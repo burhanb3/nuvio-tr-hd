@@ -1,0 +1,260 @@
+{
+  "checkedAt": "2026-10-25T19:21:53.244Z",
+  "version": "1.4.0",
+  "film": "spider-man",
+  "metadata": "fixed known TMDB reference; upstream source/subtitle requests are live",
+  "elapsedMs": 17712,
+  "bytesRead": 2877612,
+  "settings": "GitHub production defaults; 24s logical budget; all resolutions; prefer Turkish; balanced subtitle matching; HLS enabled; up to 20; public download bridge enabled",
+  "diagnostic": {
+    "tmdbId": "969681",
+    "sources": [
+      {
+        "name": "PlayIMDb",
+        "candidates": 3
+      },
+      {
+        "name": "VixSrc",
+        "candidates": 1
+      },
+      {
+        "name": "Internet Archive",
+        "candidates": 3
+      },
+      {
+        "name": "4KHDHub / HubCloud",
+        "candidates": 3
+      }
+    ],
+    "rejected": {},
+    "http": {
+      "api.themoviedb.org:200": 1,
+      "vixsrc.to:200": 5,
+      "streamdata.vaplayer.ru:200": 1,
+      "4khdhub.one:200": 2,
+      "onlinecoachingacademy.site:200": 6,
+      "archive.org:200": 8,
+      "greenmotors.club:302": 3,
+      "opensubtitles-v3.strem.io:200": 1,
+      "greenmotors.cc:200": 3,
+      "hubcloud.ist:200": 3,
+      "gamerxyt.com:200": 3,
+      "archive.org:302": 9,
+      "ia800102.us.archive.org:200": 2,
+      "ia800901.us.archive.org:200": 1,
+      "nuvio-tr-hd-download-bridge.kamilbsr03.chatgpt.site:200": 1,
+      "opensubtitles.stremio.homes:200": 10,
+      "ia800102.us.archive.org:206": 2,
+      "ia600102.us.archive.org:206": 2,
+      "ia600901.us.archive.org:206": 1,
+      "4dad9ad3e94138b7447532d7884e3068.r2.cloudflarestorage.com:206": 6,
+      "ia800901.us.archive.org:206": 1
+    },
+    "results": 10,
+    "reason": "ok",
+    "elapsedMs": 17711
+  },
+  "streams": [
+    {
+      "name": "01 · Nuvio TR HD · 4KHDHub / HubCloud · MKV · Online izlenebilir · İndirilebilir · 1920×802 · dosyadan doğrulandı · 9.69 GiB · dosya boyutu · TR altyazı (sürüm benzerliği)",
+      "quality": "720p",
+      "type": "mkv",
+      "size": "9920.6 MiB",
+      "subtitles": [
+        {
+          "name": "Türkçe · VTT · 01 · Spider-Man.Brand.New.Day.2026.2160p.MA.WEB-DL.DDP5.1.Atmos.H.265-ASTRiD · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · 02 · Spider-Man.Brand.New.Day.2026.1080p.AMZN.WEB-DL.DDP5.1.H.264-KyoGo · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · 03 · Spider.Man.Brand.New.Day.2026.German.DL.1080p.WEB.H265-WAREZCX · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "02 · Nuvio TR HD · 4KHDHub / HubCloud · MKV · Online izlenebilir · İndirilebilir · 1920×800 · dosyadan doğrulandı · 2.64 GiB · dosya boyutu · TR altyazı (sürüm benzerliği)",
+      "quality": "720p",
+      "type": "mkv",
+      "size": "2699.6 MiB",
+      "subtitles": [
+        {
+          "name": "Türkçe · VTT · 01 · Spider-Man.Brand.New.Day.2026.1080p.AMZN.WEB-DL.DDP5.1.H.264-KyoGo · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · 02 · Spider-Man.Brand.New.Day.2026.2160p.MA.WEB-DL.DDP5.1.Atmos.H.265-ASTRiD · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · 03 · Spider.Man.Brand.New.Day.2026.German.DL.1080p.WEB.H265-WAREZCX · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "03 · Nuvio TR HD · 4KHDHub / HubCloud · MKV · Online izlenebilir · İndirilebilir · 1920×800 · dosyadan doğrulandı · 7.71 GiB · dosya boyutu · TR altyazı (sürüm benzerliği)",
+      "quality": "720p",
+      "type": "mkv",
+      "size": "7894.6 MiB",
+      "subtitles": [
+        {
+          "name": "Türkçe · VTT · 01 · Spider-Man.Brand.New.Day.2026.1080p.AMZN.WEB-DL.DDP5.1.H.264-KyoGo · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · 02 · Spider-Man.Brand.New.Day.2026.2160p.MA.WEB-DL.DDP5.1.Atmos.H.265-ASTRiD · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · 03 · Spider.Man.Brand.New.Day.2026.German.DL.1080p.WEB.H265-WAREZCX · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "04 · Nuvio TR HD · Internet Archive · MP4 · Online izlenebilir · İndirilebilir · 853×480 · dosyadan doğrulandı · 835.3 MiB · dosya boyutu · TR altyazı (sürüm benzerliği)",
+      "quality": "480p",
+      "type": "mp4",
+      "size": "835.3 MiB",
+      "subtitles": [
+        {
+          "name": "Türkçe · VTT · 01 · Spider-Man.Brand.New.Day.2026.2160p.MA.WEB-DL.DDP5.1.Atmos.H.265-ASTRiD · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · 02 · Spider-Man.Brand.New.Day.2026.1080p.AMZN.WEB-DL.DDP5.1.H.264-KyoGo · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · 03 · Spider.Man.Brand.New.Day.2026.German.DL.1080p.WEB.H265-WAREZCX · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "05 · Nuvio TR HD · Internet Archive · MKV · Online izlenebilir · İndirilebilir · 3840×2160 · dosyadan doğrulandı · 85.47 GiB · dosya boyutu · TR altyazı (sürüm benzerliği)",
+      "quality": "2160p",
+      "type": "mkv",
+      "size": "87522.2 MiB",
+      "subtitles": [
+        {
+          "name": "Türkçe · VTT · 01 · Spider-Man.Brand.New.Day.2026.2160p.MA.WEB-DL.DDP5.1.Atmos.H.265-ASTRiD · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · 02 · Spider-Man.Brand.New.Day.2026.1080p.AMZN.WEB-DL.DDP5.1.H.264-KyoGo · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · 03 · Spider.Man.Brand.New.Day.2026.German.DL.1080p.WEB.H265-WAREZCX · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "06 · Nuvio TR HD · Internet Archive · MP4 · Online izlenebilir · İndirilebilir · 1152×480 · dosyadan doğrulandı · 665.6 MiB · dosya boyutu · TR altyazı (süre uyumu)",
+      "quality": "480p",
+      "type": "mp4",
+      "size": "665.6 MiB",
+      "subtitles": [
+        {
+          "name": "Türkçe · VTT · 01 · Spider-Man.Brand.New.Day.2026.1080p.AMZN.WEB-DL.DDP5.1.H.264-KyoGo · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · 02 · Spider.Man.Brand.New.Day.2026.German.DL.1080p.WEB.H265-WAREZCX · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · 03 · Spider-Man.Brand.New.Day.2026.2160p.MA.WEB-DL.DDP5.1.Atmos.H.265-ASTRiD · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "07 · Nuvio TR HD · PlayIMDb · HLS · Online izlenebilir · İndirilemez · 640×266 / 1280×534 / 1920×800 · HLS listesi; otomatik kalite · ~784.8 MiB–4.65 GiB veri · bitrate × akış süresi tahmini · TR altyazı (süre uyumu)",
+      "quality": "720p",
+      "type": "hls",
+      "size": "~784.8 MiB–4.65 GiB veri",
+      "subtitles": [
+        {
+          "name": "Türkçe · VTT · 01 · Spider-Man.Brand.New.Day.2026.1080p.AMZN.WEB-DL.DDP5.1.H.264-KyoGo · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · 02 · Spider.Man.Brand.New.Day.2026.German.DL.1080p.WEB.H265-WAREZCX · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · 03 · Spider-Man.Brand.New.Day.2026.2160p.MA.WEB-DL.DDP5.1.Atmos.H.265-ASTRiD · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "08 · Nuvio TR HD · PlayIMDb · HLS · Online izlenebilir · İndirilemez · 640×266 / 1280×534 / 1920×800 · HLS listesi; otomatik kalite · ~784.8 MiB–4.65 GiB veri · bitrate × akış süresi tahmini · TR altyazı (süre uyumu)",
+      "quality": "720p",
+      "type": "hls",
+      "size": "~784.8 MiB–4.65 GiB veri",
+      "subtitles": [
+        {
+          "name": "Türkçe · VTT · 01 · Spider-Man.Brand.New.Day.2026.1080p.AMZN.WEB-DL.DDP5.1.H.264-KyoGo · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · 02 · Spider.Man.Brand.New.Day.2026.German.DL.1080p.WEB.H265-WAREZCX · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · 03 · Spider-Man.Brand.New.Day.2026.2160p.MA.WEB-DL.DDP5.1.Atmos.H.265-ASTRiD · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "09 · Nuvio TR HD · PlayIMDb · HLS · Online izlenebilir · İndirilemez · 640×266 / 1280×534 / 1920×800 · HLS listesi; otomatik kalite · ~784.8 MiB–4.65 GiB veri · bitrate × akış süresi tahmini · TR altyazı (süre uyumu)",
+      "quality": "720p",
+      "type": "hls",
+      "size": "~784.8 MiB–4.65 GiB veri",
+      "subtitles": [
+        {
+          "name": "Türkçe · VTT · 01 · Spider-Man.Brand.New.Day.2026.1080p.AMZN.WEB-DL.DDP5.1.H.264-KyoGo · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · 02 · Spider.Man.Brand.New.Day.2026.German.DL.1080p.WEB.H265-WAREZCX · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · 03 · Spider-Man.Brand.New.Day.2026.2160p.MA.WEB-DL.DDP5.1.Atmos.H.265-ASTRiD · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "10 · Nuvio TR HD · VixSrc · HLS · Online izlenebilir · İndirilemez · 854×480 / 1280×720 / 1920×1080 · HLS listesi; otomatik kalite · ~1.09 GiB–4.56 GiB veri · bitrate × akış süresi tahmini · TR altyazı (süre uyumu)",
+      "quality": "1080p",
+      "type": "hls",
+      "size": "~1.09 GiB–4.56 GiB veri",
+      "subtitles": [
+        {
+          "name": "Türkçe · VTT · 01 · Spider-Man.Brand.New.Day.2026.1080p.AMZN.WEB-DL.DDP5.1.H.264-KyoGo · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · 02 · Spider.Man.Brand.New.Day.2026.German.DL.1080p.WEB.H265-WAREZCX · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · 03 · Spider-Man.Brand.New.Day.2026.2160p.MA.WEB-DL.DDP5.1.Atmos.H.265-ASTRiD · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        }
+      ]
+    }
+  ],
+  "deviceTest": "not-run"
+}

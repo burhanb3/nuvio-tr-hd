@@ -10,7 +10,7 @@
 4. Worker sınırlı GET Range ile gerçek konteyner/boyutu doğrular. Bu URL için HEAD imzayı bozabildiğinden kullanılmaz. Doğrulanan nesneye /files/SHA256.mkv veya .mp4 adresi verir. Telefon da gerçek konteyneri kontrol eder.
 5. Köprü GET 307 ile dosya sunucusuna yönlendirir; HEAD doğrulanmış Content-Length/MIME döner. Dosya adı Nuvio'ya doğru uzantıyla ulaşır. Tam video kaynak sunucudan gelir; burada saklanmaz/proxy'lenmez.
 
-Kayıt en çok altı saat ve gerçek imzanın kalan ömrü kadar Map/Cache API'de tutulur. Bu kalıcı depolama değildir; cache silinirse veya kayıt eskirse 410 döner, yeniden kaynak aranmalıdır. İndirme başladıktan sonraki bağlantı doğrudan kaynaktadır.
+Kayıt en çok altı saat ve gerçek imzanın kalan ömrü kadar Map/Cache API'de tutulur. Bu kalıcı depolama değildir. Cache kaybolursa bağlantının public kaynak parametresi, SHA-256 yolu ve gerçek konteyner yeniden doğrulanır. İmza eskirse veya dosya alınamazsa 410 döner, yeniden kaynak aranmalıdır. İndirme başladıktan sonraki bağlantı doğrudan kaynaktadır.
 
 ## Tam ortak tarama neden kapalı?
 

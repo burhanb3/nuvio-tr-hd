@@ -5,7 +5,7 @@ Son güncelleme: 25 Ekim 2026. Geliştirilen sürüm: **1.4.0**. Kullanıcı **y
 ## Yetki ve dağıtım
 
 - Kullanıcı **sa deposuna yükleme, adıyla yeni aç** dedi. Yalnız https://github.com/burhanb3/nuvio-tr-hd kullanılır; burhanb3/sa'ya yazılmadı.
-- Yerel/uzak varsayılan dal codex/publish-nuvio-tr-hd. Manifest https://burhanb3.github.io/nuvio-tr-hd/manifest.json . 1.3.0 yayını compatibility/github-publication.json ile kanıtlıdır. 1.4.0 yayın durumu yeni rapordan kontrol edilmelidir.
+- Yerel/uzak varsayılan dal codex/publish-nuvio-tr-hd. Manifest https://burhanb3.github.io/nuvio-tr-hd/manifest.json . **1.4.0 yayımlandı:** kod commit'i 1d7ca3d630a63bd30879f8872e735616eb05ec2b. Windows/Linux Actions 40225594715 ve Pages 40225594674 başarılı; oturumsuz manifest/provider/sayfa HTTP 200 ve yerel SHA eşitliği compatibility/github-publication.json ile kanıtlı.
 - Eski Sites projesi appgprj_6ade23835f7c81919a2a9bb960abd631, plugin-host/, hayatimbitmiss adresi 1.2.0'da kaldı. Hesap değişti, NOT_FOUND; aynı eski Site'ı yeniden oluşturmaya çalışmayın.
 - **Ayrı dosya köprüsü**: appgprj_6ade5021d6b88191818ece53a5d5f1e0, download-bridge/.openai/hosting.json; https://nuvio-tr-hd-download-bridge.kamilbsr03.chatgpt.site . Public erişim. Kimliği koruyun, yeniden create_site çağırmayın. Yayın kanıtı compatibility/download-bridge-publication.json içinde tutulmalıdır.
 - Credential Manager mevcut burhanb3 oturumuyla Git push/API çalıştı. Token yalnız çocuk süreç belleğinde; komut satırına/dosyaya/günlüğe yazmayın. Sites credential gizli stdin ile verilir.
@@ -16,7 +16,7 @@ Son güncelleme: 25 Ekim 2026. Geliştirilen sürüm: **1.4.0**. Kullanıcı **y
 - İmzalı GET URL’sinde HEAD 403 beklenebilir. HEAD atlanır, sınırlı GET Range ve konteyner doğrulanır. Normal engelli HEAD'e tekrar yüklenilmez.
 - Bilgisayarda canlı Spider-Man: 2.830.708.974 byte, 1920×800 MKV; ayrıca yaklaşık 8,28 ve 10,40 GB MKV. Dune HDHub zinciri indirilebilir dosya vermedi. Bu gözlem kalıcı erişim garantisi değildir.
 - Bulut sunucusundan HDHub/PlayIMDb 403, VixSrc boş dönüyor. **Tam ortak tarama varsayılan kapalı** kalır. Kaynaklar telefondan aranır; köprü yalnız telefonun bulduğu public imzalı R2 dosyasını tekrar doğrulayıp dosya adını koruyan yönlendirme kaydeder. Public dosya URL’si ve kanonik metadata köprüye gider; kişisel kataloglar/anahtarlar gitmez.
-- Köprü GET 307 ile kaynağa yönlendirir; tam video saklamaz/proxy’lemez. HEAD doğrulanmış boyut/MIME döner. Kayıt en çok 6 saat/gerçek imza süresi; evrilirse 410 ve yeniden arama gerekir. Cache kalıcı veritabanı değildir.
+- Köprü GET 307 ile kaynağa yönlendirir; tam video saklamaz/proxy’lemez. HEAD doğrulanmış boyut/MIME döner. Geçici kayıt en çok 6 saat/gerçek imza süresi; cache yoksa URL'deki public kaynak parametresiyle yeniden doğrulanır. İmza eskirse 410 ve yeniden arama gerekir. Cache kalıcı veritabanı değildir.
 - HLS listesi gerçek çözünürlük profillerini, EXTINF süresini ve bitrate bazlı yaklaşık aktarım boyutunu sunar. Bu gerçek dosya boyutu/piksel doğrulaması değildir. HLS asla indirilebilir olmaz.
 - Dengeli altyazı modu aynı film/yıl alternatiflerini belirsiz etiketle sunar; yanlış kimlik/dil/yıl/kurgu hâlâ reddedilir. Geçersiz bir altyazı diğer geçerli altyazıları çökertmez.
 - **1 saniye otomatik düzeltme uygulanmadı.** Plugin ABI’sinde offset yok. Nuvio AutoSync yalnız Android dahili ExoPlayer ve kullanılabilir gömülü referans altyazı yolunda; iOS'ta yok. Zaman farkını ölçmeden rastgele kaydırmayın. Gelecek ayrı servis audio/VAD veya güvenilir zamanlı referans ve dönüştürülmüş VTT/SRT gerektirir.
