@@ -2,6 +2,8 @@
 
 ## Güncel yönlendirme — 1.5.0, 25 Ekim 2026
 
+**1.5.0 GitHub yayını tamamlandı:** 62bf0b31ae1a767cd63b442c3bbde113a4601dfb kod commit'i. Test ve paket 40229105237 (Windows/Linux) ve Pages 40229105202 başarılı; yerel check 92/92, güncel upstream drift yok. Manifest/provider/sayfa HTTP 200 ve yerel SHA eşitliği compatibility/github-publication.json ile doğrulanır. Ayrı Sites servisinin yeni kodu yayımlanmadı; mevcut köprü 1.4.0, aşağıdaki capability gate sınırı geçerli.
+
 Kullanıcı Game of Thrones ve Fleabag dizilerinde boş sonuç/eklenti görünmüyor dedi; ayrıca daha çok indirilebilir+TR seçenek, dar HLS boyut tahmini, ayrı kalite satırları, boyut/kalite sırası, gruplama ve kısa başlık istedi. İki dizinin S01E01 bölümleri referans alındı; kullanıcı sezon/bölüm belirtmedi.
 
 - PlayIMDb doğru IMDb+başlık+S/E dosya adı döndürmesine rağmen yıl yok diye eleniyordu; düzeltildi. VixSrc yalnız movie API'sini kullanıyordu; /api/tv/id/season/episode eklendi. Native normalizePluginType diğer/series/show türlerini TV sayar; yerel kimlik aynı normalizasyonu izler. Manifest movie/tv zaten doğruydu. ProviderFilterRow boş ve yüklenmeyen grupları gizler; bu nedenle boş tarama sağlayıcı görünmüyor gibi olur.

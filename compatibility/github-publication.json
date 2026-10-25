@@ -1,51 +1,57 @@
 {
-  "checkedAt": "2026-10-25T19:22:16.542Z",
-  "version": "1.4.0",
+  "checkedAt": "2026-10-25T20:06:31.864Z",
+  "version": "1.5.0",
   "origin": "https://burhanb3.github.io/nuvio-tr-hd",
   "authenticated": false,
   "repository": "https://github.com/burhanb3/nuvio-tr-hd",
-  "sourceCommit": "1d7ca3d630a63bd30879f8872e735616eb05ec2b",
+  "sourceCommit": "62bf0b31ae1a767cd63b442c3bbde113a4601dfb",
   "branch": "codex/publish-nuvio-tr-hd",
   "actions": {
-    "tests": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40225594715",
+    "tests": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40229105237",
     "testsConclusion": "success",
-    "pages": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40225594674",
+    "pages": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40229105202",
     "pagesConclusion": "success"
   },
-  "mode": "phone source scan; public signed R2 filename-preserving bridge; full cloud discovery disabled",
+  "mode": "phone movie/TV scan; signed R2 file bridge still 1.4.0; muxed HLS qualities split directly; external audio/subtitle masters retained until profile capability is deployed",
   "checks": [
     {
       "path": "/manifest.json",
       "status": 200,
       "type": "application/json; charset=utf-8",
       "bytes": 694,
-      "sha256": "825c088ed5204bd357658c317cab1096208dd3e96220e9fd58e2cc38dd9e790e",
+      "sha256": "a43c9d0326ea6d62bfd5a1fdef4e661ca4ef8058b3bccb14692480d9773ff2e8",
       "matchesLocal": true
     },
     {
       "path": "/providers/nuvio-tr-hd.js",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 94699,
-      "sha256": "45642dabe5367bd4fb2df7a6185e2f9cfada5e75f55292ac8586a78896696ff8",
+      "bytes": 110568,
+      "sha256": "25904ba0d12d1eeb1410763ccea38ac04195750613e11f00a99fca0de89f9dbb",
       "matchesLocal": true
     },
     {
       "path": "/",
       "status": 200,
       "type": "text/html; charset=utf-8",
-      "bytes": 5924,
-      "sha256": "6fe9bf6e261c0a09f134fce0b85ad268e23d4e73704345a304a8e2414f3dffdd",
+      "bytes": 6663,
+      "sha256": "8098319f0fed6d772bfe0d0861bfd2e2a2f8741981f9e905035dd7ee4a01f444",
       "matchesLocal": true
     }
   ],
   "tests": {
-    "local": 82,
-    "quickjs": "passed; HDHub chain/alias included",
+    "local": 92,
+    "quickjs": "passed; TV IMDb/episode + AltyaziDB SRT, HDHub chain and alias included",
     "ci": "Windows/Linux passed",
     "upstream": "0.6.4-beta; locked 19 files unchanged"
   },
+  "bridge": {
+    "newVersionDeployed": false,
+    "existingVersion": "1.4.0",
+    "reason": "Sites account/workspace changed; existing project NOT_FOUND; user cannot switch now"
+  },
   "deviceTest": "not-run",
   "fullPlayback": "not-run",
-  "fullDownload": "not-run"
+  "fullDownload": "not-run",
+  "subtitleAudioSync": "not-run"
 }
