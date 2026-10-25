@@ -102,3 +102,7 @@ Kaynak eşleştirmesi, dosya doğrulaması ve altyazı yüklemesi sunucuda aynı
 - [ ] İndirme sırasında yönlendirme/erişim başlıkları ve telefonun arka plan davranışı ayrıca kontrol edildi.
 
 Sonuçları uygulama sürümü, platform, tarih ve kişisel bilgileri temizlenmiş gözlemle kaydedin. Gerçek erişim tokenlarını rapora eklemeyin.
+
+## 1.4.0 ek kontrol (25 Ekim 2026)
+
+verify:upstream, 0.6.4-beta ve güncel cmp-rewrite HEAD 56ae37081afaff820b6073da84e711320238de36 üzerinde kilitli 19 dosyada drift bulmadı; kilit incelemesiz yenilenmedi. PluginSubtitleResult offset alanı taşımıyor. Nuvio AutoSync Android internal ExoPlayer ve gömülü referans altyazıya bağlı; iOS desteklenmiyor: [resmî AutoSync belgesi](https://github.com/NuvioMedia/NuvioMobile/blob/cmp-rewrite/docs/subtitle-autosync.md). Native indirme uzantıyı source URL yolundan seçtiği için gerçek dosya köprüsü .mkv/.mp4 yoluyla sınanır. HEAD/GET Range doğrulaması tam native indirme ve cihaz codec testi değildir.

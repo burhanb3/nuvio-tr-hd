@@ -1,7 +1,7 @@
 'use strict';
 const { matchesIdentity } = require('./matching.cjs');
 const { safeUrl, cleanHeaders } = require('./util.cjs');
-const SERVICE_ORIGIN = 'https://nuvio-tr-hd.hayatimbitmiss.chatgpt.site';
+const SERVICE_ORIGIN = 'https://nuvio-tr-hd-download-bridge.kamilbsr03.chatgpt.site';
 
 async function loadHosted(http, target) {
   // Only public canonical metadata goes to our service. Personal catalogs,
@@ -22,6 +22,8 @@ async function loadHosted(http, target) {
         headers: cleanHeaders(c.headers), identity: target, identityConfidence: Number(c.identityConfidence) || 90,
         claimedQuality: String(c.claimedQuality || '').slice(0, 30), embeddedTurkish: c.embeddedTurkish === true, subtitles: [] },
       video: { url, container: v.container, downloadable: v.container !== 'hls', dimensions,
+        resolutionOptions: (v.resolutionOptions || []).filter(d => Number.isInteger(d?.width) && Number.isInteger(d?.height) && d.width > 0 && d.height > 0 && d.width <= 16384 && d.height <= 16384).slice(0, 16),
+        sizeEstimate: Number.isSafeInteger(v.sizeEstimate?.minimum) && Number.isSafeInteger(v.sizeEstimate?.maximum) && v.sizeEstimate.minimum > 0 && v.sizeEstimate.maximum >= v.sizeEstimate.minimum ? v.sizeEstimate : null,
         size: Number.isSafeInteger(v.size) && v.size > 0 ? v.size : null, duration: Number(v.duration) || null },
       subtitles: (Array.isArray(pair.subtitles) ? pair.subtitles : []).slice(0, 4).filter(s => s?.language === 'tr' && safeUrl(s.url))
         .map(s => ({ url: safeUrl(s.url), language: 'tr', name: String(s.name || 'Türkçe').slice(0, 300), _score: Math.min(100, Math.max(0, Number(s._score) || 0)),
@@ -29,4 +31,20 @@ async function loadHosted(http, target) {
     };
   }).filter(Boolean);
 }
-module.exports = { loadHosted, SERVICE_ORIGIN };
+async function registerDownloads(http, candidates, target) {
+  const direct = candidates.filter(c => /\.(mkv|mp4)(?:$|[?#])/i.test(c.url));
+  const pending = candidates.filter(c => !direct.includes(c)).slice(0, 3);
+  if (!pending.length) return direct;
+  const data = await http.json(SERVICE_ORIGIN + '/api/files', { method: 'POST', timeoutMs: 6500,
+    headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ target,
+      candidates: pending.map(c => ({ url: c.url, filename: c.filename })) }) });
+  if (data?.schema !== 1 || !matchesIdentity(data.target, target) || !Array.isArray(data.files)) return direct;
+  for (const entry of data.files) {
+    const candidate = pending.find(c => c.url === entry.url);
+    const alias = safeUrl(entry.downloadAlias);
+    if (candidate && alias && new URL(alias).origin === SERVICE_ORIGIN && /^\/files\/[a-f0-9]{64}\.(mkv|mp4)$/.test(new URL(alias).pathname))
+      direct.push({ ...candidate, downloadAlias: alias });
+  }
+  return direct;
+}
+module.exports = { loadHosted, registerDownloads, SERVICE_ORIGIN };

@@ -157,6 +157,24 @@ test('daha güçlü altyazı eşleşmesi daha yüksek çözünürlüğün önün
   assert.equal(result[0].candidate.url, '720');
 });
 
+test('dengeli altyazı aynı filmin alternatifini belirsiz diye sunar; yanlış film kabul edilmez', async () => {
+  const { scoreSubtitle } = require('../src/subtitle-discovery.cjs');
+  const { loadSubtitles } = require('../src/subtitles.cjs');
+  const candidate = { filename: 'The.Matrix.1999.mkv', url: 'https://media.test/movie.mkv' };
+  const sub = { lang: 'tur', _scope: 'title', title: 'The.Matrix.1999.WEB-DL.GROUP' };
+  const match = scoreSubtitle(sub, candidate, { duration: 600 }, target, true);
+  assert.equal(match.allowFilmFallback, true);
+  assert.equal(scoreSubtitle({ ...sub, title: 'The.Matrix.Reloaded.1999.WEB-DL' }, candidate, {}, target, true), null);
+  assert.equal(scoreSubtitle({ ...sub, title: 'The.Matrix.2003.WEB-DL' }, candidate, {}, target, true), null);
+  assert.equal(scoreSubtitle({ ...sub, title: 'The.Matrix.1999.Extended' }, candidate, {}, target, true), null);
+  const url = 'https://media.test/timing.vtt';
+  const http = createHttp({ fetchImpl: fixtureFetch({ [url]: { body: 'WEBVTT\n\n00:07:50.000 --> 00:08:00.000\nTürkçe\n', mime: 'text/vtt' } }) });
+  try {
+    const tracks = await loadSubtitles(http, { subtitles: [{ ...sub, url, _match: match }, { lang: 'tr', url: 'https://media.test/broken.srt' }] }, target, false, { videoDuration: 600, keepScore: true });
+    assert.equal(tracks.length, 1); assert.equal(tracks[0]._score, 35); assert.match(tracks[0].name, /senkron belirsiz/);
+  } finally { http.close(); }
+});
+
 test('bir katalog gövdesi takılsa da diğer kaynağın tamamlanan çifti korunur', async () => {
   const fixture = makeFixture({ items: [{ ...identity, streams: [{ url: 'https://media.test/movie.mp4', subtitles: [{ url: 'https://media.test/tr.srt', lang: 'tur' }] }] }] });
   const transport = fixtureFetch(fixture);

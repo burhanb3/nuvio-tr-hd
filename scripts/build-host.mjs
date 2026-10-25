@@ -20,7 +20,7 @@ const entry=`import service from './hosting/worker.mjs';
 const assets=${JSON.stringify(assets)};
 export default {async fetch(request,env,ctx){
  const path=new URL(request.url).pathname;
- if(path.startsWith('/api/')||path.startsWith('/hls/'))return service.fetch(request,env,ctx);
+ if(path.startsWith('/api/')||path.startsWith('/hls/')||path.startsWith('/files/'))return service.fetch(request,env,ctx);
  if(!['GET','HEAD'].includes(request.method))return new Response('Method not allowed',{status:405});
  const asset=assets[path==='/'?'/index.html':path];
  if(!asset)return new Response('Not found',{status:404});

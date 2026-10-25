@@ -1,68 +1,39 @@
-# “Alınıyor…” uzun sürüyor veya kaynak yok
+# Uzun bekleme, boş kaynak veya eksik bilgi
 
-**1.3.0 GitHub dağıtımı:** Kurulum `https://burhanb3.github.io/nuvio-tr-hd/manifest.json`. Eski Sites kopyasını kapat, Tümü/20/HLS açık; **Ortak tarama kapalı, DahmerMovies kapalı** seç. Hesap değişimi nedeniyle hazırlanan Worker üretime yayımlanamadı. VixSrc bu sürümde sunucu gerektirmeden doğrudan çalışır. Aşağıdaki cache/sunucu bölümleri isteğe bağlı yerel uygulamayı anlatır; canlı özellik değildir.
+## Güncelleme
 
+1. Nuvio Pluginler bölümünde https://burhanb3.github.io/nuvio-tr-hd/manifest.json deposunu yenileyin; sağlayıcı 1.4.0 olmalı. Eski hayatimbitmiss Sites kopyasını kapatın.
+2. Çözünürlük Tümü, sonuç sınırı 20, HLS açık, MKV dosya köprüsü açık, altyazı eşleştirme Dengeli, Türkçe bulunamazsa Videoyu göster seçin. Nuvio'nun altyazı dili Türkçe olmalı.
+3. Filmi ve kaynak ekranını kapatıp yeniden arayın. Önceden kaydedilmiş ayarlar güncellemede korunabilir. Depoyu kaldırıp eklemek ayarları sıfırlayabilir.
 
-25 Ekim 2026: Kullanıcı iPhone'da **Dune (2021)** ve **Spider-Man: Brand New Day** için uzun bekleme ve boş sonuç bildirdi. 1.2.0 sonrasında küçük Spider-Man MP4'ü üç Türkçe altyazıyla açıldı; tekrar arama ve Dune hâlâ sorunluydu. **1.3.0**, bu ikinci bildirim üzerine ortak kaynak servisi, kısa önbellek, VixSrc ve çalışan videoyu koruyan altyazı politikası ekler.
+## 1.4.0 neleri düzeltir?
 
-## Telefonda güncelle
+- Public imzalı GET dosyasında HEAD 403 nedeniyle yanlış eleme giderildi. Normal engelli dosyalarda erişim zorlanmaz.
+- Uzantısız gerçek R2 MKV, köprüyle .mkv adı alır. Köprü yoksa yanlış adla indirme vaat etmek yerine aday elenir.
+- HLS'de gerçek liste profili ve bitrate × süre tahmini görünür. Dosya/konteyner bilgisi okunamazsa dosya adı yalnız tahmin diye sunulur; eksik bilgi uydurulmaz.
+- Dengeli altyazı modunda aynı filme ait belirsiz alternatifler sunulur; bozuk bir altyazı geçerli diğerlerini düşürmez.
+- Bulut IP'sinde kaynak sayfaları 403 verdiğinden arama varsayılan telefonda yapılır. Ortak tarama açılması önerilmez. Dosya köprüsü yalnız bulunan public dosyaya erişir.
 
-1. Nuvio **Pluginler → Nuvio TR HD deposu** bölümünden yenileme/güncelleme işlemini çalıştır. Sürüm **1.3.0** olmalı; menü adı Nuvio diline/sürümüne göre değişebilir.
-2. Sağlayıcı ayarlarında **HLS çevrimiçi izleme alternatiflerini göster** seçeneğini aç. Önceki sürümün kayıtlı kapalı tercihi korunur. Bu seçenek yeni kurulumda varsayılan açıktır.
-3. Nuvio'nun tercih edilen altyazı dilini **Türkçe** seç. Filmi kapatıp yeniden kaynak ara; açık sonuç ekranı önceki aramayı gösterebilir.
-4. Yeni varsayılanlar **çözünürlük Tümü / sonuç sınırı 20**. Kayıtlı önceki tercihin varsa elle değiştir. **Ortak tarama** açık olsun. Türkçe bulunamazsa videoyu göster politikası yeni varsayılandır; servis hatasında çalışan video silinmez.
-5. Yalnız indirilebilir kaynaklar için **MP4/MKV · Online izlenebilir · İndirilebilir** sonuçlarını kullan. **HLS · Online izlenebilir · İndirilemez** çevrimdışı dosya indirmesi sağlamaz.
+## Sonucun anlamı
 
-Aynı kurulum bağlantısı geçerlidir: `https://burhanb3.github.io/nuvio-tr-hd/manifest.json`. Depo güncellenemiyorsa kaldırıp aynı bağlantıyla ekleme seçeneği yerel sağlayıcı ayarlarını sıfırlayabilir; önce ayarlarını kaydet.
+Online izlenebilir / İndirilebilir: gerçek MP4/MKV yapı ve erişim kontrolünden geçti. Tam film ve codec testi değildir. HLS / İndirilemez: yalnız online. TR bulunamadı: çalışan video var, doğrulanmış mevcut Türkçe SRT/VTT yok. Film düzeyi / senkron belirsiz: doğru film, sürüm zamanlaması kanıtlanmadı. Köprü 410: geçici kayıt/imza eskidi; yeniden kaynak arayın.
 
-## 1.3.0'da ne değişti?
+Dune (2021) için son bilgisayar taramasında TR HLS, indirilebilir dosya yok. Spider-Man 1.4.0 son tam sorguda 10 sonuç verdi; 2,64 GiB MKV dahil dosyalara Türkçe VTT bağlandı. Önceki Türkçe çağrıları boş/zaman aşımı verebildi. Bunlar kalıcı kaynak sözü veya fiziksel iPhone testi değildir.
 
-- Public kaynaklar sunucuda taranır; başarılı çiftler en çok üç dakika tutulur, aynı anda gelen aynı arama birleştirilir. Boş cevap önbelleğe alınmaz. Telefonun yaptığı yavaş native istek sayısı azalır. Servis adresi yine aynı kurulum alan adıdır.
-- VixSrc, Dune için ikinci online kaynak ve kaynakla eşlenmiş Türkçe VTT getirir. Otomatik/1080p/720p/480p, master'da gerçekten bulunan profillerdir; dört bağımsız sağlayıcı değildir. Playlist çözünürlüğü gerçek piksel doğrulaması diye etiketlenmez.
-- Altyazılarda numara, sürüm ve varsa fps bilgisi görünür; aynı gövdeli aynalar elenir. Genel başlık+yıl, tam sürüm eşleşmesi sayılmaz.
-- Sonuç sayısının varsayılanı 20'dir; bu sayı bulunamayan alternatifler uydurularak doldurulmaz. Küçük MP4'ler düşük kalite nedeniyle varsayılan gizlenmez.
-- Kişisel katalog/addon adresleri ve anahtarlar telefonda kalır. Servise yalnız kanonik film/bölüm metadatası gider. [Teknik akış](../hosting/README.md).
+## Bekleme sınırı
 
-## 1.2.0 tarihsel gözlemi
+Ortak scheduler en çok 100 ms native uyku bırakır; Nuvio clearTimeout native sleep'i iptal etmez. Telefon JS mantıksal bütçesi 24 saniye. Başlamış native fetch/gövde okuması bu süreden uzun sürebilir; fiziksel iPhone süresi garanti edilmez. Tamamlanan videolar, altyazı takılırsa korunur.
 
-| Film | Canlı kaynak gözlemi | Sınır |
-| --- | --- | --- |
-| Dune (2021), TMDB 438631 | PlayIMDb'den üç doğrulanmış HLS oynatma listesi ve Türkçe VTT; en iyi altyazıda tam sürüm adı eşleşti | DahmerMovies dosya CDN'i 403/429 döndü. İndirilebilir MP4/MKV doğrulanamadı. HLS çözünürlüğü pikselden doğrulanmış değildir. |
-| Spider-Man: Brand New Day, TMDB 969681 | Internet Archive'dan 3840×2160 MKV ve Türkçe VTT | Yaklaşık 85,5 GiB/91,8 GB; telefonda büyük. Altyazı kanıtı sürüm benzerliği/süre uyumu; kesin senkron değil. Düşük çözünürlüklü MP4 türevleri HD filtresinde elendi. |
-
-Sonuçlar sabit, bilinen TMDB referans metadatasıyla; diğer ağ istekleri canlı çalıştırılarak alındı. Raporlar `compatibility/pipeline-dune-check.json` ve `compatibility/pipeline-spider-man-check.json` içindedir. Bu test tam video oynatmaz/indirmez. Telefonun native ağı, codec desteği ve sahne sahne altyazı senkronu sınanmadı. Kaynaklar sonraki aramada değişebilir.
-
-## Bekleme nasıl düzeldi?
-
-- Nuvio'nun JavaScript zamanlayıcısında `clearTimeout` native coroutine beklemesini iptal etmiyor. quickjs-kt 1.0.15, JavaScript sonucu yakalansa bile bekleyen native işleri bitirmeden değerlendirmeyi tamamlamıyor. Önceki uzun toplam zamanlayıcı çağrının bitişini geciktirebiliyordu.
-- Yeni ortak zamanlayıcı aynı iş için en çok 100 ms'lik native uyku kurar. İptal edilmiş 30–42 saniyelik uyku bırakılmaz. QuickJS testinde iptal edilmeyen native bekleme davranışı ayrıca taklit edilir.
-- Kaynaklar buldukları adayları hemen kontrol ettirir; yavaş bir katalog diğer hazır çiftleri engellemez. Video kontrolleri toplam üç eşzamanlı iş ile sınırlıdır.
-- Türkçe araması video kontrolüyle örtüşür; altyazı servisi JSON'una 9 saniye tanınır. Başlık/hash sorguları seri zaman aşımı oluşturmaz. Takılan yanıt gövdeleri de zaman aşımına tabidir.
-- 429 sonrası aynı kökene tekrar yüklenilmez; dosyanın HEAD isteği 403/404 verirse bir de GET ile zorlanmaz.
-
-1.3.0'da telefon bütçesi 24 saniye, sunucu tarama bütçesi 13 saniyedir. Bunlar **mantıksal** sınırlardır. Nuvio fetch köprüsü AbortSignal'ı native isteğe aktarmadığı için başlamış TMDB/kişisel ağ işlerinin kapanması bu sınırdan uzun sürebilir. Fiziksel iPhone üzerinde ölçülmüş dönüş süresi olarak sunulmaz. Ortak tarama, telefonun kaynak servislerine ayrı ayrı gitme ihtiyacını azaltır.
-
-## Boş sonuçların nedenini bulmak
-
-**Hata ayıklama özeti** ayarı, uygulama günlüklerine `[Nuvio TR HD]` etiketiyle kaynak/adet/HTTP durumlarını yazar. Video veya altyazı URL'si, API anahtarı, Cookie ve Authorization yazılmaz. Bu özet stream listesinde gösterilemez; güncel Nuvio ABI'si hata/ilerleme kartı desteklemiyor. Uygulamanın kendi ağ günlükleri ayrıca hassas bilgi içerebilir; tam günlükleri herkese açık paylaşma.
-
-| Tanı | Anlamı |
-| --- | --- |
-| `identity_unavailable` | TMDB kimliği/anahtarı/metadata alınamadı; yanlış filme düşmemek için arama durdu |
-| `video_unavailable` | Dosya/playlist doğrulanamadı; HTTP durumları erişim veya ağ sorununu ayırmaya yardım eder |
-| `quality` | Gerçek video boyutları seçilen alt sınırın altında |
-| `subtitle_no_match` | Adaya uygun Türkçe sürüm/hash/süre kanıtı bulunmadı |
-| `subtitle_unavailable` | Eşleşme adayı vardı, fakat gerçek SRT/VTT gövdesi doğrulanamadı |
-| `hls_disabled` | Sonuç HLS, kullanıcı çevrimiçi alternatifleri kapattı |
-| `deadline` | Bütçe doldu; o ana kadar tamamlanan çiftler korundu |
-
-Yerel tekrar:
+Hata ayıklama özeti ayarı kaynak/adet/HTTP durumlarını URL veya anahtar olmadan günlüğe yazar. identity_unavailable: metadata; video_unavailable: dosya/playlist; subtitle_no_match: uygun eşleşme yok; subtitle_unavailable: SRT/VTT gövdesi alınamadı; deadline: süre doldu. Tam uygulama günlükleri hassas URL içerebilir, public paylaşmayın.
 
 ```powershell
 npm run check
 npm run verify:upstream
+npm run test:live:bridge
 npm run test:live:pipeline -- --film=dune
 npm run test:live:pipeline -- --film=spider-man
 ```
 
-Bu komutlar `.cache/` içine URL/anahtar içermeyen rapor yazar. Sabit TMDB referansı kullandıklarından canlı TMDB erişimini test etmezler. Sonraki geliştirme önceliği, Dune dahil güncel filmler için erişilebilir ve makul boyutlu bağımsız MP4/MKV sağlayıcıları eklemek ve iPhone'da oynatma/indirme kabul testini tamamlamaktır.
+Bu testler sınırlı video aralığı ve altyazı gövdesini okur; tam film indirmez. Sabit TMDB referansı kullanılan canlı test, canlı TMDB servisini doğrulamaz. iPhone'da tam indirme ve uçak modunda altyazı ayrıca sınanmalıdır.
+
+**1.4.0 son canlı kanıt:** public köprü kayıt → HEAD 200 / 2.830.708.974 byte → GET Range 206 / gerçek 1920×800 MKV; tekrar üç kayıt başarılı. Source discovery bilgisayardan, köprü üretimden sınandı. Tam Spider-Man sağlayıcı akışı yaklaşık 13,25 saniyede 10 alternatif ve Türkçe VTT verdi. Raporlar compatibility/download-bridge-live-140.json ve pipeline-spider-man-140.json. Bunlar iPhone/tam film indirme testi değildir.

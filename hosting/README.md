@@ -1,38 +1,36 @@
-# Ortak kaynak servisi
+# Dosya köprüsü ve deneysel ortak servis
 
-**Yayın durumu (1.3.0):** Bu Worker hazırlanmış ve yerelde sınanmıştır; eski Sites çalışma alanına erişim kaybolduğu için üretime yayımlanmadı. GitHub Pages sürümü kaynakları telefondan doğrudan arar; `hostedDiscovery` varsayılan kapalıdır. Aşağıdaki akış isteğe bağlı Worker kurulumu içindir. Doğrudan VixSrc, master adresine gerçek HLS gövdesi doğrulanmış `nuvio_format=master.m3u8` son eki ekler; Nuvio'nun native URL filtresi bu HLS'yi dosya indirmesine kapatır. Tek master, kalite ve ses/altyazı gruplarını korur.
+1.4.0 public köprü: https://nuvio-tr-hd-download-bridge.kamilbsr03.chatgpt.site . Kurulum/kod hâlâ https://burhanb3.github.io/nuvio-tr-hd/manifest.json üzerinden gelir. Eski hayatimbitmiss Sites projesiyle karıştırmayın.
 
+## Varsayılan akış
 
-1.3.0, aynı Sites kimliğini statik yayından Worker ESM servisine geçirir. Kurulum adresi değişmez. `worker.mjs` Node bağımlılığı olmayan sağlayıcı çekirdeğini çalıştırır; `page.html` kurulum sayfasının kaynak kopyasıdır. Yayın checkout'u `plugin-host/`, kimlik `plugin-host/.openai/hosting.json` içindedir.
+1. Telefon Nuvio TMDB anahtarıyla kanonik kimliği çözer; gerçek sağlayıcı sayfalarını kendisi arar. HDHub sayfasındaki TMDB + JSON-LD özgün başlık/yıl kontrol edilir.
+2. HDHub → public kısa bağlantı → HubCloud → FSL/R2 zinciri imzalı public GET dosya adresi verir. Bu adresler çoğunlukla uzantısızdır; Nuvio böyle bir MKV’yi MP4 adıyla kaydedebilir.
+3. /api/files POST’a yalnız kanonik metadata ve en çok üç public R2 adresi/dosya adı gönderilir. Kişisel katalog/addon adresi, TMDB anahtarı, Cookie/Authorization gönderilmez. R2 hostname + AWS imzası biçimi sınırlandırılır; keyfi URL proxy'si değildir.
+4. Worker sınırlı GET Range ile gerçek konteyner/boyutu doğrular. Bu URL için HEAD imzayı bozabildiğinden kullanılmaz. Doğrulanan nesneye /files/SHA256.mkv veya .mp4 adresi verir. Telefon da gerçek konteyneri kontrol eder.
+5. Köprü GET 307 ile dosya sunucusuna yönlendirir; HEAD doğrulanmış Content-Length/MIME döner. Dosya adı Nuvio'ya doğru uzantıyla ulaşır. Tam video kaynak sunucudan gelir; burada saklanmaz/proxy'lenmez.
 
-## Akış
+Kayıt en çok altı saat ve gerçek imzanın kalan ömrü kadar Map/Cache API'de tutulur. Bu kalıcı depolama değildir; cache silinirse veya kayıt eskirse 410 döner, yeniden kaynak aranmalıdır. İndirme başladıktan sonraki bağlantı doğrudan kaynaktadır.
 
-1. Telefon, kendi Nuvio TMDB anahtarıyla özgün başlığı/yılı/IMDb kimliğini çözer.
-2. Ortak tarama açıkken `/api/discover` POST gövdesine yalnız bu kanonik metadata yazılır. Katalog/addon adresleri, TMDB anahtarı, Cookie veya Authorization gönderilmez.
-3. Servis PlayIMDb, Internet Archive ve VixSrc'yi sınırlı süreyle sorgular; dosya/kalite/altyazı kontrolleri sunucuda yapılır. Metadata burada istemcinin kanonik referansıdır; ikinci bir canlı TMDB doğrulaması yapıldığı iddia edilmez.
-4. Başarılı ve boş olmayan sonuçlar kanonik metadata SHA-256 anahtarıyla en çok 180 saniye Cloudflare Cache API'ye yazılır. Bilinen URL sona erme zamanı daha erkense süre kısaltılır. Boş/hatalı sonuç önbelleğe alınmaz. Eşzamanlı aynı sorgu birleştirilir. Cache kalıcı kullanıcı veritabanı değildir.
-5. Telefon, dönen kimlikleri/URL türlerini tekrar kontrol eder; kişisel kaynakları kendi içinde ekler, kullanıcının filtreleriyle en iyi 20 sonucu sıralar. Ortak servis erişilemiyorsa yerel public adaptörler yedektir.
+## Tam ortak tarama neden kapalı?
 
-## VixSrc
+/api/discover ve /hls/vix/...m3u8 deneysel kod olarak korunur. Ancak üretim Worker IP'sinden HDHub ve PlayIMDb 403; VixSrc boş sonuç verdi. Bilgisayardaki aynı aramalar çalıştı. Bu nedenle hostedDiscovery varsayılan kapalıdır; Nuvio ayarına önerilen açık servis diye sunulmaz. Köprünün dosyaya erişebilmesi, sağlayıcı sayfasını tarayabilmesiyle aynı şey değildir. Boş servis yanıtı doğrudan aramayı durdurmaz.
 
-Yalnız film desteği vardır. Resmî oynatıcı sayfasının kullandığı herkese açık `/api/movie/{tmdbId}` → kısa ömürlü embed → master playlist akışı okunur; HTML scriptleri çalıştırılmaz. Embed başlığı özgün başlıkla karşılaştırılır. Master'da Türkçe varsa bağlı altyazı playlisti okunur; tek parça VTT ayrıca dış altyazı olarak sunulur.
+## Kaynak ve yayın
 
-Master URL'si uzantısız olduğu için Nuvio'nun indirme filtresiyle uyumlu `/hls/vix/movie/{id}/{auto|yükseklik}.m3u8` yolu kullanılır. Servis yalnız küçük master metnini sunar. Audio/video alt playlistleri ve segmentleri kaynak sunucuda kalır; bütün video proxy'lenmez. HLS hiçbir zaman indirilebilir sayılmaz. Gerçek varyantlar seçilir; farklı çözünürlük profilleri bağımsız sağlayıcı olarak tanıtılmaz. Playlistteki çözünürlük beyanı konteynerden doğrulanmış piksel boyutu değildir.
-
-## Derleme
-
-Sites Worker ESM starter'ının `dist/server/index.js` + `dist/.openai/hosting.json` çıktı düzeni kullanılır. Windows için aynı deterministik çıktı Node/esbuild ile üretilir; Bash gerekmez. Statik dosyalar Worker'a base64 olarak gömülür ve aynı URL/MIME ile sunulur.
+Kimlik download-bridge/.openai/hosting.json içinde: appgprj_6ade5021d6b88191818ece53a5d5f1e0. Aynı Site kimliğini koruyun. Worker kaynak dosyası hosting/worker.mjs; src/ ortak modülleri kullanılır. Sites Worker ESM düzeni dist/server/index.js + dist/.openai/hosting.json. Script Windows Node/esbuild ile aynı düzeni üretir.
 
 ```powershell
 npm run check
-# plugin-host/public içine index.html, manifest, provider ve ZIP hazırlanır.
-# src/ ve hosting/worker.mjs yayın checkout'una kopyalanır.
-# Kimlik korunur; hosting.json içindeki static alanı kaldırılır.
-npm run build:host
+# src/ ve hosting/worker.mjs dosyalarını mevcut download-bridge checkout'una kopyala.
+node scripts/build-host.mjs download-bridge
+npm run test:live:bridge
 ```
 
-Paketleme/yayın Sites source helper ile aynı project_id üzerinde yapılmalıdır; başka Site oluşturmayın. Bu projenin barındırmasını değiştiren bir fork, `src/hosted.cjs` içindeki servis origin'ini de kendi servis adresine uyarlamalıdır. Yayın yardımcılarına erişim tokenları yalnız gizli stdin ile verilir.
+Source helper açma → aynı kimlikle exact commit push/arşiv → saved version → deploy akışı kullanılır. Gizli bilgiler yalnız stdin; public repoya kayıt/token konmaz. Son native yayın ve sınırlı ağ doğrulama kanıtı compatibility/download-bridge-publication.json içinde tutulur.
 
-## Sınırlar
+## Senkron ve cihaz sınırı
 
-Sunucu bütçesi 13 saniye, telefon iş akışının mantıksal bütçesi 24 saniyedir. Başlamış native TMDB veya kişisel kaynak isteğinin fiilî iptali hâlâ Nuvio'ya bağlıdır. Başarılı videolar altyazı başarısızlığında korunur; “TR bulunamadı” olarak etiketlenir. Fiziksel iPhone oynatımı, arka plan indirme ve çevrimdışı altyazı kabul testi kullanıcıyla ayrıca doğrulanmalıdır.
+Bu köprü ses/altyazı senkronu ölçmez. Nuvio plugin ABI’sinde offset yok. iOS otomatik senkron motoru uygulanmadı. Tam video/indirme, codec ve uçak modunda Türkçe seçim testi fiziksel iPhone'da yapılmadı. 24 saniye JS bütçesi native iPhone dönüş garantisi değildir.
+
+Geçici kayıt kaybolduğunda bağlantıdaki public imzalı kaynak parametresi kullanılır: SHA-256 yoluyla eşleşmeli, izinli R2/signature biçimi ve gerçek konteyner yeniden doğrulanmalıdır. Böylece cache silinmesi tek başına linki bozmaz; imzanın sona ermesi hâlâ yeniden arama gerektirir. Ephemeral URL içeren tam linkler rapora/commit’e konmaz.

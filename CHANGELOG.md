@@ -1,5 +1,17 @@
 # Değişiklik günlüğü
 
+## 1.4.0 — 25 Ekim 2026
+
+- Yalnız ücretsiz/hesapsız kapsam. HDHub/HubCloud public FSL → R2 adaptörü, TMDB/özgün başlık/yıl doğrulaması ve üç küçük aday önceliği.
+- Presigned GET bağlantısında HEAD 403 yüzünden yanlış eleme giderildi; sınırlı GET Range ile gerçek konteyner/boyut/piksel okunur.
+- Ayrı public dosya köprüsü, uzantısız doğrulanmış MKV/MP4 için doğru adlı yönlendirme, yerel HEAD metadata ve süreli kayıt. Tam video barındırılmaz.
+- Bulut sağlayıcı sayfalarında 403 görüldü; arama telefonda kalır. Public dosya URL’si ve kanonik metadata köprüye gider; kişisel katalog/anahtar gönderilmez.
+- HLS çözünürlük profilleri ve bitrate × süre yaklaşık aktarım boyutu; açık kanıt/tahmin ayrımı, HLS indirilemez.
+- Dengeli altyazı varsayılanı aynı filmden belirsiz alternatifleri de sunar; yanlış film/yıl/kurgu korunur. Bozuk altyazı diğer geçerli seçenekleri çökertmez.
+- Otomatik zaman kaydırması uygulanmadı. iOS AutoSync ve plugin offset alanı yok; fiziksel telefon/tam film indirme testi henüz yapılmadı.
+- Yeni fixture, köprü kayıt/yönlendirme, HLS metadata testleri; Türkçe rehber ve hafıza güncellemesi.
+
+
 ## 1.3.0 — 25 Ekim 2026
 
 - Dağıtım: Kullanıcı yeni `burhanb3/nuvio-tr-hd` GitHub deposunu istedi; sa deposuna yazılmadı. Eski Sites hesabına erişim kaybolduğundan Worker üretime yayımlanmadı. GitHub Pages sürümü kaynakları doğrudan arar; ortak servis kapalıdır. Aşağıdaki Worker/cache maddeleri hazırlanmış isteğe bağlı koddur, canlı özellik değildir.

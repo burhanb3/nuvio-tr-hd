@@ -1,0 +1,75 @@
+[
+  {
+    "checkedAt": "2026-10-25T19:16:42.112Z",
+    "version": "1.4.0",
+    "target": {
+      "tmdbId": 969681,
+      "type": "movie",
+      "originalTitle": "Spider-Man: Brand New Day",
+      "year": 2026,
+      "imdbId": "tt22084616",
+      "runtimeMinutes": 145
+    },
+    "elapsedMs": 4612,
+    "metadata": "fixed known TMDB reference; local source discovery and live public bridge registration",
+    "candidates": 3,
+    "registered": 3,
+    "files": [
+      {
+        "source": "4KHDHub / HubCloud",
+        "filename": "Spider-Man.Brand.New.Day.2026.REPACK.1080p.AMZN.WEB-DL.Multi.DDP5.1.AV1-4kHdHub.Com.mkv"
+      },
+      {
+        "source": "4KHDHub / HubCloud",
+        "filename": "Spider-Man.Brand.New.Day.2026.REPACK.1080p.AMZN.WEB-DL.Multi.DDP5.1.Atmos.DV.HDR.H.265-4kHdHub.Com.mkv"
+      },
+      {
+        "source": "4KHDHub / HubCloud",
+        "filename": "Spider-Man.Brand.New.Day.2026.REPACK.1080p.iTunes.WEB-DL.Multi.DDP5.1.Atmos.H.265-4kHdHub.Com.mkv"
+      }
+    ],
+    "deviceTest": "not-run",
+    "fullPlayback": "not-run",
+    "fullDownload": "not-run",
+    "downloadAliasCheck": {
+      "headStatus": 200,
+      "headSize": 2830708974,
+      "headMime": "video/x-matroska",
+      "rangeStatus": 206,
+      "contentRange": "bytes 0-131071/2830708974",
+      "bytesRead": 131072,
+      "container": "mkv",
+      "dimensions": {
+        "width": 1920,
+        "height": 800
+      },
+      "redirected": true
+    },
+    "repeatedRegistration": {
+      "registered": 3
+    }
+  },
+  {
+    "checkedAt": "2026-10-25T19:16:50.386Z",
+    "version": "1.4.0",
+    "target": {
+      "tmdbId": 438631,
+      "type": "movie",
+      "originalTitle": "Dune",
+      "year": 2021,
+      "imdbId": "tt1160419",
+      "runtimeMinutes": 155
+    },
+    "elapsedMs": 4519,
+    "metadata": "fixed known TMDB reference; local source discovery and live public bridge registration",
+    "candidates": 0,
+    "registered": 0,
+    "files": [],
+    "deviceTest": "not-run",
+    "fullPlayback": "not-run",
+    "fullDownload": "not-run",
+    "repeatedRegistration": {
+      "registered": 0
+    }
+  }
+]

@@ -53,8 +53,11 @@ async function loadSubtitles(http, candidate, target, allowHttp, options = {}) {
     let match = sub._match;
     if (match?.requireDuration) {
       const last = lastCueSeconds(text), duration = options.videoDuration;
-      if (!(duration > 0 && last / duration >= 0.9 && last / duration <= 1.01 && Math.abs(duration - last) <= 420)) return null;
-      match = { score: 65, label: 'Süre uyumu; senkron doğrulanmadı' };
+      const close = duration > 0 && last / duration >= 0.9 && last / duration <= 1.01 && Math.abs(duration - last) <= 420;
+      if (close) match = { score: 65, label: 'Süre uyumu; senkron doğrulanmadı' };
+      else if (match.allowFilmFallback && duration > 0 && last / duration >= 0.75 && last / duration <= 1.03)
+        match = { score: 35, label: 'Aynı film; sürüm/senkron belirsiz' };
+      else return null;
     }
     const label = match ? ` · ${match.label}` : '';
     const release = String(sub.releaseName || sub.subtitleFileName || sub.title || sub.movieReleaseName || sub.name || 'Alternatif altyazı')
@@ -68,7 +71,7 @@ async function loadSubtitles(http, candidate, target, allowHttp, options = {}) {
   });
   // Same payload mirrored at two URLs is one subtitle, not two choices.
   const contents = new Set();
-  return tracks.filter(t => { if (contents.has(t._contentKey)) return false; contents.add(t._contentKey); return true; })
+  return tracks.filter(t => { if (!t || contents.has(t._contentKey)) return false; contents.add(t._contentKey); return true; })
     .map(({ _contentKey, ...track }) => track);
 }
 

@@ -1,6 +1,6 @@
 {
   "name": "nuvio-tr-hd",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "private": true,
   "description": "Nuvio KMP için kişisel MP4/MKV ve Türkçe altyazı sağlayıcısı",
   "license": "MIT",
@@ -13,6 +13,7 @@
     "verify:upstream": "node scripts/verify-upstream.mjs",
     "test:live": "node scripts/test-live.mjs",
     "test:live:pipeline": "node scripts/test-pipeline-live.mjs",
+    "test:live:bridge": "node scripts/test-bridge-live.mjs",
     "serve:example": "node scripts/example-server.mjs"
   },
   "devDependencies": {

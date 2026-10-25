@@ -1,31 +1,31 @@
 # Nuvio TR HD
 
-Nuvio Mobile'ın Kotlin Multiplatform **Full** sürümü için JavaScript sağlayıcı deposu. Film seçildiğinde birden çok gerçek kaynağı otomatik tarar, MP4/MKV bağlantılarını doğrular ve her video için mevcut Türkçe altyazıları arayıp eşleştirir. En uygun video–altyazı çiftlerini üstte sunar. Varsayılan üst sınır **20**, çözünürlük filtresi **Tümü**. İstenirse 6/10 seçilebilir. Sürüm **1.3.0**.
+Nuvio Mobile'ın Kotlin Multiplatform **Full** sürümü için JavaScript sağlayıcı deposu. Film seçildiğinde birden çok gerçek kaynağı otomatik tarar, MP4/MKV bağlantılarını doğrular ve her video için mevcut Türkçe altyazıları arayıp eşleştirir. En uygun video–altyazı çiftlerini üstte sunar. Varsayılan üst sınır **20**, çözünürlük filtresi **Tümü**. İstenirse 6/10 seçilebilir. Sürüm **1.4.0**.
 
 **25 Ekim 2026 uyumluluk kontrolü:** `0.6.4-beta` ve güncel `cmp-rewrite` dalının ilgili kaynak sözleşmeleri karşılaştırıldı. Derlenmiş sağlayıcı gerçek QuickJS WASM motorunda test edilir. Fiziksel Android/iOS cihazında oynatma ve indirme testi henüz yapılmadı. Ayrıntılar: [uyumluluk raporu](docs/UYUMLULUK.md).
 
-Bu depo medya barındırmaz. VixSrc, Internet Archive ve PlayIMDb yerleşiktir; DahmerMovies deneysel yerel yedektir ve varsayılan kapalıdır. JSON/Stremio adresi girmek zorunlu değildir. Kişisel JSON ve Stremio kaynakları ek alternatif olarak korunmuştur. Her film için erişilebilir HD dosya veya uygun Türkçe altyazı bulunması garanti değildir; başarısız/engelli kaynaklar atlanır.
+Bu depo medya barındırmaz. 4KHDHub/HubCloud, VixSrc, Internet Archive ve PlayIMDb yerleşiktir; DahmerMovies deneysel yerel yedektir ve varsayılan kapalıdır. JSON/Stremio adresi girmek zorunlu değildir. Kişisel JSON ve Stremio kaynakları ek alternatif olarak korunmuştur. Her film için erişilebilir HD dosya veya uygun Türkçe altyazı bulunması garanti değildir; başarısız/engelli kaynaklar atlanır.
 
 ## Otomatik çalışma
 
 1. Nuvio'nun verdiği TMDB ID ile özgün başlık, yıl, IMDb kimliği ve film süresi alınır.
 2. Yerleşik sağlayıcılar sınırlı paralellikle taranır; ek JSON/Stremio kaynakları varsa aynı havuza katılır. Başlık/yıl uyuşmazlığı ve fragmanlar elenir.
-3. Dosyaların gerçek MP4/MKV yapısı, video piksel boyutları ve mümkünse süresi okunur. Dosya adındaki kalite yalnız aday seçimine yardımcı olabilir; sonuç kalitesi konteynerden doğrulanır.
+3. Dosyaların gerçek MP4/MKV yapısı, video piksel boyutları ve mümkünse süresi okunur. Konteyner okunamazsa dosya adındaki kalite yalnız açıkça etiketlenmiş tahmindir. HLS çözünürlükleri oynatma listesinden, yaklaşık aktarım boyutu bitrate × süreden gelir; gerçek dosya ölçümüyle karıştırılmaz.
 4. Her dosya için OpenSubtitles hash'i hesaplanabildiğinde hesaplanır; Türkçe altyazı servislerine film/bölüm ve dosya bilgileriyle sorgu yapılır. Video URL'si altyazı servisine gönderilmez.
-5. Altyazılar **hash → tam sürüm → kaynakla eşlenmiş → sürüm benzerliği → gerçek video süresiyle uyum** sırasıyla değerlendirilir. Süre/sürüm benzerliği, sesle doğrulanmış senkron değildir ve arayüzde açıkça belirtilir. Farklı film/yıl/bölüm ve açıkça farklı extended/director's cut sürümleri elenir.
+5. Altyazılar **hash → tam sürüm → kaynakla eşlenmiş → sürüm benzerliği → süre uyumu → aynı filmden belirsiz alternatif** sırasıyla değerlendirilir. Süre/sürüm benzerliği, sesle doğrulanmış senkron değildir ve arayüzde açıkça belirtilir. Farklı film/yıl/bölüm ve açıkça farklı extended/director's cut sürümleri elenir.
 6. İndirilebilir dosya, güçlü Türkçe eşleşmesi, doğrulanmış çözünürlük ve makul dosya boyutu öne alınır. Kaynaklar dengeli taranır; tek sağlayıcı tüm aday kotasını tüketmez.
 
-Varsayılanlar: otomatik tarama ve Türkçe altyazı araması açık; çözünürlük filtresi Tümü; Türkçe altyazısız videolar TR bulunamadı etiketiyle görünür; **HLS çevrimiçi alternatifleri açık**. Dosyalar önce, HLS yalnız oynatma etiketiyle sonra gelir. Çözünürlük okunamazsa **Bilinmiyor** yazılır. İstenirse ayarlardan kaynaklar ayrı kapatılabilir, düşük kalite veya altyazısız sonuçlar gösterilebilir.
+Varsayılanlar: otomatik tarama ve Türkçe altyazı araması açık; çözünürlük filtresi Tümü; Türkçe altyazısız videolar TR bulunamadı etiketiyle görünür; **HLS çevrimiçi alternatifleri açık**. Dosyalar önce, HLS yalnız oynatma etiketiyle sonra gelir. Çözünürlük okunamazsa mevcut dosya adı ipucu tahmin diye sunulur; hiçbir kanıt yoksa eksik bilgi açık kalır. İstenirse ayarlardan kaynaklar ayrı kapatılabilir, düşük kalite veya altyazısız sonuçlar gösterilebilir.
 
 **Altı sonuç Nuvio'nun sınırı değildir.** Bu eklentinin ayarlanabilir liste sınırıdır. Arka planda en çok 40 video adayı için kaynak başına eşit kota ayrılır. Sonuç sayısını 20 seçmek yeni sağlayıcı eklemez. Mantıksal süre bütçesi 24 saniyedir; başlamış native ağ isteklerinin bitişi ayrıca Nuvio'ya bağlıdır.
 
-**1.3.0'a geçiş:** GitHub Pages manifestini yeni depo olarak ekleyin ve eski Sites kopyasını kapatın. Nuvio Pluginler ekranında depoyu yenileyin/güncelleyin ve sağlayıcı sürümünün **1.3.0** olduğunu kontrol edin. Önceden kaydedilmiş HLS kapalı ayarı değişmez; Dune gibi çevrimiçi alternatifler için sağlayıcı ayarındaki **HLS çevrimiçi izleme alternatiflerini göster** seçeneğini açın. Yenileme yoksa aynı depoyu kaldırıp yeniden eklemek yerel sağlayıcı ayarlarını sıfırlayabilir.
+**1.4.0'a geçiş:** GitHub Pages manifestini yeni depo olarak ekleyin ve eski Sites kopyasını kapatın. Nuvio Pluginler ekranında depoyu yenileyin/güncelleyin ve sağlayıcı sürümünün **1.4.0** olduğunu kontrol edin. Önceden kaydedilmiş HLS kapalı ayarı değişmez; Dune gibi çevrimiçi alternatifler için sağlayıcı ayarındaki **HLS çevrimiçi izleme alternatiflerini göster** seçeneğini açın. Yenileme yoksa aynı depoyu kaldırıp yeniden eklemek yerel sağlayıcı ayarlarını sıfırlayabilir.
 
 Dune (2021) / Spider-Man denemesi, uzun bekleme düzeltmesi ve sonuçların sınırları: [sorun giderme](docs/SORUN_GIDERME.md).
 
-**GitHub yayını doğrudan çalışır.** Hesap/çalışma alanı değiştiğinden eski Sites adresindeki 1.2.0 güncellenemedi. Sunucuya bağımlı kalmamak için VixSrc doğrudan adaptörü eklendi. **Ortak tarama kapalı** varsayılandır; kaynaklar telefondan aranır. Türkçe bulunamazsa çalışan video silinmez. İsteğe bağlı ortak tarama/önbellek Worker kodu depodadır; ayrı yayınlanmadan canlı özellik sayılmaz. [Sunucu kodu ve sınırlar](hosting/README.md).
+**Kaynaklar telefondan aranır; dosya köprüsü varsayılan açıktır.** Yeni public köprü yalnız bulunan imzalı R2 dosyasını sınırlı GET aralığıyla doğrular ve `.mkv` / `.mp4` adını koruyan yönlendirme verir. Video doğrudan kaynaktan gelir. Bulut IP’sine kaynak sayfaları 403 verdiğinden tam ortak tarama varsayılan kapalı tutulur. Kişisel kataloglar/anahtarlar gönderilmez; bu public dosya adresi ve film metadatası köprüye gider. [Servis ve sınırlar](hosting/README.md).
 
-Eski kayıtlı tercihler taşınırsa **Tümü / 20 / HLS açık / Ortak tarama kapalı / DahmerMovies kapalı** seçin. Yeni altyazı politikası Türkçeyi tercih eder; gerekirse sıkı mod seçilebilir.
+Eski kayıtlı tercihler taşınırsa **Tümü / 20 / HLS açık / MKV dosya köprüsü açık / DahmerMovies kapalı** seçin. Yeni altyazı politikası Türkçeyi tercih eder; gerekirse sıkı mod seçilebilir.
 
 Kaynak ve eşleştirme ayrıntıları: [otomatik sistem rehberi](docs/OTOMATIK_KAYNAKLAR.md).
 
@@ -56,7 +56,7 @@ Plugin kurulumu, Nuvio'nun **Addons** ekranına yapılan bir Stremio kurulumunda
 3. **Actions → Manifesti GitHub Pages üzerinde yayınla → Run workflow** çalıştırın.
 4. İşlem bittiğinde deployment adresinin sonuna `/manifest.json` ekleyin. Sağlayıcı URL'si bu manifestin bulunduğu kökten çözülür; dosya adını değiştirmeyin.
 
-Pages işlemi elle başlatılır ve testler geçince yalnızca `dist/` içeriğini yayınlar. Doğrudan ham manifest kurulumu Pages gerektirmez. Kataloglarınızın herkese açık olması gerekmez; fakat telefonunuz bunlara ulaşabilmelidir. İmzalı URL ve kişisel erişim bilgilerini herkese açık depoya koymayın. Pages'in ücretsiz/genel kullanımını özel medya saklama alanı gibi değerlendirmeyin.
+Pages işlemi varsayılan yayın dalına push ile veya elle başlatılır ve testler geçince yalnızca `dist/` içeriğini yayınlar. Doğrudan ham manifest kurulumu Pages gerektirmez. Kataloglarınızın herkese açık olması gerekmez; fakat telefonunuz bunlara ulaşabilmelidir. İmzalı URL ve kişisel erişim bilgilerini herkese açık depoya koymayın. Pages'in ücretsiz/genel kullanımını özel medya saklama alanı gibi değerlendirmeyin.
 
 ### Bilgisayarınızdan yerel deneme
 
@@ -101,12 +101,12 @@ Stremio kaynağında `stream` kaynağı gerekir. `meta` sağlanıyorsa orijinal 
 
 - MP4 `ftyp`/konteyner yapısı, MKV EBML `DocType=matroska` kontrol edilir. HTML hata sayfası, sahte uzantı, 403/404, bozuk JSON, hatalı byte range ve zaman aşımı sonucu atlanır.
 - Video boyutları MP4 `moov/trak/tkhd` + video handler veya MKV video track `PixelWidth/PixelHeight` alanlarından okunur. MP4 başında bulunamazsa en çok 256 KiB kuyruk aralığı da denenir. Dosya adındaki `1080p/2160p` kalite kanıtı sayılmaz.
-- Kalite etiketi gerçek kısa kenara göre konservatif hesaplanır. Örneğin `1920×800`, `720p` etiketiyle birlikte tam piksel boyutuyla gösterilir. Okunamayan çözünürlük **Bilinmiyor** kalır.
+- Kalite etiketi gerçek kısa kenara göre konservatif hesaplanır. Örneğin `1920×800`, `720p` etiketiyle birlikte tam piksel boyutuyla gösterilir. Okunamayan çözünürlükte dosya adı ipucu yalnız **tahmin** olarak yazılır; hiçbir kanıt yoksa eksik bilgi açık bırakılır.
 - Kontrol ilk 128 KiB + gerekirse son 256 KiB üzerinden yapılır; tam dosya çözme, görsel kalite, codec/HDR/DRM veya dosyanın tümünün sağlam olduğu garantisi değildir. İndirme kullanılabilirliği sunucunun erişim/süre sınırlarına da bağlıdır.
 - HLS çevrimiçi alternatifleri varsayılan açıktır ve `HLS · Online izlenebilir · İndirilemez` adıyla gelir; doğrudan dosya denmez. Yalnız indirilebilir dosya istiyorsanız HLS ayarını kapatın. Uzantısız HLS, Nuvio'nun indirme filtresine takılmayabileceği için hiç döndürülmez. DASH desteklenmez.
-- MKV URL'sinin son yolu `.mkv` olmalıdır; Nuvio uzantısız URL'yi `.mp4` adıyla kaydedebildiğinden uzantısız MKV elenir.
+- MKV URL’si `.mkv` ile bitmelidir. Yeni köprü doğrulanmış public R2 dosyalarına bu adı sağlar. Köprü kapalıysa uzantısız MKV, yanlış adla kaydetmeyi önlemek için elenir.
 - Harici altyazı Türkçe ve UTF-8 olmalı; SRT/VTT gövdesi doğrulanır. OpenSubtitles gibi `/sub.vtt/` ve uzantısız indirme uçları da gövde incelemesiyle desteklenir. Video başlıkları altyazı sunucusuna otomatik aktarılmaz. Türkçe altyazı, Türkçe ses anlamına gelmez.
-- Hash ve sürüm eşleşmesi güçlü kanıttır; sürüm benzerliği veya süre uyumu tam senkron garantisi değildir. Nuvio'nun desteklediği platformlarda isteğe bağlı otomatik altyazı senkronu ayrıca kullanılabilir.
+- Hash ve sürüm eşleşmesi güçlü kanıttır; sürüm benzerliği veya süre uyumu tam senkron garantisi değildir. Nuvio AutoSync yalnız Android dahili ExoPlayer yolunda, kullanılabilir gömülü referans altyazıyla çalışır; iPhone’da bu özellik yoktur. Plugin ABI’si zaman kaydırma alanı sağlamaz.
 
 Nuvio plugin sonuç şemasında bir `downloadable` anahtarı yoktur. Bu proje desteklenmeyen bir bayrak uydurmaz; dosya türünü ve doğrulama durumunu sonuç adında gösterir. Son indirme ve oynatma davranışını uygulama belirler.
 
@@ -117,6 +117,7 @@ npm run check
 npm run verify:upstream
 npm run test:live
 npm run test:live:pipeline
+npm run test:live:bridge
 ```
 
 `npm run build`, modülleri Node bağımlılığı olmayan tek CommonJS sağlayıcısına paketler. `providers/nuvio-tr-hd.js` depoda tutulur; uygulama kaynak modüllerini ayrı ayrı yüklemez. `dist/` her derlemede temizlenen yayın paketidir. Normal testler ağsızdır; `test:live` gerçek servislerde metadata, sınırlı video aralıkları ve altyazı gövdelerini denetler, tam film indirmez. Canlı kontrolün dış servisler yüzünden başarısız olması fixture testinden ayrı raporlanır.

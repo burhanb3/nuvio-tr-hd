@@ -1,0 +1,31 @@
+'use strict';
+const { qualityLabel } = require('../util.cjs');
+
+function filenameQuality(filename) {
+  const match = String(filename || '').match(/(?:^|[^0-9])(4320|2160|1440|1080|720|576|480|360|240)p\b/i);
+  if (match) return Number(match[1]) + 'p';
+  return /(?:^|[ ._-])4k(?:[ ._-]|$)/i.test(String(filename)) ? '2160p' : null;
+}
+function describeQuality(video, candidate) {
+  if (video.dimensions) return { quality: qualityLabel(video.dimensions), text: `${video.dimensions.width}×${video.dimensions.height} · dosyadan doğrulandı` };
+  const options = video.resolutionOptions || [];
+  if (options.length) {
+    const labels = [...new Set(options.map(d => `${d.width}×${d.height}`))];
+    return { quality: qualityLabel(options[options.length - 1]), text: `${labels.join(' / ')} · HLS listesi${labels.length > 1 ? '; otomatik kalite' : ''}` };
+  }
+  const hint = filenameQuality(candidate.filename) || filenameQuality(candidate.claimedQuality);
+  if (hint) return { quality: hint, text: `${hint} tahmini · dosya adı; piksel ölçülmedi` };
+  return { quality: 'Bilinmiyor', text: 'Kalite bilgisi alınamadı' };
+}
+function humanBytes(bytes) {
+  return bytes >= 1024 ** 3 ? `${(bytes / 1024 ** 3).toFixed(2)} GiB` : `${(bytes / 1024 ** 2).toFixed(1)} MiB`;
+}
+function describeSize(video) {
+  if (video.size > 0) return { size: `${(video.size / 1024 ** 2).toFixed(1)} MiB`, text: `${humanBytes(video.size)} · dosya boyutu` };
+  if (video.sizeEstimate?.minimum > 0 && video.sizeEstimate.maximum >= video.sizeEstimate.minimum) {
+    const estimate = video.sizeEstimate, range = humanBytes(estimate.minimum) + (estimate.maximum > estimate.minimum * 1.02 ? '–' + humanBytes(estimate.maximum) : '');
+    return { size: `~${range} veri`, text: `~${range} veri · bitrate × ${estimate.durationSource === 'playlist' ? 'akış süresi' : 'film süresi'} tahmini` };
+  }
+  return { text: video.container === 'hls' ? 'Aktarım boyutu hesaplanamadı' : 'Dosya boyutu alınamadı' };
+}
+module.exports = { filenameQuality, describeQuality, describeSize };

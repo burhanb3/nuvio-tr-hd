@@ -1,0 +1,42 @@
+{
+  "checkedAt": "2026-10-25T19:19:22.598Z",
+  "version": "1.4.0",
+  "projectId": "appgprj_6ade5021d6b88191818ece53a5d5f1e0",
+  "origin": "https://nuvio-tr-hd-download-bridge.kamilbsr03.chatgpt.site",
+  "access": "public",
+  "authenticated": false,
+  "sourceCommit": "cd9684945777c66b4d3d9a7076c2f146f1463a19",
+  "savedVersion": "appgprj_6ade5021d6b88191818ece53a5d5f1e0~appgver_33d007e6f88c819189a2db3a5230c3ff",
+  "deploymentId": "appgdep_6ade5582fc088191ac136763e93ab3ea",
+  "nativeStatus": "succeeded",
+  "mode": "phone source discovery; public signed R2 registration and filename-preserving redirect; cloud source discovery disabled by default",
+  "checks": {
+    "health": {
+      "status": 200,
+      "version": "1.4.0",
+      "discovery": true,
+      "cacheSeconds": 180
+    },
+    "signedFile": {
+      "headStatus": 200,
+      "headSize": 2830708974,
+      "headMime": "video/x-matroska",
+      "rangeStatus": 206,
+      "contentRange": "bytes 0-131071/2830708974",
+      "bytesRead": 131072,
+      "container": "mkv",
+      "dimensions": {
+        "width": 1920,
+        "height": 800
+      },
+      "redirected": true
+    },
+    "repeatedRegistration": {
+      "registered": 3
+    }
+  },
+  "cacheNote": "Cache is best effort. Alias includes public signed source in query; cold isolate checks digest, allowed R2/signature form and real container before redirect.",
+  "deviceTest": "not-run",
+  "fullPlayback": "not-run",
+  "fullDownload": "not-run"
+}

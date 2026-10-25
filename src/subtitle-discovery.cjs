@@ -40,7 +40,9 @@ function scoreSubtitle(sub, candidate, video, target, allowLoose = false) {
   if (hasReleaseDetail && b && (a === b || (' ' + b + ' ').includes(' ' + a + ' '))) return { score: 95, label: 'Tam sürüm eşleşmesi' };
   if (!sub._scope || sub._scope === 'paired') return { score: 90, label: 'Kaynakla eşlenmiş' };
   const title = normalizeTitle(target.originalTitle);
-  if (!b.startsWith(title + ' ')) return allowLoose ? { score: 30, label: 'Film eşleşmesi; senkron belirsiz' } : null;
+  // A looser release match must still be this film. The title-scoped IMDb
+  // request is not permission to merge an explicitly different title/year.
+  if (b !== title && b !== titleYear && !b.startsWith(titleYear + ' ')) return null;
   const family = sourceFamily(file);
   if (family && family === sourceFamily(name)) {
     const ignore = new Set((title + ' ' + target.year).split(' '));
@@ -49,7 +51,7 @@ function scoreSubtitle(sub, candidate, video, target, allowLoose = false) {
     const common = [...x].filter(w => y.has(w)).length;
     if (common >= 2) return { score: Math.min(85, 70 + common * 2), label: 'Sürüm benzerliği; senkron kontrolü önerilir' };
   }
-  if (video.duration > 60) return { score: 50, label: 'Film eşleşmesi; süre kontrolü bekleniyor', requireDuration: true };
+  if (video.duration > 60) return { score: 50, label: 'Film eşleşmesi; süre kontrolü bekleniyor', requireDuration: true, ...(allowLoose ? { allowFilmFallback: true } : {}) };
   return allowLoose ? { score: 35, label: 'Film eşleşmesi; senkron belirsiz' } : null;
 }
 function decodeFilename(url) {

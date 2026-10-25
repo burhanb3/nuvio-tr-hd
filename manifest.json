@@ -1,13 +1,13 @@
 {
   "name": "Nuvio TR HD",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Otomatik çoklu kaynak tarama, doğrulanmış MP4/MKV ve kaynak başına Türkçe altyazı eşleştirme.",
   "author": "Nuvio TR HD",
   "scrapers": [
     {
       "id": "nuvio-tr-hd",
       "name": "Nuvio TR HD",
-      "version": "1.3.0",
+      "version": "1.4.0",
       "description": "Otomatik kaynak ve Türkçe altyazı araması; ek JSON/Stremio kaynakları isteğe bağlıdır.",
       "filename": "providers/nuvio-tr-hd.js",
       "supportedTypes": ["movie", "tv"],

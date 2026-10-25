@@ -3,9 +3,31 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { getQuickJS } from 'quickjs-emscripten';
 import helpers from './helpers.cjs';
+import {createRequire} from 'node:module';
+const require=createRequire(import.meta.url);
+const {SERVICE_ORIGIN}=require('../src/hosted.cjs');
 
-const { makeFixture, responseFor, identity } = helpers;
+const { makeFixture, responseFor, identity, target, mkv } = helpers;
 const bundle = await readFile(new URL('../providers/nuvio-tr-hd.js', import.meta.url), 'utf8');
+
+test('QuickJS HDHub public zincirini çözer; köprü adı ve gerçek MKV piksel/boyutu korunur', async () => {
+  const file='https://bucket.r2.cloudflarestorage.com/object?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Signature='+'a'.repeat(64);
+  const alias=SERVICE_ORIGIN+'/files/'+'b'.repeat(64)+'.mkv?source='+encodeURIComponent(file);
+  const enc=s=>Buffer.from(s).toString('base64');
+  const packed=enc(JSON.stringify({o:enc('https://hubcloud.example/file')})).replace(/[A-Za-z]/g,c=>String.fromCharCode(c.charCodeAt(0)+(c.toLowerCase()<='m'?13:-13)));
+  const fixture=makeFixture({extra:{
+    'https://4khdhub.one/?s=The%20Matrix':{body:'<a href="https://4khdhub.one/matrix/">The Matrix (1999)</a>'},
+    'https://4khdhub.one/matrix/':{body:`<script>var defaultVideoId='603'</script><script type="application/ld+json">{"@type":"Movie","name":"The Matrix","datePublished":"1999-03-31"}</script><div class="download-item"><div class="file-title">The.Matrix.1999.WEB-DL.mkv</div><a href="https://greenmotors.club/example">Download HubCloud</a></div>`},
+    'https://greenmotors.club/example':{body:`s('o','${enc(enc(packed))}')`},
+    'https://hubcloud.example/file':{body:'var url="https://gamerxyt.com/hubcloud.php?token=example"'},
+    'https://gamerxyt.com/hubcloud.php?token=example':{body:`<a href="${file.replaceAll('&','&amp;')}">FSL Server</a>`},
+    [SERVICE_ORIGIN+'/api/files']:{json:{schema:1,target,files:[{url:file,downloadAlias:alias}]}},
+    [file]:{body:mkv(1920,800),headStatus:403}
+  }});
+  const streams=await runInQuickJs(fixture,{settings:{autoSubtitles:false,archiveEnabled:false,playImdbEnabled:false,vixsrcEnabled:false}});
+  assert.equal(streams.length,1);assert.equal(streams[0].url,alias);assert.match(streams[0].name,/1920×800 · dosyadan doğrulandı/);
+  assert.match(streams[0].name,/İndirilebilir/);assert.equal(streams[0].type,'mkv');assert.ok(streams[0].size);
+});
 
 async function runInQuickJs(fixture, { settings, args = ['603', 'movie'], invokeSettings = false, nativeTimers = false } = {}) {
   const engine = await getQuickJS();
@@ -35,8 +57,9 @@ async function runInQuickJs(fixture, { settings, args = ['603', 'movie'], invoke
     setHost('__fixture_fetch', (url, options) => vm.newString(JSON.stringify(responseFor(fixture, vm.getString(url), JSON.parse(vm.getString(options))))));
     setHost('__fixture_parse_url', url => {
       const parsed = new URL(vm.getString(url));
-      return vm.newString(JSON.stringify({ href: parsed.href, protocol: parsed.protocol, hostname: parsed.hostname, origin: parsed.origin }));
+      return vm.newString(JSON.stringify({ href: parsed.href, protocol: parsed.protocol, hostname: parsed.hostname, origin: parsed.origin, pathname: parsed.pathname, search: parsed.search, hash: parsed.hash, params: Object.fromEntries(parsed.searchParams) }));
     });
+    setHost('__fixture_atob', value => vm.newString(Buffer.from(vm.getString(value),'base64').toString('latin1')));
     setHost('__set_timer', (callback, delay) => {
       const id = ++timerId;
       const fn = callback.dup();
@@ -60,7 +83,10 @@ async function runInQuickJs(fixture, { settings, args = ['603', 'movie'], invoke
       globalThis.TMDB_API_KEY = 'test';
       globalThis.setTimeout = (fn, ms) => __set_timer(fn, ms);
       globalThis.clearTimeout = id => __clear_timer(id);
-      globalThis.URL = function(url) { Object.assign(this, JSON.parse(__fixture_parse_url(url))); };
+      globalThis.URL = function(url) { Object.assign(this, JSON.parse(__fixture_parse_url(url))); this.searchParams = {get: key => this.params[key] ?? null}; };
+      // These read-only fields/base64 operations also exist in Nuvio's locked
+      // JsBindings.kt. No Node or browser object is exposed to plugin code.
+      globalThis.atob = value => __fixture_atob(value);
       globalThis.fetch = async function(url, options) {
         var result = JSON.parse(__fixture_fetch(url, JSON.stringify(options || {})));
         return { status: result.status, ok: result.status >= 200 && result.status < 300, url: result.url,

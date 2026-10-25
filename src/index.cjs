@@ -1,7 +1,7 @@
 'use strict';
 const { createHttp } = require('./http.cjs');
 const { createScheduler } = require('./scheduler.cjs');
-const { loadHosted } = require('./hosted.cjs');
+const { loadHosted, registerDownloads } = require('./hosted.cjs');
 const { resolveIdentity } = require('./matching.cjs');
 const { loadCatalog } = require('./providers/catalog.cjs');
 const { loadAddon } = require('./providers/stremio.cjs');
@@ -9,11 +9,13 @@ const { scanDirectory } = require('./providers/directory.cjs');
 const { scanArchive } = require('./providers/archive.cjs');
 const { scanPlayImdb } = require('./providers/playimdb.cjs');
 const { scanVixDirect } = require('./providers/vixsrc.cjs');
+const { scanHdHub } = require('./providers/hdhub.cjs');
 const { probe } = require('./media/probe.cjs');
 const { loadSubtitles } = require('./subtitles.cjs');
 const { createSubtitleDiscovery, scoreSubtitle } = require('./subtitle-discovery.cjs');
-const { safeUrl, mapLimit, qualityLabel } = require('./util.cjs');
+const { safeUrl, mapLimit } = require('./util.cjs');
 const { rankStreams } = require('./ranking.cjs');
+const { describeQuality, describeSize } = require('./media/presentation.cjs');
 
 function parseUrls(value, allowHttp) {
   if (typeof value !== 'string') return [];
@@ -23,15 +25,15 @@ function formatResults(completed, settings, target) {
   const maximum = Math.max(3, Math.min(20, Number(settings.maxResults) || 20));
   return rankStreams(completed, maximum).map(({ candidate, video, subtitles }, index) => {
     const kind = video.downloadable ? `${video.container.toUpperCase()} · Online izlenebilir · İndirilebilir` : 'HLS · Online izlenebilir · İndirilemez';
-    const claim = !video.dimensions && candidate.claimedQuality ? ` · ${candidate.claimedQuality} sağlayıcı beyanı` : '';
-    const dimensionText = video.dimensions ? ` · ${video.dimensions.width}×${video.dimensions.height} doğrulandı` : ' · Çözünürlük doğrulanamadı';
+    const quality = describeQuality(video, candidate), size = describeSize(video);
+    const dimensionText = ` · ${quality.text}`;
     const subScore = subtitles[0]?._score || 0;
     const matchText = subScore >= 90 ? 'eşleşti' : subScore >= 70 ? 'sürüm benzerliği' : subScore >= 65 ? 'süre uyumu' : 'film düzeyi; senkron belirsiz';
     const subtitleText = subtitles.length ? ` · TR altyazı (${matchText})` : candidate.embeddedTurkish ? ' · TR altyazı (HLS içi)' : ' · TR altyazı bulunamadı';
-    const title = `${target.originalTitle} (${target.year}) · ${kind}${claim}${dimensionText}${subtitleText}`;
-    return { name: `${String(index + 1).padStart(2, '0')} · Nuvio TR HD · ${candidate.source} · ${kind}${claim}${dimensionText}${subtitleText}`,
-      title, url: video.url, quality: qualityLabel(video.dimensions),
-      ...(video.size ? { size: `${(video.size / (1024 ** 2)).toFixed(1)} MiB` } : {}),
+    const title = `${target.originalTitle} (${target.year}) · ${kind}${dimensionText} · ${size.text}${subtitleText}`;
+    return { name: `${String(index + 1).padStart(2, '0')} · Nuvio TR HD · ${candidate.source} · ${kind}${dimensionText} · ${size.text}${subtitleText}`,
+      title, url: video.url, quality: quality.quality,
+      ...(size.size ? { size: size.size } : {}),
       ...(subtitles.length ? { language: 'Türkçe altyazı' } : {}), provider: 'Nuvio TR HD', type: video.container,
       ...(Object.keys(candidate.headers).length ? { headers: candidate.headers } : {}),
       subtitles: subtitles.map(({ _score, ...subtitle }) => subtitle) };
@@ -81,7 +83,7 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs = 24000, r
         const pair = { candidate, video, subtitles: [] };
         if (!strictSubtitles || candidate.embeddedTurkish) completed.push(pair);
         const declared = candidate.subtitles.map(sub => {
-          const match = sub && scoreSubtitle(sub, candidate, video, target, settings.allowLooseSubtitles === true);
+          const match = sub && scoreSubtitle(sub, candidate, video, target, settings.subtitleMatchMode !== 'strict');
           return match ? { ...sub, _match: match } : null;
         }).filter(Boolean).sort((a, b) => b._match.score - a._match.score);
         if (declared.length) {
@@ -94,7 +96,7 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs = 24000, r
         const discovered = await discoverSubtitles(candidate, video);
         const entries = [...candidate.subtitles, ...discovered].map(sub => {
           if (!sub || typeof sub !== 'object') return null;
-          const match = scoreSubtitle(sub, candidate, video, target, settings.allowLooseSubtitles === true);
+          const match = scoreSubtitle(sub, candidate, video, target, settings.subtitleMatchMode !== 'strict');
           return match ? { ...sub, _match: match } : null;
         }).filter(Boolean).sort((a, b) => b._match.score - a._match.score);
         const subtitles = await loadSubtitles(http, { ...candidate, subtitles: entries }, target, allowHttp, { keepScore: true, videoDuration: video.duration });
@@ -111,12 +113,14 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs = 24000, r
           let hosted = null;
           if (settings.autoDiscover !== false && settings.hostedDiscovery === true) {
             hosted = await loadHosted(http, target);
+            if (hosted && !hosted.length) hosted = null;
             if (hosted) {
               for (const pair of hosted) {
                 const source = pair.candidate.source;
                 if ((source.startsWith('VixSrc') && settings.vixsrcEnabled === false) ||
                     (source === 'Internet Archive' && settings.archiveEnabled === false) ||
                     (source === 'PlayIMDb' && settings.playImdbEnabled === false) ||
+                    (source === '4KHDHub / HubCloud' && settings.hdhubEnabled === false) ||
                     (pair.video.container === 'hls' && settings.includeHls === false) ||
                     (pair.video.dimensions && Math.min(pair.video.dimensions.width, pair.video.dimensions.height) < Number(settings.minimumQuality || 0)) ||
                     (strictSubtitles && !pair.subtitles.length && !pair.candidate.embeddedTurkish)) continue;
@@ -133,10 +137,14 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs = 24000, r
             if (settings.playImdbEnabled !== false) sourceJobs.push({ name: 'PlayIMDb', run: () => scanPlayImdb(http, target) });
             if (settings.vixsrcEnabled !== false && settings.includeHls !== false && !sourceFactories.some(s => s.name === 'VixSrc'))
               sourceJobs.push({ name: 'VixSrc', run: () => scanVixDirect(http, target) });
+            if (settings.hdhubEnabled !== false && !sourceFactories.some(s => s.name === '4KHDHub / HubCloud')) sourceJobs.push({ name: '4KHDHub / HubCloud', run: async () => {
+              const candidates = await scanHdHub(http, target, { allowExtensionless: settings.useDownloadBridge !== false });
+              return settings.useDownloadBridge !== false ? registerDownloads(http, candidates, target) : candidates;
+            } });
           }
           for (const source of sourceFactories) sourceJobs.push({ name: source.name, run: () => source.run(http, target) });
           const quota = Math.max(1, Math.floor(40 / Math.max(1, sourceJobs.length)));
-          await mapLimit(sourceJobs, 3, async job => {
+          await mapLimit(sourceJobs, 4, async job => {
             let candidates;
             try { candidates = await job.run(); } catch { candidates = []; }
             report.sources.push({ name: job.name, candidates: candidates.length });
@@ -173,16 +181,19 @@ function onSettings() {
     { type: 'header', label: 'Nuvio TR HD · Otomatik kaynak ve Türkçe altyazı' },
     { type: 'info', label: 'Varsayılan: tüm çözünürlükler, en fazla 20 alternatif. Online izlenebilir kaynaklar gösterilir; doğrulanmış MP4/MKV ayrıca İndirilebilir etiketlidir. Türkçe bulunamazsa video gizlenmez. Nuvio altyazı dilini Türkçe seçin.' },
     { type: 'toggle', key: 'autoDiscover', label: 'Otomatik kaynak tarama', defaultValue: true },
-    { type: 'toggle', key: 'hostedDiscovery', label: 'Ortak tarama servisini kullan (sunucu kurulmuşsa)', defaultValue: false, description: 'GitHub yayını kaynakları doğrudan tarar. İsteğe bağlı Worker ayrı kurulmalıdır; yalnız film metadatası gönderilir.' },
+    { type: 'toggle', key: 'useDownloadBridge', label: 'MKV indirme adını koruyan dosya köprüsü', defaultValue: true, description: 'Kaynaklar telefondan aranır. Yalnız bulunan public dosya adresi ve film metadatası köprüde doğrulanır. Video doğrudan kaynaktan gelir; kişisel katalog/anahtar gönderilmez.' },
     { type: 'toggle', key: 'vixsrcEnabled', label: 'VixSrc çevrimiçi alternatifleri', defaultValue: true },
+    { type: 'toggle', key: 'hdhubEnabled', label: '4KHDHub / HubCloud doğrudan dosya araması', defaultValue: true, description: 'Ücretsiz public FSL dosyaları doğrulanır. Kaynak metadatası boyut/piksel doğrulaması sayılmaz.' },
     { type: 'toggle', key: 'directoryEnabled', label: 'DahmerMovies dizin taraması (deneysel yerel yedek)', defaultValue: false, description: 'Dosya CDN’i sık 403/429 döndürdüğünden varsayılan kapalıdır.' },
     { type: 'toggle', key: 'archiveEnabled', label: 'Internet Archive film araması', defaultValue: true },
     { type: 'toggle', key: 'playImdbEnabled', label: 'PlayIMDb API araması', defaultValue: true, description: 'Bazı sonuçlar HLS olabilir; dosya indirmesi olarak gösterilmez.' },
     { type: 'toggle', key: 'autoSubtitles', label: 'Türkçe altyazıyı otomatik ara', defaultValue: true },
     { type: 'select', key: 'subtitlePolicy', label: 'Türkçe altyazı bulunamazsa', defaultValue: 'prefer', options: [
       { value: 'prefer', label: 'Videoyu göster; TR yok bilgisini yaz' }, { value: 'require', label: 'Videoyu gizle' }] },
-    { type: 'toggle', key: 'allowLooseSubtitles', label: 'Sürüm eşleşmezse film düzeyinde altyazı kabul et', defaultValue: false,
-      description: 'Senkron belirsiz olur. Varsayılan olarak hash, sürüm veya kaynak eşleşmesi aranır.' },
+    { type: 'select', key: 'subtitleMatchMode', label: 'Altyazı eşleştirme', defaultValue: 'balanced', options: [
+      { value: 'balanced', label: 'Önce güçlü eşleşme; aynı filmden alternatif de sun' },
+      { value: 'strict', label: 'Yalnız güçlü eşleşme veya yakın süre' }],
+      description: 'Yanlış film/yıl ve farklı kurgu reddedilir. Film düzeyi alternatiflerin senkronu belirsizdir; otomatik zaman düzeltmesi yapılmaz.' },
     { type: 'select', key: 'minimumQuality', label: 'En düşük doğrulanmış çözünürlük', defaultValue: '0', options: [
       { value: '0', label: 'Tümü (önerilen)' }, { value: '480', label: '480p' }, { value: '720', label: '720p' }, { value: '1080', label: '1080p' }] },
     { type: 'select', key: 'maxResults', label: 'Gösterilecek en fazla kaynak', defaultValue: '20', description: 'Üst sınırdır; olmayan alternatif üretilmez. Önceki kayıtlı 6/10 tercihini 20’ye değiştirebilirsiniz.', options: [

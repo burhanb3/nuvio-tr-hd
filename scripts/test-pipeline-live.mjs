@@ -24,7 +24,7 @@ async function transport(url,options={}){
 }
 const provider=createProvider({tmdbKey:'fixed-reference-metadata',fetchImpl:transport});
 const start=Date.now();const streams=await provider.getStreams(reference.id,'movie');
-const report={checkedAt:new Date().toISOString(),version:pkg.version,film:selection,metadata:'fixed known TMDB reference; upstream source/subtitle requests are live',elapsedMs:Date.now()-start,bytesRead,settings:'GitHub production defaults; 24s logical budget; all resolutions; prefer Turkish; HLS enabled; up to 20; direct source scan; optional hosted discovery disabled',diagnostic:provider.getReport(),streams:streams.map(s=>({name:s.name,quality:s.quality,type:s.type,size:s.size,subtitles:s.subtitles.map(t=>({name:t.name,language:t.language}))})),deviceTest:'not-run'};
+const report={checkedAt:new Date().toISOString(),version:pkg.version,film:selection,metadata:'fixed known TMDB reference; upstream source/subtitle requests are live',elapsedMs:Date.now()-start,bytesRead,settings:'GitHub production defaults; 24s logical budget; all resolutions; prefer Turkish; balanced subtitle matching; HLS enabled; up to 20; public download bridge enabled',diagnostic:provider.getReport(),streams:streams.map(s=>({name:s.name,quality:s.quality,type:s.type,size:s.size,subtitles:s.subtitles.map(t=>({name:t.name,language:t.language}))})),deviceTest:'not-run'};
 await mkdir(new URL('../.cache/',import.meta.url),{recursive:true});
 const filename=selection==='night'?'pipeline-live-report.json':`pipeline-${selection}-report.json`;
 await writeFile(new URL('../.cache/'+filename,import.meta.url),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report,null,2));if(!streams.length)process.exitCode=1;
