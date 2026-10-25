@@ -1,0 +1,42 @@
+{
+  "checkedAt": "2026-10-25T17:19:32.359Z",
+  "version": "1.3.0",
+  "origin": "https://burhanb3.github.io/nuvio-tr-hd",
+  "authenticated": false,
+  "repository": "https://github.com/burhanb3/nuvio-tr-hd",
+  "sourceCommit": "30b0f3197d7300ea0783ecf53d0a4a3048602cc5",
+  "branch": "codex/publish-nuvio-tr-hd",
+  "actions": {
+    "tests": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40215802262",
+    "testsConclusion": "success",
+    "pages": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40215802321",
+    "pagesConclusion": "success"
+  },
+  "mode": "direct source scan; optional Worker not deployed",
+  "checks": [
+    {
+      "path": "/manifest.json",
+      "status": 200,
+      "type": "application/json; charset=utf-8",
+      "bytes": 694,
+      "sha256": "e2937bee1c1022c53f8fbba0c904974b7951be90d1a6730688dc1fbba3d690eb",
+      "matchesLocal": true
+    },
+    {
+      "path": "/providers/nuvio-tr-hd.js",
+      "status": 200,
+      "type": "application/javascript; charset=utf-8",
+      "bytes": 79476,
+      "sha256": "f03e07991766f36d07bf38bdab8f441dfc7cdf5de61d3fe484b6b277292422f3",
+      "matchesLocal": true
+    },
+    {
+      "path": "/",
+      "status": 200,
+      "type": "text/html; charset=utf-8",
+      "bytes": 5469,
+      "sha256": "4d7bcbb078034b4d5cf0a45e0ec1d7944de7ecde7b13cc40552fb594a148dabf",
+      "matchesLocal": true
+    }
+  ]
+}

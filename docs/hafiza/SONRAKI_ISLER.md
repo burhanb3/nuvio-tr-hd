@@ -5,6 +5,8 @@
 
 İşlevsel teslimin dış bağımlılıkları:
 
+- GitHub `burhanb3/nuvio-tr-hd` / Pages 1.3.0 yayını tamamlandı. Manifest `https://burhanb3.github.io/nuvio-tr-hd/manifest.json`; eski Sites kopyasını kapatıp yeni depoyu kullanma ve iPhone denemesi kullanıcıdan bekleniyor. Ortak tarama kapalı, HLS açık, Tümü/20. Üretimde Worker/cache yoktur.
+
 - İsteğe bağlı kişisel JSON/Stremio adresleri; otomatik kaynak araması bunlara bağımlı değildir.
 - Sites üzerinden HTTPS manifest yayını ve oturumsuz HTTP kontrolleri tamamlandı. Kaynak proje plugin-host/ ve kimlik .openai/hosting.json içindedir. Gelecek sürümleri aynı Site kimliğiyle güncelleyin. GitHub entegrasyonu 403 verdiğinden GitHub yayını yoktur.
 - Full Android ve Full iOS cihazında `docs/UYUMLULUK.md` kontrol listesini gerçek dosyalarla yürütmesi.

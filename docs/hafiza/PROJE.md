@@ -5,6 +5,8 @@
 
 Son güncelleme: 25 Ekim 2026. Sürüm: 1.3.0.
 
+**GitHub yayını tamamlandı:** `https://github.com/burhanb3/nuvio-tr-hd`, dal `codex/publish-nuvio-tr-hd`. Kod commit'i `30b0f3197d7300ea0783ecf53d0a4a3048602cc5`. GitHub Actions test işi `40215802262` (Windows/Linux) ve Pages işi `40215802321` başarılı. Yerel check 68 test geçti. Manifest, sağlayıcı ve kurulum sayfası oturumsuz HTTP 200; içerik SHA-256 değerleri yerel dosyalarla aynı. Kanıt `compatibility/github-publication.json`. Gerçek kurulum adresi `https://burhanb3.github.io/nuvio-tr-hd/manifest.json`. Yeni depo kullanıcı isteğiyle açıldı; sa'ya yazılmadı. Tekrar canlı doğrudan denemede Dune 4 sonuç (VixSrc Türkçe dahil), Spider-Man 7 sonuç verdi; ikinci denemelerde de sonuçlar korundu. Spider-Man Türkçe servisi bu son tekrarlarda sonuç vermedi; videolar TR bulunamadı etiketiyle korundu. Sunucu cache'i üretimde yok; ortak tarama kapalı kalmalıdır. Yeni sürüm iPhone üzerinde henüz kullanıcı tarafından denenmedi.
+
 İsim **Nuvio TR HD**. Kullanıcı, kişisel kullanım için JavaScript plugin deposu, JSON katalogları ve Stremio kaynakları, gerçek MP4/MKV bağlantıları, mümkün olduğunda doğrulanmış kalite, doğru film/bölüm ve mevcut Türkçe harici altyazılar istedi. Kaynak biçimi ayrıca soruldu ve **JSON katalogları ve Stremio kaynakları** seçildi.
 
 Kullanıcı daha sonra kapsamı netleştirdi: **otomatik farklı sağlayıcı taraması, her videoya ayrı Türkçe eşleştirme, birkaç sıralı alternatif, online ve çevrimdışı otomatik altyazı**. Bu son talep önceliklidir; JSON/Stremio ile sınırlı bir proje olarak devam etmeyin. All-in-One Nuvio'nun kaynak bulma örüntülerinin incelenmesine izin verdi.

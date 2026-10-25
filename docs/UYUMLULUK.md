@@ -82,6 +82,8 @@ Upstream güncellenirse: değişen manifest/runtime/ağ/indirme dosyalarını ok
 
 ## 1.3.0 ortak tarama ve kullanıcı gözlemi
 
+**GitHub üretim yayını:** [yayın kanıtı](../compatibility/github-publication.json). GitHub Actions Windows/Linux testleri ve Pages yayını başarılı; manifest/sağlayıcı/sayfa oturumsuz HTTP 200 ve yerel dosyalarla aynı. Doğrudan Dune tekrarı 4 sonuç (VixSrc Türkçe dahil), Spider-Man tekrarı 7 sonuç döndürdü. Son Spider-Man denemesinde Türkçe servisi sonuç vermediği halde video listesi korundu. Sunucu/cache yerelde hazır ama üretimde yok; GitHub sürümü ortak tarama kapalıyken çalışır. Bu yayın fiziksel iPhone testi yerine geçmez.
+
 Kullanıcı iPhone'da küçük Spider-Man MP4'ünün üç Türkçe altyazıyla açıldığını, senkronun uygun göründüğünü bildirdi. Bu geliştirici tarafından yürütülmüş tam indirme/çevrimdışı test değildir. Tekrar arama başarısızlığı üzerine public tarama sunucuya taşındı; kısa cache, TR başarısızlığında videoyu koruma ve VixSrc eklendi. Yeni varsayılanlar Tümü / 20 / Türkçeyi tercih et.
 
 Kaynak eşleştirmesi, dosya doğrulaması ve altyazı yüklemesi sunucuda aynı sağlayıcı çekirdeğiyle yapılır. Telefon ortak sonuçların TMDB/başlık/yıl ve URL sınıfını tekrar denetler. Kişisel kaynaklar yereldir. HLS profili çözünürlük beyanı ayrıca yazılır; gerçek piksel olarak sunulmaz. Sunucu yalnız küçük HLS master'ı proxy'ler, video/audio segmenti taşımaz. [Servis mimarisi](../hosting/README.md).
