@@ -1,0 +1,43 @@
+{
+  "checkedAt": "2026-10-25",
+  "repository": "NuvioMedia/NuvioMobile",
+  "release": "0.6.4-beta",
+  "releaseCommit": "bcd62a2d6e77512597a8d693f46f035e5278cdb7",
+  "defaultBranch": "cmp-rewrite",
+  "defaultHead": "c114d6fb69fbed2bbed1f728bce7d752b5a19158",
+  "sourceFiles": {
+    "composeApp/src/commonMain/kotlin/com/nuvio/app/features/plugins/PluginModels.kt": "2dfe5fdab84a0f044c162b9fdf26a6ab2dfbc041",
+    "composeApp/src/fullCommonMain/kotlin/com/nuvio/app/features/plugins/PluginManifestParser.kt": "7981f311b92915245f92e74740ecc4bac41e67cc",
+    "composeApp/src/fullCommonMain/kotlin/com/nuvio/app/features/plugins/PluginRepository.kt": "f9c7cefac6e4fe477da47adb95bb33e7a70964a8",
+    "composeApp/src/fullCommonMain/kotlin/com/nuvio/app/features/plugins/runtime/PluginRuntime.kt": "04fc61ba488b3ba0a146fb5a83286e2c5cbb092d",
+    "composeApp/src/fullCommonMain/kotlin/com/nuvio/app/features/plugins/runtime/js/JsBindings.kt": "f19b11a939ded987ec0fd83ed959364414a0ab07",
+    "composeApp/src/fullCommonMain/kotlin/com/nuvio/app/features/plugins/runtime/network/FetchBridge.kt": "757ca33ab2fffda34384999f42bea748533d185d",
+    "composeApp/src/commonMain/kotlin/com/nuvio/app/features/streams/StreamFetchSupport.kt": "5bfa30be3d7ce135aaa4846f0df11b732ad6cea7",
+    "composeApp/src/commonMain/kotlin/com/nuvio/app/features/downloads/DownloadsRepository.kt": "909e718364f693d5a5d612933f0c896c6b144340",
+    "composeApp/src/commonMain/kotlin/com/nuvio/app/features/downloads/DownloadSubtitles.kt": "f804ee50379f088a5da0be9e52200da492e25da8",
+    "composeApp/src/commonMain/kotlin/com/nuvio/app/features/addons/AddonPlatform.kt": "c0e30fcebfc3a1b473fa852c42f5e2c029ad6b6b",
+    "composeApp/src/androidMain/kotlin/com/nuvio/app/features/addons/AddonPlatform.android.kt": "29d28f438d37d7ae6ab0f6a3a057496be16c3bfb",
+    "composeApp/src/iosMain/kotlin/com/nuvio/app/features/addons/AddonPlatform.ios.kt": "c556d5b8fd3c15d8dca9a88898ef4c0224206883",
+    "gradle/libs.versions.toml": "133b6209a498c8b75e9472b699c715e4892da271",
+    "composeApp/src/androidFull/kotlin/com/nuvio/app/features/plugins/runtime/PluginRuntime.android.kt": "9bfd84dabb56dab61896bd1d73a0db0051154cde",
+    "composeApp/src/iosFull/kotlin/com/nuvio/app/features/plugins/runtime/PluginRuntime.ios.kt": "2945271f78bbbe5ded14a72c5106554cee5666f5",
+    "composeApp/src/fullCommonMain/kotlin/com/nuvio/app/features/plugins/PluginSettingsDialog.kt": "a945815edd14df792319818dc2cbe8de740defdd",
+    "composeApp/src/commonMain/kotlin/com/nuvio/app/features/player/PlayerScreenRuntimeTrackActions.kt": "f8e90c81a20cd0b82d3b7751d07c3cfe94bb619e",
+    "composeApp/src/commonMain/kotlin/com/nuvio/app/features/player/PlayerSubtitleMatching.kt": "b98bf8396df5265c2599e806be3e03e5176e15d7",
+    "composeApp/src/commonMain/kotlin/com/nuvio/app/features/player/PlayerStartupSubtitles.kt": "42986ee37ae874a9b3a9202c28e4a5bd1efe92e6"
+  },
+  "verification": {
+    "sourceContract": "verified",
+    "defaultBranchContract": "identical-to-release",
+    "quickjsEngine": "quickjs-emscripten 0.32.0 (WASM), Nuvio-shaped bridge",
+    "androidDevice": "not-run",
+    "iosDevice": "not-run",
+    "kotlinBuild": "not-run",
+    "subtitleAutoSelection": "verified source path with ISO language code tr; device not run"
+  },
+  "knownNativeLimits": [
+    "Fetch polyfill ignores AbortSignal; JS deadline does not cancel native requests.",
+    "iOS raw HTTP reads whole response before truncation and ignores followRedirects.",
+    "Downloadability has no native plugin result field; HLS is excluded by default and extensionless HLS is never returned."
+  ]
+}

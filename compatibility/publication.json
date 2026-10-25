@@ -1,0 +1,35 @@
+{
+  "checkedAt": "2026-10-25T16:28:25.470Z",
+  "version": "1.2.0",
+  "origin": "https://nuvio-tr-hd.hayatimbitmiss.chatgpt.site",
+  "authenticated": false,
+  "sourceCommit": "bb0fecf95900ff6c3a3e52a390c73e6cca85d805",
+  "savedVersion": "appgprj_6ade23835f7c81919a2a9bb960abd631~appgver_7a220eb0e6248191a043c4daacf3b757",
+  "deployment": "appgdep_6ade2e025ea48191bf7e1ba15e591fc1",
+  "checks": [
+    {
+      "path": "/manifest.json",
+      "status": 200,
+      "type": "application/json",
+      "bytes": 694,
+      "sha256": "bd79791d0c2ad080fc088c59b4a19084f2a2e869584d30025c4f7cb792a81569",
+      "matchesLocal": true
+    },
+    {
+      "path": "/providers/nuvio-tr-hd.js",
+      "status": 200,
+      "type": "text/javascript",
+      "bytes": 66576,
+      "sha256": "78cfdce26f0acd68427dce2e177ae67fe64979dfabe4e061f5d228f5f4a03760",
+      "matchesLocal": true
+    },
+    {
+      "path": "/downloads/nuvio-tr-hd-1.2.0.zip",
+      "status": 200,
+      "type": "application/zip",
+      "bytes": 117229,
+      "sha256": "a979f487c227b91230bd5e67aab9f568e2f7bb62b07caaec61c071bf69fe09c0",
+      "matchesLocal": true
+    }
+  ]
+}

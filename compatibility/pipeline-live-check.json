@@ -1,0 +1,33 @@
+{
+  "checkedAt": "2026-10-25T15:24:13.843Z",
+  "metadata": "fixed known TMDB reference; external source/subtitle requests are live",
+  "elapsedMs": 16954,
+  "bytesRead": 1510152,
+  "settings": "production defaults; 42s budget; 720p minimum; Turkish subtitles required",
+  "streams": [
+    {
+      "name": "01 · Nuvio TR HD · Internet Archive · MKV · Doğrudan dosya · 1488×1080 doğrulandı · TR altyazı (sürüm benzerliği)",
+      "quality": "1080p",
+      "type": "mkv",
+      "subtitles": [
+        {
+          "name": "Türkçe · VTT · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        }
+      ]
+    }
+  ],
+  "deviceTest": "not-run"
+}

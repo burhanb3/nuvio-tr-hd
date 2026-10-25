@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "items": [
+    {
+      "tmdbId": 603,
+      "type": "movie",
+      "originalTitle": "The Matrix",
+      "year": 1999,
+      "streams": [
+        {
+          "url": "https://media.example.invalid/kendi-dosyaniz.mp4",
+          "name": "Kişisel arşiv",
+          "headers": {},
+          "subtitles": [
+            { "url": "https://media.example.invalid/kendi-altyaziniz.tr.srt", "language": "tr" },
+            { "url": "https://media.example.invalid/kendi-altyaziniz.tr.vtt", "language": "tur" }
+          ]
+        }
+      ]
+    },
+    {
+      "tmdbId": 1399,
+      "type": "tv",
+      "originalTitle": "Game of Thrones",
+      "year": 2011,
+      "season": 1,
+      "episode": 1,
+      "streams": [
+        { "url": "https://media.example.invalid/kendi-bolumunuz.mkv" }
+      ],
+      "subtitles": [
+        { "url": "https://media.example.invalid/kendi-bolumunuz.tr.srt", "language": "tr-TR" }
+      ]
+    }
+  ]
+}

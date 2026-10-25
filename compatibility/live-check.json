@@ -1,0 +1,317 @@
+{
+  "checkedAt": "2026-10-25T15:17:21.824Z",
+  "target": {
+    "tmdbId": 10331,
+    "year": 1968
+  },
+  "sources": [
+    {
+      "provider": "DahmerMovies",
+      "candidates": 3,
+      "requestCompleted": true
+    },
+    {
+      "provider": "Internet Archive",
+      "candidates": 3,
+      "requestCompleted": true
+    },
+    {
+      "provider": "PlayIMDb",
+      "candidates": 3,
+      "requestCompleted": true
+    }
+  ],
+  "samples": [
+    {
+      "provider": "DahmerMovies",
+      "containerVerified": false
+    },
+    {
+      "provider": "DahmerMovies",
+      "containerVerified": false
+    },
+    {
+      "provider": "Internet Archive",
+      "containerVerified": true,
+      "container": "mkv",
+      "dimensions": {
+        "width": 1488,
+        "height": 1080
+      },
+      "duration": 5796.46,
+      "hashComputed": true,
+      "turkishSubtitlesVerified": 4,
+      "bestSubtitleScore": 76
+    },
+    {
+      "provider": "Internet Archive",
+      "containerVerified": true,
+      "container": "mp4",
+      "dimensions": {
+        "width": 661,
+        "height": 480
+      },
+      "duration": 5796.46,
+      "hashComputed": true,
+      "turkishSubtitlesVerified": 4,
+      "bestSubtitleScore": 76
+    }
+  ],
+  "deviceTest": "not-run",
+  "fullVideoDownloaded": false,
+  "requests": [
+    {
+      "host": "streamdata.vaplayer.ru",
+      "method": "GET",
+      "status": 200,
+      "bytes": 1798,
+      "truncated": false
+    },
+    {
+      "host": "a.111477.xyz",
+      "method": "GET",
+      "status": 200,
+      "bytes": 15220,
+      "truncated": false
+    },
+    {
+      "host": "archive.org",
+      "method": "GET",
+      "status": 200,
+      "bytes": 715,
+      "truncated": false
+    },
+    {
+      "host": "archive.org",
+      "method": "GET",
+      "status": 200,
+      "bytes": 1115,
+      "truncated": false
+    },
+    {
+      "host": "archive.org",
+      "method": "GET",
+      "status": 200,
+      "bytes": 45830,
+      "truncated": false
+    },
+    {
+      "host": "archive.org",
+      "method": "GET",
+      "status": 200,
+      "bytes": 11366,
+      "truncated": false
+    },
+    {
+      "host": "archive.org",
+      "method": "GET",
+      "status": 200,
+      "bytes": 34800,
+      "truncated": false
+    },
+    {
+      "host": "archive.org",
+      "method": "GET",
+      "status": 200,
+      "bytes": 36236,
+      "truncated": false
+    },
+    {
+      "host": "archive.org",
+      "method": "GET",
+      "status": 200,
+      "bytes": 3383,
+      "truncated": false
+    },
+    {
+      "host": "archive.org",
+      "method": "GET",
+      "status": 200,
+      "bytes": 10439,
+      "truncated": false
+    },
+    {
+      "host": "a.111477.xyz",
+      "method": "HEAD",
+      "status": 307,
+      "bytes": 0,
+      "truncated": false
+    },
+    {
+      "host": "p.111477.xyz",
+      "method": "HEAD",
+      "status": 403,
+      "bytes": 0,
+      "truncated": false
+    },
+    {
+      "host": "a.111477.xyz",
+      "method": "GET",
+      "status": 307,
+      "bytes": 208,
+      "truncated": false
+    },
+    {
+      "host": "p.111477.xyz",
+      "method": "GET",
+      "status": 403,
+      "bytes": 6055,
+      "truncated": false
+    },
+    {
+      "host": "a.111477.xyz",
+      "method": "HEAD",
+      "status": 429,
+      "bytes": 0,
+      "truncated": false
+    },
+    {
+      "host": "a.111477.xyz",
+      "method": "GET",
+      "status": 429,
+      "bytes": 8111,
+      "truncated": false
+    },
+    {
+      "host": "archive.org",
+      "method": "HEAD",
+      "status": 302,
+      "bytes": 0,
+      "truncated": false
+    },
+    {
+      "host": "ia800905.us.archive.org",
+      "method": "HEAD",
+      "status": 200,
+      "bytes": 0,
+      "truncated": false
+    },
+    {
+      "host": "archive.org",
+      "method": "GET",
+      "status": 302,
+      "bytes": 0,
+      "truncated": false
+    },
+    {
+      "host": "ia800905.us.archive.org",
+      "method": "GET",
+      "status": 206,
+      "bytes": 131072,
+      "truncated": false
+    },
+    {
+      "host": "archive.org",
+      "method": "GET",
+      "status": 302,
+      "bytes": 0,
+      "truncated": false
+    },
+    {
+      "host": "ia800905.us.archive.org",
+      "method": "GET",
+      "status": 206,
+      "bytes": 65536,
+      "truncated": false
+    },
+    {
+      "host": "opensubtitles-v3.strem.io",
+      "method": "GET",
+      "status": 200,
+      "bytes": 21357,
+      "truncated": false
+    },
+    {
+      "host": "opensubtitles.stremio.homes",
+      "method": "GET",
+      "status": 200,
+      "bytes": 2312,
+      "truncated": false
+    },
+    {
+      "host": "opensubtitles.stremio.homes",
+      "method": "GET",
+      "status": 200,
+      "bytes": 2312,
+      "truncated": false
+    },
+    {
+      "host": "opensubtitles.stremio.homes",
+      "method": "GET",
+      "status": 200,
+      "bytes": 80564,
+      "truncated": false
+    },
+    {
+      "host": "opensubtitles.stremio.homes",
+      "method": "GET",
+      "status": 200,
+      "bytes": 80576,
+      "truncated": false
+    },
+    {
+      "host": "opensubtitles.stremio.homes",
+      "method": "GET",
+      "status": 200,
+      "bytes": 80564,
+      "truncated": false
+    },
+    {
+      "host": "opensubtitles.stremio.homes",
+      "method": "GET",
+      "status": 200,
+      "bytes": 83133,
+      "truncated": false
+    },
+    {
+      "host": "archive.org",
+      "method": "HEAD",
+      "status": 302,
+      "bytes": 0,
+      "truncated": false
+    },
+    {
+      "host": "ia800905.us.archive.org",
+      "method": "HEAD",
+      "status": 200,
+      "bytes": 0,
+      "truncated": false
+    },
+    {
+      "host": "archive.org",
+      "method": "GET",
+      "status": 302,
+      "bytes": 0,
+      "truncated": false
+    },
+    {
+      "host": "ia800905.us.archive.org",
+      "method": "GET",
+      "status": 206,
+      "bytes": 131072,
+      "truncated": false
+    },
+    {
+      "host": "archive.org",
+      "method": "GET",
+      "status": 302,
+      "bytes": 0,
+      "truncated": false
+    },
+    {
+      "host": "ia800905.us.archive.org",
+      "method": "GET",
+      "status": 206,
+      "bytes": 65536,
+      "truncated": false
+    },
+    {
+      "host": "opensubtitles.stremio.homes",
+      "method": "GET",
+      "status": 200,
+      "bytes": 2312,
+      "truncated": false
+    }
+  ],
+  "pairedSamplesVerified": 2
+}

@@ -1,0 +1,25 @@
+name: Canlı kaynak ve altyazı kontrolü
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  live:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: npm run test:live
+      - run: npm run test:live:pipeline
+      - uses: actions/upload-artifact@v7.0.2
+        if: always()
+        with:
+          name: live-source-report
+          path: |
+            .cache/live-report.json
+            .cache/pipeline-live-report.json

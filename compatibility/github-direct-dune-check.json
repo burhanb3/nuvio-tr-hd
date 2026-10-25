@@ -1,0 +1,74 @@
+{
+  "checkedAt": "2026-10-25T17:16:48.625Z",
+  "version": "1.3.0",
+  "film": "dune",
+  "metadata": "fixed known TMDB reference; upstream source/subtitle requests are live",
+  "elapsedMs": 1971,
+  "bytesRead": 206719,
+  "settings": "GitHub production defaults; 24s logical budget; all resolutions; prefer Turkish; HLS enabled; up to 20; direct source scan; optional hosted discovery disabled",
+  "diagnostic": {
+    "tmdbId": "438631",
+    "sources": [
+      {
+        "name": "PlayIMDb",
+        "candidates": 3
+      },
+      {
+        "name": "VixSrc",
+        "candidates": 1
+      },
+      {
+        "name": "Internet Archive",
+        "candidates": 0
+      }
+    ],
+    "rejected": {
+      "subtitle_no_match": 3
+    },
+    "http": {
+      "api.themoviedb.org:200": 1,
+      "vixsrc.to:200": 5,
+      "streamdata.vaplayer.ru:200": 1,
+      "opensubtitles-v3.strem.io:200": 1,
+      "nicheauthorityengine.site:200": 3,
+      "archive.org:200": 7,
+      "opensubtitles.stremio.homes:timeout_or_network": 1,
+      "sc-u20-01.secretraven98.boats:200": 1
+    },
+    "results": 4,
+    "reason": "ok",
+    "elapsedMs": 1968
+  },
+  "streams": [
+    {
+      "name": "01 · Nuvio TR HD · VixSrc · HLS · Online izlenebilir · İndirilemez · Otomatik HLS sağlayıcı beyanı · Çözünürlük doğrulanamadı · TR altyazı (eşleşti)",
+      "quality": "Bilinmiyor",
+      "type": "hls",
+      "subtitles": [
+        {
+          "name": "Türkçe · VTT · 01 · VixSrc Türkçe · Kaynakla eşlenmiş",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "02 · Nuvio TR HD · PlayIMDb · HLS · Online izlenebilir · İndirilemez · Çözünürlük doğrulanamadı · TR altyazı bulunamadı",
+      "quality": "Bilinmiyor",
+      "type": "hls",
+      "subtitles": []
+    },
+    {
+      "name": "03 · Nuvio TR HD · PlayIMDb · HLS · Online izlenebilir · İndirilemez · Çözünürlük doğrulanamadı · TR altyazı bulunamadı",
+      "quality": "Bilinmiyor",
+      "type": "hls",
+      "subtitles": []
+    },
+    {
+      "name": "04 · Nuvio TR HD · PlayIMDb · HLS · Online izlenebilir · İndirilemez · Çözünürlük doğrulanamadı · TR altyazı bulunamadı",
+      "quality": "Bilinmiyor",
+      "type": "hls",
+      "subtitles": []
+    }
+  ],
+  "deviceTest": "not-run"
+}

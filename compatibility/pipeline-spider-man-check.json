@@ -1,0 +1,73 @@
+{
+  "checkedAt": "2026-10-25T16:22:18.870Z",
+  "version": "1.2.0",
+  "film": "spider-man",
+  "metadata": "fixed known TMDB reference; external source/subtitle requests are live",
+  "elapsedMs": 8605,
+  "bytesRead": 1153307,
+  "settings": "production defaults; 30s logical budget; 720p minimum; Turkish subtitles required; HLS playback fallback enabled",
+  "diagnostic": {
+    "tmdbId": "969681",
+    "sources": [
+      {
+        "name": "DahmerMovies",
+        "candidates": 0
+      },
+      {
+        "name": "PlayIMDb",
+        "candidates": 3
+      },
+      {
+        "name": "Internet Archive",
+        "candidates": 3
+      }
+    ],
+    "rejected": {
+      "subtitle_no_match": 3,
+      "quality": 2
+    },
+    "http": {
+      "api.themoviedb.org:200": 1,
+      "a.111477.xyz:429": 1,
+      "streamdata.vaplayer.ru:200": 1,
+      "opensubtitles-v3.strem.io:200": 1,
+      "onlinecoachingacademy.site:200": 3,
+      "archive.org:200": 8,
+      "opensubtitles.stremio.homes:200": 5,
+      "archive.org:302": 9,
+      "ia600102.us.archive.org:200": 1,
+      "ia800901.us.archive.org:200": 1,
+      "ia800102.us.archive.org:200": 1,
+      "ia800102.us.archive.org:206": 2,
+      "ia600901.us.archive.org:206": 1,
+      "ia600102.us.archive.org:206": 2,
+      "ia800901.us.archive.org:206": 1
+    },
+    "results": 1,
+    "reason": "ok",
+    "elapsedMs": 8603
+  },
+  "streams": [
+    {
+      "name": "01 · Nuvio TR HD · Internet Archive · MKV · Doğrudan dosya · 3840×2160 doğrulandı · TR altyazı (sürüm benzerliği)",
+      "quality": "2160p",
+      "type": "mkv",
+      "size": "87522.2 MiB",
+      "subtitles": [
+        {
+          "name": "Türkçe · VTT · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        }
+      ]
+    }
+  ],
+  "deviceTest": "not-run"
+}

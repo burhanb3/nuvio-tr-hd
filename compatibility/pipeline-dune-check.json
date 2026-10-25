@@ -1,0 +1,92 @@
+{
+  "checkedAt": "2026-10-25T16:22:11.284Z",
+  "version": "1.2.0",
+  "film": "dune",
+  "metadata": "fixed known TMDB reference; external source/subtitle requests are live",
+  "elapsedMs": 11021,
+  "bytesRead": 304944,
+  "settings": "production defaults; 30s logical budget; 720p minimum; Turkish subtitles required; HLS playback fallback enabled",
+  "diagnostic": {
+    "tmdbId": "438631",
+    "sources": [
+      {
+        "name": "PlayIMDb",
+        "candidates": 3
+      },
+      {
+        "name": "DahmerMovies",
+        "candidates": 10
+      },
+      {
+        "name": "Internet Archive",
+        "candidates": 0
+      }
+    ],
+    "rejected": {
+      "video_unavailable": 6
+    },
+    "http": {
+      "api.themoviedb.org:200": 1,
+      "streamdata.vaplayer.ru:200": 1,
+      "opensubtitles-v3.strem.io:200": 1,
+      "nicheauthorityengine.site:200": 3,
+      "a.111477.xyz:200": 1,
+      "archive.org:200": 7,
+      "opensubtitles.stremio.homes:200": 3,
+      "a.111477.xyz:307": 4,
+      "p.111477.xyz:403": 4,
+      "a.111477.xyz:429": 2
+    },
+    "results": 3,
+    "reason": "ok",
+    "elapsedMs": 11020
+  },
+  "streams": [
+    {
+      "name": "01 · Nuvio TR HD · PlayIMDb · HLS · Yalnızca oynatma · Çözünürlük doğrulanamadı · TR altyazı (eşleşti)",
+      "quality": "Bilinmiyor",
+      "type": "hls",
+      "subtitles": [
+        {
+          "name": "Türkçe · VTT · Tam sürüm eşleşmesi",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "02 · Nuvio TR HD · PlayIMDb · HLS · Yalnızca oynatma · Çözünürlük doğrulanamadı · TR altyazı (eşleşti)",
+      "quality": "Bilinmiyor",
+      "type": "hls",
+      "subtitles": [
+        {
+          "name": "Türkçe · VTT · Tam sürüm eşleşmesi",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "03 · Nuvio TR HD · PlayIMDb · HLS · Yalnızca oynatma · Çözünürlük doğrulanamadı · TR altyazı (eşleşti)",
+      "quality": "Bilinmiyor",
+      "type": "hls",
+      "subtitles": [
+        {
+          "name": "Türkçe · VTT · Tam sürüm eşleşmesi",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        }
+      ]
+    }
+  ],
+  "deviceTest": "not-run"
+}

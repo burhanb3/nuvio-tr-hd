@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.cache/
+coverage/
+*.log
+config.local.json
+catalog.local.json
+.env*
+*.zip
+plugin-host/

@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Nuvio TR HD sağlayıcısını tek manifest bağlantısıyla kurun.">
+  <title>Nuvio TR HD — Kurulum</title>
+  <style>
+    :root { color-scheme: dark; font: 16px/1.65 system-ui, sans-serif; background: #0c1317; color: #ecf4f5; }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    main { max-width: 850px; margin: 0 auto; padding: 64px 24px 40px; }
+    .eyebrow { color: #76d3c3; font-size: .8rem; letter-spacing: .16em; text-transform: uppercase; font-weight: 700; }
+    h1 { font-size: clamp(2.6rem, 7vw, 4.5rem); line-height: 1.08; letter-spacing: -.05em; margin: 12px 0 22px; }
+    h2 { font-size: 1.25rem; margin: 36px 0 12px; }
+    p { color: #b8c9cf; max-width: 65ch; }
+    .panel { margin: 30px 0; background: #142128; border: 1px solid #2c434b; border-radius: 18px; padding: 24px; }
+    label { display: block; font-weight: 650; margin-bottom: 10px; }
+    input { width: 100%; background: #0c1317; border: 1px solid #3e5c66; color: #e5f7f3; font: .9rem/1.5 ui-monospace, monospace; padding: 14px; border-radius: 10px; }
+    .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; margin-top: 16px; }
+    button { background: #8de4d2; color: #10231f; border: none; border-radius: 9px; font: inherit; font-weight: 700; padding: 12px 20px; cursor: pointer; }
+    button:hover { background: #b3f4e6; }
+    button:focus-visible, a:focus-visible, input:focus-visible { outline: 3px solid #76d3c3; outline-offset: 4px; }
+    a { color: #a1ddd3; text-underline-offset: 4px; }
+    li { padding: 6px 0; color: #c3d0d4; }
+    strong { color: #f1f7f8; }
+    .status { min-height: 1.6em; margin-bottom: 0; color: #8de4d2; font-size: .9rem; }
+    .note { border-left: 3px solid #4c737a; padding-left: 16px; font-size: .95rem; }
+    footer { margin-top: 42px; border-top: 1px solid #273a42; padding-top: 20px; color: #8a9ea7; font-size: .85rem; }
+    @media (max-width: 500px) { main { padding: 38px 18px 28px; } .panel { padding: 18px; } button { width: 100%; } }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="eyebrow">Kişisel JavaScript sağlayıcısı · v1.3.0</div>
+    <h1>Nuvio TR HD</h1>
+    <p>Film seç. Kaynaklar taransın. Uygun MP4/MKV dosyaları ve mevcut Türkçe altyazı alternatifleri birlikte listelensin.</p>
+    <section class="panel" aria-label="Kurulum bağlantısı">
+      <label for="manifest">Nuvio → Pluginler → Depo ekle</label>
+      <input id="manifest" type="url" readonly aria-label="Manifest bağlantısı">
+      <div class="actions">
+        <button id="copy" type="button">Bağlantıyı kopyala</button>
+        <a href="manifest.json">Manifesti aç</a>
+        <a href="downloads/nuvio-tr-hd-1.3.0.zip" download>Kaynak kodu indir</a>
+      </div>
+      <p class="status" id="status" role="status" aria-live="polite"></p>
+    </section>
+    <h2>Kuruluysa 1.3.0'a güncelle</h2>
+    <p>Nuvio'nun <strong>Pluginler</strong> ekranında bu depoyu yenile/güncelle ve sağlayıcı sürümünün <strong>1.3.0</strong> olduğunu kontrol et. Aynı bağlantı geçerli.</p>
+    <p>Varsayılanlar: <strong>Tüm çözünürlükler · 20 alternatif · Online HLS açık</strong>. Önceki kayıtlı 6/10 veya 720p tercihi korunabilir; sağlayıcı ayarından <strong>Tümü / 20</strong> seç. <strong>Ortak tarama</strong> ve <strong>HLS çevrimiçi izleme</strong> açık olsun. Filmin kaynak ekranını kapatıp yeniden aç.</p>
+    <p id="service-status" class="status" role="status">Kaynak servisi kontrol ediliyor…</p>
+    <h2>Üç adımda kurulum</h2>
+    <ol>
+      <li>Plugin destekli <strong>Nuvio Full</strong> sürümünde yukarıdaki bağlantıyı <strong>Pluginler → Depo ekle</strong> bölümüne yapıştır.</li>
+      <li><strong>Nuvio TR HD</strong> sağlayıcısını etkinleştir. Otomatik kaynak ve altyazı araması varsayılan açık.</li>
+      <li>Nuvio'nun tercih edilen altyazı dilini <strong>Türkçe</strong> seç. Daha önce elle kapattığın film tercihleri otomatik seçimi etkileyebilir.</li>
+    </ol>
+    <h2>Altı kaynak sınırı mı var?</h2>
+    <p>Nuvio'nun altı sınırı yok. Eklenti en fazla 40 adayı değerlendirir, varsayılan en iyi <strong>20 alternatifi</strong> gösterir. 6/10 da seçilebilir. Uygun iki kaynak varsa iki gösterilir. Aynı sağlayıcının farklı HLS çözünürlükleri bağımsız sağlayıcı sayılmaz.</p>
+    <h2>İzleme ve indirme</h2>
+    <p>Kaynaklar <strong>Online izlenebilir</strong> olarak gösterilir. Gerçek MP4/MKV dosyaları ayrıca <strong>İndirilebilir</strong>, HLS listeleri <strong>İndirilemez</strong> etiketlidir. Dosyanın okunabilen piksel boyutları doğrulanır; HLS çözünürlük beyanı ayrıca belirtilir. Nuvio'nun dosya ve altyazı indirmesi tamamlanınca filmi <strong>İndirilenler</strong> bölümünden çevrimdışı açabilirsin.</p>
+    <h2>Dune ve Spider-Man denemesinden sonra</h2>
+    <p>1.3.0 ortak kaynak taramasını sunucuda yapar ve başarılı sonuçları üç dakika önbellekler. Tekrar aramada bütün servisler yeniden zorlanmaz. Türkçe servisi aksarsa çalışan video kaybolmaz; TR bulunamadığı açıkça yazılır. Altyazı adları numara ve sürüm bilgisiyle ayırt edilir.</p>
+    <ul>
+      <li><strong>Dune (2021):</strong> PlayIMDb yanında VixSrc eklendi. VixSrc'nin videoyla eşlediği Türkçe VTT ve gerçek HLS çözünürlük seçenekleri alınır. İndirilebilir MP4/MKV dosyası henüz doğrulanamadı.</li>
+      <li><strong>Spider-Man: Brand New Day:</strong> küçük MP4 türevleri çözünürlük nedeniyle gizlenmez. 4K MKV yaklaşık <strong>85,5 GiB</strong>; dosya adındaki 4K iddiası küçük MP4'e kalite etiketi olarak taşınmaz. Online alternatifler de listelenir.</li>
+    </ul>
+    <p class="note">Ortak servise yalnız seçilen filmin TMDB/IMDb kimliği, özgün başlığı, yılı ve bölüm/süre bilgisi gider. Kişisel katalog adresleri, TMDB anahtarı ve erişim başlıkları telefonda kalır. Servis yalnız sonuç ve küçük HLS listesi sunar; video/audio verileri kaynak sunucudan gelir.</p>
+    <p class="note">Kaynak kapsamı ve altyazı senkronu filme/sürüme göre değişir. Sürüm benzerliği veya süre uyumu kesin senkron kanıtı değildir. Fiziksel telefonda tam indirme ve çevrimdışı oynatma testi henüz yapılmadı.</p>
+    <footer>Nuvio TR HD medya barındırmaz. Bu sayfa yalnız manifest, sağlayıcı kodu ve kurulum dosyalarını sunar. MIT lisansı.</footer>
+  </main>
+  <script>
+    const input = document.querySelector('#manifest');
+    input.value = new URL('manifest.json', location.href).href;
+    document.querySelector('#copy').addEventListener('click', async () => {
+      const status = document.querySelector('#status');
+      try { await navigator.clipboard.writeText(input.value); status.textContent = 'Kopyalandı. Nuvio’daki Depo ekle alanına yapıştırabilirsin.'; }
+      catch { input.focus(); input.select(); status.textContent = 'Bağlantıyı seçtim; cihazının kopyala komutunu kullanabilirsin.'; }
+    });
+    fetch('/api/health').then(r => { if (!r.ok) throw Error(); return r.json(); }).then(data => {
+      document.querySelector('#service-status').textContent = 'Ortak kaynak servisi hazır · v' + data.version;
+    }).catch(() => { document.querySelector('#service-status').textContent = 'Ortak kaynak servisine şu an ulaşılamıyor. Daha sonra tekrar kontrol edebilirsin.'; });
+  </script>
+</body>
+</html>

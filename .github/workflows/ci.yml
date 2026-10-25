@@ -1,0 +1,29 @@
+name: Test ve paket
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: npm run check
+      - name: Üretilmiş sağlayıcı güncel mi
+        run: git diff --exit-code -- providers/nuvio-tr-hd.js manifest.json
+      - uses: actions/upload-artifact@v7.0.2
+        if: matrix.os == 'ubuntu-latest'
+        with:
+          name: nuvio-tr-hd
+          path: dist/
+          if-no-files-found: error
