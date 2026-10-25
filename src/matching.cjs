@@ -3,7 +3,7 @@ const { normalizeTitle, positiveInt } = require('./util.cjs');
 
 async function resolveIdentity(http, tmdbId, mediaType, season, episode, key) {
   const id = positiveInt(tmdbId);
-  const type = mediaType === 'movie' ? 'movie' : ['tv', 'series'].includes(mediaType) ? 'tv' : null;
+  const type = mediaType === 'movie' ? 'movie' : ['tv', 'series', 'show', 'other'].includes(mediaType) ? 'tv' : null;
   if (!id || !type || !key || (type === 'tv' && (!positiveInt(season) || !positiveInt(episode)))) return null;
   const meta = await http.json(`https://api.themoviedb.org/3/${type}/${id}?api_key=${encodeURIComponent(key)}&append_to_response=external_ids`);
   if (!meta || meta.id !== id) return null;
@@ -12,8 +12,17 @@ async function resolveIdentity(http, tmdbId, mediaType, season, episode, key) {
   const year = typeof date === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(date) ? Number(date.slice(0, 4)) : null;
   if (!normalizeTitle(originalTitle) || !year) return null;
   return { tmdbId: id, originalTitle, year, type, season: type === 'tv' ? Number(season) : null,
+    ...(typeof meta.poster_path === 'string' && /^\/[A-Za-z0-9]+\.(jpg|png)$/i.test(meta.poster_path) ? { posterPath: meta.poster_path } : {}),
     episode: type === 'tv' ? Number(episode) : null, imdbId: meta.imdb_id || meta.external_ids?.imdb_id || null,
-    runtimeMinutes: type === 'movie' && Number(meta.runtime) > 0 ? Number(meta.runtime) : null };
+    runtimeMinutes: type === 'movie' && Number(meta.runtime) > 0 ? Number(meta.runtime) :
+      type === 'tv' && Number(meta.episode_run_time?.[0]) > 0 ? Number(meta.episode_run_time[0]) : null };
+}
+
+function matchesEpisode(value, target) {
+  const text = String(value).replace(/[._]/g, ' ');
+  const found = [...text.matchAll(/\bs(\d{1,3})[ -]*e(\d{1,3})\b|\b(\d{1,2})x(\d{1,3})\b/gi)];
+  return found.length > 0 && found.every(m => Number(m[1] || m[3]) === target.season && Number(m[2] || m[4]) === target.episode) &&
+    !/\bs\d+[ -]*e\d+\s*[-+]\s*(?:e)?\d+\b/i.test(text);
 }
 
 function matchesIdentity(record, target, requireEpisode = true) {
@@ -56,4 +65,4 @@ function matchesStreamFilename(stream, target) {
   }
   return true;
 }
-module.exports = { resolveIdentity, matchesIdentity, matchesAddonMeta, matchesStreamFilename };
+module.exports = { resolveIdentity, matchesIdentity, matchesAddonMeta, matchesStreamFilename, matchesEpisode };

@@ -1,5 +1,15 @@
 # Sonraki işler
 
+## 1.5.0 güncel öncelik
+
+1. GitHub Pages 1.5.0, Windows/Linux testleri ve oturumsuz manifest/provider/sayfa içerik eşitliğini doğrulayıp yayın raporunu güncelleyin. Önceki 1.4.0 yayın raporu tarihsel olabilir.
+2. Kullanıcı iPhone'da GOT/Fleabag bölüm taramasını ve kısa sıralı listeyi deneyecek. GOT 4,41 GiB ve Spider-Man küçük MP4/MKV için video+TR tam indirme/sonrasında uçak modu gerekiyor. Kaynak/QuickJS testini cihaz testi saymayın.
+3. Fleabag indirilebilir dosya yok; Pixel404/link-generator HTML elendi. Dune'da en küçük yeni dosya 18,24 GiB; daha küçük ücretsiz doğrudan aynalar ana kapsam eksiği.
+4. **Sites bekleyen iş:** kullanıcı şu an önceki çalışma alanına dönemiyor. appgprj_6ade5021d6b88191818ece53a5d5f1e0 aynı kimlikte korunur; yeni Site açmayın. Erişim geldiğinde source helper ile açın, src/ + hosting/worker.mjs 1.5 kodunu mevcut checkout'a aktarın, Worker ESM doğrula/paketle/yayımla. /hls/profile.m3u8 ses/altyazı grupları korunarak canlı test edilmeli. O zamana kadar capability gate kapalı; ayrı sesli HLS otomatik master olarak kalır.
+5. Kaynak envanteri/araştırma raporu üzerinden yalnız gerçek erişilebilir ücretsiz/hesapsız kaynakları genişletin. Kopya sağlayıcı sayısını başarı sanmayın. Otomatik zaman senkronu hâlâ uygulanmadı; güvenilir referans/ses ölçümü gerekir.
+
+Aşağıdaki 1.4.0 notları tarihsel bağlamdır.
+
 Son güncelleme: 25 Ekim 2026. Yalnız ücretsiz/hesapsız kapsam geçerli; burhanb3/sa'ya yazmayın.
 
 1. **Tamamlandı:** 1.4.0 köprü canlı kayıt → HEAD 200 → GET Range 206, tekrar üç kayıt, gerçek 1920×800 / 2.830.708.974 byte MKV. Source discovery bilgisayarda, köprü public üretimde; fiziksel telefon testi değil.

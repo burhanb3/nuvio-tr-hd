@@ -22,7 +22,8 @@ test('HLS yaklaşık aktarım boyutu gerçek playlist süresi ve bitrate ile hes
  assert.equal(video.sizeEstimate.minimum,4875000);assert.equal(video.sizeEstimate.maximum,9750000);
  assert.equal(video.sizeEstimate.durationSource,'playlist');
  assert.equal(describeQuality(video,{}).quality,'1080p');assert.match(describeQuality(video,{}).text,/1280×720 \/ 1920×1080 · HLS/);
- assert.match(describeSize(video).size,/^~.* veri$/);http.close();
+ assert.equal(describeSize(video).size,undefined);assert.match(describeSize(video).text,/boyutu değişken/);
+ assert.match(describeSize({sizeEstimate:video.renditions[0].sizeEstimate}).size,/^~.*MiB/);http.close();
 });
 test('HLS canlı akışa film süresi veya dosya boyutu uydurulmaz',async()=>{
  const http=createHttp({fetchImpl:fixtureFetch({})});
@@ -33,7 +34,7 @@ test('çocuk playlist alınamazsa TMDB süresi yalnız tahmin kaynağı olarak k
  const http=createHttp({fetchImpl:fixtureFetch({})});
  const video=await inspectHls(http,master,url,{headers:{},identity:{runtimeMinutes:100}});
  assert.equal(video.durationSource,'tmdb');assert.equal(video.sizeEstimate.minimum,1500000000);
- assert.match(describeSize(video).text,/film süresi tahmini/);http.close();
+ assert.match(describeSize({sizeEstimate:video.renditions[0].sizeEstimate}).text,/tahmini; film süresi/);http.close();
 });
 test('gerçek piksel dosya adıyla değişmez; isim tahmini doğrulanmış diye sunulmaz',()=>{
  assert.equal(describeQuality({dimensions:{width:1280,height:720}},{filename:'Movie.2160p.mkv'}).quality,'720p');
@@ -52,7 +53,7 @@ test('master altındaki canlı playlist için film süresinden boyut tahmini ür
 });
 test('HLS dış kökene kişisel Authorization/Cookie taşımaz',async()=>{
  let sent;
- const http=createHttp({fetchImpl:async(u,opts)=>{sent=opts.headers;return fixtureFetch({'https://cdn.test/low.m3u8':{body:vod}})(u,opts);}});
+ const http=createHttp({fetchImpl:async(u,opts)=>{if(u.startsWith('https://cdn.test/'))sent=opts.headers;return fixtureFetch({'https://cdn.test/low.m3u8':{body:vod}})(u,opts);}});
  await inspectHls(http,master.replace('low.m3u8','https://cdn.test/low.m3u8'),url,
   {headers:{Authorization:'private',Cookie:'private',Referer:'https://stream.test/'}});
  assert.equal(sent.Authorization,undefined);assert.equal(sent.Cookie,undefined);assert.equal(sent.Referer,'https://stream.test/');http.close();

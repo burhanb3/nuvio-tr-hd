@@ -29,8 +29,8 @@ async function loadSubtitles(http, candidate, target, allowHttp, options = {}) {
     if (!url || seen.has(url) || /\.(zip|ass|ssa|rar)(?:\/?$|[?#])/i.test(url)) return false;
     seen.add(url);
     return true;
-  }).slice(0, 4);
-  const tracks = await mapLimit(entries, 2, async (sub, index) => {
+  }).slice(0, 12);
+  const loadTrack = async (sub, index) => {
     if (http.expired()) return null;
     const url = safeUrl(sub.url, candidate.subtitleBase, allowHttp);
     // Subtitle credentials are explicit; video credentials never cross over.
@@ -65,14 +65,24 @@ async function loadSubtitles(http, candidate, target, allowHttp, options = {}) {
     const fps = Number(sub.fpsMilli) > 0 ? ` · ${(Number(sub.fpsMilli) / 1000).toFixed(3)} fps` : '';
     let fingerprint = 2166136261;
     for (const byte of result.bytes) fingerprint = Math.imul(fingerprint ^ byte, 16777619) >>> 0;
-    return { url: result.url, language: 'tr', name: `Türkçe · ${format.toUpperCase()} · ${String(index + 1).padStart(2, '0')} · ${release}${fps}${label}`,
+    const provider = sub._subtitleProvider ? ` · ${sub._subtitleProvider}` : '';
+    return { url: result.url, language: 'tr', name: `Türkçe · ${format.toUpperCase()}${provider} · ${String(index + 1).padStart(2, '0')} · ${release}${fps}${label}`,
       _contentKey: result.bytes.length + ':' + fingerprint,
       ...(options.keepScore ? { _score: match?.score || 90 } : {}), ...(Object.keys(headers).length ? { headers } : {}) };
-  });
+  };
+  const tracks = [], collected = new Set();
+  // Try later alternatives when an earlier URL is broken. Stop after four
+  // distinct valid bodies, instead of waiting on every subtitle in a release.
+  for (let offset = 0; offset < entries.length && tracks.length < 4 && !http.expired(); offset += 2) {
+    const batch = await mapLimit(entries.slice(offset, offset + 2), 2, (sub, index) => loadTrack(sub, offset + index));
+    for (const track of batch) if (track && !collected.has(track._contentKey)) {
+      collected.add(track._contentKey); tracks.push(track);
+    }
+  }
   // Same payload mirrored at two URLs is one subtitle, not two choices.
   const contents = new Set();
   return tracks.filter(t => { if (!t || contents.has(t._contentKey)) return false; contents.add(t._contentKey); return true; })
-    .map(({ _contentKey, ...track }) => track);
+    .slice(0, 4).map(({ _contentKey, ...track }) => track);
 }
 
 function decodeUtf8(bytes) {

@@ -13,10 +13,12 @@ test('JSON uçtan uca: MP4 + MKV, Türkçe SRT/VTT, bozuk kaynak izolasyonu', as
   ] }] });
   const streams = await provider(fixture).getStreams('603', 'movie');
   assert.equal(streams.length, 2);
-  assert.equal(streams[0].quality, '1080p');
-  assert.equal(streams[0].subtitles.length, 2);
-  assert.equal(streams[0].subtitles[0].language, 'tr');
-  assert.match(streams[0].name, /Online izlenebilir · İndirilebilir/);
+  const subtitled = streams.find(stream => stream.type === 'mp4');
+  assert.equal(subtitled.quality, '1920×1080 ✓');
+  assert.equal(subtitled.subtitles.length, 2);
+  assert.equal(subtitled.subtitles[0].language, 'tr');
+  assert.match(subtitled.name, /İndirilebilir/);
+  assert.equal(streams[0].type, 'mkv', 'küçük dosya varsayılan önce gelir');
   assert.ok(streams.every(s => typeof s.url === 'string' && typeof s.size === 'string'));
 });
 test('remake yılı, yanlış TMDB ve benzer isimler elenir', async () => {
@@ -52,7 +54,7 @@ test('stream-only Stremio: kesin başlık+yıl, torrent ve yanlış ad filtreler
   ] });
   const streams = await provider(fixture, { settings: { catalogUrls: '', addonUrls: 'https://addon.test/manifest.json' } }).getStreams(603, 'movie');
   assert.equal(streams.length, 1);
-  assert.equal(streams[0].quality, '1080p');
+  assert.equal(streams[0].quality, '1920×1080 ✓');
 });
 test('süresiz ağ isteği zaman aşımında boş sonuç verir', async () => {
   const start = Date.now();

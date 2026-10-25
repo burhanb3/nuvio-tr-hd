@@ -30,7 +30,7 @@ test('ortak sonuçların kimliği, HLS indirme sınıfı ve özel bilgilerin gö
  }]}};
  const p=createProvider({tmdbKey:'test',settings:{hostedDiscovery:true,catalogUrls:'https://private.test/catalog.json',tmdbApiKey:'test'},fetchImpl:fixtureFetch(fixture,calls)});
  const streams=await p.getStreams(603,'movie');assert.equal(streams.length,1);
- assert.match(streams[0].name,/Online izlenebilir · İndirilemez/);assert.match(streams[0].title,/HLS içi/);
+ assert.match(streams[0].name,/Online · VixSrc/);assert.match(streams[0].title,/Online izlenebilir · İndirilemez/);assert.match(streams[0].title,/HLS içi/);
  const body=calls.find(c=>c.url.endsWith('/api/discover')).body;
  assert.deepEqual(Object.keys(JSON.parse(body)),['target']);assert.ok(!body.includes('private.test'));assert.ok(!body.includes('api_key'));
  const badHttp=createHttp({fetchImpl:fixtureFetch({[SERVICE_ORIGIN+'/api/discover']:{json:{schema:1,target:{...target,year:2003},pairs:[]}}})});

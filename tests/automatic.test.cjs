@@ -45,7 +45,7 @@ test('boş ayarlarda iki bağımsız kaynağı otomatik bulur; her dosyaya farkl
   const calls = [];
   const streams = await createProvider({ tmdbKey: 'test', settings: { directoryEnabled: true, hostedDiscovery: false }, fetchImpl: autoFetch(autoFixture(), calls) }).getStreams(603, 'movie');
   assert.equal(streams.length, 2);
-  assert.match(streams[0].name, /^01 .*Internet Archive/);
+  assert.match(streams[0].name, /^01 .*Archive/);
   assert.match(streams[1].name, /^02 .*DahmerMovies/);
   assert.equal(streams[0].subtitles[0].url, 'https://media.test/exact-b.srt');
   assert.equal(streams[1].subtitles[0].url, 'https://media.test/exact-a.vtt');

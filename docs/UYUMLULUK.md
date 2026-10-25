@@ -1,5 +1,14 @@
 # Nuvio Kotlin Multiplatform uyumluluğu
 
+**Güncel 1.5.0 kontrolü (25 Ekim 2026):** resmî 0.6.4-beta ve cmp-rewrite HEAD 56ae37081afaff820b6073da84e711320238de36 üzerinde kilitli 19 sözleşme dosyası değişmemiştir. [Yeni denetim](../compatibility/upstream-150-check.json). Kilit incelemesiz yenilenmedi. Native supportedTypes movie/tv uygundur; series/show/other tv'ye normalize edilir. Kaynak tipi hatası yüzünden manifestin diziyi gizlediği doğrulanmadı: asıl sorun taramada boş sonuçtu.
+
+Nuvio [ProviderFilterRow.kt](https://github.com/NuvioMedia/NuvioMobile/blob/cmp-rewrite/composeApp/src/commonMain/kotlin/com/nuvio/app/features/streams/ProviderFilterRow.kt) boş ve yüklenmeyen grupları kaynak filtresinde gizler. [StreamFetchSupport.kt](https://github.com/NuvioMedia/NuvioMobile/blob/cmp-rewrite/composeApp/src/commonMain/kotlin/com/nuvio/app/features/streams/StreamFetchSupport.kt) name'i kart başlığı, quality/size/language alanlarını açıklama yapar; kısa görünüm buna uyar. Alt gruplar için özel accordion alanı yoktur; plugin satırları bitişik sıralar ve sayı öneki native alfabetik sıralamada korunur.
+
+Yeni HLS master servisi kaynak/fixture testinden geçti ama mevcut Sites hesabına erişim olmadığı için üretime yayımlanmadı. Sağlık yanıtında features.hlsProfiles true olmadan yeni yol kullanılmaz. Önceden çalışan 1.4.0 dosya köprüsü korunur.
+
+**Fiziksel iPhone/Android, Kotlin derlemesi, tam film oynatımı ve indirme henüz yapılmadı.** Kaynak/QuickJS testi bunların yerine geçmez. Aşağıdaki önceki sürümlere ait bölüm ve sayılar tarihsel kayıtlardır.
+
+
 **1.3.0 dağıtım notu:** GitHub Pages sürümü doğrudan kaynak tarar; isteğe bağlı Worker eski Sites hesabına erişilemediği için üretime yayımlanmadı. Ortak tarama varsayılan kapalıdır. Yeni doğrudan VixSrc HLS format son eki, native `isSupportedDownloadUrl` filtresinin `.m3u8` kontrolüyle birlikte sınandı; HLS dosya indirmesi sunulmaz. Kaynak sözleşmesi güncel 0.6.4-beta ve 25 Ekim güncel dalda tekrar doğrulandı; rapor `compatibility/upstream-current-check.json`. Fiziksel yeni sürüm cihaz testi bekler.
 
 

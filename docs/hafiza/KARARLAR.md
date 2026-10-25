@@ -1,5 +1,14 @@
 # Tasarım kararları
 
+## 1.5.0 ek kararları
+
+- TV'de yıl içermeyen release adı yalnız doğru IMDb sorgu bağı + tam özgün başlık + kesin S/E ile kabul edilir. Filmde yıl zorunluluğu aynı kalır. Sezon paketi tek bölüm diye sunulmaz. Poster bağı, HDHub'ın numeric TMDB ID göstermeyen dizi sayfasını kanonik metadata'ya bağlayan ek kanıttır.
+- Kaynak çeşitliliği gerçek dosya/altyazı erişimiyle sayılır; 221 manifest tanımı veya üç kalite profili bağımsız çalışan sağlayıcı değildir. Üçüncü taraf anahtarları kopyalanmaz.
+- Varsayılan boyut küçükten büyüğe. Bilinmeyen boyut sona gelir; kalite, önerilen ve gruplu sıra ayarlanabilir. Kısa başlık/metaveri native parser'ın desteklediği alanlara dağıtılır. Özel accordion/header alanı uydurulmaz.
+- HLS ayrı kalite satırı ses/altyazı grubunu korumalıdır. Muxed child URL doğrudan kullanılabilir. Ayrı sesli master yalnız yayımlanmış yetenek onayı varsa seçili master servisine gider. Hesap engelinde mevcut master korunur; 404 veren yeni yol yayımlanmış gibi kullanılamaz.
+- HLS boyutunda ortalama bitrate/parça örneği tercih edilir; yalnız peak varsa üst tahmin açık yazılır. Otomatik çoklu kaliteye dar tek sayı uydurulmaz; değişken denir. HTML başlığı ölçüm değildir.
+- Geçersiz ilk altyazı diğer adayları engellemez; en çok 12 aday/dört farklı geçerli dosya. Hash/sürüm/gerçek senkron ayrımı sürer.
+
 1. Güncel KMP scrapers manifesti, CommonJS getStreams(tmdbId, mediaType, season, episode), onSettings formu kullanılır. Üretilmiş providers/nuvio-tr-hd.js doğrudan düzenlenmez.
 2. Film kimliği TMDB ID + normalize özgün başlık + yıl. Dizilerde sezon/bölüm de kesin olmalı. Kaynak isimleri ve uzantı tek başına film kanıtı değildir.
 3. MP4/MKV gerçek konteyner, video boyutu, byte toplamı ve mümkünse süreyle doğrulanır. Dosya adındaki çözünürlük yalnız tahmin etiketi taşır. HLS profili ve bitrate×süre aktarım tahmini gerçek dosya ölçümü değildir.

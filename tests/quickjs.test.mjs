@@ -25,7 +25,7 @@ test('QuickJS HDHub public zincirini çözer; köprü adı ve gerçek MKV piksel
     [file]:{body:mkv(1920,800),headStatus:403}
   }});
   const streams=await runInQuickJs(fixture,{settings:{autoSubtitles:false,archiveEnabled:false,playImdbEnabled:false,vixsrcEnabled:false}});
-  assert.equal(streams.length,1);assert.equal(streams[0].url,alias);assert.match(streams[0].name,/1920×800 · dosyadan doğrulandı/);
+  assert.equal(streams.length,1);assert.equal(streams[0].url,alias);assert.equal(streams[0].quality,'1920×800 ✓');
   assert.match(streams[0].name,/İndirilebilir/);assert.equal(streams[0].type,'mkv');assert.ok(streams[0].size);
 });
 
@@ -132,16 +132,30 @@ test('derlenmiş gerçek sağlayıcı QuickJS üzerinde MP4/MKV ve Türkçe alty
   ] }] });
   const streams = await runInQuickJs(fixture);
   assert.equal(streams.length, 2);
-  assert.equal(streams[0].quality, '1080p');
-  assert.match(streams[0].subtitles[0].name, /^Türkçe · SRT/);
-  assert.equal(streams[0].subtitles[0].language, 'tr');
-  assert.equal(streams[1].type, 'mkv');
+  const subtitled=streams.find(stream=>stream.type==='mp4');
+  assert.equal(subtitled.quality, '1920×1080 ✓');
+  assert.match(subtitled.subtitles[0].name, /^Türkçe · SRT/);
+  assert.equal(subtitled.subtitles[0].language, 'tr');
+  assert.equal(streams[0].type, 'mkv');
 });
 test('derlenmiş ayar formu KMP onSettings sözleşmesine uyar', async () => {
   const layout = await runInQuickJs({}, { invokeSettings: true });
   assert.ok(Array.isArray(layout));
   assert.ok(layout.some(field => field.type === 'toggle' && field.key === 'includeHls'));
   assert.ok(layout.every(field => ['header', 'info', 'text', 'toggle', 'select'].includes(field.type)));
+});
+
+test('QuickJS: yıl içermeyen doğru dizi bölümü ve AltyazıDB Türkçe SRT birlikte döner',async()=>{
+ const tv={id:67070,original_name:'Fleabag',first_air_date:'2016-07-21',external_ids:{imdb_id:'tt5687612'},episode_run_time:[26]};
+ const fixture={
+  'https://api.themoviedb.org/3/tv/67070?api_key=test&append_to_response=external_ids':{json:tv},
+  'https://streamdata.vaplayer.ru/api.php?tmdb=67070&type=tv&season=1&episode=1':{json:{status_code:200,data:{imdb_id:'tt5687612',file_name:'Fleabag.S01E01.1080p.WEB-DL',stream_urls:['https://media.test/episode.mp4']}}},
+  'https://media.test/episode.mp4':{body:helpers.mp4()},
+  'https://altyazidb.online/subtitles/series/tt5687612%3A1%3A1.json':{json:{subtitles:[{lang:'tur',title:'S01E01 WEB-DL',url:'https://subs.test/tr.srt'}]}},
+  'https://subs.test/tr.srt':{body:'1\n00:00:00,000 --> 00:25:00,000\nÖrnek\n',mime:'application/x-subrip'}
+ };
+ const streams=await runInQuickJs(fixture,{args:['67070','tv',1,1],settings:{vixsrcEnabled:false,hdhubEnabled:false}});
+ assert.equal(streams.length,1);assert.equal(streams[0].subtitles[0].language,'tr');assert.match(streams[0].subtitles[0].name,/AltyazıDB/);
 });
 
 test('QuickJS: clearTimeout native beklemeyi iptal etmese de hızlı çağrı uzun bütçeyi beklemez', async () => {
@@ -166,6 +180,6 @@ test('QuickJS otomatik dizin taraması, BigInt dosya hash’i ve Türkçe eşlem
   } });
   const streams = await runInQuickJs(fixture, { settings: { directoryEnabled: true, hostedDiscovery: false, archiveEnabled: false, playImdbEnabled: false } });
   assert.equal(streams.length, 1);
-  assert.equal(streams[0].quality, '1080p');
+  assert.equal(streams[0].quality, '1920×1080 ✓');
   assert.equal(streams[0].subtitles[0].language, 'tr');
 });

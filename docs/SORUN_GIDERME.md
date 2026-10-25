@@ -1,5 +1,8 @@
 # Uzun bekleme, boş kaynak veya eksik bilgi
 
+**Güncel sürüm 1.5.0:** dizilerde PlayIMDb yıl filtresi ve VixSrc TV rotası düzeltildi, HDHub tek bölüm dosyaları ve AltyazıDB eklendi. Kısa başlık, küçükten büyüğe varsayılan sıra, kalite/gruplama seçenekleri var. Sesi birlikte gelen HLS ayrı kalite satırlarıdır; ayrı sesli HLS için profil servisi Sites erişimi olmadığı için yayımlanamadı ve otomatik master korunur. Aşağıdaki 1.4.0 notları tarihsel bağlamdır. [Yeni araştırma ve sınırlar](KAYNAK_ARASTIRMASI.md).
+
+
 ## Güncelleme
 
 1. Nuvio Pluginler bölümünde https://burhanb3.github.io/nuvio-tr-hd/manifest.json deposunu yenileyin; sağlayıcı 1.4.0 olmalı. Eski hayatimbitmiss Sites kopyasını kapatın.

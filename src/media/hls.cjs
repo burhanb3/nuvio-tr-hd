@@ -1,5 +1,5 @@
 'use strict';
-const { safeUrl } = require('../util.cjs');
+const { safeUrl, mapLimit } = require('../util.cjs');
 
 function attributes(line) {
   const result = {};
@@ -11,6 +11,8 @@ function inspectPlaylist(text, base) {
   if (lines[0] !== '#EXTM3U') return null;
   const variants = [];
   let duration = 0, segments = 0;
+  const mediaSegments = [], media = [];
+  let segmentDuration = null;
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
     if (line.startsWith('#EXT-X-STREAM-INF:')) {
@@ -18,20 +20,67 @@ function inspectPlaylist(text, base) {
       const resolution = info.RESOLUTION?.match(/^(\d+)x(\d+)$/);
       const url = safeUrl(lines[i + 1], base);
       const bandwidth = Number(info.BANDWIDTH), averageBandwidth = Number(info['AVERAGE-BANDWIDTH']);
-      if (url) variants.push({ url,
+      if (url) variants.push({ url, line, audioGroup: info.AUDIO || null, subtitlesGroup: info.SUBTITLES || null,
         dimensions: resolution && Number(resolution[1]) <= 16384 && Number(resolution[2]) <= 16384 && Number(resolution[1]) > 0 && Number(resolution[2]) > 0 ? { width: Number(resolution[1]), height: Number(resolution[2]) } : null,
         bandwidth: bandwidth > 0 && bandwidth < 1000000000 ? bandwidth : null,
         averageBandwidth: averageBandwidth > 0 && averageBandwidth < 1000000000 ? averageBandwidth : null });
     }
     if (line.startsWith('#EXTINF:')) {
       const value = Number(line.slice(8).split(',')[0]);
-      if (value > 0 && value < 3600) { duration += value; segments++; }
+      if (value > 0 && value < 3600) { duration += value; segments++; segmentDuration = value; }
+    }
+    if (segmentDuration && line && !line.startsWith('#')) {
+      const address = safeUrl(line, base);
+      if (address) mediaSegments.push({ url: address, duration: segmentDuration });
+      segmentDuration = null;
+    }
+    if (line.startsWith('#EXT-X-MEDIA:')) {
+      const info = attributes(line.slice(13));
+      const uri = safeUrl(info.URI, base);
+      if (uri) media.push({ type: info.TYPE, group: info['GROUP-ID'], line: line.replace(/URI="[^"]*"/, `URI="${uri}"`), url: uri });
     }
   }
   const ended = lines.includes('#EXT-X-ENDLIST');
   const live = segments > 0 && !ended;
-  return { variants: variants.slice(0, 16), duration: ended && duration > 0 && duration < 86400 ? duration : null, live,
+  return { variants: variants.slice(0, 16), media: media.slice(0, 40), segments: mediaSegments,
+    duration: ended && duration > 0 && duration < 86400 ? duration : null, live,
     valid: variants.length > 0 || (segments > 0 && lines.some(l => l.startsWith('#EXT-X-TARGETDURATION:'))) };
+}
+
+function selectedMaster(master, variant) {
+  const media = master.media.filter(m => (m.type === 'AUDIO' && m.group === variant.audioGroup) || (m.type === 'SUBTITLES' && m.group === variant.subtitlesGroup));
+  return ['#EXTM3U', '#EXT-X-VERSION:6', ...media.map(m => m.line), variant.line, variant.url, ''].join('\n');
+}
+function profileAddress(text, origin) {
+  if (!origin || text.length > 12000) return null;
+  try {
+    const binary = encodeURIComponent(text).replace(/%([0-9A-F]{2})/g, (_, hex) => String.fromCharCode(parseInt(hex, 16)));
+    return origin + '/hls/profile.m3u8?data=' + encodeURIComponent(btoa(binary));
+  } catch { return null; }
+}
+function requestHeaders(candidate, from, to) {
+  return new URL(from).origin === new URL(to).origin ? candidate.headers :
+    Object.fromEntries(Object.entries(candidate.headers || {}).filter(([k]) => !/^(authorization|cookie)$/i.test(k)));
+}
+async function sampledBytes(http, media, headers, totalDuration, base) {
+  if (!media?.duration || media.live || !media.segments.length) return null;
+  const indices = [...new Set([0.15, 0.5, 0.85].map(f => Math.floor((media.segments.length - 1) * f)))];
+  const samples = await mapLimit(indices, 3, async index => {
+    if (http.expired()) return null;
+    const segment = media.segments[index];
+    if (!http.hlsNoSampleOrigins) http.hlsNoSampleOrigins = new Set();
+    const origin = new URL(segment.url).origin;
+    if (http.hlsNoSampleOrigins.has(origin)) return null;
+    const result = await http.request(segment.url, { method: 'HEAD', headers: requestHeaders({ headers }, base, segment.url), timeoutMs: 1600 });
+    if (!result || /html|json|xml/.test(result.response.headers.get('content-type') || '')) { http.hlsNoSampleOrigins.add(origin); return null; }
+    const range = result?.response.headers.get('content-range')?.match(/^bytes \d+-\d+\/(\d+)$/i);
+    const size = Number(range?.[1] || result?.response.headers.get('content-length'));
+    if (!(size > 0 && size < 200000000) || result.response.headers.get('content-encoding')) { http.hlsNoSampleOrigins.add(origin); return null; }
+    return { bytes: size, duration: segment.duration };
+  });
+  const valid = samples.filter(Boolean);
+  if (valid.length < Math.min(2, indices.length)) return null;
+  return { bytes: Math.round(valid.reduce((sum, s) => sum + s.bytes, 0) / valid.reduce((sum, s) => sum + s.duration, 0) * totalDuration), samples: valid.length };
 }
 
 async function inspectHls(http, text, url, candidate) {
@@ -39,12 +88,14 @@ async function inspectHls(http, text, url, candidate) {
   if (!master?.valid) return null;
   let duration = master.duration, durationSource = duration ? 'playlist' : null, live = master.live;
   const variants = master.variants;
+  let firstMedia = null, firstUrl = null;
   if (variants.length && !duration && !http.expired()) {
     const lowest = variants.slice().sort((a, b) => (a.bandwidth || Infinity) - (b.bandwidth || Infinity))[0];
     const sameOrigin = new URL(lowest.url).origin === new URL(url).origin;
     const headers = sameOrigin ? candidate.headers : Object.fromEntries(Object.entries(candidate.headers || {}).filter(([k]) => !/^(authorization|cookie)$/i.test(k)));
     const child = await http.text(lowest.url, { headers });
     const media = child && inspectPlaylist(child.text, child.url);
+    firstMedia = media; firstUrl = lowest.url;
     if (media?.live) live = true;
     if (media?.duration) { duration = media.duration; durationSource = 'playlist'; }
   }
@@ -60,9 +111,32 @@ async function inspectHls(http, text, url, candidate) {
   }).filter(n => Number.isFinite(n) && n > 0);
   const sizeEstimate = estimates.length ? { minimum: Math.round(Math.min(...estimates)), maximum: Math.round(Math.max(...estimates)),
     basis: variants.every(v => !!v.averageBandwidth) ? 'average-bitrate' : 'peak-or-average-bitrate', durationSource } : null;
+  const renditions = await mapLimit(variants.filter(v => v.dimensions).slice(0, 5), 2, async variant => {
+    let media = variant.url === firstUrl ? firstMedia : null;
+    if (!media && !http.expired()) {
+      const child = await http.text(variant.url, { headers: requestHeaders(candidate, url, variant.url), timeoutMs: 2000 });
+      media = child && inspectPlaylist(child.text, child.url);
+    }
+    const seconds = media?.duration || (media?.live ? null : duration);
+    let estimate = seconds && (variant.averageBandwidth || variant.bandwidth) ? {
+      minimum: Math.round((variant.averageBandwidth || variant.bandwidth) * seconds / 8),
+      maximum: Math.round((variant.averageBandwidth || variant.bandwidth) * seconds / 8),
+      basis: variant.averageBandwidth ? 'average-bitrate' : 'peak-bitrate', durationSource: media?.duration ? 'playlist' : durationSource
+    } : null;
+    // HEAD samples avoid fetching video segments into iOS's buffering bridge.
+    // External audio would need separate measurement; use the advertised mux
+    // average/peak rather than silently omitting its bytes.
+    if (seconds && !variant.audioGroup && !variant.averageBandwidth && !http.expired()) {
+      const sample = await sampledBytes(http, media, requestHeaders(candidate, url, variant.url), seconds, variant.url);
+      if (sample) estimate = { minimum: sample.bytes, maximum: sample.bytes, basis: 'segment-samples', samples: sample.samples, durationSource: 'playlist' };
+    }
+    return { url: variant.url, dimensions: variant.dimensions, playlist: selectedMaster(master, variant), sizeEstimate: estimate,
+      duration: seconds, hasExternalAudio: !!variant.audioGroup, hasExternalSubtitles: !!variant.subtitlesGroup };
+  });
   return { url, container: 'hls', dimensions: null, size: null, downloadable: false,
+    renditions,
     resolutionOptions, resolutionEvidence: resolutionOptions.length ? 'hls-manifest' : null,
     sizeEstimate, ...(duration ? { duration, durationSource } : {}) };
 }
 
-module.exports = { attributes, inspectPlaylist, inspectHls };
+module.exports = { attributes, inspectPlaylist, inspectHls, selectedMaster, profileAddress };

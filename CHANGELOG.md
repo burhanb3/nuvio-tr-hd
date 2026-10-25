@@ -1,5 +1,17 @@
 # Değişiklik günlüğü
 
+## 1.5.0 — 25 Ekim 2026
+
+- TV kapsamı düzeltildi: VixSrc bölüm rotası, PlayIMDb doğru IMDb+tam bölüm ile yıl içermeyen dizi release'leri. Native desteklenen show/other türleri güvenli TV normalizasyonuna eklendi.
+- HDHub TV JSON-LD adı/yılı + TMDB posteriyle bağlama, tek bölüm seçimi, paket eleme. Büyük bölüm sayfası için en çok 1.000.000 karakter; native 1 MiB sınırı büyütülmedi.
+- Public .mkv/.mp4 Worker dosya terminalleri ve GET-only erişim; literal dosya adı boşlukları güvenli kodlanır. İlk küçük aynalar ölüyse sonraki sınırlı grup denenir.
+- Hesapsız AltyazıDB Türkçe SRT eklendi; dizi S/E kontrolü, sürüm notunu tam sürüm kanıtı saymama, bozuk ilk dosyalardan sonra geçerli alternatifleri deneme.
+- Kısa native kart başlığı, ayrı piksel/boyut/TR alanları; varsayılan küçükten büyüğe, kalite/önerilen sıralama ve tür/sağlayıcı/kalite gruplaması ayarları.
+- Sesi birlikte gelen HLS her kaliteye ayrı satır ve ayrı boyut tahmini; ortalama bitrate veya üç geçerli HEAD parça örneği, yoksa açık tepe bitrate üst tahmini. Geniş otomatik kalite aralıkları gösterilmez.
+- Ayrı ses/altyazı gruplarını koruyan stateless HLS master servisi hazır, **yayımlanmadı**. Mevcut Sites projesi hesap/çalışma alanı değişiminden sonra NOT_FOUND; kullanıcı şu an dönemiyor. Yetenek kontrolü yeni yolu kapalı tutar; ayrı sesli master otomatik kalır. Var olan dosya köprüsü değiştirilmedi.
+- Dokuz depo/221 tanım/134 normalize kimlik envanteri, seçilmiş kod ve canlı endpoint incelemesi. Her kayıt çalışan bağımsız sağlayıcı sayılmadı. Fiziksel cihaz/tam video testleri yapılmadı.
+
+
 ## 1.4.0 — 25 Ekim 2026
 
 - Yalnız ücretsiz/hesapsız kapsam. HDHub/HubCloud public FSL → R2 adaptörü, TMDB/özgün başlık/yıl doğrulaması ve üç küçük aday önceliği.

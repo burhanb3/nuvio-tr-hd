@@ -1,7 +1,7 @@
 'use strict';
 const { createHttp } = require('./http.cjs');
 const { createScheduler } = require('./scheduler.cjs');
-const { loadHosted, registerDownloads } = require('./hosted.cjs');
+const { loadHosted, registerDownloads, SERVICE_ORIGIN } = require('./hosted.cjs');
 const { resolveIdentity } = require('./matching.cjs');
 const { loadCatalog } = require('./providers/catalog.cjs');
 const { loadAddon } = require('./providers/stremio.cjs');
@@ -16,6 +16,7 @@ const { createSubtitleDiscovery, scoreSubtitle } = require('./subtitle-discovery
 const { safeUrl, mapLimit } = require('./util.cjs');
 const { rankStreams } = require('./ranking.cjs');
 const { describeQuality, describeSize } = require('./media/presentation.cjs');
+const { profileAddress } = require('./media/hls.cjs');
 
 function parseUrls(value, allowHttp) {
   if (typeof value !== 'string') return [];
@@ -23,7 +24,21 @@ function parseUrls(value, allowHttp) {
 }
 function formatResults(completed, settings, target) {
   const maximum = Math.max(3, Math.min(20, Number(settings.maxResults) || 20));
-  return rankStreams(completed, maximum).map(({ candidate, video, subtitles }, index) => {
+  const expanded = completed.flatMap(pair => {
+    const { video } = pair;
+    if (video.container !== 'hls' || !video.renditions?.length || settings.hlsView === 'auto') return [pair];
+    const profiles = video.renditions.map(r => {
+      const publicSource = ['VixSrc', 'PlayIMDb', 'DiziYou'].includes(pair.candidate.source) &&
+        !Object.keys(pair.candidate.headers || {}).some(key => /^(authorization|cookie)$/i.test(key));
+      const address = settings.useDownloadBridge !== false && settings.hlsProfileBridgeReady === true && publicSource ? profileAddress(r.playlist, SERVICE_ORIGIN) :
+        !r.hasExternalAudio && !r.hasExternalSubtitles && /\.m3u8(?:$|[?#])/i.test(r.url) ? r.url : null;
+      if (!address) return null;
+      return { ...pair, video: { ...video, url: address, renditions: undefined, resolutionOptions: [r.dimensions], sizeEstimate: r.sizeEstimate, duration: r.duration } };
+    }).filter(Boolean);
+    return profiles.length ? settings.hlsView === 'both' ? [pair, ...profiles] : profiles : [pair];
+  });
+  const ordering = { ...settings, sortOrder: settings.sortOrder || 'size_asc' };
+  return rankStreams(expanded, maximum, ordering).map(({ candidate, video, subtitles }, index) => {
     const kind = video.downloadable ? `${video.container.toUpperCase()} · Online izlenebilir · İndirilebilir` : 'HLS · Online izlenebilir · İndirilemez';
     const quality = describeQuality(video, candidate), size = describeSize(video);
     const dimensionText = ` · ${quality.text}`;
@@ -31,10 +46,19 @@ function formatResults(completed, settings, target) {
     const matchText = subScore >= 90 ? 'eşleşti' : subScore >= 70 ? 'sürüm benzerliği' : subScore >= 65 ? 'süre uyumu' : 'film düzeyi; senkron belirsiz';
     const subtitleText = subtitles.length ? ` · TR altyazı (${matchText})` : candidate.embeddedTurkish ? ' · TR altyazı (HLS içi)' : ' · TR altyazı bulunamadı';
     const title = `${target.originalTitle} (${target.year}) · ${kind}${dimensionText} · ${size.text}${subtitleText}`;
-    return { name: `${String(index + 1).padStart(2, '0')} · Nuvio TR HD · ${candidate.source} · ${kind}${dimensionText} · ${size.text}${subtitleText}`,
+    const source = String(candidate.source || 'Kaynak').replace('4KHDHub / HubCloud', '4KHDHub').replace('Internet Archive', 'Archive') +
+      (candidate.serverIndex ? ` ${candidate.serverIndex}` : '');
+    const subTag = subtitles.length ? 'TR' : candidate.embeddedTurkish ? 'TR içi' : 'TR yok';
+    const badge = video.downloadable ? 'İndirilebilir' : 'Online';
+    const details = video.dimensions ? `${video.dimensions.width}×${video.dimensions.height}` :
+      video.resolutionOptions?.length === 1 ? `${video.resolutionOptions[0].width}×${video.resolutionOptions[0].height}` :
+        video.resolutionOptions?.length > 1 ? 'Otomatik kalite' : quality.quality;
+    const label = settings.compactLabels === false ? `${source} · ${kind}${dimensionText} · ${size.text}${subtitleText}` : `${badge} · ${source}`;
+    return { name: `${String(index + 1).padStart(2, '0')} · ${label}`,
       title, url: video.url, quality: quality.quality,
       ...(size.size ? { size: size.size } : {}),
-      ...(subtitles.length ? { language: 'Türkçe altyazı' } : {}), provider: 'Nuvio TR HD', type: video.container,
+      ...(settings.compactLabels !== false ? { quality: `${details}${video.dimensions ? ' ✓' : video.container === 'hls' ? ' HLS' : quality.quality === 'Bilinmiyor' ? '' : ' tahmin'}` } : {}),
+      language: subTag + (subtitles.length && subScore < 90 ? ' · senkron belirsiz' : ''), provider: 'Nuvio TR HD', type: video.container,
       ...(Object.keys(candidate.headers).length ? { headers: candidate.headers } : {}),
       subtitles: subtitles.map(({ _score, ...subtitle }) => subtitle) };
   });
@@ -64,6 +88,8 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs = 24000, r
       const unique = new Map(), waiting = [];
       let active = 0;
       let timer, target, discoverSubtitles;
+      let profileBridgeReady = false;
+      const renderSettings = () => ({ ...settings, hlsProfileBridgeReady: profileBridgeReady });
       const strictSubtitles = settings.subtitlePolicy === 'require';
       async function withProbeSlot(job) {
         if (active >= 3) await new Promise(resolve => waiting.push(resolve));
@@ -110,6 +136,8 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs = 24000, r
           target = await resolveIdentity(http, tmdbId, mediaType, season, episode, settings.tmdbApiKey || tmdbKey);
           if (!target) { report.reason = 'identity_unavailable'; return []; }
           discoverSubtitles = createSubtitleDiscovery(http, target, settings);
+          if (settings.autoDiscover !== false && settings.useDownloadBridge !== false && settings.hlsView !== 'auto')
+            void http.json(SERVICE_ORIGIN + '/api/health', { timeoutMs: 1500 }).then(data => { profileBridgeReady = data?.features?.hlsProfiles === true; });
           let hosted = null;
           if (settings.autoDiscover !== false && settings.hostedDiscovery === true) {
             hosted = await loadHosted(http, target);
@@ -155,12 +183,12 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs = 24000, r
             void discoverSubtitles.prefetch();
             await mapLimit(candidates.slice(0, quota), 3, processCandidate);
           });
-          return formatResults(completed, settings, target);
-        } catch { report.reason = 'internal_error'; return target ? formatResults(completed, settings, target) : []; }
+          return formatResults(completed, renderSettings(), target);
+        } catch { report.reason = 'internal_error'; return target ? formatResults(completed, renderSettings(), target) : []; }
       };
       try {
         const results = await Promise.race([run(), new Promise(resolve => {
-          timer = scheduler.schedule(() => { report.reason = 'deadline'; resolve(target ? formatResults(completed, settings, target) : []); }, budgetMs);
+          timer = scheduler.schedule(() => { report.reason = 'deadline'; resolve(target ? formatResults(completed, renderSettings(), target) : []); }, budgetMs);
         })]);
         report.results = results.length;
         if (report.reason === 'searching') report.reason = results.length ? 'ok' : 'no_eligible_sources';
@@ -181,6 +209,17 @@ function onSettings() {
     { type: 'header', label: 'Nuvio TR HD · Otomatik kaynak ve Türkçe altyazı' },
     { type: 'info', label: 'Varsayılan: tüm çözünürlükler, en fazla 20 alternatif. Online izlenebilir kaynaklar gösterilir; doğrulanmış MP4/MKV ayrıca İndirilebilir etiketlidir. Türkçe bulunamazsa video gizlenmez. Nuvio altyazı dilini Türkçe seçin.' },
     { type: 'toggle', key: 'autoDiscover', label: 'Otomatik kaynak tarama', defaultValue: true },
+    { type: 'toggle', key: 'compactLabels', label: 'Kısa ve sade kaynak başlıkları', defaultValue: true },
+    { type: 'select', key: 'sortOrder', label: 'Kaynak sıralaması', defaultValue: 'size_asc', options: [
+      { value: 'size_asc', label: 'Boyut: küçükten büyüğe' }, { value: 'size_desc', label: 'Boyut: büyükten küçüğe' },
+      { value: 'quality_desc', label: 'Kalite: yüksekten düşüğe' }, { value: 'quality_asc', label: 'Kalite: düşükten yükseğe' },
+      { value: 'recommended', label: 'Önerilen: indirme ve Türkçe eşleşmesi' }] },
+    { type: 'select', key: 'groupResults', label: 'Sıralamada grupla', defaultValue: 'none', description: 'Aynı gruptaki satırlar yan yana sıralanır; Nuvio içinde ayrı açılır başlık oluşturulmaz.', options: [
+      { value: 'none', label: 'Gruplama yok' }, { value: 'type', label: 'Önce indirilebilir, sonra online' },
+      { value: 'quality', label: 'Çözünürlüğe göre' }, { value: 'source', label: 'Sağlayıcıya göre' }] },
+    { type: 'select', key: 'hlsView', label: 'HLS kalite seçenekleri', defaultValue: 'separate', options: [
+      { value: 'separate', label: 'Her çözünürlüğü ayrı göster' }, { value: 'auto', label: 'Tek otomatik kalite' },
+      { value: 'both', label: 'Ayrı kaliteler ve otomatik' }] },
     { type: 'toggle', key: 'useDownloadBridge', label: 'MKV indirme adını koruyan dosya köprüsü', defaultValue: true, description: 'Kaynaklar telefondan aranır. Yalnız bulunan public dosya adresi ve film metadatası köprüde doğrulanır. Video doğrudan kaynaktan gelir; kişisel katalog/anahtar gönderilmez.' },
     { type: 'toggle', key: 'vixsrcEnabled', label: 'VixSrc çevrimiçi alternatifleri', defaultValue: true },
     { type: 'toggle', key: 'hdhubEnabled', label: '4KHDHub / HubCloud doğrudan dosya araması', defaultValue: true, description: 'Ücretsiz public FSL dosyaları doğrulanır. Kaynak metadatası boyut/piksel doğrulaması sayılmaz.' },
@@ -200,7 +239,7 @@ function onSettings() {
       { value: '6', label: '6 alternatif' }, { value: '10', label: '10 alternatif' }, { value: '20', label: '20 alternatif' }] },
     { type: 'text', key: 'catalogUrls', label: 'Ek JSON katalog adresleri', placeholder: 'İsteğe bağlı; boşlukla ayırın' },
     { type: 'text', key: 'addonUrls', label: 'Ek Stremio manifest adresleri', placeholder: 'İsteğe bağlı; boşlukla ayırın' },
-    { type: 'text', key: 'subtitleUrls', label: 'Ek/alternatif altyazı addon adresleri', description: 'Boşsa yerleşik Türkçe OpenSubtitles v3+ ve resmî v3 kullanılır.' },
+    { type: 'text', key: 'subtitleUrls', label: 'Ek/alternatif altyazı addon adresleri', description: 'Boşsa AltyazıDB, Türkçe OpenSubtitles v3+ ve resmî v3 kullanılır.' },
     { type: 'text', key: 'tmdbApiKey', label: 'TMDB v3 anahtarı (isteğe bağlı)', description: 'Boşsa Nuvio tarafından sağlanan anahtar kullanılır.' },
     { type: 'toggle', key: 'includeHls', label: 'HLS çevrimiçi izleme alternatiflerini göster', defaultValue: true, description: 'Doğrudan dosyalar önce gelir. HLS yalnız oynatma içindir; Nuvio üzerinden dosya olarak indirilemez.' },
     { type: 'toggle', key: 'debug', label: 'Hata ayıklama özeti', defaultValue: false, description: 'Uygulama günlüklerine kaynak/adet/HTTP durumlarını yazar; erişim anahtarı veya video adresi yazılmaz.' },

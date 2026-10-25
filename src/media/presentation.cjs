@@ -21,10 +21,13 @@ function humanBytes(bytes) {
   return bytes >= 1024 ** 3 ? `${(bytes / 1024 ** 3).toFixed(2)} GiB` : `${(bytes / 1024 ** 2).toFixed(1)} MiB`;
 }
 function describeSize(video) {
-  if (video.size > 0) return { size: `${(video.size / 1024 ** 2).toFixed(1)} MiB`, text: `${humanBytes(video.size)} · dosya boyutu` };
+  if (video.size > 0) return { size: humanBytes(video.size), text: `${humanBytes(video.size)} · dosya boyutu` };
   if (video.sizeEstimate?.minimum > 0 && video.sizeEstimate.maximum >= video.sizeEstimate.minimum) {
     const estimate = video.sizeEstimate, range = humanBytes(estimate.minimum) + (estimate.maximum > estimate.minimum * 1.02 ? '–' + humanBytes(estimate.maximum) : '');
-    return { size: `~${range} veri`, text: `~${range} veri · bitrate × ${estimate.durationSource === 'playlist' ? 'akış süresi' : 'film süresi'} tahmini` };
+    if (estimate.maximum > estimate.minimum * 1.02) return { text: 'Otomatik kalite · aktarım boyutu değişken' };
+    const qualifier = estimate.basis === 'peak-bitrate' ? '≤~' : '~';
+    const basis = estimate.basis === 'segment-samples' ? `${estimate.samples} parça başlığı örneği` : estimate.basis === 'peak-bitrate' ? 'tepe bitrate; üst tahmin' : 'bitrate × süre tahmini';
+    return { size: `${qualifier}${range}`, text: `${qualifier}${range} veri · ${basis}${estimate.durationSource === 'tmdb' ? '; film süresi' : ''}` };
   }
   return { text: video.container === 'hls' ? 'Aktarım boyutu hesaplanamadı' : 'Dosya boyutu alınamadı' };
 }

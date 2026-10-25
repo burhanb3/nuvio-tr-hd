@@ -1,0 +1,132 @@
+{
+  "checkedAt": "2026-10-25T20:03:25.703Z",
+  "targetVersion": "1.5.0",
+  "live": [
+    {
+      "name": "dune",
+      "version": "1.5.0",
+      "checkedAt": "2026-10-25T20:01:29.018Z",
+      "elapsedMs": 24030,
+      "results": 14,
+      "turkish": 13,
+      "downloadable": [
+        {
+          "quality": "1920×804 ✓",
+          "size": "18.24 GiB",
+          "turkish": 4
+        },
+        {
+          "quality": "1920×1080 ✓",
+          "size": "29.57 GiB",
+          "turkish": 4
+        },
+        {
+          "quality": "3840×1608 ✓",
+          "size": "43.94 GiB",
+          "turkish": 4
+        },
+        {
+          "quality": "3840×2160 ✓",
+          "size": "71.00 GiB",
+          "turkish": 0
+        }
+      ]
+    },
+    {
+      "name": "spider-man",
+      "version": "1.5.0",
+      "checkedAt": "2026-10-25T19:59:22.479Z",
+      "elapsedMs": 24035,
+      "results": 16,
+      "turkish": 16,
+      "downloadable": [
+        {
+          "quality": "1280×720 ✓",
+          "size": "730.3 MiB",
+          "turkish": 1
+        },
+        {
+          "quality": "853×480 ✓",
+          "size": "835.3 MiB",
+          "turkish": 1
+        },
+        {
+          "quality": "1920×800 ✓",
+          "size": "2.64 GiB",
+          "turkish": 1
+        },
+        {
+          "quality": "1920×800 ✓",
+          "size": "7.71 GiB",
+          "turkish": 1
+        },
+        {
+          "quality": "1920×802 ✓",
+          "size": "9.69 GiB",
+          "turkish": 1
+        },
+        {
+          "quality": "3840×2160 ✓",
+          "size": "85.47 GiB",
+          "turkish": 1
+        }
+      ]
+    },
+    {
+      "name": "got",
+      "version": "1.5.0",
+      "checkedAt": "2026-10-25T20:04:25.261Z",
+      "elapsedMs": 20293,
+      "results": 10,
+      "turkish": 10,
+      "downloadable": [
+        {
+          "quality": "1920×1080 ✓",
+          "size": "4.41 GiB",
+          "turkish": 4
+        },
+        {
+          "quality": "1920×1080 ✓",
+          "size": "5.96 GiB",
+          "turkish": 4
+        },
+        {
+          "quality": "1920×1080 ✓",
+          "size": "13.63 GiB",
+          "turkish": 4
+        }
+      ]
+    },
+    {
+      "name": "fleabag",
+      "version": "1.5.0",
+      "checkedAt": "2026-10-25T20:01:16.996Z",
+      "elapsedMs": 12015,
+      "results": 10,
+      "turkish": 10,
+      "downloadable": []
+    }
+  ],
+  "sourceInventory": {
+    "repositoriesTried": 9,
+    "repositoriesResponded": 8,
+    "definitions": 221,
+    "normalizedIds": 134,
+    "allSourcesVerified": false
+  },
+  "bridge": {
+    "origin": "https://nuvio-tr-hd-download-bridge.kamilbsr03.chatgpt.site",
+    "deployedVersion": "1.4.0",
+    "newHlsProfilesDeployed": false,
+    "reason": "Sites project NOT_FOUND after account/workspace change; user cannot switch now; capability gate keeps new route disabled"
+  },
+  "nativeUiEvidence": {
+    "supportedTypes": "movie/tv; native normalizes series/show/other to tv",
+    "emptyProvider": "ProviderFilterRow filters empty nonloading groups",
+    "compactFields": "StreamFetchSupport uses name and quality/size/language metadata; no custom accordion groups"
+  },
+  "deviceTest": "not-run",
+  "fullPlayback": "not-run",
+  "fullDownload": "not-run",
+  "subtitleAudioSync": "not-run"
+}

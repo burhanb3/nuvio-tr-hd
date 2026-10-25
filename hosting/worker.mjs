@@ -10,7 +10,7 @@ const { loadVixBundle, vixCandidates, selectMaster } = vixModule;
 const { scanHdHub } = hdModule;
 const { probe } = probeModule;
 const { safeUrl, normalizeTitle, mapLimit } = utilModule;
-export const VERSION = '1.4.0';
+export const VERSION = '1.5.0';
 const cors = { 'Access-Control-Allow-Origin': '*', 'Cache-Control': 'no-store' };
 const json = (data, status = 200) => new Response(JSON.stringify(data), { status, headers: { ...cors, 'Content-Type': 'application/json; charset=utf-8' } });
 
@@ -231,7 +231,20 @@ export function createService({ fetchImpl = globalThis.fetch, cache: suppliedCac
       const url = new URL(request.url);
       try {
         if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: { ...cors, 'Access-Control-Allow-Methods': 'GET, POST, OPTIONS', 'Access-Control-Allow-Headers': 'Content-Type' } });
-        if (url.pathname === '/api/health') return json({ version: VERSION, discovery: true, cacheSeconds: 180 });
+        if (request.method === 'GET' && url.pathname === '/hls/profile.m3u8') {
+          const data = url.searchParams.get('data');
+          if (!data || data.length > 24000) return new Response('Invalid profile', { status: 400, headers: cors });
+          const text = new TextDecoder('utf-8', { fatal: true }).decode(Uint8Array.from(atob(data), c => c.charCodeAt(0)));
+          const lines = text.trim().split(/\r?\n/);
+          if (lines[0] !== '#EXTM3U' || lines.filter(l => l.startsWith('#EXT-X-STREAM-INF:')).length !== 1 ||
+            lines.some(l => l.startsWith('#') && !/^#EXTM3U$|^#EXT-X-(VERSION:|MEDIA:|STREAM-INF:)/.test(l)) ||
+            lines.some(l => !l.startsWith('#') && !safeUrl(l)) ||
+            [...text.matchAll(/URI="([^"]*)"/g)].some(m => !safeUrl(m[1]))) return new Response('Invalid profile', { status: 400, headers: cors });
+          // Stateless small master only: video, audio and subtitle bytes remain
+          // on their original servers. No upstream fetch or segment proxy.
+          return new Response(text, { headers: { ...cors, 'Content-Type': 'application/vnd.apple.mpegurl' } });
+        }
+        if (url.pathname === '/api/health') return json({ version: VERSION, discovery: true, cacheSeconds: 180, features: { hlsProfiles: true } });
         if (['GET','HEAD'].includes(request.method) && url.pathname.startsWith('/files/')) return await redirectFile(request, url);
         if (request.method === 'GET' && url.pathname.startsWith('/hls/vix/')) return await playlist(url, ctx);
         if (url.pathname === '/api/files' && request.method === 'POST') {

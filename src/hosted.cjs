@@ -37,7 +37,8 @@ async function registerDownloads(http, candidates, target) {
   if (!pending.length) return direct;
   const data = await http.json(SERVICE_ORIGIN + '/api/files', { method: 'POST', timeoutMs: 6500,
     headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ target,
-      candidates: pending.map(c => ({ url: c.url, filename: c.filename })) }) });
+      candidates: pending.map(c => ({ url: c.url, filename: target.type === 'tv' && !String(c.filename).includes(String(target.year)) ?
+        `${target.originalTitle}.${target.year}.${String(c.filename).replace(/^[^.]+\./, '')}` : c.filename })) }) });
   if (data?.schema !== 1 || !matchesIdentity(data.target, target) || !Array.isArray(data.files)) return direct;
   for (const entry of data.files) {
     const candidate = pending.find(c => c.url === entry.url);

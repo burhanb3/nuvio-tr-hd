@@ -1,5 +1,8 @@
 # Nuvio TR HD nasıl çalışır, sırada ne var?
 
+**Güncel sürüm 1.5.0:** dizilerde PlayIMDb yıl filtresi ve VixSrc TV rotası düzeltildi, HDHub tek bölüm dosyaları ve AltyazıDB eklendi. Kısa başlık, küçükten büyüğe varsayılan sıra, kalite/gruplama seçenekleri var. Sesi birlikte gelen HLS ayrı kalite satırlarıdır; ayrı sesli HLS için profil servisi Sites erişimi olmadığı için yayımlanamadı ve otomatik master korunur. Aşağıdaki 1.4.0 notları tarihsel bağlamdır. [Yeni araştırma ve sınırlar](KAYNAK_ARASTIRMASI.md).
+
+
 1.4.0 kurulum: https://burhanb3.github.io/nuvio-tr-hd/manifest.json . Yalnız ücretsiz, hesapsız kaynaklar kullanılır. Eski Sites kopyasını kapatın; sürüm 1.4.0, Tümü/20/HLS ve MKV dosya köprüsü açık olsun. Nuvio altyazı dili Türkçe seçilmeli.
 
 ## Film seçilince

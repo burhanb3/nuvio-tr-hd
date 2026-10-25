@@ -21,8 +21,9 @@ function parseMaster(text) {
   return { variants, turkish };
 }
 
-async function loadVixBundle(http, tmdbId) {
-  const data = await http.json(`${VIX_ORIGIN}/api/movie/${tmdbId}`);
+async function loadVixBundle(http, tmdbId, target) {
+  const route = target?.type === 'tv' ? `tv/${tmdbId}/${target.season}/${target.episode}` : `movie/${tmdbId}`;
+  const data = await http.json(`${VIX_ORIGIN}/api/${route}`);
   const embed = safeUrl(data?.src, VIX_ORIGIN + '/');
   if (!embed || !embed.startsWith(VIX_ORIGIN + '/embed/')) return null;
   let embedTitle;
@@ -80,8 +81,8 @@ function selectMaster(text, quality) {
 }
 
 async function scanVixDirect(http, target) {
-  if (target.type !== 'movie') return [];
-  const bundle = await loadVixBundle(http, target.tmdbId);
+  if (target.type === 'tv' && !(target.season > 0 && target.episode > 0)) return [];
+  const bundle = await loadVixBundle(http, target.tmdbId, target);
   if (!bundle || normalizeTitle(bundle.embedTitle) !== normalizeTitle(target.originalTitle)) return [];
   // Nuvio's native download filter examines the URL string's .m3u8 suffix.
   // VixSrc accepts this inert format hint and still returns the actual HLS

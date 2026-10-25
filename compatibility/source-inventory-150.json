@@ -1,0 +1,3118 @@
+{
+  "checkedAt": "2026-10-25T19:56:08.135Z",
+  "method": "Public manifest inventory across selected maintained/community repos; selected implementations and actual HTTP responses inspected separately. No remote code executed.",
+  "exhaustive": false,
+  "scope": "free and accountless only; no personal/debrid keys copied; torrent-only entries are not MP4/MKV files",
+  "definitions": 221,
+  "normalizedIds": 134,
+  "caution": "Counts include forks, wrappers and mirrors; these are not independent verified working sources.",
+  "repositories": [
+    {
+      "repo": "NuvioPlugin/All-in-One-Nuvio",
+      "url": "https://raw.githubusercontent.com/NuvioPlugin/All-in-One-Nuvio/refs/heads/main/manifest.json",
+      "status": 200,
+      "manifestName": "All-in-One-Nuvio",
+      "manifestVersion": "1.0.0",
+      "providers": [
+        {
+          "id": "allanime",
+          "name": "AllAnime",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "mkv",
+            "m3u8"
+          ],
+          "file": "providers/allanime.js",
+          "enabled": true
+        },
+        {
+          "id": "4khdhub",
+          "name": "4KHDHub",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mkv"
+          ],
+          "file": "providers/4khdhub.js",
+          "enabled": true
+        },
+        {
+          "id": "1shows",
+          "name": "1Shows",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mkv",
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/1shows.js",
+          "enabled": true
+        },
+        {
+          "id": "allwish",
+          "name": "🌟 All-Wish",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/allwish.js",
+          "enabled": true
+        },
+        {
+          "id": "animekai",
+          "name": "AnimeKai",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/animekai.js",
+          "enabled": true
+        },
+        {
+          "id": "anizone",
+          "name": "AniZone",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "m3u8"
+          ],
+          "file": "providers/anizone.js",
+          "enabled": true
+        },
+        {
+          "id": "anikototv",
+          "name": "AnikotoTV",
+          "types": [
+            "movie",
+            "tv",
+            "anime"
+          ],
+          "formats": [
+            "mp4"
+          ],
+          "file": "providers/anikototv.js",
+          "enabled": true
+        },
+        {
+          "id": "anidb",
+          "name": "AniDB",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/anidb.js",
+          "enabled": true
+        },
+        {
+          "id": "animepahe",
+          "name": "AnimePahe",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "m3u8",
+            "mp4"
+          ],
+          "file": "providers/animepahe.js",
+          "enabled": true
+        },
+        {
+          "id": "animesalt",
+          "name": "AnimeSalt",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "m3u8",
+            "mp4"
+          ],
+          "file": "providers/animesalt.js",
+          "enabled": true
+        },
+        {
+          "id": "animedekho",
+          "name": "AnimeDekho",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "m3u8",
+            "mp4"
+          ],
+          "file": "providers/animedekho.js",
+          "enabled": true
+        },
+        {
+          "id": "animetsu",
+          "name": "Animetsu",
+          "types": [
+            "movie",
+            "tv",
+            "anime"
+          ],
+          "formats": [
+            "m3u8"
+          ],
+          "file": "providers/animetsu.js",
+          "enabled": true
+        },
+        {
+          "id": "animeworld",
+          "name": "🗡️ AnimeWorld",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "m3u8"
+          ],
+          "file": "providers/animeworld.js",
+          "enabled": true
+        },
+        {
+          "id": "anime-sama",
+          "name": "🐍 Anime-Sama",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "mkv"
+          ],
+          "file": "providers/anime-sama.js",
+          "enabled": true
+        },
+        {
+          "id": "allmovieland",
+          "name": "AllMovieLand",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "m3u8"
+          ],
+          "file": "providers/allmovieland.js",
+          "enabled": true
+        },
+        {
+          "id": "animezey",
+          "name": "AnimeZeY",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "mkv",
+            "m3u8"
+          ],
+          "file": "providers/animezey.js",
+          "enabled": true
+        },
+        {
+          "id": "desiflix",
+          "name": "DesiFlix",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "mkv",
+            "m3u8"
+          ],
+          "file": "providers/desiflix.js",
+          "enabled": true
+        },
+        {
+          "id": "castle",
+          "name": "🏰 Castle",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/castle.js",
+          "enabled": true
+        },
+        {
+          "id": "Cineby",
+          "name": "Cineby",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "m3u8"
+          ],
+          "file": "providers/cineby.js",
+          "enabled": true
+        },
+        {
+          "id": "cinefreak",
+          "name": "CineFreak",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mkv",
+            "mp4"
+          ],
+          "file": "providers/cinefreak.js",
+          "enabled": true
+        },
+        {
+          "id": "moonflix",
+          "name": "MoonFlix",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "mkv"
+          ],
+          "file": "providers/moonflix.js",
+          "enabled": true
+        },
+        {
+          "id": "cinemacity",
+          "name": "CinemaCity",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/cinemacity.js",
+          "enabled": true
+        },
+        {
+          "id": "ctgmovies",
+          "name": "CTGMovies",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "m3u8",
+            "mp4",
+            "mkv"
+          ],
+          "file": "providers/ctgmovies.js",
+          "enabled": true
+        },
+        {
+          "id": "dahmermovies",
+          "name": "Dahmermovies",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "mkv",
+            "m3u8"
+          ],
+          "file": "providers/dahmermovies.js",
+          "enabled": true
+        },
+        {
+          "id": "dahmermovies-tv",
+          "name": "Dahmermovies-TV",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "mkv",
+            "m3u8"
+          ],
+          "file": "providers/dahmermovies-4k.js",
+          "enabled": true
+        },
+        {
+          "id": "dooflix",
+          "name": "DooFlix",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/dooflix.js",
+          "enabled": true
+        },
+        {
+          "id": "einthusan",
+          "name": "Einthustan",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/einthusan.js",
+          "enabled": true
+        },
+        {
+          "id": "fibwatch",
+          "name": "FibWatch",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "m3u8",
+            "mp4",
+            "mkv"
+          ],
+          "file": "providers/fibwatch.js",
+          "enabled": true
+        },
+        {
+          "id": "goated",
+          "name": "🐐 Goated",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mkv",
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/goated.js",
+          "enabled": true
+        },
+        {
+          "id": "gramcinema",
+          "name": "GramCinema",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/gramcinema.js",
+          "enabled": true
+        },
+        {
+          "id": "hdghartv",
+          "name": "HDGharTV",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "m3u8"
+          ],
+          "file": "providers/hdghartv.js",
+          "enabled": true
+        },
+        {
+          "id": "hdhub4u",
+          "name": "HDHub4u",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mkv",
+            "mp4"
+          ],
+          "file": "providers/hdhub4u.js",
+          "enabled": true
+        },
+        {
+          "id": "hianime",
+          "name": "HiAnime",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "m3u8"
+          ],
+          "file": "providers/hianime.js",
+          "enabled": true
+        },
+        {
+          "id": "hindmoviez",
+          "name": "HindMoviez",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "mkv",
+            "m3u8"
+          ],
+          "file": "providers/hindmoviez.js",
+          "enabled": true
+        },
+        {
+          "id": "kurage",
+          "name": "Kurage",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mkv",
+            "m3u8"
+          ],
+          "file": "providers/kurage.js",
+          "enabled": true
+        },
+        {
+          "id": "moviebox",
+          "name": "MovieBox",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "mpd"
+          ],
+          "file": "providers/moviebox.js",
+          "enabled": true
+        },
+        {
+          "id": "movieblast",
+          "name": "MovieBlast",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "mkv",
+            "m3u8"
+          ],
+          "file": "providers/movieblast.js",
+          "enabled": true
+        },
+        {
+          "id": "moviesdrive",
+          "name": "MoviesDrive",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mkv",
+            "mp4"
+          ],
+          "file": "providers/moviesdrive.js",
+          "enabled": true
+        },
+        {
+          "id": "moviesmod",
+          "name": "MoviesMod",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "mkv",
+            "m3u8"
+          ],
+          "file": "providers/moviesmod.js",
+          "enabled": true
+        },
+        {
+          "id": "movieshunt",
+          "name": "🎬 MoviesHunt",
+          "types": [
+            "movie"
+          ],
+          "formats": [
+            "m3u8"
+          ],
+          "file": "providers/movieshunt.js",
+          "enabled": true
+        },
+        {
+          "id": "movies4u",
+          "name": "Movies4u",
+          "types": [
+            "movie"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/movies4u.js",
+          "enabled": true
+        },
+        {
+          "id": "movix",
+          "name": "Movix VF",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/movix.js",
+          "enabled": true
+        },
+        {
+          "id": "nakios",
+          "name": "Nakios",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/nakios.js",
+          "enabled": true
+        },
+        {
+          "id": "netmirror",
+          "name": "NetMirror",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [],
+          "file": "providers/netmirror.js",
+          "enabled": true
+        },
+        {
+          "id": "persianstremio",
+          "name": "🌸 PersianStremio",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/persianstremio.js",
+          "enabled": true
+        },
+        {
+          "id": "peachify",
+          "name": "🍑 Peachify",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "m3u8",
+            "mp4"
+          ],
+          "file": "providers/peachify.js",
+          "enabled": true
+        },
+        {
+          "id": "playimdb",
+          "name": "PlayIMDb",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "mkv",
+            "m3u8"
+          ],
+          "file": "providers/playimdb.js",
+          "enabled": true
+        },
+        {
+          "id": "purstream",
+          "name": "Purstream",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/purstream.js",
+          "enabled": true
+        },
+        {
+          "id": "showbox",
+          "name": "ShowBox",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "mkv",
+            "m3u8"
+          ],
+          "file": "providers/showbox.js",
+          "enabled": true
+        },
+        {
+          "id": "topcartoons",
+          "name": "TopCartoons",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/topcartoons.js",
+          "enabled": true
+        },
+        {
+          "id": "torrentio",
+          "name": "🧲 Torrentio",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/torrentio.js",
+          "enabled": true
+        },
+        {
+          "id": "vidrock",
+          "name": "🪨 VidRock",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/vidrock.js",
+          "enabled": true
+        },
+        {
+          "id": "uhdmovies",
+          "name": "UHDMovies",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mkv"
+          ],
+          "file": "providers/uhdmovies.js",
+          "enabled": true
+        },
+        {
+          "id": "vegamovies",
+          "name": "VegaMovies",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "mkv"
+          ],
+          "file": "providers/vegamovies.js",
+          "enabled": true
+        },
+        {
+          "id": "vidlink",
+          "name": "VidLink",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/vidlink.js",
+          "enabled": true
+        },
+        {
+          "id": "videasy",
+          "name": "VidEasy",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/videasy.js",
+          "enabled": true
+        },
+        {
+          "id": "vidsrc",
+          "name": "VidSrc",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/vidsrc.js",
+          "enabled": true
+        },
+        {
+          "id": "vixsrc",
+          "name": "VixSrc",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/vixsrc.js",
+          "enabled": true
+        },
+        {
+          "id": "vidfast",
+          "name": "VidFast",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/vidfast.js",
+          "enabled": true
+        },
+        {
+          "id": "vidlove",
+          "name": "❤️ VidLove",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8",
+            "mkv"
+          ],
+          "file": "providers/vidlove.js",
+          "enabled": true
+        },
+        {
+          "id": "xpass",
+          "name": "XPass",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "mkv",
+            "m3u8"
+          ],
+          "file": "providers/xpass.js",
+          "enabled": true
+        },
+        {
+          "id": "zinkmovies",
+          "name": "ZinkMovies",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "mkv",
+            "m3u8"
+          ],
+          "file": "providers/zinkmovies.js",
+          "enabled": true
+        },
+        {
+          "id": "onlykdrama",
+          "name": "🫰 OnlyKDrama",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "mkv",
+            "m3u8"
+          ],
+          "file": "providers/onlykdrama.js",
+          "enabled": true
+        },
+        {
+          "id": "kisskh",
+          "name": "💋 Kisskh",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/kisskh.js",
+          "enabled": true
+        },
+        {
+          "id": "reanime",
+          "name": "Reanime",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mkv",
+            "m3u8"
+          ],
+          "file": "providers/reanime.js",
+          "enabled": true
+        },
+        {
+          "id": "mapple",
+          "name": "Mapple",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "m3u8"
+          ],
+          "file": "providers/mapple.js",
+          "enabled": true
+        }
+      ]
+    },
+    {
+      "repo": "phisher98/phisher-nuvio-providers",
+      "url": "https://raw.githubusercontent.com/phisher98/phisher-nuvio-providers/refs/heads/main/manifest.json",
+      "status": 404,
+      "providers": []
+    },
+    {
+      "repo": "michat88/nuvio-providers",
+      "url": "https://raw.githubusercontent.com/michat88/nuvio-providers/refs/heads/main/manifest.json",
+      "status": 200,
+      "manifestName": "Michat88 Repo",
+      "manifestVersion": "1.0.0",
+      "providers": [
+        {
+          "id": "kisskh",
+          "name": "Kisskh",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/kisskh.js",
+          "enabled": true
+        },
+        {
+          "id": "4khdhub",
+          "name": "4khdhub",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/4khdhub.js",
+          "enabled": true
+        },
+        {
+          "id": "animekai",
+          "name": "Animekai",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/animekai.js",
+          "enabled": true
+        },
+        {
+          "id": "castle",
+          "name": "Castle",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/castle.js",
+          "enabled": true
+        },
+        {
+          "id": "cinevibe",
+          "name": "Cinevibe",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/cinevibe.js",
+          "enabled": true
+        },
+        {
+          "id": "dahmermovies",
+          "name": "Dahmermovies",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/dahmermovies.js",
+          "enabled": true
+        },
+        {
+          "id": "dvdplay",
+          "name": "Dvdplay",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/dvdplay.js",
+          "enabled": true
+        },
+        {
+          "id": "hdhub4u",
+          "name": "Hdhub4u",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/hdhub4u.js",
+          "enabled": true
+        },
+        {
+          "id": "hdrezka",
+          "name": "Hdrezka",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/hdrezka.js",
+          "enabled": true
+        },
+        {
+          "id": "idlix",
+          "name": "Idlix",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/idlix.js",
+          "enabled": true
+        },
+        {
+          "id": "mallumv",
+          "name": "Mallumv",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/mallumv.js",
+          "enabled": true
+        },
+        {
+          "id": "mapple",
+          "name": "Mapple",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/mapple.js",
+          "enabled": true
+        },
+        {
+          "id": "moviebox",
+          "name": "Moviebox",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/moviebox.js",
+          "enabled": true
+        },
+        {
+          "id": "moviesmod",
+          "name": "Moviesmod",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/moviesmod.js",
+          "enabled": true
+        },
+        {
+          "id": "myflixer-extractor",
+          "name": "Myflixer-extractor",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/myflixer-extractor.js",
+          "enabled": true
+        },
+        {
+          "id": "netmirror",
+          "name": "Netmirror",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/netmirror.js",
+          "enabled": true
+        },
+        {
+          "id": "showbox",
+          "name": "Showbox",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/showbox.js",
+          "enabled": true
+        },
+        {
+          "id": "streamflix",
+          "name": "Streamflix",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/streamflix.js",
+          "enabled": true
+        },
+        {
+          "id": "uhdmovies",
+          "name": "Uhdmovies",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/uhdmovies.js",
+          "enabled": true
+        },
+        {
+          "id": "videasy",
+          "name": "Videasy",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/videasy.js",
+          "enabled": true
+        },
+        {
+          "id": "vidlink",
+          "name": "Vidlink",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/vidlink.js",
+          "enabled": true
+        },
+        {
+          "id": "vidnest-anime",
+          "name": "Vidnest-anime",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/vidnest-anime.js",
+          "enabled": true
+        },
+        {
+          "id": "vidnest",
+          "name": "Vidnest",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/vidnest.js",
+          "enabled": true
+        },
+        {
+          "id": "vidrock",
+          "name": "Vidrock",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/vidrock.js",
+          "enabled": true
+        },
+        {
+          "id": "vidsrc",
+          "name": "Vidsrc",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/vidsrc.js",
+          "enabled": true
+        },
+        {
+          "id": "vixsrc",
+          "name": "Vixsrc",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/vixsrc.js",
+          "enabled": true
+        },
+        {
+          "id": "watch32",
+          "name": "Watch32",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/watch32.js",
+          "enabled": true
+        },
+        {
+          "id": "xprime",
+          "name": "Xprime",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/xprime.js",
+          "enabled": true
+        },
+        {
+          "id": "yflix",
+          "name": "Yflix",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/yflix.js",
+          "enabled": true
+        },
+        {
+          "id": "adimoviebox",
+          "name": "Adimoviebox",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/adimoviebox.js",
+          "enabled": true
+        }
+      ]
+    },
+    {
+      "repo": "yoruix/nuvio-providers",
+      "url": "https://raw.githubusercontent.com/yoruix/nuvio-providers/refs/heads/main/manifest.json",
+      "status": 200,
+      "manifestName": "Yoru's Repo",
+      "manifestVersion": "1.0.0",
+      "providers": [
+        {
+          "id": "4khdhub",
+          "name": "4KHDHub",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mkv"
+          ],
+          "file": "providers/4khdhub.js",
+          "enabled": true
+        },
+        {
+          "id": "animepahe",
+          "name": "AnimePahe",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "m3u8"
+          ],
+          "file": "providers/animepahe.js",
+          "enabled": true
+        },
+        {
+          "id": "uhdmovies",
+          "name": "UHDMovies",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mkv"
+          ],
+          "file": "providers/uhdmovies.js",
+          "enabled": true
+        },
+        {
+          "id": "moviesmod",
+          "name": "MoviesMod",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mkv"
+          ],
+          "file": "providers/moviesmod.js",
+          "enabled": true
+        },
+        {
+          "id": "dahmermovies",
+          "name": "DahmerMovies",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mkv"
+          ],
+          "file": "providers/dahmermovies.js",
+          "enabled": true
+        },
+        {
+          "id": "netmirror",
+          "name": "NetMirror",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [],
+          "file": "providers/netmirror.js",
+          "enabled": true
+        },
+        {
+          "id": "streamflix",
+          "name": "StreamFlix",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mkv"
+          ],
+          "file": "providers/streamflix.js",
+          "enabled": true
+        },
+        {
+          "id": "moviebox",
+          "name": "MovieBox",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "mpd"
+          ],
+          "file": "providers/moviebox.js",
+          "enabled": true
+        },
+        {
+          "id": "vixsrc",
+          "name": "Vixsrc",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [],
+          "file": "providers/vixsrc.js",
+          "enabled": true
+        },
+        {
+          "id": "dvdplay",
+          "name": "DVDPlay",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mkv"
+          ],
+          "file": "providers/dvdplay.js",
+          "enabled": true
+        },
+        {
+          "id": "yflix",
+          "name": "YFlix",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "m3u8",
+            "mp4"
+          ],
+          "file": "providers/yflix.js",
+          "enabled": true
+        },
+        {
+          "id": "videasy",
+          "name": "VIDEASY",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "m3u8",
+            "mp4",
+            "mkv"
+          ],
+          "file": "providers/videasy.js",
+          "enabled": false
+        },
+        {
+          "id": "mallumv",
+          "name": "MalluMV",
+          "types": [
+            "movie"
+          ],
+          "formats": [
+            "mkv",
+            "mp4"
+          ],
+          "file": "providers/mallumv.js",
+          "enabled": true
+        },
+        {
+          "id": "vidlink",
+          "name": "Vidlink",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "m3u8",
+            "mp4"
+          ],
+          "file": "providers/vidlink.js",
+          "enabled": true
+        },
+        {
+          "id": "vidnest",
+          "name": "Vidnest",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/vidnest.js",
+          "enabled": true
+        },
+        {
+          "id": "vidnest-anime",
+          "name": "VidnestAnime",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "m3u8"
+          ],
+          "file": "providers/vidnest-anime.js",
+          "enabled": true
+        },
+        {
+          "id": "cinevibe",
+          "name": "Cinevibe",
+          "types": [
+            "movie"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/cinevibe.js",
+          "enabled": true
+        },
+        {
+          "id": "cinemacity",
+          "name": "CinemaCity",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4"
+          ],
+          "file": "providers/cinemacity.js",
+          "enabled": true
+        },
+        {
+          "id": "castle",
+          "name": "Castle",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/castle.js",
+          "enabled": true
+        },
+        {
+          "id": "showbox",
+          "name": "ShowBox",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "mkv"
+          ],
+          "file": "providers/showbox.js",
+          "enabled": true
+        },
+        {
+          "id": "hdhub4u",
+          "name": "HDHub4u",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mkv",
+            "mp4"
+          ],
+          "file": "providers/hdhub4u.js",
+          "enabled": true
+        },
+        {
+          "id": "allmovieland",
+          "name": "AllMovieLand",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "m3u8"
+          ],
+          "file": "providers/allmovieland.js",
+          "enabled": true
+        },
+        {
+          "id": "dooflix",
+          "name": "DooFlix",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "m3u8"
+          ],
+          "file": "providers/dooflix.js",
+          "enabled": true
+        },
+        {
+          "id": "movieblast",
+          "name": "MovieBlast",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "mkv"
+          ],
+          "file": "providers/movieblast.js",
+          "enabled": true
+        },
+        {
+          "id": "mycima",
+          "name": "MyCima",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/mycima.js",
+          "enabled": true
+        },
+        {
+          "id": "moviesdrive",
+          "name": "MoviesDrive",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mkv",
+            "mp4"
+          ],
+          "file": "providers/moviesdrive.js",
+          "enabled": true
+        },
+        {
+          "id": "hianime",
+          "name": "HiAnime",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "m3u8"
+          ],
+          "file": "providers/hianime.js",
+          "enabled": true
+        },
+        {
+          "id": "kurage",
+          "name": "Kurage",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4"
+          ],
+          "file": "providers/kurage.js",
+          "enabled": true
+        },
+        {
+          "id": "anizone",
+          "name": "AniZone",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "m3u8"
+          ],
+          "file": "providers/anizone.js",
+          "enabled": true
+        }
+      ]
+    },
+    {
+      "repo": "mooncrown04/nuviotr",
+      "url": "https://raw.githubusercontent.com/mooncrown04/nuviotr/refs/heads/main/manifest.json",
+      "status": 200,
+      "manifestName": "MoOnCrOwN-NUVİO",
+      "manifestVersion": "0.4",
+      "providers": [
+        {
+          "id": "moonvidmodyfilmdizi",
+          "name": "MoonVidmodyFilmDizi",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "mkv",
+            "hls",
+            "m3u8"
+          ],
+          "file": "providers/moonvidmodyfilmdizi.js",
+          "enabled": true
+        },
+        {
+          "id": "MoOnCrOwNFilmM3U",
+          "name": "MoOnCrOwNFilmM3U",
+          "types": [
+            "movie"
+          ],
+          "formats": [
+            "mp4",
+            "mkv",
+            "hls",
+            "m3u8"
+          ],
+          "file": "providers/MoOnCrOwNFilmM3U.js",
+          "enabled": false
+        },
+        {
+          "id": "MoOnCrOwNDiziM3U",
+          "name": "MoOnCrOwNDiziM3U",
+          "types": [
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "mkv",
+            "hls",
+            "m3u8"
+          ],
+          "file": "providers/MoOnCrOwNDiziM3U.js",
+          "enabled": true
+        },
+        {
+          "id": "m3u",
+          "name": "M3u",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "mkv",
+            "hls",
+            "m3u8"
+          ],
+          "file": "providers/M3U/m3u.js",
+          "enabled": true
+        },
+        {
+          "id": "m3u.mooncrown.addon",
+          "name": "MoOnCrOwN M3U",
+          "types": [],
+          "formats": [
+            "mp4",
+            "mkv",
+            "hls",
+            "m3u8"
+          ],
+          "file": "eklentiler/M3U/ListM3u.js",
+          "enabled": true
+        },
+        {
+          "id": "netmirror",
+          "name": "NetMirror",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [],
+          "file": "providers/netmirror.js",
+          "enabled": true
+        },
+        {
+          "id": "sinemacx",
+          "name": "SinemaCx",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "mkv",
+            "hls",
+            "m3u8"
+          ],
+          "file": "providers/sinemacx.js",
+          "enabled": true
+        },
+        {
+          "id": "diziyou",
+          "name": "DiziYou",
+          "types": [
+            "tv"
+          ],
+          "formats": [
+            "m3u8"
+          ],
+          "file": "providers/diziyou.js",
+          "enabled": true
+        },
+        {
+          "id": "fullhdfilmizlesene",
+          "name": "FullHdFilmizlesene",
+          "types": [
+            "movie"
+          ],
+          "formats": [
+            "mp4",
+            "mkv",
+            "hls",
+            "m3u8"
+          ],
+          "file": "providers/fullhdfilmizlesene.js",
+          "enabled": true
+        },
+        {
+          "id": "sinewix",
+          "name": "SineWix",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "mkv"
+          ],
+          "file": "providers/sinewix.js",
+          "enabled": true
+        },
+        {
+          "id": "rec",
+          "name": "Rec",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "m3u8"
+          ],
+          "file": "providers/rec.js",
+          "enabled": true
+        },
+        {
+          "id": "jetfilmizle",
+          "name": "JetFilmizle",
+          "types": [
+            "movie"
+          ],
+          "formats": [
+            "mp4",
+            "mkv"
+          ],
+          "file": "providers/jetfilmizle.js",
+          "enabled": true
+        },
+        {
+          "id": "sezonlukdizi",
+          "name": "SezonlukDizi",
+          "types": [
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "mkv"
+          ],
+          "file": "providers/sezonlukdizi.js",
+          "enabled": true
+        },
+        {
+          "id": "webteizle",
+          "name": "WebteIzle",
+          "types": [
+            "movie"
+          ],
+          "formats": [],
+          "file": "providers/webteizle.js",
+          "enabled": true
+        },
+        {
+          "id": "filmmodu",
+          "name": "FilmModu",
+          "types": [
+            "movie"
+          ],
+          "formats": [],
+          "file": "providers/filmmodu.js",
+          "enabled": true
+        },
+        {
+          "id": "altiyuzaltmisaltifilm",
+          "name": "AltiYuzAltmisAltiFilm",
+          "types": [
+            "movie"
+          ],
+          "formats": [
+            "m3u8"
+          ],
+          "file": "providers/altiyuzaltmisaltifilm.js",
+          "enabled": true
+        },
+        {
+          "id": "cinemacity",
+          "name": "CinemaCity",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/cinemacity.js",
+          "enabled": true
+        },
+        {
+          "id": "vidlink",
+          "name": "Vidlink",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/vidlink.js",
+          "enabled": true
+        }
+      ]
+    },
+    {
+      "repo": "fmustafayaman/turkish-nuvio",
+      "url": "https://raw.githubusercontent.com/fmustafayaman/turkish-nuvio/refs/heads/main/manifest.json",
+      "status": 200,
+      "manifestName": "Turkish Nuvio",
+      "manifestVersion": "1.21.0",
+      "providers": [
+        {
+          "id": "animecix",
+          "name": "Animecix",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4"
+          ],
+          "file": "providers/animecix.js",
+          "enabled": true
+        },
+        {
+          "id": "fullhdfilm",
+          "name": "FullHDFilmizlesene",
+          "types": [
+            "movie"
+          ],
+          "formats": [
+            "m3u8"
+          ],
+          "file": "providers/fullhdfilm.js",
+          "enabled": true
+        },
+        {
+          "id": "dizifilm",
+          "name": "Dizifilm",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "m3u8"
+          ],
+          "file": "providers/dizifilm.js",
+          "enabled": true
+        },
+        {
+          "id": "dizibal",
+          "name": "Dizibal",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "m3u8"
+          ],
+          "file": "providers/dizibal.js",
+          "enabled": true
+        }
+      ]
+    },
+    {
+      "repo": "manitux-app/nuvio-plugins",
+      "url": "https://raw.githubusercontent.com/manitux-app/nuvio-plugins/refs/heads/main/manifest.json",
+      "status": 200,
+      "manifestName": "Manitux Nuvio Plugins",
+      "manifestVersion": "0.1.4",
+      "providers": [
+        {
+          "id": "hdfilmcehennemi",
+          "name": "!HDFilmCehennemi",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [],
+          "file": "providers/hdfilmcehennemi.js",
+          "enabled": true
+        },
+        {
+          "id": "filmmakinesi",
+          "name": "!FilmMakinesi",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [],
+          "file": "providers/filmmakinesi.js",
+          "enabled": true
+        },
+        {
+          "id": "filmekseni",
+          "name": "!FilmEkseni",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [],
+          "file": "providers/filmekseni.js",
+          "enabled": true
+        },
+        {
+          "id": "dizibal",
+          "name": "!DiziBal",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [],
+          "file": "providers/dizibal.js",
+          "enabled": true
+        },
+        {
+          "id": "diziyou",
+          "name": "!DiziYou",
+          "types": [
+            "tv"
+          ],
+          "formats": [],
+          "file": "providers/diziyou.js",
+          "enabled": true
+        },
+        {
+          "id": "dexterpw",
+          "name": "!DexterPW",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [],
+          "file": "providers/dexterpw.js",
+          "enabled": true
+        },
+        {
+          "id": "dizibox",
+          "name": "!DiziBox",
+          "types": [
+            "tv"
+          ],
+          "formats": [],
+          "file": "providers/dizibox.js",
+          "enabled": true
+        },
+        {
+          "id": "rarefilm",
+          "name": "!RareFilm",
+          "types": [
+            "movie"
+          ],
+          "formats": [],
+          "file": "providers/rarefilm.js",
+          "enabled": true
+        }
+      ]
+    },
+    {
+      "repo": "itsmeadarsh2008/Streamline",
+      "url": "https://raw.githubusercontent.com/itsmeadarsh2008/Streamline/refs/heads/main/manifest.json",
+      "status": 200,
+      "manifestName": "Streamline",
+      "manifestVersion": "1.9.1",
+      "providers": [
+        {
+          "id": "vidlink",
+          "name": "Vidlink",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "m3u8",
+            "mp4"
+          ],
+          "file": "providers/vidlink.js",
+          "enabled": true
+        },
+        {
+          "id": "videasy",
+          "name": "Videasy",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "m3u8",
+            "mp4",
+            "mkv"
+          ],
+          "file": "providers/videasy.js",
+          "enabled": true
+        },
+        {
+          "id": "hexa",
+          "name": "Hexa",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "m3u8"
+          ],
+          "file": "providers/hexa.js",
+          "enabled": true
+        },
+        {
+          "id": "vidzee",
+          "name": "Vidzee",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "m3u8",
+            "mp4"
+          ],
+          "file": "providers/vidzee.js",
+          "enabled": true
+        },
+        {
+          "id": "vidrock",
+          "name": "Vidrock",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "m3u8",
+            "mp4"
+          ],
+          "file": "providers/vidrock.js",
+          "enabled": true
+        },
+        {
+          "id": "vidfast",
+          "name": "VidFast",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "m3u8",
+            "mp4"
+          ],
+          "file": "providers/vidfast.js",
+          "enabled": true
+        },
+        {
+          "id": "vidcore",
+          "name": "Vidcore",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "m3u8"
+          ],
+          "file": "providers/vidcore.js",
+          "enabled": true
+        },
+        {
+          "id": "vaplayer",
+          "name": "VaPlayer",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "m3u8"
+          ],
+          "file": "providers/vaplayer.js",
+          "enabled": true
+        },
+        {
+          "id": "primesrc",
+          "name": "PrimeSrc",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/primesrc.js",
+          "enabled": true
+        },
+        {
+          "id": "showbox",
+          "name": "ShowBox",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/showbox.js",
+          "enabled": true
+        },
+        {
+          "id": "moviebox",
+          "name": "MovieBox",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/moviebox.js",
+          "enabled": true
+        },
+        {
+          "id": "allmovieland",
+          "name": "AllMovieLand",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "m3u8"
+          ],
+          "file": "providers/allmovieland.js",
+          "enabled": true
+        },
+        {
+          "id": "cinejoy",
+          "name": "Cinejoy",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "m3u8",
+            "mp4"
+          ],
+          "file": "providers/cinejoy.js",
+          "enabled": true
+        },
+        {
+          "id": "hdhub4u",
+          "name": "HDHub4u",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "m3u8",
+            "mp4",
+            "mkv"
+          ],
+          "file": "providers/hdhub4u.js",
+          "enabled": true
+        },
+        {
+          "id": "hdhub",
+          "name": "4KHDHub",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mkv",
+            "mp4"
+          ],
+          "file": "providers/hdhub.js",
+          "enabled": true
+        },
+        {
+          "id": "uhdmovies",
+          "name": "UHDMovies",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mkv",
+            "mp4"
+          ],
+          "file": "providers/uhdmovies.js",
+          "enabled": true
+        },
+        {
+          "id": "moviesmod",
+          "name": "MoviesMod",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mkv",
+            "mp4"
+          ],
+          "file": "providers/moviesmod.js",
+          "enabled": true
+        },
+        {
+          "id": "moviesdrive",
+          "name": "MoviesDrive",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mkv",
+            "mp4"
+          ],
+          "file": "providers/moviesdrive.js",
+          "enabled": true
+        },
+        {
+          "id": "vegamovies",
+          "name": "VegaMovies",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mkv",
+            "mp4"
+          ],
+          "file": "providers/vegamovies.js",
+          "enabled": true
+        },
+        {
+          "id": "rogmovies",
+          "name": "RogMovies",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mkv",
+            "mp4"
+          ],
+          "file": "providers/rogmovies.js",
+          "enabled": true
+        },
+        {
+          "id": "bollyflix",
+          "name": "Bollyflix",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mkv",
+            "mp4"
+          ],
+          "file": "providers/bollyflix.js",
+          "enabled": true
+        },
+        {
+          "id": "anizone",
+          "name": "Anizone",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "m3u8"
+          ],
+          "file": "providers/anizone.js",
+          "enabled": true
+        },
+        {
+          "id": "anidb",
+          "name": "AniDB",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "m3u8"
+          ],
+          "file": "providers/anidb.js",
+          "enabled": true
+        },
+        {
+          "id": "just4anime",
+          "name": "Just4Anime",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "m3u8"
+          ],
+          "file": "providers/just4anime.js",
+          "enabled": true
+        },
+        {
+          "id": "torrents",
+          "name": "Torrents",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mkv",
+            "mp4"
+          ],
+          "file": "providers/torrents.js",
+          "enabled": true
+        }
+      ]
+    },
+    {
+      "repo": "niakw/NiakVIO",
+      "url": "https://raw.githubusercontent.com/niakw/NiakVIO/refs/heads/main/manifest.json",
+      "status": 200,
+      "manifestName": "NiakVIO v5.21.128",
+      "manifestVersion": "5.21.128",
+      "providers": [
+        {
+          "id": "ANIME-SAMA",
+          "name": "🐍 Anime-Sama",
+          "types": [
+            "anime",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "mkv"
+          ],
+          "file": "providers/anime-sama--nuvio--fe2c60fee04912d9.js",
+          "enabled": true
+        },
+        {
+          "id": "purstream",
+          "name": "💧 Purstream",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/purstream--nuvio--079a2dc23051b0fd.js",
+          "enabled": true
+        },
+        {
+          "id": "flemmix",
+          "name": "🔥 Flemmix",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/flemmix--nuvio--a7fe877f4c82358c.js",
+          "enabled": true
+        },
+        {
+          "id": "uhdmovies",
+          "name": "📺 UHDMovies",
+          "types": [
+            "movie"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/uhdmovies--nuvio--f9e16fb8dcb009ca.js",
+          "enabled": true
+        },
+        {
+          "id": "movieshunt",
+          "name": "🎬 MoviesHunt",
+          "types": [
+            "movie"
+          ],
+          "formats": [
+            "m3u8"
+          ],
+          "file": "providers/movieshunt--nuvio--559849a111a68261.js",
+          "enabled": true
+        },
+        {
+          "id": "hindmoviez",
+          "name": "🇮🇳 HindMoviez",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "mkv",
+            "m3u8"
+          ],
+          "file": "providers/hindmoviez--nuvio--deb5bc529fa7a4b8.js",
+          "enabled": true
+        },
+        {
+          "id": "4KHDHUB",
+          "name": "📺 4KHDHub",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mkv"
+          ],
+          "file": "providers/4khdhub--nuvio--eca7e5aae12dd62b.js",
+          "enabled": true
+        },
+        {
+          "id": "persianstremio",
+          "name": "🌸 PersianStremio",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/persianstremio--nuvio--de1651156a80b28d.js",
+          "enabled": true
+        },
+        {
+          "id": "kehflix",
+          "name": "🎬 Kehflix",
+          "types": [
+            "movie",
+            "tv",
+            "anime"
+          ],
+          "formats": [],
+          "file": "providers/kehflix--nuvio--759e8e184a7d004d.js",
+          "enabled": true
+        },
+        {
+          "id": "ANIKOTOTV",
+          "name": "📺 AnikotoTV",
+          "types": [
+            "anime",
+            "tv"
+          ],
+          "formats": [
+            "mp4"
+          ],
+          "file": "providers/anikototv--nuvio--710a9a30b4b57aac.js",
+          "enabled": true
+        },
+        {
+          "id": "ANIMEKAI",
+          "name": "🐉 AnimeKai",
+          "types": [
+            "anime",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/animekai--nuvio--8b20db6f7c06578f.js",
+          "enabled": true
+        },
+        {
+          "id": "animesalt",
+          "name": "🧂 AnimeSalt",
+          "types": [
+            "anime",
+            "tv"
+          ],
+          "formats": [
+            "m3u8",
+            "mp4"
+          ],
+          "file": "providers/animesalt--nuvio--ceb5924bba4fe522.js",
+          "enabled": true
+        },
+        {
+          "id": "animesama-co",
+          "name": "🐍 AnimeSama.co (DLE Mirror)",
+          "types": [
+            "anime",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/animesama-co--nuvio--2e05140a8bcc2d50.js",
+          "enabled": true
+        },
+        {
+          "id": "animesultra",
+          "name": "🚀 AnimesUltra",
+          "types": [
+            "anime",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "mkv"
+          ],
+          "file": "providers/animesultra--nuvio--9b0addd187dc9d88.js",
+          "enabled": true
+        },
+        {
+          "id": "animevostfr",
+          "name": "🇫🇷 AnimeVOSTFR",
+          "types": [
+            "anime",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "mkv"
+          ],
+          "file": "providers/animevostfr--nuvio--c52ead0b22d7092a.js",
+          "enabled": true
+        },
+        {
+          "id": "castle",
+          "name": "🏰 Castle",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/castle--nuvio--abf39dfab678181e.js",
+          "enabled": true
+        },
+        {
+          "id": "coflix",
+          "name": "🎥 Coflix",
+          "types": [
+            "movie",
+            "tv",
+            "anime"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/coflix--nuvio--4c7d44469e454b46.js",
+          "enabled": true
+        },
+        {
+          "id": "FRENCH-MANGA",
+          "name": "🇫🇷 French-Manga",
+          "types": [
+            "anime",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/french-manga--nuvio--be04df20f8702f6b.js",
+          "enabled": true
+        },
+        {
+          "id": "kurage",
+          "name": "🪼 Kurage",
+          "types": [
+            "anime",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "mkv",
+            "m3u8"
+          ],
+          "file": "providers/kurage--nuvio--45937c9677bb5fd9.js",
+          "enabled": true
+        },
+        {
+          "id": "moviesmod",
+          "name": "🛠️ MoviesMod",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8",
+            "mkv"
+          ],
+          "file": "providers/moviesmod--nuvio--fd7022d0d211ddeb.js",
+          "enabled": true
+        },
+        {
+          "id": "mugiwarastream",
+          "name": "👒 Mugiwara-no-Streaming",
+          "types": [
+            "anime",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "mkv",
+            "m3u8"
+          ],
+          "file": "providers/mugiwarastream--nuvio--d1b6e46004922b66.js",
+          "enabled": true
+        },
+        {
+          "id": "neko-sama",
+          "name": "🐱 Neko-Sama",
+          "types": [
+            "anime",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/neko-sama--nuvio--7209583cabfe5ecb.js",
+          "enabled": true
+        },
+        {
+          "id": "papadustream",
+          "name": "🍿 Papadustream",
+          "types": [
+            "movie",
+            "tv",
+            "anime"
+          ],
+          "formats": [
+            "m3u8"
+          ],
+          "file": "providers/papadustream--nuvio--b27be3199be61f9b.js",
+          "enabled": true
+        },
+        {
+          "id": "PLAYIMDB",
+          "name": "▶️ PlayIMDb",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "mkv",
+            "m3u8"
+          ],
+          "file": "providers/playimdb--nuvio--9a4170b8ac168d47.js",
+          "enabled": true
+        },
+        {
+          "id": "sekai",
+          "name": "🌏 Sekai",
+          "types": [
+            "anime",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "mkv"
+          ],
+          "file": "providers/sekai--nuvio--9ed8dedad6c11475.js",
+          "enabled": true
+        },
+        {
+          "id": "streamzo",
+          "name": "🌊 StreamZo",
+          "types": [
+            "movie",
+            "tv",
+            "anime"
+          ],
+          "formats": [
+            "m3u8"
+          ],
+          "file": "providers/streamzo--nuvio--f3a16e146b62f5ea.js",
+          "enabled": true
+        },
+        {
+          "id": "VIDFAST",
+          "name": "⚡ VidFast",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/vidfast--nuvio--31e27066cae81d47.js",
+          "enabled": true
+        },
+        {
+          "id": "VIDROCK",
+          "name": "🪨 VidRock",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/vidrock--nuvio--4176371e61a1bcde.js",
+          "enabled": true
+        },
+        {
+          "id": "voiranime",
+          "name": "👁️ VoirAnime",
+          "types": [
+            "anime",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "mkv",
+            "m3u8"
+          ],
+          "file": "providers/voiranime--nuvio--1e28736b3a1005e6.js",
+          "enabled": true
+        },
+        {
+          "id": "voiranime-homes",
+          "name": "🏠 VoirAnime.homes",
+          "types": [
+            "anime",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/voiranime-homes--nuvio--7a990c7df4bf63c9.js",
+          "enabled": true
+        },
+        {
+          "id": "voiranime-rip",
+          "name": "👁️ VoirAnime.rip",
+          "types": [
+            "anime",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/voiranime-rip--nuvio--61e1e6837d0106fb.js",
+          "enabled": true
+        },
+        {
+          "id": "vostfree",
+          "name": "🆓 Vostfree",
+          "types": [
+            "anime",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "mkv"
+          ],
+          "file": "providers/vostfree--nuvio--db882a0f14e60b18.js",
+          "enabled": true
+        },
+        {
+          "id": "wookafr",
+          "name": "🇫🇷 Wookafr",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/wookafr--nuvio--a5649ce47029b9d7.js",
+          "enabled": true
+        },
+        {
+          "id": "yflix",
+          "name": "🇾 YFlix",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "m3u8",
+            "mp4"
+          ],
+          "file": "providers/yflix--nuvio--18521e205e412995.js",
+          "enabled": true
+        },
+        {
+          "id": "ALLANIME",
+          "name": "🌐 AllAnime",
+          "types": [
+            "anime",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "mkv",
+            "m3u8"
+          ],
+          "file": "providers/allanime--nuvio--2712c2a7cfff63ee.js",
+          "enabled": true
+        },
+        {
+          "id": "ALLWISH",
+          "name": "🌟 All-Wish",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/allwish--nuvio--ee9aeb311d107c2b.js",
+          "enabled": true
+        },
+        {
+          "id": "ANIME-ULTIME",
+          "name": "🔥 Anime-Ultime",
+          "types": [
+            "anime",
+            "tv"
+          ],
+          "formats": [
+            "mp4"
+          ],
+          "file": "providers/anime-ultime--nuvio--194ceccc97e8e190.js",
+          "enabled": true
+        },
+        {
+          "id": "ANIMEVOST-FR",
+          "name": "🇫🇷 AnimeVOST.fr",
+          "types": [
+            "anime",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/animevost-fr--nuvio--7227c91fc1ac2791.js",
+          "enabled": true
+        },
+        {
+          "id": "MALLUMV",
+          "name": "🌴 MalluMV",
+          "types": [
+            "movie"
+          ],
+          "formats": [
+            "mkv",
+            "mp4"
+          ],
+          "file": "providers/mallumv--nuvio--cf423a9e0431d69a.js",
+          "enabled": true
+        },
+        {
+          "id": "moviebox",
+          "name": "📦 MovieBox",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8"
+          ],
+          "file": "providers/moviebox--nuvio--795db9d85e39d995.js",
+          "enabled": true
+        },
+        {
+          "id": "vidlove",
+          "name": "❤️ VidLove",
+          "types": [
+            "movie",
+            "tv"
+          ],
+          "formats": [
+            "mp4",
+            "m3u8",
+            "mkv"
+          ],
+          "file": "providers/vidlove--nuvio--b4c7d2524ff9834e.js",
+          "enabled": true
+        }
+      ]
+    }
+  ]
+}

@@ -1,5 +1,8 @@
 # Otomatik kaynak ve altyazı sistemi
 
+**Güncel sürüm 1.5.0:** dizilerde PlayIMDb yıl filtresi ve VixSrc TV rotası düzeltildi, HDHub tek bölüm dosyaları ve AltyazıDB eklendi. Kısa başlık, küçükten büyüğe varsayılan sıra, kalite/gruplama seçenekleri var. Sesi birlikte gelen HLS ayrı kalite satırlarıdır; ayrı sesli HLS için profil servisi Sites erişimi olmadığı için yayımlanamadı ve otomatik master korunur. Aşağıdaki 1.4.0 notları tarihsel bağlamdır. [Yeni araştırma ve sınırlar](KAYNAK_ARASTIRMASI.md).
+
+
 Sürüm 1.4.0 ile ek adres gerektirmeden arama yapılır. Önceki JSON/Stremio modülleri korunmuştur.
 
 ## Sağlayıcılar

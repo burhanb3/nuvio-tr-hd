@@ -22,7 +22,7 @@ async function probe(http, candidate, includeHls = false, hashEnabled = false) {
   // S3/R2 presigned GET links sign the HTTP method. HEAD on a working GET
   // URL can legitimately be 403; inspect only a bounded GET range instead.
   const signedGet = /[?&]X-Amz-Algorithm=AWS4-HMAC-SHA256(?:&|$)/i.test(candidate.url) && /[?&]X-Amz-Signature=[a-f0-9]{64}(?:&|$)/i.test(candidate.url);
-  const head = signedGet ? null : await http.request(candidate.url, { method: 'HEAD', headers: candidate.headers });
+  const head = signedGet || candidate.getOnly === true ? null : await http.request(candidate.url, { method: 'HEAD', headers: candidate.headers });
   if (!head && [401, 403, 404, 410, 429].includes(http.failureFor?.(candidate.url)?.status)) return null;
   const mime = (head?.response.headers.get('content-type') || '').toLowerCase();
   if (/html|json/.test(mime)) return null;

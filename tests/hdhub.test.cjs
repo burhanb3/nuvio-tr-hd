@@ -58,6 +58,17 @@ test('uzantısız dosyalar köprü olmadan, bozuk zincirler ve diziler atlanır'
     assert.deepEqual(await scanHdHub(http, target, { allowExtensionless: true }), []);
   } finally { http.close(); }
 });
+
+test('public dosya terminalindeki boşluklu MKV yolu ve GET-only sunucu desteklenir',async()=>{
+ const {fixture}=hdFixture();const url='https://download.example.workers.dev/The Matrix 1999.mkv';
+ fixture['https://gamerxyt.com/hubcloud.php?token=example']={body:`<a href="${url}">Download File [1.5 GB]</a>`};
+ fixture[url.replaceAll(' ','%20')]={body:mkv(),headStatus:403};
+ const calls=[],http=createHttp({fetchImpl:fixtureFetch(fixture,calls)});
+ try{const candidates=await scanHdHub(http,target);assert.equal(candidates.length,1);assert.equal(candidates[0].getOnly,true);
+  const video=await probe(http,candidates[0]);assert.equal(video.container,'mkv');assert.equal(video.downloadable,true);
+  assert.equal(calls.filter(c=>c.url.includes('.workers.dev')&&c.method==='HEAD').length,0);
+ }finally{http.close();}
+});
 test('köprü doğrulanan dosyaya MKV adı sağlar; HEAD dosyaya yeniden istek atmaz', async () => {
   const { createService } = await import('../hosting/worker.mjs');
   const { fixture, file } = hdFixture(), calls = [], memory = new Map();

@@ -1,5 +1,21 @@
 # Proje hafızası
 
+## Güncel yönlendirme — 1.5.0, 25 Ekim 2026
+
+Kullanıcı Game of Thrones ve Fleabag dizilerinde boş sonuç/eklenti görünmüyor dedi; ayrıca daha çok indirilebilir+TR seçenek, dar HLS boyut tahmini, ayrı kalite satırları, boyut/kalite sırası, gruplama ve kısa başlık istedi. İki dizinin S01E01 bölümleri referans alındı; kullanıcı sezon/bölüm belirtmedi.
+
+- PlayIMDb doğru IMDb+başlık+S/E dosya adı döndürmesine rağmen yıl yok diye eleniyordu; düzeltildi. VixSrc yalnız movie API'sini kullanıyordu; /api/tv/id/season/episode eklendi. Native normalizePluginType diğer/series/show türlerini TV sayar; yerel kimlik aynı normalizasyonu izler. Manifest movie/tv zaten doğruydu. ProviderFilterRow boş ve yüklenmeyen grupları gizler; bu nedenle boş tarama sağlayıcı görünmüyor gibi olur.
+- HDHub TVSeries JSON-LD adı/yılı ve TMDB'den gelen poster yolu ile bağlanır. Tek bölüm MKV seçilir; sezon ZIP/RAR asla video sayılmaz. 902 KB Game of Thrones sayfası için kontrollü 1.000.000 karakter text sınırı eklendi; native 1 MiB sınırı büyütülmedi.
+- Public Worker dosya terminalleri eklendi; URL'deki literal boşluklar tek kez %20 yapılır. HEAD 403 ama GET 206 olan bu terminallerde getOnly flag'iyle yalnız sınırlı GET kullanılır; genel erişim reddi kuralı korunur. İlk küçük aynalar ölüyse en çok altı release incelenir.
+- AltyazıDB hesapsız Türkçe SRT yedeği eklendi. Kimliğe bağlı sürüm notu tam sürüm/hash kanıtına çevrilmez. Dizi sezon/bölüm adları doğrulanır; yılın ilk yayın yılından sonraki episode release yılı olması doğru IMDb sorgusuna bağlıysa kabul edilebilir. En çok 12 adaydan dört farklı geçerli altyazıda durulur; bozuk ilk URL sonraki alternatifi engellemez.
+- Kısa kartlar native name + quality/size/language alanlarına ayrıldı. Varsayılan sortOrder=size_asc; quality_asc/desc, size_desc, recommended seçilebilir. groupResults=none/type/source/quality satırları bitişik sıralar; gerçek accordion oluşturmaz. hlsView=separate/auto/both vardır.
+- HLS renditions her profile kendi boyut tahmini verir. Average bandwidth varsa o, yoksa üç uygun HEAD parça örneği; HEAD HTML/eksikse tepe bitrate üst tahmini. Hatalı örnek kökenine aynı aramada tekrar yüklenilmez. Çoklu otomatik kalitede geniş aralık yerine değişken bilgi yazılır. Ayrı ses grubunu video child URL'siyle koparmayın.
+- **Sites erişimi tekrar kayboldu:** mevcut dosya köprüsü appgprj_6ade5021d6b88191818ece53a5d5f1e0 için get_site ve credential NOT_FOUND. Kullanıcı hesap/çalışma alanını değiştirdiğini ve şu an kamilbsr03'e dönemediğini doğruladı. Yeniden Site oluşturulmadı, download-bridge checkout'una kaynak kopyalanmadı. Mevcut public köprü 1.4.0 çalışır. hosting/worker.mjs 1.5.0 stateless /hls/profile.m3u8 hazır ama **yayımlanmadı**. Plugin /api/health features.hlsProfiles true görmeden kullanmaz. Ses birlikteyse doğrudan ayrı kalite; ayrı sesli VixSrc otomatik master kalır.
+- Kaynak envanteri: dokuz repo denendi, sekizi 221 tanım/134 normalize kimlik verdi. Hepsi çalışan bağımsız sağlayıcı değildir. Araştırma docs/KAYNAK_ARASTIRMASI.md ve compatibility/source-inventory-150.json. MP4Hydra HTML, MovieBox web 404, Wyzie anahtarsız 401, TürkçeAltyazıOrg 502; çalışma iddiasıyla eklenmedi. Ücretsiz+hesapsız kapsam ve sa deposuna yazmama yasağı sürer.
+- Son canlı geliştirme kontrolü: GOT S01E01 4,41/5,96/13,63 GiB gerçek 1920×1080 MKV ve TR altyazı; Fleabag S01E01 online/TR var, indirilebilir doğrulanmadı. Dune'da sonraki sürümlerden 18,24 GiB ve üzeri MKV+TR çıktı; telefonda makul boyutlu Dune hâlâ eksik. Spider-Man 730,3 MiB/1280×720 MP4 ve 2,64 GiB MKV dahil TR sonuçları verdi. Raporların kendi sürüm/tarihleri korunur; bazı erken testler 1.4.0 sürüm etiketiyle geliştirme kodudur. Fiziksel iPhone, tam oynatma/indirme, codec ve sahne senkronu yapılmadı.
+
+Aşağıdaki 1.4.0 kayıtları tarihsel bağlamdır; yayın durumu compatibility/github-publication.json'dan doğrulanır.
+
 Son güncelleme: 25 Ekim 2026. Geliştirilen sürüm: **1.4.0**. Kullanıcı **yalnız ücretsiz ve hesapsız** kaynak istedi. Kendi film/bölüm seçimiyle otomatik çoklu kaynak, gerçek MP4/MKV, Türkçe mevcut SRT/VTT, online/çevrimdışı birlikte sunma hedefi sürer. Telefon iPhone; test filmi Dune (2021). JSON/Stremio ek kaynak olarak korunur. Varsayılan Tümü/20/HLS açık, TR tercih et, dengeli altyazı eşleşmesi.
 
 ## Yetki ve dağıtım

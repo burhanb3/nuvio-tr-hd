@@ -76,10 +76,11 @@ function createHttp({ fetchImpl, allowHttp = false, timeoutMs = 4500, deadline =
   }
 
   async function text(url, options = {}) {
-    const result = await request(url, options);
+    const { maxChars = 700000, ...requestOptions } = options;
+    const result = await request(url, requestOptions);
     if (!result) return null;
     const text = await result.response.text();
-    if (!text || text.length > 700000 || text.endsWith('...[truncated]')) return null;
+    if (!text || text.length > Math.min(1000000, Math.max(1, maxChars)) || text.endsWith('...[truncated]')) return null;
     return { text, url: result.url };
   }
 

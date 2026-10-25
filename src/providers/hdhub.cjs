@@ -2,6 +2,7 @@
 const { safeUrl, normalizeTitle, mapLimit } = require('../util.cjs');
 const { anchors } = require('./directory.cjs');
 const { decodeUtf8 } = require('../subtitles.cjs');
+const { matchesEpisode } = require('../matching.cjs');
 const HDHUB_ORIGIN = 'https://4khdhub.one';
 
 function decode64(value) {
@@ -23,23 +24,32 @@ function shortlinkTarget(html) {
 }
 function pageMatches(html, target) {
   const id = html.match(/\bdefaultVideoId\s*=\s*['"](\d+)['"]/)?.[1];
-  if (Number(id) !== target.tmdbId) return false;
+  if (target.type === 'movie' && Number(id) !== target.tmdbId) return false;
   for (const block of html.matchAll(/<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)) {
     try {
       const data = JSON.parse(block[1]);
-      if (data['@type'] === 'Movie' && normalizeTitle(data.name) === normalizeTitle(target.originalTitle) && Number(String(data.datePublished).slice(0, 4)) === target.year) return true;
+      const type = target.type === 'tv' ? 'TVSeries' : 'Movie';
+      const year = Number(String(target.type === 'tv' ? data.startDate : data.datePublished).slice(0, 4));
+      // The series page exposes no numeric TMDB ID. Bind its exact title/year
+      // AND TMDB poster path from canonical metadata, not an arbitrary first hit.
+      const bound = target.type === 'movie' || (target.posterPath && typeof data.image === 'string' &&
+        new URL(data.image).hostname === 'image.tmdb.org' && new URL(data.image).pathname.endsWith(target.posterPath));
+      if (data['@type'] === type && bound && normalizeTitle(data.name) === normalizeTitle(target.originalTitle) && year === target.year) return true;
     } catch {}
   }
   return false;
 }
 function releaseEntries(html, target) {
   const out = [];
-  for (const section of html.split(/<div\s+class="download-item\b/).slice(1, 30)) {
-    const filename = section.match(/<div\s+class="file-title">([^<]+)</)?.[1]?.trim();
+  const sections = target.type === 'tv' ? html.split(/<div\s+class="episode-download-item\b/).slice(1, 650) :
+    html.split(/<div\s+class="download-item\b/).slice(1, 30);
+  for (const section of sections) {
+    const filename = section.match(/<div\s+class="(?:episode-)?file-title">\s*([^<]+)</)?.[1]?.trim();
     if (!filename || !/\.(mkv|mp4)$/i.test(filename)) continue;
     const normalized = normalizeTitle(filename);
     const title = normalizeTitle(target.originalTitle);
-    if (!normalized.startsWith(title + ' ') || !normalized.includes(' ' + target.year + ' ')) continue;
+    if (!normalized.startsWith(title + ' ')) continue;
+    if (target.type === 'tv' ? !matchesEpisode(filename, target) : !normalized.includes(' ' + target.year + ' ')) continue;
     const years = normalized.match(/\b(?:19|20)\d{2}\b/g);
     if (years?.some(y => Number(y) !== target.year)) continue;
     const link = anchors(section).find(a => /Download HubCloud/i.test(a.text));
@@ -61,28 +71,39 @@ async function resolveRelease(http, entry, target, allowExtensionless) {
   if (!terminal || new URL(terminal).hostname !== 'gamerxyt.com' || new URL(terminal).pathname !== '/hubcloud.php') return [];
   const result = await http.text(terminal);
   if (!result) return [];
-  return anchors(result.text).filter(a => /FSL(?:v2)? Server/i.test(a.text)).slice(0, 2).map(a => {
-    const url = safeUrl(a.href, result.url);
-    if (!url || !new URL(url).hostname.endsWith('.r2.cloudflarestorage.com')) return null;
+  return anchors(result.text).filter(a => /FSL(?:v2)? Server|Download File\s*\[/i.test(a.text)).slice(0, 3).map(a => {
+    // Some public terminal anchors contain literal filename spaces. Encode
+    // only those spaces; do not double-encode existing signed URL escapes.
+    const url = safeUrl(a.href.replace(/ /g, '%20'), result.url);
+    if (!url) return null;
+    const hostname = new URL(url).hostname;
+    const r2 = hostname.endsWith('.r2.cloudflarestorage.com');
+    const publicFile = hostname.endsWith('.workers.dev') && /\.(mkv|mp4)(?:$|[?#])/i.test(url);
+    if (!r2 && !publicFile) return null;
     // Raw R2 object keys often lack .mkv. A published bridge must supply the
     // filename-preserving alias; direct fallback cannot promise native naming.
     if (!allowExtensionless && !/\.(?:mkv|mp4)(?:$|[?#])/i.test(url)) return null;
     return { url, filename: entry.filename, headers: { Referer: 'https://gamerxyt.com/' }, subtitles: [],
+      ...(publicFile ? { getOnly: true } : {}),
       subtitleBase: result.url, source: '4KHDHub / HubCloud', identity: target, identityConfidence: 95 };
   }).filter(Boolean);
 }
 async function scanHdHub(http, target, options = {}) {
-  if (target.type !== 'movie') return [];
   const search = await http.text(HDHUB_ORIGIN + '/?s=' + encodeURIComponent(target.originalTitle));
   if (!search) return [];
   const expected = normalizeTitle(target.originalTitle) + ' ' + target.year;
-  const result = anchors(search.text).find(a => normalizeTitle(a.text).endsWith(expected));
+  const result = anchors(search.text).find(a => target.type === 'tv' ? (' ' + normalizeTitle(a.text) + ' ').includes(' ' + expected + ' ') : normalizeTitle(a.text).endsWith(expected));
   const pageUrl = result && safeUrl(result.href, search.url);
   if (!pageUrl || new URL(pageUrl).origin !== HDHUB_ORIGIN) return [];
-  const page = await http.text(pageUrl);
+  const page = await http.text(pageUrl, { maxChars: target.type === 'tv' ? 1000000 : 700000 });
   if (!page || !pageMatches(page.text, target)) return [];
   const entries = releaseEntries(page.text, target);
-  const selected = entries.slice(0, 3);
-  return (await mapLimit(selected, 2, entry => resolveRelease(http, entry, target, options.allowExtensionless === true))).flat();
+  const resolved = [];
+  // If the first small releases have dead mirrors, inspect the next bounded
+  // group instead of declaring that this title has no downloadable file.
+  for (let offset = 0; offset < Math.min(6, entries.length) && resolved.length < 3 && !http.expired(); offset += 3)
+    resolved.push(...(await mapLimit(entries.slice(offset, offset + 3), 2,
+      entry => resolveRelease(http, entry, target, options.allowExtensionless === true))).flat());
+  return resolved.slice(0, 6);
 }
 module.exports = { scanHdHub, shortlinkTarget, pageMatches, releaseEntries, HDHUB_ORIGIN };

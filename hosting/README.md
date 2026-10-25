@@ -1,5 +1,7 @@
 # Dosya köprüsü ve deneysel ortak servis
 
+**1.5.0 kaynak kodu / 1.4.0 üretim:** hosting/worker.mjs içinde stateless `/hls/profile.m3u8?data=...` küçük master servisi ve `features.hlsProfiles` sağlık alanı hazırdır. Yük tek seçili kalite ve ona ait ses/altyazı gruplarını korur; video byte'ları sunulmaz. Yerel handler/fixture kontrolü yapıldı. Ancak mevcut project_id hesap/çalışma alanı değişiminden sonra NOT_FOUND; kullanıcı şu an eski hesaba dönemiyor. **Bu güncelleme üretime yayımlanmadı.** Yeni Site açılmadı, mevcut download-bridge kaynak checkout'una açma helper'ı başarısızken dosya kopyalanmadı. GitHub 1.5 plugin sağlık yanıtında yetenek görmeden yeni yolu kullanmaz. Ses birlikteyse doğrudan kalite satırları, ayrı ses/altyazı grubunda otomatik master kullanılır. Önceki dosya yönlendirme köprüsü 1.4.0 olarak çalışmayı sürdürür.
+
 1.4.0 public köprü: https://nuvio-tr-hd-download-bridge.kamilbsr03.chatgpt.site . Kurulum/kod hâlâ https://burhanb3.github.io/nuvio-tr-hd/manifest.json üzerinden gelir. Eski hayatimbitmiss Sites projesiyle karıştırmayın.
 
 ## Varsayılan akış
