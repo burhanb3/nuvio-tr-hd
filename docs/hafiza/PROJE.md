@@ -6,7 +6,9 @@ Kullanıcı her satırın aynı alanları göstermesini, TR yok yerine TR altyaz
 
 Yeni EN homes servisi ve eşlenmiş DiziYou/Animecix/Archive/dizin/JSON/Stremio EN SRT/VTT. MKV/HLS gömülü diller tespit edildiği ölçüde gösterilir. Aynı scoreSubtitle motoru; kanonik farklı dil adları yalnız kimliği bağlı sorguda; her dil4 seçenek (toplam8), TR önce. TR zorunlu EN-only ile geçmez. Otomatik aday bütçeleri TR12/EN8, hash dil başına3; ortak gövde native4, EN fiziksel ve mantıksal en fazla1. body cache arama içinde paylaşılır, nativeGroup fetch’e gitmez. Aynı URL farklı açık headers ile farklı dil gövdeleri korunabilir; aynı içerik aynası iki dil sayılmaz.
 
-168 test/gerçek QuickJS;20 kilitli upstream dosyada drift yok. Native0.6.4-beta parser dil/string/liste alanları ve kart sırası kontrol edildi. Canlı Dune/Fleabag/DeathNote çift dilli; Dune2/DeathNote2 dosya+TR/EN. Fleabag Archive ilk1/tekrar0 indirme, ağ/Range zaman aşımı; düzelmiş veya korunmuş2 dosya denmez. compatibility/subtitles-and-cards-172.json. Fiziksel iPhone/tam oynatma/iki dil birlikte indirme/offline/sahne senkronu yok. Yayın kanıtı iş sonunda güncellenecek.
+168 test/gerçek QuickJS;20 kilitli upstream dosyada drift yok. Native0.6.4-beta parser dil/string/liste alanları ve kart sırası kontrol edildi. Canlı Dune/Fleabag/DeathNote çift dilli; Dune2/DeathNote2 dosya+TR/EN. Fleabag Archive ilk1/tekrar0 indirme, ağ/Range zaman aşımı; düzelmiş veya korunmuş2 dosya denmez. compatibility/subtitles-and-cards-172.json. Fiziksel iPhone/tam oynatma/iki dil birlikte indirme/offline/sahne senkronu yok. Altyazı cache tam gövde yerine biçim/son cue/içerik parmak izini saklar; aynı gövde farklı kalite için yeniden çözülmez.
+
+**1.7.2 yayın tamamlandı:** kod f6cdc270f3534d528bfd1df53834a8f23902a23b; Windows/Linux Test40383064585 ve Pages40383064008 başarılı. Beş public varlık HTTP200 ve yerel SHA eşit; compatibility/github-publication.json. Aynı manifest adresi/ID’ler; yeni video sağlayıcısı0, fiziksel cihaz testi yok. Kullanıcı için Pluginler ekranında mevcut depoyu yenilemek yeterli.
 
 
 ## 1.7.1 indirme araştırması — 26 Ekim 2026

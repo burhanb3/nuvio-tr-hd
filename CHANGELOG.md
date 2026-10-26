@@ -7,6 +7,7 @@
 - EN OpenSubtitles v3+ ve eşlenmiş EN SRT/VTT; aynı kimlik/kurgu/yıl/bölüm/hash/release/süre ve gövde kontrolleri. Dil başına4 seçenek; Türkçe zorunluyu EN karşılamaz.
 - Ortak altyazı native fetch limiti4, EN en fazla1; mevcut TR çiftini EN beklemesi silmez. Aynı URL için farklı açık altyazı başlıklarıyla iki dil desteklenir.
 - 168 test/QuickJS; canlı TR+EN gövdeleri ve native alan sırası kontrolü. Fleabag Archive ağ arızası saklanmadı; fiziksel cihaz/tam indirme/offline/senkron yok.
+- Aynı GitHub Pages adresinde yayımlandı; Windows/Linux CI ve beş public dosyanın HTTP200/SHA kontrolü başarılı.
 
 
 ## 1.7.1 — 2026-10-26
