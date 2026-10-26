@@ -15,11 +15,13 @@ test('manifest KMP scrapers şeması, yayın yolu ve sürümleri tutarlı', asyn
   const main=manifest.scrapers.find(s=>s.id==='nuvio-tr-hd');
   assert.equal(main?.name,'Nuvio TR HD');
   assert.ok(main?.formats.includes('hls'));
+  const extra=manifest.scrapers.find(s=>s.id==='nuvio-tr-hd-extra-anime');
+  assert.equal(extra?.enabled,true);assert.deepEqual(extra?.supportedTypes,['tv']);
   assert.ok(!manifest.scrapers.some(s=>s.id==='nuvio-tr-hd-online'),'Film/dizi araması yeni online scraper kurulmasına bağımlı olmamalı');
   for (const scraper of manifest.scrapers) {
     for (const key of ['id', 'name', 'version', 'filename']) assert.equal(typeof scraper[key], 'string');
     assert.equal(scraper.version, manifest.version);
-    assert.deepEqual(scraper.supportedTypes, ['movie', 'tv']);
+    assert.deepEqual(scraper.supportedTypes, scraper.id==='nuvio-tr-hd-extra-anime'?['tv']:['movie', 'tv']);
     assert.equal(scraper.hasSettings, true);
     await access(new URL('../' + scraper.filename, import.meta.url));
     const published = await readFile(new URL('../dist/' + scraper.filename, import.meta.url), 'utf8');

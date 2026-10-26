@@ -74,3 +74,9 @@ test('AniMOM: resmi yönlendirme yalnız ağ hatasında bir kez yenilenir; HTML 
  try{const video=await probe(http,{url,headers:{},source:'AniMOM'},false,false);assert.ok(video);assert.equal(calls,2);}finally{http.close();}
  for(const entry of [{status:403},{body:'<html>Denied</html>',mime:'text/html'}]){const requests=[],http=createHttp({fetchImpl:fixtureFetch({[url]:entry},requests)});try{assert.equal(await probe(http,{url,headers:{},source:'AniMOM'}),null);assert.equal(requests.length,1);}finally{http.close();}}
 });
+test('Kısmi MP4: doğrulanmış dosya, isteğe bağlı metadata ağı bozulunca kaybolmaz; piksel/hash uydurulmaz',async()=>{
+ const {body}=largeMoov(),url='https://vidcache.net:8161/example/video.mp4',calls=[];
+ const fetcher=fixtureFetch({[url]:{body,mime:'video/mp4'}});
+ const http=createHttp({fetchImpl:async(u,o)=>{calls.push(o.headers.Range);if(o.headers.Range!=='bytes=0-131071')throw Error('metadata unavailable');return fetcher(u,o);}});
+ try{const video=await probe(http,{url,headers:{},source:'AniMOM'},false,true);assert.equal(video.downloadable,true);assert.equal(video.size,body.length);assert.equal(video.dimensions,null);assert.equal(video.videoHash,null);assert.equal(calls.length,2);}finally{http.close();}
+});

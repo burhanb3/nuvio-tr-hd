@@ -1643,12 +1643,75 @@ var require_animom = __commonJS({
           identityConfidence: 90,
           subtitles: [],
           filename: syntheticFilename(target) + ".mp4",
-          filenameSynthetic: true,
-          requireDuration: true
+          filenameSynthetic: true
         } : null;
       });
     }
     module2.exports = { scanAniMom, searchRows, matchingSeries, episodeAddress, uploadVideo };
+  }
+});
+
+// src/providers/seicode.cjs
+var require_seicode = __commonJS({
+  "src/providers/seicode.cjs"(exports2, module2) {
+    "use strict";
+    var { safeUrl, mapLimit } = require_util();
+    var { sameName, syntheticFilename } = require_page_data();
+    var { decodeEntities } = require_directory();
+    var API = "https://next.seicode.net";
+    var ORIGIN = "https://seicode.net/";
+    function matchesSeiCode(detail, target) {
+      return detail && detail.type === "tv" && Number(detail.tmdbID) === target.tmdbId && Number(String(detail.firstAirDate || "").slice(0, 4)) === target.year && (!target.firstAirDate || String(detail.firstAirDate).slice(0, 10) === target.firstAirDate) && [detail.english, detail.original, detail.japanese, ...Array.isArray(detail.alternativeTitles) ? detail.alternativeTitles.slice(0, 40).map((n) => typeof n === "string" ? n : n?.title) : []].some((n) => sameName(n, target));
+    }
+    function mp4UploadEmbed(value) {
+      const url = safeUrl(value);
+      if (!url) return null;
+      const parsed = new URL(url);
+      if (!/^(?:www\.)?mp4upload\.com$/i.test(parsed.hostname)) return null;
+      const id = parsed.pathname.match(/^\/(?:embed-)?([a-z0-9]{8,32})(?:\.html)?\/?$/i)?.[1];
+      return id ? "https://www.mp4upload.com/embed-" + id + ".html" : null;
+    }
+    function mp4UploadVideo(html) {
+      const block = String(html).match(/\bplayer\.src\s*\(\s*\{([\s\S]{0,2000}?)\}\s*\)/)?.[1];
+      if (!block || !/\btype\s*:\s*['"]video\/mp4['"]/.test(block)) return null;
+      const url = safeUrl(decodeEntities(block.match(/\bsrc\s*:\s*['"]([^'"]+)['"]/)?.[1] || ""));
+      return url && /^[a-z0-9-]+\.mp4upload\.com$/i.test(new URL(url).hostname) && /\.mp4(?:$|[?#])/i.test(url) ? url : null;
+    }
+    async function scanSeiCode(http, target) {
+      if (!target.isAnime || target.type !== "tv") return [];
+      let detail;
+      for (const name of (target.searchTitles || [target.originalTitle]).slice(0, 2)) {
+        const rows = await http.json(API + "/anime/search?q=" + encodeURIComponent(name), { headers: { Referer: ORIGIN } });
+        if (Array.isArray(rows)) for (const row of rows.slice(0, 12)) {
+          if (!/^[a-z0-9-]{1,180}$/i.test(row?.slug || "") || ![row.english, ...Array.isArray(row.alternativeTitles) ? row.alternativeTitles.slice(0, 40) : []].some((n) => sameName(typeof n === "string" ? n : n?.title, target))) continue;
+          const data = await http.json(API + "/anime/" + encodeURIComponent(row.slug), { headers: { Referer: ORIGIN } });
+          if (data?.slug === row.slug && matchesSeiCode(data, target)) {
+            detail = data;
+            break;
+          }
+          if (http.expired()) break;
+        }
+        if (detail || http.expired()) break;
+      }
+      const season = detail?.seasons?.find((s) => Number(s.season_number) === target.season);
+      const episode = season?.episodes?.find((e) => Number(e.episode_number) === target.episode);
+      if (!episode || !episode.video_links || http.expired()) return [];
+      const embeds = [...new Set(Object.values(episode.video_links).slice(0, 40).map(mp4UploadEmbed).filter(Boolean))].slice(0, 2);
+      return mapLimit(embeds, 2, async (embed) => {
+        const page = await http.text(embed, { headers: { Referer: ORIGIN } }), url = page && mp4UploadVideo(page.text);
+        return url ? {
+          url,
+          source: "SeiCode",
+          identity: target,
+          identityConfidence: 100,
+          headers: { Referer: "https://www.mp4upload.com/" },
+          filename: syntheticFilename(target) + ".mp4",
+          filenameSynthetic: true,
+          subtitles: []
+        } : null;
+      });
+    }
+    module2.exports = { scanSeiCode, matchesSeiCode, mp4UploadEmbed, mp4UploadVideo };
   }
 });
 
@@ -2259,12 +2322,13 @@ var require_probe = __commonJS({
         return inspectHls(http, text, playlist.url, candidate, { detailed: options.detailedHls });
       }
       let dataUrl = candidate.url;
-      const bytes = (start, end) => http.bytes(
+      const supplemental = ["AniMOM", "SeiCode"].includes(candidate.source);
+      const bytes = (start, end, timeoutMs) => http.bytes(
         dataUrl,
         candidate.headers,
         start,
         end,
-        candidate.source === "AniMOM" ? { timeoutMs: 7e3 } : {}
+        supplemental ? { timeoutMs: timeoutMs || (candidate.source === "AniMOM" ? 7e3 : 4500) } : {}
       );
       const sample = await bytes();
       if (!sample) return null;
@@ -2284,10 +2348,12 @@ var require_probe = __commonJS({
       if (info.container === "mp4" && /\.mkv(?:$|[?#])/i.test(sample.url)) return null;
       if (info.container === "mkv" && /\.mp4(?:$|[?#])/i.test(sample.url)) return null;
       let tailSample = null;
+      let optionalMetadataFailed = false;
       if (info.container === "mp4" && (!info.dimensions || candidate.requireDuration && !info.duration) && !http.expired()) {
         const offset = mp4MetadataOffset(sample.bytes, sample.total);
         if (offset !== null) {
-          const metadata = await bytes(offset, Math.min(sample.total - 1, offset + 262143));
+          const metadata = await bytes(offset, Math.min(sample.total - 1, offset + 262143), 3e3);
+          if (supplemental && !metadata) optionalMetadataFailed = true;
           if (sameFile(sample, metadata)) {
             const extra = mp4MetadataInfo(metadata.bytes, sample.total - offset);
             if (extra?.invalidVideo) return null;
@@ -2297,10 +2363,11 @@ var require_probe = __commonJS({
           }
         }
       }
-      if ((!info.dimensions || candidate.requireDuration && !info.duration) && info.container === "mp4" && sample.total > sample.bytes.length && !http.expired()) {
+      if ((!info.dimensions || candidate.requireDuration && !info.duration) && !optionalMetadataFailed && info.container === "mp4" && sample.total > sample.bytes.length && !http.expired()) {
         const start = Math.max(sample.bytes.length, sample.total - 262144);
-        const tail = await bytes(start, sample.total - 1);
+        const tail = await bytes(start, sample.total - 1, 3e3);
         tailSample = tail;
+        if (supplemental && !tail) optionalMetadataFailed = true;
         if (sameFile(sample, tail)) {
           const extra = mp4TailInfo(tail.bytes);
           if (extra?.invalidVideo) return null;
@@ -2313,8 +2380,8 @@ var require_probe = __commonJS({
       const durationTolerance = candidate.durationTolerance === 0.1 ? { low: 0.9, high: 1.1 } : { low: 0.7, high: 1.35 };
       if (info.duration && expectedDuration > 0 && (info.duration < expectedDuration * durationTolerance.low || info.duration > expectedDuration * durationTolerance.high)) return null;
       let videoHash = null;
-      if ((hashEnabled || candidate.expectedFile) && sample.total >= 131072 && !http.expired()) {
-        if (!tailSample || tailSample.bytes.length < 65536) tailSample = await bytes(sample.total - 65536, sample.total - 1);
+      if ((hashEnabled || candidate.expectedFile) && !optionalMetadataFailed && sample.total >= 131072 && !http.expired()) {
+        if (!tailSample || tailSample.bytes.length < 65536) tailSample = await bytes(sample.total - 65536, sample.total - 1, 3e3);
         if (sameFile(sample, tailSample)) videoHash = opensubtitlesHash(sample.bytes, tailSample.bytes, sample.total);
       }
       const pinned = candidate.expectedFile;
@@ -2640,7 +2707,7 @@ var require_presentation = __commonJS({
 var require_diagnostics = __commonJS({
   "src/diagnostics.cjs"(exports2, module2) {
     "use strict";
-    var VERSION = true ? "1.7.3" : "dev";
+    var VERSION = true ? "1.7.4" : "dev";
     function effectiveTmdbKey(settings, injectedKey) {
       return typeof settings.tmdbApiKey === "string" && settings.tmdbApiKey.trim() ? settings.tmdbApiKey.trim() : typeof injectedKey === "string" ? injectedKey.trim() : "";
     }
@@ -2697,6 +2764,7 @@ var require_index = __commonJS({
     var { scanDiziYou } = require_diziyou();
     var { scanFilmModu } = require_filmmodu();
     var { scanAniMom } = require_animom();
+    var { scanSeiCode } = require_seicode();
     var { scanDiziBak } = require_dizibak();
     var { probe } = require_probe();
     var { loadSubtitles, subtitleLanguage, subtitleKey, selectSubtitles, embeddedSubtitleLanguages } = require_subtitles();
@@ -2837,7 +2905,7 @@ var require_index = __commonJS({
           const renderSettings = () => ({ ...settings, hlsProfileBridgeReady: profileBridgeReady });
           const strictSubtitles = settings.subtitlePolicy === "require";
           async function withProbeSlot(job) {
-            if (active >= 3) await new Promise((resolve) => waiting.push(resolve));
+            if (active >= (lane === "extraAnime" ? 1 : 3)) await new Promise((resolve) => waiting.push(resolve));
             else active++;
             try {
               if (!http.expired()) return await job();
@@ -2879,6 +2947,7 @@ var require_index = __commonJS({
               return;
             }
             const pair = { candidate, video, subtitles: [] };
+            if (lane === "extraAnime") void discoverSubtitles.prefetch();
             const embedded = embeddedSubtitleLanguages(video, candidate).includes("tr");
             let published = !strictSubtitles || embedded;
             if (published) completed.push(pair);
@@ -2956,8 +3025,12 @@ var require_index = __commonJS({
                 report.reason = "identity_unavailable";
                 return [];
               }
-              if (lane === "anime" && !target.isAnime) {
+              if (["anime", "extraAnime"].includes(lane) && !target.isAnime) {
                 report.reason = "not_anime";
+                return [];
+              }
+              if (lane === "extraAnime" && target.type !== "tv") {
+                report.reason = "unsupported_media_type";
                 return [];
               }
               discoverSubtitles = createSubtitleDiscovery(http, target, settings);
@@ -3007,12 +3080,15 @@ var require_index = __commonJS({
                   sourceJobs.push({ name: "VixSrc", run: () => scanVixDirect(http, target) });
                 if (animeLane && settings.animecixEnabled !== false && target.isAnime) sourceJobs.push({ name: "Animecix", run: () => scanAnimecix(http, target) });
                 if (animeLane && settings.sonanimeEnabled !== false && target.isAnime) sourceJobs.push({ name: "SonAnime", run: () => scanSonAnime(http, target) });
-                if (animeLane && settings.animomEnabled === true && target.isAnime) sourceJobs.push({ name: "AniMOM", run: () => scanAniMom(http, target) });
-                if (onlineLane && settings.includeHls !== false && settings.diziyouEnabled !== false && target.type === "tv" && !target.isAnime)
+                if ((lane === "extraAnime" && settings.animomEnabled !== false || lane === "all" && settings.animomEnabled === true) && target.isAnime)
+                  sourceJobs.push({ name: "AniMOM", run: () => scanAniMom(http, target) });
+                if ((lane === "extraAnime" && settings.seicodeEnabled !== false || lane === "all" && settings.seicodeEnabled === true) && target.isAnime)
+                  sourceJobs.push({ name: "SeiCode", run: () => scanSeiCode(http, target) });
+                if (onlineLane && settings.diziyouEnabled !== false && target.type === "tv" && !target.isAnime)
                   sourceJobs.push({ name: "DiziYou", run: () => scanDiziYou(http, target) });
                 if (onlineLane && settings.includeHls !== false && settings.dizibakEnabled !== false && target.type === "tv" && !target.isAnime)
                   sourceJobs.push({ name: "DiziBak", run: () => scanDiziBak(http, target) });
-                if (onlineLane && settings.includeHls !== false && settings.filmmoduEnabled !== false && target.type === "movie" && !target.isAnime)
+                if (onlineLane && settings.filmmoduEnabled !== false && target.type === "movie" && !target.isAnime)
                   sourceJobs.push({ name: "FilmModu", run: () => scanFilmModu(http, target) });
                 if (filesLane && settings.hdhubEnabled !== false && !sourceFactories.some((s) => s.name === "4KHDHub / HubCloud")) sourceJobs.push({ name: "4KHDHub / HubCloud", run: async () => {
                   return scanHdHub(http, target, { allowExtensionless: settings.useDownloadBridge !== false, onCandidates: (candidates) => acceptCandidates(candidates, true) });
@@ -3031,8 +3107,8 @@ var require_index = __commonJS({
                 emit({ stage: "source", source: job.name, candidates: candidates.length });
                 if (!candidates.length || http.expired()) return;
                 if (["4KHDHub / HubCloud", "Internet Archive"].includes(job.name) && !sourceFactories.some((s) => s.name === job.name)) return;
-                void discoverSubtitles.prefetch();
-                await mapLimit(candidates.slice(0, quota), 3, processCandidate);
+                if (lane !== "extraAnime") void discoverSubtitles.prefetch();
+                await mapLimit(candidates.slice(0, quota), lane === "extraAnime" ? 1 : 3, processCandidate);
               });
               await Promise.all(pending);
               return formatResults(completed, renderSettings(), target);
@@ -3122,6 +3198,7 @@ var require_index = __commonJS({
         { type: "info", label: "Ses kodları: EN İngilizce, TR Türkçe, JA Japonca, HI Hintçe. ? işareti kaynak/dosya adı iddiasıdır. ES görüntüde, İspanyolca sabit altyazıdır; ses dili değildir." },
         { type: "toggle", key: "autoSubtitles", label: "TR ve EN altyazıları otomatik ara", defaultValue: true },
         { type: "toggle", key: "animomEnabled", label: "Deneysel AniMOM anime dosyaları", defaultValue: false, description: "Varsayılan kapalı: tekil MP4/TR doğrulandı, birleşik arama ve bazı bölümlerde CDN kararsız. Tam ad/yıl/bölüm gerekir; düz bölüm numarası başka sezona taşınmaz." },
+        { type: "toggle", key: "seicodeEnabled", label: "SeiCode / MP4Upload ek anime dosyaları", defaultValue: true, description: "Kısmi katalog: tam TMDB/ad/yıl ve açık sezon/bölüm bağı gerekir. Yalnız gerçek MP4Upload dosyası sunulur; eksik bölümde başka bölüm seçilmez." },
         { type: "select", key: "subtitlePolicy", label: "Türkçe altyazı bulunamazsa", defaultValue: "prefer", options: [
           { value: "prefer", label: "Videoyu göster; TR altyazı yok bilgisini yaz" },
           { value: "require", label: "Videoyu gizle" }
@@ -3163,19 +3240,19 @@ var require_index = __commonJS({
       return createProvider({ settings, tmdbKey }).getStreams(tmdbId, mediaType, season, episode);
     }
     function createEntry(lane) {
-      const titles = { main: "Film/dizi · online ve dosyalar", files: "Dosyalar", online: "Hızlı kaynaklar", anime: "Anime" };
-      const only = { files: ["hdhubEnabled", "directoryEnabled", "archiveEnabled", "catalogUrls", "addonUrls"], online: ["playImdbEnabled", "vixsrcEnabled", "diziyouEnabled", "dizibakEnabled", "filmmoduEnabled", "hlsView"], anime: ["animecixEnabled", "sonanimeEnabled"] };
+      const titles = { main: "Film/dizi · online ve dosyalar", files: "Dosyalar", online: "Hızlı kaynaklar", anime: "Anime", extraAnime: "Ek Anime" };
+      const only = { files: ["hdhubEnabled", "directoryEnabled", "archiveEnabled", "catalogUrls", "addonUrls"], online: ["playImdbEnabled", "vixsrcEnabled", "diziyouEnabled", "dizibakEnabled", "filmmoduEnabled", "hlsView"], anime: ["animecixEnabled", "sonanimeEnabled"], extraAnime: ["animomEnabled", "seicodeEnabled"] };
       only.main = [...only.files, ...only.online];
       const sourceFields = Object.values(only).flat();
       return {
         async getStreams(...args) {
           const settings = typeof globalThis.SCRAPER_SETTINGS === "object" && globalThis.SCRAPER_SETTINGS || {};
           const tmdbKey = typeof globalThis.TMDB_API_KEY === "string" ? globalThis.TMDB_API_KEY : "";
-          return createProvider({ settings, tmdbKey, lane, budgetMs: lane === "main" ? 24e3 : lane === "online" ? 16e3 : lane === "anime" ? 2e4 : 28e3 }).getStreams(...args);
+          return createProvider({ settings, tmdbKey, lane, budgetMs: ["main", "extraAnime"].includes(lane) ? 24e3 : lane === "online" ? 16e3 : lane === "anime" ? 2e4 : 28e3 }).getStreams(...args);
         },
         onSettings: () => [
-          { type: "info", label: lane === "main" ? "Film/dizi araması online HLS ile gerçek MP4/MKV dosyalarını aynı listede sunar. Dosya araması boşsa online alternatifler korunur. Anime ayrı taramadır." : `Bu ayarlar yalnız ${titles[lane]} taramasına aittir. En fazla kaynak sınırı bu tarama içindir.` },
-          ...onSettings().filter((field) => !sourceFields.includes(field.key) || only[lane].includes(field.key))
+          { type: "info", label: lane === "main" ? "Film/dizi araması online HLS ile gerçek MP4/MKV dosyalarını aynı listede sunar. Dosya araması boşsa online alternatifler korunur. Anime ayrı taramadır." : lane === "extraAnime" ? "Kısmi kapsama sahip ek anime dosyaları bağımsız taranır. Her bölümde sonuç garantisi yoktur; boş sonuç diğer sağlayıcıların sonuçlarını silmez. Aynı anda tek dosya kontrol edilir." : `Bu ayarlar yalnız ${titles[lane]} taramasına aittir. En fazla kaynak sınırı bu tarama içindir.` },
+          ...onSettings().filter((field) => (!sourceFields.includes(field.key) || only[lane].includes(field.key)) && (lane !== "extraAnime" || !["includeHls", "useDownloadBridge", "allowHttp", "detailedHlsMetadata"].includes(field.key))).map((field) => lane === "extraAnime" && field.key === "animomEnabled" ? { ...field, label: "AniMOM ek anime dosyaları", defaultValue: true, description: "Kısmi katalog: tam ad/yıl/bölüm ve gerçek MP4 kontrolü gerekir. Çalışmayan bölüm atlanır; diğer sonuçlar korunur." } : lane === "extraAnime" && field.type === "info" && field.label.startsWith("Tanı ·") ? { ...field, label: field.label.split(" · ").slice(0, 3).join(" · ") + " · Bağımsız Ek Anime" } : field)
         ]
       };
     }

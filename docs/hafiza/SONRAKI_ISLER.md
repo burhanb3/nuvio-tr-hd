@@ -1,5 +1,12 @@
 # Sonraki işler
 
+## 1.7.4 öncelik
+
+1. Aynı manifest adresinde1.7.4/üçscraper/altıpublicvarlık yayını;189check/QuickJS ve20upstream tamam. CI/Pages/SHA sonrasıkanıt/hafızagüncelle.
+2. Kısmi kaynakları kabul eden güncel kullanıcı talimatıyla film/dizi MP4/MKV araştırmasına devam; yeni film/diziadaptörü0. Bütünkatalogkapsamı şartı koyma; gerçekdosya/kimlik/yıl/S/E şartı sürer.
+3. EkAnimeAniMOM+SeiCodevarsayılanaçık. SeiCodeE3/E111080p0,29GB/EN;TRyok. AniMOMDN1birkez0,36GB/TR-EN,tekrarveDN2boş. Kalıcıistikrar/tümsezon/hep720piddiasıyok.
+4. Telefondaüçüncüscraperotomatiketkinleşme,erkenEkAnimegörünümü,tamindirme/offline/TR-EN/senkron sınanmadı. Tekrarkimlikayarlarıbozma/PCsunucu/hesapsabitanahtarekleme.
+
 ## 1.7.3 öncelik
 
 1. **Tamamlandı:**1.7.3 a46d6838c257d7a21320e432a0c6be766b24fadd aynı manifest/ID’lerle yayımlandı.178check/QuickJS,20upstream drift yok; Windows/Linux40391651511/Pages40391651671 ve5publicHTTP200/SHA başarılı. Yayın kanıtı/hafıza güncel; kapsam hedefi açık.

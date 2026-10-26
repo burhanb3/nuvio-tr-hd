@@ -1,5 +1,13 @@
 # Proje hafızası
 
+## 1.7.4 — 27 Ekim, kısmi kapsama izin
+
+Kullanıcı birkaç seri/bölümde sağlam çalışan sağlayıcıları da kullanmamızı istedi. Bu talimat eski “birden çok bölüm/birleşik kararlılık yoksa varsayılan açma” kapısının önüne geçer; yanlış kimlik/yıl/bölüm veya sahte dosya kabul edilmez. YeniID nuvio-tr-hd-extra-anime, TV, varsayılan açık; ana+animeID/ayarları aynı. AniMOM bu bağımsız taramaya taşındı, eskiAnime’de tekrar çalışmaz. Yeni SeiCode/MP4Upload genel adaptörü: tamtmdbID/ad/yıl/ilkdate ve açıkS/E, yalnız gerçekVideo.jsMP4, fallbackbaşkabölüm yok.
+
+CanlıSeiCodeSHIBOYUGIS1E3:293996724byte/1920×1080/1456,914s/hash8acf34a189bc23f8;E11:291531575byte/1920×1080/1465,959s/hash623b30874f041a0b; ENvar/TRyok. İkisindeek5,351/4,657s, olağananime20,013/15,371s ayrı. E2a3başarısız. DN1birparalelturAniMOM0,36GB+TR/EN, pikselnull; DN2veDN1tekrarındaek0; olağan4seçenekkorundu. Hepsikararlı/tümsezon/TReşleşti deme. Webflixsonpozitifyol451oldu,eklenmedi.
+
+Ekprobe1,diğer3 herinvocationiçin; appgenelitoplamkotası değildir. Ekmetadata3s,baş MP4/Range/size geçerseisteğebağlımetadatabaşarısızlığıdosyayıdüşürmez; kalite/hashuydurulmaz. Zorunlusüre/pineskiadaylardakorunur. BoşekdosyaaltyazıAPIsorgusuaçmaz. DiziYou/FilmModuHLSkapalıgerçekMP4taramasıfixturebugfix; yenicanlıfilm/dizikaynağısayma.189check/QuickJS;20upstreamdriftyok. docs/KISMI_KAYNAKLAR_174.md,partial-sources-174.json. YeniPC/backend/hesap/videoPin0. Fizikselcihaz/tamindirme/offline/senkronyok. Yayınkanıtı işsonunda güncellenecek.
+
 ## 1.7.3 — kaynak araştırması ve gerçek MP4 metadata
 
 Varsayılan yeni kararlı film/dizi dosya sağlayıcısı0. AniMOM/YourUpload genel anime adaptörü tekil DeathNoteS01E01’de356493310byte/1280×720/1390,661s MP4+dörtTR68–69 puan verdi; başka bölüm ve birleşik aramalar kararsız, bu yüzden animomEnabled===true ile deneysel/varsayılan kapalı. Sezon/episode tahmini yok; yeni pin/hesap/backend0. Webflix tek AoT dosyası doğrulansa da film/TV451/5xx; SineWix/Anizium401, Nakios timeout, Movix embed/UqloadHLS+downloadSecurityerror/Dood403, VidZeeHLS, Soaperforsale/HydraBacksoon, Anizm/Sibnet403. Anahtar/imza/koruma aşılmadı.

@@ -1,5 +1,9 @@
 # Nuvio Kotlin Multiplatform uyumluluğu
 
+## 1.7.4 — üçüncü bağımsız scraper
+
+Mevcut iki ID korunur; nuvio-tr-hd-extra-anime yalnız tv destekleyen üçüncü kayıttır. Native0.6.4-beta StreamsRepository her scraper’ı ayrılaunch eder ve hercompletion’ı mevcut gruba ekler; boşcompletion önceki stream’leri korur. Bu davranış mevcut20dosyalı lock içinde doğrulandı; yeniABI alanı veya per-resultcallback yok.189fixture/gerçekQuickJS;20dosyadadriftyok (upstream-174-check.json). Altıpublicvarlık/üçaktifJS/legacyJS yayınlanır. Source/Node ölçümü fiziksel iPhone erken-görünüm/indirme kanıtı değildir.
+
 ## 1.7.3 — mevcut ABI
 
 178fixture/gerçekQuickJS; Nuvio0.6.4-beta ve güncel dalın20 kilitli dosyasında drift yok (upstream-173-check.json). Yeni native alan yok; MP4 ek Range ve ilk CDN adresi sağlayıcı içinde kalır. Deneysel AniMOM default kapalı; getStreams/onSettings ve metadata/range yolu derlenmiş anime paketinde sınandı. Physical3 probe/4altyazı/EN1 ve scheduler sınırları korunur. Cihaz/offline/senkron testi yok.

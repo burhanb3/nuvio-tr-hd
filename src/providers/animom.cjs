@@ -71,7 +71,7 @@ async function scanAniMom(http, target) {
   return (await mapLimit([...new Set(embeds)].slice(0,2),2,async embed=>{
     const page = await http.text(embed,{headers:{Referer:address}}), url = page && uploadVideo(page.text);
     return url ? {url,source:'AniMOM',headers:{Referer:'https://www.yourupload.com/'},identity:target,identityConfidence:90,subtitles:[],
-      filename:syntheticFilename(target)+'.mp4',filenameSynthetic:true,requireDuration:true} : null;
+      filename:syntheticFilename(target)+'.mp4',filenameSynthetic:true} : null;
   }));
 }
 module.exports={scanAniMom,searchRows,matchingSeries,episodeAddress,uploadVideo};

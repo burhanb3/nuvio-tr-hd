@@ -28,8 +28,9 @@ async function probeOne(http, candidate, includeHls = false, hashEnabled = false
   // YourUpload performs an extra public CDN redirect. Allow that hop within
   // the existing search deadline; all other sources keep their normal limit.
   let dataUrl = candidate.url;
-  const bytes = (start, end) => http.bytes(dataUrl, candidate.headers, start, end,
-    candidate.source === 'AniMOM' ? { timeoutMs: 7000 } : {});
+  const supplemental = ['AniMOM','SeiCode'].includes(candidate.source);
+  const bytes = (start, end, timeoutMs) => http.bytes(dataUrl, candidate.headers, start, end,
+    supplemental ? { timeoutMs: timeoutMs || (candidate.source==='AniMOM'?7000:4500) } : {});
   const sample = await bytes();
   if (!sample) return null;
   // Read the rest from the exact server that returned the first bytes. A
@@ -54,10 +55,12 @@ async function probeOne(http, candidate, includeHls = false, hashEnabled = false
   if (info.container === 'mp4' && /\.mkv(?:$|[?#])/i.test(sample.url)) return null;
   if (info.container === 'mkv' && /\.mp4(?:$|[?#])/i.test(sample.url)) return null;
   let tailSample = null;
+  let optionalMetadataFailed = false;
   if (info.container === 'mp4' && (!info.dimensions || candidate.requireDuration && !info.duration) && !http.expired()) {
     const offset = mp4MetadataOffset(sample.bytes, sample.total);
     if (offset !== null) {
-      const metadata = await bytes(offset, Math.min(sample.total - 1, offset + 262143));
+      const metadata = await bytes(offset, Math.min(sample.total - 1, offset + 262143),3000);
+      if (supplemental && !metadata) optionalMetadataFailed = true;
       if (sameFile(sample, metadata)) {
         const extra = mp4MetadataInfo(metadata.bytes, sample.total - offset);
         if (extra?.invalidVideo) return null;
@@ -67,10 +70,11 @@ async function probeOne(http, candidate, includeHls = false, hashEnabled = false
       }
     }
   }
-  if ((!info.dimensions || (candidate.requireDuration && !info.duration)) && info.container === 'mp4' && sample.total > sample.bytes.length && !http.expired()) {
+  if ((!info.dimensions || (candidate.requireDuration && !info.duration)) && !optionalMetadataFailed && info.container === 'mp4' && sample.total > sample.bytes.length && !http.expired()) {
     const start = Math.max(sample.bytes.length, sample.total - 262144);
-    const tail = await bytes(start, sample.total - 1);
+    const tail = await bytes(start, sample.total - 1,3000);
     tailSample = tail;
+    if (supplemental && !tail) optionalMetadataFailed = true;
     if (sameFile(sample, tail)) {
       const extra = mp4TailInfo(tail.bytes);
       if (extra?.invalidVideo) return null;
@@ -83,8 +87,8 @@ async function probeOne(http, candidate, includeHls = false, hashEnabled = false
   const durationTolerance = candidate.durationTolerance === 0.1 ? { low: 0.9, high: 1.1 } : { low: 0.7, high: 1.35 };
   if (info.duration && expectedDuration > 0 && (info.duration < expectedDuration * durationTolerance.low || info.duration > expectedDuration * durationTolerance.high)) return null;
   let videoHash = null;
-  if ((hashEnabled || candidate.expectedFile) && sample.total >= 131072 && !http.expired()) {
-    if (!tailSample || tailSample.bytes.length < 65536) tailSample = await bytes(sample.total - 65536, sample.total - 1);
+  if ((hashEnabled || candidate.expectedFile) && !optionalMetadataFailed && sample.total >= 131072 && !http.expired()) {
+    if (!tailSample || tailSample.bytes.length < 65536) tailSample = await bytes(sample.total - 65536, sample.total - 1,3000);
     if (sameFile(sample, tailSample)) videoHash = opensubtitlesHash(sample.bytes, tailSample.bytes, sample.total);
   }
   const pinned = candidate.expectedFile;

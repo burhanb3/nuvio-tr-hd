@@ -11,6 +11,7 @@ const { makeFixture, responseFor, identity, target, mkv } = helpers;
 const bundle = await readFile(new URL('../providers/nuvio-tr-hd.js', import.meta.url), 'utf8');
 const onlineBundle = await readFile(new URL('../providers/nuvio-tr-hd-online.js', import.meta.url), 'utf8');
 const animeBundle = await readFile(new URL('../providers/nuvio-tr-hd-anime.js', import.meta.url), 'utf8');
+const extraAnimeBundle = await readFile(new URL('../providers/nuvio-tr-hd-extra-anime.js', import.meta.url), 'utf8');
 
 test('QuickJS AniMOM: generic title/year/episode lookup and large-moov metadata stay native compatible',async()=>{
  const root='https://animom.org/anime/example-anime',embed='https://www.yourupload.com/embed/Example1',url='https://vidcache.net:8161/example/video.mp4';
@@ -24,13 +25,32 @@ test('QuickJS AniMOM: generic title/year/episode lookup and large-moov metadata 
   [root+'-1-bolum']:{body:`<h1><a href="${root}">Example Anime</a> 1. Bölüm</h1><button data-frame="${embed}">YourUpload</button>`},
   [embed]:{body:`<meta property="og:video" content="${url}"><script>file:'${url}'</script>`},[url]:{body,mime:'video/mp4'}
  };
- const result=await runInQuickJs(fixture,{code:animeBundle,args:['123456','tv',1,1],settings:{autoSubtitles:false,animecixEnabled:false,sonanimeEnabled:false,animomEnabled:true}});
+ const result=await runInQuickJs(fixture,{code:extraAnimeBundle,args:['123456','tv',1,1],settings:{autoSubtitles:false}});
  assert.equal(result.length,1);assert.match(result[0].name,/AniMOM/);assert.equal(result[0].quality,'1280×720 ✓');
  fixture[root].body=fixture[root].body.replaceAll('2020','2021');
- assert.deepEqual(await runInQuickJs(fixture,{code:animeBundle,args:['123456','tv',1,1],settings:{autoSubtitles:false,animecixEnabled:false,sonanimeEnabled:false,animomEnabled:true}}),[]);
+ assert.deepEqual(await runInQuickJs(fixture,{code:extraAnimeBundle,args:['123456','tv',1,1],settings:{autoSubtitles:false}}),[]);
  const fileFixture=makeFixture({files:{'https://media.test/movie.mp4':{body,mime:'video/mp4'}}});
  const streams=await runInQuickJs(fileFixture,{settings:{autoDiscover:false,autoSubtitles:false,catalogUrls:'https://library.test/catalog.json'}});
  assert.equal(streams[0].quality,'1280×720 ✓');assert.equal(streams[0].type,'mp4');
+});
+test('QuickJS Ek Anime ayarları kısmi kaynağı varsayılan açar; ana/anime kaynak ayarlarına karışmaz',async()=>{
+ const layout=await runInQuickJs({},{code:extraAnimeBundle,invokeSettings:true});
+ assert.equal(layout.find(f=>f.key==='animomEnabled')?.defaultValue,true);
+ assert.equal(layout.find(f=>f.key==='seicodeEnabled')?.defaultValue,true);
+ assert.ok(!layout.some(f=>['animecixEnabled','archiveEnabled','hdhubEnabled','useDownloadBridge'].includes(f.key)));
+ const old=await runInQuickJs({},{code:animeBundle,invokeSettings:true});assert.ok(!old.some(f=>f.key==='animomEnabled'));
+});
+test('QuickJS Ek Anime: kısmi SeiCode bölümü varsayılan bulunur; eksik bölümde başka bölüm seçilmez',async()=>{
+ const embed='https://www.mp4upload.com/embed-example12345.html',file='https://a4.mp4upload.com:183/example/video.mp4';
+ const fixture={
+  'https://api.themoviedb.org/3/tv/123456?api_key=test&append_to_response=external_ids':{json:{id:123456,name:'Example Anime',original_name:'例のアニメ',first_air_date:'2020-01-01',original_language:'ja',genres:[{id:16}]}},
+  'https://next.seicode.net/anime/search?q=Example%20Anime':{json:[{slug:'example-anime',english:'Example Anime'}]},
+  'https://next.seicode.net/anime/example-anime':{json:{slug:'example-anime',english:'Example Anime',type:'tv',tmdbID:123456,firstAirDate:'2020-01-01',seasons:[{season_number:1,episodes:[{episode_number:3,video_links:{MP4Upload:'https://www.mp4upload.com/example12345'}}]}]}},
+  [embed]:{body:`<script>player.src({type:'video/mp4',src:'${file}'});</script>`},[file]:{body:helpers.mp4({width:1920,height:1080}),mime:'video/mp4'}
+ };
+ const settings={autoSubtitles:false,animomEnabled:false};
+ const rows=await runInQuickJs(fixture,{code:extraAnimeBundle,args:['123456','tv',1,3],settings});assert.equal(rows.length,1);assert.match(rows[0].name,/SeiCode/);assert.equal(rows[0].quality,'1920×1080 ✓');
+ assert.deepEqual(await runInQuickJs(fixture,{code:extraAnimeBundle,args:['123456','tv',1,2],settings}),[]);
 });
 
 test('QuickJS bilingual subtitles retain tr/en and uniform card fields with real MP4 metadata',async()=>{

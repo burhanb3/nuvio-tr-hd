@@ -1,0 +1,1151 @@
+{
+  "checkedAt": "2026-10-26T22:39:58.895Z",
+  "version": "1.7.4",
+  "acceptance": "User accepts providers with a few genuinely working series/episodes. Validate each result; missing episodes do not invalidate a working subset.",
+  "newCatalogAdapters": 1,
+  "previousExperimentalProviderNowSeparateDefault": true,
+  "newScraperEntries": 1,
+  "newStableUniversalMovieTvProviders": 0,
+  "newAccounts": 0,
+  "newHelperBackends": 0,
+  "newPerTitleVideoPins": 0,
+  "tests": 189,
+  "manifests": {
+    "existingIds": [
+      "nuvio-tr-hd",
+      "nuvio-tr-hd-anime"
+    ],
+    "newId": "nuvio-tr-hd-extra-anime",
+    "newTypes": [
+      "tv"
+    ],
+    "newDefaultEnabled": true
+  },
+  "nativeContract": {
+    "repository": "NuvioMedia/NuvioMobile",
+    "release": "0.6.4-beta",
+    "file": "composeApp/src/commonMain/kotlin/com/nuvio/app/features/streams/StreamsRepository.kt",
+    "behavior": "Scrapers launched individually; each completion merges into existing group; empty completion retains earlier streams.",
+    "perStreamStreamingCallback": false,
+    "deviceVerified": false
+  },
+  "providers": {
+    "AniMOM": {
+      "source": "canonical search/detail/episode -> public YourUpload MP4",
+      "partial": true,
+      "defaultEnabled": true,
+      "oneParallelRunWorked": true,
+      "nextEpisodeFailed": true,
+      "repeatCanFail": true
+    },
+    "SeiCode": {
+      "source": "next.seicode.net -> explicit MP4Upload link -> actual Video.js source",
+      "partial": true,
+      "defaultEnabled": true,
+      "identity": "Exact TMDB ID, canonical name/year/first-air date, explicit season and episode. No first-episode or cross-season fallback.",
+      "verifiedCases": [
+        "SHIBOYUGI S01E03",
+        "SHIBOYUGI S01E11"
+      ],
+      "turkishExternalSubtitlesInTheseCases": false,
+      "englishExternalSubtitlesInTheseCases": true,
+      "allEpisodesVerified": false
+    }
+  },
+  "limitsPerInvocation": {
+    "regularMediaProbe": 3,
+    "extraMediaProbe": 1,
+    "extraBudgetMs": 24000,
+    "subtitleBody": 4,
+    "englishSubtitleBody": 1
+  },
+  "metadata": "Extra sources keep a genuine Range/container/size-validated file if optional pixel/duration lookup fails. No invented quality/hash; source-specific metadata timeout3s and no repeated optional requests after failure. Existing required-duration/pin checks remain.",
+  "subtitles": "Same TR/EN matching engine; no subtitle API traffic for entirely failed extra files.",
+  "hlsOffFix": "DiziYou/FilmModu adapters can still return genuine MP4 when HLS disabled. Fixture regression; not claimed as a new live film/TV provider.",
+  "aniMomParallel": {
+    "checkedAt": "2026-10-26T20:26:40.379Z",
+    "version": "1.7.4",
+    "method": "Independent regular/extra provider instances, parallel live bounded HTTP; fixed canonical TMDB references. Not native iPhone.",
+    "cases": [
+      {
+        "key": "death-note-s1e1",
+        "runs": [
+          {
+            "lane": "anime",
+            "ms": 20035,
+            "displayed": 4,
+            "display": [
+              {
+                "name": "01 · İndirilebilir · Animecix",
+                "quality": "852×480 ✓",
+                "size": "0,09 GB",
+                "language": "Ses: bilinmiyor · TR/EN altyazı"
+              },
+              {
+                "name": "02 · İndirilebilir · SonAnime",
+                "quality": "852×480 ✓",
+                "size": "0,11 GB",
+                "language": "Ses: bilinmiyor · TR/EN altyazı"
+              },
+              {
+                "name": "03 · İndirilebilir · Animecix",
+                "quality": "1280×720 ✓",
+                "size": "0,18 GB",
+                "language": "Ses: bilinmiyor · TR/EN altyazı"
+              },
+              {
+                "name": "04 · İndirilebilir · SonAnime",
+                "quality": "1280×720 ✓",
+                "size": "0,24 GB",
+                "language": "Ses: bilinmiyor · TR/EN altyazı"
+              }
+            ],
+            "files": [
+              {
+                "source": "SonAnime",
+                "size": 108188435,
+                "dimensions": {
+                  "width": 852,
+                  "height": 480
+                },
+                "duration": 1390.656,
+                "videoHash": "aeb13fe9c33ad4e2",
+                "languages": [
+                  "tr",
+                  "en"
+                ]
+              },
+              {
+                "source": "SonAnime",
+                "size": 240288551,
+                "dimensions": {
+                  "width": 1280,
+                  "height": 720
+                },
+                "duration": 1390.656,
+                "videoHash": "ee1699af9a8861b3",
+                "languages": [
+                  "tr",
+                  "en"
+                ]
+              },
+              {
+                "source": "Animecix",
+                "size": 108188435,
+                "dimensions": {
+                  "width": 852,
+                  "height": 480
+                },
+                "duration": 1390.656,
+                "videoHash": "aeb13fe9c33ad4e2",
+                "languages": [
+                  "tr",
+                  "en"
+                ]
+              },
+              {
+                "source": "Animecix",
+                "size": 94687213,
+                "dimensions": {
+                  "width": 852,
+                  "height": 480
+                },
+                "duration": 1376.201,
+                "videoHash": "a17d74067279b61a",
+                "languages": [
+                  "tr",
+                  "en"
+                ]
+              },
+              {
+                "source": "Animecix",
+                "size": 240288551,
+                "dimensions": {
+                  "width": 1280,
+                  "height": 720
+                },
+                "duration": 1390.656,
+                "videoHash": "ee1699af9a8861b3",
+                "languages": [
+                  "tr",
+                  "en"
+                ]
+              },
+              {
+                "source": "Animecix",
+                "size": 179688354,
+                "dimensions": {
+                  "width": 1280,
+                  "height": 720
+                },
+                "duration": 1376.201,
+                "videoHash": "e46fb0d504a1786c",
+                "languages": [
+                  "tr",
+                  "en"
+                ]
+              }
+            ],
+            "reason": "deadline",
+            "http": {
+              "api.themoviedb.org:200": 1,
+              "api.sonanime.com:200": 2,
+              "animecix.tv:200": 2,
+              "opensubtitles-v3.strem.io:200": 1,
+              "altyazidb.online:200": 5,
+              "tau-video.xyz:200": 2,
+              "video.konununuzmani.com:206": 4,
+              "subs5.strem.io:200": 1,
+              "alice-4.cfd:206": 2,
+              "alfreda-1.cfd:206": 2,
+              "voxen-2.asia:206": 2,
+              "opensubtitles.stremio.homes:200": 9,
+              "valenx-2.asia:206": 2
+            },
+            "rejected": {}
+          },
+          {
+            "lane": "extraAnime",
+            "ms": 16101,
+            "displayed": 1,
+            "display": [
+              {
+                "name": "01 · İndirilebilir · AniMOM",
+                "quality": "Kalite bilinmiyor",
+                "size": "0,36 GB",
+                "language": "Ses: bilinmiyor · TR/EN altyazı"
+              }
+            ],
+            "files": [
+              {
+                "source": "AniMOM",
+                "size": 356493310,
+                "dimensions": null,
+                "videoHash": null,
+                "languages": [
+                  "tr",
+                  "en"
+                ]
+              }
+            ],
+            "reason": "ok",
+            "http": {
+              "api.themoviedb.org:200": 1,
+              "animom.org:200": 3,
+              "www.yourupload.com:200": 1,
+              "opensubtitles-v3.strem.io:200": 1,
+              "altyazidb.online:200": 5,
+              "vidcache.net:302": 1,
+              "s217.vidcache.net:206": 1,
+              "s217.vidcache.net:timeout_or_network": 1,
+              "subs5.strem.io:200": 1,
+              "opensubtitles.stremio.homes:200": 3
+            },
+            "rejected": {}
+          }
+        ]
+      },
+      {
+        "key": "death-note-s1e2",
+        "runs": [
+          {
+            "lane": "anime",
+            "ms": 12461,
+            "displayed": 4,
+            "display": [
+              {
+                "name": "01 · İndirilebilir · SonAnime",
+                "quality": "852×480 ✓",
+                "size": "0,11 GB",
+                "language": "Ses: bilinmiyor · TR/EN altyazı"
+              },
+              {
+                "name": "02 · İndirilebilir · Animecix",
+                "quality": "857×482 ✓",
+                "size": "0,12 GB",
+                "language": "Ses: bilinmiyor · TR/EN altyazı"
+              },
+              {
+                "name": "03 · İndirilebilir · Animecix",
+                "quality": "1280×720 ✓",
+                "size": "0,23 GB",
+                "language": "Ses: bilinmiyor · TR/EN altyazı"
+              },
+              {
+                "name": "04 · İndirilebilir · SonAnime",
+                "quality": "1280×720 ✓",
+                "size": "0,24 GB",
+                "language": "Ses: bilinmiyor · TR/EN altyazı"
+              }
+            ],
+            "files": [
+              {
+                "source": "SonAnime",
+                "size": 240460874,
+                "dimensions": {
+                  "width": 1280,
+                  "height": 720
+                },
+                "duration": 1390.187,
+                "videoHash": "f78dc7cbb6fbf7f4",
+                "languages": [
+                  "tr",
+                  "en"
+                ]
+              },
+              {
+                "source": "SonAnime",
+                "size": 108581271,
+                "dimensions": {
+                  "width": 852,
+                  "height": 480
+                },
+                "duration": 1390.187,
+                "videoHash": "c5558d97753936a7",
+                "languages": [
+                  "tr",
+                  "en"
+                ]
+              },
+              {
+                "source": "Animecix",
+                "size": 120828360,
+                "dimensions": {
+                  "width": 857,
+                  "height": 482
+                },
+                "duration": 1376.267,
+                "videoHash": "24df8cb3b134ccd9",
+                "languages": [
+                  "tr",
+                  "en"
+                ]
+              },
+              {
+                "source": "Animecix",
+                "size": 229573280,
+                "dimensions": {
+                  "width": 1280,
+                  "height": 720
+                },
+                "duration": 1376.267,
+                "videoHash": "0fb69bf19fe4c746",
+                "languages": [
+                  "tr",
+                  "en"
+                ]
+              },
+              {
+                "source": "Animecix",
+                "size": 108581271,
+                "dimensions": {
+                  "width": 852,
+                  "height": 480
+                },
+                "duration": 1390.187,
+                "videoHash": "c5558d97753936a7",
+                "languages": [
+                  "tr",
+                  "en"
+                ]
+              },
+              {
+                "source": "Animecix",
+                "size": 240460874,
+                "dimensions": {
+                  "width": 1280,
+                  "height": 720
+                },
+                "duration": 1390.187,
+                "videoHash": "f78dc7cbb6fbf7f4",
+                "languages": [
+                  "tr",
+                  "en"
+                ]
+              }
+            ],
+            "reason": "ok",
+            "http": {
+              "api.themoviedb.org:200": 1,
+              "api.sonanime.com:200": 2,
+              "animecix.tv:200": 2,
+              "opensubtitles-v3.strem.io:200": 1,
+              "altyazidb.online:200": 5,
+              "video.konununuzmani.com:206": 4,
+              "tau-video.xyz:200": 2,
+              "subs5.strem.io:200": 2,
+              "dietlind-3.cfd:206": 2,
+              "dietlind-4.cfd:206": 2,
+              "alfreda-2.cfd:206": 2,
+              "opensubtitles.stremio.homes:200": 6,
+              "opensubtitles.stremio.homes:429": 3,
+              "opensubtitles.stremio.homes:timeout_or_network": 3,
+              "byakuyakuchiki.cfd:206": 2
+            },
+            "rejected": {}
+          },
+          {
+            "lane": "extraAnime",
+            "ms": 16239,
+            "displayed": 0,
+            "display": [],
+            "files": [],
+            "reason": "no_eligible_sources",
+            "http": {
+              "api.themoviedb.org:200": 1,
+              "animom.org:200": 3,
+              "www.yourupload.com:200": 1,
+              "opensubtitles-v3.strem.io:200": 1,
+              "altyazidb.online:200": 1,
+              "vidcache.net:302": 2,
+              "opensubtitles.stremio.homes:429": 2,
+              "vidcache.net:timeout_or_network": 1
+            },
+            "rejected": {
+              "video_unavailable": 1
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "aniMomRecheck": {
+    "checkedAt": "2026-10-26T20:29:55.835Z",
+    "version": "1.7.4",
+    "method": "Independent regular/extra provider instances, parallel live bounded HTTP; fixed canonical TMDB references. Not native iPhone.",
+    "cases": [
+      {
+        "key": "death-note-s1e1",
+        "runs": [
+          {
+            "lane": "anime",
+            "ms": 14046,
+            "displayed": 4,
+            "display": [
+              {
+                "name": "01 · İndirilebilir · Animecix",
+                "quality": "852×480 ✓",
+                "size": "0,09 GB",
+                "language": "Ses: bilinmiyor · TR altyazı"
+              },
+              {
+                "name": "02 · İndirilebilir · SonAnime",
+                "quality": "852×480 ✓",
+                "size": "0,11 GB",
+                "language": "Ses: bilinmiyor · TR altyazı"
+              },
+              {
+                "name": "03 · İndirilebilir · Animecix",
+                "quality": "1280×720 ✓",
+                "size": "0,18 GB",
+                "language": "Ses: bilinmiyor · TR altyazı"
+              },
+              {
+                "name": "04 · İndirilebilir · SonAnime",
+                "quality": "1280×720 ✓",
+                "size": "0,24 GB",
+                "language": "Ses: bilinmiyor · TR altyazı"
+              }
+            ],
+            "files": [
+              {
+                "source": "SonAnime",
+                "size": 108188435,
+                "dimensions": {
+                  "width": 852,
+                  "height": 480
+                },
+                "duration": 1390.656,
+                "videoHash": "aeb13fe9c33ad4e2",
+                "languages": [
+                  "tr"
+                ]
+              },
+              {
+                "source": "SonAnime",
+                "size": 240288551,
+                "dimensions": {
+                  "width": 1280,
+                  "height": 720
+                },
+                "duration": 1390.656,
+                "videoHash": "ee1699af9a8861b3",
+                "languages": [
+                  "tr"
+                ]
+              },
+              {
+                "source": "Animecix",
+                "size": 108188435,
+                "dimensions": {
+                  "width": 852,
+                  "height": 480
+                },
+                "duration": 1390.656,
+                "videoHash": "aeb13fe9c33ad4e2",
+                "languages": [
+                  "tr"
+                ]
+              },
+              {
+                "source": "Animecix",
+                "size": 94687213,
+                "dimensions": {
+                  "width": 852,
+                  "height": 480
+                },
+                "duration": 1376.201,
+                "videoHash": "a17d74067279b61a",
+                "languages": [
+                  "tr"
+                ]
+              },
+              {
+                "source": "Animecix",
+                "size": 240288551,
+                "dimensions": {
+                  "width": 1280,
+                  "height": 720
+                },
+                "duration": 1390.656,
+                "videoHash": "ee1699af9a8861b3",
+                "languages": [
+                  "tr"
+                ]
+              },
+              {
+                "source": "Animecix",
+                "size": 179688354,
+                "dimensions": {
+                  "width": 1280,
+                  "height": 720
+                },
+                "duration": 1376.201,
+                "videoHash": "e46fb0d504a1786c",
+                "languages": [
+                  "tr"
+                ]
+              }
+            ],
+            "reason": "ok",
+            "http": {
+              "api.themoviedb.org:200": 1,
+              "api.sonanime.com:200": 2,
+              "animecix.tv:200": 2,
+              "tau-video.xyz:200": 2,
+              "opensubtitles-v3.strem.io:200": 1,
+              "altyazidb.online:200": 5,
+              "video.konununuzmani.com:206": 4,
+              "subs5.strem.io:200": 1,
+              "alice-4.cfd:206": 2,
+              "voxen-2.asia:206": 2,
+              "alfreda-1.cfd:206": 2,
+              "opensubtitles.stremio.homes:timeout_or_network": 8,
+              "valenx-2.asia:206": 2
+            },
+            "rejected": {}
+          },
+          {
+            "lane": "extraAnime",
+            "ms": 17323,
+            "displayed": 0,
+            "display": [],
+            "files": [],
+            "reason": "no_eligible_sources",
+            "http": {
+              "api.themoviedb.org:200": 1,
+              "animom.org:200": 3,
+              "www.yourupload.com:200": 1,
+              "vidcache.net:302": 2,
+              "vidcache.net:timeout_or_network": 1
+            },
+            "rejected": {
+              "video_unavailable": 1
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "seicodeParallel": {
+    "checkedAt": "2026-10-26T22:33:05.477Z",
+    "version": "1.7.4",
+    "method": "Independent regular/extra provider instances, parallel live bounded HTTP; fixed canonical TMDB references. Not native iPhone.",
+    "cases": [
+      {
+        "key": "shiboyugi-s1e3",
+        "runs": [
+          {
+            "lane": "anime",
+            "ms": 20013,
+            "displayed": 11,
+            "display": [
+              {
+                "name": "01 · İndirilebilir · Animecix",
+                "quality": "853×480 ✓",
+                "size": "0,07 GB",
+                "language": "Ses: bilinmiyor · EN altyazı · TR altyazı yok"
+              },
+              {
+                "name": "02 · İndirilebilir · SonAnime",
+                "quality": "853×480 ✓",
+                "size": "0,07 GB",
+                "language": "Ses: bilinmiyor · EN altyazı · TR altyazı yok"
+              },
+              {
+                "name": "03 · İndirilebilir · Animecix",
+                "quality": "853×480 ✓",
+                "size": "0,07 GB",
+                "language": "Ses: bilinmiyor · EN altyazı · TR altyazı yok"
+              },
+              {
+                "name": "04 · İndirilebilir · Animecix",
+                "quality": "853×480 ✓",
+                "size": "0,07 GB",
+                "language": "Ses: bilinmiyor · EN altyazı · TR altyazı yok"
+              },
+              {
+                "name": "05 · İndirilebilir · Animecix",
+                "quality": "1280×720 ✓",
+                "size": "0,10 GB",
+                "language": "Ses: bilinmiyor · EN altyazı · TR altyazı yok"
+              },
+              {
+                "name": "06 · İndirilebilir · SonAnime",
+                "quality": "1280×720 ✓",
+                "size": "0,10 GB",
+                "language": "Ses: bilinmiyor · EN altyazı · TR altyazı yok"
+              },
+              {
+                "name": "07 · İndirilebilir · Animecix",
+                "quality": "1280×720 ✓",
+                "size": "0,11 GB",
+                "language": "Ses: bilinmiyor · EN altyazı · TR altyazı yok"
+              },
+              {
+                "name": "08 · İndirilebilir · Animecix",
+                "quality": "1920×1080 ✓",
+                "size": "0,15 GB",
+                "language": "Ses: bilinmiyor · EN altyazı · TR altyazı yok"
+              },
+              {
+                "name": "09 · İndirilebilir · SonAnime",
+                "quality": "1920×1080 ✓",
+                "size": "0,15 GB",
+                "language": "Ses: bilinmiyor · EN altyazı · TR altyazı yok"
+              },
+              {
+                "name": "10 · İndirilebilir · Animecix",
+                "quality": "1920×1080 ✓",
+                "size": "0,18 GB",
+                "language": "Ses: bilinmiyor · EN altyazı · TR altyazı yok"
+              },
+              {
+                "name": "11 · İndirilebilir · Animecix",
+                "quality": "1920×1080 ✓",
+                "size": "0,18 GB",
+                "language": "Ses: bilinmiyor · EN altyazı · TR altyazı yok"
+              }
+            ],
+            "files": [
+              {
+                "source": "SonAnime",
+                "size": 150473491,
+                "dimensions": {
+                  "width": 1920,
+                  "height": 1080
+                },
+                "duration": 1435.768,
+                "videoHash": "90fb7ebba4422cf5",
+                "languages": [
+                  "en"
+                ]
+              },
+              {
+                "source": "Animecix",
+                "size": 67579228,
+                "dimensions": {
+                  "width": 853,
+                  "height": 480
+                },
+                "duration": 1435.768,
+                "videoHash": "3d93b379d9649a40",
+                "languages": [
+                  "en"
+                ]
+              },
+              {
+                "source": "SonAnime",
+                "size": 102413750,
+                "dimensions": {
+                  "width": 1280,
+                  "height": 720
+                },
+                "duration": 1435.768,
+                "videoHash": null,
+                "languages": [
+                  "en"
+                ]
+              },
+              {
+                "source": "SonAnime",
+                "size": 67579228,
+                "dimensions": {
+                  "width": 853,
+                  "height": 480
+                },
+                "duration": 1435.768,
+                "videoHash": null,
+                "languages": [
+                  "en"
+                ]
+              },
+              {
+                "source": "Animecix",
+                "size": 102413750,
+                "dimensions": {
+                  "width": 1280,
+                  "height": 720
+                },
+                "duration": 1435.768,
+                "videoHash": null,
+                "languages": [
+                  "en"
+                ]
+              },
+              {
+                "source": "Animecix",
+                "size": 68062337,
+                "dimensions": {
+                  "width": 853,
+                  "height": 480
+                },
+                "duration": 1456.107,
+                "videoHash": "c01c2536c74f321c",
+                "languages": [
+                  "en"
+                ]
+              },
+              {
+                "source": "Animecix",
+                "size": 150473491,
+                "dimensions": {
+                  "width": 1920,
+                  "height": 1080
+                },
+                "duration": 1435.768,
+                "videoHash": null,
+                "languages": [
+                  "en"
+                ]
+              },
+              {
+                "source": "Animecix",
+                "size": 105029234,
+                "dimensions": {
+                  "width": 1280,
+                  "height": 720
+                },
+                "duration": 1456.107,
+                "videoHash": null,
+                "languages": [
+                  "en"
+                ]
+              },
+              {
+                "source": "Animecix",
+                "size": 181535602,
+                "dimensions": {
+                  "width": 1920,
+                  "height": 1080
+                },
+                "duration": 1456.107,
+                "videoHash": null,
+                "languages": [
+                  "en"
+                ]
+              },
+              {
+                "source": "Animecix",
+                "size": 69862109,
+                "dimensions": {
+                  "width": 853,
+                  "height": 480
+                },
+                "duration": 1456.896,
+                "videoHash": "1f9e40019b94c49f",
+                "languages": [
+                  "en"
+                ]
+              },
+              {
+                "source": "Animecix",
+                "size": 182104313,
+                "dimensions": {
+                  "width": 1920,
+                  "height": 1080
+                },
+                "duration": 1456.896,
+                "videoHash": "e2de1299829c2c50",
+                "languages": [
+                  "en"
+                ]
+              }
+            ],
+            "reason": "deadline",
+            "http": {
+              "api.themoviedb.org:200": 1,
+              "animecix.tv:200": 2,
+              "api.sonanime.com:200": 2,
+              "tau-video.xyz:200": 3,
+              "opensubtitles-v3.strem.io:200": 1,
+              "video.konununuzmani.com:206": 4,
+              "altyazidb.online:200": 1,
+              "subs5.strem.io:200": 2,
+              "opensubtitles.stremio.homes:200": 3,
+              "aloysia-2.cfd:206": 2,
+              "opensubtitles.stremio.homes:429": 2,
+              "opensubtitles.stremio.homes:timeout_or_network": 4,
+              "video.konununuzmani.com:timeout_or_network": 2,
+              "aloysia-3.cfd:206": 1,
+              "aloysia-4.cfd:206": 1,
+              "marlis-1.cfd:206": 2,
+              "aloysia-3.cfd:timeout_or_network": 1,
+              "aloysia-4.cfd:timeout_or_network": 1,
+              "marlis-2.cfd:206": 1,
+              "franka-4.cfd:206": 1,
+              "alwin-1.cfd:206": 2,
+              "marlis-2.cfd:timeout_or_network": 1,
+              "franka-4.cfd:timeout_or_network": 1,
+              "alwin-3.cfd:206": 2,
+              "alwin-2.cfd:timeout_or_network": 1
+            },
+            "rejected": {
+              "video_unavailable": 1
+            }
+          },
+          {
+            "lane": "extraAnime",
+            "ms": 5351,
+            "displayed": 1,
+            "display": [
+              {
+                "name": "01 · İndirilebilir · SeiCode",
+                "quality": "1920×1080 ✓",
+                "size": "0,29 GB",
+                "language": "Ses: bilinmiyor · EN altyazı · TR altyazı yok"
+              }
+            ],
+            "files": [
+              {
+                "source": "SeiCode",
+                "size": 293996724,
+                "dimensions": {
+                  "width": 1920,
+                  "height": 1080
+                },
+                "duration": 1456.914,
+                "videoHash": "8acf34a189bc23f8",
+                "languages": [
+                  "en"
+                ]
+              }
+            ],
+            "reason": "ok",
+            "http": {
+              "api.themoviedb.org:200": 1,
+              "next.seicode.net:200": 2,
+              "animom.org:200": 3,
+              "www.mp4upload.com:200": 1,
+              "a4.mp4upload.com:206": 3,
+              "opensubtitles-v3.strem.io:200": 1,
+              "subs5.strem.io:200": 2,
+              "altyazidb.online:200": 1,
+              "opensubtitles.stremio.homes:200": 2,
+              "opensubtitles.stremio.homes:429": 2
+            },
+            "rejected": {}
+          }
+        ]
+      },
+      {
+        "key": "shiboyugi-s1e11",
+        "runs": [
+          {
+            "lane": "anime",
+            "ms": 15371,
+            "displayed": 8,
+            "display": [
+              {
+                "name": "01 · İndirilebilir · Animecix",
+                "quality": "853×480 ✓",
+                "size": "0,05 GB",
+                "language": "Ses: bilinmiyor · EN altyazı · TR altyazı yok"
+              },
+              {
+                "name": "02 · İndirilebilir · Animecix",
+                "quality": "853×480 ✓",
+                "size": "0,05 GB",
+                "language": "Ses: bilinmiyor · EN altyazı · TR altyazı yok"
+              },
+              {
+                "name": "03 · İndirilebilir · Animecix",
+                "quality": "1280×720 ✓",
+                "size": "0,07 GB",
+                "language": "Ses: bilinmiyor · EN altyazı · TR altyazı yok"
+              },
+              {
+                "name": "04 · İndirilebilir · Animecix",
+                "quality": "1280×720 ✓",
+                "size": "0,07 GB",
+                "language": "Ses: bilinmiyor · EN altyazı · TR altyazı yok"
+              },
+              {
+                "name": "05 · İndirilebilir · Animecix",
+                "quality": "1920×1080 ✓",
+                "size": "0,12 GB",
+                "language": "Ses: bilinmiyor · EN altyazı · TR altyazı yok"
+              },
+              {
+                "name": "06 · İndirilebilir · Animecix",
+                "quality": "1920×1080 ✓",
+                "size": "0,12 GB",
+                "language": "Ses: bilinmiyor · EN altyazı · TR altyazı yok"
+              },
+              {
+                "name": "07 · İndirilebilir · SonAnime",
+                "quality": "1920×1080 ✓",
+                "size": "0,12 GB",
+                "language": "Ses: bilinmiyor · EN altyazı · TR altyazı yok"
+              },
+              {
+                "name": "08 · İndirilebilir · Animecix",
+                "quality": "1920×1080 ✓",
+                "size": "0,26 GB",
+                "language": "Ses: bilinmiyor · EN altyazı · TR altyazı yok"
+              }
+            ],
+            "files": [
+              {
+                "source": "SonAnime",
+                "size": 124456461,
+                "dimensions": {
+                  "width": 1920,
+                  "height": 1080
+                },
+                "duration": 1460.586,
+                "videoHash": "f3335b071394c8b3",
+                "languages": [
+                  "en"
+                ]
+              },
+              {
+                "source": "Animecix",
+                "size": 47599633,
+                "dimensions": {
+                  "width": 853,
+                  "height": 480
+                },
+                "duration": 1460.586,
+                "videoHash": "653431e7fc02153f",
+                "languages": [
+                  "en"
+                ]
+              },
+              {
+                "source": "Animecix",
+                "size": 70068255,
+                "dimensions": {
+                  "width": 1280,
+                  "height": 720
+                },
+                "duration": 1460.586,
+                "videoHash": "a6fc4ae4c2ed9610",
+                "languages": [
+                  "en"
+                ]
+              },
+              {
+                "source": "Animecix",
+                "size": 259307725,
+                "dimensions": {
+                  "width": 1920,
+                  "height": 1080
+                },
+                "duration": 1465.167,
+                "videoHash": "1e6c05acbb2645e5",
+                "languages": [
+                  "en"
+                ]
+              },
+              {
+                "source": "Animecix",
+                "size": 124456461,
+                "dimensions": {
+                  "width": 1920,
+                  "height": 1080
+                },
+                "duration": 1460.586,
+                "videoHash": null,
+                "languages": [
+                  "en"
+                ]
+              },
+              {
+                "source": "Animecix",
+                "size": 48270412,
+                "dimensions": {
+                  "width": 853,
+                  "height": 480
+                },
+                "duration": 1465.942,
+                "videoHash": "528cdcb69bf149b1",
+                "languages": [
+                  "en"
+                ]
+              },
+              {
+                "source": "Animecix",
+                "size": 72388643,
+                "dimensions": {
+                  "width": 1280,
+                  "height": 720
+                },
+                "duration": 1465.942,
+                "videoHash": "7c2ef905c698575e",
+                "languages": [
+                  "en"
+                ]
+              },
+              {
+                "source": "Animecix",
+                "size": 123999174,
+                "dimensions": {
+                  "width": 1920,
+                  "height": 1080
+                },
+                "duration": 1465.942,
+                "videoHash": null,
+                "languages": [
+                  "en"
+                ]
+              }
+            ],
+            "reason": "ok",
+            "http": {
+              "api.themoviedb.org:200": 1,
+              "animecix.tv:200": 2,
+              "api.sonanime.com:200": 2,
+              "tau-video.xyz:200": 3,
+              "opensubtitles-v3.strem.io:200": 1,
+              "opensubtitles.stremio.homes:200": 8,
+              "altyazidb.online:200": 1,
+              "video.konununuzmani.com:206": 2,
+              "marlis-2.cfd:206": 2,
+              "marlis-3.cfd:206": 2,
+              "subs5.strem.io:200": 2,
+              "marlis-4.cfd:206": 1,
+              "irtau1.online:206": 3,
+              "marlis-4.cfd:timeout_or_network": 1,
+              "tsuriko-3.asia:206": 2,
+              "tsuriko-2.asia:206": 2,
+              "takurox-1.asia:206": 1,
+              "takurox-1.asia:timeout_or_network": 1
+            },
+            "rejected": {}
+          },
+          {
+            "lane": "extraAnime",
+            "ms": 4657,
+            "displayed": 1,
+            "display": [
+              {
+                "name": "01 · İndirilebilir · SeiCode",
+                "quality": "1920×1080 ✓",
+                "size": "0,29 GB",
+                "language": "Ses: bilinmiyor · EN altyazı · TR altyazı yok"
+              }
+            ],
+            "files": [
+              {
+                "source": "SeiCode",
+                "size": 291531575,
+                "dimensions": {
+                  "width": 1920,
+                  "height": 1080
+                },
+                "duration": 1465.959,
+                "videoHash": "623b30874f041a0b",
+                "languages": [
+                  "en"
+                ]
+              }
+            ],
+            "reason": "ok",
+            "http": {
+              "api.themoviedb.org:200": 1,
+              "next.seicode.net:200": 2,
+              "animom.org:200": 3,
+              "www.mp4upload.com:200": 1,
+              "a4.mp4upload.com:206": 3,
+              "opensubtitles-v3.strem.io:200": 1,
+              "subs5.strem.io:200": 2,
+              "altyazidb.online:200": 1,
+              "opensubtitles.stremio.homes:200": 4
+            },
+            "rejected": {}
+          }
+        ]
+      }
+    ]
+  },
+  "mp4UploadTerminals": {
+    "checkedAt": "2026-10-26T22:29:10.019Z",
+    "results": [
+      {
+        "episode": 3,
+        "host": "a4.mp4upload.com:183",
+        "ms": 2580,
+        "video": {
+          "container": "mp4",
+          "dimensions": {
+            "width": 1920,
+            "height": 1080
+          },
+          "duration": 1456.914,
+          "size": 293996724,
+          "videoHash": null,
+          "downloadable": true
+        }
+      },
+      {
+        "episode": 11,
+        "host": "a4.mp4upload.com:183",
+        "ms": 6884,
+        "video": {
+          "container": "mp4",
+          "dimensions": null,
+          "size": 291531575,
+          "videoHash": null,
+          "downloadable": true
+        }
+      }
+    ]
+  },
+  "additionalResearch": {
+    "Webflix": "Previously working anime API now451 too; not integrated.",
+    "DDizi": "Client methods inspected; no verified new file and no integration."
+  },
+  "sourceReferences": [
+    "https://github.com/falsisdev/anthology/blob/main/providers/seicode.js",
+    "https://github.com/NuvioMedia/NuvioMobile/blob/0.6.4-beta/composeApp/src/commonMain/kotlin/com/nuvio/app/features/streams/StreamsRepository.kt",
+    "https://www.imdb.com/title/tt33309549/episodes/"
+  ],
+  "method": "Fixed canonical metadata + live bounded Node HTTP, Range and subtitle bodies; compiled QuickJS fixtures separately. No remote provider code executed/copied.",
+  "allSourceCriteriaMet": false,
+  "physicalDevice": "not-run",
+  "fullPlayback": "not-run",
+  "fullDownload": "not-run",
+  "offline": "not-run",
+  "subtitleAudioSync": "not-run"
+}

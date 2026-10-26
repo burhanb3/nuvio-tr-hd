@@ -1,5 +1,14 @@
 # Tasarım kararları
 
+## 1.7.4 kısmi kaynak kararı (öncelikli)
+
+- Kullanıcı birkaç sağlam seri/bölümü yeterli gördü; bir sağlayıcının bütün kataloğu çalışmak zorunda değil. Önceki geniş kapsam kapısı bu talimatla kalktı.
+- Kısmi kaynaklar bağımsız Ek Anime scraper’ında; eski ana/anime ID/ayarları aynı, üçüncüIDTV vevarsayılanaçık. Native completion birleştirme kullanılır, per-resultstreaming alanı uydurulmaz.
+- Kimlik/yıl/bölümvegerçekdosya kontrolleri sürer; yanlış bölümefallback yok. Dosyası bozulan bölüm atlanır.
+- Ek format/Range/byte doğrulanınca isteğe bağlı metadata arızası dosyayı düşürmez; bilgi bilinmiyor kalır. Eski zorunlu süre/pinler korunur.
+- Ek dosya kotası1/arama24s; ana3 aynı. Bu kotalar per-invocation; fiziksel iPhone süre garantisi değildir.
+- SeiCode’da ENvar/TRyok gözlemini TRvar diye sunma. Araştırma artık küçükama gerçek dosya katkılarını da kabul eder.
+
 ## 1.7.3 indirme kararları
 
 - Tekil çalışan dosya, kararlı genel kaynak demek değildir. AniMOM deneysel ve varsayılan kapalı; film/dizi kapsamı hedefi açık.

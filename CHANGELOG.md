@@ -1,5 +1,13 @@
 # Değişiklik günlüğü
 
+## 1.7.4 — 2026-10-27
+
+- Çalışan birkaç seri/bölümü de değerlendiren kısmi kaynak yaklaşımı. AniMOM yeni bağımsız Ek Anime sağlayıcısında varsayılan açık; önceki iki kimlik/ayar korunur.
+- Yeni SeiCode/MP4Upload adaptörü; tam TMDB/ad/yıl/ilk tarih, açık sezon/bölüm ve gerçek MP4. Yanlış bölüm/ilk bölüm fallback’i yok.
+- Ek dosya kontrolleri tekli; başarısız dosya gereksiz altyazı isteği açmaz. Sağlam MP4’ün isteğe bağlı metadata hatasında korunması, bilinmeyen kalite/hash’i uydurmama.
+- HLS kapalıyken DiziYou/FilmModu’nun gerçek MP4 seçenekleri yine taranır; HLS dosya sayılmaz.
+- 189 test/QuickJS; canlı ek1080p/0,29GB ve EN altyazı örnekleri. Bazı bölüm/düğümler hâlâ başarısız; yeni canlı film/dizi dosya sağlayıcısı0. Fiziksel cihaz/tam indirme/offline/senkron yok.
+
 ## 1.7.3 — 2026-10-26
 
 - Büyük MP4 metadata kutusunda gerçek kutu sınırına en fazla1ek256KiBRange ile piksel/süre okuma; isimden kalite doğrulaması yok.
