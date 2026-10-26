@@ -25,6 +25,8 @@ Boş sonuç sürerse bu tanı satırını ve film/bölümü paylaşın. Önce ot
 
 Boş aramalar uygulama günlüğüne `[Nuvio TR HD]` özetini yazar. Kimlik adımı `missing_tmdb_key`, `missing_episode`, `tmdb_request_failed`, `tmdb_id_mismatch`, `tmdb_metadata_incomplete` gibi nedenleri ayırır. Kaynak başına aday sayısı, reddetme sayacı ve yalnız HTTP host/durum bilgisi bulunur. Tam URL, anahtar, altyazı metni ve başlık değerleri yazılmaz. Hata ayıklama açıkken başarılı aramalar da özetlenir. Uygulamanın kendi günlükleri farklı veri içerebilir; bu eklenti özeti dışında tam günlük paylaşılması istenmez.
 
+İlk Linux CI çalışması, HTTP timeout’u ile toplam arama zamanlayıcısının aynı anda dolduğu bir raporlama yarışını yakaladı. Tamamlanan video korunur; artık son HTTP isteği önce çözülse bile gerçek son tarih geçildiyse neden `deadline` olur. Yalnız tanıyı doğru yapar; native ağı iptal etmez.
+
 ## Testlerin sınırı
 
 Regresyon testleri Obsession’ın doğrulanmış alternatif yılı/yanlış IMDb reddi, farklı kimlikli altyazı, durmayan isteğe bağlı HLS sorgusunun hiç başlatılmaması, sonraki büyük release’in korunması, TMDB/ayar tanısı ve gerçek QuickJS ayar formunu kapsar. Kaynak/altyazı canlı testleri **sabit TMDB referansıyla** çalışır; Nuvio’nun telefonda enjekte ettiği anahtarla gerçek TMDB API sorgusunu sınamaz.

@@ -2190,7 +2190,7 @@ var require_index = __commonJS({
               }, budgetMs);
             })]);
             report.results = results.length;
-            if (report.reason === "searching") report.reason = results.length ? "ok" : "no_eligible_sources";
+            if (report.reason === "searching") report.reason = http.expired() ? "deadline" : results.length ? "ok" : "no_eligible_sources";
             return results;
           } finally {
             http.close();

@@ -6,6 +6,7 @@
 - PlayIMDb/VixSrc HLS aramasında ek profil/parça ölçümleri varsayılan kapalı; doğrulanan master korunur ve VixSrc master tekrar indirilmez. Ses/altyazı grupları korunur. Bitrate × TMDB süre tahmini gerçek dosya ölçümü veya altyazı süre uyumu sayılmaz. MP4/MKV doğrulaması gevşetilmedi.
 - HDHub erken ayna sayacı sonraki release’leri durdurmaz; en çok 12 release, ikili çözümleme. Büyük dosyaya boyut tavanı yoktur; küçük Dune indirmesi hâlâ doğrulanmadı.
 - Kimlik sorgusuna en çok 10 saniye mantıksal süre; ağ gerektirmeyen sürüm/ayar/anahtar varlığı Tanı satırı ve anahtar/URL içermeyen boş sonuç tanısı. Telefonda ortak boş sonuç kök nedeni henüz kesinleşmedi.
+- HTTP ve arama zamanlayıcıları aynı anda dolarsa tamamlanan videolar korunurken süre sonu nedeni doğru raporlanır. Linux CI bu tanı yarışını yakaladı; sonuçlar başarılı diye yanlış sayılmaz.
 - Kullanıcı 1.6.1’i iPhone’da gördüğünü doğruladı. Sabit TMDB referanslı canlı kaynak kontrolü telefonun TMDB API çağrısını sınamaz; fiziksel iPhone/tam oynatma/indirme/senkron testi yapılmadı.
 
 

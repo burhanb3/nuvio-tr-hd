@@ -223,7 +223,10 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs = 24000, r
           timer = scheduler.schedule(() => { report.reason = 'deadline'; resolve(target ? formatResults(completed, renderSettings(), target) : []); }, budgetMs);
         })]);
         report.results = results.length;
-        if (report.reason === 'searching') report.reason = results.length ? 'ok' : 'no_eligible_sources';
+        // Request and search timers can expire in the same scheduler tick.
+        // Even if the last request wins the promise race, the wall-clock
+        // deadline has still been reached; preserve completed pairs and report it.
+        if (report.reason === 'searching') report.reason = http.expired() ? 'deadline' : results.length ? 'ok' : 'no_eligible_sources';
         return results;
       } finally {
         http.close(); scheduler.cancel(timer); scheduler.close();
