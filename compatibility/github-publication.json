@@ -1,15 +1,15 @@
 {
-  "checkedAt": "2026-10-26T10:01:21.502Z",
-  "version": "1.6.1",
+  "checkedAt": "2026-10-26T10:41:50.721Z",
+  "version": "1.6.2",
   "origin": "https://burhanb3.github.io/nuvio-tr-hd",
   "authenticated": false,
   "assetRequestsAuthenticated": false,
   "ciMetadataAuthenticated": true,
   "repository": "https://github.com/burhanb3/nuvio-tr-hd",
-  "sourceCommit": "e5824c9005805b366c52770f086c967c85ecdee8",
+  "sourceCommit": "5b298cdeda6dfbcc10b55b053fdbe25022dce446",
   "branch": "codex/publish-nuvio-tr-hd",
   "actions": {
-    "tests": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40303952952",
+    "tests": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40309193725",
     "testsConclusion": "success",
     "jobs": [
       {
@@ -21,7 +21,7 @@
         "conclusion": "success"
       }
     ],
-    "pages": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40303952928",
+    "pages": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40309193727",
     "pagesConclusion": "success"
   },
   "mode": "original scraper ID combines online + files; independent anime; versioned code URLs; legacy online file remains available but is not installed",
@@ -31,47 +31,49 @@
       "status": 200,
       "type": "application/json; charset=utf-8",
       "bytes": 1446,
-      "sha256": "0467c7650fe6ace84427778144271d928cbe0477c7f91c2a05379cd59c4a600e",
+      "sha256": "d908ce7238f0d49f310e2f0335d6b6eca6c2e1e44dfaa5f42e3774ad45c0f447",
       "matchesLocal": true
     },
     {
-      "path": "/providers/nuvio-tr-hd.js?v=1.6.1",
+      "path": "/providers/nuvio-tr-hd.js?v=1.6.2",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 122888,
-      "sha256": "89d770dd25314db5d089fef01d0721804eb0393f6859254a3b4a42ecc225265f",
+      "bytes": 131331,
+      "sha256": "6a3817cd30320bed390ac6b39d23b7b2a0ecc9a8eca4b2fd8b7d8e5323b341d0",
       "matchesLocal": true
     },
     {
-      "path": "/providers/nuvio-tr-hd-anime.js?v=1.6.1",
+      "path": "/providers/nuvio-tr-hd-anime.js?v=1.6.2",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 122889,
-      "sha256": "f2a4c00dccd766f64933ff110296de8fbaac07bdf0ce6a847a74947e5465eb79",
+      "bytes": 131332,
+      "sha256": "40aa68ca210430d037062edb4717e7f6f70c3668842f5b1ae8dbcaad9122a792",
       "matchesLocal": true
     },
     {
       "path": "/providers/nuvio-tr-hd-online.js",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 122891,
-      "sha256": "d59179074316f817ba6932a50d69c01a506797d56ba9db63ba7826114f45095f",
+      "bytes": 131334,
+      "sha256": "5c2eca47ca22d70a2ed02bb3bb15a98cf25bd6593ab757dbe91f4961b6ec9388",
       "matchesLocal": true
     },
     {
       "path": "/",
       "status": 200,
       "type": "text/html; charset=utf-8",
-      "bytes": 6617,
-      "sha256": "47a0762e8d21fb3a69c16d5a5fd080b35a0d5412f03cd47d84731635092df266",
+      "bytes": 6658,
+      "sha256": "efa6da01d5595a833b9ffd6c9ee6ea484bd577741920ab2ef7e8a700a1c5a3af",
       "matchesLocal": true
     }
   ],
   "tests": {
-    "local": 107,
-    "quickjs": "passed; original scraper alone returns mixed file/HLS and group-prefixed Shameless episode",
+    "local": 114,
+    "quickjs": "passed; compiled settings show1.6.2; HLS optional IO and canonical release-year regression fixtures also passed",
     "upstream": "0.6.4-beta; 20 locked files verified"
   },
+  "recoveryEvidence": "compatibility/recovery-162.json",
+  "iphoneEmptyResultsRootCause": "not confirmed; awaiting phone diagnostic after known source regressions fixed",
   "smallDuneDownloadVerified": false,
   "largeFileSupport": "retained; no size ceiling",
   "bridge": {

@@ -1,6 +1,8 @@
 # Proje hafızası
 
-## 1.6.2 çalışma durumu — 26 Ekim 2026
+## 1.6.2 güncel durum — 26 Ekim 2026
+
+**Yayın tamamlandı:** kod commit’i 5b298cdeda6dfbcc10b55b053fdbe25022dce446. Windows/Linux Test ve paket 40309193725 ve Pages 40309193727 başarılı. Yerel 114/114; oturumsuz manifest, iki sürümlü sağlayıcı, eski online JS yolu ve sayfa HTTP 200 + yerel SHA eşit. Kanıt compatibility/github-publication.json. İlk Linux denemesi süre sonu rapor yarışını yakaladı; 5b298cd düzeltmesi tamamlanan videoyu koruyup doğru deadline nedeni verir. Fiziksel telefon boş sonuç nedeni hâlâ doğrulanmadı.
 
 Kullanıcı iPhone’da 1.6.1 gördüğünü doğruladı; eski sürüm varsayımı geçersiz. Fleabag ilk bölüm S01E01 olarak alındı; Obsession son Curry Barker filmi, 1339713/tt37287335. Telefonda ortak boş sonuç kök nedeni henüz bilinmiyor. Canlı pipeline TMDB metadata’sını sabit verir; Nuvio’nun enjekte ettiği anahtarla gerçek TMDB API adımını sınamaz.
 
@@ -10,7 +12,7 @@ Yerleşik PlayIMDb/VixSrc HLS varsayılanı hafif metadata: gerçek master doğr
 
 Tanı info alanı ağsız sürüm/ayar/anahtar varlığı gösterir; anahtarın geçerlilik testi değildir. Boş sonuç günlüğünde kimlik nedeni, sayaçlar ve HTTP host/durum bulunur; anahtar/tam URL/metin yok. Zorunlu kimlik sorgusuna 10 saniye JS süresi ayrılır; toplam bütçe geçerlidir. iOS native 60 saniye, iptal eksikliği ve bekleyen işlerin tüketilmesi riski sürer; telefonda düzeldi iddiası yok.
 
-Canlı referans: Obsession 10 online/TR 2,9 saniye, Fleabag 10 online/TR 3,8 saniye, Dune 10 online/TR 4,3 saniye. Dune’da 5 dosya adayı Workers TLS/ağ hatası verdi; gerçek indirme sıfır, küçük Dune çözülmedi. Bu raporlar sabit metadata ve canlı kaynaktır, telefon testi değildir. Yerel check 114/114; yayın kanıtı tamamlanınca güncellenir. Köprü 1.4 değişmedi/Sites erişimi açılmadı. Rehber docs/IPHONE_BOS_SONUC_162.md; upstream 20 dosyada drift yok; lock değişmedi.
+Canlı referans: Obsession 10 online/TR 2,9 saniye, Fleabag 10 online/TR 3,8 saniye, Dune 10 online/TR 4,3 saniye. Dune’da 5 dosya adayı Workers TLS/ağ hatası verdi; gerçek indirme sıfır, küçük Dune çözülmedi. Bu raporlar sabit metadata ve canlı kaynaktır, telefon testi değildir. Yerel check 114/114; yayın ve SHA kanıtı tamamlandı. Köprü 1.4 değişmedi/Sites erişimi açılmadı. Rehber docs/IPHONE_BOS_SONUC_162.md; upstream 20 dosyada drift yok; lock değişmedi.
 
 
 ## 1.6.1 güncel durum — 26 Ekim 2026

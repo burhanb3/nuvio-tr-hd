@@ -1,6 +1,6 @@
 # Nuvio Kotlin Multiplatform uyumluluğu
 
-**1.6.2 — 26 Ekim:** onSettings içindeki ağsız Tanı info alanı mevcut ABI’yı kullanır; sürüm build sırasında gömülür. TMDB key enjeksiyonu, native ID normalizasyonu ve iOS fetch60s/Abort eksikliği kaynakta tekrar incelendi. Kilitli20dosyada drift yok; compatibility/upstream-162-check.json. Lock değiştirilmedi. HLS opsiyonel sorguları azaltmak fiziksel iPhone dönüş garantisi değildir. [Tanı ve sınırlar](IPHONE_BOS_SONUC_162.md).
+**1.6.2 — 26 Ekim:** 114 yerel test/QuickJS, GitHub Windows/Linux ve Pages başarılı; beş public varlık HTTP 200 ve SHA eşitliği doğrulandı. onSettings içindeki ağsız Tanı info alanı mevcut ABI’yı kullanır; sürüm build sırasında gömülür. TMDB key enjeksiyonu, native ID normalizasyonu ve iOS fetch60s/Abort eksikliği kaynakta tekrar incelendi. Kilitli20dosyada drift yok; compatibility/upstream-162-check.json. Lock değiştirilmedi. HLS opsiyonel sorguları azaltmak fiziksel iPhone dönüş garantisi değildir. [Tanı ve sınırlar](IPHONE_BOS_SONUC_162.md).
 
 
 **1.6.1 — 26Ekim:** eski scraper ID tek başına online ve dosya döndürür; manifestte ana+anime iki kayıt vardır. Eski online JS yolu uyumluluk için üretilir ama kurulum girdisi değildir. ABI aynı, yeni ana paket gerçek QuickJS’te tek başına karma sonuç ve Shameless grup önekiyle test edildi.20kilitli dosya/güncel0.6.4-beta doğrulaması compatibility/upstream-161-check.json. Fiziksel cihaz testi yok. [Ayrıntılar](ONLINE_VE_DIZI_DUZELTMELERI.md).

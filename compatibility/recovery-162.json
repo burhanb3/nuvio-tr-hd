@@ -73,7 +73,7 @@
     ]
   },
   "tests": {
-    "sourceFixtureAndQuickjs": "see npm run check and publication evidence",
+    "sourceFixtureAndQuickjs": "114/114 passed locally and GitHub Windows/Linux; all three generated bundles tested",
     "phoneTmdbApi": "not-run",
     "physicalIphone": "not-run",
     "fullPlayback": "not-run",
@@ -82,5 +82,17 @@
     "subtitleAudioSync": "not-run"
   },
   "smallDuneDownloadVerified": false,
-  "bridgeVersion": "1.4.0; unchanged"
+  "bridgeVersion": "1.4.0; unchanged",
+  "publication": {
+    "sourceCommit": "5b298cdeda6dfbcc10b55b053fdbe25022dce446",
+    "tests": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40309193725",
+    "pages": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40309193727",
+    "proof": "compatibility/github-publication.json"
+  },
+  "ciRegression": {
+    "firstAttempt": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40308947212",
+    "failure": "completed pair retained; reason ok instead of deadline when request/search timers expired together",
+    "fixCommit": "5b298cd",
+    "resolved": true
+  }
 }
