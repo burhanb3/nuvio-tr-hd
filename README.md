@@ -1,10 +1,18 @@
 # Nuvio TR HD
 
-Nuvio Mobile'ın Kotlin Multiplatform **Full** sürümü için JavaScript sağlayıcı deposu. Film/bölüm seçildiğinde birden çok gerçek kaynağı otomatik tarar, MP4/MKV bağlantılarını doğrular ve her video için mevcut Türkçe ve İngilizce altyazıları arayıp eşleştirir. Seçilen boyut/kalite/uygunluk sırasıyla sunar. Her taramada varsayılan üst sınır **20**, çözünürlük filtresi **Tümü**. İstenirse 6/10 seçilebilir. Sürüm **1.7.5**.
+Nuvio Mobile'ın Kotlin Multiplatform **Full** sürümü için JavaScript sağlayıcı deposu. Film/bölüm seçildiğinde birden çok gerçek kaynağı otomatik tarar, MP4/MKV bağlantılarını doğrular ve her video için mevcut Türkçe ve İngilizce altyazıları arayıp eşleştirir. Seçilen boyut/kalite/uygunluk sırasıyla sunar. Her taramada varsayılan üst sınır **20**, çözünürlük filtresi **Tümü**. İstenirse 6/10 seçilebilir. Sürüm **1.7.6**.
 
 **27 Ekim 2026 uyumluluk kontrolü:** `0.6.4-beta` ve güncel `cmp-rewrite` dalının ilgili kaynak sözleşmeleri karşılaştırıldı. Derlenmiş sağlayıcı gerçek QuickJS WASM motorunda test edilir. Fiziksel Android/iOS cihazında oynatma ve indirme testi henüz yapılmadı. Ayrıntılar: [uyumluluk raporu](docs/UYUMLULUK.md).
 
 Bu depo medya barındırmaz. Waploaded güncel dosyalar, SonAnime, AniMOM, SeiCode, DiziYou, DiziBak, FilmModu, Animecix/Tau, 4KHDHub/HubCloud, VixSrc, Internet Archive ve PlayIMDb yerleşiktir; DahmerMovies deneysel yerel yedektir ve varsayılan kapalıdır. JSON/Stremio adresi girmek zorunlu değildir. Kişisel JSON ve Stremio kaynakları ek alternatif olarak korunmuştur. Her film için erişilebilir HD dosya veya uygun Türkçe altyazı bulunması garanti değildir; başarısız/engelli kaynaklar atlanır.
+
+## 1.7.6: sade kartlar ve Türkçe dublaj
+
+Pluginler ekranında mevcut depoyu yenileyin. Örnek: **1080p · 1920×804 · 2,11 GB · Ses: TR/EN · TR/EN altyazı**. Kartlarda bilinmiyor/tahmini/? ve geniş boyut aralıkları kaldırıldı; en olası destekli değer gösterilir. Hiç veri olmayan alan gizlenir. Gerçek piksel/byte önceliklidir; HLS GB değeri aktarım modelidir. Diller TR/EN/FR/ES/DE…HI sırasıyla, en fazla beş ve +N olarak sunulur. HI-only sesine EN eklenmez.
+
+Yeni HDFilmDelisi film adaptörü varsayılan açık: Dune, Matrix ve No Way Home testlerinde **TR/EN ses ve Türkçe altyazı izleri** bulunan HLS verdi. Bu online katkıdır; indirilebilir dosya sayılmaz. HDHub MB/MiB sıralaması ve aynı bütçede küçük/yüksek kalite/büyük sürüm seçimi düzeltildi. Mevcut Dune/Fleabag indirmeleri korundu; Shameless gibi dizilerde indirme açığı sürüyor. 210 test/QuickJS; fiziksel telefon/tam indirme/offline/senkron testi yok. [Yöntem, kanıtlar ve sınırlar](docs/KARTLAR_VE_DUBLAJ_176.md).
+
+Önceki sürüm bölümleri tarihçedir; kart görünümünde 1.7.6 kuralları geçerlidir.
 
 ## 1.7.5: film/dizi indirmelerine kısmi yeni kaynak
 
@@ -18,7 +26,7 @@ Gerçek kontrollerde Southland Tales **0,42 GB / 1024×512 / TR ve EN SRT**, Hea
 
 Depoyu Nuvio Pluginler ekranından yenileyin. Yeni **Nuvio TR HD · Ek Anime** varsayılan açık gelir; eski iki sağlayıcı ve ayarları korunur. AniMOM/YourUpload ile yeni SeiCode/MP4Upload küçük kapsamlarda da gerçek dosya alternatifleri ekler. Her bölüm ayrı doğrulanır; boş sonuç önceki sonuçları silmez.
 
-Canlı SeiCode iki bölümde0,29GB/gerçek1080p ve ENaltyazı verdi, TRbulunmadı. AniMOM bir paralel turda0,36GB/TR-EN verdi, başka tur/bölümlerde boş kaldı. Metadata okunamazsa kalite bilinmiyor kalır.189test/QuickJS; telefon/tamindirme/offline/senkron yok. [Örnekler, kurulum ve sınırlar](docs/KISMI_KAYNAKLAR_174.md).
+Canlı SeiCode iki bölümde0,29GB/gerçek1080p ve ENaltyazı verdi, TRbulunmadı. AniMOM bir paralel turda0,36GB/TR-EN verdi, başka tur/bölümlerde boş kaldı. Metadata okunamazsa kanıtlı sunum ipucu kullanılır veya alan gizlenir.189test/QuickJS; telefon/tamindirme/offline/senkron yok. [Örnekler, kurulum ve sınırlar](docs/KISMI_KAYNAKLAR_174.md).
 
 ## 1.7.3: gerçek dosya bilgisi ve indirme araştırması
 
@@ -30,9 +38,9 @@ AniMOM/YourUpload anime adaptörü tekil720p/0,36GB MP4+TR verdi; birleşik aram
 
 ## 1.7.2: aynı kart düzeni ve TR/EN altyazı
 
-Mevcut depoyu Nuvio Pluginler ekranından yenileyip sürümün **1.7.2** olduğunu kontrol edin. Kurulum adresi ve sağlayıcı kimlikleri aynı; kaldırıp yeniden eklemek gerekmez.
+Mevcut depoyu Nuvio Pluginler ekranından yenileyip güncel sürümü kontrol edin. Kurulum adresi ve sağlayıcı kimlikleri aynı; kaldırıp yeniden eklemek gerekmez.
 
-Kartlar her zaman **kalite · GB · ses · altyazı** alanlarını gösterir. Eksik boyut veya ses boş bırakılmaz; bilinmiyor yazılır. Ses kodları ve altyazı kodları ayrıdır: `Ses: EN · TR/EN altyazı`. Türkçe yoksa `TR altyazı yok`; yalnız İngilizce varsa `EN altyazı · TR altyazı yok` görünür. Bütün boyutlar Türkçe virgüllü decimal GB’dir; tahminler işaretlidir.
+Kart sırası **kalite · GB · ses · altyazı** şeklindedir. 1.7.6 ile dayanaklı tek değer kullanılır, sıfır kanıtta alan gizlenir. Ses kodları ve altyazı kodları ayrıdır: `Ses: EN · TR/EN altyazı`. Türkçe yoksa `TR altyazı yok`; yalnız İngilizce varsa `EN altyazı · TR altyazı yok` görünür. Bütün boyutlar Türkçe virgüllü decimal GB’dir; HLS aktarım modeli gerçek dosya ölçümünden ayrıdır.
 
 İngilizce OpenSubtitles araması ve kaynakla eşlenmiş EN SRT/VTT desteği eklendi. Aynı kimlik/yıl/bölüm, hash/release/süre ve UTF-8 kontrolleri iki dilde uygulanır. Dil başına dört alternatif; TR önce gelir, Türkçe zorunlu ayarını EN karşılamaz. İngilizce gövdeler ortak dört native fetch’in en fazla birini kullanır. **168 test ve gerçek QuickJS geçti; fiziksel iPhone/tam indirme/offline/senkron testi yok.** [Detaylar ve örnekler](docs/TR_EN_VE_KARTLAR_172.md).
 
@@ -48,7 +56,7 @@ Uygulama kodunu değiştirmeden Türkçe font için mevcut iOS harici oynatıcı
 
 Tek tek yapımlara yeni dosya pini eklemek yerine DiziYou, DiziBak, FilmModu ve SonAnime genel taramaları eklendi. Animecix kanonik farklı dil adlarını tanır; Archive tam bölüm dosyalarını genel olarak arar. Yeni yardımcı sunucu kurulmadı; önceki kaynaklar/kimlikler ve JSON/Stremio desteği korunur.
 
-Sesler EN/TR/JA gibi kısa kodlarla, doğrulanmamış kaynak iddiası ? ile görünür. Önerilen sırada özgün/TR/EN tercih edilebilir; boyut/kalite sıralaması değişmez. Aynı dosya aynaları tekilleşir. Çelişen HLS kaliteleri çoğalmaz. Yılsız tam dizi release eşleşmesi ve bozuk Türkçe kodlama kontrolü geliştirildi.
+Sesler TR/EN/JA gibi kısa kodlarla görünür; 1.7.6 ile soru işareti kaldırıldı. Önerilen sırada özgün/TR/EN tercih edilebilir; boyut/kalite sıralaması değişmez. Aynı dosya aynaları tekilleşir. Çelişen HLS kaliteleri çoğalmaz. Yılsız tam dizi release eşleşmesi ve bozuk Türkçe kodlama kontrolü geliştirildi.
 
 **Yeni film/dizi alternatifleri çoğunlukla online HLS’dir. Normal film/dizi için küçük MP4/MKV boşluğu sürer; her yapım/her kalite hedefi tamamlanmadı.** Harici ses birleştirme plugin ABI’sinde yoktur. iPhone’daki eksik Türkçe font glifleri uygulama düzeltmesi gerektirir; hazır yama kaynak üzerinde kontrol edildi, cihazda uygulanmadı. 153 yerel test ve gerçek QuickJS geçti. Tam oynatma/indirme/çevrimdışı/senkron testi yok. [Yöntemler, sınırlar ve araştırma](docs/KAYNAK_GENISLETME_170.md).
 
@@ -68,7 +76,7 @@ Archive’ın yıl alanı eksik kayıtları, kesin başlık/yıl + dosya adı/y�
 
 14 vakalık gerçek kaynak matrisinde küçük indirilebilir + Türkçe altyazı 3/14’ten 8/14’e çıktı. Dune için yaklaşık 756/905 MiB, Spider-Verse için 1,88 GiB dosyalar doğrulandı. Fleabag S01E01 için yaklaşık 99 MiB MKV bulundu; bağımsız görüntü örnekleri doğru bölümle eşleşti. No Way Home’da 840 MiB düşük çözünürlüklü bir alternatif var; ikinci iyi kalite hâlâ eksik. **Diğer normal dizi vakalarında, Matrix ve Inception’da indirme boşlukları sürüyor.** [Tam liste, ses dilleri ve kalan hedefler](docs/KAPSAM_MATRISI.md).
 
-Ses dili okunabildiğinde konteynerden gösterilir; dosya adı iddiası tahmini yazılır. Küçük Dune MKV’si Hintçe ses içerir. Türkçe altyazı bulunması özgün ses veya sahne senkronu garantisi değildir. Mevcut boyut/kalite sıralaması korunur.
+Ses dili okunabildiğinde konteynerden gösterilir; eksikse kaynak/dosya/özgün dil ipuçları kullanılır. Küçük Dune MKV’si Hintçe ses içerir. Türkçe altyazı bulunması özgün ses veya sahne senkronu garantisi değildir. Mevcut boyut/kalite sıralaması korunur.
 
 128 fixture/QuickJS testi, kaynak/altyazı canlı kontrolleri ve ayrı kapsam ölçümü vardır. Sabit TMDB referansı telefonun gerçek API anahtarını sınamaz. **Fiziksel iPhone, tam oynatma/indirme, çevrimdışı altyazı ve sahne senkronu testi yapılmadı.** Ana scraper aynı kimlikle online ve dosyaları birlikte arar; Anime ayrıdır. Ana arama 24, Anime 20 saniye mantıksal bütçe; native iOS işleri ayrıca geciktirebilir.
 
@@ -80,7 +88,7 @@ Game of Thrones ve Fleabag için TV yolu düzeltildi. PlayIMDb'nin doğru IMDb/b
 
 Varsayılan kaynak sırası **küçükten büyüğe**. Kalite/boyut/önerilen sıralama ve tür/kalite/sağlayıcıya göre yan yana gruplama ayarlıdır. Kısa başlık örneği: **01 · İndirilebilir · 4KHDHub**; Nuvio alt satırı **1920×1080 ✓ · 4.41 GiB · TR · senkron belirsiz**. Ayrı açılır grup/kart tasarımı plugin ABI'siyle oluşturulmaz.
 
-HLS, sesi birlikte gelen kaynaklarda her kalite için ayrı satırdır. Her satırın kendi ortalama bitrate/parça başlığı tahmini veya açık üst tahmini vardır; geniş 784 MB–4,65 GB aralığı gösterilmez. Ayrı ses grubu olan kaynaklar mevcut köprü 1.4.0 kaldığı için otomatik master olarak korunur, boyutu değişken yazılır. HLS profil servisinin 1.5.0 kodu hazırdır; Sites hesabına erişim kaybı ve kullanıcının şu an geçememesi nedeniyle yayımlanamadı. Sağlık cevabında yetenek onayı olmadan yeni URL kullanılmaz.
+HLS, sesi birlikte gelen kaynaklarda her kalite için ayrı satırdır. Her satırın kendi ortalama bitrate/parça başlığı tahmini veya açık üst tahmini vardır; geniş 784 MB–4,65 GB aralığı gösterilmez. Ayrı ses grubu olan kaynaklar mevcut köprü 1.4.0 kaldığı için otomatik master olarak korunur, boyutu en yüksek bilinen sürüme göre tek değerle modellenir. HLS profil servisinin 1.5.0 kodu hazırdır; Sites hesabına erişim kaybı ve kullanıcının şu an geçememesi nedeniyle yayımlanamadı. Sağlık cevabında yetenek onayı olmadan yeni URL kullanılmaz.
 
 [Dokuz depo envanteri ve gerçek kaynak araştırması](docs/KAYNAK_ARASTIRMASI.md): 221 tanım/134 normalize kimlik; hepsi bağımsız veya çalışır sayılmaz. Yeni yöntemler ve başarısız denemeler belgelenmiştir.
 
@@ -88,12 +96,12 @@ HLS, sesi birlikte gelen kaynaklarda her kalite için ayrı satırdır. Her sat�
 
 1. Nuvio'nun verdiği TMDB ID ile özgün başlık, yıl, IMDb kimliği ve film süresi alınır.
 2. Yerleşik sağlayıcılar sınırlı paralellikle taranır; ek JSON/Stremio kaynakları varsa aynı havuza katılır. Başlık/yıl uyuşmazlığı ve fragmanlar elenir.
-3. Dosyaların gerçek MP4/MKV yapısı, video piksel boyutları ve mümkünse süresi okunur. Konteyner okunamazsa dosya adındaki kalite yalnız açıkça etiketlenmiş tahmindir. HLS çözünürlükleri oynatma listesinden, yaklaşık aktarım boyutu bitrate × süreden gelir; gerçek dosya ölçümüyle karıştırılmaz.
+3. Dosyaların gerçek MP4/MKV yapısı, video piksel boyutları ve mümkünse süresi okunur. Konteyner okunamazsa dosya adındaki kalite yalnız sunum ipucudur; doğrulanmış kalite filtresine kanıt olmaz. HLS çözünürlükleri oynatma listesinden, yaklaşık aktarım boyutu bitrate × süreden gelir; gerçek dosya ölçümüyle karıştırılmaz.
 4. Her dosya için OpenSubtitles hash'i hesaplanabildiğinde hesaplanır; Türkçe altyazı servislerine film/bölüm ve dosya bilgileriyle sorgu yapılır. Video URL'si altyazı servisine gönderilmez.
 5. Altyazılar **hash → tam sürüm → kaynakla eşlenmiş → sürüm benzerliği → süre uyumu → aynı filmden belirsiz alternatif** sırasıyla değerlendirilir. Süre/sürüm benzerliği, sesle doğrulanmış senkron değildir ve arayüzde açıkça belirtilir. Farklı film/yıl/bölüm ve açıkça farklı extended/director's cut sürümleri elenir.
 6. Varsayılan küçükten büyüğe sıralanır; istenirse Önerilen seçimi indirilebilir dosya ve güçlü Türkçe eşleşmesini öne alır. Kaynaklar dengeli taranır; tek sağlayıcı tüm aday kotasını tüketmez.
 
-Varsayılanlar: otomatik tarama ve Türkçe altyazı araması açık; çözünürlük filtresi Tümü; Türkçe altyazısız videolar TR bulunamadı etiketiyle görünür; **HLS çevrimiçi alternatifleri açık**. Varsayılan boyut sırası uygulanır; Önce indirilebilir gruplaması ayrıca seçilebilir. HLS yalnız online etiketi taşır. Çözünürlük okunamazsa mevcut dosya adı ipucu tahmin diye sunulur; hiçbir kanıt yoksa eksik bilgi açık kalır. İstenirse ayarlardan kaynaklar ayrı kapatılabilir, düşük kalite veya altyazısız sonuçlar gösterilebilir.
+Varsayılanlar: otomatik tarama ve Türkçe altyazı araması açık; çözünürlük filtresi Tümü; Türkçe altyazısız videolar TR altyazı yok etiketiyle görünür; **HLS çevrimiçi alternatifleri açık**. Varsayılan boyut sırası uygulanır; Önce indirilebilir gruplaması ayrıca seçilebilir. HLS yalnız online etiketi taşır. Çözünürlük okunamazsa mevcut kaynak/dosya/bitrate ipucu kullanılır; hiçbir kanıt yoksa alan gizlenir. İstenirse ayarlardan kaynaklar ayrı kapatılabilir, düşük kalite veya altyazısız sonuçlar gösterilebilir.
 
 **Altı sonuç Nuvio'nun sınırı değildir.** Bu eklentinin ayarlanabilir liste sınırıdır. Genel kaynaklara tarama başına 40 aday kotası ayrılır; HDHub ayrıca en çok 12 release’i aşamalı işler. Sonuç sayısını 20 seçmek yeni sağlayıcı eklemez. Mantıksal bütçeler ana arama 24, Anime 20 saniyedir; başlamış native ağ işlerinin bitişi ayrıca Nuvio’ya bağlıdır.
 
@@ -179,11 +187,11 @@ Stremio kaynağında `stream` kaynağı gerekir. `meta` sağlanıyorsa orijinal 
 
 - MP4 `ftyp`/konteyner yapısı, MKV EBML `DocType=matroska` kontrol edilir. HTML hata sayfası, sahte uzantı, 403/404, bozuk JSON, hatalı byte range ve zaman aşımı sonucu atlanır.
 - Video boyutları MP4 `moov/trak/tkhd` + video handler veya MKV video track `PixelWidth/PixelHeight` alanlarından okunur. MP4 başında bulunamazsa en çok 256 KiB kuyruk aralığı da denenir. Dosya adındaki `1080p/2160p` kalite kanıtı sayılmaz.
-- Kalite etiketi gerçek kısa kenara göre konservatif hesaplanır. Örneğin `1920×800`, `720p` etiketiyle birlikte tam piksel boyutuyla gösterilir. Okunamayan çözünürlükte dosya adı ipucu yalnız **tahmin** olarak yazılır; hiçbir kanıt yoksa eksik bilgi açık bırakılır.
+- Kalite etiketi gerçek piksel ve standart genişlik/kırpılma oranına göre hesaplanır. Örneğin `1920×800`, `1080p · 1920×800` şeklinde görünür. Okunamayan çözünürlükte kaynak/dosya/bitrate yalnız sunum ipucudur; hiçbir kanıt yoksa alan gizlenir.
 - Kontrol ilk 128 KiB + gerekirse son 256 KiB üzerinden yapılır; tam dosya çözme, görsel kalite, codec/HDR/DRM veya dosyanın tümünün sağlam olduğu garantisi değildir. İndirme kullanılabilirliği sunucunun erişim/süre sınırlarına da bağlıdır.
 - HLS çevrimiçi alternatifleri varsayılan açıktır; kısa kartta **Online**, metaveride **HLS** yazar. Ayrıntılı başlık/başlık alanında **Online izlenebilir · İndirilemez** açıklaması korunur; doğrudan dosya denmez. Yalnız indirilebilir dosya istiyorsanız HLS ayarını kapatın. Uzantısız HLS, Nuvio'nun indirme filtresine takılmayabileceği için hiç döndürülmez. DASH desteklenmez.
 - MKV URL’si `.mkv` ile bitmelidir. Yeni köprü doğrulanmış public R2 dosyalarına bu adı sağlar. Köprü kapalıysa uzantısız MKV, yanlış adla kaydetmeyi önlemek için elenir.
-- Harici altyazı Türkçe ve UTF-8 olmalı; SRT/VTT gövdesi doğrulanır. OpenSubtitles gibi `/sub.vtt/` ve uzantısız indirme uçları da gövde incelemesiyle desteklenir. Video başlıkları altyazı sunucusuna otomatik aktarılmaz. Türkçe altyazı, Türkçe ses anlamına gelmez.
+- Harici altyazı Türkçe/İngilizce ve UTF-8 olmalı; SRT/VTT gövdesi doğrulanır. OpenSubtitles gibi `/sub.vtt/` ve uzantısız indirme uçları da gövde incelemesiyle desteklenir. Video başlıkları altyazı sunucusuna otomatik aktarılmaz. Türkçe altyazı, Türkçe ses anlamına gelmez.
 - Hash ve sürüm eşleşmesi güçlü kanıttır; sürüm benzerliği veya süre uyumu tam senkron garantisi değildir. Nuvio AutoSync yalnız Android dahili ExoPlayer yolunda, kullanılabilir gömülü referans altyazıyla çalışır; iPhone’da bu özellik yoktur. Plugin ABI’si zaman kaydırma alanı sağlamaz.
 
 Nuvio plugin sonuç şemasında bir `downloadable` anahtarı yoktur. Bu proje desteklenmeyen bir bayrak uydurmaz; dosya türünü ve doğrulama durumunu sonuç adında gösterir. Son indirme ve oynatma davranışını uygulama belirler.

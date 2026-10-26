@@ -15,18 +15,18 @@ const { scanAnimecix } = require('./providers/animecix.cjs');
 const { scanSonAnime } = require('./providers/sonanime.cjs');
 const { scanDiziYou } = require('./providers/diziyou.cjs');
 const { scanFilmModu } = require('./providers/filmmodu.cjs');
+const {scanHdFilmDelisi}=require('./providers/hdfilmdelisi.cjs');
 const { scanAniMom } = require('./providers/animom.cjs');
 const { scanSeiCode } = require('./providers/seicode.cjs');
 const { scanDiziBak } = require('./providers/dizibak.cjs');
 const { probe } = require('./media/probe.cjs');
 const { loadSubtitles, subtitleLanguage, subtitleKey, selectSubtitles, embeddedSubtitleLanguages } = require('./subtitles.cjs');
 const { createSubtitleDiscovery, scoreSubtitle } = require('./subtitle-discovery.cjs');
-const { safeUrl, mapLimit } = require('./util.cjs');
+const { safeUrl, mapLimit, qualityLabel } = require('./util.cjs');
 const { rankStreams } = require('./ranking.cjs');
-const { describeQuality, describeSize, cardFields, subtitleLabel } = require('./media/presentation.cjs');
+const { cardFields, subtitleLabel } = require('./media/presentation.cjs');
 const { profileAddress } = require('./media/hls.cjs');
 const { configuration, configurationLabel, effectiveTmdbKey, writeDiagnostic } = require('./diagnostics.cjs');
-const { describeAudio } = require('./media/audio.cjs');
 
 function parseUrls(value, allowHttp) {
   if (typeof value !== 'string') return [];
@@ -62,21 +62,15 @@ function formatResults(completed, settings, target) {
   const ordering = { ...settings, sortOrder: settings.sortOrder || 'size_asc' };
   return rankStreams(expanded, maximum, ordering).map(({ candidate, video, subtitles }, index) => {
     const kind = video.downloadable ? `${video.container.toUpperCase()} · Online izlenebilir · İndirilebilir` : 'HLS · Online izlenebilir · İndirilemez';
-    const quality = describeQuality(video, candidate), size = describeSize(video);
-    const audio = describeAudio(video, candidate);
     const fields = cardFields(video,candidate,subtitles);
-    const dimensionText = ` · ${quality.text}`;
-    const subScore = subtitles[0]?._score || 0;
-    const matchText = subScore >= 90 ? 'eşleşti' : subScore >= 70 ? 'sürüm benzerliği' : subScore >= 65 ? 'süre uyumu' : 'film düzeyi; senkron belirsiz';
-    const embedded = embeddedSubtitleLanguages(video,candidate).length>0;
     const burnedForeign = candidate.burnedSubtitleLanguage === 'es' ? 'İspanyolca altyazı görüntüye işlenmiş' : '';
-    const subtitleText = ` · ${subtitleLabel(video,candidate,subtitles)}` + (subtitles.length ? ` (${matchText})` : embedded ? ` (${video.container==='hls'?'HLS':'dosya'} içi)` : '');
-    const detailedTitle = `${target.originalTitle} (${target.year}) · ${kind}${dimensionText} · ${size.text}${audio ? ' · Ses: '+audio.text : ''}${subtitleText}${burnedForeign ? ' · '+burnedForeign : ''}`;
-    const title = settings.compactLabels === false ? detailedTitle : `${fields.quality} · ${fields.size} · ${fields.language}${!subtitles.length&&embedded?' · '+(video.container==='hls'?'HLS':'Dosya')+' içi altyazı':''}${burnedForeign ? ' · '+burnedForeign : ''}${video.container === 'hls' ? ' · Online izlenebilir · İndirilemez' : ''}`;
+    const description=[fields.quality,fields.size,fields.language].filter(Boolean).join(' · ');
+    const detailedTitle=[`${target.originalTitle} (${target.year})`,kind,description,burnedForeign].filter(Boolean).join(' · ');
+    const title = settings.compactLabels === false ? detailedTitle : description+(burnedForeign?' · '+burnedForeign:'')+(video.container==='hls'?' · Online izlenebilir · İndirilemez':'');
     const source = String(candidate.source || 'Kaynak').replace('4KHDHub / HubCloud', '4KHDHub').replace('Internet Archive', 'Archive') +
       (candidate.serverIndex ? ` ${candidate.serverIndex}` : '');
     const badge = video.downloadable ? 'İndirilebilir' : 'Online';
-    const label = settings.compactLabels === false ? `${source} · ${kind}${dimensionText} · ${size.text}${subtitleText}` : `${badge} · ${source}`;
+    const label = settings.compactLabels === false ? [source,kind,fields.quality,fields.size,subtitleLabel(video,candidate,subtitles)].filter(Boolean).join(' · ') : `${badge} · ${source}`;
     return { name: `${String(index + 1).padStart(2, '0')} · ${label}`,
       title, url: video.url, quality: fields.quality, size: fields.size,
       language: fields.language, provider: 'Nuvio TR HD', type: video.container,
@@ -134,12 +128,12 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs = 24000, r
         if (unique.size >= 40) { reject('candidate_limit'); return; }
         unique.set(key, candidate);
         if (/\.m3u8(?:$|[?#])/i.test(candidate.url) && settings.includeHls === false) { reject('hls_disabled'); return; }
-        const lightweightHls = ['PlayIMDb', 'VixSrc', 'DiziYou', 'DiziBak', 'FilmModu'].includes(candidate.source) && settings.detailedHlsMetadata !== true;
+        const lightweightHls = ['PlayIMDb', 'VixSrc', 'DiziYou', 'DiziBak', 'FilmModu','HDFilmDelisi'].includes(candidate.source) && settings.detailedHlsMetadata !== true;
         const video = await withProbeSlot(() => probe(http, candidate, settings.includeHls !== false, settings.autoSubtitles !== false,
           { detailedHls: !lightweightHls }));
         if (!video || http.expired()) { reject('video_unavailable'); return; }
         const minimum = Number(settings.minimumQuality ?? 0);
-        if (video.dimensions && Math.min(video.dimensions.width, video.dimensions.height) < minimum) { reject('quality'); return; }
+        if (video.dimensions && parseInt(qualityLabel(video.dimensions)) < minimum) { reject('quality'); return; }
         const pair = { candidate, video, subtitles: [] };
         // Partial sources often have empty/broken files. Start subtitle traffic
         // only after actual media bytes passed the probe in this extra lane.
@@ -211,7 +205,7 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs = 24000, r
                     (source === 'PlayIMDb' && settings.playImdbEnabled === false) ||
                     (source === '4KHDHub / HubCloud' && settings.hdhubEnabled === false) ||
                     (pair.video.container === 'hls' && settings.includeHls === false) ||
-                    (pair.video.dimensions && Math.min(pair.video.dimensions.width, pair.video.dimensions.height) < Number(settings.minimumQuality || 0)) ||
+                    (pair.video.dimensions && parseInt(qualityLabel(pair.video.dimensions)) < Number(settings.minimumQuality || 0)) ||
                     (strictSubtitles && !pair.subtitles.some(s=>s.language==='tr') && !embeddedSubtitleLanguages(pair.video,pair.candidate).includes('tr'))) continue;
                 completed.push(pair);
               }
@@ -255,6 +249,8 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs = 24000, r
               sourceJobs.push({ name: 'DiziBak', run: () => scanDiziBak(http, target) });
             if (onlineLane && settings.filmmoduEnabled !== false && target.type === 'movie' && !target.isAnime)
               sourceJobs.push({ name: 'FilmModu', run: () => scanFilmModu(http, target) });
+            if (onlineLane && settings.includeHls !== false && settings.hdfilmdelisiEnabled !== false && target.type === 'movie' && !target.isAnime)
+              sourceJobs.push({ name:'HDFilmDelisi',run:()=>scanHdFilmDelisi(http,target) });
             if (filesLane && settings.hdhubEnabled !== false && !sourceFactories.some(s => s.name === '4KHDHub / HubCloud')) sourceJobs.push({ name: '4KHDHub / HubCloud', run: async () => {
               return scanHdHub(http, target, { allowExtensionless: settings.useDownloadBridge !== false, onCandidates: candidates => acceptCandidates(candidates, true) });
             } });
@@ -307,7 +303,7 @@ function onSettings() {
   return [
     { type: 'header', label: 'Nuvio TR HD · Otomatik kaynak ve TR/EN altyazı' },
     { type: 'info', label: configurationLabel(settings, tmdbKey) },
-    { type: 'info', label: 'Kart sırası: kalite · GB · ses · TR/EN altyazı. Eksik bilgi açıkça yazılır; ? ses iddiası, ~ boyut tahminidir. En fazla 20 sonuç, tüm çözünürlükler. Türkçe yoksa varsayılan olarak video korunur; İngilizce altyazılar da sunulur. Nuvio altyazı dilini Türkçe seçebilirsiniz.' },
+    { type: 'info', label: 'Kart sırası: p ve piksel · GB · ses · altyazı. Bilgiler dosya, oynatma listesi ve kaynak ipuçlarından seçilir. Diller TR/EN öncelikli; ilk beş dil ve kalan sayı gösterilir. En fazla 20 sonuç; tüm çözünürlükler. Nuvio altyazı dilini Türkçe seçebilirsiniz.' },
     { type: 'toggle', key: 'autoDiscover', label: 'Otomatik kaynak tarama', defaultValue: true },
     { type: 'toggle', key: 'compactLabels', label: 'Kısa ve sade kaynak başlıkları', defaultValue: true },
     { type: 'select', key: 'audioPreference', label: 'Önerilen sıralamada ses tercihi', defaultValue: 'preferred', options: [
@@ -328,6 +324,7 @@ function onSettings() {
     { type: 'toggle', key: 'useDownloadBridge', label: 'MKV indirme adını koruyan dosya köprüsü', defaultValue: true, description: 'Kaynaklar telefondan aranır. Yalnız bulunan public dosya adresi ve film metadatası köprüde doğrulanır. Video doğrudan kaynaktan gelir; kişisel katalog/anahtar gönderilmez.' },
     { type: 'toggle', key: 'vixsrcEnabled', label: 'VixSrc çevrimiçi alternatifleri', defaultValue: true },
     { type: 'toggle', key: 'hdhubEnabled', label: '4KHDHub / HubCloud doğrudan dosya araması', defaultValue: true, description: 'Ücretsiz public FSL dosyaları doğrulanır. Kaynak metadatası boyut/piksel doğrulaması sayılmaz.' },
+    {type:'toggle',key:'hdfilmdelisiEnabled',label:'HDFilmDelisi Türkçe dublaj ve çoklu ses',defaultValue:true,description:'Public film kataloğu ve gerçek HLS listesi. Ses/altyazı dilleri yayıncıdan okunur; bu kaynak online izleme içindir.'},
     { type: 'toggle', key: 'waploadedEnabled', label: 'Waploaded güncel film/dizi dosyaları', defaultValue: true, description: 'Kısmi kapsam: kaynağın son güncellenen listesi taranır; tüm arşivi kapsamaz. Gerçek dosya, yıl ve bölüm doğrulanır. Mevcut TR/EN araması uygulanır.' },
     { type: 'toggle', key: 'directoryEnabled', label: 'DahmerMovies dizin taraması (deneysel yerel yedek)', defaultValue: false, description: 'Dosya CDN’i sık 403/429 döndürdüğünden varsayılan kapalıdır.' },
     { type: 'toggle', key: 'archiveEnabled', label: 'Internet Archive film araması', defaultValue: true },
@@ -367,7 +364,7 @@ async function getStreams(tmdbId, mediaType, season, episode) {
 }
 function createEntry(lane) {
   const titles = { main: 'Film/dizi · online ve dosyalar', files: 'Dosyalar', online: 'Hızlı kaynaklar', anime: 'Anime', extraAnime:'Ek Anime' };
-  const only = { files: ['hdhubEnabled','directoryEnabled','archiveEnabled','waploadedEnabled','catalogUrls','addonUrls'], online: ['playImdbEnabled','vixsrcEnabled','diziyouEnabled','dizibakEnabled','filmmoduEnabled','hlsView'], anime: ['animecixEnabled','sonanimeEnabled'],extraAnime:['animomEnabled','seicodeEnabled'] };
+  const only = { files: ['hdhubEnabled','directoryEnabled','archiveEnabled','waploadedEnabled','catalogUrls','addonUrls'], online: ['playImdbEnabled','vixsrcEnabled','diziyouEnabled','dizibakEnabled','filmmoduEnabled','hdfilmdelisiEnabled','hlsView'], anime: ['animecixEnabled','sonanimeEnabled'],extraAnime:['animomEnabled','seicodeEnabled'] };
   only.main = [...only.files, ...only.online];
   const sourceFields = Object.values(only).flat();
   return {

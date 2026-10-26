@@ -70,11 +70,13 @@ async function mapLimit(items, limit, fn) {
 
 function qualityLabel(dimensions) {
   if (!dimensions || !positiveInt(dimensions.width) || !positiveInt(dimensions.height)) return 'Bilinmiyor';
-  const edge = Math.min(dimensions.width, dimensions.height);
-  const tiers = [4320, 2160, 1440, 1080, 720, 576, 480, 360, 240];
-  // Actual pixels, not a filename or a claimed quality string.
-  const tier = tiers.find(n => edge >= n);
-  return tier ? `${tier}p` : `${edge}p`;
+  const long=Math.max(dimensions.width,dimensions.height),short=Math.min(dimensions.width,dimensions.height);
+  // Common widescreen encodes crop black bars (1920x800 is a 1080p encode).
+  // Nonstandard widths retain their actual short edge, rather than inventing
+  // a standard width from a filename. Portrait footage works the same way.
+  const standard=[[7680,4320],[3840,2160],[2560,1440],[1920,1080],[1280,720],[854,480],[640,360],[426,240]]
+    .find(([width,height])=>Math.abs(long-width)/width<=0.02&&short>=height*0.6&&short<=height*1.03);
+  return `${standard?standard[1]:short}p`;
 }
 
 module.exports = { positiveInt, normalizeTitle, safeUrl, cleanHeaders, mergeHeaders, mapLimit, qualityLabel };

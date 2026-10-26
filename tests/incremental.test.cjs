@@ -27,5 +27,5 @@ test('MKV içinde gerçek TR altyazı izi okunur; yabancı/bilinmeyen codec TR s
 test('MKV gömülü TR, harici dosya olmasa da sıkı TR filtresinde korunur ve indirmeyle aynı dosyadadır',async()=>{
  const data=makeFixture({items:[{...target,streams:[{url:'https://media.test/movie.mkv'}]}],extra:{'https://media.test/movie.mkv':{body:subtitledMkv()}}});
  const p=createProvider({tmdbKey:'test',settings:{autoDiscover:false,catalogUrls:'https://library.test/catalog.json',autoSubtitles:false,subtitlePolicy:'require'},fetchImpl:fixtureFetch(data)});
- const streams=await p.getStreams(603,'movie');assert.equal(streams.length,1);assert.equal(streams[0].language,'Ses: bilinmiyor · TR altyazı');assert.match(streams[0].name,/İndirilebilir/);assert.deepEqual(streams[0].subtitles,[]);
+ const streams=await p.getStreams(603,'movie');assert.equal(streams.length,1);assert.equal(streams[0].language,'TR altyazı');assert.match(streams[0].name,/İndirilebilir/);assert.deepEqual(streams[0].subtitles,[]);
 });

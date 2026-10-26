@@ -4,6 +4,7 @@ const { anchors, decodeEntities } = require('./directory.cjs');
 const { canonicalNames } = require('./page-data.cjs');
 const { matchesEpisode } = require('../matching.cjs');
 const { audioCode } = require('../media/audio.cjs');
+const {base64Bytes}=require('../media/base64.cjs');
 
 const ORIGINS = { movie: 'https://films.waploaded.com', tv: 'https://shows.waploaded.com' };
 const indexes = new Map();
@@ -61,17 +62,11 @@ function sameEpisodeHeading(html, target) {
   return !!name && matchesEpisode(text, target) && /^s\d{1,3}\s*e\d{1,3}$/.test(normalized.slice(name.length).trim());
 }
 function decodeLink(key, value) {
-  if (typeof key !== 'string' || !key.length || key.length > 200 || typeof value !== 'string' || value.length > 12000 ||
-      !/^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/.test(value)) return null;
+  if (typeof key !== 'string' || !key.length || key.length > 200) return null;
   // XOR data contains NUL bytes. Keep it inside JS: passing an atob binary
   // string through a C-string/native bridge can truncate it at the first NUL.
-  const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/', data = value.replace(/=+$/, '');
-  let buffer = 0, bits = 0, out = '', index = 0;
-  for (const char of data) {
-    buffer = (buffer << 6) | alphabet.indexOf(char); bits += 6;
-    if (bits >= 8) { bits -= 8; out += String.fromCharCode(((buffer >> bits) & 255) ^ key.charCodeAt(index++ % key.length)); buffer &= (1 << bits) - 1; }
-  }
-  return safeUrl(out);
+  const data=base64Bytes(value);
+  return data?safeUrl(Array.from(data,(byte,index)=>String.fromCharCode(byte^key.charCodeAt(index%key.length))).join('')):null;
 }
 function namedFile(url, slug) {
   const address = safeUrl(url);

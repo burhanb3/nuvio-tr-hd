@@ -1,0 +1,345 @@
+{
+  "checkedAt": "2026-10-26T23:58:08.430Z",
+  "version": "1.7.6",
+  "method": "Public canonical catalogue and real HLS manifests inspected with fixed title/year/IMDb references; no full playback or phone TMDB credential test. Signed URLs, player payloads, tickets and keys omitted.",
+  "exhaustive": false,
+  "tests": 210,
+  "presentation": {
+    "unknownAndTentativeMarkersOnCards": false,
+    "noEvidence": "omit field rather than invent arbitrary values",
+    "qualityPriority": [
+      "container pixels",
+      "playlist resolutions",
+      "source/filename hint",
+      "bitrate model"
+    ],
+    "realPixelsIncludeP": true,
+    "cropped1920x800Label": "1080p",
+    "sizePriority": [
+      "actual byte count",
+      "highest known rendition estimate",
+      "resolution/duration/codec model"
+    ],
+    "peakBandwidthUsageFactor": 0.8,
+    "automaticHlsActualTransferMayDiffer": true,
+    "liveFiniteSizeGenerated": false,
+    "audioPriority": [
+      "container/playlist",
+      "declared source",
+      "filename",
+      "canonical original language"
+    ],
+    "audioFallbackMayDifferFromDub": true,
+    "measuredHindiOnlyDoesNotGainEnglish": true,
+    "languageOrder": "TR, EN, FR, ES, DE, other languages, HI last",
+    "maximumVisibleLanguages": 5,
+    "remainingCountShown": true,
+    "externalSubtitleDiscoveryLanguages": [
+      "tr",
+      "en"
+    ]
+  },
+  "source": {
+    "name": "HDFilmDelisi",
+    "lane": "main",
+    "setting": "hdfilmdelisiEnabled",
+    "defaultEnabled": true,
+    "types": [
+      "movie"
+    ],
+    "publicOnly": true,
+    "identity": "exact original title/year/IMDb plus film-page JSON-LD",
+    "seoMp4RejectedAsNotVideo": true,
+    "publicLiteralDecodeWithoutExecutingScripts": true,
+    "noEmbeddedApiKeyOrLicenseCopied": true,
+    "transport": "HLS only, same exact probed public endpoint with ?format=.m3u8 accepted",
+    "nativeDownloadFilterExcludesM3u8": true,
+    "newDownloadAdapter": false
+  },
+  "live": {
+    "checkedAt": "2026-10-26T23:46:39.474Z",
+    "metadata": "fixed canonical references, real source HTTP",
+    "rows": [
+      {
+        "key": "dune",
+        "ms": 1043,
+        "candidates": 1,
+        "videos": [
+          {
+            "source": "HDFilmDelisi",
+            "video": {
+              "container": "hls",
+              "dimensions": null,
+              "resolutionOptions": [
+                {
+                  "width": 1920,
+                  "height": 804
+                }
+              ],
+              "audioLanguages": [
+                "tr",
+                "en"
+              ],
+              "subtitleLanguages": [
+                "en",
+                "st",
+                "tr"
+              ],
+              "downloadable": false,
+              "sizeEstimate": {
+                "minimum": 2641931213,
+                "maximum": 2641931213,
+                "basis": "peak-or-average-bitrate",
+                "durationSource": "tmdb"
+              }
+            },
+            "card": {
+              "quality": "1080p · 1920×804",
+              "size": "2,11 GB",
+              "language": "Ses: TR/EN · TR/EN/ST altyazı"
+            }
+          }
+        ],
+        "events": [
+          {
+            "stage": "http",
+            "host": "hdfilmdelisi.one",
+            "status": 200,
+            "method": "GET"
+          },
+          {
+            "stage": "http",
+            "host": "hdfilmdelisi.one",
+            "status": 200,
+            "method": "GET"
+          },
+          {
+            "stage": "http",
+            "host": "pl.vixolity.com",
+            "status": 200,
+            "method": "GET"
+          },
+          {
+            "stage": "http",
+            "host": "ha.vixolity.com",
+            "status": 200,
+            "method": "GET"
+          }
+        ]
+      },
+      {
+        "key": "matrix",
+        "ms": 539,
+        "candidates": 1,
+        "videos": [
+          {
+            "source": "HDFilmDelisi",
+            "video": {
+              "container": "hls",
+              "dimensions": null,
+              "resolutionOptions": [
+                {
+                  "width": 854,
+                  "height": 480
+                },
+                {
+                  "width": 1920,
+                  "height": 800
+                }
+              ],
+              "audioLanguages": [
+                "tr",
+                "en"
+              ],
+              "subtitleLanguages": [
+                "en",
+                "st",
+                "tr"
+              ],
+              "downloadable": false,
+              "sizeEstimate": {
+                "minimum": 1035458100,
+                "maximum": 2634989460,
+                "basis": "peak-or-average-bitrate",
+                "durationSource": "tmdb"
+              }
+            },
+            "card": {
+              "quality": "1080p · Otomatik",
+              "size": "2,11 GB",
+              "language": "Ses: TR/EN · TR/EN/ST altyazı"
+            }
+          }
+        ],
+        "events": [
+          {
+            "stage": "http",
+            "host": "hdfilmdelisi.one",
+            "status": 200,
+            "method": "GET"
+          },
+          {
+            "stage": "http",
+            "host": "hdfilmdelisi.one",
+            "status": 200,
+            "method": "GET"
+          },
+          {
+            "stage": "http",
+            "host": "pl.vixolity.com",
+            "status": 200,
+            "method": "GET"
+          },
+          {
+            "stage": "http",
+            "host": "ha.vixolity.com",
+            "status": 200,
+            "method": "GET"
+          }
+        ]
+      },
+      {
+        "key": "no-way-home",
+        "ms": 561,
+        "candidates": 1,
+        "videos": [
+          {
+            "source": "HDFilmDelisi",
+            "video": {
+              "container": "hls",
+              "dimensions": null,
+              "resolutionOptions": [
+                {
+                  "width": 854,
+                  "height": 480
+                },
+                {
+                  "width": 1920,
+                  "height": 1080
+                }
+              ],
+              "audioLanguages": [
+                "tr",
+                "en"
+              ],
+              "subtitleLanguages": [
+                "en",
+                "st",
+                "tr"
+              ],
+              "downloadable": false,
+              "sizeEstimate": {
+                "minimum": 892962810,
+                "maximum": 2680120530,
+                "basis": "peak-or-average-bitrate",
+                "durationSource": "tmdb"
+              }
+            },
+            "card": {
+              "quality": "1080p · Otomatik",
+              "size": "2,14 GB",
+              "language": "Ses: TR/EN · TR/EN/ST altyazı"
+            }
+          }
+        ],
+        "events": [
+          {
+            "stage": "http",
+            "host": "hdfilmdelisi.one",
+            "status": 200,
+            "method": "GET"
+          },
+          {
+            "stage": "http",
+            "host": "hdfilmdelisi.one",
+            "status": 200,
+            "method": "GET"
+          },
+          {
+            "stage": "http",
+            "host": "pl.vixolity.com",
+            "status": 200,
+            "method": "GET"
+          },
+          {
+            "stage": "http",
+            "host": "ha.vixolity.com",
+            "status": 200,
+            "method": "GET"
+          }
+        ]
+      }
+    ],
+    "filmmoduDuneCandidates": 0
+  },
+  "downloadSearch": {
+    "source": "HDHub",
+    "fix": "MB/MiB/GB/GiB release ordering",
+    "sameMaximumReleaseInspections": 12,
+    "plan": "interleave small, high-quality hints, and two large releases",
+    "probeQuotaUnchanged": 3,
+    "filenameHintsOnlyForScheduling": true,
+    "largeFilesExcludedByNewSizeCap": false,
+    "newGeneralFilmTvDownloadAdapters": 0
+  },
+  "research": [
+    {
+      "source": "HDFilmDelisi",
+      "result": "public search and real HLS TR/EN tracks",
+      "integrated": true
+    },
+    {
+      "source": "HDFilmCehennemi",
+      "result": "403",
+      "integrated": false
+    },
+    {
+      "source": "FilmMakinesi",
+      "result": "403",
+      "integrated": false
+    },
+    {
+      "source": "DiziPal current domain",
+      "result": "network fetch failed",
+      "integrated": false
+    },
+    {
+      "source": "Vidmody legacy host",
+      "result": "network fetch failed",
+      "integrated": false
+    },
+    {
+      "source": "Sinema",
+      "result": "redirect to a different site; no verified media",
+      "integrated": false
+    },
+    {
+      "source": "PuhuTV community source",
+      "result": "embedded static-key path not used; no API request/integration",
+      "integrated": false
+    }
+  ],
+  "newBackends": 0,
+  "newAccounts": 0,
+  "newPerTitleVideoPins": 0,
+  "newScraperEntries": 0,
+  "upstream": {
+    "release": "0.6.4-beta",
+    "head": "af58a32b05741963beec861255f5b18f7ede69cf",
+    "lockedFiles": 20,
+    "sourceDrift": []
+  },
+  "allSourceCriteriaMet": false,
+  "limitations": {
+    "newHlsIsNotDownloadExpansion": true,
+    "movieTvDownloadGapsRemain": true,
+    "sourceLanguagesAreManifestLabelsNotAudioSceneVerification": true,
+    "physicalDevice": "not-run",
+    "kotlinBuild": "not-run",
+    "fullPlayback": "not-run",
+    "fullDownload": "not-run",
+    "offline": "not-run",
+    "subtitleAudioSceneSync": "not-run",
+    "subtitleFontFixed": false
+  }
+}

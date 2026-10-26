@@ -1,5 +1,13 @@
 # Tasarım kararları
 
+## 1.7.6 güncel görünüm ve kaynak kararı (öncelikli)
+
+- Kullanıcı bilinmiyor/?/tahmini göstermememizi istedi. Eski tüm alanlar zorunlu ve tahmin işaretli kararı artık geçerli değil. Kanıtlı en olası değer tek başına sunulur, hiçbir dayanak yoksa alan gizlenir. Kanıt seviyesi kod/raporda saklanır. İsimden gerçek piksel/byte doğrulaması üretme.
+- Ses kanıtı konteyner/list > açık kaynak > dosya adı > özgün dil. Sonuncusu dublajda yanlış olabilir; gerçek HI-only üzerine EN ekleme. TR/EN/FR/ES/DE…HIson; en fazla5+N, ses/altyazı ayrı. Harici altyazı keşfi yalnızTR/EN kalır; diğer kodlar kaynak izlerinden gelir.
+- HLS tek GB değeri modeldir; en yüksek sürüm/ortalama tercih, tepe0,8 katsayısı, çözünürlük/süre/codec fallback. Gerçek byte daima önce, live sonlu boyut yok. Modeli dosya indirmesi veya ölçüm kanıtı sayma.
+- HDFilmDelisi yalnız movie/nonanime/online/HLS açıkken; public ve exactIMDb/original/year/pageJSON-LD. SEOmp4 gerçekdosya değil. Public literal decode normal kaynak verisi; eval/newFunction/license/sabitkey yok. ExactHLSURL marker native downloader filtresini korur; HLS asla indirilebilir değil.
+- HDHub aynı12release bütçesinde küçük/yüksek/büyük birlikte incelenir; MB ve binarybirimler doğru. Yüksek dosya adı ipucu yalnız sıra, probe şartı aynı. Yeni genel dosya sağlayıcısı doğrulanmadığını gizleme; HLS dublajı indirme artışı sayma.
+
 ## 1.7.5 film/dizi dosya kararları
 
 - Birkaç yapımda sağlam dosya veren kısmi kaynak da kullanılabilir. Waploaded güncel50 film/50dizi listesi tam katalog diye sunulmaz. Araması boşken aynı sorguyu tekrarlamak veya tüm eski arşivi telefondan gezmek yok.

@@ -1,6 +1,8 @@
 'use strict';
 const { describeAudio, audioCode } = require('./media/audio.cjs');
 const { embeddedSubtitleLanguages } = require('./subtitles.cjs');
+const {probableSize}=require('./media/presentation.cjs');
+const {qualityLabel}=require('./util.cjs');
 
 function balancedCandidates(groups, maximum = 18) {
   const result = [];
@@ -32,13 +34,11 @@ function audioPenalty(entry,settings) {
   return audio && ['container','playlist'].includes(audio.evidence) && !audio.codes.some(c=>preferred.includes(c)) ? 1100000000 : 0;
 }
 function sizeValue(entry) {
-  if (entry.video.size > 0) return entry.video.size;
-  const e = entry.video.sizeEstimate;
-  return e?.minimum > 0 ? (e.minimum + e.maximum) / 2 : null;
+  return probableSize(entry.video,entry.candidate)?.bytes||null;
 }
 function qualityValue(entry) {
-  if (entry.video.dimensions) return Math.min(entry.video.dimensions.width, entry.video.dimensions.height);
-  const sizes = (entry.video.resolutionOptions || []).map(d => Math.min(d.width, d.height));
+  if (entry.video.dimensions) return parseInt(qualityLabel(entry.video.dimensions));
+  const sizes = (entry.video.resolutionOptions || []).map(d => parseInt(qualityLabel(d)));
   return sizes.length ? Math.max(...sizes) : null;
 }
 function groupValue(entry, group) {

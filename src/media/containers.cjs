@@ -1,4 +1,5 @@
 'use strict';
+const {languageCode}=require('./languages.cjs');
 
 function ascii(bytes, start, length) {
   let out = '';
@@ -179,7 +180,7 @@ function mkvInfo(bytes) {
         const field = id => { const item = children.find(x => x.id === id && x.complete); return item ? ascii(bytes, item.data, item.end - item.data) : ''; };
         const language = field(0x22b59d) || field(0x22b59c);
         const codec = field(0x86);
-        const code=/^(tr|tur)(?:-|$)/i.test(language)?'tr':/^(en|eng)(?:-|$)/i.test(language)?'en':null;
+        const code=languageCode(language);
         if (code && /^S_(TEXT\/(UTF8|WEBVTT|ASS|SSA)|VOBSUB|HDMV\/PGS)$/.test(codec))
           subtitleTracks.push({ language:code, codec });
       }

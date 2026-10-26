@@ -1,5 +1,13 @@
 # Sonraki işler
 
+## 1.7.6 öncelik
+
+1. 1.7.6 aynı adrese yayın hazırlanıyor; 210check/QuickJS ve20upstreamdrift0. CI/Pages/altıpublicSHA kanıtını tamamla; üçkimlik korunur.
+2. Film/dizi MP4/MKV açığı öncelik: Shameless/Matrix/GoT ve ek gerçek kaliteler açık. HDHub MB/sürüm planı düzeldi ama yeni dosya sağlayıcısı bulunmuş sayılmaz. Public gerçekdosya ucu ->genelkatalog yöntemini sürdür; yeni pin/PC/backend/hesap/sabitkey yok.
+3. Yeni HDFilmDelisi TRdublajı HLSonline katkısıdır. Dune/Matrix/NoWayHome yalnız gerçekliste/probe; fiziksel ses/senkron/tamfilm testi değil. FilmModuDunebu tur0; eski/ölüVidmody,DiziPal2140ağ,HDFilmCehennemi/FilmMakinesi403,PuhuTVsabitkey yolunu yeni durum olmadan tekrarlama.
+4. Yeni sade kartlarda ipucu modellerini rastgele genişletme. Gerçekpiksel/byte/ses önceliği veHI-only doğru kalsın;TR/ENöncelik5+N. Model GB gerçekindirmebyte değil; kaynak/renditionevidence içeride tutulsun.
+5. Telefon yenilemesi/TRdublaj seçimi/tamdosya/TR-ENoffline/senkron/font testleri yapılmadı. iOSnativebeklemeleri için fiziksel süre garantisi verme. Font sorunu bu kart sürümüyle çözülmedi.
+
 ## 1.7.5 öncelik
 
 1. Waploaded ana sağlayıcıda varsayılan açık; kısmi son50 film/50dizi listesi. 1.7.5 aynı adreste yayımlandı:327a3765269ef2d1b8059bf6d43696bc76470630.199check/QuickJS,20upstream drift yok; Windows/Linux40419829204,Pages40419829111 vealtıpublicHTTP200/SHA başarılı; github-publication.json güncel.

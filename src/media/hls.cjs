@@ -1,6 +1,6 @@
 'use strict';
 const { safeUrl, mapLimit } = require('../util.cjs');
-const { subtitleLanguage } = require('../subtitles.cjs');
+const {languageCode} = require('./languages.cjs');
 
 function attributes(line) {
   const result = {};
@@ -38,7 +38,7 @@ function inspectPlaylist(text, base) {
     if (line.startsWith('#EXT-X-MEDIA:')) {
       const info = attributes(line.slice(13));
       const uri = safeUrl(info.URI, base);
-      if (uri || info.TYPE === 'AUDIO' && !info.URI) media.push({ type: info.TYPE, group: info['GROUP-ID'], language: info.LANGUAGE || (info.TYPE==='SUBTITLES'?subtitleLanguage(info.NAME):null),
+      if (uri || info.TYPE === 'AUDIO' && !info.URI) media.push({ type: info.TYPE, group: info['GROUP-ID'], language: info.LANGUAGE || languageCode(info.NAME),
         line: uri ? line.replace(/URI="[^"]*"/, `URI="${uri}"`) : line, url: uri });
     }
   }
@@ -102,8 +102,8 @@ async function inspectHls(http, text, url, candidate, options = {}) {
   const groups = new Set(master.variants.map(v => v.audioGroup).filter(Boolean));
   const audioLanguages = [...new Set(master.media.filter(m => m.type === 'AUDIO' && groups.has(m.group) && m.language).map(m => m.language))];
   const subtitleGroups=new Set(master.variants.map(v=>v.subtitlesGroup).filter(Boolean));
-  const subtitleLanguages=[...new Set(master.media.filter(m=>m.type==='SUBTITLES'&&subtitleGroups.has(m.group)).map(m=>subtitleLanguage(m.language)).filter(Boolean))];
-  const variantSubtitles=variant=>[...new Set(master.media.filter(m=>m.type==='SUBTITLES'&&m.group===variant.subtitlesGroup).map(m=>subtitleLanguage(m.language)).filter(Boolean))];
+  const subtitleLanguages=[...new Set(master.media.filter(m=>m.type==='SUBTITLES'&&subtitleGroups.has(m.group)).map(m=>languageCode(m.language)).filter(Boolean))];
+  const variantSubtitles=variant=>[...new Set(master.media.filter(m=>m.type==='SUBTITLES'&&m.group===variant.subtitlesGroup).map(m=>languageCode(m.language)).filter(Boolean))];
   // A working master must not wait for every rendition and segment HEAD.
   // Native iOS fetches are not cancelled by the JS deadline; avoid starting
   // optional work in the default recovery path.
@@ -121,7 +121,7 @@ async function inspectHls(http, text, url, candidate, options = {}) {
     const resolutionOptions = [...new Map(renditions.map(r => [r.dimensions.width+'x'+r.dimensions.height,r.dimensions])).values()]
       .sort((a,b) => Math.min(a.width,a.height) - Math.min(b.width,b.height));
     const sizes = renditions.map(r => r.sizeEstimate).filter(Boolean);
-    return { url, container: 'hls', dimensions: null, size: null, downloadable: false, renditions, resolutionOptions, audioLanguages, subtitleLanguages,
+    return { url, container: 'hls', dimensions: null, size: null, downloadable: false, live:master.live, renditions, resolutionOptions, audioLanguages, subtitleLanguages,
       resolutionEvidence: resolutionOptions.length ? 'hls-manifest' : null,
       sizeEstimate: sizes.length ? { minimum: Math.min(...sizes.map(s=>s.minimum)), maximum: Math.max(...sizes.map(s=>s.maximum)),
         basis: master.variants.every(v=>!!v.averageBandwidth) ? 'average-bitrate' : 'peak-or-average-bitrate', durationSource } : null,
@@ -175,7 +175,7 @@ async function inspectHls(http, text, url, candidate, options = {}) {
       duration: seconds, subtitleLanguages:variantSubtitles(variant), audioLanguages: master.media.filter(m=>m.type==='AUDIO'&&m.group===variant.audioGroup&&m.language).map(m=>m.language),
       hasExternalAudio: !!variant.audioGroup, hasExternalSubtitles: !!variant.subtitlesGroup };
   });
-  return { url, container: 'hls', dimensions: null, size: null, downloadable: false,
+  return { url, container: 'hls', dimensions: null, size: null, downloadable: false, live,
     renditions, audioLanguages, subtitleLanguages,
     resolutionOptions, resolutionEvidence: resolutionOptions.length ? 'hls-manifest' : null,
     sizeEstimate, ...(duration ? { duration, durationSource } : {}) };

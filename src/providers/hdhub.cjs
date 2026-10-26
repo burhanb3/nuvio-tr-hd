@@ -61,12 +61,26 @@ function releaseEntries(html, target) {
     const link = anchors(section).find(a => /Download HubCloud/i.test(a.text));
     const url = safeUrl(link?.href, HDHUB_ORIGIN + '/');
     if (!url || !/^greenmotors\.(?:club|cc)$/i.test(new URL(url).hostname)) continue;
-    const size = Number(section.match(/>\s*([\d.]+)\s*GB\s*</i)?.[1]) || Infinity;
+    const sizeHint = section.match(/>\s*([\d.,]+)\s*(Gi?B|Mi?B)\s*</i);
+    const amount = Number(sizeHint?.[1]?.replace(',','.'));
+    const units={gb:1,gib:1.073741824,mb:0.001,mib:0.001048576};
+    const size = amount>0 ? amount * units[sizeHint[2].toLowerCase()] : Infinity;
     // Size/codec text orders which candidates to inspect. It is never used as
     // a verified resolution or byte count in the returned stream.
     out.push({ filename, url, size, av1: /\bAV1\b/i.test(filename) });
   }
   return out.sort((a, b) => a.size - b.size);
+}
+function releasePlan(entries,maximum=12) {
+  const hint=e=>Number(e.filename.match(/\b(4320|2160|1440|1080|720|576|480|360)p\b/i)?.[1])||(/\b4k\b/i.test(e.filename)?2160:0);
+  const small=entries.slice().sort((a,b)=>a.size-b.size),high=entries.slice().sort((a,b)=>hint(b)-hint(a)||a.size-b.size);
+  const large=entries.filter(e=>Number.isFinite(e.size)).slice().sort((a,b)=>b.size-a.size),out=[],seen=new Set();
+  // Keep the same bounded release budget, but reserve early opportunities
+  // for high-quality/large releases instead of only the cheapest twelve.
+  for(let i=0;out.length<maximum&&i<entries.length;i++)for(const e of [small[i],high[i],i<2?large[i]:null]) {
+    if(e&&!seen.has(e.url)){seen.add(e.url);out.push(e);if(out.length===maximum)break;}
+  }
+  return out;
 }
 async function resolveRelease(http, entry, target, allowExtensionless) {
   const redirect = await http.text(entry.url);
@@ -112,7 +126,7 @@ async function scanHdHub(http, target, options = {}) {
   if (!pageUrl || new URL(pageUrl).origin !== HDHUB_ORIGIN) return [];
   const page = await http.text(pageUrl, { maxChars: target.type === 'tv' ? 1000000 : 700000 });
   if (!page || !pageMatches(page.text, target)) return [];
-  const entries = releaseEntries(page.text, target);
+  const entries = releasePlan(releaseEntries(page.text, target));
   const resolved = [];
   // A terminal URL is not yet a working file. Feed each release to the probe
   // pipeline as soon as it resolves; dead small mirrors must not consume the
@@ -128,4 +142,4 @@ async function scanHdHub(http, target, options = {}) {
   }
   return options.onCandidates ? resolved : resolved.slice(0, 6);
 }
-module.exports = { scanHdHub, shortlinkTarget, pageMatches, releaseEntries, HDHUB_ORIGIN };
+module.exports = { scanHdHub, shortlinkTarget, pageMatches, releaseEntries, releasePlan, HDHUB_ORIGIN };

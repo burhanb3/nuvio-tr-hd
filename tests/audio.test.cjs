@@ -15,10 +15,10 @@ test('MKV yalnız ses track dili ses sayılır; TR altyazı track dili karışt�
  const entry=(type,language)=>ebml('ae',Buffer.concat([ebml('83',[type]),ebml('22b59c',Buffer.from(language))]));
  const file=Buffer.concat([header,ebml('18538067',ebml('1654ae6b',Buffer.concat([entry(2,'hin'),entry(2,'eng'),entry(17,'tur')])))]);
  assert.deepEqual(inspectContainer(file).audioLanguages,['hin','eng']);
- assert.equal(describeAudio(inspectContainer(file),{}).text,'HI/EN');
+ assert.equal(describeAudio(inspectContainer(file),{}).text,'EN/HI');
 });
 test('dosya adı ses ipucu açıkça tahmindir; film başlığındaki French dil sayılmaz',()=>{
- assert.equal(describeAudio({},{filename:'Movie.FRENCH.2021.mp4'}).text,'FR?');
+ assert.equal(describeAudio({},{filename:'Movie.FRENCH.2021.mp4'}).text,'FR');
  assert.equal(describeAudio({},{filename:'The.French.Connection.1971.mp4',identity:{originalTitle:'The French Connection'}}),null);
  assert.equal(describeAudio({audioLanguages:['und']},{filename:'Movie.2021.mp4'}),null);
 });

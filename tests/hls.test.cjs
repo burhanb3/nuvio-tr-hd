@@ -22,8 +22,8 @@ test('HLS yaklaşık aktarım boyutu gerçek playlist süresi ve bitrate ile hes
  assert.equal(video.sizeEstimate.minimum,4875000);assert.equal(video.sizeEstimate.maximum,9750000);
  assert.equal(video.sizeEstimate.durationSource,'playlist');
  assert.equal(describeQuality(video,{}).quality,'1080p');assert.match(describeQuality(video,{}).text,/1280×720 \/ 1920×1080 · HLS/);
- assert.equal(describeSize(video).size,undefined);assert.match(describeSize(video).text,/boyutu değişken/);
- assert.match(describeSize({sizeEstimate:video.renditions[0].sizeEstimate}).size,/^~.*GB/);http.close();
+ assert.equal(describeSize(video).size,'0,010 GB');assert.match(describeSize(video).text,/boyutu değişken/);
+ assert.match(describeSize({sizeEstimate:video.renditions[0].sizeEstimate}).size,/^[\d,]+ GB/);http.close();
 });
 test('HLS canlı akışa film süresi veya dosya boyutu uydurulmaz',async()=>{
  const http=createHttp({fetchImpl:fixtureFetch({})});

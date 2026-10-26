@@ -67,15 +67,15 @@ test('English-only is shown as EN + TR altyazı yok, but never satisfies require
  const required=await createProvider({tmdbKey:'test',settings:{...settings,subtitlePolicy:'require'},fetchImpl:fixtureFetch(fixture)}).getStreams(603,'movie');
  assert.deepEqual(required,[]);
 });
-test('All cards have quality, size, audio and subtitle placeholders; decimal GB and codes use one layout',()=>{
+test('Cards show compact language priorities and point sizes; absent evidence leaves no unknown placeholders',()=>{
  const pair=(id,patch={})=>({candidate:{url:`https://media.test/${id}.mp4`,source:'Kaynak',headers:{},subtitles:[]},video:{url:`https://media.test/${id}.mp4`,container:'mp4',downloadable:true,...patch},subtitles:[]});
  const known=pair('known',{size:1800000000,dimensions:{width:1920,height:1080},audioLanguages:['eng','tur']});known.subtitles=[{url:'https://subs.test/tr',language:'tr',_score:90},{url:'https://subs.test/en',language:'en',_score:95}];
  const rows=formatResults([known,pair('unknown')],{},target);
- assert.equal(rows[0].size,'1,80 GB');assert.equal(rows[0].language,'Ses: EN/TR · TR/EN altyazı');
- assert.equal(rows[1].quality,'Kalite bilinmiyor');assert.equal(rows[1].size,'Boyut bilinmiyor');assert.equal(rows[1].language,'Ses: bilinmiyor · TR altyazı yok');
- assert.ok(rows.every(s=>['quality','size','language'].every(k=>typeof s[k]==='string'&&s[k].length)));
+ assert.equal(rows[0].size,'1,80 GB');assert.equal(rows[0].language,'Ses: TR/EN · TR/EN altyazı');
+ assert.equal(rows[1].quality,'');assert.equal(rows[1].size,'');assert.equal(rows[1].language,'TR altyazı yok');
+ assert.ok(rows.every(s=>['quality','size','language'].every(k=>typeof s[k]==='string')));
  const online=pair('hls',{container:'hls',downloadable:false,sizeEstimate:{minimum:1800000000,maximum:1800000000,basis:'average-bitrate'}});
- assert.equal(formatResults([online],{},target)[0].size,'~1,80 GB');
+ assert.equal(formatResults([online],{},target)[0].size,'1,80 GB');
 });
 test('Only the selected HLS subtitle group contributes TR/EN; unused groups do not label the stream',async()=>{
  const text='#EXTM3U\n#EXT-X-MEDIA:TYPE=SUBTITLES,GROUP-ID="en",LANGUAGE="eng",URI="en.m3u8"\n#EXT-X-MEDIA:TYPE=SUBTITLES,GROUP-ID="tr",LANGUAGE="tur",URI="tr.m3u8"\n#EXT-X-STREAM-INF:BANDWIDTH=1000000,RESOLUTION=1280x720,SUBTITLES="en"\n720.m3u8\n';

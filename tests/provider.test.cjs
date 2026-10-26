@@ -14,7 +14,7 @@ test('JSON uçtan uca: MP4 + MKV, Türkçe SRT/VTT, bozuk kaynak izolasyonu', as
   const streams = await provider(fixture).getStreams('603', 'movie');
   assert.equal(streams.length, 2);
   const subtitled = streams.find(stream => stream.type === 'mp4');
-  assert.equal(subtitled.quality, '1920×1080 ✓');
+  assert.equal(subtitled.quality, '1080p · 1920×1080');
   assert.equal(subtitled.subtitles.length, 2);
   assert.equal(subtitled.subtitles[0].language, 'tr');
   assert.match(subtitled.name, /İndirilebilir/);
@@ -54,7 +54,7 @@ test('stream-only Stremio: kesin başlık+yıl, torrent ve yanlış ad filtreler
   ] });
   const streams = await provider(fixture, { settings: { catalogUrls: '', addonUrls: 'https://addon.test/manifest.json' } }).getStreams(603, 'movie');
   assert.equal(streams.length, 1);
-  assert.equal(streams[0].quality, '1920×1080 ✓');
+  assert.equal(streams[0].quality, '1080p · 1920×1080');
 });
 test('süresiz ağ isteği zaman aşımında boş sonuç verir', async () => {
   const start = Date.now();
@@ -72,8 +72,8 @@ test('otomatik tarama kapalı ve ek kaynak yoksa ağ çağrısı yapılmaz', asy
 test('konteyner ve dosya adı kalite bilgisi vermiyorsa eksik bilgi açık kalır', async () => {
   const fixture = makeFixture({ files: { 'https://media.test/movie.mp4': { body: mp4({ width: 0, height: 0 }), mime: 'video/mp4' } } });
   const streams = await provider(fixture).getStreams(603, 'movie');
-  assert.equal(streams[0].quality, 'Kalite bilinmiyor');
-  assert.match(streams[0].title, /Kalite bilinmiyor/);
+  assert.equal(streams[0].quality, '');
+  assert.doesNotMatch(streams[0].title, /bilinmiyor|tahmini|undefined/);
 });
 
 test('varsayılan Tümü/20; eski 6/10 seçilebilir ve sonuç çoğaltılmaz', () => {

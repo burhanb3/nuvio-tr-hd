@@ -18,7 +18,7 @@ test('kısa kartlar native alanlara bölünür; varsayılan küçükten büyüğ
  const list=formatResults(entries,{},target);
  assert.match(list[0].name,/Source small/);assert.match(list[2].name,/unknown/);
  assert.ok(list.every(s=>s.name.length<75));assert.ok(list.every(s=>!s.name.includes('Nuvio TR HD')));
- assert.equal(list[0].quality,'1440×720 ✓');assert.equal(list[0].language,'Ses: bilinmiyor · TR altyazı yok');
+ assert.equal(list[0].quality,'720p · 1440×720');assert.equal(list[0].language,'TR altyazı yok');
  const quality=formatResults(entries,{sortOrder:'quality_desc'},target);assert.match(quality[0].name,/unknown/);
  const descending=formatResults(entries,{sortOrder:'size_desc'},target);assert.match(descending[0].name,/big/);
  const grouped=formatResults([pair('hls',100,720,'hls'),...entries],{groupResults:'type'},target);
@@ -38,7 +38,7 @@ test('HLS her kaliteye ayrı satır ve ayrı boyut; ayrı ses grubu koparılmaz'
   assert.ok(list.every(s=>s.type==='hls'&&s.name.includes('Online')&&!s.name.includes('İndirilebilir')));
   assert.notEqual(list[0].size,list[1].size);assert.ok(list.every(s=>!s.size.includes('–')));
   const external={...video,renditions:video.renditions.map(r=>({...r,hasExternalAudio:true}))};
-  const fallback=formatResults([{...p,video:external}],{},target);assert.equal(fallback.length,1);assert.equal(fallback[0].url,url);assert.equal(fallback[0].size,'Boyut değişken');
+  const fallback=formatResults([{...p,video:external}],{},target);assert.equal(fallback.length,1);assert.equal(fallback[0].url,url);assert.match(fallback[0].size,/^[\d,]+ GB$/);
   const withBridge=formatResults([{...p,video:external}],{hlsProfileBridgeReady:true},target);
   assert.equal(withBridge.length,2);assert.ok(withBridge.every(s=>s.url.includes('/hls/profile.m3u8?data=')));
  }finally{http.close();}

@@ -1,0 +1,188 @@
+{
+  "checkedAt": "2026-10-26T23:52:26.991Z",
+  "version": "1.7.6",
+  "metadata": "fixed canonical reference; does not test phone TMDB API credentials",
+  "acceptance": {
+    "movieSmallFileBytes": 3221225472,
+    "episodeSmallFileBytes": 1073741824,
+    "minimumDistinctDownloadQualities": 2,
+    "requireTurkishSubtitle": true,
+    "physicalPlaybackAndOfflineTest": "not-run"
+  },
+  "transport": "Node limited1MiB, actual source and subtitle HTTP; native iPhone transport not tested",
+  "physicalDevice": "not-run",
+  "fullPlayback": "not-run",
+  "fullDownload": "not-run",
+  "finishedAt": "2026-10-26T23:52:52.389Z",
+  "allSourceCriteriaMet": false,
+  "cases": [
+    {
+      "key": "dune",
+      "tmdbId": 438631,
+      "title": "Dune",
+      "type": "movie",
+      "elapsedMs": 10518,
+      "bytesRead": 3877694,
+      "onlineWithTr": true,
+      "downloadUrls": 2,
+      "estimatedDistinctFiles": 2,
+      "downloadQualities": [
+        "1280x536",
+        "1146x480"
+      ],
+      "cleanOnlineWithTr": true,
+      "cleanDownloadQualities": [
+        "1280x536",
+        "1146x480"
+      ],
+      "cleanSmallWithTr": true,
+      "smallWithTr": true,
+      "smallLimitBytes": 3221225472,
+      "sourceCoverageCriteriaMet": true,
+      "gaps": [],
+      "files": [
+        {
+          "source": "Internet Archive",
+          "container": "mkv",
+          "bytes": 792903325,
+          "filename": "Dune_2021_720p_BluRay_x265_HEVC_10bit_AAC_2_0_Hindi_PSA_ASAP.mkv",
+          "releaseYearBasis": "content-sample-pinned-file",
+          "mediaFilename": "Dune_2021_720p_BluRay_x265_HEVC_10bit_AAC_2_0_Hindi_PSA_ASAP.mkv",
+          "audioLanguages": [
+            "hi"
+          ],
+          "subtitleBestScore": 76,
+          "burnedSubtitleLanguage": null,
+          "knownForeignBurnedSubtitles": false,
+          "dimensions": {
+            "width": 1280,
+            "height": 536
+          },
+          "quality": "1280x536",
+          "turkishSubtitle": true,
+          "externalTurkishTracks": 8,
+          "actualDurationSeconds": 9326.659,
+          "hashAvailable": true
+        },
+        {
+          "source": "Internet Archive",
+          "container": "mp4",
+          "bytes": 949160267,
+          "filename": "Dune_2021_720p_BluRay_x265_HEVC_10bit_AAC_2_0_Hindi_PSA_ASAP.mkv",
+          "releaseYearBasis": "content-sample-pinned-file",
+          "mediaFilename": "Dune_2021_720p_BluRay_x265_HEVC_10bit_AAC_2_0_Hindi_PSA_ASAP.mp4",
+          "audioLanguages": [],
+          "subtitleBestScore": 76,
+          "burnedSubtitleLanguage": null,
+          "knownForeignBurnedSubtitles": false,
+          "dimensions": {
+            "width": 1146,
+            "height": 480
+          },
+          "quality": "1146x480",
+          "turkishSubtitle": true,
+          "externalTurkishTracks": 8,
+          "actualDurationSeconds": 9326.698,
+          "hashAvailable": true
+        }
+      ]
+    },
+    {
+      "key": "fleabag-s1e1",
+      "tmdbId": 67070,
+      "title": "Fleabag",
+      "type": "tv",
+      "season": 1,
+      "episode": 1,
+      "elapsedMs": 6226,
+      "bytesRead": 1713892,
+      "onlineWithTr": true,
+      "downloadUrls": 2,
+      "estimatedDistinctFiles": 2,
+      "downloadQualities": [
+        "848x354"
+      ],
+      "cleanOnlineWithTr": true,
+      "cleanDownloadQualities": [
+        "848x354"
+      ],
+      "cleanSmallWithTr": true,
+      "smallWithTr": true,
+      "smallLimitBytes": 1073741824,
+      "sourceCoverageCriteriaMet": false,
+      "gaps": [
+        "multiple_verified_download_qualities_missing"
+      ],
+      "files": [
+        {
+          "source": "Internet Archive",
+          "container": "mkv",
+          "bytes": 103770149,
+          "filename": "Fleabag.S01E01.480p.WEB-DL.Tehmovies.biz.mkv",
+          "releaseYearBasis": "content-sample-pinned-file",
+          "mediaFilename": "Fleabag.S01E01.480p.WEB-DL.Tehmovies.biz.mkv",
+          "audioLanguages": [],
+          "subtitleBestScore": 74,
+          "burnedSubtitleLanguage": null,
+          "knownForeignBurnedSubtitles": false,
+          "dimensions": {
+            "width": 848,
+            "height": 354
+          },
+          "quality": "848x354",
+          "turkishSubtitle": true,
+          "externalTurkishTracks": 8,
+          "actualDurationSeconds": 1564.874,
+          "hashAvailable": true
+        },
+        {
+          "source": "Internet Archive",
+          "container": "mp4",
+          "bytes": 162737999,
+          "filename": "Fleabag.S01E01.480p.WEB-DL.Tehmovies.biz.mkv",
+          "releaseYearBasis": "content-sample-pinned-file",
+          "mediaFilename": "Fleabag.S01E01.480p.WEB-DL.Tehmovies.biz.mp4",
+          "audioLanguages": [],
+          "subtitleBestScore": 74,
+          "burnedSubtitleLanguage": null,
+          "knownForeignBurnedSubtitles": false,
+          "dimensions": {
+            "width": 848,
+            "height": 354
+          },
+          "quality": "848x354",
+          "turkishSubtitle": true,
+          "externalTurkishTracks": 8,
+          "actualDurationSeconds": 1564.866,
+          "hashAvailable": true
+        }
+      ]
+    },
+    {
+      "key": "shameless-s1e1",
+      "tmdbId": 34307,
+      "title": "Shameless",
+      "type": "tv",
+      "season": 1,
+      "episode": 1,
+      "elapsedMs": 8646,
+      "bytesRead": 1488723,
+      "onlineWithTr": true,
+      "downloadUrls": 0,
+      "estimatedDistinctFiles": 0,
+      "downloadQualities": [],
+      "cleanOnlineWithTr": true,
+      "cleanDownloadQualities": [],
+      "cleanSmallWithTr": false,
+      "smallWithTr": false,
+      "smallLimitBytes": 1073741824,
+      "sourceCoverageCriteriaMet": false,
+      "gaps": [
+        "download_missing",
+        "small_download_with_tr_missing",
+        "multiple_verified_download_qualities_missing"
+      ],
+      "files": []
+    }
+  ]
+}

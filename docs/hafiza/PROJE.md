@@ -1,5 +1,15 @@
 # Proje hafızası
 
+## 1.7.6 — 27 Ekim, kartlar ve TR dublaj
+
+Güncel kullanıcı talimatı eski zorunlu bilinmiyor/?/~ görünümünü geçersiz kılar: kartlarda en olası destekli tek değer; sıfır kanıtta alan boş, rastgele sayı yok. qualityChoice/probableSize, gerçek piksel/byte önceliği; dosya/kaynak/originalLanguage ve bitrate/codec/süre modelleri yalnız sunum ipucu, doğrulanmış piksel değil. Kırpılmış1920×800=1080p,1024×512=512p; p+tam piksel. Dil TR>EN>FR>ES>DE…HIson,5+N; ses ve altyazı ayrı. ÖlçülmüşHI-only üzerine EN ekleme.
+
+Yeni HDFilmDelisi genel film adaptörü ana sağlayıcıda varsayılan açık hdfilmdelisiEnabled; yeni scraper/backend/account/videoPin0. Public arama exactoriginal/year/IMDb ve publicfilmJSON-LD; SEO sahteMP4 kullanılmaz. Sayfanın kodlanmış public literal oynatıcı verisi JS içinde çözülür, script/key/license kopyası yok. Aynı exactHLS uç noktası ?format=.m3u8 ile probe edilir ve native indirilebilir filtresi dışlar. Dune/Matrix/NoWayHome TR/EN ses+TR altyazı HLS listelerinde bulundu; bu yeni dosya değil, sahne/dil gövdesi/senkron kanıtı değil. Sourcealone0,5–1s; bütünarama/cihaz garantisi değil.
+
+HDHub MB/MiB/GB/GiB iç sıra düzeltildi; aynı12release bütçesinde küçük/yüksek/büyük interleave, en yüksek dosya adına göre probe sırası yalnız ipucu. Nativekota/scheduler/boyut üst sınırı değişmedi. Birleşikson: Dune2dosya+TR/2piksel10,5s; Fleabag2dosya+TR/tekpiksel6,2s; Shameless0indirme8,6s. Yeni genel MP4/MKV sağlayıcısı0; eskiArchive dosyalarını yeni başarı sayma. HDFilmCehennemi/FilmMakinesi403, DiziPal2140ağhatası, Vidmodyağhatası,Sinema yönlendirme/kanıtyok,PuhuTVsabitkeyyolukullanılmadı. Aynı bozuk yolları tekrarlama.
+
+210check/QuickJS; Nuvio0.6.4-beta/güncelaf58a32b05741963beec861255f5b18f7ede69cf,20lockeddrift0,kilitdeğişmedi. ÜçID aynı. Fizikselcihaz/tamoynatım/indirme/offline/senkronyok. compatibility/cards-and-dub-176,coverage-176,upstream-176-check ve docs/KARTLAR_VE_DUBLAJ_176.md. Yayın 1.7.6 hazırlanıyor; CI/public SHA tamamlanmadan yayımlandı deme.
+
 ## 1.7.5 — 27 Ekim, film/dizi indirme odağı
 
 Yeni Waploaded genel adaptörü ana sağlayıcıya eklendi; varsayılan açık `waploadedEnabled`. Yeni scraper yok; üç kimlik/ayar korunur. Ücretsiz/hesapsız; yeni PC/backend/film-bölüm pini yok. Kaynağın araması boş döndü; film ve dizi sitemap'leri yalnız son güncellenen 50'şer kayıt içeriyor. Bu **kısmi güncel liste**, tam arşiv veya Dune/Fleabag/Shameless çözümü değildir. Başarılı küçük indeks aynı JS ömründe 5 dakika tutulur, imzalı adres tutulmaz.

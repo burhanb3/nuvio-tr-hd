@@ -27,7 +27,7 @@ test('anime: TMDB/özgün başlık/yıl birlikte şart; film-dizi ve farklı ani
 test('anime: gerçek MP4 boyut/pikseli API etiketini geçersiz kılar; mevcut TR SRT taşınır',async()=>{
  const calls=[],p=createProvider({lane:'anime',tmdbKey:'test',fetchImpl:fixtureFetch(fixture(),calls)});
  const streams=await p.getStreams(13916,'tv',1,1);
- assert.equal(streams.length,1);assert.equal(streams[0].quality,'1280×720 ✓');assert.equal(streams[0].type,'mp4');
+ assert.equal(streams.length,1);assert.equal(streams[0].quality,'720p · 1280×720');assert.equal(streams[0].type,'mp4');
  assert.notEqual(streams[0].size,'999999999');assert.equal(streams[0].subtitles[0].language,'tr');
  assert.ok(!calls.some(c=>/4khdhub|vaplayer|archive.org|vixsrc/.test(c.url)));
 });

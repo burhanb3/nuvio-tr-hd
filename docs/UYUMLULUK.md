@@ -1,5 +1,13 @@
 # Nuvio Kotlin Multiplatform uyumluluğu
 
+## 1.7.6 — sade alanlar ve HLS dublaj
+
+27 Ekim 2026: Nuvio0.6.4-beta, güncel cmp-rewrite HEAD af58a32b05741963beec861255f5b18f7ede69cf; kilitli20dosyada drift yok, kilit değişmedi. ÜçscraperID ve sonuçABI aynı. Yeni hdfilmdelisiEnabled yalnız mevcut ayar türüdür.
+
+210test/gerçekQuickJS geçti. Native StreamFetchSupport boş quality/size/language alanlarını atlar; bilinmiyor metni eklemez. Ölçülen piksel p ile gösterilir; ipucu modelleri doğrulanmış metadata yerine geçmez. Native DownloadsRepository .m3u8 ile biten URL'leri dışlar; yeni kaynağın tam probu yapılan ?format=.m3u8 adresi bu kurala uyar. HLS'ye desteklenmeyen downloadable alanı eklenmedi.
+
+[Upstream kanıtı](../compatibility/upstream-176-check.json), [kart/dublaj kaynak kanıtı](../compatibility/cards-and-dub-176.json), [regresyon](../compatibility/coverage-176.json), [sınırlar](KARTLAR_VE_DUBLAJ_176.md). Fiziksel iPhone/Android, Kotlin derlemesi, tam oynatma/indirme/offline/senkron yapılmadı.
+
 ## 1.7.5 — film/dizi dosyaları
 
 27 Ekim 2026: Nuvio `0.6.4-beta`, güncel `cmp-rewrite` HEAD `168aeaf3477edd42129f63252a7746d56de81d93`. Kilitli 20 kaynak dosyada drift yok; kilit değiştirilmedi. Yeni manifest girdisi veya ABI alanı eklenmedi. Waploaded ana sağlayıcıda çalışır; mevcut üç scraper kimliği korunur.

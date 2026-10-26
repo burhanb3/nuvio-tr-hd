@@ -9,7 +9,7 @@ const { mp4, mkv, box, moov, fixtureFetch } = require('./helpers.cjs');
 test('MP4 video track ve Matroska video boyutları konteynerden okunur', () => {
   assert.deepEqual(inspectContainer(mp4()), { container: 'mp4', dimensions: { width: 1920, height: 1080 } });
   assert.deepEqual(inspectContainer(mkv()), { container: 'mkv', dimensions: { width: 1280, height: 720 } });
-  assert.equal(qualityLabel(inspectContainer(mp4({ width: 1920, height: 800 })).dimensions), '720p');
+  assert.equal(qualityLabel(inspectContainer(mp4({ width: 1920, height: 800 })).dimensions), '1080p');
 });
 test('WebM, sahte uzantı, tek ftyp, HTML ve bozuk baytlar kabul edilmez', () => {
   for (const data of [Buffer.from('<html>movie.mp4</html>'), Buffer.from('fake.mkv'), mkv(1280, 720, 'webm'),

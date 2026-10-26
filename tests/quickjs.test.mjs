@@ -13,6 +13,21 @@ const onlineBundle = await readFile(new URL('../providers/nuvio-tr-hd-online.js'
 const animeBundle = await readFile(new URL('../providers/nuvio-tr-hd-anime.js', import.meta.url), 'utf8');
 const extraAnimeBundle = await readFile(new URL('../providers/nuvio-tr-hd-extra-anime.js', import.meta.url), 'utf8');
 
+test('QuickJS: public Turkish dub source keeps TR/EN audio, real HLS and clean p/pixel cards',async()=>{
+ const origin='https://hdfilmdelisi.one',embed='https://pl.vixolity.com/PublicExample',raw='https://ha.vixolity.com/vs/tt0133093';
+ const shifted=Buffer.from(Array.from(`player({file:'${raw}'});`,c=>c.charCodeAt(0)+7)),hex=Buffer.from(shifted.toString('base64').split('').reverse().join('')).toString('hex');
+ const fixture=makeFixture({extra:{
+  [origin+'/api/search?q=The%20Matrix']:{json:{results:[{orijinalBaslik:'The Matrix',baslik:'Matrix',yayinYili:1999,imdbId:'tt0133093',slug:'matrix',accessLevel:'public'}]}},
+  [origin+'/film/matrix']:{body:'<script type="application/ld+json">{"@type":"Movie","name":"Matrix","datePublished":1999}</script><script>self.__next_f.push([1,'+JSON.stringify('x:{"videoUrl":"'+embed+'","requireAuthForWatch":false}')+'])</script>'},
+  [embed]:{body:`})('${hex}',7);`},
+  [raw+'?format=.m3u8']:{body:'#EXTM3U\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="a",LANGUAGE="tr",URI="tr.m3u8"\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="a",LANGUAGE="en",URI="en.m3u8"\n#EXT-X-STREAM-INF:BANDWIDTH=3000000,RESOLUTION=1920x804,AUDIO="a"\nvideo.m3u8\n'}
+ }});
+ const settings={autoSubtitles:false,archiveEnabled:false,hdhubEnabled:false,playImdbEnabled:false,vixsrcEnabled:false,filmmoduEnabled:false,waploadedEnabled:false,useDownloadBridge:false};
+ const streams=await runInQuickJs(fixture,{settings});assert.equal(streams.length,1);assert.equal(streams[0].type,'hls');assert.equal(streams[0].quality,'1080p · 1920×804');assert.match(streams[0].language,/Ses: TR\/EN/);
+ assert.doesNotMatch(streams[0].title,/bilinmiyor|tahmin|[?~]/);assert.match(streams[0].title,/İndirilemez/);
+ assert.deepEqual(await runInQuickJs(fixture,{settings:{...settings,hdfilmdelisiEnabled:false}}),[]);
+});
+
 test('QuickJS: güncel film dosyası public ticket ile bulunur; gerçek MKV ve ad uzantısı korunur',async()=>{
  const token='a'.repeat(32),origin='https://films.waploaded.com',slug='the-matrix-1999-4321-mkv';
  const page='https://meetdownload.com/'+token+'/'+slug,raw='https://files.kissorgrab.com/public/'+slug,url=raw.replace(/-mkv$/,'.mkv');
@@ -30,7 +45,7 @@ test('QuickJS: güncel film dosyası public ticket ile bulunur; gerçek MKV ve a
  }});
  const settings={autoSubtitles:false,archiveEnabled:false,hdhubEnabled:false,playImdbEnabled:false,vixsrcEnabled:false,filmmoduEnabled:false};
  const fetchCalls=[];const streams=await runInQuickJs(fixture,{settings,fetchCalls});assert.equal(streams.length,1,JSON.stringify(fetchCalls));assert.equal(streams[0].url,url);
- assert.equal(streams[0].type,'mkv');assert.equal(streams[0].quality,'1280×720 ✓');assert.match(streams[0].name,/Waploaded/);
+ assert.equal(streams[0].type,'mkv');assert.equal(streams[0].quality,'720p · 1280×720');assert.match(streams[0].name,/Waploaded/);
  assert.deepEqual(await runInQuickJs(fixture,{settings:{...settings,waploadedEnabled:false}}),[]);
 });
 
@@ -47,12 +62,12 @@ test('QuickJS AniMOM: generic title/year/episode lookup and large-moov metadata 
   [embed]:{body:`<meta property="og:video" content="${url}"><script>file:'${url}'</script>`},[url]:{body,mime:'video/mp4'}
  };
  const result=await runInQuickJs(fixture,{code:extraAnimeBundle,args:['123456','tv',1,1],settings:{autoSubtitles:false}});
- assert.equal(result.length,1);assert.match(result[0].name,/AniMOM/);assert.equal(result[0].quality,'1280×720 ✓');
+ assert.equal(result.length,1);assert.match(result[0].name,/AniMOM/);assert.equal(result[0].quality,'720p · 1280×720');
  fixture[root].body=fixture[root].body.replaceAll('2020','2021');
  assert.deepEqual(await runInQuickJs(fixture,{code:extraAnimeBundle,args:['123456','tv',1,1],settings:{autoSubtitles:false}}),[]);
  const fileFixture=makeFixture({files:{'https://media.test/movie.mp4':{body,mime:'video/mp4'}}});
  const streams=await runInQuickJs(fileFixture,{settings:{autoDiscover:false,autoSubtitles:false,catalogUrls:'https://library.test/catalog.json'}});
- assert.equal(streams[0].quality,'1280×720 ✓');assert.equal(streams[0].type,'mp4');
+ assert.equal(streams[0].quality,'720p · 1280×720');assert.equal(streams[0].type,'mp4');
 });
 test('QuickJS Ek Anime ayarları kısmi kaynağı varsayılan açar; ana/anime kaynak ayarlarına karışmaz',async()=>{
  const layout=await runInQuickJs({},{code:extraAnimeBundle,invokeSettings:true});
@@ -70,7 +85,7 @@ test('QuickJS Ek Anime: kısmi SeiCode bölümü varsayılan bulunur; eksik böl
   [embed]:{body:`<script>player.src({type:'video/mp4',src:'${file}'});</script>`},[file]:{body:helpers.mp4({width:1920,height:1080}),mime:'video/mp4'}
  };
  const settings={autoSubtitles:false,animomEnabled:false};
- const rows=await runInQuickJs(fixture,{code:extraAnimeBundle,args:['123456','tv',1,3],settings});assert.equal(rows.length,1);assert.match(rows[0].name,/SeiCode/);assert.equal(rows[0].quality,'1920×1080 ✓');
+ const rows=await runInQuickJs(fixture,{code:extraAnimeBundle,args:['123456','tv',1,3],settings});assert.equal(rows.length,1);assert.match(rows[0].name,/SeiCode/);assert.equal(rows[0].quality,'1080p · 1920×1080');
  assert.deepEqual(await runInQuickJs(fixture,{code:extraAnimeBundle,args:['123456','tv',1,2],settings}),[]);
 });
 
@@ -82,7 +97,7 @@ test('QuickJS bilingual subtitles retain tr/en and uniform card fields with real
  }});
  const streams=await runInQuickJs(fixture,{settings:{autoDiscover:false,catalogUrls:'https://library.test/catalog.json'}});
  assert.equal(streams.length,1);assert.deepEqual(streams[0].subtitles.map(s=>s.language),['tr','en']);
- assert.match(streams[0].language,/^Ses: bilinmiyor · TR\/EN altyazı$/);assert.match(streams[0].size,/GB$/);
+ assert.match(streams[0].language,/^TR\/EN altyazı$/);assert.match(streams[0].size,/GB$/);
 });
 
 test('QuickJS English-only subtitle never satisfies the require-Turkish filter',async()=>{
@@ -107,7 +122,7 @@ test('QuickJS HDHub public zincirini çözer; köprü adı ve gerçek MKV piksel
     [file]:{body:mkv(1920,800),headStatus:403}
   }});
   const streams=await runInQuickJs(fixture,{settings:{autoSubtitles:false,archiveEnabled:false,playImdbEnabled:false,vixsrcEnabled:false}});
-  assert.equal(streams.length,1);assert.equal(streams[0].url,alias);assert.equal(streams[0].quality,'1920×800 ✓');
+  assert.equal(streams.length,1);assert.equal(streams[0].url,alias);assert.equal(streams[0].quality,'1080p · 1920×800');
   assert.match(streams[0].name,/İndirilebilir/);assert.equal(streams[0].type,'mkv');assert.ok(streams[0].size);
 });
 
@@ -218,7 +233,7 @@ test('derlenmiş gerçek sağlayıcı QuickJS üzerinde MP4/MKV ve Türkçe alty
   const streams = await runInQuickJs(fixture);
   assert.equal(streams.length, 2);
   const subtitled=streams.find(stream=>stream.type==='mp4');
-  assert.equal(subtitled.quality, '1920×1080 ✓');
+  assert.equal(subtitled.quality, '1080p · 1920×1080');
   assert.match(subtitled.subtitles[0].name, /^Türkçe · SRT/);
   assert.equal(subtitled.subtitles[0].language, 'tr');
   assert.equal(streams[0].type, 'mkv');
@@ -243,7 +258,7 @@ test('QuickJS anime paketi: doğru kanonik bölüm, gerçek 720p MP4 ve eşlenmi
   'https://subs.test/tr.srt':{body:helpers.srt,mime:'text/plain'}
  };
  const streams=await runInQuickJs(fixture,{code:animeBundle,args:['13916','tv',1,1],settings:{autoSubtitles:false}});
- assert.equal(streams.length,1);assert.equal(streams[0].quality,'1280×720 ✓');assert.equal(streams[0].subtitles[0].language,'tr');
+ assert.equal(streams.length,1);assert.equal(streams[0].quality,'720p · 1280×720');assert.equal(streams[0].subtitles[0].language,'tr');
  const ordinary=makeFixture();assert.deepEqual(await runInQuickJs(ordinary,{code:animeBundle,settings:{}}),[]);
 });
 
@@ -256,7 +271,7 @@ test('QuickJS SonAnime: Japonca özgün adın kanonik İngilizce karşılığı,
   'https://video.konununuzmani.com/video/fixture':{body:helpers.mp4({width:852,height:480})}
  };
  const streams=await runInQuickJs(fixture,{code:animeBundle,args:['13916','tv',1,1],settings:{autoSubtitles:false}});
- assert.equal(streams.length,1);assert.match(streams[0].name,/SonAnime/);assert.equal(streams[0].quality,'852×480 ✓');assert.equal(streams[0].type,'mp4');
+ assert.equal(streams.length,1);assert.match(streams[0].name,/SonAnime/);assert.equal(streams[0].quality,'480p · 852×480');assert.equal(streams[0].type,'mp4');
 });
 
 test('QuickJS DiziYou: yeni kaynaktan online HLS + eşlenmiş TR, yanlış üç kalite tek Auto',async()=>{
@@ -270,7 +285,7 @@ test('QuickJS DiziYou: yeni kaynaktan online HLS + eşlenmiş TR, yanlış üç 
   'https://subs.test/tr.vtt':{body:helpers.vtt}
  };
  const streams=await runInQuickJs(fixture,{args:['67070','tv',1,1],settings:{autoSubtitles:false}});
- assert.equal(streams.length,1);assert.match(streams[0].name,/DiziYou/);assert.equal(streams[0].subtitles[0].language,'tr');assert.equal(streams[0].type,'hls');assert.match(streams[0].language,/EN\?/);
+ assert.equal(streams.length,1);assert.match(streams[0].name,/DiziYou/);assert.equal(streams[0].subtitles[0].language,'tr');assert.equal(streams[0].type,'hls');assert.match(streams[0].language,/Ses: EN/);
  assert.doesNotMatch(streams[0].quality,/1080|720|480/);
 });
 
@@ -328,6 +343,6 @@ test('QuickJS otomatik dizin taraması, BigInt dosya hash’i ve Türkçe eşlem
   } });
   const streams = await runInQuickJs(fixture, { settings: { directoryEnabled: true, hostedDiscovery: false, archiveEnabled: false, playImdbEnabled: false } });
   assert.equal(streams.length, 1);
-  assert.equal(streams[0].quality, '1920×1080 ✓');
+  assert.equal(streams[0].quality, '1080p · 1920×1080');
   assert.equal(streams[0].subtitles[0].language, 'tr');
 });
