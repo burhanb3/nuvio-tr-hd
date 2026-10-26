@@ -9,6 +9,7 @@
 - Altyazı gövdesi arama başına bir kez UTF-8 çözülür; ilk üç farklı hash sorgusuyla istek patlaması sınırlanır. Metinsiz/adressiz karakter tanısı sayaçları.
 - iOS 0.6.4-beta font seçimi CJK olarak doğrulandı; gerçek font cmap tablosunda ş/Ş/ğ/Ğ/ı/İ glifleri eksik. Plugin font/offset alanı yok; font sorunu giderilmiş sayılmadı. MoviesMod/DriveSeed/MoviesDrive araştırması; uygun olmayan Range/kimlik/ad koşulları üretime alınmadı.
 - 20 dosyalık upstream kilidi gözle incelenerek genişletildi; StreamsRepository bağımsız tamamlama kanıtı eklendi. Üç paket gerçek QuickJS’te sınanır. Fiziksel cihaz/tam oynatma/indirme/senkron testi yapılmadı.
+- Yayın tamamlandı: af89eda kodu, yerel100/100, Windows/Linux Actions ve Pages başarılı; manifest/üç sağlayıcı/sayfa HTTP200 ve yerel SHA eşit.
 
 ## 1.5.0 — 25 Ekim 2026
 

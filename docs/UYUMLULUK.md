@@ -2,6 +2,8 @@
 
 **1.6.0 kontrolü — 26 Ekim 2026:** 0.6.4-beta üzerinde bağımsız scraper tamamlamalarının birleştirildiği StreamsRepository incelendi; aynı dosya güncel cmp-rewrite dalında da aynı SHA’da. İncelenen bu dosya kilide eklenerek 20 dosyaya çıkıldı; önceki 19 dosya değiştirilmedi. Üç CommonJS giriş, movie/tv, getStreams ve onSettings ABI’si kullanılır; streaming callback veya font alanı uydurulmadı.
 
+Yerel100/100 ve GitHub Actions Windows/Linux doğrulaması başarılı. Üç üretilmiş paket QuickJS’te sınandı. GitHub Pages1.6.0 manifest/üç sağlayıcı/sayfa HTTP200 ve yerel hash eşitliği [yayın kanıtında](../compatibility/github-publication.json). iPhone/tam oynatma/indirme/senkron hâlâ çalıştırılmadı.
+
 Yeni kanıtlar: [upstream](../compatibility/upstream-160-check.json), [tamamlama ve iOS font kaynağı](../compatibility/architecture-and-font-160.json), [kurulum/sınırlar](ANIME_HIZ_VE_ALTYAZI.md). Kaynak/QuickJS doğrulaması fiziksel cihaz testi değildir. 1.5.0 ve daha eski aşağıdaki notlar kendi tarihlerine ait gözlemlerdir.
 
 **Güncel 1.5.0 kontrolü (25 Ekim 2026):** resmî 0.6.4-beta ve cmp-rewrite HEAD 56ae37081afaff820b6073da84e711320238de36 üzerinde kilitli 19 sözleşme dosyası değişmemiştir. [Yeni denetim](../compatibility/upstream-150-check.json). Kilit incelemesiz yenilenmedi. Native supportedTypes movie/tv uygundur; series/show/other tv'ye normalize edilir. Kaynak tipi hatası yüzünden manifestin diziyi gizlediği doğrulanmadı: asıl sorun taramada boş sonuçtu.

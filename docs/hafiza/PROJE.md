@@ -2,6 +2,8 @@
 
 ## 1.6.0 çalışma durumu — 26 Ekim 2026
 
+**GitHub yayını tamamlandı:** af89edae8999303b56e3191411fa6ead0e340d3c kod commit'i. Windows/Linux Test ve paket 40298554965 ve Pages40298554973 başarılı. Yerel100/100; oturumsuz manifest, üç sağlayıcı ve sayfa HTTP200 ve yerel SHA eşitliği compatibility/github-publication.json ile doğrulandı. Kurulum adresi aynı. Köprü1.4 ve fiziksel cihaz/tam oynatma/indirme/senkron sınırları değişmedi.
+
 Üç bağımsız scraper hazır: eski nuvio-tr-hd kimliği Dosyalar, yeni nuvio-tr-hd-online Hızlı kaynaklar ve nuvio-tr-hd-anime Anime. Native StreamsRepository her scraper tamamlandığında ekler (release/current SHA aynı); bir çağrıda per-stream callback yok. Mantıksal bütçeler 28/16/20 sn; native iPhone drain garantisi yok. Ayarlar/20 sonuç sınırı scraper başına; eski kişisel JSON/Stremio ayarları Dosyalar’da korunur. Global sıralama native gruplara bağlıdır.
 
 Animecix/Tau doğru TMDB ID+özgün ad+yıl ve exact title/season/episode ile çalışır; ilk sonuç/fuzzy/mutlak bölüm fallback yok. TMDB görünen başlığı arama yardımıdır. API boyut/kalitesi kanıt sayılmaz. Canlı Death Note 4 MP4 (90–229 MiB; 480/720) +4 TR; AoT 9 MP4 (165–569 MiB; 480/720/1080)+3 TR. Süre benzerliği gerçek senkron değildir; TR kaynak hard-sub kanıtı değildir.
@@ -12,7 +14,7 @@ iOS 0.6.4-beta ve güncel MPVPlayerBridge varsayılan sub-font Noto Sans CJK SC.
 
 26 Ekim canlı: Spider-Man ilk online4,2s, dosyalar14,1s; 665,6/835,3 MiB MP4 ve2,64GiB MKV+TR. Dune online4,6s/TR, GOT online3,5s/TR; ikisinde bu kontrolde dosya aynaları ağ hatası. Önceki1.5 büyük dosya başarısı bugünün erişim garantisi değildir. MoviesMod sayfasında1,3GB listelenen Dune public zinciri Google MKV’ye ulaştı; URL uzantısız+Range200, üretime alınmadı. MoviesDrive IMDb benzer ama yanlış kimlikler verdi, eklenmedi.
 
-Ücretsiz/hesapsız, sa deposuna yazmama, Sites eski kimliğini yeniden oluşturmama sınırları sürer. Mevcut köprü1.4 değişmedi; yeni HLS profile servisi yayımlanmadı. Yeni docs/ANIME_HIZ_VE_ALTYAZI.md. Yerel npm run check 100/100; gerçek QuickJS’te üç paket ve upstream20 dosya geçti. GitHub yayın kanıtı tamamlanınca durum güncellenecek. Fiziksel iPhone/tam oynatma/indirme/senkron yok.
+Ücretsiz/hesapsız, sa deposuna yazmama, Sites eski kimliğini yeniden oluşturmama sınırları sürer. Mevcut köprü1.4 değişmedi; yeni HLS profile servisi yayımlanmadı. Yeni docs/ANIME_HIZ_VE_ALTYAZI.md. Yerel npm run check 100/100; gerçek QuickJS’te üç paket ve upstream20 dosya geçti. GitHub yayını ve SHA doğrulaması tamamlandı. Fiziksel iPhone/tam oynatma/indirme/senkron yok.
 
 ## Güncel yönlendirme — 1.5.0, 25 Ekim 2026
 

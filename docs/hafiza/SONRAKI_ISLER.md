@@ -2,7 +2,7 @@
 
 ## 1.6.0 güncel öncelik
 
-1. Üç scraper ile GitHub1.6.0 yayını ve HTTP/SHA doğrulamasını tamamla. Mevcut eski scraper ayarları Dosyalar’da; yeni iki scraper varsayılan.
+1. **Tamamlandı:** GitHub1.6.0 af89eda, Windows/Linux100 test ve Pages başarılı; manifest/üç scraper/sayfa HTTP200+yerel SHA eşit. Kanıt compatibility/github-publication.json. Mevcut eski scraper ayarları Dosyalar’da; yeni iki scraper varsayılan.
 2. iPhone’da hızlı grup diğer taramalar sürerken gerçekten görünüyor mu, Death Note/AoT S01E01 MP4+TR tam indirme ve uçak modunu doğrula. Sabit referans metadata/QuickJS telefon testi değildir.
 3. Küçük film/dizi dosyaları hâlâ eksik; Dune/GOT dosya aynaları26Ekim ağ hatası verdi. MoviesMod/DriveSeed uzantısız+Range200 MKV’yi korumayı kaldırarak ekleme. Yeni kaynakları gerçek dosya ile doğrula.
 4. Anime sonraki sezon/mutlak bölüm eşlemesi yapılmadı; kanonik episode mapping olmadan tahmin ekleme. Yakılmış altyazı otomatik tanınmıyor; harici metin üst üste binebilir.

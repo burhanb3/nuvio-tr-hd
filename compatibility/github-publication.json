@@ -1,54 +1,93 @@
 {
-  "checkedAt": "2026-10-25T20:06:31.864Z",
-  "version": "1.5.0",
+  "checkedAt": "2026-10-26T09:20:18.413Z",
+  "version": "1.6.0",
   "origin": "https://burhanb3.github.io/nuvio-tr-hd",
   "authenticated": false,
+  "assetRequestsAuthenticated": false,
+  "ciMetadataAuthenticated": true,
   "repository": "https://github.com/burhanb3/nuvio-tr-hd",
-  "sourceCommit": "62bf0b31ae1a767cd63b442c3bbde113a4601dfb",
+  "sourceCommit": "af89edae8999303b56e3191411fa6ead0e340d3c",
   "branch": "codex/publish-nuvio-tr-hd",
   "actions": {
-    "tests": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40229105237",
+    "tests": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40298554965",
     "testsConclusion": "success",
-    "pages": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40229105202",
+    "jobs": [
+      {
+        "name": "verify (ubuntu-latest)",
+        "conclusion": "success"
+      },
+      {
+        "name": "verify (windows-latest)",
+        "conclusion": "success"
+      }
+    ],
+    "pages": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40298554973",
     "pagesConclusion": "success"
   },
-  "mode": "phone movie/TV scan; signed R2 file bridge still 1.4.0; muxed HLS qualities split directly; external audio/subtitle masters retained until profile capability is deployed",
+  "mode": "three independent phone-side scrapers: files/online/anime; existing signed R2 bridge remains1.4; external-audio HLS masters retained",
   "checks": [
     {
       "path": "/manifest.json",
       "status": 200,
       "type": "application/json; charset=utf-8",
-      "bytes": 694,
-      "sha256": "a43c9d0326ea6d62bfd5a1fdef4e661ca4ef8058b3bccb14692480d9773ff2e8",
+      "bytes": 1808,
+      "sha256": "7c2b6dd151afe247d5e0ccc0a967e917f9d4ba716fb6acec259bd4b4922f49b0",
       "matchesLocal": true
     },
     {
       "path": "/providers/nuvio-tr-hd.js",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 110568,
-      "sha256": "25904ba0d12d1eeb1410763ccea38ac04195750613e11f00a99fca0de89f9dbb",
+      "bytes": 120912,
+      "sha256": "e8444b0345ca2576a213e1489b8d6039fe7b7d4f909b2e9f3ecaf1af55507026",
+      "matchesLocal": true
+    },
+    {
+      "path": "/providers/nuvio-tr-hd-online.js",
+      "status": 200,
+      "type": "application/javascript; charset=utf-8",
+      "bytes": 120914,
+      "sha256": "4bf4c9140d2e0204abc1561b306e7dc4b52d8ef76469f7188586765c9e610d74",
+      "matchesLocal": true
+    },
+    {
+      "path": "/providers/nuvio-tr-hd-anime.js",
+      "status": 200,
+      "type": "application/javascript; charset=utf-8",
+      "bytes": 120912,
+      "sha256": "05d2b39766da702f0e21ce607cb4003064c5a446f843598e849aee7042c06e8f",
       "matchesLocal": true
     },
     {
       "path": "/",
       "status": 200,
       "type": "text/html; charset=utf-8",
-      "bytes": 6663,
-      "sha256": "8098319f0fed6d772bfe0d0861bfd2e2a2f8741981f9e905035dd7ee4a01f444",
+      "bytes": 7421,
+      "sha256": "fc24f4cca9e6b4a7bb2b0f62f27b5a380ad2793d514f9eb3bee47fbd7d066795",
       "matchesLocal": true
     }
   ],
   "tests": {
-    "local": 92,
-    "quickjs": "passed; TV IMDb/episode + AltyaziDB SRT, HDHub chain and alias included",
-    "ci": "Windows/Linux passed",
-    "upstream": "0.6.4-beta; locked 19 files unchanged"
+    "local": 100,
+    "quickjs": "passed; all three generated entry points",
+    "upstream": "0.6.4-beta; 20 reviewed locked files verified"
   },
   "bridge": {
     "newVersionDeployed": false,
     "existingVersion": "1.4.0",
-    "reason": "Sites account/workspace changed; existing project NOT_FOUND; user cannot switch now"
+    "reason": "existing Sites workspace inaccessible; project identity retained"
+  },
+  "font": {
+    "fixed": false,
+    "verifiedMissingGlyphs": [
+      "ş",
+      "Ş",
+      "ğ",
+      "Ğ",
+      "ı",
+      "İ"
+    ],
+    "proof": "compatibility/ios-font-160.json"
   },
   "deviceTest": "not-run",
   "fullPlayback": "not-run",
