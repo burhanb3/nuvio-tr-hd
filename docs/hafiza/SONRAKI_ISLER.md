@@ -1,5 +1,13 @@
 # Sonraki işler
 
+## 1.7.2 öncelik
+
+1. Kart düzeni/EN özelliğini aynı manifest/ID’lerle yayınla;168test/QuickJS,20upstream drift yok. Yayın sonrası CI/Pages/beş varlık SHA ve hafızayı güncelle.
+2. Fiziksel iPhone’da kalite/GB/ses/TR-EN sırası, Türkçe zorunlu EN-only filtresi ve iki dil seçimini denemek gerekiyor. Tam video/iki dil indirme/offline/senkron henüz yok.
+3. Fleabag Archive ilk canlıtur1/tekrar0 dosya verdi; sebep ağ/Range. Bunu EN regresyonu çözüldü veya iki dosya hep korunuyor diye sunma. Online TR/EN vardı.
+4. Yeni genel MP4/MKV sağlayıcı hedefi açık; bu tur yeni video sağlayıcısı değil altyazı ve görünüm geliştirmesidir. Ücretsiz/hesapsız/yeniPCsunucuyok ve manuel film pinine dönmeme şartları sürer.
+
+
 ## 1.7.1 öncelik
 
 1. Yeni çalışan genel MP4/MKV sağlayıcı bulma hedefi açık. Bu tur yeni sağlayıcı yok; bozuk/embed/login isteyen sonuçları ekleyerek sayıyı şişirme. Matrix/Shameless/GoT indirmeleri hâlâ eksik.

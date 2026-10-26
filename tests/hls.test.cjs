@@ -23,7 +23,7 @@ test('HLS yaklaşık aktarım boyutu gerçek playlist süresi ve bitrate ile hes
  assert.equal(video.sizeEstimate.durationSource,'playlist');
  assert.equal(describeQuality(video,{}).quality,'1080p');assert.match(describeQuality(video,{}).text,/1280×720 \/ 1920×1080 · HLS/);
  assert.equal(describeSize(video).size,undefined);assert.match(describeSize(video).text,/boyutu değişken/);
- assert.match(describeSize({sizeEstimate:video.renditions[0].sizeEstimate}).size,/^~.*MiB/);http.close();
+ assert.match(describeSize({sizeEstimate:video.renditions[0].sizeEstimate}).size,/^~.*GB/);http.close();
 });
 test('HLS canlı akışa film süresi veya dosya boyutu uydurulmaz',async()=>{
  const http=createHttp({fetchImpl:fixtureFetch({})});
@@ -40,7 +40,7 @@ test('gerçek piksel dosya adıyla değişmez; isim tahmini doğrulanmış diye 
  assert.equal(describeQuality({dimensions:{width:1280,height:720}},{filename:'Movie.2160p.mkv'}).quality,'720p');
  assert.match(describeQuality({},{filename:'Movie.2160p.mkv'}).text,/2160p tahmini · dosya adı/);
  assert.equal(describeQuality({},{filename:'Movie.mkv'}).quality,'Bilinmiyor');
- assert.equal(describeSize({size:1073741824}).text,'1.00 GiB · dosya boyutu');
+ assert.equal(describeSize({size:1073741824}).text,'1,07 GB · dosya boyutu');
 });
 
 test('master altındaki canlı playlist için film süresinden boyut tahmini üretilmez',async()=>{

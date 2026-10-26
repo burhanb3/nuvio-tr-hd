@@ -1,6 +1,6 @@
 'use strict';
 const { safeUrl, normalizeTitle, mapLimit } = require('./util.cjs');
-const { isTurkish } = require('./subtitles.cjs');
+const { subtitleLanguage } = require('./subtitles.cjs');
 const { matchesEpisode } = require('./matching.cjs');
 
 const SUBTITLE_SERVICES = [
@@ -8,9 +8,10 @@ const SUBTITLE_SERVICES = [
   'https://opensubtitles-v3.strem.io'
 ];
 const TURKISH_SUBTITLE_SERVICES = ['https://altyazidb.online'];
+const ENGLISH_SUBTITLE_SERVICES = ['https://opensubtitles.stremio.homes/en/ai-translated=false%7Cfrom=all%7Cauto-adjustment=false'];
 function releaseKey(value) {
   return normalizeTitle(String(value || '').split('/').pop().replace(/\.(mkv|mp4|srt|vtt)$/i, '')
-    .replace(/[._ -](tr|tur|turkish|sdh|forced|cc)$/i, ''));
+    .replace(/[._ -](tr|tur|turkish|en|eng|english|sdh|forced|cc)$/i, ''));
 }
 function sourceFamily(value) {
   const text = String(value).toLowerCase().replace(/[^a-z0-9]/g, '');
@@ -25,15 +26,22 @@ function cutSignature(value) {
   const text = normalizeTitle(value).replace(/ /g, '');
   return ['extended', 'directorscut', 'unrated', 'theatrical', 'uncut'].filter(t => text.includes(t)).join('|');
 }
+function canonicalRelease(value,target,allowAliases) {
+  const key=releaseKey(value),title=normalizeTitle(target.originalTitle);
+  if(!allowAliases)return key;
+  const aliases=[...new Set((target.searchTitles||[]).map(normalizeTitle))].filter(Boolean).sort((a,b)=>b.length-a.length);
+  const alias=aliases.find(a=>key===a||key.startsWith(a+' '));
+  return alias ? title+key.slice(alias.length) : key;
+}
 function scoreSubtitle(sub, candidate, video, target, allowLoose = false) {
-  if (!isTurkish(sub.language || sub.lang || sub.lang_code) || sub.ai_translated === true || sub.ai_translated === 'true') return null;
+  if (!subtitleLanguage(sub.language || sub.lang || sub.lang_code) || sub.ai_translated === true || sub.ai_translated === 'true') return null;
   if ((sub.imdbId || sub.imdb_id) && (sub.imdbId || sub.imdb_id) !== target.imdbId) return null;
   if (sub.tmdbId != null && Number(sub.tmdbId) !== target.tmdbId) return null;
   if (target.type === 'tv' && ((Number(sub.season) > 0 && Number(sub.season) !== target.season) ||
     (Number(sub.episode) > 0 && Number(sub.episode) !== target.episode))) return null;
   const name = String(sub.releaseName || sub.movieReleaseName || sub.title || sub.subtitleFileName || '');
   const file = candidate.filename || decodeFilename(candidate.url);
-  const a = releaseKey(file), b = releaseKey(name);
+  const a = canonicalRelease(file,target,true), b = canonicalRelease(name,target,sub._identityBound===true);
   if (target.type === 'tv' && /\bs\d+[ ._-]*e\d+\b|\b\d+x\d+\b/i.test(name) && !matchesEpisode(name, target)) return null;
   const years = b.match(/\b(?:19|20)\d{2}\b/g);
   const releaseYears = target.type === 'movie' && (sub._identityBound === true || (sub._scope === 'paired' && candidate.identityImdbBound === true)) ?
@@ -72,10 +80,10 @@ function decodeFilename(url) {
 
 function createSubtitleDiscovery(http, target, settings) {
   const cache = new Map();
-  let hashRequests = 0;
+  const hashRequests = {tr:0,en:0};
   const bases = settings.subtitleUrls ? String(settings.subtitleUrls).split(/\s+/)
     .map(url => safeUrl(url, undefined, settings.allowHttp === true)?.replace(/\/manifest\.json(?:\?.*)?$/, '').replace(/\/$/, '')).filter(Boolean).slice(0, 3) :
-    [...TURKISH_SUBTITLE_SERVICES, ...SUBTITLE_SERVICES];
+    [...TURKISH_SUBTITLE_SERVICES, ...SUBTITLE_SERVICES, ...ENGLISH_SUBTITLE_SERVICES];
   const type = target.type === 'tv' ? 'series' : 'movie';
   const id = target.imdbId + (target.type === 'tv' ? `:${target.season}:${target.episode}` : '');
   function lookup(url) {
@@ -83,7 +91,10 @@ function createSubtitleDiscovery(http, target, settings) {
     return cache.get(url);
   }
   function normalize(data, base) {
-    return Array.isArray(data?.subtitles) ? data.subtitles.filter(s => s && isTurkish(s.lang || s.language || s.lang_code)).slice(0, 100)
+    const counts={tr:0,en:0};
+    return Array.isArray(data?.subtitles) ? data.subtitles.filter(s => {
+      const language=s&&subtitleLanguage(s.lang||s.language||s.lang_code);return language&&counts[language]++<100;
+    })
       .map(s => {
         const release = String(s.releaseName || s.title || s.name || s.label || '');
         const title = normalizeTitle(target.originalTitle);
@@ -91,7 +102,7 @@ function createSubtitleDiscovery(http, target, settings) {
         // IMDb+episode route supplies identity, never a full release/hash match.
         const named = base === 'https://altyazidb.online' && !normalizeTitle(release).startsWith(title + ' ') ?
           `${target.originalTitle}.${target.year}.${release}` : release;
-        return { ...s, language: s.lang || s.language || s.lang_code, releaseName: named, _scope: 'title',
+        return { ...s, language: subtitleLanguage(s.lang || s.language || s.lang_code), releaseName: named, _scope: 'title',
           _identityBound: true, _releaseNotesOnly: named !== release,
           _subtitleProvider: base === 'https://altyazidb.online' ? 'AltyazıDB' : 'OpenSubtitles', identity: target };
       }) : [];
@@ -107,22 +118,26 @@ function createSubtitleDiscovery(http, target, settings) {
     if (video.videoHash) extras.push(`videoHash=${video.videoHash}`);
     // Start title and hash requests together; one slow service must not add a
     // second serial timeout to every candidate. URL/credentials stay private.
-    const titleResults = bases.map(base => lookup(`${base}/subtitles/${type}/${encodeURIComponent(id)}.json`).then(data=>normalize(data,base)));
-    let hashResults = Promise.resolve([]);
+    const languages=options.languages||['tr','en'];
+    const relevant=base=>!(/stremio\.homes\/tr\//.test(base)&&!languages.includes('tr'))&&!(/stremio\.homes\/en\//.test(base)&&!languages.includes('en'))&&
+      !(TURKISH_SUBTITLE_SERVICES.includes(base)&&!languages.includes('tr'));
+    const titleResults = bases.filter(relevant).map(base => lookup(`${base}/subtitles/${type}/${encodeURIComponent(id)}.json`).then(data=>normalize(data,base)));
+    const hashResults=[];
     // A title lookup is shared across alternatives. Request hash-aware results
     // only where a real hash exists, without losing the fast title response.
-    const hashBase = bases.find(base => base.includes('opensubtitles.stremio.homes'));
+    for(const language of languages){
+    const hashBase = bases.find(base => base.includes(`opensubtitles.stremio.homes/${language}/`));
     if (settings.hashLookups !== false && video.videoHash && hashBase && !http.expired()) {
       const hashUrl = `${hashBase}/subtitles/${type}/${encodeURIComponent(id)}/${extras.join('&')}.json`;
       // Avoid a burst of one hash query per mirror/quality. The shared title
       // lookup still covers every file; cached hash results remain reusable.
-      if (cache.has(hashUrl) || hashRequests < 3) {
-        if (!cache.has(hashUrl)) hashRequests++;
-        hashResults = lookup(hashUrl).then(data => normalize(data, hashBase));
+      if (cache.has(hashUrl) || hashRequests[language] < 3) {
+        if (!cache.has(hashUrl)) hashRequests[language]++;
+        hashResults.push(lookup(hashUrl).then(data => normalize(data, hashBase)));
       }
-    }
-    const groups = await Promise.all([...titleResults,hashResults].map(async job=>{
-      const rows=await job;
+    }}
+    const groups = await Promise.all([...titleResults,...hashResults].map(async job=>{
+      const rows=(await job).filter(s=>languages.includes(s.language));
       if(rows.length&&options.onBatch)await options.onBatch(rows);
       return rows;
     }));
@@ -131,4 +146,4 @@ function createSubtitleDiscovery(http, target, settings) {
   discover.prefetch = prefetch;
   return discover;
 }
-module.exports = { createSubtitleDiscovery, scoreSubtitle, releaseKey, decodeFilename, SUBTITLE_SERVICES, TURKISH_SUBTITLE_SERVICES };
+module.exports = { createSubtitleDiscovery, scoreSubtitle, releaseKey, decodeFilename, SUBTITLE_SERVICES, TURKISH_SUBTITLE_SERVICES, ENGLISH_SUBTITLE_SERVICES };

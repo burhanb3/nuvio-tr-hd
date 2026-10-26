@@ -33,7 +33,7 @@ function autoFetch(fixture, calls = []) {
       fixture[url] = { json: { subtitles: [
         { url: 'https://media.test/exact-a.vtt', lang: 'tur', title: fileA.replace(/\.mp4$/, ''), ai_translated: false },
         { url: 'https://media.test/exact-b.srt', lang: 'tur', title: fileB.replace(/\.mkv$/, ''), ai_translated: false },
-        { url: 'https://media.test/tr.srt', lang: 'eng', title: fileA },
+        { url: 'https://media.test/tr.srt', lang: 'spa', title: fileA },
         { url: 'https://media.test/tr.srt', lang: 'tur', title: fileA, ai_translated: true }
       ] } };
     }

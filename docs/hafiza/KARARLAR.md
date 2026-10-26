@@ -1,5 +1,15 @@
 # Tasarım kararları
 
+## 1.7.2 görünüm ve dil kararları
+
+- Her sonuçta kalite, size ve language string’leri dolu; ses bilinmiyor ve boyut bilinmiyor yer tutucuları kullanılır. Native sıraya uy: kalite/GB/ses/altyazı.
+- Bütün boyutlar decimal GB, Türkçe virgül/iki hane. MB/MiB/GiB karışmaz; gerçek byte ölçümü, tahmin ve bilinmiyor ayrılır.
+- Ses EN/TR ile altyazı TR/EN ayrı bölümdedir. TR yok metni TR altyazı yok olur. Yalnız EN varsa iki bilgi de yazılır.
+- EN de TR ile aynı kimlik/yıl/bölüm/kurgu/hash/release/süre/UTF-8 kontrolünü kullanır. Kendi dili doğru metadata koduyla en döner; TR etiketi EN’e taşınmaz.
+- Dil başına4, toplam8; TR önce. Türkçe zorunlu ayarı yalnız EN ile karşılanmaz. Ortak native4 ve EN1 kotası TR’nin EN tarafından işgal edilmesini sınırlar.
+- Gömülü HLS dilinde yalnız ilgili profilin referans verdiği grup sayılır. Video/altyazı alanı bilinmiyorsa varsayma. Fiziksel iki-dilli offline testi hâlâ yok.
+
+
 ## 1.7.1 ek kararlar
 
 - Harici ses dosyası birleştirme yolu kullanıcı tarafından bırakıldı; kaynak içi özgün/TR/EN ses aranır.

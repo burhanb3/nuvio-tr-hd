@@ -9,14 +9,14 @@ function createHttp({ fetchImpl, allowHttp = false, timeoutMs = 4500, deadline =
   const controllers = new Set();
   let closed = false;
   const expired = () => closed || Date.now() >= deadline;
-  const networkPools = { 'subtitle-body': { limit:4, active:0, waiting:[] }, 'media-probe': { limit:3, active:0, waiting:[] } };
+  const networkPools = { 'subtitle-body': { limit:4, active:0, waiting:[] }, 'subtitle-body-en': { limit:1, active:0, waiting:[] }, 'media-probe': { limit:3, active:0, waiting:[] } };
   async function fetchNetwork(url, options, group, end) {
     const pool = networkPools[group];
     if(!pool)return fetcher(url,options);
     if(pool.active>=pool.limit)await new Promise(resolve=>pool.waiting.push(resolve));else pool.active++;
     // Keep the lease until the underlying native fetch actually settles.
     // A logical JS timeout does not cancel Nuvio iOS networking.
-    try{return expired()||Date.now()>=end?null:await fetcher(url,options);}
+    try{return expired()||Date.now()>=end?null:group==='subtitle-body-en'?await fetchNetwork(url,options,'subtitle-body',end):await fetcher(url,options);}
     finally{if(pool.waiting.length)pool.waiting.shift()();else pool.active--;}
   }
   const emit = event => { try { onEvent(event); } catch {} };

@@ -18,7 +18,7 @@ test('yanlış dil, kimlik, HTML, bozuk SRT ve yinelenen URL ayıklanır', async
   } });
   const http = createHttp({ fetchImpl: fixtureFetch(fixture) });
   const subs = await loadSubtitles(http, { subtitleBase: 'https://media.test/catalog.json', subtitles: [
-    { url: 'tr.srt', language: 'tr' }, { url: 'tr.srt', language: 'tur' }, { url: 'tr.vtt', language: 'en' },
+    { url: 'tr.srt', language: 'tr' }, { url: 'tr.srt', language: 'tur' }, { url: 'tr.vtt', language: 'es' },
     { url: 'tr.vtt', language: 'tr', identity: { ...target, year: 2003 } },
     { url: 'bad.srt', language: 'tr' }, { url: 'broken.srt', language: 'tr' }, null
   ] }, target, false);

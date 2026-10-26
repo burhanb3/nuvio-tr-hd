@@ -1,5 +1,6 @@
 'use strict';
 const { describeAudio, audioCode } = require('./media/audio.cjs');
+const { embeddedSubtitleLanguages } = require('./subtitles.cjs');
 
 function balancedCandidates(groups, maximum = 18) {
   const result = [];
@@ -13,7 +14,9 @@ function balancedCandidates(groups, maximum = 18) {
 function streamScore(entry, settings = {}) {
   const dimensions = entry.video.dimensions;
   const pixels = dimensions ? Math.min(dimensions.width, dimensions.height) : 0;
-  const subScore = Math.max(entry.video.embeddedTurkish || entry.candidate.embeddedTurkish ? 90 : 0, ...entry.subtitles.map(s => s._score || 0));
+  const trScore=Math.max(embeddedSubtitleLanguages(entry.video,entry.candidate).includes('tr')?90:0,...entry.subtitles.filter(s=>!s.language||s.language==='tr').map(s=>s._score||0));
+  const enScore=Math.max(embeddedSubtitleLanguages(entry.video,entry.candidate).includes('en')?90:0,...entry.subtitles.filter(s=>s.language==='en').map(s=>s._score||0));
+  const subScore=trScore?100+trScore:enScore;
   // Matched subtitles and real downloads first; avoid overvaluing huge files.
   return (entry.video.downloadable ? 1000000000 : 0) + subScore * 1000000 +
     (entry.candidate.identityConfidence || 100) * 1000 + Math.min(pixels, 2160) -

@@ -1,5 +1,7 @@
 'use strict';
 const { qualityLabel } = require('../util.cjs');
+const { describeAudio } = require('./audio.cjs');
+const { subtitleLanguage, embeddedSubtitleLanguages } = require('../subtitles.cjs');
 
 function filenameQuality(filename) {
   const match = String(filename || '').match(/(?:^|[^0-9])(4320|2160|1440|1080|720|576|480|360|240)p\b/i);
@@ -18,7 +20,7 @@ function describeQuality(video, candidate) {
   return { quality: 'Bilinmiyor', text: 'Kalite bilgisi alınamadı' };
 }
 function humanBytes(bytes) {
-  return bytes >= 1024 ** 3 ? `${(bytes / 1024 ** 3).toFixed(2)} GiB` : `${(bytes / 1024 ** 2).toFixed(1)} MiB`;
+  return bytes < 10000000 ? '<0,01 GB' : `${(bytes / 1000000000).toFixed(2).replace('.',',')} GB`;
 }
 function describeSize(video) {
   if (video.size > 0) return { size: humanBytes(video.size), text: `${humanBytes(video.size)} · dosya boyutu` };
@@ -31,4 +33,19 @@ function describeSize(video) {
   }
   return { text: video.container === 'hls' ? 'Aktarım boyutu hesaplanamadı' : 'Dosya boyutu alınamadı' };
 }
-module.exports = { filenameQuality, describeQuality, describeSize };
+function subtitleLabel(video,candidate,subtitles) {
+  const languages=new Set([...embeddedSubtitleLanguages(video,candidate),...subtitles.map(s=>subtitleLanguage(s.language)).filter(Boolean)]);
+  const label=['tr','en'].filter(l=>languages.has(l)).map(l=>l.toUpperCase()).join('/');
+  return label ? `${label} altyazı${languages.has('tr')?'':' · TR altyazı yok'}` : 'TR altyazı yok';
+}
+function cardFields(video,candidate,subtitles) {
+  const quality=describeQuality(video,candidate),size=describeSize(video),audio=describeAudio(video,candidate);
+  const dimensions=video.dimensions||video.resolutionOptions?.length===1&&video.resolutionOptions[0];
+  return {
+    quality: dimensions ? `${dimensions.width}×${dimensions.height}${video.dimensions?' ✓':' HLS'}` :
+      video.resolutionOptions?.length>1 ? 'Otomatik HLS' : quality.quality==='Bilinmiyor' ? 'Kalite bilinmiyor' : `${quality.quality} tahmini`,
+    size: size.size || (video.sizeEstimate ? 'Boyut değişken' : 'Boyut bilinmiyor'),
+    language: `Ses: ${audio?.text||'bilinmiyor'} · ${subtitleLabel(video,candidate,subtitles)}` + (candidate.burnedSubtitleLanguage==='es'?' · ES görüntüde':'')
+  };
+}
+module.exports = { filenameQuality, describeQuality, describeSize, cardFields, subtitleLabel };

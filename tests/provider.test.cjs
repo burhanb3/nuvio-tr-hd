@@ -72,8 +72,8 @@ test('otomatik tarama kapalı ve ek kaynak yoksa ağ çağrısı yapılmaz', asy
 test('konteyner ve dosya adı kalite bilgisi vermiyorsa eksik bilgi açık kalır', async () => {
   const fixture = makeFixture({ files: { 'https://media.test/movie.mp4': { body: mp4({ width: 0, height: 0 }), mime: 'video/mp4' } } });
   const streams = await provider(fixture).getStreams(603, 'movie');
-  assert.equal(streams[0].quality, 'Bilinmiyor');
-  assert.match(streams[0].title, /Kalite bilgisi alınamadı/);
+  assert.equal(streams[0].quality, 'Kalite bilinmiyor');
+  assert.match(streams[0].title, /Kalite bilinmiyor/);
 });
 
 test('varsayılan Tümü/20; eski 6/10 seçilebilir ve sonuç çoğaltılmaz', () => {

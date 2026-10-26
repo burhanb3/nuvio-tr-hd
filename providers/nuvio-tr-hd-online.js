@@ -145,14 +145,14 @@ var require_http = __commonJS({
       const controllers = /* @__PURE__ */ new Set();
       let closed = false;
       const expired = () => closed || Date.now() >= deadline;
-      const networkPools = { "subtitle-body": { limit: 4, active: 0, waiting: [] }, "media-probe": { limit: 3, active: 0, waiting: [] } };
+      const networkPools = { "subtitle-body": { limit: 4, active: 0, waiting: [] }, "subtitle-body-en": { limit: 1, active: 0, waiting: [] }, "media-probe": { limit: 3, active: 0, waiting: [] } };
       async function fetchNetwork(url, options, group, end) {
         const pool = networkPools[group];
         if (!pool) return fetcher(url, options);
         if (pool.active >= pool.limit) await new Promise((resolve) => pool.waiting.push(resolve));
         else pool.active++;
         try {
-          return expired() || Date.now() >= end ? null : await fetcher(url, options);
+          return expired() || Date.now() >= end ? null : group === "subtitle-body-en" ? await fetchNetwork(url, options, "subtitle-body", end) : await fetcher(url, options);
         } finally {
           if (pool.waiting.length) pool.waiting.shift()();
           else pool.active--;
@@ -382,12 +382,176 @@ var require_matching = __commonJS({
   }
 });
 
+// src/subtitles.cjs
+var require_subtitles = __commonJS({
+  "src/subtitles.cjs"(exports2, module2) {
+    "use strict";
+    var { safeUrl, cleanHeaders, mapLimit } = require_util();
+    var { matchesIdentity } = require_matching();
+    function isTurkish(language) {
+      return subtitleLanguage(language) === "tr";
+    }
+    function subtitleLanguage(value) {
+      const language = String(value || "").trim();
+      if (/^(tr|tur|turkish|türkçe|turkce)(?:[-_].*)?$/i.test(language)) return "tr";
+      return /^(en|eng|english|ingilizce|İngilizce)(?:[-_].*)?$/i.test(language) ? "en" : null;
+    }
+    function subtitleKey(track) {
+      return track.url + JSON.stringify(Object.entries(cleanHeaders(track.headers)).sort());
+    }
+    function selectSubtitles(tracks, perLanguage = 4) {
+      const seen = /* @__PURE__ */ new Set(), contents = /* @__PURE__ */ new Set(), counts = { tr: 0, en: 0 }, result = [];
+      for (const track of tracks.slice().sort((a, b) => (subtitleLanguage(a.language) === "en" ? 1 : 0) - (subtitleLanguage(b.language) === "en" ? 1 : 0) || (b._score || 0) - (a._score || 0))) {
+        const language = subtitleLanguage(track.language);
+        const key = subtitleKey(track);
+        if (!language || counts[language] >= perLanguage || seen.has(key) || track._contentKey && contents.has(track._contentKey)) continue;
+        seen.add(key);
+        if (track._contentKey) contents.add(track._contentKey);
+        counts[language]++;
+        result.push(track);
+      }
+      return result;
+    }
+    function embeddedSubtitleLanguages(video, candidate = {}) {
+      if (Array.isArray(video.subtitleLanguages)) return [...new Set(video.subtitleLanguages.map(subtitleLanguage).filter(Boolean))];
+      return [...new Set([
+        ...(video.subtitleTracks || []).map((t) => subtitleLanguage(t.language)),
+        video.embeddedTurkish || candidate.embeddedTurkish ? "tr" : null,
+        video.embeddedEnglish || candidate.embeddedEnglish ? "en" : null
+      ].filter(Boolean))];
+    }
+    function subtitleFormat(text) {
+      const clean = text.replace(/^\uFEFF/, "").trimStart();
+      if (/^WEBVTT(?:[ \t\r\n]|$)/.test(clean) && /(?:\d{2}:)?\d{2}:\d{2}\.\d{3}\s+-->\s+(?:\d{2}:)?\d{2}:\d{2}\.\d{3}/.test(clean)) return "vtt";
+      if (/(?:^|\n)\s*\d+\s*\r?\n\d{2}:\d{2}:\d{2},\d{3}\s+-->\s+\d{2}:\d{2}:\d{2},\d{3}/.test(clean)) return "srt";
+      return null;
+    }
+    function lastCueSeconds(text) {
+      let last = 0;
+      for (const match of text.matchAll(/-->\s*(?:(\d{1,2}):)?(\d{2}):(\d{2})[.,](\d{3})/g)) {
+        last = Math.max(last, Number(match[1] || 0) * 3600 + Number(match[2]) * 60 + Number(match[3]) + Number(match[4]) / 1e3);
+      }
+      return last;
+    }
+    async function subtitleSlot(http, task, language) {
+      const key = language === "en" ? "subtitleEnglishPool" : "subtitlePool", limit = language === "en" ? 1 : 4;
+      const pool = http[key] || (http[key] = { active: 0, waiting: [] });
+      if (pool.active >= limit) await new Promise((resolve) => pool.waiting.push(resolve));
+      else pool.active++;
+      try {
+        return http.expired() ? null : language === "en" ? await subtitleSlot(http, task) : await task();
+      } finally {
+        if (pool.waiting.length) pool.waiting.shift()();
+        else pool.active--;
+      }
+    }
+    async function loadSubtitles(http, candidate, target, allowHttp, options = {}) {
+      const seen = /* @__PURE__ */ new Set();
+      const entries = candidate.subtitles.slice(0, 240).sort((a, b) => (subtitleLanguage(a?.language || a?.lang || a?.lang_code) === "en" ? 1 : 0) - (subtitleLanguage(b?.language || b?.lang || b?.lang_code) === "en" ? 1 : 0)).filter((sub) => {
+        if (!sub || !subtitleLanguage(sub.language || sub.lang || sub.lang_code)) return false;
+        if (sub.identity && !matchesIdentity(sub.identity, target)) return false;
+        const url = safeUrl(sub.url, candidate.subtitleBase, allowHttp);
+        const key = subtitleKey({ ...sub, url });
+        if (!url || seen.has(key) || /\.(zip|ass|ssa|rar)(?:\/?$|[?#])/i.test(url)) return false;
+        seen.add(key);
+        return true;
+      }).sort((a, b) => (subtitleLanguage(a.language || a.lang || a.lang_code) === "en" ? 1 : 0) - (subtitleLanguage(b.language || b.lang || b.lang_code) === "en" ? 1 : 0));
+      const limits = { tr: 12, en: 8 }, ordinals = { tr: 0, en: 0 };
+      const selected = entries.filter((sub) => --limits[subtitleLanguage(sub.language || sub.lang || sub.lang_code)] >= 0).map((sub) => ({ ...sub, _ordinal: ++ordinals[subtitleLanguage(sub.language || sub.lang || sub.lang_code)] }));
+      const loadTrack = async (sub, index) => {
+        if (http.expired()) return null;
+        const url = safeUrl(sub.url, candidate.subtitleBase, allowHttp);
+        const headers = cleanHeaders(sub.headers);
+        const key = url + JSON.stringify(headers);
+        if (!http.subtitleCache) http.subtitleCache = /* @__PURE__ */ new Map();
+        if (!http.subtitleCache.has(key)) http.subtitleCache.set(key, subtitleSlot(http, async () => {
+          const language2 = subtitleLanguage(sub.language || sub.lang || sub.lang_code);
+          const result2 = await http.request(url, { headers, timeoutMs: 9e3, nativeGroup: language2 === "en" ? "subtitle-body-en" : "subtitle-body" });
+          if (!result2 || /html|zip|gzip|json/.test(result2.response.headers.get("content-type") || "")) return null;
+          const bytes = new Uint8Array(await result2.response.arrayBuffer());
+          if (!bytes.length || bytes.length > 262144) return null;
+          const text = decodeUtf8(bytes), format2 = text && subtitleFormat(text);
+          http.note?.({
+            stage: "subtitle_text",
+            invalidUtf8: text === null,
+            turkishCharacters: /[şŞğĞıİçÇöÖüÜ]/.test(text || ""),
+            combiningCharacters: /[\u0300-\u036f]/.test(text || ""),
+            inlineFont: /<font\b|font-family\s*:|\{\\fn/i.test(text || ""),
+            mojibake: /Å[ŸžŞş]|Ä[±°Ÿž]|Ã[¶¼§–œ‡]/.test(text || "")
+          });
+          const corrupted = /\uFFFD|Å[ŸžŞş]|Ä[±°Ÿž]|Ã[¶¼§–œ‡]/.test(text || "");
+          if (!format2 || corrupted) return null;
+          let fingerprint = 2166136261;
+          for (const byte of bytes) fingerprint = Math.imul(fingerprint ^ byte, 16777619) >>> 0;
+          return { url: result2.url, format: format2, lastCue: lastCueSeconds(text), contentKey: bytes.length + ":" + fingerprint };
+        }, subtitleLanguage(sub.language || sub.lang || sub.lang_code)));
+        const result = await http.subtitleCache.get(key);
+        if (!result) return null;
+        const { format } = result;
+        let match = sub._match;
+        if (match?.requireDuration) {
+          const last = result.lastCue, duration = options.videoDuration;
+          const close = duration > 0 && last / duration >= 0.9 && last / duration <= 1.01 && Math.abs(duration - last) <= 420;
+          if (close) match = { score: 65 + Math.max(0, 4 - Math.floor(Math.abs(duration - last) / 60)), label: "Süre uyumu; senkron doğrulanmadı" };
+          else if (match.allowFilmFallback && duration > 0 && last / duration >= 0.75 && last / duration <= 1.03)
+            match = { score: 35, label: "Aynı film; sürüm/senkron belirsiz" };
+          else return null;
+        }
+        const label = match ? ` · ${match.label}` : "";
+        const release = String(sub.releaseName || sub.subtitleFileName || sub.title || sub.movieReleaseName || sub.name || "Alternatif altyazı").replace(/[\r\n\x00-\x1f]/g, " ").replace(/\s+/g, " ").slice(0, 130);
+        const fps = Number(sub.fpsMilli) > 0 ? ` · ${(Number(sub.fpsMilli) / 1e3).toFixed(3)} fps` : "";
+        const provider = sub._subtitleProvider ? ` · ${sub._subtitleProvider}` : "";
+        const language = subtitleLanguage(sub.language || sub.lang || sub.lang_code), languageName = language === "tr" ? "Türkçe" : "İngilizce";
+        return {
+          url: result.url,
+          language,
+          name: `${languageName} · ${format.toUpperCase()}${provider} · ${String(sub._ordinal || index + 1).padStart(2, "0")} · ${release}${fps}${label}`,
+          _contentKey: result.contentKey,
+          ...options.keepScore ? { _score: match?.score || 90 } : {},
+          ...Object.keys(headers).length ? { headers } : {}
+        };
+      };
+      const tracks = [], collected = /* @__PURE__ */ new Set();
+      const acceptTrack = (track) => {
+        if (!track || collected.has(track._contentKey) || tracks.filter((t) => t.language === track.language).length >= 4) return;
+        collected.add(track._contentKey);
+        tracks.push(track);
+        if (options.onTrack) options.onTrack(track);
+      };
+      for (let offset = 0; offset < selected.length && tracks.length < 8 && !http.expired(); offset += 2) {
+        await mapLimit(
+          selected.slice(offset, offset + 2).filter((sub) => tracks.filter((t) => t.language === subtitleLanguage(sub.language || sub.lang || sub.lang_code)).length < 4),
+          2,
+          async (sub, index) => acceptTrack(await loadTrack(sub, offset + index))
+        );
+      }
+      const contents = /* @__PURE__ */ new Set();
+      return selectSubtitles(tracks.filter((t) => {
+        if (!t || contents.has(t._contentKey)) return false;
+        contents.add(t._contentKey);
+        return true;
+      })).map(({ _contentKey, ...track }) => track);
+    }
+    function decodeUtf8(bytes) {
+      try {
+        let encoded = "";
+        for (const b of bytes) encoded += "%" + b.toString(16).padStart(2, "0");
+        return decodeURIComponent(encoded);
+      } catch {
+        return null;
+      }
+    }
+    module2.exports = { isTurkish, subtitleLanguage, subtitleKey, selectSubtitles, embeddedSubtitleLanguages, subtitleFormat, loadSubtitles, decodeUtf8, lastCueSeconds };
+  }
+});
+
 // src/hosted.cjs
 var require_hosted = __commonJS({
   "src/hosted.cjs"(exports2, module2) {
     "use strict";
     var { matchesIdentity } = require_matching();
     var { safeUrl, cleanHeaders } = require_util();
+    var { subtitleLanguage, selectSubtitles } = require_subtitles();
     var SERVICE_ORIGIN = "https://nuvio-tr-hd-download-bridge.kamilbsr03.chatgpt.site";
     async function loadHosted(http, target) {
       const data = await http.json(SERVICE_ORIGIN + "/api/discover", {
@@ -413,6 +577,7 @@ var require_hosted = __commonJS({
             identityConfidence: Number(c.identityConfidence) || 90,
             claimedQuality: String(c.claimedQuality || "").slice(0, 30),
             embeddedTurkish: c.embeddedTurkish === true,
+            embeddedEnglish: c.embeddedEnglish === true,
             subtitles: []
           },
           video: {
@@ -425,13 +590,13 @@ var require_hosted = __commonJS({
             size: Number.isSafeInteger(v.size) && v.size > 0 ? v.size : null,
             duration: Number(v.duration) || null
           },
-          subtitles: (Array.isArray(pair.subtitles) ? pair.subtitles : []).slice(0, 4).filter((s) => s?.language === "tr" && safeUrl(s.url)).map((s) => ({
+          subtitles: selectSubtitles((Array.isArray(pair.subtitles) ? pair.subtitles : []).slice(0, 100).filter((s) => subtitleLanguage(s?.language) && safeUrl(s.url)).map((s) => ({
             url: safeUrl(s.url),
-            language: "tr",
-            name: String(s.name || "Türkçe").slice(0, 300),
+            language: subtitleLanguage(s.language),
+            name: String(s.name || (subtitleLanguage(s.language) === "tr" ? "Türkçe" : "İngilizce")).slice(0, 300),
             _score: Math.min(100, Math.max(0, Number(s._score) || 0)),
             ...Object.keys(cleanHeaders(s.headers)).length ? { headers: cleanHeaders(s.headers) } : {}
-          }))
+          })))
         };
       }).filter(Boolean);
     }
@@ -558,6 +723,7 @@ var require_directory = __commonJS({
   "src/providers/directory.cjs"(exports2, module2) {
     "use strict";
     var { safeUrl, normalizeTitle } = require_util();
+    var { subtitleLanguage } = require_subtitles();
     var DIRECTORY_ORIGIN = "https://a.111477.xyz";
     function decodeEntities(text) {
       return String(text).replace(/&amp;/g, "&").replace(/&quot;/g, '"').replace(/&#39;|&apos;/g, "'").replace(/&#(\d+);/g, (_, n) => String.fromCodePoint(Number(n))).replace(/<[^>]*>/g, "").trim();
@@ -596,7 +762,11 @@ var require_directory = __commonJS({
         const page = await http.text(root + path, { headers: { Referer: root + "/" } });
         if (!page) continue;
         const found = anchors(page.text);
-        const subtitles = found.filter((x) => /\.(srt|vtt)$/i.test(x.href) && /(?:[._-](?:tr|tur)|turkish|türkçe)/i.test(x.text || x.href)).map((x) => ({ url: safeUrl(x.href, page.url), language: "tr", releaseName: x.text, _scope: "release" }));
+        const subtitles = found.filter((x) => /\.(srt|vtt)$/i.test(x.href)).map((x) => {
+          const extra = normalizeTitle(x.text || x.href).replace(normalizeTitle(target.originalTitle), "");
+          const language = subtitleLanguage(extra.match(/\b(tr|tur|turkish|turkce|en|eng|english)\b/)?.[1]);
+          return language ? { url: safeUrl(x.href, page.url), language, releaseName: x.text, _scope: "release" } : null;
+        }).filter(Boolean);
         const out = [];
         for (const entry of found) {
           const url = safeUrl(entry.href, page.url);
@@ -693,6 +863,7 @@ var require_archive = __commonJS({
     var { filenameIdentity } = require_directory();
     var { verifiedArchiveRecords, verifiedMetadataFile } = require_archive_verified();
     var { matchesEpisode } = require_matching();
+    var { subtitleLanguage } = require_subtitles();
     function archiveQuery(target, preferHd = false, titleYear = !preferHd) {
       const title = target.originalTitle.replace(/["\\]/g, " ");
       const exclusions = ["sample", "trailer", "featurette", "review", "podcast", "commercial", "teaser"].filter((word) => !normalizeTitle(title).split(" ").includes(word));
@@ -756,7 +927,11 @@ var require_archive = __commonJS({
           return directory && servers.length ? servers.map((host) => safeUrl(`https://${host}${directory}/${path}`)).filter(Boolean) : [safeUrl(`https://archive.org/download/${encodeURIComponent(doc.identifier)}/${path}`)].filter(Boolean);
         };
         const urlFor = (name) => urlsFor(name)[0];
-        const subtitles = files.filter((f) => /\.(srt|vtt)$/i.test(f.name) && /(?:[._-](tr|tur)|turkish)/i.test(f.name)).map((f) => ({ url: urlFor(f.name), language: "tr", releaseName: f.name, _scope: "release" }));
+        const subtitles = files.filter((f) => /\.(srt|vtt)$/i.test(f.name)).map((f) => {
+          const extra = normalizeTitle(f.name).replace(expectedTitle, "");
+          const language = subtitleLanguage(f.language) || subtitleLanguage(extra.match(/\b(tr|tur|turkish|en|eng|english)\b/)?.[1]);
+          return language ? { url: urlFor(f.name), language, releaseName: f.name, _scope: "release" } : null;
+        }).filter(Boolean);
         const videos = files.filter((f) => {
           if (pinnedItem && !verifiedMetadataFile(verifiedRecord, f)) return false;
           const extraName = normalizeTitle(f.name).replace(expectedTitle, "");
@@ -839,129 +1014,6 @@ var require_playimdb = __commonJS({
       })).filter((x) => x.url);
     }
     module2.exports = { scanPlayImdb, PLAY_API };
-  }
-});
-
-// src/subtitles.cjs
-var require_subtitles = __commonJS({
-  "src/subtitles.cjs"(exports2, module2) {
-    "use strict";
-    var { safeUrl, cleanHeaders, mapLimit } = require_util();
-    var { matchesIdentity } = require_matching();
-    function isTurkish(language) {
-      return /^(tr|tur|turkish|türkçe|turkce)(?:[-_].*)?$/i.test(String(language || "").trim());
-    }
-    function subtitleFormat(text) {
-      const clean = text.replace(/^\uFEFF/, "").trimStart();
-      if (/^WEBVTT(?:[ \t\r\n]|$)/.test(clean) && /(?:\d{2}:)?\d{2}:\d{2}\.\d{3}\s+-->\s+(?:\d{2}:)?\d{2}:\d{2}\.\d{3}/.test(clean)) return "vtt";
-      if (/(?:^|\n)\s*\d+\s*\r?\n\d{2}:\d{2}:\d{2},\d{3}\s+-->\s+\d{2}:\d{2}:\d{2},\d{3}/.test(clean)) return "srt";
-      return null;
-    }
-    function lastCueSeconds(text) {
-      let last = 0;
-      for (const match of text.matchAll(/-->\s*(?:(\d{1,2}):)?(\d{2}):(\d{2})[.,](\d{3})/g)) {
-        last = Math.max(last, Number(match[1] || 0) * 3600 + Number(match[2]) * 60 + Number(match[3]) + Number(match[4]) / 1e3);
-      }
-      return last;
-    }
-    async function subtitleSlot(http, task) {
-      const pool = http.subtitlePool || (http.subtitlePool = { active: 0, waiting: [] });
-      if (pool.active >= 4) await new Promise((resolve) => pool.waiting.push(resolve));
-      else pool.active++;
-      try {
-        return http.expired() ? null : await task();
-      } finally {
-        if (pool.waiting.length) pool.waiting.shift()();
-        else pool.active--;
-      }
-    }
-    async function loadSubtitles(http, candidate, target, allowHttp, options = {}) {
-      const seen = /* @__PURE__ */ new Set();
-      const entries = candidate.subtitles.slice(0, 120).filter((sub) => {
-        if (!sub || !isTurkish(sub.language || sub.lang)) return false;
-        if (sub.identity && !matchesIdentity(sub.identity, target)) return false;
-        const url = safeUrl(sub.url, candidate.subtitleBase, allowHttp);
-        if (!url || seen.has(url) || /\.(zip|ass|ssa|rar)(?:\/?$|[?#])/i.test(url)) return false;
-        seen.add(url);
-        return true;
-      }).slice(0, 12);
-      const loadTrack = async (sub, index) => {
-        if (http.expired()) return null;
-        const url = safeUrl(sub.url, candidate.subtitleBase, allowHttp);
-        const headers = cleanHeaders(sub.headers);
-        const key = url + JSON.stringify(headers);
-        if (!http.subtitleCache) http.subtitleCache = /* @__PURE__ */ new Map();
-        if (!http.subtitleCache.has(key)) http.subtitleCache.set(key, subtitleSlot(http, async () => {
-          const result2 = await http.request(url, { headers, timeoutMs: 9e3, nativeGroup: "subtitle-body" });
-          if (!result2 || /html|zip|gzip|json/.test(result2.response.headers.get("content-type") || "")) return null;
-          const bytes = new Uint8Array(await result2.response.arrayBuffer());
-          if (!bytes.length || bytes.length > 262144) return null;
-          const text2 = decodeUtf8(bytes), format2 = text2 && subtitleFormat(text2);
-          http.note?.({
-            stage: "subtitle_text",
-            invalidUtf8: text2 === null,
-            turkishCharacters: /[şŞğĞıİçÇöÖüÜ]/.test(text2 || ""),
-            combiningCharacters: /[\u0300-\u036f]/.test(text2 || ""),
-            inlineFont: /<font\b|font-family\s*:|\{\\fn/i.test(text2 || ""),
-            mojibake: /Å[ŸžŞş]|Ä[±°Ÿž]|Ã[¶¼§–œ‡]/.test(text2 || "")
-          });
-          const corrupted = /\uFFFD|Å[ŸžŞş]|Ä[±°Ÿž]|Ã[¶¼§–œ‡]/.test(text2 || "");
-          return format2 && !corrupted ? { bytes, url: result2.url, text: text2, format: format2 } : null;
-        }));
-        const result = await http.subtitleCache.get(key);
-        if (!result) return null;
-        const { text, format } = result;
-        let match = sub._match;
-        if (match?.requireDuration) {
-          const last = lastCueSeconds(text), duration = options.videoDuration;
-          const close = duration > 0 && last / duration >= 0.9 && last / duration <= 1.01 && Math.abs(duration - last) <= 420;
-          if (close) match = { score: 65 + Math.max(0, 4 - Math.floor(Math.abs(duration - last) / 60)), label: "Süre uyumu; senkron doğrulanmadı" };
-          else if (match.allowFilmFallback && duration > 0 && last / duration >= 0.75 && last / duration <= 1.03)
-            match = { score: 35, label: "Aynı film; sürüm/senkron belirsiz" };
-          else return null;
-        }
-        const label = match ? ` · ${match.label}` : "";
-        const release = String(sub.releaseName || sub.subtitleFileName || sub.title || sub.movieReleaseName || sub.name || "Alternatif altyazı").replace(/[\r\n\x00-\x1f]/g, " ").replace(/\s+/g, " ").slice(0, 130);
-        const fps = Number(sub.fpsMilli) > 0 ? ` · ${(Number(sub.fpsMilli) / 1e3).toFixed(3)} fps` : "";
-        let fingerprint = 2166136261;
-        for (const byte of result.bytes) fingerprint = Math.imul(fingerprint ^ byte, 16777619) >>> 0;
-        const provider = sub._subtitleProvider ? ` · ${sub._subtitleProvider}` : "";
-        return {
-          url: result.url,
-          language: "tr",
-          name: `Türkçe · ${format.toUpperCase()}${provider} · ${String(index + 1).padStart(2, "0")} · ${release}${fps}${label}`,
-          _contentKey: result.bytes.length + ":" + fingerprint,
-          ...options.keepScore ? { _score: match?.score || 90 } : {},
-          ...Object.keys(headers).length ? { headers } : {}
-        };
-      };
-      const tracks = [], collected = /* @__PURE__ */ new Set();
-      const acceptTrack = (track) => {
-        if (!track || collected.has(track._contentKey) || tracks.length >= 4) return;
-        collected.add(track._contentKey);
-        tracks.push(track);
-        if (options.onTrack) options.onTrack(track);
-      };
-      for (let offset = 0; offset < entries.length && tracks.length < 4 && !http.expired(); offset += 2) {
-        await mapLimit(entries.slice(offset, offset + 2), 2, async (sub, index) => acceptTrack(await loadTrack(sub, offset + index)));
-      }
-      const contents = /* @__PURE__ */ new Set();
-      return tracks.filter((t) => {
-        if (!t || contents.has(t._contentKey)) return false;
-        contents.add(t._contentKey);
-        return true;
-      }).sort((a, b) => (b._score || 0) - (a._score || 0)).slice(0, 4).map(({ _contentKey, ...track }) => track);
-    }
-    function decodeUtf8(bytes) {
-      try {
-        let encoded = "";
-        for (const b of bytes) encoded += "%" + b.toString(16).padStart(2, "0");
-        return decodeURIComponent(encoded);
-      } catch {
-        return null;
-      }
-    }
-    module2.exports = { isTurkish, subtitleFormat, loadSubtitles, decodeUtf8, lastCueSeconds };
   }
 });
 
@@ -1258,7 +1310,7 @@ var require_animecix = __commonJS({
   "src/providers/animecix.cjs"(exports2, module2) {
     "use strict";
     var { safeUrl, normalizeTitle, mapLimit } = require_util();
-    var { isTurkish } = require_subtitles();
+    var { isTurkish, subtitleLanguage } = require_subtitles();
     var { sameName } = require_page_data();
     var ORIGIN = "https://animecix.tv";
     var PLAYER = "https://tau-video.xyz";
@@ -1294,7 +1346,7 @@ var require_animecix = __commonJS({
       return (await mapLimit(selected, 2, async (source) => {
         const video = await http.json(`${PLAYER}/api/video/${source._embedId}`, { headers: { Referer: PLAYER + "/", Origin: PLAYER } });
         if (!video || video._id !== source._embedId || Number(video.title_id) !== Number(match.id) || Number(video.season_number) !== season || Number(video.episode_number) !== episode || !Array.isArray(video.urls)) return [];
-        const captions = [...Array.isArray(source.captions) ? source.captions : [], ...Array.isArray(video.captions) ? video.captions : []].filter((sub) => sub && isTurkish(sub.language || sub.lang || sub.srclang)).map((sub) => ({ url: sub.url || sub.src, language: "tr", _scope: "paired", identity: target }));
+        const captions = [...Array.isArray(source.captions) ? source.captions : [], ...Array.isArray(video.captions) ? video.captions : []].filter((sub) => sub && subtitleLanguage(sub.language || sub.lang || sub.srclang || sub.lang_code)).map((sub) => ({ url: sub.url || sub.src, language: subtitleLanguage(sub.language || sub.lang || sub.srclang || sub.lang_code), _scope: "paired", identity: target }));
         const filename = `${target.originalTitle}.${target.year}` + (target.type === "tv" ? `.S${String(season).padStart(2, "0")}E${String(episode).padStart(2, "0")}` : "");
         return video.urls.slice(0, 4).map((entry) => {
           const url = safeUrl(entry?.url);
@@ -1373,6 +1425,7 @@ var require_diziyou = __commonJS({
     var { safeUrl, mapLimit, normalizeTitle } = require_util();
     var { anchors } = require_directory();
     var { jsonLd, tagAttributes, sameName, sameOrigin, syntheticFilename } = require_page_data();
+    var { subtitleLanguage } = require_subtitles();
     var ORIGIN = "https://www.diziyou.one";
     function seriesMatches(html, target) {
       return jsonLd(html).some((r) => r["@type"] === "TVSeries" && sameName(r.name, target) && Number(String(r.startDate || r.datePublished || "").slice(0, 4)) === target.year);
@@ -1412,7 +1465,7 @@ var require_diziyou = __commonJS({
         const player = await http.text(version.url, { headers: { Referer: episodeUrl } });
         const video = player && [...player.text.matchAll(/<video\b([^>]*)>([\s\S]*?)<\/video>/gi)].find((m) => tagAttributes(m[1]).id === "diziyou");
         if (!video) return [];
-        const subtitles = [...video[2].matchAll(/<track\b[^>]*>/gi)].map((m) => tagAttributes(m[0])).filter((a) => a.srclang === "tr").map((a) => ({ url: safeUrl(a.src, player.url), language: "tr", _scope: "paired", identity: target, headers: { Referer: ORIGIN + "/" } })).filter((s) => s.url);
+        const subtitles = [...video[2].matchAll(/<track\b[^>]*>/gi)].map((m) => tagAttributes(m[0])).filter((a) => subtitleLanguage(a.srclang)).map((a) => ({ url: safeUrl(a.src, player.url), language: subtitleLanguage(a.srclang), _scope: "paired", identity: target, headers: { Referer: ORIGIN + "/" } })).filter((s) => s.url);
         return [...video[2].matchAll(/<source\b[^>]*>/gi)].slice(0, 5).map((m) => {
           const url = safeUrl(tagAttributes(m[0]).src, player.url);
           if (!url || !/\.(m3u8|mp4|mkv)(?:$|[?#])/i.test(url)) return null;
@@ -1752,8 +1805,9 @@ var require_containers = __commonJS({
             };
             const language = field(2274717) || field(2274716);
             const codec = field(134);
-            if (/^(tr|tur)(?:-|$)/i.test(language) && /^S_(TEXT\/(UTF8|WEBVTT|ASS|SSA)|VOBSUB|HDMV\/PGS)$/.test(codec))
-              subtitleTracks.push({ language: "tr", codec });
+            const code = /^(tr|tur)(?:-|$)/i.test(language) ? "tr" : /^(en|eng)(?:-|$)/i.test(language) ? "en" : null;
+            if (code && /^S_(TEXT\/(UTF8|WEBVTT|ASS|SSA)|VOBSUB|HDMV\/PGS)$/.test(codec))
+              subtitleTracks.push({ language: code, codec });
           }
           if (ebmlNumber(bytes, children.find((x) => x.id === 131)) !== 1) continue;
           const video = children.find((x) => x.id === 224 && x.complete);
@@ -1764,7 +1818,13 @@ var require_containers = __commonJS({
           if (!dimensions && width > 0 && height > 0 && width <= 16384 && height <= 16384) dimensions = { width, height };
         }
       }
-      return { container: "mkv", dimensions, ...audioLanguages.size ? { audioLanguages: [...audioLanguages] } : {}, ...subtitleTracks.length ? { subtitleTracks, embeddedTurkish: true } : {}, ...duration ? { duration } : {} };
+      return {
+        container: "mkv",
+        dimensions,
+        ...audioLanguages.size ? { audioLanguages: [...audioLanguages] } : {},
+        ...subtitleTracks.length ? { subtitleTracks, ...subtitleTracks.some((t) => t.language === "tr") ? { embeddedTurkish: true } : {}, ...subtitleTracks.some((t) => t.language === "en") ? { embeddedEnglish: true } : {} } : {},
+        ...duration ? { duration } : {}
+      };
     }
     function mp4TailInfo(bytes) {
       for (let at = 4; at + 4 < bytes.length; at++) {
@@ -1816,6 +1876,7 @@ var require_hls = __commonJS({
   "src/media/hls.cjs"(exports2, module2) {
     "use strict";
     var { safeUrl, mapLimit } = require_util();
+    var { subtitleLanguage } = require_subtitles();
     function attributes(line) {
       const result = {};
       for (const match of line.matchAll(/([A-Z0-9-]+)=(?:"([^"]*)"|([^,]*))(?:,|$)/g)) result[match[1]] = match[2] ?? match[3];
@@ -1864,7 +1925,7 @@ var require_hls = __commonJS({
           if (uri || info.TYPE === "AUDIO" && !info.URI) media.push({
             type: info.TYPE,
             group: info["GROUP-ID"],
-            language: info.LANGUAGE || null,
+            language: info.LANGUAGE || (info.TYPE === "SUBTITLES" ? subtitleLanguage(info.NAME) : null),
             line: uri ? line.replace(/URI="[^"]*"/, `URI="${uri}"`) : line,
             url: uri
           });
@@ -1939,6 +2000,9 @@ var require_hls = __commonJS({
       if (!master?.valid) return null;
       const groups = new Set(master.variants.map((v) => v.audioGroup).filter(Boolean));
       const audioLanguages = [...new Set(master.media.filter((m) => m.type === "AUDIO" && groups.has(m.group) && m.language).map((m) => m.language))];
+      const subtitleGroups = new Set(master.variants.map((v) => v.subtitlesGroup).filter(Boolean));
+      const subtitleLanguages = [...new Set(master.media.filter((m) => m.type === "SUBTITLES" && subtitleGroups.has(m.group)).map((m) => subtitleLanguage(m.language)).filter(Boolean))];
+      const variantSubtitles = (variant) => [...new Set(master.media.filter((m) => m.type === "SUBTITLES" && m.group === variant.subtitlesGroup).map((m) => subtitleLanguage(m.language)).filter(Boolean))];
       if (options.detailed === false) {
         const duration2 = master.duration || (!master.live && Number(candidate.identity?.runtimeMinutes) > 0 ? candidate.identity.runtimeMinutes * 60 : null);
         const durationSource2 = master.duration ? "playlist" : duration2 ? "tmdb" : null;
@@ -1951,6 +2015,7 @@ var require_hls = __commonJS({
             playlist: selectedMaster(master, variant),
             sizeEstimate: bytes ? { minimum: bytes, maximum: bytes, basis: variant.averageBandwidth ? "average-bitrate" : "peak-bitrate", durationSource: durationSource2 } : null,
             duration: duration2,
+            subtitleLanguages: variantSubtitles(variant),
             audioLanguages: master.media.filter((m) => m.type === "AUDIO" && m.group === variant.audioGroup && m.language).map((m) => m.language),
             hasExternalAudio: !!variant.audioGroup,
             hasExternalSubtitles: !!variant.subtitlesGroup
@@ -1967,6 +2032,7 @@ var require_hls = __commonJS({
           renditions: renditions2,
           resolutionOptions: resolutionOptions2,
           audioLanguages,
+          subtitleLanguages,
           resolutionEvidence: resolutionOptions2.length ? "hls-manifest" : null,
           sizeEstimate: sizes.length ? {
             minimum: Math.min(...sizes.map((s) => s.minimum)),
@@ -2032,6 +2098,7 @@ var require_hls = __commonJS({
           playlist: selectedMaster(master, variant),
           sizeEstimate: estimate,
           duration: seconds,
+          subtitleLanguages: variantSubtitles(variant),
           audioLanguages: master.media.filter((m) => m.type === "AUDIO" && m.group === variant.audioGroup && m.language).map((m) => m.language),
           hasExternalAudio: !!variant.audioGroup,
           hasExternalSubtitles: !!variant.subtitlesGroup
@@ -2045,6 +2112,7 @@ var require_hls = __commonJS({
         downloadable: false,
         renditions,
         audioLanguages,
+        subtitleLanguages,
         resolutionOptions,
         resolutionEvidence: resolutionOptions.length ? "hls-manifest" : null,
         sizeEstimate,
@@ -2146,15 +2214,16 @@ var require_subtitle_discovery = __commonJS({
   "src/subtitle-discovery.cjs"(exports2, module2) {
     "use strict";
     var { safeUrl, normalizeTitle, mapLimit } = require_util();
-    var { isTurkish } = require_subtitles();
+    var { subtitleLanguage } = require_subtitles();
     var { matchesEpisode } = require_matching();
     var SUBTITLE_SERVICES = [
       "https://opensubtitles.stremio.homes/tr/ai-translated=false%7Cfrom=all%7Cauto-adjustment=false",
       "https://opensubtitles-v3.strem.io"
     ];
     var TURKISH_SUBTITLE_SERVICES = ["https://altyazidb.online"];
+    var ENGLISH_SUBTITLE_SERVICES = ["https://opensubtitles.stremio.homes/en/ai-translated=false%7Cfrom=all%7Cauto-adjustment=false"];
     function releaseKey(value) {
-      return normalizeTitle(String(value || "").split("/").pop().replace(/\.(mkv|mp4|srt|vtt)$/i, "").replace(/[._ -](tr|tur|turkish|sdh|forced|cc)$/i, ""));
+      return normalizeTitle(String(value || "").split("/").pop().replace(/\.(mkv|mp4|srt|vtt)$/i, "").replace(/[._ -](tr|tur|turkish|en|eng|english|sdh|forced|cc)$/i, ""));
     }
     function sourceFamily(value) {
       const text = String(value).toLowerCase().replace(/[^a-z0-9]/g, "");
@@ -2169,14 +2238,21 @@ var require_subtitle_discovery = __commonJS({
       const text = normalizeTitle(value).replace(/ /g, "");
       return ["extended", "directorscut", "unrated", "theatrical", "uncut"].filter((t) => text.includes(t)).join("|");
     }
+    function canonicalRelease(value, target, allowAliases) {
+      const key = releaseKey(value), title = normalizeTitle(target.originalTitle);
+      if (!allowAliases) return key;
+      const aliases = [...new Set((target.searchTitles || []).map(normalizeTitle))].filter(Boolean).sort((a, b) => b.length - a.length);
+      const alias = aliases.find((a) => key === a || key.startsWith(a + " "));
+      return alias ? title + key.slice(alias.length) : key;
+    }
     function scoreSubtitle(sub, candidate, video, target, allowLoose = false) {
-      if (!isTurkish(sub.language || sub.lang || sub.lang_code) || sub.ai_translated === true || sub.ai_translated === "true") return null;
+      if (!subtitleLanguage(sub.language || sub.lang || sub.lang_code) || sub.ai_translated === true || sub.ai_translated === "true") return null;
       if ((sub.imdbId || sub.imdb_id) && (sub.imdbId || sub.imdb_id) !== target.imdbId) return null;
       if (sub.tmdbId != null && Number(sub.tmdbId) !== target.tmdbId) return null;
       if (target.type === "tv" && (Number(sub.season) > 0 && Number(sub.season) !== target.season || Number(sub.episode) > 0 && Number(sub.episode) !== target.episode)) return null;
       const name = String(sub.releaseName || sub.movieReleaseName || sub.title || sub.subtitleFileName || "");
       const file = candidate.filename || decodeFilename(candidate.url);
-      const a = releaseKey(file), b = releaseKey(name);
+      const a = canonicalRelease(file, target, true), b = canonicalRelease(name, target, sub._identityBound === true);
       if (target.type === "tv" && /\bs\d+[ ._-]*e\d+\b|\b\d+x\d+\b/i.test(name) && !matchesEpisode(name, target)) return null;
       const years = b.match(/\b(?:19|20)\d{2}\b/g);
       const releaseYears = target.type === "movie" && (sub._identityBound === true || sub._scope === "paired" && candidate.identityImdbBound === true) ? [target.year, ...target.releaseYears || []] : [target.year];
@@ -2212,8 +2288,8 @@ var require_subtitle_discovery = __commonJS({
     }
     function createSubtitleDiscovery(http, target, settings) {
       const cache = /* @__PURE__ */ new Map();
-      let hashRequests = 0;
-      const bases = settings.subtitleUrls ? String(settings.subtitleUrls).split(/\s+/).map((url) => safeUrl(url, void 0, settings.allowHttp === true)?.replace(/\/manifest\.json(?:\?.*)?$/, "").replace(/\/$/, "")).filter(Boolean).slice(0, 3) : [...TURKISH_SUBTITLE_SERVICES, ...SUBTITLE_SERVICES];
+      const hashRequests = { tr: 0, en: 0 };
+      const bases = settings.subtitleUrls ? String(settings.subtitleUrls).split(/\s+/).map((url) => safeUrl(url, void 0, settings.allowHttp === true)?.replace(/\/manifest\.json(?:\?.*)?$/, "").replace(/\/$/, "")).filter(Boolean).slice(0, 3) : [...TURKISH_SUBTITLE_SERVICES, ...SUBTITLE_SERVICES, ...ENGLISH_SUBTITLE_SERVICES];
       const type = target.type === "tv" ? "series" : "movie";
       const id = target.imdbId + (target.type === "tv" ? `:${target.season}:${target.episode}` : "");
       function lookup(url) {
@@ -2221,13 +2297,17 @@ var require_subtitle_discovery = __commonJS({
         return cache.get(url);
       }
       function normalize(data, base) {
-        return Array.isArray(data?.subtitles) ? data.subtitles.filter((s) => s && isTurkish(s.lang || s.language || s.lang_code)).slice(0, 100).map((s) => {
+        const counts = { tr: 0, en: 0 };
+        return Array.isArray(data?.subtitles) ? data.subtitles.filter((s) => {
+          const language = s && subtitleLanguage(s.lang || s.language || s.lang_code);
+          return language && counts[language]++ < 100;
+        }).map((s) => {
           const release = String(s.releaseName || s.title || s.name || s.label || "");
           const title = normalizeTitle(target.originalTitle);
           const named = base === "https://altyazidb.online" && !normalizeTitle(release).startsWith(title + " ") ? `${target.originalTitle}.${target.year}.${release}` : release;
           return {
             ...s,
-            language: s.lang || s.language || s.lang_code,
+            language: subtitleLanguage(s.lang || s.language || s.lang_code),
             releaseName: named,
             _scope: "title",
             _identityBound: true,
@@ -2246,18 +2326,22 @@ var require_subtitle_discovery = __commonJS({
         const filename = candidate.filename || decodeFilename(video.url);
         const extras = [`filename=${encodeURIComponent(filename)}`, `videoSize=${video.size || 0}`];
         if (video.videoHash) extras.push(`videoHash=${video.videoHash}`);
-        const titleResults = bases.map((base) => lookup(`${base}/subtitles/${type}/${encodeURIComponent(id)}.json`).then((data) => normalize(data, base)));
-        let hashResults = Promise.resolve([]);
-        const hashBase = bases.find((base) => base.includes("opensubtitles.stremio.homes"));
-        if (settings.hashLookups !== false && video.videoHash && hashBase && !http.expired()) {
-          const hashUrl = `${hashBase}/subtitles/${type}/${encodeURIComponent(id)}/${extras.join("&")}.json`;
-          if (cache.has(hashUrl) || hashRequests < 3) {
-            if (!cache.has(hashUrl)) hashRequests++;
-            hashResults = lookup(hashUrl).then((data) => normalize(data, hashBase));
+        const languages = options.languages || ["tr", "en"];
+        const relevant = (base) => !(/stremio\.homes\/tr\//.test(base) && !languages.includes("tr")) && !(/stremio\.homes\/en\//.test(base) && !languages.includes("en")) && !(TURKISH_SUBTITLE_SERVICES.includes(base) && !languages.includes("tr"));
+        const titleResults = bases.filter(relevant).map((base) => lookup(`${base}/subtitles/${type}/${encodeURIComponent(id)}.json`).then((data) => normalize(data, base)));
+        const hashResults = [];
+        for (const language of languages) {
+          const hashBase = bases.find((base) => base.includes(`opensubtitles.stremio.homes/${language}/`));
+          if (settings.hashLookups !== false && video.videoHash && hashBase && !http.expired()) {
+            const hashUrl = `${hashBase}/subtitles/${type}/${encodeURIComponent(id)}/${extras.join("&")}.json`;
+            if (cache.has(hashUrl) || hashRequests[language] < 3) {
+              if (!cache.has(hashUrl)) hashRequests[language]++;
+              hashResults.push(lookup(hashUrl).then((data) => normalize(data, hashBase)));
+            }
           }
         }
-        const groups = await Promise.all([...titleResults, hashResults].map(async (job) => {
-          const rows = await job;
+        const groups = await Promise.all([...titleResults, ...hashResults].map(async (job) => {
+          const rows = (await job).filter((s) => languages.includes(s.language));
           if (rows.length && options.onBatch) await options.onBatch(rows);
           return rows;
         }));
@@ -2266,7 +2350,7 @@ var require_subtitle_discovery = __commonJS({
       discover.prefetch = prefetch;
       return discover;
     }
-    module2.exports = { createSubtitleDiscovery, scoreSubtitle, releaseKey, decodeFilename, SUBTITLE_SERVICES, TURKISH_SUBTITLE_SERVICES };
+    module2.exports = { createSubtitleDiscovery, scoreSubtitle, releaseKey, decodeFilename, SUBTITLE_SERVICES, TURKISH_SUBTITLE_SERVICES, ENGLISH_SUBTITLE_SERVICES };
   }
 });
 
@@ -2275,9 +2359,9 @@ var require_audio = __commonJS({
   "src/media/audio.cjs"(exports2, module2) {
     "use strict";
     var { normalizeTitle } = require_util();
-    var aliases = { eng: "en", tur: "tr", hin: "hi", fra: "fr", fre: "fr", jpn: "ja", rus: "ru", deu: "de", ger: "de", spa: "es", por: "pt", ita: "it", kor: "ko" };
+    var aliases = { eng: "en", english: "en", tur: "tr", turkish: "tr", türkçe: "tr", turkce: "tr", hin: "hi", hindi: "hi", fra: "fr", fre: "fr", french: "fr", jpn: "ja", japanese: "ja", rus: "ru", deu: "de", ger: "de", spa: "es", spanish: "es", por: "pt", ita: "it", kor: "ko" };
     function audioCode(value) {
-      const code = String(value || "").toLowerCase().split("-")[0];
+      const code = String(value || "").trim().toLowerCase().split(/[-_]/)[0];
       return aliases[code] || code;
     }
     function describeAudio(video, candidate) {
@@ -2298,6 +2382,7 @@ var require_ranking = __commonJS({
   "src/ranking.cjs"(exports2, module2) {
     "use strict";
     var { describeAudio, audioCode } = require_audio();
+    var { embeddedSubtitleLanguages } = require_subtitles();
     function balancedCandidates(groups, maximum = 18) {
       const result = [];
       for (let offset = 0; result.length < maximum; offset++) {
@@ -2314,7 +2399,9 @@ var require_ranking = __commonJS({
     function streamScore(entry, settings = {}) {
       const dimensions = entry.video.dimensions;
       const pixels = dimensions ? Math.min(dimensions.width, dimensions.height) : 0;
-      const subScore = Math.max(entry.video.embeddedTurkish || entry.candidate.embeddedTurkish ? 90 : 0, ...entry.subtitles.map((s) => s._score || 0));
+      const trScore = Math.max(embeddedSubtitleLanguages(entry.video, entry.candidate).includes("tr") ? 90 : 0, ...entry.subtitles.filter((s) => !s.language || s.language === "tr").map((s) => s._score || 0));
+      const enScore = Math.max(embeddedSubtitleLanguages(entry.video, entry.candidate).includes("en") ? 90 : 0, ...entry.subtitles.filter((s) => s.language === "en").map((s) => s._score || 0));
+      const subScore = trScore ? 100 + trScore : enScore;
       return (entry.video.downloadable ? 1e9 : 0) + subScore * 1e6 + (entry.candidate.identityConfidence || 100) * 1e3 + Math.min(pixels, 2160) - (entry.video.size > 12 * 1024 ** 3 ? 2e3 : 0) - (entry.candidate.burnedSubtitleLanguage && entry.candidate.burnedSubtitleLanguage !== "tr" ? 12e8 : 0) - audioPenalty(entry, settings);
     }
     function audioPenalty(entry, settings) {
@@ -2363,6 +2450,8 @@ var require_presentation = __commonJS({
   "src/media/presentation.cjs"(exports2, module2) {
     "use strict";
     var { qualityLabel } = require_util();
+    var { describeAudio } = require_audio();
+    var { subtitleLanguage, embeddedSubtitleLanguages } = require_subtitles();
     function filenameQuality(filename) {
       const match = String(filename || "").match(/(?:^|[^0-9])(4320|2160|1440|1080|720|576|480|360|240)p\b/i);
       if (match) return Number(match[1]) + "p";
@@ -2380,7 +2469,7 @@ var require_presentation = __commonJS({
       return { quality: "Bilinmiyor", text: "Kalite bilgisi alınamadı" };
     }
     function humanBytes(bytes) {
-      return bytes >= 1024 ** 3 ? `${(bytes / 1024 ** 3).toFixed(2)} GiB` : `${(bytes / 1024 ** 2).toFixed(1)} MiB`;
+      return bytes < 1e7 ? "<0,01 GB" : `${(bytes / 1e9).toFixed(2).replace(".", ",")} GB`;
     }
     function describeSize(video) {
       if (video.size > 0) return { size: humanBytes(video.size), text: `${humanBytes(video.size)} · dosya boyutu` };
@@ -2393,7 +2482,21 @@ var require_presentation = __commonJS({
       }
       return { text: video.container === "hls" ? "Aktarım boyutu hesaplanamadı" : "Dosya boyutu alınamadı" };
     }
-    module2.exports = { filenameQuality, describeQuality, describeSize };
+    function subtitleLabel(video, candidate, subtitles) {
+      const languages = /* @__PURE__ */ new Set([...embeddedSubtitleLanguages(video, candidate), ...subtitles.map((s) => subtitleLanguage(s.language)).filter(Boolean)]);
+      const label = ["tr", "en"].filter((l) => languages.has(l)).map((l) => l.toUpperCase()).join("/");
+      return label ? `${label} altyazı${languages.has("tr") ? "" : " · TR altyazı yok"}` : "TR altyazı yok";
+    }
+    function cardFields(video, candidate, subtitles) {
+      const quality = describeQuality(video, candidate), size = describeSize(video), audio = describeAudio(video, candidate);
+      const dimensions = video.dimensions || video.resolutionOptions?.length === 1 && video.resolutionOptions[0];
+      return {
+        quality: dimensions ? `${dimensions.width}×${dimensions.height}${video.dimensions ? " ✓" : " HLS"}` : video.resolutionOptions?.length > 1 ? "Otomatik HLS" : quality.quality === "Bilinmiyor" ? "Kalite bilinmiyor" : `${quality.quality} tahmini`,
+        size: size.size || (video.sizeEstimate ? "Boyut değişken" : "Boyut bilinmiyor"),
+        language: `Ses: ${audio?.text || "bilinmiyor"} · ${subtitleLabel(video, candidate, subtitles)}` + (candidate.burnedSubtitleLanguage === "es" ? " · ES görüntüde" : "")
+      };
+    }
+    module2.exports = { filenameQuality, describeQuality, describeSize, cardFields, subtitleLabel };
   }
 });
 
@@ -2401,7 +2504,7 @@ var require_presentation = __commonJS({
 var require_diagnostics = __commonJS({
   "src/diagnostics.cjs"(exports2, module2) {
     "use strict";
-    var VERSION = true ? "1.7.1" : "dev";
+    var VERSION = true ? "1.7.2" : "dev";
     function effectiveTmdbKey(settings, injectedKey) {
       return typeof settings.tmdbApiKey === "string" && settings.tmdbApiKey.trim() ? settings.tmdbApiKey.trim() : typeof injectedKey === "string" ? injectedKey.trim() : "";
     }
@@ -2459,11 +2562,11 @@ var require_index = __commonJS({
     var { scanFilmModu } = require_filmmodu();
     var { scanDiziBak } = require_dizibak();
     var { probe } = require_probe();
-    var { loadSubtitles } = require_subtitles();
+    var { loadSubtitles, subtitleLanguage, subtitleKey, selectSubtitles, embeddedSubtitleLanguages } = require_subtitles();
     var { createSubtitleDiscovery, scoreSubtitle } = require_subtitle_discovery();
     var { safeUrl, mapLimit } = require_util();
     var { rankStreams } = require_ranking();
-    var { describeQuality, describeSize } = require_presentation();
+    var { describeQuality, describeSize, cardFields, subtitleLabel } = require_presentation();
     var { profileAddress } = require_hls();
     var { configuration, configurationLabel, effectiveTmdbKey, writeDiagnostic } = require_diagnostics();
     var { describeAudio } = require_audio();
@@ -2479,8 +2582,8 @@ var require_index = __commonJS({
         const previous = key && files.get(key);
         if (previous) {
           const tracks = /* @__PURE__ */ new Map();
-          for (const sub of [...previous.subtitles, ...pair.subtitles].sort((a, b) => (b._score || 0) - (a._score || 0))) if (!tracks.has(sub.url)) tracks.set(sub.url, sub);
-          previous.subtitles = [...tracks.values()].slice(0, 4);
+          for (const sub of [...previous.subtitles, ...pair.subtitles].sort((a, b) => (b._score || 0) - (a._score || 0))) if (!tracks.has(subtitleKey(sub))) tracks.set(subtitleKey(sub), sub);
+          previous.subtitles = selectSubtitles([...tracks.values()]);
           if (pair.candidate.burnedSubtitleLanguage) previous.candidate = { ...previous.candidate, burnedSubtitleLanguage: pair.candidate.burnedSubtitleLanguage };
         } else {
           const copy = { ...pair, subtitles: pair.subtitles.slice() };
@@ -2502,7 +2605,8 @@ var require_index = __commonJS({
             resolutionOptions: [r.dimensions],
             sizeEstimate: r.sizeEstimate,
             duration: r.duration,
-            audioLanguages: r.audioLanguages || video.audioLanguages
+            audioLanguages: r.audioLanguages || video.audioLanguages,
+            subtitleLanguages: r.subtitleLanguages || video.subtitleLanguages
           } };
         }).filter(Boolean);
         return profiles.length ? settings.hlsView === "both" ? [pair, ...profiles] : profiles : [pair];
@@ -2512,27 +2616,25 @@ var require_index = __commonJS({
         const kind = video.downloadable ? `${video.container.toUpperCase()} · Online izlenebilir · İndirilebilir` : "HLS · Online izlenebilir · İndirilemez";
         const quality = describeQuality(video, candidate), size = describeSize(video);
         const audio = describeAudio(video, candidate);
+        const fields = cardFields(video, candidate, subtitles);
         const dimensionText = ` · ${quality.text}`;
         const subScore = subtitles[0]?._score || 0;
         const matchText = subScore >= 90 ? "eşleşti" : subScore >= 70 ? "sürüm benzerliği" : subScore >= 65 ? "süre uyumu" : "film düzeyi; senkron belirsiz";
-        const embedded = candidate.embeddedTurkish || video.embeddedTurkish;
+        const embedded = embeddedSubtitleLanguages(video, candidate).length > 0;
         const burnedForeign = candidate.burnedSubtitleLanguage === "es" ? "İspanyolca altyazı görüntüye işlenmiş" : "";
-        const subtitleText = subtitles.length ? ` · TR altyazı (${matchText})` : embedded ? ` · TR altyazı (${video.container === "hls" ? "HLS" : "dosya"} içi)` : " · TR altyazı bulunamadı";
+        const subtitleText = ` · ${subtitleLabel(video, candidate, subtitles)}` + (subtitles.length ? ` (${matchText})` : embedded ? ` (${video.container === "hls" ? "HLS" : "dosya"} içi)` : "");
         const detailedTitle = `${target.originalTitle} (${target.year}) · ${kind}${dimensionText} · ${size.text}${audio ? " · Ses: " + audio.text : ""}${subtitleText}${burnedForeign ? " · " + burnedForeign : ""}`;
-        const title = settings.compactLabels === false ? detailedTitle : `${quality.text} · ${size.text}${audio ? " · " + audio.text : ""}${subtitleText}${burnedForeign ? " · " + burnedForeign : ""}${video.container === "hls" ? " · Online izlenebilir · İndirilemez" : ""}`;
-        const source = String(candidate.source || "Kaynak").replace("4KHDHub / HubCloud", "4KHDHub").replace("Internet Archive", "Archive") + (candidate.serverIndex ? ` ${candidate.serverIndex}` : "") + (candidate.source === "Animecix" && candidate.sourceNote ? ` · ${candidate.sourceNote.slice(0, 40)}` : "");
-        const subTag = subtitles.length ? "Türkçe Altyazı" : embedded ? "TR içi" : candidate.turkishSource ? "TR kaynak · altyazı doğrulanmadı" : "TR yok";
+        const title = settings.compactLabels === false ? detailedTitle : `${fields.quality} · ${fields.size} · ${fields.language}${!subtitles.length && embedded ? " · " + (video.container === "hls" ? "HLS" : "Dosya") + " içi altyazı" : ""}${burnedForeign ? " · " + burnedForeign : ""}${video.container === "hls" ? " · Online izlenebilir · İndirilemez" : ""}`;
+        const source = String(candidate.source || "Kaynak").replace("4KHDHub / HubCloud", "4KHDHub").replace("Internet Archive", "Archive") + (candidate.serverIndex ? ` ${candidate.serverIndex}` : "");
         const badge = video.downloadable ? "İndirilebilir" : "Online";
-        const details = video.dimensions ? `${video.dimensions.width}×${video.dimensions.height}` : video.resolutionOptions?.length === 1 ? `${video.resolutionOptions[0].width}×${video.resolutionOptions[0].height}` : video.resolutionOptions?.length > 1 ? "Otomatik kalite" : quality.quality;
         const label = settings.compactLabels === false ? `${source} · ${kind}${dimensionText} · ${size.text}${subtitleText}` : `${badge} · ${source}`;
         return {
           name: `${String(index + 1).padStart(2, "0")} · ${label}`,
           title,
           url: video.url,
-          quality: quality.quality,
-          ...size.size ? { size: size.size } : {},
-          ...settings.compactLabels !== false ? { quality: `${details}${video.dimensions ? " ✓" : video.container === "hls" ? " HLS" : quality.quality === "Bilinmiyor" ? "" : " tahmin"}` } : {},
-          language: (audio ? audio.text + " · " : "") + subTag + (burnedForeign ? " · ES görüntüde" : ""),
+          quality: fields.quality,
+          size: fields.size,
+          language: fields.language,
           provider: "Nuvio TR HD",
           type: video.container,
           ...Object.keys(candidate.headers).length ? { headers: candidate.headers } : {},
@@ -2640,7 +2742,7 @@ var require_index = __commonJS({
               return;
             }
             const pair = { candidate, video, subtitles: [] };
-            const embedded = candidate.embeddedTurkish || video.embeddedTurkish;
+            const embedded = embeddedSubtitleLanguages(video, candidate).includes("tr");
             let published = !strictSubtitles || embedded;
             if (published) completed.push(pair);
             const validatedTracks = /* @__PURE__ */ new Map();
@@ -2648,9 +2750,9 @@ var require_index = __commonJS({
               if (http.expired()) return;
               const key2 = track._contentKey || track.url, previous = validatedTracks.get(key2);
               const { _contentKey, ...clean } = track;
-              if (!previous || (clean._score || 0) > (previous._score || 0)) validatedTracks.set(key2, clean);
-              pair.subtitles = [...validatedTracks.values()].sort((a, b) => (b._score || 0) - (a._score || 0)).slice(0, 4);
-              if (pair.subtitles.length && !published) {
+              if (!previous || (clean._score || 0) > (previous._score || 0) || clean.language === "tr" && previous.language === "en") validatedTracks.set(key2, clean);
+              pair.subtitles = selectSubtitles([...validatedTracks.values()]);
+              if (pair.subtitles.some((s) => s.language === "tr") && !published) {
                 completed.push(pair);
                 published = true;
               }
@@ -2667,10 +2769,11 @@ var require_index = __commonJS({
                 allowHttp,
                 { keepScore: true, onTrack: acceptTrack, videoDuration: video.durationSource === "tmdb" ? void 0 : video.duration }
               );
-              if (pair.subtitles.length) return;
+              if (["tr", "en"].every((language) => pair.subtitles.some((s) => s.language === language))) return;
             }
-            const scheduled = /* @__PURE__ */ new Set(), deferred = [];
-            let generalCount = 0, totalCount = 0, releaseReserved = false;
+            const needed = ["tr", "en"].filter((language) => !pair.subtitles.some((s) => s.language === language));
+            const scheduled = /* @__PURE__ */ new Set(), deferred = [], counts = { tr: 0, en: 0 }, generalCount = { tr: 0, en: 0 }, releaseReserved = { tr: false, en: false }, limits = { tr: 12, en: 8 };
+            let totalCount = 0;
             const acceptBatch = async (rows) => {
               if (http.expired()) return;
               const entries = rows.map((sub) => {
@@ -2679,17 +2782,19 @@ var require_index = __commonJS({
                 return match ? { ...sub, _match: match } : null;
               }).filter(Boolean).sort((a, b) => b._match.score - a._match.score).filter((sub) => {
                 const url = safeUrl(sub.url, candidate.subtitleBase, allowHttp);
-                const key2 = url + JSON.stringify(sub.headers || {}), strong = sub._match.score >= 90;
-                if (!url || scheduled.has(key2) || totalCount >= 12 || /\.(zip|ass|ssa|rar)(?:\/?$|[?#])/i.test(url)) return false;
-                const generalLimit = video.videoHash && !releaseReserved ? 8 : 12;
-                if (!strong && generalCount >= generalLimit) {
+                const language = subtitleLanguage(sub.language || sub.lang || sub.lang_code), key2 = url + JSON.stringify(sub.headers || {}), strong = sub._match.score >= 90;
+                if (!language || !needed.includes(language) || !url || scheduled.has(key2) || counts[language] >= limits[language] || /\.(zip|ass|ssa|rar)(?:\/?$|[?#])/i.test(url)) return false;
+                const generalLimit = video.videoHash && !releaseReserved[language] ? limits[language] - 4 : limits[language];
+                if (!strong && generalCount[language] >= generalLimit) {
                   deferred.push(sub);
                   return false;
                 }
-                if (pair.subtitles.length === 4 && sub._match.score <= (pair.subtitles[3]._score || 0)) return false;
+                const existing = pair.subtitles.filter((s) => s.language === language);
+                if (existing.length === 4 && sub._match.score <= (existing[3]._score || 0)) return false;
                 scheduled.add(key2);
                 totalCount++;
-                if (!strong) generalCount++;
+                counts[language]++;
+                if (!strong) generalCount[language]++;
                 return true;
               });
               if (entries.length) await loadSubtitles(
@@ -2700,9 +2805,9 @@ var require_index = __commonJS({
                 { keepScore: true, onTrack: acceptTrack, videoDuration: video.durationSource === "tmdb" ? void 0 : video.duration }
               );
             };
-            await discoverSubtitles(candidate, video, { onBatch: acceptBatch });
-            if (!http.expired() && pair.subtitles.length < 4 && deferred.length) {
-              releaseReserved = true;
+            await discoverSubtitles(candidate, video, { onBatch: acceptBatch, languages: needed });
+            if (!http.expired() && deferred.length) {
+              for (const language of needed) releaseReserved[language] = true;
               await acceptBatch(deferred.slice());
             }
             if (!http.expired() && !pair.subtitles.length) reject(totalCount ? "subtitle_unavailable" : "subtitle_no_match");
@@ -2730,7 +2835,7 @@ var require_index = __commonJS({
                 if (hosted) {
                   for (const pair of hosted) {
                     const source = pair.candidate.source;
-                    if (source.startsWith("VixSrc") && settings.vixsrcEnabled === false || source === "Internet Archive" && settings.archiveEnabled === false || source === "PlayIMDb" && settings.playImdbEnabled === false || source === "4KHDHub / HubCloud" && settings.hdhubEnabled === false || pair.video.container === "hls" && settings.includeHls === false || pair.video.dimensions && Math.min(pair.video.dimensions.width, pair.video.dimensions.height) < Number(settings.minimumQuality || 0) || strictSubtitles && !pair.subtitles.length && !pair.candidate.embeddedTurkish) continue;
+                    if (source.startsWith("VixSrc") && settings.vixsrcEnabled === false || source === "Internet Archive" && settings.archiveEnabled === false || source === "PlayIMDb" && settings.playImdbEnabled === false || source === "4KHDHub / HubCloud" && settings.hdhubEnabled === false || pair.video.container === "hls" && settings.includeHls === false || pair.video.dimensions && Math.min(pair.video.dimensions.width, pair.video.dimensions.height) < Number(settings.minimumQuality || 0) || strictSubtitles && !pair.subtitles.some((s) => s.language === "tr") && !embeddedSubtitleLanguages(pair.video, pair.candidate).includes("tr")) continue;
                     completed.push(pair);
                   }
                   report.sources.push({ name: "Ortak tarama", candidates: hosted.length });
@@ -2824,9 +2929,9 @@ var require_index = __commonJS({
       const settings = typeof globalThis.SCRAPER_SETTINGS === "object" && globalThis.SCRAPER_SETTINGS || {};
       const tmdbKey = typeof globalThis.TMDB_API_KEY === "string" ? globalThis.TMDB_API_KEY : "";
       return [
-        { type: "header", label: "Nuvio TR HD · Otomatik kaynak ve Türkçe altyazı" },
+        { type: "header", label: "Nuvio TR HD · Otomatik kaynak ve TR/EN altyazı" },
         { type: "info", label: configurationLabel(settings, tmdbKey) },
-        { type: "info", label: "Varsayılan: tüm çözünürlükler, en fazla 20 alternatif. Online izlenebilir kaynaklar gösterilir; doğrulanmış MP4/MKV ayrıca İndirilebilir etiketlidir. Türkçe bulunamazsa video gizlenmez. Nuvio altyazı dilini Türkçe seçin." },
+        { type: "info", label: "Kart sırası: kalite · GB · ses · TR/EN altyazı. Eksik bilgi açıkça yazılır; ? ses iddiası, ~ boyut tahminidir. En fazla 20 sonuç, tüm çözünürlükler. Türkçe yoksa varsayılan olarak video korunur; İngilizce altyazılar da sunulur. Nuvio altyazı dilini Türkçe seçebilirsiniz." },
         { type: "toggle", key: "autoDiscover", label: "Otomatik kaynak tarama", defaultValue: true },
         { type: "toggle", key: "compactLabels", label: "Kısa ve sade kaynak başlıkları", defaultValue: true },
         {
@@ -2877,9 +2982,9 @@ var require_index = __commonJS({
         { type: "toggle", key: "dizibakEnabled", label: "DiziBak dizi alternatifi", defaultValue: true, description: "Küçük public metadata yanıtları kullanılır. İlk bölüm tarihi ve dizi kategorisi uyuşmazsa sonuç eklenmez." },
         { type: "toggle", key: "filmmoduEnabled", label: "FilmModu online film ve kaynak ses seçenekleri", defaultValue: true },
         { type: "info", label: "Ses kodları: EN İngilizce, TR Türkçe, JA Japonca, HI Hintçe. ? işareti kaynak/dosya adı iddiasıdır. ES görüntüde, İspanyolca sabit altyazıdır; ses dili değildir." },
-        { type: "toggle", key: "autoSubtitles", label: "Türkçe altyazıyı otomatik ara", defaultValue: true },
+        { type: "toggle", key: "autoSubtitles", label: "TR ve EN altyazıları otomatik ara", defaultValue: true },
         { type: "select", key: "subtitlePolicy", label: "Türkçe altyazı bulunamazsa", defaultValue: "prefer", options: [
-          { value: "prefer", label: "Videoyu göster; TR yok bilgisini yaz" },
+          { value: "prefer", label: "Videoyu göster; TR altyazı yok bilgisini yaz" },
           { value: "require", label: "Videoyu gizle" }
         ] },
         {
@@ -2906,7 +3011,7 @@ var require_index = __commonJS({
         ] },
         { type: "text", key: "catalogUrls", label: "Ek JSON katalog adresleri", placeholder: "İsteğe bağlı; boşlukla ayırın" },
         { type: "text", key: "addonUrls", label: "Ek Stremio manifest adresleri", placeholder: "İsteğe bağlı; boşlukla ayırın" },
-        { type: "text", key: "subtitleUrls", label: "Ek/alternatif altyazı addon adresleri", description: "Boşsa AltyazıDB, Türkçe OpenSubtitles v3+ ve resmî v3 kullanılır." },
+        { type: "text", key: "subtitleUrls", label: "Ek/alternatif TR/EN altyazı addon adresleri", description: "Boşsa AltyazıDB, TR/EN OpenSubtitles v3+ ve resmî v3 kullanılır. Dil başına en fazla dört geçerli alternatif sunulur." },
         { type: "text", key: "tmdbApiKey", label: "TMDB v3 anahtarı (isteğe bağlı)", description: "Boşsa Nuvio tarafından sağlanan anahtar kullanılır." },
         { type: "toggle", key: "includeHls", label: "HLS çevrimiçi izleme alternatiflerini göster", defaultValue: true, description: "Doğrudan dosyalar önce gelir. HLS yalnız oynatma içindir; Nuvio üzerinden dosya olarak indirilemez." },
         { type: "toggle", key: "debug", label: "Hata ayıklama özeti", defaultValue: false, description: "Boş sonuçlarda tanı zaten yazılır; açıkken başarılı aramaları da yazar. Günlükte ayar/kimlik/kaynak/adet/HTTP durumları vardır; anahtar ve video adresi yoktur." },

@@ -1,10 +1,16 @@
 # Nuvio TR HD
 
-Nuvio Mobile'ın Kotlin Multiplatform **Full** sürümü için JavaScript sağlayıcı deposu. Film/bölüm seçildiğinde birden çok gerçek kaynağı otomatik tarar, MP4/MKV bağlantılarını doğrular ve her video için mevcut Türkçe altyazıları arayıp eşleştirir. Seçilen boyut/kalite/uygunluk sırasıyla sunar. Her taramada varsayılan üst sınır **20**, çözünürlük filtresi **Tümü**. İstenirse 6/10 seçilebilir. Sürüm **1.7.1**.
+Nuvio Mobile'ın Kotlin Multiplatform **Full** sürümü için JavaScript sağlayıcı deposu. Film/bölüm seçildiğinde birden çok gerçek kaynağı otomatik tarar, MP4/MKV bağlantılarını doğrular ve her video için mevcut Türkçe altyazıları arayıp eşleştirir. Seçilen boyut/kalite/uygunluk sırasıyla sunar. Her taramada varsayılan üst sınır **20**, çözünürlük filtresi **Tümü**. İstenirse 6/10 seçilebilir. Sürüm **1.7.2**.
 
 **26 Ekim 2026 uyumluluk kontrolü:** `0.6.4-beta` ve güncel `cmp-rewrite` dalının ilgili kaynak sözleşmeleri karşılaştırıldı. Derlenmiş sağlayıcı gerçek QuickJS WASM motorunda test edilir. Fiziksel Android/iOS cihazında oynatma ve indirme testi henüz yapılmadı. Ayrıntılar: [uyumluluk raporu](docs/UYUMLULUK.md).
 
 Bu depo medya barındırmaz. SonAnime, DiziYou, DiziBak, FilmModu, Animecix/Tau, 4KHDHub/HubCloud, VixSrc, Internet Archive ve PlayIMDb yerleşiktir; DahmerMovies deneysel yerel yedektir ve varsayılan kapalıdır. JSON/Stremio adresi girmek zorunlu değildir. Kişisel JSON ve Stremio kaynakları ek alternatif olarak korunmuştur. Her film için erişilebilir HD dosya veya uygun Türkçe altyazı bulunması garanti değildir; başarısız/engelli kaynaklar atlanır.
+
+## 1.7.2: aynı kart düzeni ve TR/EN altyazı
+
+Kartlar her zaman **kalite · GB · ses · altyazı** alanlarını gösterir. Eksik boyut veya ses boş bırakılmaz; bilinmiyor yazılır. Ses kodları ve altyazı kodları ayrıdır: `Ses: EN · TR/EN altyazı`. Türkçe yoksa `TR altyazı yok`; yalnız İngilizce varsa `EN altyazı · TR altyazı yok` görünür. Bütün boyutlar Türkçe virgüllü decimal GB’dir; tahminler işaretlidir.
+
+İngilizce OpenSubtitles araması ve kaynakla eşlenmiş EN SRT/VTT desteği eklendi. Aynı kimlik/yıl/bölüm, hash/release/süre ve UTF-8 kontrolleri iki dilde uygulanır. Dil başına dört alternatif; TR önce gelir, Türkçe zorunlu ayarını EN karşılamaz. İngilizce gövdeler ortak dört native fetch’in en fazla birini kullanır. **168 test ve gerçek QuickJS geçti; fiziksel iPhone/tam indirme/offline/senkron testi yok.** [Detaylar ve örnekler](docs/TR_EN_VE_KARTLAR_172.md).
 
 ## 1.7.1: indirme kontrolü ve iPhone font alternatifi
 

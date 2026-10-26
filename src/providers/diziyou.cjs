@@ -2,6 +2,7 @@
 const { safeUrl, mapLimit, normalizeTitle } = require('../util.cjs');
 const { anchors } = require('./directory.cjs');
 const { jsonLd, tagAttributes, sameName, sameOrigin, syntheticFilename } = require('./page-data.cjs');
+const { subtitleLanguage } = require('../subtitles.cjs');
 const ORIGIN = 'https://www.diziyou.one';
 function seriesMatches(html, target) {
   return jsonLd(html).some(r => r['@type'] === 'TVSeries' && sameName(r.name, target) && Number(String(r.startDate || r.datePublished || '').slice(0,4)) === target.year);
@@ -40,8 +41,8 @@ async function scanDiziYou(http, target) {
     // Only the actual player video: the page also contains MP4 advertisements.
     const video = player && [...player.text.matchAll(/<video\b([^>]*)>([\s\S]*?)<\/video>/gi)].find(m => tagAttributes(m[1]).id === 'diziyou');
     if (!video) return [];
-    const subtitles = [...video[2].matchAll(/<track\b[^>]*>/gi)].map(m => tagAttributes(m[0])).filter(a => a.srclang === 'tr')
-      .map(a => ({ url: safeUrl(a.src, player.url), language: 'tr', _scope: 'paired', identity: target, headers: { Referer: ORIGIN+'/' } })).filter(s => s.url);
+    const subtitles = [...video[2].matchAll(/<track\b[^>]*>/gi)].map(m => tagAttributes(m[0])).filter(a => subtitleLanguage(a.srclang))
+      .map(a => ({ url: safeUrl(a.src, player.url), language: subtitleLanguage(a.srclang), _scope: 'paired', identity: target, headers: { Referer: ORIGIN+'/' } })).filter(s => s.url);
     return [...video[2].matchAll(/<source\b[^>]*>/gi)].slice(0,5).map(m => {
       const url = safeUrl(tagAttributes(m[0]).src, player.url);
       if (!url || !/\.(m3u8|mp4|mkv)(?:$|[?#])/i.test(url)) return null;

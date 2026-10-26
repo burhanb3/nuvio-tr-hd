@@ -3,6 +3,7 @@ const { safeUrl, normalizeTitle, mapLimit } = require('../util.cjs');
 const { filenameIdentity } = require('./directory.cjs');
 const { verifiedArchiveRecords, verifiedMetadataFile } = require('./archive-verified.cjs');
 const { matchesEpisode } = require('../matching.cjs');
+const { subtitleLanguage } = require('../subtitles.cjs');
 
 function archiveQuery(target, preferHd = false, titleYear = !preferHd) {
   const title = target.originalTitle.replace(/["\\]/g, ' ');
@@ -84,8 +85,11 @@ async function scanArchive(http, target, options = {}) {
         [safeUrl(`https://archive.org/download/${encodeURIComponent(doc.identifier)}/${path}`)].filter(Boolean);
     };
     const urlFor = name => urlsFor(name)[0];
-    const subtitles = files.filter(f => /\.(srt|vtt)$/i.test(f.name) && /(?:[._-](tr|tur)|turkish)/i.test(f.name))
-      .map(f => ({ url: urlFor(f.name), language: 'tr', releaseName: f.name, _scope: 'release' }));
+    const subtitles = files.filter(f => /\.(srt|vtt)$/i.test(f.name)).map(f => {
+      const extra=normalizeTitle(f.name).replace(expectedTitle,'');
+      const language=subtitleLanguage(f.language)||subtitleLanguage(extra.match(/\b(tr|tur|turkish|en|eng|english)\b/)?.[1]);
+      return language ? { url:urlFor(f.name),language,releaseName:f.name,_scope:'release' } : null;
+    }).filter(Boolean);
     const videos = files.filter(f => {
       if (pinnedItem && !verifiedMetadataFile(verifiedRecord,f)) return false;
       const extraName = normalizeTitle(f.name).replace(expectedTitle, '');

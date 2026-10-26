@@ -1,6 +1,7 @@
 'use strict';
 const { matchesIdentity } = require('./matching.cjs');
 const { safeUrl, cleanHeaders } = require('./util.cjs');
+const { subtitleLanguage, selectSubtitles } = require('./subtitles.cjs');
 const SERVICE_ORIGIN = 'https://nuvio-tr-hd-download-bridge.kamilbsr03.chatgpt.site';
 
 async function loadHosted(http, target) {
@@ -20,14 +21,14 @@ async function loadHosted(http, target) {
     return {
       candidate: { url, filename: String(c.filename || '').slice(0, 300), source: String(c.source || 'Ortak kaynak').slice(0, 80),
         headers: cleanHeaders(c.headers), identity: target, identityConfidence: Number(c.identityConfidence) || 90,
-        claimedQuality: String(c.claimedQuality || '').slice(0, 30), embeddedTurkish: c.embeddedTurkish === true, subtitles: [] },
+        claimedQuality: String(c.claimedQuality || '').slice(0, 30), embeddedTurkish: c.embeddedTurkish === true, embeddedEnglish:c.embeddedEnglish===true, subtitles: [] },
       video: { url, container: v.container, downloadable: v.container !== 'hls', dimensions,
         resolutionOptions: (v.resolutionOptions || []).filter(d => Number.isInteger(d?.width) && Number.isInteger(d?.height) && d.width > 0 && d.height > 0 && d.width <= 16384 && d.height <= 16384).slice(0, 16),
         sizeEstimate: Number.isSafeInteger(v.sizeEstimate?.minimum) && Number.isSafeInteger(v.sizeEstimate?.maximum) && v.sizeEstimate.minimum > 0 && v.sizeEstimate.maximum >= v.sizeEstimate.minimum ? v.sizeEstimate : null,
         size: Number.isSafeInteger(v.size) && v.size > 0 ? v.size : null, duration: Number(v.duration) || null },
-      subtitles: (Array.isArray(pair.subtitles) ? pair.subtitles : []).slice(0, 4).filter(s => s?.language === 'tr' && safeUrl(s.url))
-        .map(s => ({ url: safeUrl(s.url), language: 'tr', name: String(s.name || 'Türkçe').slice(0, 300), _score: Math.min(100, Math.max(0, Number(s._score) || 0)),
-          ...(Object.keys(cleanHeaders(s.headers)).length ? { headers: cleanHeaders(s.headers) } : {}) }))
+      subtitles: selectSubtitles((Array.isArray(pair.subtitles) ? pair.subtitles : []).slice(0, 100).filter(s => subtitleLanguage(s?.language) && safeUrl(s.url))
+        .map(s => ({ url: safeUrl(s.url), language: subtitleLanguage(s.language), name: String(s.name || (subtitleLanguage(s.language)==='tr'?'Türkçe':'İngilizce')).slice(0, 300), _score: Math.min(100, Math.max(0, Number(s._score) || 0)),
+          ...(Object.keys(cleanHeaders(s.headers)).length ? { headers: cleanHeaders(s.headers) } : {}) })))
     };
   }).filter(Boolean);
 }

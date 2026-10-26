@@ -1,5 +1,14 @@
 # Değişiklik günlüğü
 
+## 1.7.2 — 2026-10-26
+
+- Her kartta kalite, GB, ses ve altyazı alanları; eksik bilgi için tutarlı yer tutucular. Türkçe virgüllü decimal GB; kısa ses kodları ve açık kaynak iddiası/tahmin etiketleri.
+- TR yok → TR altyazı yok. TR/EN dış/gömülü altyazı dilleri, ses dillerinden ayrı gösterilir.
+- EN OpenSubtitles v3+ ve eşlenmiş EN SRT/VTT; aynı kimlik/kurgu/yıl/bölüm/hash/release/süre ve gövde kontrolleri. Dil başına4 seçenek; Türkçe zorunluyu EN karşılamaz.
+- Ortak altyazı native fetch limiti4, EN en fazla1; mevcut TR çiftini EN beklemesi silmez. Aynı URL için farklı açık altyazı başlıklarıyla iki dil desteklenir.
+- 168 test/QuickJS; canlı TR+EN gövdeleri ve native alan sırası kontrolü. Fleabag Archive ağ arızası saklanmadı; fiziksel cihaz/tam indirme/offline/senkron yok.
+
+
 ## 1.7.1 — 2026-10-26
 
 - Dosya kontrolünde ayrı HEAD kaldırıldı; Range GET gerçek format/boyut/piksel kontrolü sürer. Native bitmemiş dosya fetch kotası3; altyazı kotası ayrı4.

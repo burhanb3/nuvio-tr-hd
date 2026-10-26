@@ -1,5 +1,14 @@
 # Proje hafızası
 
+## 1.7.2 — tek kart düzeni ve TR/EN
+
+Kullanıcı her satırın aynı alanları göstermesini, TR yok yerine TR altyazı yok yazılmasını ve İngilizce altyazının aynı kontrollerle eklenmesini istedi. Kalite/GB/ses/altyazı her zaman doludur; bilinmeyen bilgi uydurulmaz. Boyut decimal GB (10^9 byte), iki hane/Türkçe virgül; HLS ~ veya ≤~ ve değişken/bilinmiyor ayrımı sürer. Ses:EN ile TR/EN altyazı ayrıdır; Animecix uzun kredisi kart adından çıkarıldı.
+
+Yeni EN homes servisi ve eşlenmiş DiziYou/Animecix/Archive/dizin/JSON/Stremio EN SRT/VTT. MKV/HLS gömülü diller tespit edildiği ölçüde gösterilir. Aynı scoreSubtitle motoru; kanonik farklı dil adları yalnız kimliği bağlı sorguda; her dil4 seçenek (toplam8), TR önce. TR zorunlu EN-only ile geçmez. Otomatik aday bütçeleri TR12/EN8, hash dil başına3; ortak gövde native4, EN fiziksel ve mantıksal en fazla1. body cache arama içinde paylaşılır, nativeGroup fetch’e gitmez. Aynı URL farklı açık headers ile farklı dil gövdeleri korunabilir; aynı içerik aynası iki dil sayılmaz.
+
+168 test/gerçek QuickJS;20 kilitli upstream dosyada drift yok. Native0.6.4-beta parser dil/string/liste alanları ve kart sırası kontrol edildi. Canlı Dune/Fleabag/DeathNote çift dilli; Dune2/DeathNote2 dosya+TR/EN. Fleabag Archive ilk1/tekrar0 indirme, ağ/Range zaman aşımı; düzelmiş veya korunmuş2 dosya denmez. compatibility/subtitles-and-cards-172.json. Fiziksel iPhone/tam oynatma/iki dil birlikte indirme/offline/sahne senkronu yok. Yayın kanıtı iş sonunda güncellenecek.
+
+
 ## 1.7.1 indirme araştırması — 26 Ekim 2026
 
 **1.7.1 yayın tamamlandı:** kod37c70e5817f0c303a6fa278af3b8b58385686c2e; Windows/Linux Test40377335403 ve Pages40377335426 başarılı.156 test/QuickJS; beş public varlık HTTP200+yerel SHA eşit. Aynı kurulum adresi/ID’ler. Yeni çalışan indirme sağlayıcısı0; kapsam/fiziksel test hedefi açık.

@@ -118,7 +118,7 @@ test('Önerilen ses sırası özgün/TR/EN tercih eder; küçükten büyüğe te
  const rows=[pair('hi','hin',100),pair('en','eng',200)];
  assert.equal(rankStreams(rows,20,{sortOrder:'recommended'})[0].candidate.source,'en');
  assert.equal(rankStreams(rows,20,{sortOrder:'size_asc'})[0].candidate.source,'hi');
- assert.equal(formatResults(rows,{},film)[0].language,'HI · TR yok');
+ assert.equal(formatResults(rows,{},film)[0].language,'Ses: HI · TR altyazı yok');
  const a=pair('one','eng',200),b=pair('two','eng',200);a.video.videoHash=b.video.videoHash='0123456789abcdef';
  assert.equal(formatResults([a,b],{},film).length,1);
 });

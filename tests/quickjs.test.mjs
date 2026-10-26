@@ -12,6 +12,24 @@ const bundle = await readFile(new URL('../providers/nuvio-tr-hd.js', import.meta
 const onlineBundle = await readFile(new URL('../providers/nuvio-tr-hd-online.js', import.meta.url), 'utf8');
 const animeBundle = await readFile(new URL('../providers/nuvio-tr-hd-anime.js', import.meta.url), 'utf8');
 
+test('QuickJS bilingual subtitles retain tr/en and uniform card fields with real MP4 metadata',async()=>{
+ const en='1\n00:00:01,000 --> 00:00:03,000\nFollow the white rabbit.\n';
+ const fixture=makeFixture({items:[{...identity,streams:[{url:'https://media.test/movie.mp4',subtitles:[{url:'https://media.test/tr.srt',language:'tr'}]}]}],extra:{
+  'https://opensubtitles.stremio.homes/en/ai-translated=false%7Cfrom=all%7Cauto-adjustment=false/subtitles/movie/tt0133093.json':{json:{subtitles:[{lang:'eng',title:'The Matrix 1999',url:'https://subs.test/en.srt'}]}},
+  'https://subs.test/en.srt':{body:en,mime:'text/plain'}
+ }});
+ const streams=await runInQuickJs(fixture,{settings:{autoDiscover:false,catalogUrls:'https://library.test/catalog.json'}});
+ assert.equal(streams.length,1);assert.deepEqual(streams[0].subtitles.map(s=>s.language),['tr','en']);
+ assert.match(streams[0].language,/^Ses: bilinmiyor · TR\/EN altyazı$/);assert.match(streams[0].size,/GB$/);
+});
+
+test('QuickJS English-only subtitle never satisfies the require-Turkish filter',async()=>{
+ const en='1\n00:00:01,000 --> 00:00:03,000\nFollow the white rabbit.\n';
+ const fixture=makeFixture({items:[{...identity,streams:[{url:'https://media.test/movie.mp4',subtitles:[{url:'https://subs.test/en.srt',language:'en'}]}]}],extra:{'https://subs.test/en.srt':{body:en,mime:'text/plain'}}});
+ const streams=await runInQuickJs(fixture,{settings:{autoDiscover:false,autoSubtitles:false,catalogUrls:'https://library.test/catalog.json',subtitlePolicy:'require'}});
+ assert.deepEqual(streams,[]);
+});
+
 test('QuickJS HDHub public zincirini çözer; köprü adı ve gerçek MKV piksel/boyutu korunur', async () => {
   const file='https://bucket.r2.cloudflarestorage.com/object?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Signature='+'a'.repeat(64);
   const alias=SERVICE_ORIGIN+'/files/'+'b'.repeat(64)+'.mkv?source='+encodeURIComponent(file);

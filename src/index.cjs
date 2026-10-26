@@ -16,11 +16,11 @@ const { scanDiziYou } = require('./providers/diziyou.cjs');
 const { scanFilmModu } = require('./providers/filmmodu.cjs');
 const { scanDiziBak } = require('./providers/dizibak.cjs');
 const { probe } = require('./media/probe.cjs');
-const { loadSubtitles } = require('./subtitles.cjs');
+const { loadSubtitles, subtitleLanguage, subtitleKey, selectSubtitles, embeddedSubtitleLanguages } = require('./subtitles.cjs');
 const { createSubtitleDiscovery, scoreSubtitle } = require('./subtitle-discovery.cjs');
 const { safeUrl, mapLimit } = require('./util.cjs');
 const { rankStreams } = require('./ranking.cjs');
-const { describeQuality, describeSize } = require('./media/presentation.cjs');
+const { describeQuality, describeSize, cardFields, subtitleLabel } = require('./media/presentation.cjs');
 const { profileAddress } = require('./media/hls.cjs');
 const { configuration, configurationLabel, effectiveTmdbKey, writeDiagnostic } = require('./diagnostics.cjs');
 const { describeAudio } = require('./media/audio.cjs');
@@ -37,8 +37,8 @@ function formatResults(completed, settings, target) {
     const previous=key&&files.get(key);
     if(previous) {
       const tracks=new Map();
-      for(const sub of [...previous.subtitles,...pair.subtitles].sort((a,b)=>(b._score||0)-(a._score||0)))if(!tracks.has(sub.url))tracks.set(sub.url,sub);
-      previous.subtitles=[...tracks.values()].slice(0,4);
+      for(const sub of [...previous.subtitles,...pair.subtitles].sort((a,b)=>(b._score||0)-(a._score||0)))if(!tracks.has(subtitleKey(sub)))tracks.set(subtitleKey(sub),sub);
+      previous.subtitles=selectSubtitles([...tracks.values()]);
       if(pair.candidate.burnedSubtitleLanguage)previous.candidate={...previous.candidate,burnedSubtitleLanguage:pair.candidate.burnedSubtitleLanguage};
     } else { const copy={...pair,subtitles:pair.subtitles.slice()}; distinct.push(copy);if(key)files.set(key,copy); }
   }
@@ -52,7 +52,7 @@ function formatResults(completed, settings, target) {
         !r.hasExternalAudio && !r.hasExternalSubtitles && /\.m3u8(?:$|[?#])/i.test(r.url) ? r.url : null;
       if (!address) return null;
       return { ...pair, video: { ...video, url: address, renditions: undefined, resolutionOptions: [r.dimensions], sizeEstimate: r.sizeEstimate, duration: r.duration,
-        audioLanguages: r.audioLanguages || video.audioLanguages } };
+        audioLanguages: r.audioLanguages || video.audioLanguages, subtitleLanguages:r.subtitleLanguages||video.subtitleLanguages } };
     }).filter(Boolean);
     return profiles.length ? settings.hlsView === 'both' ? [pair, ...profiles] : profiles : [pair];
   });
@@ -61,27 +61,22 @@ function formatResults(completed, settings, target) {
     const kind = video.downloadable ? `${video.container.toUpperCase()} · Online izlenebilir · İndirilebilir` : 'HLS · Online izlenebilir · İndirilemez';
     const quality = describeQuality(video, candidate), size = describeSize(video);
     const audio = describeAudio(video, candidate);
+    const fields = cardFields(video,candidate,subtitles);
     const dimensionText = ` · ${quality.text}`;
     const subScore = subtitles[0]?._score || 0;
     const matchText = subScore >= 90 ? 'eşleşti' : subScore >= 70 ? 'sürüm benzerliği' : subScore >= 65 ? 'süre uyumu' : 'film düzeyi; senkron belirsiz';
-    const embedded = candidate.embeddedTurkish || video.embeddedTurkish;
+    const embedded = embeddedSubtitleLanguages(video,candidate).length>0;
     const burnedForeign = candidate.burnedSubtitleLanguage === 'es' ? 'İspanyolca altyazı görüntüye işlenmiş' : '';
-    const subtitleText = subtitles.length ? ` · TR altyazı (${matchText})` : embedded ? ` · TR altyazı (${video.container === 'hls' ? 'HLS' : 'dosya'} içi)` : ' · TR altyazı bulunamadı';
+    const subtitleText = ` · ${subtitleLabel(video,candidate,subtitles)}` + (subtitles.length ? ` (${matchText})` : embedded ? ` (${video.container==='hls'?'HLS':'dosya'} içi)` : '');
     const detailedTitle = `${target.originalTitle} (${target.year}) · ${kind}${dimensionText} · ${size.text}${audio ? ' · Ses: '+audio.text : ''}${subtitleText}${burnedForeign ? ' · '+burnedForeign : ''}`;
-    const title = settings.compactLabels === false ? detailedTitle : `${quality.text} · ${size.text}${audio ? ' · '+audio.text : ''}${subtitleText}${burnedForeign ? ' · '+burnedForeign : ''}${video.container === 'hls' ? ' · Online izlenebilir · İndirilemez' : ''}`;
+    const title = settings.compactLabels === false ? detailedTitle : `${fields.quality} · ${fields.size} · ${fields.language}${!subtitles.length&&embedded?' · '+(video.container==='hls'?'HLS':'Dosya')+' içi altyazı':''}${burnedForeign ? ' · '+burnedForeign : ''}${video.container === 'hls' ? ' · Online izlenebilir · İndirilemez' : ''}`;
     const source = String(candidate.source || 'Kaynak').replace('4KHDHub / HubCloud', '4KHDHub').replace('Internet Archive', 'Archive') +
-      (candidate.serverIndex ? ` ${candidate.serverIndex}` : '') + (candidate.source === 'Animecix' && candidate.sourceNote ? ` · ${candidate.sourceNote.slice(0, 40)}` : '');
-    const subTag = subtitles.length ? 'Türkçe Altyazı' : embedded ? 'TR içi' : candidate.turkishSource ? 'TR kaynak · altyazı doğrulanmadı' : 'TR yok';
+      (candidate.serverIndex ? ` ${candidate.serverIndex}` : '');
     const badge = video.downloadable ? 'İndirilebilir' : 'Online';
-    const details = video.dimensions ? `${video.dimensions.width}×${video.dimensions.height}` :
-      video.resolutionOptions?.length === 1 ? `${video.resolutionOptions[0].width}×${video.resolutionOptions[0].height}` :
-        video.resolutionOptions?.length > 1 ? 'Otomatik kalite' : quality.quality;
     const label = settings.compactLabels === false ? `${source} · ${kind}${dimensionText} · ${size.text}${subtitleText}` : `${badge} · ${source}`;
     return { name: `${String(index + 1).padStart(2, '0')} · ${label}`,
-      title, url: video.url, quality: quality.quality,
-      ...(size.size ? { size: size.size } : {}),
-      ...(settings.compactLabels !== false ? { quality: `${details}${video.dimensions ? ' ✓' : video.container === 'hls' ? ' HLS' : quality.quality === 'Bilinmiyor' ? '' : ' tahmin'}` } : {}),
-      language: (audio ? audio.text+' · ' : '') + subTag + (burnedForeign ? ' · ES görüntüde' : ''), provider: 'Nuvio TR HD', type: video.container,
+      title, url: video.url, quality: fields.quality, size: fields.size,
+      language: fields.language, provider: 'Nuvio TR HD', type: video.container,
       ...(Object.keys(candidate.headers).length ? { headers: candidate.headers } : {}),
       subtitles: subtitles.map(({ _score, ...subtitle }) => subtitle) };
   });
@@ -143,7 +138,7 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs = 24000, r
         const minimum = Number(settings.minimumQuality ?? 0);
         if (video.dimensions && Math.min(video.dimensions.width, video.dimensions.height) < minimum) { reject('quality'); return; }
         const pair = { candidate, video, subtitles: [] };
-        const embedded = candidate.embeddedTurkish || video.embeddedTurkish;
+        const embedded = embeddedSubtitleLanguages(video,candidate).includes('tr');
         let published = !strictSubtitles || embedded;
         if (published) completed.push(pair);
         const validatedTracks = new Map();
@@ -151,9 +146,9 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs = 24000, r
           if(http.expired())return;
           const key=track._contentKey||track.url,previous=validatedTracks.get(key);
           const { _contentKey, ...clean }=track;
-          if(!previous||(clean._score||0)>(previous._score||0))validatedTracks.set(key,clean);
-          pair.subtitles=[...validatedTracks.values()].sort((a,b)=>(b._score||0)-(a._score||0)).slice(0,4);
-          if(pair.subtitles.length&&!published){completed.push(pair);published=true;}
+          if(!previous||(clean._score||0)>(previous._score||0)||clean.language==='tr'&&previous.language==='en')validatedTracks.set(key,clean);
+          pair.subtitles=selectSubtitles([...validatedTracks.values()]);
+          if(pair.subtitles.some(s=>s.language==='tr')&&!published){completed.push(pair);published=true;}
         };
         const declared = candidate.subtitles.map(sub => {
           const match = sub && scoreSubtitle(sub, candidate, video, target, settings.subtitleMatchMode !== 'strict');
@@ -162,9 +157,10 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs = 24000, r
         if (declared.length) {
           await loadSubtitles(http, { ...candidate, subtitles: declared }, target, allowHttp,
             { keepScore: true, onTrack: acceptTrack, videoDuration: video.durationSource === 'tmdb' ? undefined : video.duration });
-          if (pair.subtitles.length) return;
+          if (['tr','en'].every(language=>pair.subtitles.some(s=>s.language===language))) return;
         }
-        const scheduled = new Set(), deferred=[];let generalCount=0,totalCount=0,releaseReserved=false;
+        const needed=['tr','en'].filter(language=>!pair.subtitles.some(s=>s.language===language));
+        const scheduled = new Set(), deferred=[],counts={tr:0,en:0},generalCount={tr:0,en:0},releaseReserved={tr:false,en:false},limits={tr:12,en:8};let totalCount=0;
         const acceptBatch = async rows => {
           if(http.expired())return;
           const entries = rows.map(sub => {
@@ -173,18 +169,19 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs = 24000, r
           return match ? { ...sub, _match: match } : null;
           }).filter(Boolean).sort((a,b)=>b._match.score-a._match.score).filter(sub=>{
             const url=safeUrl(sub.url,candidate.subtitleBase,allowHttp);
-            const key=url+JSON.stringify(sub.headers||{}),strong=sub._match.score>=90;
-            if(!url||scheduled.has(key)||totalCount>=12||/\.(zip|ass|ssa|rar)(?:\/?$|[?#])/i.test(url))return false;
-            const generalLimit=video.videoHash&&!releaseReserved?8:12;
-            if(!strong&&generalCount>=generalLimit){deferred.push(sub);return false;}
-            if(pair.subtitles.length===4&&sub._match.score<=(pair.subtitles[3]._score||0))return false;
-            scheduled.add(key);totalCount++;if(!strong)generalCount++;return true;
+            const language=subtitleLanguage(sub.language||sub.lang||sub.lang_code),key=url+JSON.stringify(sub.headers||{}),strong=sub._match.score>=90;
+            if(!language||!needed.includes(language)||!url||scheduled.has(key)||counts[language]>=limits[language]||/\.(zip|ass|ssa|rar)(?:\/?$|[?#])/i.test(url))return false;
+            const generalLimit=video.videoHash&&!releaseReserved[language]?limits[language]-4:limits[language];
+            if(!strong&&generalCount[language]>=generalLimit){deferred.push(sub);return false;}
+            const existing=pair.subtitles.filter(s=>s.language===language);
+            if(existing.length===4&&sub._match.score<=(existing[3]._score||0))return false;
+            scheduled.add(key);totalCount++;counts[language]++;if(!strong)generalCount[language]++;return true;
           });
           if(entries.length)await loadSubtitles(http,{...candidate,subtitles:entries},target,allowHttp,
             {keepScore:true,onTrack:acceptTrack,videoDuration:video.durationSource==='tmdb'?undefined:video.duration});
         };
-        await discoverSubtitles(candidate,video,{onBatch:acceptBatch});
-        if(!http.expired()&&pair.subtitles.length<4&&deferred.length){releaseReserved=true;await acceptBatch(deferred.slice());}
+        await discoverSubtitles(candidate,video,{onBatch:acceptBatch,languages:needed});
+        if(!http.expired()&&deferred.length){for(const language of needed)releaseReserved[language]=true;await acceptBatch(deferred.slice());}
         if(!http.expired()&&!pair.subtitles.length)reject(totalCount?'subtitle_unavailable':'subtitle_no_match');
       };
       const run = async () => {
@@ -208,7 +205,7 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs = 24000, r
                     (source === '4KHDHub / HubCloud' && settings.hdhubEnabled === false) ||
                     (pair.video.container === 'hls' && settings.includeHls === false) ||
                     (pair.video.dimensions && Math.min(pair.video.dimensions.width, pair.video.dimensions.height) < Number(settings.minimumQuality || 0)) ||
-                    (strictSubtitles && !pair.subtitles.length && !pair.candidate.embeddedTurkish)) continue;
+                    (strictSubtitles && !pair.subtitles.some(s=>s.language==='tr') && !embeddedSubtitleLanguages(pair.video,pair.candidate).includes('tr'))) continue;
                 completed.push(pair);
               }
               report.sources.push({ name: 'Ortak tarama', candidates: hosted.length });
@@ -296,9 +293,9 @@ function onSettings() {
   const settings = typeof globalThis.SCRAPER_SETTINGS === 'object' && globalThis.SCRAPER_SETTINGS || {};
   const tmdbKey = typeof globalThis.TMDB_API_KEY === 'string' ? globalThis.TMDB_API_KEY : '';
   return [
-    { type: 'header', label: 'Nuvio TR HD · Otomatik kaynak ve Türkçe altyazı' },
+    { type: 'header', label: 'Nuvio TR HD · Otomatik kaynak ve TR/EN altyazı' },
     { type: 'info', label: configurationLabel(settings, tmdbKey) },
-    { type: 'info', label: 'Varsayılan: tüm çözünürlükler, en fazla 20 alternatif. Online izlenebilir kaynaklar gösterilir; doğrulanmış MP4/MKV ayrıca İndirilebilir etiketlidir. Türkçe bulunamazsa video gizlenmez. Nuvio altyazı dilini Türkçe seçin.' },
+    { type: 'info', label: 'Kart sırası: kalite · GB · ses · TR/EN altyazı. Eksik bilgi açıkça yazılır; ? ses iddiası, ~ boyut tahminidir. En fazla 20 sonuç, tüm çözünürlükler. Türkçe yoksa varsayılan olarak video korunur; İngilizce altyazılar da sunulur. Nuvio altyazı dilini Türkçe seçebilirsiniz.' },
     { type: 'toggle', key: 'autoDiscover', label: 'Otomatik kaynak tarama', defaultValue: true },
     { type: 'toggle', key: 'compactLabels', label: 'Kısa ve sade kaynak başlıkları', defaultValue: true },
     { type: 'select', key: 'audioPreference', label: 'Önerilen sıralamada ses tercihi', defaultValue: 'preferred', options: [
@@ -328,9 +325,9 @@ function onSettings() {
     { type: 'toggle', key: 'dizibakEnabled', label: 'DiziBak dizi alternatifi', defaultValue: true, description: 'Küçük public metadata yanıtları kullanılır. İlk bölüm tarihi ve dizi kategorisi uyuşmazsa sonuç eklenmez.' },
     { type: 'toggle', key: 'filmmoduEnabled', label: 'FilmModu online film ve kaynak ses seçenekleri', defaultValue: true },
     { type: 'info', label: 'Ses kodları: EN İngilizce, TR Türkçe, JA Japonca, HI Hintçe. ? işareti kaynak/dosya adı iddiasıdır. ES görüntüde, İspanyolca sabit altyazıdır; ses dili değildir.' },
-    { type: 'toggle', key: 'autoSubtitles', label: 'Türkçe altyazıyı otomatik ara', defaultValue: true },
+    { type: 'toggle', key: 'autoSubtitles', label: 'TR ve EN altyazıları otomatik ara', defaultValue: true },
     { type: 'select', key: 'subtitlePolicy', label: 'Türkçe altyazı bulunamazsa', defaultValue: 'prefer', options: [
-      { value: 'prefer', label: 'Videoyu göster; TR yok bilgisini yaz' }, { value: 'require', label: 'Videoyu gizle' }] },
+      { value: 'prefer', label: 'Videoyu göster; TR altyazı yok bilgisini yaz' }, { value: 'require', label: 'Videoyu gizle' }] },
     { type: 'select', key: 'subtitleMatchMode', label: 'Altyazı eşleştirme', defaultValue: 'balanced', options: [
       { value: 'balanced', label: 'Önce güçlü eşleşme; aynı filmden alternatif de sun' },
       { value: 'strict', label: 'Yalnız güçlü eşleşme veya yakın süre' }],
@@ -341,7 +338,7 @@ function onSettings() {
       { value: '6', label: '6 alternatif' }, { value: '10', label: '10 alternatif' }, { value: '20', label: '20 alternatif' }] },
     { type: 'text', key: 'catalogUrls', label: 'Ek JSON katalog adresleri', placeholder: 'İsteğe bağlı; boşlukla ayırın' },
     { type: 'text', key: 'addonUrls', label: 'Ek Stremio manifest adresleri', placeholder: 'İsteğe bağlı; boşlukla ayırın' },
-    { type: 'text', key: 'subtitleUrls', label: 'Ek/alternatif altyazı addon adresleri', description: 'Boşsa AltyazıDB, Türkçe OpenSubtitles v3+ ve resmî v3 kullanılır.' },
+    { type: 'text', key: 'subtitleUrls', label: 'Ek/alternatif TR/EN altyazı addon adresleri', description: 'Boşsa AltyazıDB, TR/EN OpenSubtitles v3+ ve resmî v3 kullanılır. Dil başına en fazla dört geçerli alternatif sunulur.' },
     { type: 'text', key: 'tmdbApiKey', label: 'TMDB v3 anahtarı (isteğe bağlı)', description: 'Boşsa Nuvio tarafından sağlanan anahtar kullanılır.' },
     { type: 'toggle', key: 'includeHls', label: 'HLS çevrimiçi izleme alternatiflerini göster', defaultValue: true, description: 'Doğrudan dosyalar önce gelir. HLS yalnız oynatma içindir; Nuvio üzerinden dosya olarak indirilemez.' },
     { type: 'toggle', key: 'debug', label: 'Hata ayıklama özeti', defaultValue: false, description: 'Boş sonuçlarda tanı zaten yazılır; açıkken başarılı aramaları da yazar. Günlükte ayar/kimlik/kaynak/adet/HTTP durumları vardır; anahtar ve video adresi yoktur.' },

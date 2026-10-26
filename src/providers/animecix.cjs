@@ -1,6 +1,6 @@
 'use strict';
 const { safeUrl, normalizeTitle, mapLimit } = require('../util.cjs');
-const { isTurkish } = require('../subtitles.cjs');
+const { isTurkish, subtitleLanguage } = require('../subtitles.cjs');
 const { sameName } = require('./page-data.cjs');
 const ORIGIN = 'https://animecix.tv';
 const PLAYER = 'https://tau-video.xyz';
@@ -41,8 +41,8 @@ async function scanAnimecix(http, target) {
     if (!video || video._id !== source._embedId || Number(video.title_id) !== Number(match.id) ||
         Number(video.season_number) !== season || Number(video.episode_number) !== episode || !Array.isArray(video.urls)) return [];
     const captions = [...(Array.isArray(source.captions) ? source.captions : []), ...(Array.isArray(video.captions) ? video.captions : [])]
-      .filter(sub => sub && isTurkish(sub.language || sub.lang || sub.srclang))
-      .map(sub => ({ url: sub.url || sub.src, language: 'tr', _scope: 'paired', identity: target }));
+      .filter(sub => sub && subtitleLanguage(sub.language || sub.lang || sub.srclang || sub.lang_code))
+      .map(sub => ({ url: sub.url || sub.src, language: subtitleLanguage(sub.language||sub.lang||sub.srclang||sub.lang_code), _scope: 'paired', identity: target }));
     const filename = `${target.originalTitle}.${target.year}` + (target.type === 'tv' ? `.S${String(season).padStart(2,'0')}E${String(episode).padStart(2,'0')}` : '');
     return video.urls.slice(0, 4).map(entry => {
       const url = safeUrl(entry?.url);

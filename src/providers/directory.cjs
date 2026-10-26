@@ -1,5 +1,6 @@
 'use strict';
 const { safeUrl, normalizeTitle } = require('../util.cjs');
+const { subtitleLanguage } = require('../subtitles.cjs');
 
 const DIRECTORY_ORIGIN = 'https://a.111477.xyz';
 function decodeEntities(text) {
@@ -40,8 +41,11 @@ async function scanDirectory(http, target, settings = {}) {
     const page = await http.text(root + path, { headers: { Referer: root + '/' } });
     if (!page) continue;
     const found = anchors(page.text);
-    const subtitles = found.filter(x => /\.(srt|vtt)$/i.test(x.href) && /(?:[._-](?:tr|tur)|turkish|türkçe)/i.test(x.text || x.href))
-      .map(x => ({ url: safeUrl(x.href, page.url), language: 'tr', releaseName: x.text, _scope: 'release' }));
+    const subtitles = found.filter(x => /\.(srt|vtt)$/i.test(x.href)).map(x => {
+      const extra=normalizeTitle(x.text||x.href).replace(normalizeTitle(target.originalTitle),'');
+      const language=subtitleLanguage(extra.match(/\b(tr|tur|turkish|turkce|en|eng|english)\b/)?.[1]);
+      return language ? { url:safeUrl(x.href,page.url),language,releaseName:x.text,_scope:'release' } : null;
+    }).filter(Boolean);
     const out = [];
     for (const entry of found) {
       const url = safeUrl(entry.href, page.url);
