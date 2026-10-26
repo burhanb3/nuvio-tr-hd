@@ -6,7 +6,7 @@
 2. download-research-171.json’daki güncel engelleri esas al: CinemaCity/Webteizle/HDHub4u403; ShowBox/FebBoxlogin; MoviesDrive/HubCloudkurtarmayanlışfilm; Workerörnekleri ağ hatası. Bunları değişiklik kanıtı olmadan aynı tur tekrar tekrar deneme. Üçüncü taraf anahtar/hf.space yardımcıproxy kullanma.
 3. Çalışan dosyaGET hostunu doğrula, sonra genel katalog araştır; tek tek yeni film/bölüm pinine dönme. Ücretsiz/hesapsız/yeniPCsunucuyok şartı sürer.
 4. MevcutVLCfontalternatifi için kullanıcıtelefonu: VLCtercihi,altyazıaktarımı,TRfont ve offlineaynıdosya. Kaynakvar/cihaztestiyok ayrımı. DahiliNuviofont değişmedi.
-5.156test/QuickJS ve20kilitliupstreamkontrolü geçti.1.7.1 yayını ve canlı regresyon kanıtını iş bitiminde güncelle. Yeni dosyaGETnativekotası3 vealtyazı4 sürer; fiziksel iPhone zaman garantisi yok.
+5. **Tamamlandı:**1.7.1 37c70e5 yayımlandı;156test/QuickJS,20upstream drift yok; Windows/Linux40377335403/Pages40377335426 ve5assetHTTP200/SHA başarılı. Canlı kanıtlar coverage-171/anime-aot-171/download-research-171 içinde. Yeni dosyaGETnativekotası3 vealtyazı4 sürer; fiziksel iPhone zaman garantisi yok.
 
 
 ## 1.7.0 öncelik — kullanıcının son yönlendirmesi

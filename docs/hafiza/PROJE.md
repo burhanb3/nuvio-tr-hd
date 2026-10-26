@@ -2,11 +2,13 @@
 
 ## 1.7.1 indirme araştırması — 26 Ekim 2026
 
+**1.7.1 yayın tamamlandı:** kod37c70e5817f0c303a6fa278af3b8b58385686c2e; Windows/Linux Test40377335403 ve Pages40377335426 başarılı.156 test/QuickJS; beş public varlık HTTP200+yerel SHA eşit. Aynı kurulum adresi/ID’ler. Yeni çalışan indirme sağlayıcısı0; kapsam/fiziksel test hedefi açık.
+
 Kullanıcı harici ses birleştirmeyi bıraktı; kendi içinde uygun ses olan kaynaklarla devam. Font için uygulama kodunu değiştirmeden mevcut harici VLC yolu0.6.4-beta kaynaklarında doğrulandı; VLC font seçer ve iOS bridge request’teki ilk subtitle URL’sini alabilir. Native hazırlık addon/language/local subtitle yoluna bağlı; bizim pluginin ilk TR’si kesin aktarılır veya offline sorunsuz demeyin. Fiziksel telefon yok. docs/IPHONE_TURKCE_FONT.md. Dahili Nuvio fontu hâlâ pluginle seçilemiyor.
 
 **Bu tur yeni çalışan indirme sağlayıcısı doğrulanmadı.** RedFlix12embed, ShowBox/FebBoxpubliclistsonrasılogin, CinemaCity/Webteizle/HDHub4u-search403, eskiDiziBoxbölümleri404,6Workeruçdosya ağ hatası. MoviesDrive güncelsearch.php çalışıyor ama MatrixkurtarmaHubCloudqueryHarryPotter2009döndürdü; yanlışfilm reddedildi. Hiçbirinden artış diye sonuç eklenmedi. Publicformgeçiciparametreleri/anahtarlar commit edilmedi. Yeni account/helper/pin yok. Aynı başarısız yolu dış durum değişmeden tekrar tekrar denemeyin; dosya GET yolunu önce doğrulayın, sonra genel katalog bağlayın. compatibility/download-research-171.json ve docs/INDIRME_ARASTIRMASI_171.md.
 
-Gerçek kod: ayrıHEAD kalktı, boundedGETboyut/format/piksel/auth koşulları sürer. NativeBitmemişmedia-probe3 lease hamfetch bitene kadar tutulur; subtitle4 ayrı, nativeGroupfetch’e gitmez. Bu fiziksel iPhone süre garantisi değildir. KaynakMP4adlı uzantısız aday doğrudan probe; MKV/HLS/HTML MP4 yapılmaz.156test/QuickJS;20upstream dosya drift yok. Yayın ve canlı kanıt iş bitiminde güncellenecek.
+Gerçek kod: ayrıHEAD kalktı, boundedGETboyut/format/piksel/auth koşulları sürer. NativeBitmemişmedia-probe3 lease hamfetch bitene kadar tutulur; subtitle4 ayrı, nativeGroupfetch’e gitmez. Bu fiziksel iPhone süre garantisi değildir. KaynakMP4adlı uzantısız aday doğrudan probe; MKV/HLS/HTML MP4 yapılmaz.156test/QuickJS;20upstream dosya drift yok. Yayın/CI/Pages/public SHA tamamlandı. Canlı Dune2/Fleabag2 dosya+TR korunur; Shameless online+TR/indirme0; AoT9MP4/TR/3piksel. Fiziksel cihaz yok.
 
 
 ## 1.7.0 genel sağlayıcı çalışması — 26 Ekim 2026
