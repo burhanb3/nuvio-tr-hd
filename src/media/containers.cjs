@@ -212,5 +212,25 @@ function mp4TailInfo(bytes) {
   return null;
 }
 function mp4TailDimensions(bytes) { return mp4TailInfo(bytes)?.dimensions || null; }
+function mp4MetadataOffset(prefix, total) {
+  if (!Number.isSafeInteger(total) || total <= prefix.length) return null;
+  // Follow an actual top-level box boundary, never scan arbitrary video bytes
+  // for the word moov. A large mdat can put metadata well before the tail range.
+  const last = boxes(prefix).find(b => !b.complete);
+  if (!last || !['mdat','free','skip','wide'].includes(last.type) ||
+      !Number.isSafeInteger(last.end) || last.end < prefix.length || last.end > total - 8) return null;
+  return last.end;
+}
+function mp4MetadataInfo(bytes, remaining) {
+  const movie = boxes(bytes)[0];
+  if (!movie || movie.type !== 'moov' || movie.end > remaining) return null;
+  if (movie.complete && !mp4HasVideo(bytes, movie)) return { invalidVideo: true };
+  const dimensions = mp4Dimensions(bytes);
+  // An incomplete moov is useful only when the complete video handler and
+  // tkhd are present. Do not accept a duration from an audio-only prefix.
+  if (!movie.complete && !dimensions) return null;
+  const duration = mp4Duration(bytes), audioLanguages = mp4AudioLanguages(bytes);
+  return { dimensions, duration, ...(audioLanguages.length ? { audioLanguages } : {}) };
+}
 function inspectContainer(bytes) { return mp4Info(bytes) || mkvInfo(bytes); }
-module.exports = { inspectContainer, mp4Dimensions, mp4Duration, mp4TailDimensions, mp4TailInfo, ascii };
+module.exports = { inspectContainer, mp4Dimensions, mp4Duration, mp4TailDimensions, mp4TailInfo, mp4MetadataOffset, mp4MetadataInfo, ascii };

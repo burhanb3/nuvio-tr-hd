@@ -1,5 +1,13 @@
 # Tasarım kararları
 
+## 1.7.3 indirme kararları
+
+- Tekil çalışan dosya, kararlı genel kaynak demek değildir. AniMOM deneysel ve varsayılan kapalı; film/dizi kapsamı hedefi açık.
+- MP4 metadata yalnız gerçek kutu sınırı/handler/tkhd üzerinden; en fazla1ek256KiBRange. İlk byte sunucusunu sonraki Range’ler için kullan; dönen aynalardan byte karıştırma.
+- Deneysel CDN resmî yönlendirmesine yalnız ağ hatasında1yenileme; HTML/izin/429’de tekrar yok. Yeni server/hesap/sabit anahtar/pin ekleme.
+- FIFO ve mevcut kaynak kotaları korunur; adil sıra prototipi geri alındı. Nativephysical3/scheduler sınırları ve TR/EN kontenjanları değişmez.
+- TekilTRsüreuyumu tam sahne senkronu değildir; birleşik aramada yeni dosya görünmediğini saklama.
+
 ## 1.7.2 görünüm ve dil kararları
 
 - Her sonuçta kalite, size ve language string’leri dolu; ses bilinmiyor ve boyut bilinmiyor yer tutucuları kullanılır. Native sıraya uy: kalite/GB/ses/altyazı.

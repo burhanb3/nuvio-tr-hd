@@ -1,5 +1,9 @@
 # Nuvio Kotlin Multiplatform uyumluluğu
 
+## 1.7.3 — mevcut ABI
+
+178fixture/gerçekQuickJS; Nuvio0.6.4-beta ve güncel dalın20 kilitli dosyasında drift yok (upstream-173-check.json). Yeni native alan yok; MP4 ek Range ve ilk CDN adresi sağlayıcı içinde kalır. Deneysel AniMOM default kapalı; getStreams/onSettings ve metadata/range yolu derlenmiş anime paketinde sınandı. Physical3 probe/4altyazı/EN1 ve scheduler sınırları korunur. Cihaz/offline/senkron testi yok.
+
 **1.7.2 — 26 Ekim:** mevcut ABI korunur; quality/size/language üçü her sonuçta string. Native0.6.4-beta StreamFetchSupport bu alanları sırayla birleştirir; PluginRuntime altyazı listesindeki ISO tr/en ve headers alanlarını taşır, dört-eleman kısıtı yoktur.168 test/gerçek QuickJS, [20 kilitli dosya kontrolü](../compatibility/upstream-172-check.json); drift yok/lock değiştirilmedi. Dört+ dört altyazı seçeneği sunmak iki dilin telefonda birlikte offline indirildiği kanıtı değildir. [TR/EN ve kartlar](TR_EN_VE_KARTLAR_172.md).
 
 **1.7.1 — 26 Ekim:** ABI değişmedi;156 fixture/gerçek QuickJS. [Güncel20dosya denetimi](../compatibility/upstream-171-check.json):0.6.4-beta, HEAD`7de46ead80c28ccd008cfd92bd69947e487992d0`, drift yok; lock değiştirilmedi. İç media-probe seçeneği native fetch’e taşınmaz. Bitmemiş native dosya fetch limiti3, altyazı4; mantıksal timeout fiziksel iPhone garantisi değildir. Release0.6.4-beta iOS ExternalPlayerPlatform/LaunchCoordinator ve PlaybackSettingsPage kaynaklarında mevcut VLC/altyazı aktarma yolu incelendi; cihaz/offline aktarım yapılmadı. [Türkçe font rehberi](IPHONE_TURKCE_FONT.md).

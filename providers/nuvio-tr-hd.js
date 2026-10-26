@@ -226,7 +226,10 @@ var require_http = __commonJS({
           return null;
         })();
         const result = await bounded(work, end, controller);
-        if (!result && !failures.has(rawUrl)) emit({ stage: "http", host: new URL(rawUrl).hostname, reason: "timeout_or_network" });
+        if (!result && !failures.has(rawUrl)) {
+          failures.set(rawUrl, { reason: "timeout_or_network" });
+          emit({ stage: "http", host: new URL(rawUrl).hostname, reason: "timeout_or_network" });
+        }
         return result;
       }
       async function json(url, options = {}) {
@@ -250,10 +253,10 @@ var require_http = __commonJS({
         if (!text2 || text2.length > Math.min(1e6, Math.max(1, maxChars)) || text2.endsWith("...[truncated]")) return null;
         return { text: text2, url: result.url };
       }
-      async function bytes(url, headers, start = 0, end = 131071) {
+      async function bytes(url, headers, start = 0, end = 131071, options = {}) {
         const limit = end - start + 1;
         if (limit <= 0 || limit > 262144) return null;
-        const result = await request(url, { headers: { ...headers, Range: `bytes=${start}-${end}` }, nativeGroup: "media-probe" });
+        const result = await request(url, { headers: { ...headers, Range: `bytes=${start}-${end}` }, nativeGroup: "media-probe", timeoutMs: options.timeoutMs });
         if (!result) return null;
         const response = result.response;
         const mime = (response.headers.get("content-type") || "").split(";")[0].toLowerCase().trim();
@@ -1555,6 +1558,100 @@ var require_filmmodu = __commonJS({
   }
 });
 
+// src/providers/animom.cjs
+var require_animom = __commonJS({
+  "src/providers/animom.cjs"(exports2, module2) {
+    "use strict";
+    var { safeUrl, normalizeTitle, mapLimit } = require_util();
+    var { anchors, decodeEntities } = require_directory();
+    var { tagAttributes, sameName, sameOrigin, syntheticFilename, jsonLd } = require_page_data();
+    var ORIGIN = "https://animom.org";
+    function searchRows(html, target) {
+      const rows = [];
+      for (const block of String(html).matchAll(/<li\b[^>]*>([\s\S]*?)<\/li>/gi)) {
+        const links = anchors(block[1]).map((a) => ({ ...a, href: sameOrigin(a.href, ORIGIN) })).filter((a) => a.href);
+        const link = links.find((a) => /^\/anime\/[a-z0-9-]+\/?$/i.test(new URL(a.href).pathname));
+        const image = block[1].match(/<img\b[^>]*>/i), name = link?.text || image && tagAttributes(image[0]).alt;
+        const info = decodeEntities(block[1].match(/<p\b[^>]*>([\s\S]*?)<\/p>/i)?.[1] || "");
+        const year = info.match(/^(\d{4})\s*[-–]\s*(.*)$/);
+        if (!link || !name || !year || Number(year[1]) !== target.year || ![name, year[2]].some((n) => sameName(n, target))) continue;
+        const url = sameOrigin(link.href, ORIGIN);
+        if (!rows.some((r) => r.url === url)) rows.push({ url, name, year: Number(year[1]) });
+        if (rows.length >= 3) break;
+      }
+      return rows;
+    }
+    function matchingSeries(html, row) {
+      const heading = html.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i)?.[1] || "";
+      const name = anchors(heading)[0]?.text;
+      const year = heading.match(/\((\d{4})\)/)?.[1];
+      return normalizeTitle(name) === normalizeTitle(row.name) && Number(year) === row.year && jsonLd(html).some((r) => normalizeTitle(r.name) === normalizeTitle(row.name) && Number(String(r.datePublished || "").slice(0, 4)) === row.year);
+    }
+    function episodeAddress(html, seriesUrl, target) {
+      const root = new URL(seriesUrl).pathname.replace(/\/$/, "");
+      for (const a of anchors(html, 2e3)) {
+        const url = sameOrigin(a.href, ORIGIN);
+        if (!url) continue;
+        const path = new URL(url).pathname.replace(/\/$/, "");
+        if (path === `${root}/sezon-${target.season}/bolum-${target.episode}` || target.season === 1 && path === `${root}-${target.episode}-bolum`) return url;
+      }
+      return null;
+    }
+    function uploadVideo(html) {
+      const tag = [...html.matchAll(/<meta\b[^>]*>/gi)].map((m) => tagAttributes(m[0])).find((a) => a.property === "og:video");
+      const url = safeUrl(tag?.content), file = safeUrl(html.match(/\bfile\s*:\s*['"]([^'"]+\.mp4(?:\?[^'"]*)?)['"]/)?.[1]);
+      if (!url || url !== file) return null;
+      const parsed = new URL(url);
+      return /^(?:[a-z0-9-]+\.)?vidcache\.net$/i.test(parsed.hostname) && /^https:$/.test(parsed.protocol) && /\/video\.mp4$/.test(parsed.pathname) ? url : null;
+    }
+    async function scanAniMom(http, target) {
+      if (!target.isAnime || target.type !== "tv") return [];
+      let match;
+      for (const title of (target.searchTitles || [target.originalTitle]).slice(0, 2)) {
+        const response = await http.text(`${ORIGIN}/search`, { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded", "X-Requested-With": "XMLHttpRequest", Referer: ORIGIN + "/" }, body: "query=" + encodeURIComponent(title) });
+        let data;
+        try {
+          data = response && JSON.parse(response.text);
+        } catch {
+        }
+        for (const row of data?.success && typeof data.theme === "string" ? searchRows(data.theme, target) : []) {
+          const page = await http.text(row.url);
+          if (page && matchingSeries(page.text, row)) {
+            match = { ...row, page };
+            break;
+          }
+        }
+        if (match || http.expired()) break;
+      }
+      if (!match || http.expired()) return [];
+      const address = episodeAddress(match.page.text, match.url, target);
+      if (!address) return [];
+      const episode = await http.text(address);
+      if (!episode) return [];
+      const heading = episode.text.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i)?.[1] || "";
+      const parent = anchors(heading)[0];
+      const headingSeason = Number(decodeEntities(heading).match(/\b(\d+)\.\s*Sezon/i)?.[1]);
+      if (!parent || sameOrigin(parent.href, ORIGIN) !== match.url || normalizeTitle(parent.text) !== normalizeTitle(match.name) || Number(decodeEntities(heading).match(/\b(\d+)\.\s*Bölüm/i)?.[1]) !== target.episode || headingSeason && headingSeason !== target.season || target.season > 1 && !headingSeason) return [];
+      const embeds = [...episode.text.matchAll(/<button\b[^>]*>/gi)].map((m) => tagAttributes(m[0])).map((a) => safeUrl(a["data-frame"])).filter((url) => url && /^https:\/\/www\.yourupload\.com\/embed\/[a-z0-9]+$/i.test(url));
+      return await mapLimit([...new Set(embeds)].slice(0, 2), 2, async (embed) => {
+        const page = await http.text(embed, { headers: { Referer: address } }), url = page && uploadVideo(page.text);
+        return url ? {
+          url,
+          source: "AniMOM",
+          headers: { Referer: "https://www.yourupload.com/" },
+          identity: target,
+          identityConfidence: 90,
+          subtitles: [],
+          filename: syntheticFilename(target) + ".mp4",
+          filenameSynthetic: true,
+          requireDuration: true
+        } : null;
+      });
+    }
+    module2.exports = { scanAniMom, searchRows, matchingSeries, episodeAddress, uploadVideo };
+  }
+});
+
 // src/providers/dizibak.cjs
 var require_dizibak = __commonJS({
   "src/providers/dizibak.cjs"(exports2, module2) {
@@ -1842,10 +1939,25 @@ var require_containers = __commonJS({
     function mp4TailDimensions(bytes) {
       return mp4TailInfo(bytes)?.dimensions || null;
     }
+    function mp4MetadataOffset(prefix, total) {
+      if (!Number.isSafeInteger(total) || total <= prefix.length) return null;
+      const last = boxes(prefix).find((b) => !b.complete);
+      if (!last || !["mdat", "free", "skip", "wide"].includes(last.type) || !Number.isSafeInteger(last.end) || last.end < prefix.length || last.end > total - 8) return null;
+      return last.end;
+    }
+    function mp4MetadataInfo(bytes, remaining) {
+      const movie = boxes(bytes)[0];
+      if (!movie || movie.type !== "moov" || movie.end > remaining) return null;
+      if (movie.complete && !mp4HasVideo(bytes, movie)) return { invalidVideo: true };
+      const dimensions = mp4Dimensions(bytes);
+      if (!movie.complete && !dimensions) return null;
+      const duration = mp4Duration(bytes), audioLanguages = mp4AudioLanguages(bytes);
+      return { dimensions, duration, ...audioLanguages.length ? { audioLanguages } : {} };
+    }
     function inspectContainer(bytes) {
       return mp4Info(bytes) || mkvInfo(bytes);
     }
-    module2.exports = { inspectContainer, mp4Dimensions, mp4Duration, mp4TailDimensions, mp4TailInfo, ascii };
+    module2.exports = { inspectContainer, mp4Dimensions, mp4Duration, mp4TailDimensions, mp4TailInfo, mp4MetadataOffset, mp4MetadataInfo, ascii };
   }
 });
 
@@ -2127,7 +2239,7 @@ var require_hls = __commonJS({
 var require_probe = __commonJS({
   "src/media/probe.cjs"(exports2, module2) {
     "use strict";
-    var { inspectContainer, mp4TailInfo, ascii } = require_containers();
+    var { inspectContainer, mp4TailInfo, mp4MetadataOffset, mp4MetadataInfo, ascii } = require_containers();
     var { opensubtitlesHash } = require_hash();
     var { inspectHls } = require_hls();
     function sameFile(first, second) {
@@ -2146,8 +2258,17 @@ var require_probe = __commonJS({
         if (!text.startsWith("#EXTM3U") || !/#EXT-X-(STREAM-INF|TARGETDURATION):/.test(text)) return null;
         return inspectHls(http, text, playlist.url, candidate, { detailed: options.detailedHls });
       }
-      const sample = await http.bytes(candidate.url, candidate.headers);
+      let dataUrl = candidate.url;
+      const bytes = (start, end) => http.bytes(
+        dataUrl,
+        candidate.headers,
+        start,
+        end,
+        candidate.source === "AniMOM" ? { timeoutMs: 7e3 } : {}
+      );
+      const sample = await bytes();
       if (!sample) return null;
+      dataUrl = sample.url;
       const textPrefix = ascii(sample.bytes, 0, Math.min(sample.bytes.length, 2048)).replace(/^\u00ef\u00bb\u00bf/, "").trimStart();
       if (textPrefix.startsWith("#EXTM3U")) {
         if (!includeHls || !/\.m3u8(?:$|[?#])/i.test(sample.url) || !/#EXT-X-(STREAM-INF|TARGETDURATION):/.test(textPrefix)) return null;
@@ -2163,9 +2284,22 @@ var require_probe = __commonJS({
       if (info.container === "mp4" && /\.mkv(?:$|[?#])/i.test(sample.url)) return null;
       if (info.container === "mkv" && /\.mp4(?:$|[?#])/i.test(sample.url)) return null;
       let tailSample = null;
+      if (info.container === "mp4" && (!info.dimensions || candidate.requireDuration && !info.duration) && !http.expired()) {
+        const offset = mp4MetadataOffset(sample.bytes, sample.total);
+        if (offset !== null) {
+          const metadata = await bytes(offset, Math.min(sample.total - 1, offset + 262143));
+          if (sameFile(sample, metadata)) {
+            const extra = mp4MetadataInfo(metadata.bytes, sample.total - offset);
+            if (extra?.invalidVideo) return null;
+            if (extra?.dimensions) info.dimensions = extra.dimensions;
+            if (extra?.duration && !info.duration) info.duration = extra.duration;
+            if (extra?.audioLanguages?.length && !info.audioLanguages?.length) info.audioLanguages = extra.audioLanguages;
+          }
+        }
+      }
       if ((!info.dimensions || candidate.requireDuration && !info.duration) && info.container === "mp4" && sample.total > sample.bytes.length && !http.expired()) {
         const start = Math.max(sample.bytes.length, sample.total - 262144);
-        const tail = await http.bytes(candidate.url, candidate.headers, start, sample.total - 1);
+        const tail = await bytes(start, sample.total - 1);
         tailSample = tail;
         if (sameFile(sample, tail)) {
           const extra = mp4TailInfo(tail.bytes);
@@ -2180,7 +2314,7 @@ var require_probe = __commonJS({
       if (info.duration && expectedDuration > 0 && (info.duration < expectedDuration * durationTolerance.low || info.duration > expectedDuration * durationTolerance.high)) return null;
       let videoHash = null;
       if ((hashEnabled || candidate.expectedFile) && sample.total >= 131072 && !http.expired()) {
-        if (!tailSample || tailSample.bytes.length < 65536) tailSample = await http.bytes(candidate.url, candidate.headers, sample.total - 65536, sample.total - 1);
+        if (!tailSample || tailSample.bytes.length < 65536) tailSample = await bytes(sample.total - 65536, sample.total - 1);
         if (sameFile(sample, tailSample)) videoHash = opensubtitlesHash(sample.bytes, tailSample.bytes, sample.total);
       }
       const pinned = candidate.expectedFile;
@@ -2197,11 +2331,13 @@ var require_probe = __commonJS({
           return false;
         }
       }).slice(0, 1) : [];
-      for (const url of [.../* @__PURE__ */ new Set([candidate.url, ...replicas])]) {
+      const attempts = candidate.source === "AniMOM" ? [candidate.url, candidate.url] : [.../* @__PURE__ */ new Set([candidate.url, ...replicas])];
+      for (const [index, url] of attempts.entries()) {
         if (http.expired()) return null;
         const video = await probeOne(http, { ...candidate, url }, includeHls, hashEnabled, options);
         if (video) return video;
         if ([401, 403, 429].includes(http.failureFor?.(url)?.status)) return null;
+        if (candidate.source === "AniMOM" && index === 0 && http.failureFor?.(url)?.reason !== "timeout_or_network") return null;
       }
       return null;
     }
@@ -2504,7 +2640,7 @@ var require_presentation = __commonJS({
 var require_diagnostics = __commonJS({
   "src/diagnostics.cjs"(exports2, module2) {
     "use strict";
-    var VERSION = true ? "1.7.2" : "dev";
+    var VERSION = true ? "1.7.3" : "dev";
     function effectiveTmdbKey(settings, injectedKey) {
       return typeof settings.tmdbApiKey === "string" && settings.tmdbApiKey.trim() ? settings.tmdbApiKey.trim() : typeof injectedKey === "string" ? injectedKey.trim() : "";
     }
@@ -2560,6 +2696,7 @@ var require_index = __commonJS({
     var { scanSonAnime } = require_sonanime();
     var { scanDiziYou } = require_diziyou();
     var { scanFilmModu } = require_filmmodu();
+    var { scanAniMom } = require_animom();
     var { scanDiziBak } = require_dizibak();
     var { probe } = require_probe();
     var { loadSubtitles, subtitleLanguage, subtitleKey, selectSubtitles, embeddedSubtitleLanguages } = require_subtitles();
@@ -2870,6 +3007,7 @@ var require_index = __commonJS({
                   sourceJobs.push({ name: "VixSrc", run: () => scanVixDirect(http, target) });
                 if (animeLane && settings.animecixEnabled !== false && target.isAnime) sourceJobs.push({ name: "Animecix", run: () => scanAnimecix(http, target) });
                 if (animeLane && settings.sonanimeEnabled !== false && target.isAnime) sourceJobs.push({ name: "SonAnime", run: () => scanSonAnime(http, target) });
+                if (animeLane && settings.animomEnabled === true && target.isAnime) sourceJobs.push({ name: "AniMOM", run: () => scanAniMom(http, target) });
                 if (onlineLane && settings.includeHls !== false && settings.diziyouEnabled !== false && target.type === "tv" && !target.isAnime)
                   sourceJobs.push({ name: "DiziYou", run: () => scanDiziYou(http, target) });
                 if (onlineLane && settings.includeHls !== false && settings.dizibakEnabled !== false && target.type === "tv" && !target.isAnime)
@@ -2983,6 +3121,7 @@ var require_index = __commonJS({
         { type: "toggle", key: "filmmoduEnabled", label: "FilmModu online film ve kaynak ses seçenekleri", defaultValue: true },
         { type: "info", label: "Ses kodları: EN İngilizce, TR Türkçe, JA Japonca, HI Hintçe. ? işareti kaynak/dosya adı iddiasıdır. ES görüntüde, İspanyolca sabit altyazıdır; ses dili değildir." },
         { type: "toggle", key: "autoSubtitles", label: "TR ve EN altyazıları otomatik ara", defaultValue: true },
+        { type: "toggle", key: "animomEnabled", label: "Deneysel AniMOM anime dosyaları", defaultValue: false, description: "Varsayılan kapalı: tekil MP4/TR doğrulandı, birleşik arama ve bazı bölümlerde CDN kararsız. Tam ad/yıl/bölüm gerekir; düz bölüm numarası başka sezona taşınmaz." },
         { type: "select", key: "subtitlePolicy", label: "Türkçe altyazı bulunamazsa", defaultValue: "prefer", options: [
           { value: "prefer", label: "Videoyu göster; TR altyazı yok bilgisini yaz" },
           { value: "require", label: "Videoyu gizle" }

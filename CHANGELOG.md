@@ -1,5 +1,12 @@
 # Değişiklik günlüğü
 
+## 1.7.3 — 2026-10-26
+
+- Büyük MP4 metadata kutusunda gerçek kutu sınırına en fazla1ek256KiBRange ile piksel/süre okuma; isimden kalite doğrulaması yok.
+- Sonraki metadata/hash aralıkları ilk byte’ı veren gerçek CDN adresinde kalır; boyut/URL/ETag denetimi sürer.
+- İsteğe bağlı AniMOM/YourUpload anime adaptörü; kanonik ad/yıl/bölüm ve gerçek MP4/süre kontrolü. Tekil dosya+TR doğrulandı, birleşik kararsızlık nedeniyle varsayılan kapalı.
+- 178 test/QuickJS; 20 upstream dosyada drift yok. Yeni varsayılan kararlı film/dizi kaynağı0; hesap/sunucu/pin eklenmedi. Fiziksel cihaz/tam indirme/offline/senkron yok.
+
 ## 1.7.2 — 2026-10-26
 
 - Her kartta kalite, GB, ses ve altyazı alanları; eksik bilgi için tutarlı yer tutucular. Türkçe virgüllü decimal GB; kısa ses kodları ve açık kaynak iddiası/tahmin etiketleri.

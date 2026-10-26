@@ -1,0 +1,742 @@
+{
+  "checkedAt": "2026-10-26T19:58:18.662Z",
+  "version": "1.7.3",
+  "method": "Public primary repositories inspected for ideas only. Ordinary accountless HTTP; bounded Range and subtitle bodies; fixed canonical TMDB references in live checks. Remote code not executed/copied.",
+  "exhaustive": false,
+  "newDefaultDownloadProviders": 0,
+  "newExperimentalDownloadProviders": 1,
+  "newStableFilmTvDownloadProviders": 0,
+  "newAccounts": 0,
+  "newHelperBackends": 0,
+  "newPerTitleVideoPins": 0,
+  "tests": 178,
+  "implemented": {
+    "metadata": "At most one extra <=262144-byte Range at a structurally proven top-level MP4 box boundary; video handler/tkhd validation; not filename quality.",
+    "cdn": "Subsequent metadata/hash ranges use the exact first-byte server, with size/URL/ETag identity checks unchanged.",
+    "experimentalAniMom": {
+      "defaultEnabled": false,
+      "titleAndYear": "Exact canonical name/year in search + detail; explicit episode and parent binding; no substring/absolute episode fallback.",
+      "delivery": "Public YourUpload og:video and player file must agree; HTTPS vidcache MP4; actual video/duration probe required.",
+      "requestTimeoutMs": 7000,
+      "maximumRefreshesOnNetworkError": 1,
+      "authHtmlRetry": false,
+      "combinedScanReliable": false
+    },
+    "nativeLimits": {
+      "mediaProbe": 3,
+      "subtitle": 4,
+      "englishSubtitle": 1
+    },
+    "nativeDeadlineGuarantee": false
+  },
+  "observations": [
+    {
+      "source": "Webflix FastFlux",
+      "status": "One anime API/file responded; other movie/TV routes returned 451/502/504 or timed out.",
+      "verifiedSingleFile": {
+        "size": 345087007,
+        "width": 1920,
+        "height": 1080,
+        "duration": 1535.552
+      },
+      "integrated": false
+    },
+    {
+      "source": "SineWix",
+      "status": "Ordinary public request 401 signed_request_rejected. Embedded app authentication/signature constants not copied.",
+      "integrated": false
+    },
+    {
+      "source": "Anizium",
+      "status": "Ordinary public search 401; custom signing constants not copied.",
+      "integrated": false
+    },
+    {
+      "source": "Nakios",
+      "status": "Source endpoint timed out; upstream also documents domain/backend migration.",
+      "integrated": false
+    },
+    {
+      "source": "Movix",
+      "status": "Four canonical movie/TV catalog requests200, returned embeds. Uqload served HLS; ordinary download form returned Security error1. Dood403/network. No verified MP4/MKV.",
+      "integrated": false
+    },
+    {
+      "source": "VidZee",
+      "status": "Three plaintext TMDB stream requests200, URLs were HLS; not counted as downloads.",
+      "integrated": false
+    },
+    {
+      "source": "Soaper.cc",
+      "status": "Domain-for-sale HTML, not a video source.",
+      "integrated": false
+    },
+    {
+      "source": "MP4Hydra",
+      "status": "Back soon HTML, not video JSON.",
+      "integrated": false
+    },
+    {
+      "source": "Anizm/Sibnet",
+      "status": "Ordinary requests403; access checks not bypassed.",
+      "integrated": false
+    },
+    {
+      "source": "AniMOM / YourUpload",
+      "status": "Canonical search/detail/episode -> genuine MP4 + existing Turkish subtitles verified in isolated check. Network failure on episode2 and repeatedly missing in combined scans; opt-in experimental only.",
+      "integrated": true,
+      "defaultEnabled": false
+    }
+  ],
+  "isolatedLive": {
+    "checkedAt": "2026-10-26T19:40:23.848Z",
+    "method": "Fixed canonical TMDB + live bounded source/Range/subtitle requests; not iPhone.",
+    "cases": [
+      {
+        "key": "death-note-s1e1",
+        "ms": 21915,
+        "candidates": 1,
+        "files": [
+          {
+            "source": "AniMOM",
+            "container": "mp4",
+            "size": 356493310,
+            "dimensions": {
+              "width": 1280,
+              "height": 720
+            },
+            "duration": 1390.661,
+            "videoHash": null,
+            "subtitles": [
+              {
+                "language": "tr",
+                "name": "Türkçe · SRT · AltyazıDB · 01 · DEATH NOTE.2006.S01E01 • Paket • 1080p • 23.976 · Süre uyumu; senkron doğrulanmadı",
+                "score": 69
+              },
+              {
+                "language": "tr",
+                "name": "Türkçe · SRT · AltyazıDB · 03 · DEATH NOTE.2006.S01E01 • KR-ÇT • Paket • EasyMOOVEE • 25 · Süre uyumu; senkron doğrulanmadı",
+                "score": 69
+              },
+              {
+                "language": "tr",
+                "name": "Türkçe · SRT · AltyazıDB · 04 · DEATH NOTE.2006.S01E01 • KR-ÇT • Paket • All ENG subbed • 30 · Süre uyumu; senkron doğrulanmadı",
+                "score": 69
+              },
+              {
+                "language": "tr",
+                "name": "Türkçe · SRT · AltyazıDB · 02 · DEATH NOTE.2006.S01E01 • KR-ÇT • Paket • [TSR] • 23.976 · Süre uyumu; senkron doğrulanmadı",
+                "score": 68
+              }
+            ],
+            "languages": [
+              "tr"
+            ]
+          }
+        ],
+        "events": [
+          {
+            "stage": "identity",
+            "reason": "request_started"
+          },
+          {
+            "stage": "http",
+            "host": "api.themoviedb.org",
+            "status": 200,
+            "method": "GET"
+          },
+          {
+            "stage": "identity",
+            "reason": "ok",
+            "year": 2006,
+            "type": "tv"
+          },
+          {
+            "stage": "http",
+            "host": "animom.org",
+            "status": 200,
+            "method": "POST"
+          },
+          {
+            "stage": "http",
+            "host": "animom.org",
+            "status": 200,
+            "method": "GET"
+          },
+          {
+            "stage": "http",
+            "host": "animom.org",
+            "status": 200,
+            "method": "GET"
+          },
+          {
+            "stage": "http",
+            "host": "www.yourupload.com",
+            "status": 200,
+            "method": "GET"
+          },
+          {
+            "stage": "http",
+            "host": "vidcache.net",
+            "status": 302,
+            "method": "GET"
+          },
+          {
+            "stage": "http",
+            "host": "s217.vidcache.net",
+            "status": 206,
+            "method": "GET"
+          },
+          {
+            "stage": "http",
+            "host": "vidcache.net",
+            "status": 302,
+            "method": "GET"
+          },
+          {
+            "stage": "http",
+            "host": "s217.vidcache.net",
+            "status": 206,
+            "method": "GET"
+          },
+          {
+            "stage": "http",
+            "host": "vidcache.net",
+            "status": 302,
+            "method": "GET"
+          },
+          {
+            "stage": "http",
+            "host": "s223.vidcache.net",
+            "status": 206,
+            "method": "GET"
+          },
+          {
+            "stage": "http",
+            "host": "opensubtitles-v3.strem.io",
+            "status": 200,
+            "method": "GET"
+          },
+          {
+            "stage": "http",
+            "host": "altyazidb.online",
+            "status": 200,
+            "method": "GET"
+          },
+          {
+            "stage": "http",
+            "host": "opensubtitles.stremio.homes",
+            "reason": "timeout_or_network"
+          },
+          {
+            "stage": "http",
+            "host": "opensubtitles.stremio.homes",
+            "reason": "timeout_or_network"
+          },
+          {
+            "stage": "http",
+            "host": "altyazidb.online",
+            "status": 200,
+            "method": "GET"
+          },
+          {
+            "stage": "subtitle_text",
+            "invalidUtf8": false,
+            "turkishCharacters": true,
+            "combiningCharacters": false,
+            "inlineFont": false,
+            "mojibake": false
+          },
+          {
+            "stage": "http",
+            "host": "altyazidb.online",
+            "status": 200,
+            "method": "GET"
+          },
+          {
+            "stage": "subtitle_text",
+            "invalidUtf8": false,
+            "turkishCharacters": true,
+            "combiningCharacters": false,
+            "inlineFont": false,
+            "mojibake": false
+          },
+          {
+            "stage": "http",
+            "host": "altyazidb.online",
+            "status": 200,
+            "method": "GET"
+          },
+          {
+            "stage": "subtitle_text",
+            "invalidUtf8": false,
+            "turkishCharacters": true,
+            "combiningCharacters": false,
+            "inlineFont": false,
+            "mojibake": false
+          },
+          {
+            "stage": "http",
+            "host": "altyazidb.online",
+            "status": 200,
+            "method": "GET"
+          },
+          {
+            "stage": "subtitle_text",
+            "invalidUtf8": false,
+            "turkishCharacters": true,
+            "combiningCharacters": false,
+            "inlineFont": false,
+            "mojibake": false
+          }
+        ]
+      },
+      {
+        "key": "death-note-s1e2",
+        "ms": 6858,
+        "candidates": 1,
+        "files": [],
+        "events": [
+          {
+            "stage": "identity",
+            "reason": "request_started"
+          },
+          {
+            "stage": "http",
+            "host": "api.themoviedb.org",
+            "status": 200,
+            "method": "GET"
+          },
+          {
+            "stage": "identity",
+            "reason": "ok",
+            "year": 2006,
+            "type": "tv"
+          },
+          {
+            "stage": "http",
+            "host": "animom.org",
+            "status": 200,
+            "method": "POST"
+          },
+          {
+            "stage": "http",
+            "host": "animom.org",
+            "status": 200,
+            "method": "GET"
+          },
+          {
+            "stage": "http",
+            "host": "animom.org",
+            "status": 200,
+            "method": "GET"
+          },
+          {
+            "stage": "http",
+            "host": "www.yourupload.com",
+            "status": 200,
+            "method": "GET"
+          },
+          {
+            "stage": "http",
+            "host": "vidcache.net",
+            "status": 302,
+            "method": "GET"
+          },
+          {
+            "stage": "http",
+            "host": "vidcache.net",
+            "reason": "timeout_or_network"
+          }
+        ]
+      }
+    ]
+  },
+  "isolatedRepeat": {
+    "checkedAt": "2026-10-26T19:42:28.776Z",
+    "method": "Fixed canonical TMDB + live bounded source/Range/subtitle requests; not iPhone.",
+    "cases": [
+      {
+        "key": "death-note-s1e2",
+        "ms": 7310,
+        "candidates": 1,
+        "files": [],
+        "events": [
+          {
+            "stage": "identity",
+            "reason": "request_started"
+          },
+          {
+            "stage": "http",
+            "host": "api.themoviedb.org",
+            "status": 200,
+            "method": "GET"
+          },
+          {
+            "stage": "identity",
+            "reason": "ok",
+            "year": 2006,
+            "type": "tv"
+          },
+          {
+            "stage": "http",
+            "host": "animom.org",
+            "status": 200,
+            "method": "POST"
+          },
+          {
+            "stage": "http",
+            "host": "animom.org",
+            "status": 200,
+            "method": "GET"
+          },
+          {
+            "stage": "http",
+            "host": "animom.org",
+            "status": 200,
+            "method": "GET"
+          },
+          {
+            "stage": "http",
+            "host": "www.yourupload.com",
+            "status": 200,
+            "method": "GET"
+          },
+          {
+            "stage": "http",
+            "host": "vidcache.net",
+            "status": 302,
+            "method": "GET"
+          },
+          {
+            "stage": "http",
+            "host": "vidcache.net",
+            "reason": "timeout_or_network"
+          }
+        ]
+      }
+    ]
+  },
+  "combinedInitial": [
+    {
+      "key": "dune",
+      "ms": 24019,
+      "results": 11,
+      "downloadPairs": 1,
+      "pairsWithTr": 5,
+      "pairsWithEn": 5,
+      "pairsWithBoth": 5,
+      "files": [
+        {
+          "source": "Internet Archive",
+          "filename": "Dune_2021_720p_BluRay_x265_HEVC_10bit_AAC_2_0_Hindi_PSA_ASAP.mkv",
+          "container": "mkv",
+          "size": 792903325,
+          "dimensions": {
+            "width": 1280,
+            "height": 536
+          },
+          "languages": [
+            "tr",
+            "en"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "fleabag-s1e1",
+      "ms": 17858,
+      "results": 13,
+      "downloadPairs": 2,
+      "pairsWithTr": 7,
+      "pairsWithEn": 7,
+      "pairsWithBoth": 7,
+      "files": [
+        {
+          "source": "Internet Archive",
+          "filename": "Fleabag.S01E01.480p.WEB-DL.Tehmovies.biz.mkv",
+          "container": "mkv",
+          "size": 103770149,
+          "dimensions": {
+            "width": 848,
+            "height": 354
+          },
+          "languages": [
+            "tr",
+            "en"
+          ]
+        },
+        {
+          "source": "Internet Archive",
+          "filename": "Fleabag.S01E01.480p.WEB-DL.Tehmovies.biz.mkv",
+          "container": "mp4",
+          "size": 162737999,
+          "dimensions": {
+            "width": 848,
+            "height": 354
+          },
+          "languages": [
+            "tr",
+            "en"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "death-note-s1e1",
+      "ms": 20016,
+      "results": 4,
+      "downloadPairs": 6,
+      "pairsWithTr": 6,
+      "pairsWithEn": 6,
+      "pairsWithBoth": 6,
+      "files": [
+        {
+          "source": "SonAnime",
+          "filename": "DEATH NOTE.2006.S01E01",
+          "container": "mp4",
+          "size": 108188435,
+          "dimensions": {
+            "width": 852,
+            "height": 480
+          },
+          "languages": [
+            "tr",
+            "en"
+          ]
+        },
+        {
+          "source": "SonAnime",
+          "filename": "DEATH NOTE.2006.S01E01",
+          "container": "mp4",
+          "size": 240288551,
+          "dimensions": {
+            "width": 1280,
+            "height": 720
+          },
+          "languages": [
+            "tr",
+            "en"
+          ]
+        },
+        {
+          "source": "Animecix",
+          "filename": "DEATH NOTE.2006.S01E01.720p.mp4",
+          "container": "mp4",
+          "size": 240288551,
+          "dimensions": {
+            "width": 1280,
+            "height": 720
+          },
+          "languages": [
+            "tr",
+            "en"
+          ]
+        },
+        {
+          "source": "Animecix",
+          "filename": "DEATH NOTE.2006.S01E01.480p.mp4",
+          "container": "mp4",
+          "size": 108188435,
+          "dimensions": {
+            "width": 852,
+            "height": 480
+          },
+          "languages": [
+            "tr",
+            "en"
+          ]
+        },
+        {
+          "source": "Animecix",
+          "filename": "DEATH NOTE.2006.S01E01.480p.mp4",
+          "container": "mp4",
+          "size": 94687213,
+          "dimensions": {
+            "width": 852,
+            "height": 480
+          },
+          "languages": [
+            "tr",
+            "en"
+          ]
+        },
+        {
+          "source": "Animecix",
+          "filename": "DEATH NOTE.2006.S01E01.720p.mp4",
+          "container": "mp4",
+          "size": 179688354,
+          "dimensions": {
+            "width": 1280,
+            "height": 720
+          },
+          "languages": [
+            "tr",
+            "en"
+          ]
+        }
+      ]
+    }
+  ],
+  "combinedMainRecheck": [
+    {
+      "key": "dune",
+      "ms": 24021,
+      "results": 11,
+      "downloadPairs": 1,
+      "pairsWithTr": 5,
+      "pairsWithEn": 5,
+      "pairsWithBoth": 5,
+      "files": [
+        {
+          "source": "Internet Archive",
+          "filename": "Dune_2021_720p_BluRay_x265_HEVC_10bit_AAC_2_0_Hindi_PSA_ASAP.mkv",
+          "container": "mkv",
+          "size": 792903325,
+          "dimensions": {
+            "width": 1280,
+            "height": 536
+          },
+          "languages": [
+            "tr",
+            "en"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "fleabag-s1e1",
+      "ms": 24020,
+      "results": 13,
+      "downloadPairs": 1,
+      "pairsWithTr": 7,
+      "pairsWithEn": 7,
+      "pairsWithBoth": 7,
+      "files": [
+        {
+          "source": "Internet Archive",
+          "filename": "Fleabag.S01E01.480p.WEB-DL.Tehmovies.biz.mkv",
+          "container": "mkv",
+          "size": 103770149,
+          "dimensions": {
+            "width": 848,
+            "height": 354
+          },
+          "languages": [
+            "tr",
+            "en"
+          ]
+        }
+      ]
+    }
+  ],
+  "combinedAnimeFinal": [
+    {
+      "key": "death-note-s1e1",
+      "ms": 19712,
+      "results": 4,
+      "downloadPairs": 6,
+      "pairsWithTr": 6,
+      "pairsWithEn": 6,
+      "pairsWithBoth": 6,
+      "files": [
+        {
+          "source": "SonAnime",
+          "filename": "DEATH NOTE.2006.S01E01",
+          "container": "mp4",
+          "size": 108188435,
+          "dimensions": {
+            "width": 852,
+            "height": 480
+          },
+          "languages": [
+            "tr",
+            "en"
+          ]
+        },
+        {
+          "source": "Animecix",
+          "filename": "DEATH NOTE.2006.S01E01.720p.mp4",
+          "container": "mp4",
+          "size": 240288551,
+          "dimensions": {
+            "width": 1280,
+            "height": 720
+          },
+          "languages": [
+            "tr",
+            "en"
+          ]
+        },
+        {
+          "source": "SonAnime",
+          "filename": "DEATH NOTE.2006.S01E01",
+          "container": "mp4",
+          "size": 240288551,
+          "dimensions": {
+            "width": 1280,
+            "height": 720
+          },
+          "languages": [
+            "tr",
+            "en"
+          ]
+        },
+        {
+          "source": "Animecix",
+          "filename": "DEATH NOTE.2006.S01E01.480p.mp4",
+          "container": "mp4",
+          "size": 94687213,
+          "dimensions": {
+            "width": 852,
+            "height": 480
+          },
+          "languages": [
+            "tr",
+            "en"
+          ]
+        },
+        {
+          "source": "Animecix",
+          "filename": "DEATH NOTE.2006.S01E01.480p.mp4",
+          "container": "mp4",
+          "size": 108188435,
+          "dimensions": {
+            "width": 852,
+            "height": 480
+          },
+          "languages": [
+            "tr",
+            "en"
+          ]
+        },
+        {
+          "source": "Animecix",
+          "filename": "DEATH NOTE.2006.S01E01.720p.mp4",
+          "container": "mp4",
+          "size": 179688354,
+          "dimensions": {
+            "width": 1280,
+            "height": 720
+          },
+          "languages": [
+            "tr",
+            "en"
+          ]
+        }
+      ]
+    }
+  ],
+  "countCaution": "Combined raw pair counts include same-file Animecix/SonAnime mirrors; do not call six raw pairs six independent files. Display was four unique choices. No AniMOM file in combined live runs.",
+  "sources": [
+    "https://github.com/falsisdev/anthology",
+    "https://github.com/Gowaru/gowaru-nuvio-providers",
+    "https://github.com/NuvioPlugin/All-in-One-Nuvio",
+    "https://github.com/neilbauman21-hub/free-moveis-api"
+  ],
+  "physicalDevice": "not-run",
+  "fullPlayback": "not-run",
+  "fullDownload": "not-run",
+  "offline": "not-run",
+  "subtitleAudioSync": "not-run"
+}

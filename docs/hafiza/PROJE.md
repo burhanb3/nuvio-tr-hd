@@ -1,5 +1,13 @@
 # Proje hafızası
 
+## 1.7.3 — kaynak araştırması ve gerçek MP4 metadata
+
+Varsayılan yeni kararlı film/dizi dosya sağlayıcısı0. AniMOM/YourUpload genel anime adaptörü tekil DeathNoteS01E01’de356493310byte/1280×720/1390,661s MP4+dörtTR68–69 puan verdi; başka bölüm ve birleşik aramalar kararsız, bu yüzden animomEnabled===true ile deneysel/varsayılan kapalı. Sezon/episode tahmini yok; yeni pin/hesap/backend0. Webflix tek AoT dosyası doğrulansa da film/TV451/5xx; SineWix/Anizium401, Nakios timeout, Movix embed/UqloadHLS+downloadSecurityerror/Dood403, VidZeeHLS, Soaperforsale/HydraBacksoon, Anizm/Sibnet403. Anahtar/imza/koruma aşılmadı.
+
+Gerçek kod: büyük moov için gerçek mdat kutu sınırına en fazla1 ek<=256KiBRange; video handler/tkhd ile piksel. Sonraki Range’ler ilk byte’ın gerçek CDN adresinde kalır; URL/boyut/ETag koruması sürer. Deneysel YourUpload7s mantıksal pay/yalnız ağ hatasında1resmi yenileme; auth/HTML tekrar yok, toplam bütçe/native3/altyazı4/EN1 aynı. 178test/QuickJS;20upstream drift yok. source-pool/fair-scheduling denemesi üretime alınmadı; mevcut FIFO/kotalar aynı.
+
+Canlı Dune1/Fleabag2 dosya ilk; Dune1/Fleabag1 tekrar. Archive ağ arızaları açık. DN ham6 çift/farklı4, mevcut kaynaklar; AniMOM birleşik turda0. Kapsam arttı/kararlı diye sunma. compatibility/download-research-173.json; fiziksel cihaz/tam indirme/offline/senkron yok. Yayın kanıtı iş sonunda güncellenecek.
+
 ## 1.7.2 — tek kart düzeni ve TR/EN
 
 Kullanıcı her satırın aynı alanları göstermesini, TR yok yerine TR altyazı yok yazılmasını ve İngilizce altyazının aynı kontrollerle eklenmesini istedi. Kalite/GB/ses/altyazı her zaman doludur; bilinmeyen bilgi uydurulmaz. Boyut decimal GB (10^9 byte), iki hane/Türkçe virgül; HLS ~ veya ≤~ ve değişken/bilinmiyor ayrımı sürer. Ses:EN ile TR/EN altyazı ayrıdır; Animecix uzun kredisi kart adından çıkarıldı.

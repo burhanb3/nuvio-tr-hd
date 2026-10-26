@@ -12,6 +12,27 @@ const bundle = await readFile(new URL('../providers/nuvio-tr-hd.js', import.meta
 const onlineBundle = await readFile(new URL('../providers/nuvio-tr-hd-online.js', import.meta.url), 'utf8');
 const animeBundle = await readFile(new URL('../providers/nuvio-tr-hd-anime.js', import.meta.url), 'utf8');
 
+test('QuickJS AniMOM: generic title/year/episode lookup and large-moov metadata stay native compatible',async()=>{
+ const root='https://animom.org/anime/example-anime',embed='https://www.yourupload.com/embed/Example1',url='https://vidcache.net:8161/example/video.mp4';
+ const ftyp=helpers.box('ftyp',Buffer.from('isom\0\0\0\0isommp42','binary'));
+ const mvhd=Buffer.alloc(20);mvhd.writeUInt32BE(1000,12);mvhd.writeUInt32BE(1390661,16);
+ const body=Buffer.concat([ftyp,helpers.box('mdat',Buffer.alloc(180000)),helpers.box('moov',helpers.box('mvhd',mvhd),helpers.moov(1280,720).subarray(8),helpers.box('free',Buffer.alloc(300000)))]);
+ const fixture={
+  'https://api.themoviedb.org/3/tv/123456?api_key=test&append_to_response=external_ids':{json:{id:123456,name:'Example Anime',original_name:'例のアニメ',first_air_date:'2020-01-01',original_language:'ja',genres:[{id:16}]}},
+  'https://animom.org/search':{body:JSON.stringify({success:true,theme:`<li><a href="${root}">Example Anime</a><p>2020 - 例のアニメ</p></li>`}),mime:'text/html'},
+  [root]:{body:`<h1><a href="${root}">Example Anime</a> (2020)</h1><script type="application/ld+json">{"name":"Example Anime","datePublished":"2020-01-01"}</script><a href="${root}-1-bolum">1</a>`},
+  [root+'-1-bolum']:{body:`<h1><a href="${root}">Example Anime</a> 1. Bölüm</h1><button data-frame="${embed}">YourUpload</button>`},
+  [embed]:{body:`<meta property="og:video" content="${url}"><script>file:'${url}'</script>`},[url]:{body,mime:'video/mp4'}
+ };
+ const result=await runInQuickJs(fixture,{code:animeBundle,args:['123456','tv',1,1],settings:{autoSubtitles:false,animecixEnabled:false,sonanimeEnabled:false,animomEnabled:true}});
+ assert.equal(result.length,1);assert.match(result[0].name,/AniMOM/);assert.equal(result[0].quality,'1280×720 ✓');
+ fixture[root].body=fixture[root].body.replaceAll('2020','2021');
+ assert.deepEqual(await runInQuickJs(fixture,{code:animeBundle,args:['123456','tv',1,1],settings:{autoSubtitles:false,animecixEnabled:false,sonanimeEnabled:false,animomEnabled:true}}),[]);
+ const fileFixture=makeFixture({files:{'https://media.test/movie.mp4':{body,mime:'video/mp4'}}});
+ const streams=await runInQuickJs(fileFixture,{settings:{autoDiscover:false,autoSubtitles:false,catalogUrls:'https://library.test/catalog.json'}});
+ assert.equal(streams[0].quality,'1280×720 ✓');assert.equal(streams[0].type,'mp4');
+});
+
 test('QuickJS bilingual subtitles retain tr/en and uniform card fields with real MP4 metadata',async()=>{
  const en='1\n00:00:01,000 --> 00:00:03,000\nFollow the white rabbit.\n';
  const fixture=makeFixture({items:[{...identity,streams:[{url:'https://media.test/movie.mp4',subtitles:[{url:'https://media.test/tr.srt',language:'tr'}]}]}],extra:{

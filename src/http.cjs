@@ -74,7 +74,10 @@ function createHttp({ fetchImpl, allowHttp = false, timeoutMs = 4500, deadline =
       return null;
     })();
     const result = await bounded(work, end, controller);
-    if (!result && !failures.has(rawUrl)) emit({ stage: 'http', host: new URL(rawUrl).hostname, reason: 'timeout_or_network' });
+    if (!result && !failures.has(rawUrl)) {
+      failures.set(rawUrl,{reason:'timeout_or_network'});
+      emit({ stage: 'http', host: new URL(rawUrl).hostname, reason: 'timeout_or_network' });
+    }
     return result;
   }
 
@@ -97,10 +100,10 @@ function createHttp({ fetchImpl, allowHttp = false, timeoutMs = 4500, deadline =
     return { text, url: result.url };
   }
 
-  async function bytes(url, headers, start = 0, end = 131071) {
+  async function bytes(url, headers, start = 0, end = 131071, options = {}) {
     const limit = end - start + 1;
     if (limit <= 0 || limit > 262144) return null;
-    const result = await request(url, { headers: { ...headers, Range: `bytes=${start}-${end}` }, nativeGroup:'media-probe' });
+    const result = await request(url, { headers: { ...headers, Range: `bytes=${start}-${end}` }, nativeGroup:'media-probe', timeoutMs:options.timeoutMs });
     if (!result) return null;
     const response = result.response;
     const mime = (response.headers.get('content-type') || '').split(';')[0].toLowerCase().trim();

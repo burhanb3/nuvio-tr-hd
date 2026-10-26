@@ -1,10 +1,16 @@
 # Nuvio TR HD
 
-Nuvio Mobile'ın Kotlin Multiplatform **Full** sürümü için JavaScript sağlayıcı deposu. Film/bölüm seçildiğinde birden çok gerçek kaynağı otomatik tarar, MP4/MKV bağlantılarını doğrular ve her video için mevcut Türkçe ve İngilizce altyazıları arayıp eşleştirir. Seçilen boyut/kalite/uygunluk sırasıyla sunar. Her taramada varsayılan üst sınır **20**, çözünürlük filtresi **Tümü**. İstenirse 6/10 seçilebilir. Sürüm **1.7.2**.
+Nuvio Mobile'ın Kotlin Multiplatform **Full** sürümü için JavaScript sağlayıcı deposu. Film/bölüm seçildiğinde birden çok gerçek kaynağı otomatik tarar, MP4/MKV bağlantılarını doğrular ve her video için mevcut Türkçe ve İngilizce altyazıları arayıp eşleştirir. Seçilen boyut/kalite/uygunluk sırasıyla sunar. Her taramada varsayılan üst sınır **20**, çözünürlük filtresi **Tümü**. İstenirse 6/10 seçilebilir. Sürüm **1.7.3**.
 
 **26 Ekim 2026 uyumluluk kontrolü:** `0.6.4-beta` ve güncel `cmp-rewrite` dalının ilgili kaynak sözleşmeleri karşılaştırıldı. Derlenmiş sağlayıcı gerçek QuickJS WASM motorunda test edilir. Fiziksel Android/iOS cihazında oynatma ve indirme testi henüz yapılmadı. Ayrıntılar: [uyumluluk raporu](docs/UYUMLULUK.md).
 
 Bu depo medya barındırmaz. SonAnime, DiziYou, DiziBak, FilmModu, Animecix/Tau, 4KHDHub/HubCloud, VixSrc, Internet Archive ve PlayIMDb yerleşiktir; DahmerMovies deneysel yerel yedektir ve varsayılan kapalıdır. JSON/Stremio adresi girmek zorunlu değildir. Kişisel JSON ve Stremio kaynakları ek alternatif olarak korunmuştur. Her film için erişilebilir HD dosya veya uygun Türkçe altyazı bulunması garanti değildir; başarısız/engelli kaynaklar atlanır.
+
+## 1.7.3: gerçek dosya bilgisi ve indirme araştırması
+
+Büyük MP4 metadata kutularında gerçek piksel/süreyi okumak için en fazla bir ek küçük Range kullanılır. Sonraki aralıklar ilk byte sunucusunda kalır; dönen CDN’den veri karıştırılmaz. Mevcut kaynaklar/TR-EN ve varsayılan ayarlar korunur.
+
+AniMOM/YourUpload anime adaptörü tekil720p/0,36GB MP4+TR verdi; birleşik arama/bazı bölümlerde kararsız olduğu için **deneysel ve varsayılan kapalı**. Film/dizi indirme kapsamı henüz büyümüş sayılmaz.178test/QuickJS; telefon/tam indirme/offline/senkron testi yok. [Araştırma ve sınırlar](docs/INDIRME_ARASTIRMASI_173.md).
 
 ## 1.7.2: aynı kart düzeni ve TR/EN altyazı
 

@@ -1,5 +1,5 @@
 'use strict';
-const { inspectContainer, mp4TailInfo, ascii } = require('./containers.cjs');
+const { inspectContainer, mp4TailInfo, mp4MetadataOffset, mp4MetadataInfo, ascii } = require('./containers.cjs');
 const { opensubtitlesHash } = require('./hash.cjs');
 const { inspectHls } = require('./hls.cjs');
 function sameFile(first, second) {
@@ -25,8 +25,17 @@ async function probeOne(http, candidate, includeHls = false, hashEnabled = false
   // The range GET already supplies type, size and actual container bytes.
   // A separate HEAD adds a native job and may reject valid signed GET links.
   // Every GET still enforces permissions, ranges, bounded bodies and format.
-  const sample = await http.bytes(candidate.url, candidate.headers);
+  // YourUpload performs an extra public CDN redirect. Allow that hop within
+  // the existing search deadline; all other sources keep their normal limit.
+  let dataUrl = candidate.url;
+  const bytes = (start, end) => http.bytes(dataUrl, candidate.headers, start, end,
+    candidate.source === 'AniMOM' ? { timeoutMs: 7000 } : {});
+  const sample = await bytes();
   if (!sample) return null;
+  // Read the rest from the exact server that returned the first bytes. A
+  // rotating redirect can otherwise send each range to a different replica.
+  // This is also the URL we already return for playback/download.
+  dataUrl = sample.url;
   const textPrefix = ascii(sample.bytes, 0, Math.min(sample.bytes.length, 2048)).replace(/^\u00ef\u00bb\u00bf/, '').trimStart();
   if (textPrefix.startsWith('#EXTM3U')) {
     // Nuvio's download filter relies on the URL extension. Never expose an
@@ -45,9 +54,22 @@ async function probeOne(http, candidate, includeHls = false, hashEnabled = false
   if (info.container === 'mp4' && /\.mkv(?:$|[?#])/i.test(sample.url)) return null;
   if (info.container === 'mkv' && /\.mp4(?:$|[?#])/i.test(sample.url)) return null;
   let tailSample = null;
+  if (info.container === 'mp4' && (!info.dimensions || candidate.requireDuration && !info.duration) && !http.expired()) {
+    const offset = mp4MetadataOffset(sample.bytes, sample.total);
+    if (offset !== null) {
+      const metadata = await bytes(offset, Math.min(sample.total - 1, offset + 262143));
+      if (sameFile(sample, metadata)) {
+        const extra = mp4MetadataInfo(metadata.bytes, sample.total - offset);
+        if (extra?.invalidVideo) return null;
+        if (extra?.dimensions) info.dimensions = extra.dimensions;
+        if (extra?.duration && !info.duration) info.duration = extra.duration;
+        if (extra?.audioLanguages?.length && !info.audioLanguages?.length) info.audioLanguages = extra.audioLanguages;
+      }
+    }
+  }
   if ((!info.dimensions || (candidate.requireDuration && !info.duration)) && info.container === 'mp4' && sample.total > sample.bytes.length && !http.expired()) {
     const start = Math.max(sample.bytes.length, sample.total - 262144);
-    const tail = await http.bytes(candidate.url, candidate.headers, start, sample.total - 1);
+    const tail = await bytes(start, sample.total - 1);
     tailSample = tail;
     if (sameFile(sample, tail)) {
       const extra = mp4TailInfo(tail.bytes);
@@ -62,7 +84,7 @@ async function probeOne(http, candidate, includeHls = false, hashEnabled = false
   if (info.duration && expectedDuration > 0 && (info.duration < expectedDuration * durationTolerance.low || info.duration > expectedDuration * durationTolerance.high)) return null;
   let videoHash = null;
   if ((hashEnabled || candidate.expectedFile) && sample.total >= 131072 && !http.expired()) {
-    if (!tailSample || tailSample.bytes.length < 65536) tailSample = await http.bytes(candidate.url, candidate.headers, sample.total - 65536, sample.total - 1);
+    if (!tailSample || tailSample.bytes.length < 65536) tailSample = await bytes(sample.total - 65536, sample.total - 1);
     if (sameFile(sample, tailSample)) videoHash = opensubtitlesHash(sample.bytes, tailSample.bytes, sample.total);
   }
   const pinned = candidate.expectedFile;
@@ -76,11 +98,15 @@ async function probe(http, candidate, includeHls = false, hashEnabled = false, o
   const replicas = canUseReplicas && Array.isArray(candidate.alternateUrls) ? candidate.alternateUrls.filter(url => {
     try { const u=new URL(url),original=new URL(candidate.url);return u.protocol==='https:' && /^[a-z]{2}\d{4,8}\.(?:us|eu|ca)\.archive\.org$/.test(u.hostname) && u.pathname===original.pathname && u.search===original.search; } catch { return false; }
   }).slice(0,1) : [];
-  for (const url of [...new Set([candidate.url,...replicas])]) {
+  const attempts = candidate.source === 'AniMOM' ? [candidate.url,candidate.url] : [...new Set([candidate.url,...replicas])];
+  for (const [index,url] of attempts.entries()) {
     if (http.expired()) return null;
     const video = await probeOne(http, { ...candidate, url }, includeHls, hashEnabled, options);
     if (video) return video;
     if ([401,403,429].includes(http.failureFor?.(url)?.status)) return null;
+    // The official YourUpload redirect rotates CDN nodes. Refresh it once only
+    // after a network failure, within the same deadline and physical quota.
+    if (candidate.source === 'AniMOM' && index === 0 && http.failureFor?.(url)?.reason !== 'timeout_or_network') return null;
   }
   return null;
 }
