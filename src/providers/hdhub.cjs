@@ -34,7 +34,12 @@ function pageMatches(html, target) {
       // AND TMDB poster path from canonical metadata, not an arbitrary first hit.
       const bound = target.type === 'movie' || (target.posterPath && typeof data.image === 'string' &&
         new URL(data.image).hostname === 'image.tmdb.org' && new URL(data.image).pathname.endsWith(target.posterPath));
-      if (data['@type'] === type && bound && normalizeTitle(data.name) === normalizeTitle(target.originalTitle) && year === target.year) return true;
+      // Some movie pages append a collection label to the original title.
+      // Strip only this explicit label; the exact TMDB ID, year and release
+      // filenames still have to match. Never accept fuzzy/substring titles.
+      const pageTitle = normalizeTitle(data.name).replace(/ marvel phase [1-6]$/, '');
+      const years = target.type === 'movie' && Number(id) === target.tmdbId ? [target.year, ...(target.releaseYears || [])] : [target.year];
+      if (data['@type'] === type && bound && pageTitle === normalizeTitle(target.originalTitle) && years.includes(year)) return true;
     } catch {}
   }
   return false;
@@ -45,13 +50,14 @@ function releaseEntries(html, target) {
     html.split(/<div\s+class="download-item\b/).slice(1, 121);
   for (const section of sections) {
     const filename = section.match(/<div\s+class="(?:episode-)?file-title">\s*([^<]+)</)?.[1]?.trim();
-    if (!filename || !/\.(mkv|mp4)$/i.test(filename)) continue;
+    if (!filename || /\.(zip|rar|7z|exe|torrent)$/i.test(filename)) continue;
     const normalized = normalizeTitle(filename);
     const title = normalizeTitle(target.originalTitle);
     if (!normalized.startsWith(title + ' ')) continue;
-    if (target.type === 'tv' ? !matchesEpisode(filename, target) : !normalized.includes(' ' + target.year + ' ')) continue;
+    const acceptedYears = target.type === 'movie' ? [target.year, ...(target.releaseYears || [])] : [target.year];
+    if (target.type === 'tv' ? !matchesEpisode(filename, target) : !acceptedYears.some(year => normalized.includes(' ' + year + ' '))) continue;
     const years = normalized.match(/\b(?:19|20)\d{2}\b/g);
-    if (years?.some(y => Number(y) !== target.year)) continue;
+    if (years?.some(y => !acceptedYears.includes(Number(y)))) continue;
     const link = anchors(section).find(a => /Download HubCloud/i.test(a.text));
     const url = safeUrl(link?.href, HDHUB_ORIGIN + '/');
     if (!url || !/^greenmotors\.(?:club|cc)$/i.test(new URL(url).hostname)) continue;
@@ -67,6 +73,11 @@ async function resolveRelease(http, entry, target, allowExtensionless) {
   const hub = redirect && shortlinkTarget(redirect.text);
   if (!hub || http.expired()) return [];
   const page = await http.text(hub);
+  const hubName = page?.text.match(/<title>\s*([^<]+)<\/title>/i)?.[1]?.trim();
+  const extension = hubName?.match(/\.(mkv|mp4)$/i)?.[1]?.toLowerCase();
+  // A display title without .mkv is still a release. A host-provided suffix is
+  // only a naming hint; the file bridge/probe must validate the actual format.
+  const filename = /\.(mkv|mp4)$/i.test(entry.filename) ? entry.filename : extension ? entry.filename + '.' + extension : entry.filename;
   const terminal = page && safeUrl(page.text.match(/\bvar\s+url\s*=\s*['"]([^'"]+)['"]/)?.[1]);
   if (!terminal || new URL(terminal).hostname !== 'gamerxyt.com' || new URL(terminal).pathname !== '/hubcloud.php') return [];
   const result = await http.text(terminal);
@@ -83,7 +94,7 @@ async function resolveRelease(http, entry, target, allowExtensionless) {
     // Raw R2 object keys often lack .mkv. A published bridge must supply the
     // filename-preserving alias; direct fallback cannot promise native naming.
     if (!allowExtensionless && !/\.(?:mkv|mp4)(?:$|[?#])/i.test(url)) return null;
-    return { url, filename: entry.filename, headers: { Referer: 'https://gamerxyt.com/' }, subtitles: [],
+    return { url, filename, headers: { Referer: 'https://gamerxyt.com/' }, subtitles: [],
       ...(publicFile ? { getOnly: true } : {}),
       subtitleBase: result.url, source: '4KHDHub / HubCloud', identity: target, identityConfidence: 95 };
   }).filter(Boolean);
@@ -91,8 +102,12 @@ async function resolveRelease(http, entry, target, allowExtensionless) {
 async function scanHdHub(http, target, options = {}) {
   const search = await http.text(HDHUB_ORIGIN + '/?s=' + encodeURIComponent(target.originalTitle));
   if (!search) return [];
-  const expected = normalizeTitle(target.originalTitle) + ' ' + target.year;
-  const result = anchors(search.text).find(a => target.type === 'tv' ? (' ' + normalizeTitle(a.text) + ' ').includes(' ' + expected + ' ') : normalizeTitle(a.text).endsWith(expected));
+  const years = target.type === 'movie' ? [target.year, ...(target.releaseYears || [])] : [target.year];
+  const expected = normalizeTitle(target.originalTitle);
+  const result = anchors(search.text).find(a => years.some(year => {
+    const title = normalizeTitle(a.text).replace(/ marvel phase [1-6] /, ' ');
+    return target.type === 'tv' ? (' ' + title + ' ').includes(' ' + expected + ' ' + year + ' ') : title.endsWith(expected + ' ' + year);
+  }));
   const pageUrl = result && safeUrl(result.href, search.url);
   if (!pageUrl || new URL(pageUrl).origin !== HDHUB_ORIGIN) return [];
   const page = await http.text(pageUrl, { maxChars: target.type === 'tv' ? 1000000 : 700000 });

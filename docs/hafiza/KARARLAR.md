@@ -1,5 +1,15 @@
 # Tasarım kararları
 
+## 1.6.3 kapsam ve kanıt kararları
+
+- Kullanıcı hedefi 14 vakalık deneme listesinden daha geniştir; bu liste regresyon ve kapsam ölçümüdür. 8 küçük dosya veya128 geçen test tüm hedef tamamlandı demek değildir. Aktif goal bu yüzden açık kalır.
+- Archive eksik yıl alanı, kesin başlık/yıl + dosya adı/yıl ve gerçek süreyle tamamlanır; açık çelişki aşılmaz. Tam uzunluk belirgin eksikse kaynak çoğaltmak için kabul edilmez.
+- Resmi metadata’nın verdiği dosya kopyaları aynı path/isimle kullanılabilir. Keyfi host, kişisel auth/cookie aktarımı veya 401/403/429 sonrası başka kopyayla zorlama yoktur. Aynalar ayrı dosya başarısı sayılmaz.
+- Yeni TV kaynağı kanonik kimlik/yıl/S-E kanıtı olmadan yalnız bir isim aramasından kabul edilmez. Eksik metadata için dar istisna ancak bağımsız kanonik içerik örnekleriyle doğrulanmış tam dosya pinidir; hash/boyut/piksel/süre ve metadata değişirse reddedilir. Anonim OpenSubtitles oturumu hesap değildir; token gizli kalır ve hash bulunmadıysa dosyayı doğrulanmış saymayız.
+- Ses dili konteynerden okunmuş değer ile dosya adı tahmini ayrılır. Özgün ses veya senkron bilinmiyorsa varmış gibi sunulmaz. HLS yine doğrudan indirilemez.
+- HLS’den gerçek MP4 hazırlama ayrı servis gerektirir; GitHub Pages bunu çalıştıramaz. Yerel prototipin kaynak/alan kullanımı ölçülmeden ve tamamlanan dosya doğrulanmadan canlı özellik denmez. Önceki Sites kimliği yeniden oluşturulmaz.
+
+
 ## 1.6.2 düzeltme kararları
 
 - Kullanıcıdaki 1.6.1 bilgisi korunur; boşluğu yalnız cache/eski sürüm varsayımıyla açıklama. Sabit metadata kullanan bilgisayar testini iPhone/TMDB API testi diye sunma.

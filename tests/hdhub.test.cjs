@@ -67,6 +67,23 @@ test('çok sayıda erken ayna daha sonraki büyük dosya sürümünün taranmas�
   } finally { http.close(); }
 });
 
+test('HDHub uzantısız gösterim adı atlanmaz; HubCloud adı yalnız uzantı ipucudur',async()=>{
+ const{fixture,page}=hdFixture();
+ fixture[HDHUB_ORIGIN+'/matrix-movie-1/'].body=page.replace('The.Matrix.1999.1080p.WEB-DL.GROUP.mkv','The.Matrix.1999.1080p.WEB-DL.GROUP');
+ fixture['https://hubcloud.example/file'].body='<title>The.Matrix.1999.1080p.WEB-DL.GROUP.mkv</title>'+fixture['https://hubcloud.example/file'].body;
+ const http=createHttp({fetchImpl:fixtureFetch(fixture)});
+ try{const candidates=await scanHdHub(http,target,{allowExtensionless:true});assert.equal(candidates.length,1);assert.ok(candidates[0].filename.endsWith('.mkv'));}finally{http.close();}
+});
+
+test('HDHub yalnız bilinen koleksiyon etiketi ve kanıtlı gösterim yılına izin verir; kimlik/yıl çelişkisi kalır',()=>{
+ const{page}=hdFixture();
+ assert.equal(pageMatches(page.replace('"name":"The Matrix"','"name":"The Matrix Marvel Phase 4"'),target),true);
+ assert.equal(pageMatches(page.replace('"name":"The Matrix"','"name":"The Matrix Reloaded"'),target),false);
+ assert.equal(pageMatches(page.replace('1999-03-31','1998-03-31'),target),false);
+ assert.equal(pageMatches(page.replace('1999-03-31','1998-03-31'),{...target,releaseYears:[1998,1999]}),true);
+ assert.equal(pageMatches(page.replace('1999-03-31','1998-03-31'),{...target,tmdbId:999,releaseYears:[1998,1999]}),false);
+});
+
 test('yanlış TMDB/yıl, bozuk kısa bağlantı ve keyfi hedef reddedilir', () => {
   const { page } = hdFixture();
   assert.equal(pageMatches(page, target), true);

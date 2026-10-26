@@ -1,5 +1,18 @@
 # Sonraki işler
 
+## 1.6.3 ve aktif kapsam hedefi
+
+1. 1.6.3 gerçek küçük Dune/Spider-Verse/No Way Home ve geniş Archive/HDHub düzeltmeleri hazırlanıyor. Yerel128 test geçti. Son check, upstream, GitHub Windows/Linux ve Pages/public SHA tamamlanıp hafıza/yayın kanıtı güncellenmeli.
+2. Hedef hâlâ açık: Matrix, Inception ve Fleabag S02E01/Shameless/GoT/Breaking Bad vakalarında indirilebilir dosya sıfır; Fleabag S01E01 99 MiB MKV+TR ile eklendi. No Way Home ve Spider-Verse’de ikinci kaliteli seçenek eksik. 14/14 online+TR olması hedefi tamamlamaz. Kapsam JSON’u gerçek eksikleri tutuyor.
+3. Ses tercihi sorusuna yanıt gelirse uygula. Küçük Dune MKV Hintçe, No Way Home dosya adı Fransızca; özgün ses bilinmiyorsa varsayma. Şimdilik tüm seçenekler etiketli, mevcut boyut sırası korunuyor.
+4. PC’de HLS’yi tamamlanmış gerçek MP4’e hazırlama prototipini araştır/test et. Portable FFmpeg resmi zip+SHA ile LocalAppData/NuvioTrHdTools/media-prototype altında; .cache/media-tools163.json sonucunu kontrol et. Dışarıdan erişim veya kalıcı servis kurulmadı. Public servis öncesi PC açık kalması, alan/bant kullanımı ve erişim tasarımı somutlaştırılmalı; kaynaklar/anahtarlar commit edilmemeli.
+5. Archive TV’de kimlik/yıl eksikliğini zayıf ad eşleşmesiyle aşma. OpenSubtitles anonim hash araştırması örnek Fleabag’de sonuçsuz; arama sonucunu hash kanıtına dönüştürme. HDRezka challenge, StreamFlix izin reddi/dosya hatası, Pixel uzantısız MKV sınırları korunur.
+6. Son aşama iPhone’da tam video + TR indirme, uçak modu ve senkron. Bu yapılmadan goal tamamlanamaz. Aynı Sites hesap sorusunu tekrarlama; köprü1.4 sürer.
+
+
+7. Dar içerik pinlerini genişletmek için her yeni dosya/bölümde bağımsız kanonik örnek karşılaştırması ve gerçek Range/hash gerekir. Dune örneklerinde hız farkı var; yalnız başlangıç offset’iyle altyazı düzeldi deme. Fleabag S01E01 pinini tüm sezonun kimlik onayı sayma. compatibility/content-163.json ve tests/archive-pins.test.cjs kanıtları korunmalı.
+
+
 ## 1.6.2 öncelik
 
 1. **Tamamlandı:** 1.6.2 5b298cd yayımlandı; yerel 114 test/QuickJS, Windows/Linux 40309193725 ve Pages 40309193727 başarılı. Beş public varlık HTTP 200 + yerel SHA eşit. Ana/anime kimlikleri ve ayarlar korunur; kaynak sorunu telefonda çözüldü sayılmaz.

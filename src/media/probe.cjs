@@ -7,7 +7,7 @@ function sameFile(first, second) {
     (first.etag && !first.etag.startsWith('W/') && first.etag === second.etag));
 }
 
-async function probe(http, candidate, includeHls = false, hashEnabled = false, options = {}) {
+async function probeOne(http, candidate, includeHls = false, hashEnabled = false, options = {}) {
   const path = candidate.url.split(/[?#]/)[0].toLowerCase();
   if (/\.(mpd|torrent|zip|rar|exe)$/.test(path)) return null;
   const hlsUrl = /\.m3u8(?:$|[?#])/i.test(candidate.url);
@@ -57,15 +57,34 @@ async function probe(http, candidate, includeHls = false, hashEnabled = false, o
       if (extra?.invalidVideo) return null;
       if (extra?.dimensions && !info.dimensions) info.dimensions = extra.dimensions;
       if (extra?.duration && !info.duration) info.duration = extra.duration;
+      if (extra?.audioLanguages?.length && !info.audioLanguages?.length) info.audioLanguages = extra.audioLanguages;
     }
   }
   if (candidate.requireDuration && !info.duration) return null;
-  if (info.duration && expectedDuration > 0 && (info.duration < expectedDuration * 0.7 || info.duration > expectedDuration * 1.35)) return null;
+  const durationTolerance = candidate.durationTolerance === 0.1 ? { low: 0.9, high: 1.1 } : { low: 0.7, high: 1.35 };
+  if (info.duration && expectedDuration > 0 && (info.duration < expectedDuration * durationTolerance.low || info.duration > expectedDuration * durationTolerance.high)) return null;
   let videoHash = null;
-  if (hashEnabled && sample.total >= 131072 && !http.expired()) {
+  if ((hashEnabled || candidate.expectedFile) && sample.total >= 131072 && !http.expired()) {
     if (!tailSample || tailSample.bytes.length < 65536) tailSample = await http.bytes(candidate.url, candidate.headers, sample.total - 65536, sample.total - 1);
     if (sameFile(sample, tailSample)) videoHash = opensubtitlesHash(sample.bytes, tailSample.bytes, sample.total);
   }
+  const pinned = candidate.expectedFile;
+  if (pinned && (sample.total !== pinned.size || !videoHash || videoHash !== pinned.hash ||
+    info.dimensions?.width !== pinned.width || info.dimensions?.height !== pinned.height ||
+    !info.duration || Math.abs(info.duration - pinned.duration) > 0.5)) return null;
   return { ...info, url: outputUrl, size: sample.total, videoHash, downloadable: true };
+}
+async function probe(http, candidate, includeHls = false, hashEnabled = false, options = {}) {
+  const canUseReplicas = candidate.source === 'Internet Archive' && !Object.keys(candidate.headers || {}).some(k => /^(authorization|cookie)$/i.test(k));
+  const replicas = canUseReplicas && Array.isArray(candidate.alternateUrls) ? candidate.alternateUrls.filter(url => {
+    try { const u=new URL(url),original=new URL(candidate.url);return u.protocol==='https:' && /^[a-z]{2}\d{4,8}\.(?:us|eu|ca)\.archive\.org$/.test(u.hostname) && u.pathname===original.pathname && u.search===original.search; } catch { return false; }
+  }).slice(0,1) : [];
+  for (const url of [...new Set([candidate.url,...replicas])]) {
+    if (http.expired()) return null;
+    const video = await probeOne(http, { ...candidate, url }, includeHls, hashEnabled, options);
+    if (video) return video;
+    if ([401,403,429].includes(http.failureFor?.(url)?.status)) return null;
+  }
+  return null;
 }
 module.exports = { probe };

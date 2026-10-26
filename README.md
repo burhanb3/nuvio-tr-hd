@@ -1,20 +1,20 @@
 # Nuvio TR HD
 
-Nuvio Mobile'ın Kotlin Multiplatform **Full** sürümü için JavaScript sağlayıcı deposu. Film/bölüm seçildiğinde birden çok gerçek kaynağı otomatik tarar, MP4/MKV bağlantılarını doğrular ve her video için mevcut Türkçe altyazıları arayıp eşleştirir. Seçilen boyut/kalite/uygunluk sırasıyla sunar. Her taramada varsayılan üst sınır **20**, çözünürlük filtresi **Tümü**. İstenirse 6/10 seçilebilir. Sürüm **1.6.2**.
+Nuvio Mobile'ın Kotlin Multiplatform **Full** sürümü için JavaScript sağlayıcı deposu. Film/bölüm seçildiğinde birden çok gerçek kaynağı otomatik tarar, MP4/MKV bağlantılarını doğrular ve her video için mevcut Türkçe altyazıları arayıp eşleştirir. Seçilen boyut/kalite/uygunluk sırasıyla sunar. Her taramada varsayılan üst sınır **20**, çözünürlük filtresi **Tümü**. İstenirse 6/10 seçilebilir. Sürüm **1.6.3**.
 
 **26 Ekim 2026 uyumluluk kontrolü:** `0.6.4-beta` ve güncel `cmp-rewrite` dalının ilgili kaynak sözleşmeleri karşılaştırıldı. Derlenmiş sağlayıcı gerçek QuickJS WASM motorunda test edilir. Fiziksel Android/iOS cihazında oynatma ve indirme testi henüz yapılmadı. Ayrıntılar: [uyumluluk raporu](docs/UYUMLULUK.md).
 
 Bu depo medya barındırmaz. Animecix/Tau, 4KHDHub/HubCloud, VixSrc, Internet Archive ve PlayIMDb yerleşiktir; DahmerMovies deneysel yerel yedektir ve varsayılan kapalıdır. JSON/Stremio adresi girmek zorunlu değildir. Kişisel JSON ve Stremio kaynakları ek alternatif olarak korunmuştur. Her film için erişilebilir HD dosya veya uygun Türkçe altyazı bulunması garanti değildir; başarısız/engelli kaynaklar atlanır.
 
-## 1.6.2: boş sonuç düzeltmeleri ve iPhone tanısı
+## 1.6.3: ölçülen indirme kapsamı
 
-Obsession gibi festival yılı ile genel gösterim yılı farklı filmler, yalnız aynı IMDb ve TMDB gösterim tarihi kanıtıyla kabul edilir. PlayIMDb/VixSrc HLS aramasında isteğe bağlı çocuk liste/parça ölçümleri varsayılan kapalıdır; geçerli master daha az sorguyla korunur. Dosya aramasında erken aynalar sonraki sürümleri durdurmaz; büyük dosya tavanı yoktur.
+Archive’ın yıl alanı eksik kayıtları, kesin başlık/yıl + dosya adı/yıl ve gerçek süre kanıtıyla taranır. Resmi dosya sunucuları doğrudan kullanılır; hazır adaylar kalan metadata’yı beklemez. HDHub’da uzantısız gösterim başlıkları, koleksiyon etiketi ve doğrulanmış gösterim yılı farkları nedeniyle yanlış elenen sürümler yeniden incelenir. Gerçek MP4/MKV/Range doğrulaması korunur.
 
-Ayarların üstünde **Tanı · 1.6.2** satırı gerçek kayıtlı filtreleri ve anahtarın yalnız varlığını gösterir. Önceki ayarlar korunur. Boş sonuç günlüğü kimlik sorgusu, kaynak ve filtre nedenlerini ayırır; anahtar veya tam URL yazmaz. [Güncelleme ve tanı rehberi](docs/IPHONE_BOS_SONUC_162.md).
+14 vakalık gerçek kaynak matrisinde küçük indirilebilir + Türkçe altyazı 3/14’ten 8/14’e çıktı. Dune için yaklaşık 756/905 MiB, Spider-Verse için 1,88 GiB dosyalar doğrulandı. Fleabag S01E01 için yaklaşık 99 MiB MKV bulundu; bağımsız görüntü örnekleri doğru bölümle eşleşti. No Way Home’da 840 MiB düşük çözünürlüklü bir alternatif var; ikinci iyi kalite hâlâ eksik. **Diğer normal dizi vakalarında, Matrix ve Inception’da indirme boşlukları sürüyor.** [Tam liste, ses dilleri ve kalan hedefler](docs/KAPSAM_MATRISI.md).
 
-**Kullanıcı iPhone’da 1.6.1 ile boş sonuç bildirdi; telefon kök nedeni henüz kesinleşmedi.** Bilgisayarda sabit TMDB metadata ile canlı kaynak sonucu alınması telefon doğrulaması değildir. Küçük indirilebilir Dune dosyası hâlâ bulunamadı. Fiziksel iPhone/tam oynatma/indirme/senkron test edilmedi.
+Ses dili okunabildiğinde konteynerden gösterilir; dosya adı iddiası tahmini yazılır. Küçük Dune MKV’si Hintçe ses içerir. Türkçe altyazı bulunması özgün ses veya sahne senkronu garantisi değildir. Mevcut boyut/kalite sıralaması korunur.
 
-Ana scraper aynı kimlikle online ve dosyaları birlikte arar; Anime ayrıdır. Ana arama 24, anime 20 saniye mantıksal bütçe kullanır. İptal edilemeyen native ağ işleri iPhone dönüşünü uzatabilir.
+128 fixture/QuickJS testi, kaynak/altyazı canlı kontrolleri ve ayrı kapsam ölçümü vardır. Sabit TMDB referansı telefonun gerçek API anahtarını sınamaz. **Fiziksel iPhone, tam oynatma/indirme, çevrimdışı altyazı ve sahne senkronu testi yapılmadı.** Ana scraper aynı kimlikle online ve dosyaları birlikte arar; Anime ayrıdır. Ana arama 24, Anime 20 saniye mantıksal bütçe; native iOS işleri ayrıca geciktirebilir.
 
 Animecix/Tau, kesin TMDB ID + özgün başlık + yıl + tam sezon/bölümle aranır. Önceki canlı kontrollerde Death Note S01E01 90–229 MiB 480p/720p MP4 ve dört TR SRT; Attack on Titan S01E01 165–569 MiB 480p/720p/1080p MP4 ve üç TR SRT verdi. SRT senkronu ölçülmedi. MKV içindeki gerçek Türkçe altyazı izleri de algılanır. [Anime ve iOS font incelemesi](docs/ANIME_HIZ_VE_ALTYAZI.md).
 
@@ -41,7 +41,7 @@ Varsayılanlar: otomatik tarama ve Türkçe altyazı araması açık; çözünü
 
 **Altı sonuç Nuvio'nun sınırı değildir.** Bu eklentinin ayarlanabilir liste sınırıdır. Genel kaynaklara tarama başına 40 aday kotası ayrılır; HDHub ayrıca en çok 12 release’i aşamalı işler. Sonuç sayısını 20 seçmek yeni sağlayıcı eklemez. Mantıksal bütçeler ana arama 24, Anime 20 saniyedir; başlamış native ağ işlerinin bitişi ayrıca Nuvio’ya bağlıdır.
 
-**1.6.2’ye geçiş:** Mevcut GitHub deposunu Nuvio Pluginler ekranından yenileyin ve ana sağlayıcı sürümünün **1.6.2** olduğunu kontrol edin. Eski Sites kopyası varsa kapatın. Önceden kaydedilmiş HLS kapalı ayarı değişmez; online alternatifler için sağlayıcı ayarındaki **HLS çevrimiçi izleme alternatiflerini göster** seçeneğini açın. Depoyu kaldırmak gerekmez; kaldırıp yeniden eklemek kişisel ayarları sıfırlayabilir.
+**1.6.3’e geçiş:** Mevcut GitHub deposunu Nuvio Pluginler ekranından yenileyin ve ana sağlayıcı sürümünün **1.6.3** olduğunu kontrol edin. Eski Sites kopyası varsa kapatın. Önceden kaydedilmiş HLS kapalı ayarı değişmez; online alternatifler için sağlayıcı ayarındaki **HLS çevrimiçi izleme alternatiflerini göster** seçeneğini açın. Depoyu kaldırmak gerekmez; kaldırıp yeniden eklemek kişisel ayarları sıfırlayabilir.
 
 Dune (2021) / Spider-Man denemesi, uzun bekleme düzeltmesi ve sonuçların sınırları: [sorun giderme](docs/SORUN_GIDERME.md).
 

@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "metadataMode": "fixed canonical reference; does not test phone TMDB API credentials",
+  "acceptance": {
+    "movieSmallFileBytes": 3221225472,
+    "episodeSmallFileBytes": 1073741824,
+    "minimumDistinctDownloadQualities": 2,
+    "requireTurkishSubtitle": true,
+    "physicalPlaybackAndOfflineTest": "not-run"
+  },
+  "titles": [
+    { "key": "no-way-home", "tmdb": { "id": 634649, "original_title": "Spider-Man: No Way Home", "release_date": "2021-12-15", "imdb_id": "tt10872600", "runtime": 148 } },
+    { "key": "spider-verse", "tmdb": { "id": 324857, "original_title": "Spider-Man: Into the Spider-Verse", "release_date": "2018-12-06", "imdb_id": "tt4633694", "runtime": 117 } },
+    { "key": "dune", "tmdb": { "id": 438631, "original_title": "Dune", "release_date": "2021-09-15", "imdb_id": "tt1160419", "runtime": 155 } },
+    { "key": "matrix", "tmdb": { "id": 603, "original_title": "The Matrix", "release_date": "1999-03-31", "imdb_id": "tt0133093", "runtime": 136 } },
+    { "key": "inception", "tmdb": { "id": 27205, "original_title": "Inception", "release_date": "2010-07-15", "imdb_id": "tt1375666", "runtime": 148 } },
+    { "key": "interstellar", "tmdb": { "id": 157336, "original_title": "Interstellar", "release_date": "2014-11-05", "imdb_id": "tt0816692", "runtime": 169 } },
+    { "key": "obsession", "tmdb": { "id": 1339713, "original_title": "Obsession", "release_date": "2026-05-13", "imdb_id": "tt37287335", "runtime": 109, "release_dates": { "results": [{ "iso_3166_1": "CA", "release_dates": [{ "type": 1, "release_date": "2025-09-06T00:00:00.000Z" }] }] } } },
+    { "key": "fleabag-s1e1", "season": 1, "episode": 1, "tmdb": { "id": 67070, "original_name": "Fleabag", "first_air_date": "2016-07-21", "external_ids": { "imdb_id": "tt5687612" }, "episode_run_time": [26], "poster_path": "/27vEYsRKa3eAniwmoccOoluEXQ1.jpg" } },
+    { "key": "fleabag-s2e1", "season": 2, "episode": 1, "tmdb": { "id": 67070, "original_name": "Fleabag", "first_air_date": "2016-07-21", "external_ids": { "imdb_id": "tt5687612" }, "episode_run_time": [26], "poster_path": "/27vEYsRKa3eAniwmoccOoluEXQ1.jpg" } },
+    { "key": "shameless-s1e1", "season": 1, "episode": 1, "tmdb": { "id": 34307, "original_name": "Shameless", "first_air_date": "2011-01-09", "external_ids": { "imdb_id": "tt1586680" }, "episode_run_time": [57] } },
+    { "key": "got-s1e1", "season": 1, "episode": 1, "tmdb": { "id": 1399, "original_name": "Game of Thrones", "first_air_date": "2011-04-17", "external_ids": { "imdb_id": "tt0944947" }, "episode_run_time": [60], "poster_path": "/1XS1oqL89opfnbLl8WnZY1O1uJx.jpg" } },
+    { "key": "breaking-bad-s1e1", "season": 1, "episode": 1, "tmdb": { "id": 1396, "original_name": "Breaking Bad", "first_air_date": "2008-01-20", "external_ids": { "imdb_id": "tt0903747" }, "episode_run_time": [58] } },
+    { "key": "death-note-s1e1", "season": 1, "episode": 1, "tmdb": { "id": 13916, "name": "Death Note", "original_name": "DEATH NOTE", "first_air_date": "2006-10-04", "external_ids": { "imdb_id": "tt0877057" }, "episode_run_time": [23], "original_language": "ja", "genres": [{ "id": 16 }] } },
+    { "key": "night-control", "control": true, "tmdb": { "id": 10331, "original_title": "Night of the Living Dead", "release_date": "1968-10-04", "imdb_id": "tt0063350", "runtime": 96 } }
+  ]
+}

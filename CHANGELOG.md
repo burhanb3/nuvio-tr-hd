@@ -1,5 +1,15 @@
 # Değişiklik günlüğü
 
+## 1.6.3 — 26 Ekim 2026
+
+- 14 film/dizi vakası için sabit kanonik metadata + canlı kaynak/altyazı kapsam ölçümü. Küçük indirme+TR 3/14’ten 8/14’e çıktı; bütün kaynak ölçütleri 5/14. Hedef tamamlanmadı; diğer normal diziler, Matrix/Inception ve ek Spider-Man kaliteleri eksik.
+- Dune tarih çelişkisi ve Fleabag S01E01 eksik metadata’sı, bağımsız görüntü örnekleriyle dar dosya eşlemesine bağlandı. Her kullanımda metadata SHA-1/boyut, gerçek Range hash’i/piksel/süre şart; başka bölüm/kimliğe taşınmaz. Görüntü kimliği altyazı senkronu sayılmaz.
+- Archive eksik yıl alanında kesin başlık/yıl, dosya adı/yıl ve gerçek süre doğrulaması; daha ilgili kayıtlar, aşamalı adaylar ve resmi doğrudan dosya kopyaları. Açık kimlik/yıl çelişkisi, 401/403/429 ve yanlış Range/format kontrolleri korunur.
+- HDHub uzantısız gösterim başlığı, bilinen koleksiyon etiketi ve TMDB’de doğrulanmış gösterim yılı desteği. Host uzantısı gerçek format doğrulaması sayılmaz.
+- MP4/MKV ses track dilleri; yalnız dosya adı ses ipucu tahmini. Mevcut sıralama korunur. Farklı ses, senkron veya fiziksel cihaz başarısı gizlenmez.
+- 128 test/QuickJS; kapsam JSON ve Türkçe rehber. HLS doğrudan indirme yapılmadı; yeni servis yayımlanmadı. Tam film/telefon/çevrimdışı/senkron testleri çalıştırılmadı.
+
+
 ## 1.6.2 — 26 Ekim 2026
 
 - Obsession’da TMDB genel gösterim yılı ile doğru IMDb’ye bağlı dosyanın festival yılı farkından kaynaklanan yanlış eleme giderildi. Yalnız TMDB’nin aynı film için doğruladığı yakın gösterim yılları kabul edilir; farklı kimlik/başlık/yıl reddi korunur. Altyazıda ek kimlik kontrolü vardır.

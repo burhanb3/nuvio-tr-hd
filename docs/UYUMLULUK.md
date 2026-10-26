@@ -1,5 +1,7 @@
 # Nuvio Kotlin Multiplatform uyumluluğu
 
+**1.6.3 — 26 Ekim:** 128 yerel test ve üretilmiş paketlerin gerçek QuickJS testi başarılı. Aynı gün resmî 0.6.4-beta ve cmp-rewrite HEAD `56ae37081afaff820b6073da84e711320238de36` üzerinde 20 kilitli dosya doğrulandı; drift yok, kilit değiştirilmedi. [Denetim](../compatibility/upstream-163-check.json). Manifest/ABI değişmedi. 14 vakalık sabit TMDB referansı + gerçek kaynak/altyazı kontrolü, native ağ köprüsü ve fiziksel iPhone testi değildir. Dar dosya pinleri hash aramasını altyazı ayarı kapalıyken de zorunlu yapar. Tam oynatma, indirme, senkron ve çevrimdışı testi yapılmadı.
+
 **1.6.2 — 26 Ekim:** 114 yerel test/QuickJS, GitHub Windows/Linux ve Pages başarılı; beş public varlık HTTP 200 ve SHA eşitliği doğrulandı. onSettings içindeki ağsız Tanı info alanı mevcut ABI’yı kullanır; sürüm build sırasında gömülür. TMDB key enjeksiyonu, native ID normalizasyonu ve iOS fetch60s/Abort eksikliği kaynakta tekrar incelendi. Kilitli20dosyada drift yok; compatibility/upstream-162-check.json. Lock değiştirilmedi. HLS opsiyonel sorguları azaltmak fiziksel iPhone dönüş garantisi değildir. [Tanı ve sınırlar](IPHONE_BOS_SONUC_162.md).
 
 

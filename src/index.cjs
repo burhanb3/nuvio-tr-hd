@@ -19,6 +19,7 @@ const { rankStreams } = require('./ranking.cjs');
 const { describeQuality, describeSize } = require('./media/presentation.cjs');
 const { profileAddress } = require('./media/hls.cjs');
 const { configuration, configurationLabel, effectiveTmdbKey, writeDiagnostic } = require('./diagnostics.cjs');
+const { describeAudio } = require('./media/audio.cjs');
 
 function parseUrls(value, allowHttp) {
   if (typeof value !== 'string') return [];
@@ -43,12 +44,13 @@ function formatResults(completed, settings, target) {
   return rankStreams(expanded, maximum, ordering).map(({ candidate, video, subtitles }, index) => {
     const kind = video.downloadable ? `${video.container.toUpperCase()} · Online izlenebilir · İndirilebilir` : 'HLS · Online izlenebilir · İndirilemez';
     const quality = describeQuality(video, candidate), size = describeSize(video);
+    const audio = describeAudio(video, candidate);
     const dimensionText = ` · ${quality.text}`;
     const subScore = subtitles[0]?._score || 0;
     const matchText = subScore >= 90 ? 'eşleşti' : subScore >= 70 ? 'sürüm benzerliği' : subScore >= 65 ? 'süre uyumu' : 'film düzeyi; senkron belirsiz';
     const embedded = candidate.embeddedTurkish || video.embeddedTurkish;
     const subtitleText = subtitles.length ? ` · TR altyazı (${matchText})` : embedded ? ` · TR altyazı (${video.container === 'hls' ? 'HLS' : 'dosya'} içi)` : ' · TR altyazı bulunamadı';
-    const title = `${target.originalTitle} (${target.year}) · ${kind}${dimensionText} · ${size.text}${subtitleText}`;
+    const title = `${target.originalTitle} (${target.year}) · ${kind}${dimensionText} · ${size.text}${audio ? ' · Ses: '+audio.text : ''}${subtitleText}`;
     const source = String(candidate.source || 'Kaynak').replace('4KHDHub / HubCloud', '4KHDHub').replace('Internet Archive', 'Archive') +
       (candidate.serverIndex ? ` ${candidate.serverIndex}` : '') + (candidate.source === 'Animecix' && candidate.sourceNote ? ` · ${candidate.sourceNote.slice(0, 40)}` : '');
     const subTag = subtitles.length ? 'TR' : embedded ? 'TR içi' : candidate.turkishSource ? 'TR kaynak · altyazı doğrulanmadı' : 'TR yok';
@@ -61,7 +63,7 @@ function formatResults(completed, settings, target) {
       title, url: video.url, quality: quality.quality,
       ...(size.size ? { size: size.size } : {}),
       ...(settings.compactLabels !== false ? { quality: `${details}${video.dimensions ? ' ✓' : video.container === 'hls' ? ' HLS' : quality.quality === 'Bilinmiyor' ? '' : ' tahmin'}` } : {}),
-      language: subTag + (subtitles.length && subScore < 90 ? ' · senkron belirsiz' : ''), provider: 'Nuvio TR HD', type: video.container,
+      language: subTag + (subtitles.length && subScore < 90 ? ' · senkron belirsiz' : '') + (audio ? ' · Ses: '+audio.text : ''), provider: 'Nuvio TR HD', type: video.container,
       ...(Object.keys(candidate.headers).length ? { headers: candidate.headers } : {}),
       subtitles: subtitles.map(({ _score, ...subtitle }) => subtitle) };
   });
@@ -177,8 +179,8 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs = 24000, r
             }
           }
           const pending = [], streamed = new Set();
-          const acceptHdHub = async candidates => {
-            const ready = settings.useDownloadBridge !== false ? await registerDownloads(http, candidates, target) : candidates;
+          const acceptCandidates = async (candidates, bridge = false) => {
+            const ready = bridge && settings.useDownloadBridge !== false ? await registerDownloads(http, candidates, target) : candidates;
             for (const candidate of ready) {
               const key = candidate.url + JSON.stringify(Object.entries(candidate.headers).sort());
               if (streamed.has(key)) continue;
@@ -187,17 +189,23 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs = 24000, r
               pending.push(processCandidate(candidate).catch(() => reject('candidate_error')));
             }
           };
+          let archiveAccepted = 0;
+          const acceptArchive = async candidates => {
+            const selected = candidates.slice(0, Math.max(0, quota - archiveAccepted));
+            archiveAccepted += selected.length;
+            await acceptCandidates(selected);
+          };
           const sourceJobs = filesLane ? [...catalogs.map(url => ({ name: 'JSON', run: () => loadCatalog(http, url, target, allowHttp) })),
             ...addons.map(url => ({ name: 'Stremio', run: () => loadAddon(http, url, target, allowHttp) }))] : [];
           if (settings.autoDiscover !== false && hosted === null) {
             if (filesLane && settings.directoryEnabled === true) sourceJobs.push({ name: 'DahmerMovies', run: () => scanDirectory(http, target, settings) });
-            if (filesLane && settings.archiveEnabled !== false) sourceJobs.push({ name: 'Internet Archive', run: () => scanArchive(http, target) });
+            if (filesLane && settings.archiveEnabled !== false) sourceJobs.push({ name: 'Internet Archive', run: () => scanArchive(http, target, { onCandidates: acceptArchive }) });
             if (onlineLane && settings.playImdbEnabled !== false) sourceJobs.push({ name: 'PlayIMDb', run: () => scanPlayImdb(http, target) });
             if (onlineLane && settings.vixsrcEnabled !== false && settings.includeHls !== false && !sourceFactories.some(s => s.name === 'VixSrc'))
               sourceJobs.push({ name: 'VixSrc', run: () => scanVixDirect(http, target) });
             if (animeLane && settings.animecixEnabled !== false && target.isAnime) sourceJobs.push({ name: 'Animecix', run: () => scanAnimecix(http, target) });
             if (filesLane && settings.hdhubEnabled !== false && !sourceFactories.some(s => s.name === '4KHDHub / HubCloud')) sourceJobs.push({ name: '4KHDHub / HubCloud', run: async () => {
-              return scanHdHub(http, target, { allowExtensionless: settings.useDownloadBridge !== false, onCandidates: acceptHdHub });
+              return scanHdHub(http, target, { allowExtensionless: settings.useDownloadBridge !== false, onCandidates: candidates => acceptCandidates(candidates, true) });
             } });
           }
           for (const source of sourceFactories) sourceJobs.push({ name: source.name, run: () => source.run(http, target) });
@@ -208,7 +216,7 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs = 24000, r
             report.sources.push({ name: job.name, candidates: candidates.length });
             emit({ stage: 'source', source: job.name, candidates: candidates.length });
             if (!candidates.length || http.expired()) return;
-            if (job.name === '4KHDHub / HubCloud' && !sourceFactories.some(s => s.name === job.name)) return;
+            if (['4KHDHub / HubCloud','Internet Archive'].includes(job.name) && !sourceFactories.some(s => s.name === job.name)) return;
             // Warm the shared title lookup while media probes run. It is not
             // started for wholly empty searches, and never blocks other sources.
             void discoverSubtitles.prefetch();

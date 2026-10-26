@@ -10,7 +10,7 @@
   </style>
 </head>
 <body><main>
-  <div class="eyebrow">KİŞİSEL JAVASCRIPT SAĞLAYICISI · V1.6.2</div>
+  <div class="eyebrow">KİŞİSEL JAVASCRIPT SAĞLAYICISI · V1.6.3</div>
   <h1>Nuvio TR HD</h1>
   <p>Film, dizi veya anime seç. Online izleme seçeneklerini ve doğrulanmış MP4/MKV dosyalarını mevcut Türkçe altyazılarla birlikte gör.</p>
   <section class="panel" aria-label="Kurulum bağlantısı">
@@ -20,7 +20,7 @@
     <p id="status" class="status" role="status" aria-live="polite"></p>
   </section>
   <h2>Eski adresten geçiyorsan</h2>
-  <p>Yukarıdaki <strong>GitHub Pages manifestini</strong> yeni depo olarak ekle. Aynı adlı eski sağlayıcıyı kapat; iki kopya birlikte çalışırsa aynı kaynaklar tekrar listelenebilir. Sağlayıcı sürümü <strong>1.6.2</strong> olmalı.</p>
+  <p>Yukarıdaki <strong>GitHub Pages manifestini</strong> yeni depo olarak ekle. Aynı adlı eski sağlayıcıyı kapat; iki kopya birlikte çalışırsa aynı kaynaklar tekrar listelenebilir. Sağlayıcı sürümü <strong>1.6.3</strong> olmalı.</p>
   <ol>
     <li>Plugin destekli <strong>Nuvio Full</strong> kullan ve depodaki <strong>Nuvio TR HD ve Anime</strong> taramalarını etkinleştir.</li>
     <li>Sağlayıcı ayarları: <strong>çözünürlük Tümü · en fazla 20 alternatif · HLS açık</strong>. Önceden kaydedilmiş 6/10 veya 720p tercihini gerekiyorsa değiştir.</li>
@@ -29,13 +29,13 @@
   </ol>
   <h2>Hangi seçenek indirilebilir?</h2>
   <p><strong>Online izlenebilir · İndirilebilir</strong> etiketi gerçek MP4/MKV dosyalarında görünür. <strong>Online izlenebilir · İndirilemez</strong> etiketi HLS içindir. HLS, MP4/MKV dosyası olarak sunulmaz. Dosya adındaki kalite gerçek çözünürlük sayılmaz; okunabilen piksel boyutları ayrıca yazılır.</p>
-  <h2>1.6.2 ile değişenler</h2><p><strong>Boş sonuç düzeltmeleri:</strong> Obsession gibi festival ve genel gösterim yılı farklı filmler yalnız aynı IMDb ve TMDB doğrulamasıyla eşlenir. HLS için isteğe bağlı ek profil ölçümleri varsayılan kapalı; geçerli ana liste korunur. Erken ayna sayısı sonraki dosya sürümlerini durdurmaz.</p><p><strong>Ayarlarda Tanı satırı:</strong> Sürümü, anahtarın yalnız varlığını ve kayıtlı kaynak/filtre ayarlarını gösterir. Anahtar veya kişisel adres içermez. Mevcut ayarlar korunur; ana liste online ve dosyaları birlikte arar.</p><ul>
+  <h2>1.6.3 ile değişenler</h2><p><strong>Küçük indirmelerde kapsam artışı:</strong> Dune için yaklaşık 756/905 MiB, Spider-Verse için 1,88 GiB, Fleabag S01E01 için 99 MiB gerçek dosyalar doğrulandı. No Way Home’da 840 MiB düşük çözünürlüklü seçenek var. Büyük dosyalar korunur; yeni küçük dosyalar bunlara eklenir.</p><p><strong>Her başlık tamamlanmış değil:</strong> 14 denemenin 8’inde küçük indirme+TR, 5’inde farklı piksel seçenekleriyle kaynak ölçütleri sağlandı. Diğer normal dizi vakalarında ve bazı filmlerde indirme eksiği sürüyor. Ses dili ölçüldüğünde yazılır; yalnız dosya adı bilgisi tahmini etiketlidir.</p><ul>
     <li><strong>Varsayılan Tümü ve 20:</strong> düşük çözünürlüklü, küçük dosyalar gizlenmez. 20 her taramanın üst sınırıdır; olmayan sonuç üretilmez.</li>
     <li><strong>Yerleşik dosya kaynağı:</strong> 4KHDHub/HubCloud public FSL bağlantıları otomatik çözülür. İmzalı GET bağlantıları HEAD 403 verdiği için yanlış elenmez; gerçek MKV başlığı ve byte boyutu okunur.</li><li><strong>Daha anlaşılır kalite/boyut:</strong> Gerçek piksel ölçümü, HLS profili ve dosya adı tahmini ayrı belirtilir. HLS aktarım boyutu yaklaşık hesaplanır.</li><li><strong>Dengeli altyazı:</strong> Güçlü eşleşmeler önce gelir; aynı filmden belirsiz alternatifler de etiketlenerek sunulur. Otomatik zaman düzeltmesi henüz yoktur.</li>
     <li><strong>Altyazı servisi aksarsa video korunur:</strong> Türkçe bulunamadığı açıkça belirtilir. İstersen sıkı altyazı politikasını seçebilirsin.</li>
     <li><strong>Ayırt edilebilir altyazı adları:</strong> numara, sürüm ve varsa fps bilgisi. Aynı içeriğin aynaları tek seçenek sayılır.</li>
   </ul>
-  <p class="note">Kullanıcının iPhone 1.6.1 boş sonuç bildirimi çözüldü sayılmıyor; fiziksel cihaz testi bekliyor. Bilgisayardaki kaynak kontrolü telefonun TMDB anahtarını ve ağını sınamaz. Küçük indirilebilir Dune dosyası henüz doğrulanmadı; büyük dosyalara boyut tavanı konmadı. Köprü 1.4.0 olarak korunur. <a href="https://github.com/burhanb3/nuvio-tr-hd/blob/codex/publish-nuvio-tr-hd/docs/IPHONE_BOS_SONUC_162.md">Düzeltmeler ve telefonda tanı rehberi</a></p>
+  <p class="note">Küçük Dune MKV’sinde Hintçe ses doğrulandı; No Way Home dosya adı Fransızca ses ipucu taşıyor. Türkçe altyazı varlığı senkron garantisi değildir. Fiziksel iPhone, tam indirme/çevrimdışı testleri bekliyor. Mevcut köprü 1.4.0’dır. <a href="https://github.com/burhanb3/nuvio-tr-hd/blob/codex/publish-nuvio-tr-hd/docs/KAPSAM_MATRISI.md">14 başlığın gerçek sonuçları ve eksikler</a></p>
   <footer>Medya barındırılmaz. GitHub Pages yalnız kurulum sayfası, manifest ve sağlayıcı kodunu sunar. MIT lisansı.</footer>
 </main><script>
   const input=document.querySelector('#manifest');input.value=new URL('manifest.json',location.href).href;

@@ -62,6 +62,26 @@ function mp4Duration(bytes) {
   return null;
 }
 
+function mp4AudioLanguages(bytes) {
+  const languages = new Set();
+  for (const movie of boxes(bytes).filter(x => x.type === 'moov')) {
+    for (const track of boxes(bytes, movie.data, Math.min(movie.end, bytes.length)).filter(x => x.type === 'trak')) {
+      const media = boxes(bytes, track.data, Math.min(track.end, bytes.length)).find(x => x.type === 'mdia');
+      if (!media) continue;
+      const children = boxes(bytes, media.data, Math.min(media.end, bytes.length));
+      const handler = children.find(x => x.type === 'hdlr' && x.complete);
+      const mdhd = children.find(x => x.type === 'mdhd' && x.complete);
+      if (!handler || ascii(bytes, handler.data + 8, 4) !== 'soun' || !mdhd) continue;
+      const version = bytes[mdhd.data], at = mdhd.data + (version === 0 ? 20 : version === 1 ? 32 : 1000000);
+      if (at + 2 > mdhd.end) continue;
+      const code = bytes[at] * 256 + bytes[at + 1];
+      const language = [10,5,0].map(shift => String.fromCharCode(((code >> shift) & 31) + 96)).join('');
+      if (/^[a-z]{3}$/.test(language) && !['und','mis','zxx'].includes(language)) languages.add(language);
+    }
+  }
+  return [...languages];
+}
+
 function mp4HasVideo(bytes, movie) {
   return boxes(bytes, movie.data, movie.end).filter(x => x.type === 'trak' && x.complete).some(track => {
     const media = boxes(bytes, track.data, track.end).find(x => x.type === 'mdia' && x.complete);
@@ -83,7 +103,8 @@ function mp4Info(bytes) {
   if (brands.some(x => /^(avif|avis|heic|heix|mif1|msf1)$/.test(x))) return null;
   if (!brands.some(x => /^(isom|iso[2-9]|mp4[12]|avc1|dash|M4V |MSNV)$/.test(x))) return null;
   const duration = mp4Duration(bytes);
-  return { container: 'mp4', dimensions: mp4Dimensions(bytes), ...(duration ? { duration } : {}) };
+  const audioLanguages = mp4AudioLanguages(bytes);
+  return { container: 'mp4', dimensions: mp4Dimensions(bytes), ...(duration ? { duration } : {}), ...(audioLanguages.length ? { audioLanguages } : {}) };
 }
 
 function vint(bytes, offset, isId) {
@@ -144,10 +165,16 @@ function mkvInfo(bytes) {
   }
   let dimensions = null;
   const subtitleTracks = [];
+  const audioLanguages = new Set();
   if (segment) {
     const tracks = elements(bytes, segment.data, segment.end).find(x => x.id === 0x1654ae6b);
     if (tracks) for (const entry of elements(bytes, tracks.data, tracks.end).filter(x => x.id === 0xae)) {
       const children = elements(bytes, entry.data, entry.end);
+      if (ebmlNumber(bytes, children.find(x => x.id === 0x83)) === 2) {
+        const field = children.find(x => x.id === 0x22b59d && x.complete) || children.find(x => x.id === 0x22b59c && x.complete);
+        const language = field && ascii(bytes, field.data, field.end - field.data);
+        if (/^[a-z]{2,3}(?:-[a-z0-9]+)*$/i.test(language || '') && !/^(und|mis|zxx)$/i.test(language)) audioLanguages.add(language.toLowerCase());
+      }
       if (ebmlNumber(bytes, children.find(x => x.id === 0x83)) === 17) {
         const field = id => { const item = children.find(x => x.id === id && x.complete); return item ? ascii(bytes, item.data, item.end - item.data) : ''; };
         const language = field(0x22b59d) || field(0x22b59c);
@@ -164,7 +191,7 @@ function mkvInfo(bytes) {
       if (!dimensions && width > 0 && height > 0 && width <= 16384 && height <= 16384) dimensions = { width, height };
     }
   }
-  return { container: 'mkv', dimensions, ...(subtitleTracks.length ? { subtitleTracks, embeddedTurkish: true } : {}), ...(duration ? { duration } : {}) };
+  return { container: 'mkv', dimensions, ...(audioLanguages.size ? { audioLanguages: [...audioLanguages] } : {}), ...(subtitleTracks.length ? { subtitleTracks, embeddedTurkish: true } : {}), ...(duration ? { duration } : {}) };
 }
 
 // For a tail range, moov need not be aligned at byte zero. Validate its complete
@@ -176,7 +203,8 @@ function mp4TailInfo(bytes) {
     if (size >= 8 && start + size <= bytes.length) {
       const movie = bytes.subarray(start, start + size), dimensions = mp4Dimensions(movie), duration = mp4Duration(movie);
       if (!mp4HasVideo(movie, boxes(movie)[0])) return { invalidVideo: true };
-      if (dimensions || duration) return { dimensions, duration };
+      const audioLanguages = mp4AudioLanguages(movie);
+      if (dimensions || duration) return { dimensions, duration, ...(audioLanguages.length ? { audioLanguages } : {}) };
     }
   }
   return null;
