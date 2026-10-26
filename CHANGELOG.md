@@ -7,6 +7,7 @@
 - Ek dosya kontrolleri tekli; başarısız dosya gereksiz altyazı isteği açmaz. Sağlam MP4’ün isteğe bağlı metadata hatasında korunması, bilinmeyen kalite/hash’i uydurmama.
 - HLS kapalıyken DiziYou/FilmModu’nun gerçek MP4 seçenekleri yine taranır; HLS dosya sayılmaz.
 - 189 test/QuickJS; canlı ek1080p/0,29GB ve EN altyazı örnekleri. Bazı bölüm/düğümler hâlâ başarısız; yeni canlı film/dizi dosya sağlayıcısı0. Fiziksel cihaz/tam indirme/offline/senkron yok.
+- Aynı GitHub Pages adresinde üç scraper yayımlandı; Windows/Linux CI ve altı public varlığın HTTP200/SHA kontrolü başarılı.
 
 ## 1.7.3 — 2026-10-26
 

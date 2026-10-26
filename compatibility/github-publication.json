@@ -1,27 +1,27 @@
 {
-  "checkedAt": "2026-10-26T20:00:59.951Z",
-  "version": "1.7.3",
+  "checkedAt": "2026-10-26T22:43:52.903Z",
+  "version": "1.7.4",
   "origin": "https://burhanb3.github.io/nuvio-tr-hd",
   "authenticated": false,
   "assetRequestsAuthenticated": false,
   "ciMetadataAuthenticated": true,
   "repository": "https://github.com/burhanb3/nuvio-tr-hd",
-  "sourceCommit": "a46d6838c257d7a21320e432a0c6be766b24fadd",
+  "sourceCommit": "c6815144c5586d999f5509d907ef41c9f820d7f3",
   "branch": "codex/publish-nuvio-tr-hd",
   "actions": {
-    "tests": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40391651511",
+    "tests": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40414456692",
     "testsConclusion": "success",
     "jobs": [
       {
-        "name": "verify (windows-latest)",
+        "name": "verify (ubuntu-latest)",
         "conclusion": "success"
       },
       {
-        "name": "verify (ubuntu-latest)",
+        "name": "verify (windows-latest)",
         "conclusion": "success"
       }
     ],
-    "pages": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40391651671",
+    "pages": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40414456949",
     "pagesConclusion": "success"
   },
   "checks": [
@@ -29,82 +29,116 @@
       "path": "/manifest.json",
       "status": 200,
       "type": "application/json; charset=utf-8",
-      "bytes": 1426,
-      "sha256": "0788b04cf3d6bc19e3fc530ed0b698e9c9a217ae27ccb0eeb1f2f08e899cef77",
+      "bytes": 2056,
+      "sha256": "eb68305f65bd81f00ec79a7d1ae8283533c8ed356ed1635a9920cf3bfc794c50",
       "matchesLocal": true
     },
     {
-      "path": "/providers/nuvio-tr-hd.js?v=1.7.3",
+      "path": "/providers/nuvio-tr-hd.js?v=1.7.4",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 190743,
-      "sha256": "3b874f4ce7707d67f5a18e9c739eb74c3eb713058c79ac83592387679f00bb93",
+      "bytes": 196727,
+      "sha256": "a8d03ee6a7efd63394ce8cb6b3c28f5a9a1f26a0bb7a8405a8a51daa3ece28d6",
       "matchesLocal": true
     },
     {
-      "path": "/providers/nuvio-tr-hd-anime.js?v=1.7.3",
+      "path": "/providers/nuvio-tr-hd-anime.js?v=1.7.4",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 190744,
-      "sha256": "de1d78e789d00b34c351e2587ccf8b69f37b60cb33c30df25083a00c85905b68",
+      "bytes": 196728,
+      "sha256": "7aeb8222f46341319a1ccd2a3a1d803cc8dccc159269cd82836356337edfa839",
+      "matchesLocal": true
+    },
+    {
+      "path": "/providers/nuvio-tr-hd-extra-anime.js?v=1.7.4",
+      "status": 200,
+      "type": "application/javascript; charset=utf-8",
+      "bytes": 196739,
+      "sha256": "6c759531175f9a4d7a4dec09df7f57d634e15491e667e796205234a506d83e35",
       "matchesLocal": true
     },
     {
       "path": "/providers/nuvio-tr-hd-online.js",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 190746,
-      "sha256": "9893a818c40dbb3d95cfa82f6d44fe0be5a30b807789e309966c254f79602da3",
+      "bytes": 196730,
+      "sha256": "a26b033ade2cdd66502b66896dc85855d361f07f16a7ce9910f15839445c65dd",
       "matchesLocal": true
     },
     {
       "path": "/",
       "status": 200,
       "type": "text/html; charset=utf-8",
-      "bytes": 5663,
-      "sha256": "147f60aff89f24a9721afe8e4ddeaa562d92812db2997f8268295b1a8332b763",
+      "bytes": 5596,
+      "sha256": "5cda704d287cc355dccd8c9d08e5a1c552e95020ea4fff9ab5011db3cd796d6a",
       "matchesLocal": true
     }
   ],
   "tests": {
-    "local": 178,
-    "quickjs": "passed; compiled anime adapter opt-in, exact identity rejection and large-moov measured pixels",
+    "local": 189,
+    "quickjs": "passed; third standalone scraper, partial SeiCode and absent-episode rejection, independent source isolation, native settings",
     "upstream": "0.6.4-beta;20lockedfiles;HEAD7de46ead80c28ccd008cfd92bd69947e487992d0;no drift"
   },
-  "sourceEvidence": "compatibility/download-research-173.json",
-  "upstreamEvidence": "compatibility/upstream-173-check.json",
-  "features": {
-    "largeMp4Metadata": "At most one extra <=262144-byte Range at a true box boundary; no filename quality.",
-    "cdn": "Metadata/hash reads stay on the exact first-byte server; URL/size/ETag validation retained.",
-    "aniMom": {
-      "experimental": true,
-      "defaultEnabled": false,
-      "isolatedVerifiedMp4": {
-        "size": 356493310,
-        "width": 1280,
-        "height": 720,
-        "duration": 1390.661,
-        "turkishSubtitles": 4
-      },
-      "combinedSearchReliable": false,
-      "secondEpisodeVerified": false
-    }
+  "sourceEvidence": "compatibility/partial-sources-174.json",
+  "upstreamEvidence": "compatibility/upstream-174-check.json",
+  "manifestIds": [
+    "nuvio-tr-hd",
+    "nuvio-tr-hd-anime",
+    "nuvio-tr-hd-extra-anime"
+  ],
+  "newScraperEntry": {
+    "id": "nuvio-tr-hd-extra-anime",
+    "supportedTypes": [
+      "tv"
+    ],
+    "defaultEnabled": true,
+    "sources": [
+      "AniMOM / YourUpload",
+      "SeiCode / MP4Upload"
+    ]
   },
-  "newDefaultDownloadProviders": 0,
-  "newStableFilmTvDownloadProviders": 0,
-  "newExperimentalDownloadProviders": 1,
+  "features": {
+    "partialCoverageAccepted": true,
+    "realIdentityAndFileChecksRetained": true,
+    "failedExtraFileDoesNotStartSubtitleTraffic": true,
+    "optionalMetadataFailureDoesNotInventQuality": true,
+    "extraConcurrentFileProbes": 1,
+    "independentNativeScraperCompletion": "source-verified; physical iPhone untested"
+  },
+  "newCatalogAdapters": 1,
+  "activatedPreviousExperimentalProvider": 1,
+  "newUniversalMovieTvDownloadProviders": 0,
   "newHelperBackends": 0,
   "newAccounts": 0,
   "newPerTitleVideoPins": 0,
-  "allSourceCriteriaMet": false,
-  "mainCoverage": {
-    "duneFilesFirst": 1,
-    "duneFilesRepeat": 1,
-    "fleabagFilesFirst": 2,
-    "fleabagFilesRepeat": 1,
-    "networkVariabilityResolved": false
+  "sourceCoverage": {
+    "SeiCode": {
+      "cases": [
+        "SHIBOYUGI S01E03",
+        "SHIBOYUGI S01E11"
+      ],
+      "files": 2,
+      "dimensions": {
+        "width": 1920,
+        "height": 1080
+      },
+      "sizes": [
+        293996724,
+        291531575
+      ],
+      "subtitles": [
+        "en"
+      ],
+      "turkishFound": false,
+      "allEpisodesVerified": false
+    },
+    "AniMOM": {
+      "oneParallelDeathNoteFileWithTrEn": true,
+      "repeatCanBeEmpty": true,
+      "nextEpisodeFailed": true
+    }
   },
-  "mode": "Original main ID still combines online+files; separate anime; stable IDs and versioned code URLs; legacy online file retained.",
+  "allSourceCriteriaMet": false,
   "deviceTest": "not-run",
   "fullPlayback": "not-run",
   "fullDownload": "not-run",

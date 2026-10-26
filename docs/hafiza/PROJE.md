@@ -6,7 +6,9 @@ Kullanıcı birkaç seri/bölümde sağlam çalışan sağlayıcıları da kulla
 
 CanlıSeiCodeSHIBOYUGIS1E3:293996724byte/1920×1080/1456,914s/hash8acf34a189bc23f8;E11:291531575byte/1920×1080/1465,959s/hash623b30874f041a0b; ENvar/TRyok. İkisindeek5,351/4,657s, olağananime20,013/15,371s ayrı. E2a3başarısız. DN1birparalelturAniMOM0,36GB+TR/EN, pikselnull; DN2veDN1tekrarındaek0; olağan4seçenekkorundu. Hepsikararlı/tümsezon/TReşleşti deme. Webflixsonpozitifyol451oldu,eklenmedi.
 
-Ekprobe1,diğer3 herinvocationiçin; appgenelitoplamkotası değildir. Ekmetadata3s,baş MP4/Range/size geçerseisteğebağlımetadatabaşarısızlığıdosyayıdüşürmez; kalite/hashuydurulmaz. Zorunlusüre/pineskiadaylardakorunur. BoşekdosyaaltyazıAPIsorgusuaçmaz. DiziYou/FilmModuHLSkapalıgerçekMP4taramasıfixturebugfix; yenicanlıfilm/dizikaynağısayma.189check/QuickJS;20upstreamdriftyok. docs/KISMI_KAYNAKLAR_174.md,partial-sources-174.json. YeniPC/backend/hesap/videoPin0. Fizikselcihaz/tamindirme/offline/senkronyok. Yayınkanıtı işsonunda güncellenecek.
+Ekprobe1,diğer3 herinvocationiçin; appgenelitoplamkotası değildir. Ekmetadata3s,baş MP4/Range/size geçerseisteğebağlımetadatabaşarısızlığıdosyayıdüşürmez; kalite/hashuydurulmaz. Zorunlusüre/pineskiadaylardakorunur. BoşekdosyaaltyazıAPIsorgusuaçmaz. DiziYou/FilmModuHLSkapalıgerçekMP4taramasıfixturebugfix; yenicanlıfilm/dizikaynağısayma.189check/QuickJS;20upstreamdriftyok. docs/KISMI_KAYNAKLAR_174.md,partial-sources-174.json. YeniPC/backend/hesap/videoPin0. Fizikselcihaz/tamindirme/offline/senkronyok.
+
+**1.7.4 yayın tamamlandı:** kod c6815144c5586d999f5509d907ef41c9f820d7f3; Windows/Linux Test40414456692 ve Pages40414456949 başarılı.189test/QuickJS; altıpublicvarlık HTTP200/yerelSHAeşit. Aynı manifest/iki eskiID ve üçüncü nuvio-tr-hd-extra-anime açık. compatibility/github-publication.json güncel. Film/dizi dosya açığı sürer; source/QuickJS kanıtı telefon testi değildir.
 
 ## 1.7.3 — kaynak araştırması ve gerçek MP4 metadata
 

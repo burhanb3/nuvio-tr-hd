@@ -2,7 +2,7 @@
 
 ## 1.7.4 öncelik
 
-1. Aynı manifest adresinde1.7.4/üçscraper/altıpublicvarlık yayını;189check/QuickJS ve20upstream tamam. CI/Pages/SHA sonrasıkanıt/hafızagüncelle.
+1. **Tamamlandı:**1.7.4 c6815144c5586d999f5509d907ef41c9f820d7f3 aynı manifest/üçscraperile yayımlandı.189check/QuickJS,20upstreamdriftyok; Windows/Linux40414456692/Pages40414456949 vealtıpublicHTTP200/SHAbaşarılı. Kanıt/hafızagüncel.
 2. Kısmi kaynakları kabul eden güncel kullanıcı talimatıyla film/dizi MP4/MKV araştırmasına devam; yeni film/diziadaptörü0. Bütünkatalogkapsamı şartı koyma; gerçekdosya/kimlik/yıl/S/E şartı sürer.
 3. EkAnimeAniMOM+SeiCodevarsayılanaçık. SeiCodeE3/E111080p0,29GB/EN;TRyok. AniMOMDN1birkez0,36GB/TR-EN,tekrarveDN2boş. Kalıcıistikrar/tümsezon/hep720piddiasıyok.
 4. Telefondaüçüncüscraperotomatiketkinleşme,erkenEkAnimegörünümü,tamindirme/offline/TR-EN/senkron sınanmadı. Tekrarkimlikayarlarıbozma/PCsunucu/hesapsabitanahtarekleme.
