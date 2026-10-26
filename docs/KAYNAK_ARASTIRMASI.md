@@ -1,5 +1,7 @@
 # Kaynak araştırması — 25 Ekim 2026
 
+**1.6.1 araştırması:** MoviesDrive Dune550MB/900MB/1,3GB/1,9GB/3,8GB sayfaları → mdrive → HubCloud incelendi. Sayfa boyutları doğrulanmış dosya sayılmadı.İki10Gbps zincirinde hedef Worker TLS hatası; yeni küçük dosya üretime alınmadı. Archive Dune benzer kayıtlarında yanlış yıl/fragmanlar reddedildi. MovieBox açık v1 araması boş; v2 invalid token döndü, özel anahtar kopyalanmadı. [Kanıt ve sınırlar](ONLINE_VE_DIZI_DUZELTMELERI.md).
+
 **26 Ekim 2026 / 1.6.0 ek araştırma:** Animecix/Tau açık API’si ve gerçek MP4 dosyaları doğrulanıp eklendi. Death Note ve Attack on Titan S01E01, mevcut Türkçe SRT alternatifleriyle sınandı. MoviesMod → public form → DriveSeed → Google video bağlantısı izlendi; uzantısız MKV ve Range 200 nedeniyle üretime eklenmedi. MoviesDrive IMDb araması yanlış benzer ID’ler verdi. UHDMovies sayfası erişilebilir; çalışan yeni terminal kanıtı yok. Yeni araştırma her kaynağı çalışır saymaz. [Kanıt ve sınırlar](ANIME_HIZ_VE_ALTYAZI.md).
 
 1.5.0 için dokuz topluluk deposunun herkese açık manifesti sorgulandı. Sekizi yanıt verdi: **221 sağlayıcı tanımı, normalize adlarla 134 kimlik**. Phisher deposunun denenmiş main manifest adresi 404 verdi. Sayılar kopyaları, sarmalayıcıları ve aynı CDN'yi kullanan adaptörleri içerir; 221 bağımsız çalışan kaynak değildir. Bütün internetin eksiksiz tarandığı iddia edilmez. [Makineyle okunur envanter](../compatibility/source-inventory-150.json), `npm run research:sources` ile yeniden üretilebilir.

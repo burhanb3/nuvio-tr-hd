@@ -1,0 +1,596 @@
+{
+  "checkedAt": "2026-10-26T09:46:52.628Z",
+  "version": "1.6.1",
+  "film": "night",
+  "metadata": "fixed known TMDB reference; upstream source/subtitle requests are live",
+  "elapsedMs": 24038,
+  "firstResultsMs": 24037,
+  "bytesRead": 3885823,
+  "settings": "Combined main24s + anime20s; all resolutions; prefer TR; balanced; HLS; up to20 per scraper; public bridge enabled; legacy diagnostic online/files lanes optional",
+  "lanes": [
+    {
+      "lane": "main",
+      "elapsedMs": 24037,
+      "diagnostic": {
+        "tmdbId": "10331",
+        "lane": "main",
+        "sources": [
+          {
+            "name": "PlayIMDb",
+            "candidates": 3
+          },
+          {
+            "name": "4KHDHub / HubCloud",
+            "candidates": 0
+          },
+          {
+            "name": "VixSrc",
+            "candidates": 1
+          },
+          {
+            "name": "Internet Archive",
+            "candidates": 13
+          }
+        ],
+        "rejected": {
+          "video_unavailable": 4
+        },
+        "http": {
+          "api.themoviedb.org:200": 1,
+          "vixsrc.to:200": 7,
+          "streamdata.vaplayer.ru:200": 1,
+          "4khdhub.one:200": 1,
+          "opensubtitles-v3.strem.io:200": 1,
+          "altyazidb.online:200": 5,
+          "archive.org:200": 8,
+          "premiumleadgeneration.site:200": 12,
+          "premiumleadgeneration.site:404": 1,
+          "opensubtitles.stremio.homes:200": 6,
+          "nuvio-tr-hd-download-bridge.kamilbsr03.chatgpt.site:timeout_or_network": 1,
+          "sc-u14-01.neonwolf57.boats:200": 6,
+          "archive.org:302": 26,
+          "dn801208.us.archive.org:200": 4,
+          "dn801208.us.archive.org:206": 6,
+          "opensubtitles.stremio.homes:429": 2,
+          "opensubtitles.stremio.homes:timeout_or_network": 1,
+          "dn711006.ca.archive.org:200": 2,
+          "dn711006.ca.archive.org:206": 4,
+          "archive.org:timeout_or_network": 3,
+          "ia800905.us.archive.org:200": 1,
+          "dn720403.ca.archive.org:200": 1,
+          "ia600905.us.archive.org:200": 1,
+          "dn710704.ca.archive.org:200": 1,
+          "ia600905.us.archive.org:206": 1,
+          "dn710704.ca.archive.org:206": 1
+        },
+        "subtitleText": {
+          "turkishCharacters": 7
+        },
+        "results": 10,
+        "reason": "deadline",
+        "elapsedMs": 24037
+      },
+      "streams": [
+        {
+          "name": "01 · İndirilebilir · Archive",
+          "quality": "320×240 ✓",
+          "type": "mp4",
+          "size": "318.5 MiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 02 · Night.of.the.Living.Dead.1968.REMASTERED.1080p.BluRay.x265-RARBG · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 03 · Night.Of.The.Living.Dead.1968.720p.BluRay.x264-[YTS.AM] · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 05 · Night.of.the.Living.Dead.1968.1080p.BluRay.x264-CtrlHD ile tam senkronludur... · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 06 · Night of the Living Dead.1968.YTS AM • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "02 · İndirilebilir · Archive",
+          "quality": "320×240 ✓",
+          "type": "mp4",
+          "size": "318.5 MiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 01 · Night of the Living Dead.1968.YTS AM • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 02 · Night of the Living Dead.1968.Tigole • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 03 · Night of the Living Dead.1968.917 MB • 25 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 04 · Night of the Living Dead.1968.MKV • 25 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "03 · İndirilebilir · Archive",
+          "quality": "320×240 ✓",
+          "type": "mp4",
+          "size": "388.1 MiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 01 · Night.of.the.Living.Dead.1968.REMASTERED.1080p.BluRay.x265-RARBG · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 02 · Night.Of.The.Living.Dead.1968.720p.BluRay.x264-[YTS.AM] · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 04 · Night.of.the.Living.Dead.1968.1080p.BluRay.x264-CtrlHD ile tam senkronludur... · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 06 · Night of the Living Dead.1968.YTS AM • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "04 · Online · PlayIMDb 3",
+          "quality": "494×360 HLS",
+          "type": "hls",
+          "size": "≤~420.4 MiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 01 · Night.Of.The.Living.Dead.1968.720p.BluRay.x264-[YTS.AM] · Sürüm benzerliği; senkron kontrolü önerilir",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 02 · Night.of.the.Living.Dead.1968.1080p.BluRay.x264-CtrlHD ile tam senkronludur... · Sürüm benzerliği; senkron kontrolü önerilir",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 03 · Night.of.the.Living.Dead.1968.REMASTERED.1080p.BluRay.x265-RARBG · Sürüm benzerliği; senkron kontrolü önerilir",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 04 · Night of the Living Dead.1968.YTS AM • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "05 · Online · PlayIMDb 1",
+          "quality": "494×360 HLS",
+          "type": "hls",
+          "size": "≤~420.4 MiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 01 · Night.Of.The.Living.Dead.1968.720p.BluRay.x264-[YTS.AM] · Sürüm benzerliği; senkron kontrolü önerilir",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 02 · Night.of.the.Living.Dead.1968.1080p.BluRay.x264-CtrlHD ile tam senkronludur... · Sürüm benzerliği; senkron kontrolü önerilir",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 03 · Night.of.the.Living.Dead.1968.REMASTERED.1080p.BluRay.x265-RARBG · Sürüm benzerliği; senkron kontrolü önerilir",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 04 · Night of the Living Dead.1968.YTS AM • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "06 · Online · PlayIMDb 3",
+          "quality": "988×720 HLS",
+          "type": "hls",
+          "size": "≤~1.62 GiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 01 · Night.Of.The.Living.Dead.1968.720p.BluRay.x264-[YTS.AM] · Sürüm benzerliği; senkron kontrolü önerilir",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 02 · Night.of.the.Living.Dead.1968.1080p.BluRay.x264-CtrlHD ile tam senkronludur... · Sürüm benzerliği; senkron kontrolü önerilir",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 03 · Night.of.the.Living.Dead.1968.REMASTERED.1080p.BluRay.x265-RARBG · Sürüm benzerliği; senkron kontrolü önerilir",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 04 · Night of the Living Dead.1968.YTS AM • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "07 · Online · PlayIMDb 1",
+          "quality": "988×720 HLS",
+          "type": "hls",
+          "size": "≤~1.62 GiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 01 · Night.Of.The.Living.Dead.1968.720p.BluRay.x264-[YTS.AM] · Sürüm benzerliği; senkron kontrolü önerilir",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 02 · Night.of.the.Living.Dead.1968.1080p.BluRay.x264-CtrlHD ile tam senkronludur... · Sürüm benzerliği; senkron kontrolü önerilir",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 03 · Night.of.the.Living.Dead.1968.REMASTERED.1080p.BluRay.x265-RARBG · Sürüm benzerliği; senkron kontrolü önerilir",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 04 · Night of the Living Dead.1968.YTS AM • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "08 · İndirilebilir · Archive",
+          "quality": "Bilinmiyor",
+          "type": "mp4",
+          "size": "1.73 GiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 01 · Night of the Living Dead.1968.YTS AM • 23.976 · Film eşleşmesi; senkron belirsiz",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 02 · Night of the Living Dead.1968.Tigole • 23.976 · Film eşleşmesi; senkron belirsiz",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 03 · Night of the Living Dead.1968.917 MB • 25 · Film eşleşmesi; senkron belirsiz",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 04 · Night of the Living Dead.1968.MKV • 25 · Film eşleşmesi; senkron belirsiz",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "09 · Online · VixSrc",
+          "quality": "Otomatik kalite HLS",
+          "type": "hls",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 01 · Night of the Living Dead.1968.YTS AM • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 02 · Night of the Living Dead.1968.Tigole • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 03 · Night of the Living Dead.1968.917 MB • 25 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 04 · Night of the Living Dead.1968.MKV • 25 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "10 · İndirilebilir · Archive",
+          "quality": "960×720 ✓",
+          "type": "mkv",
+          "size": "8.05 GiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 01 · Night of the Living Dead.1968.YTS AM • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 02 · Night of the Living Dead.1968.Tigole • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 03 · Night of the Living Dead.1968.917 MB • 25 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 04 · Night of the Living Dead.1968.MKV • 25 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "lane": "anime",
+      "elapsedMs": 55,
+      "diagnostic": {
+        "tmdbId": "10331",
+        "lane": "anime",
+        "sources": [],
+        "rejected": {},
+        "http": {
+          "api.themoviedb.org:200": 1
+        },
+        "subtitleText": {},
+        "results": 0,
+        "reason": "not_anime",
+        "elapsedMs": 53
+      },
+      "streams": []
+    }
+  ],
+  "streams": [
+    {
+      "name": "01 · İndirilebilir · Archive",
+      "quality": "320×240 ✓",
+      "type": "mp4",
+      "size": "318.5 MiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 02 · Night.of.the.Living.Dead.1968.REMASTERED.1080p.BluRay.x265-RARBG · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 03 · Night.Of.The.Living.Dead.1968.720p.BluRay.x264-[YTS.AM] · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 05 · Night.of.the.Living.Dead.1968.1080p.BluRay.x264-CtrlHD ile tam senkronludur... · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 06 · Night of the Living Dead.1968.YTS AM • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "02 · İndirilebilir · Archive",
+      "quality": "320×240 ✓",
+      "type": "mp4",
+      "size": "318.5 MiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 01 · Night of the Living Dead.1968.YTS AM • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 02 · Night of the Living Dead.1968.Tigole • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 03 · Night of the Living Dead.1968.917 MB • 25 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 04 · Night of the Living Dead.1968.MKV • 25 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "03 · İndirilebilir · Archive",
+      "quality": "320×240 ✓",
+      "type": "mp4",
+      "size": "388.1 MiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 01 · Night.of.the.Living.Dead.1968.REMASTERED.1080p.BluRay.x265-RARBG · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 02 · Night.Of.The.Living.Dead.1968.720p.BluRay.x264-[YTS.AM] · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 04 · Night.of.the.Living.Dead.1968.1080p.BluRay.x264-CtrlHD ile tam senkronludur... · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 06 · Night of the Living Dead.1968.YTS AM • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "04 · Online · PlayIMDb 3",
+      "quality": "494×360 HLS",
+      "type": "hls",
+      "size": "≤~420.4 MiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 01 · Night.Of.The.Living.Dead.1968.720p.BluRay.x264-[YTS.AM] · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 02 · Night.of.the.Living.Dead.1968.1080p.BluRay.x264-CtrlHD ile tam senkronludur... · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 03 · Night.of.the.Living.Dead.1968.REMASTERED.1080p.BluRay.x265-RARBG · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 04 · Night of the Living Dead.1968.YTS AM • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "05 · Online · PlayIMDb 1",
+      "quality": "494×360 HLS",
+      "type": "hls",
+      "size": "≤~420.4 MiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 01 · Night.Of.The.Living.Dead.1968.720p.BluRay.x264-[YTS.AM] · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 02 · Night.of.the.Living.Dead.1968.1080p.BluRay.x264-CtrlHD ile tam senkronludur... · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 03 · Night.of.the.Living.Dead.1968.REMASTERED.1080p.BluRay.x265-RARBG · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 04 · Night of the Living Dead.1968.YTS AM • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "06 · Online · PlayIMDb 3",
+      "quality": "988×720 HLS",
+      "type": "hls",
+      "size": "≤~1.62 GiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 01 · Night.Of.The.Living.Dead.1968.720p.BluRay.x264-[YTS.AM] · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 02 · Night.of.the.Living.Dead.1968.1080p.BluRay.x264-CtrlHD ile tam senkronludur... · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 03 · Night.of.the.Living.Dead.1968.REMASTERED.1080p.BluRay.x265-RARBG · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 04 · Night of the Living Dead.1968.YTS AM • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "07 · Online · PlayIMDb 1",
+      "quality": "988×720 HLS",
+      "type": "hls",
+      "size": "≤~1.62 GiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 01 · Night.Of.The.Living.Dead.1968.720p.BluRay.x264-[YTS.AM] · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 02 · Night.of.the.Living.Dead.1968.1080p.BluRay.x264-CtrlHD ile tam senkronludur... · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 03 · Night.of.the.Living.Dead.1968.REMASTERED.1080p.BluRay.x265-RARBG · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 04 · Night of the Living Dead.1968.YTS AM • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "08 · İndirilebilir · Archive",
+      "quality": "Bilinmiyor",
+      "type": "mp4",
+      "size": "1.73 GiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 01 · Night of the Living Dead.1968.YTS AM • 23.976 · Film eşleşmesi; senkron belirsiz",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 02 · Night of the Living Dead.1968.Tigole • 23.976 · Film eşleşmesi; senkron belirsiz",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 03 · Night of the Living Dead.1968.917 MB • 25 · Film eşleşmesi; senkron belirsiz",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 04 · Night of the Living Dead.1968.MKV • 25 · Film eşleşmesi; senkron belirsiz",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "09 · Online · VixSrc",
+      "quality": "Otomatik kalite HLS",
+      "type": "hls",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 01 · Night of the Living Dead.1968.YTS AM • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 02 · Night of the Living Dead.1968.Tigole • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 03 · Night of the Living Dead.1968.917 MB • 25 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 04 · Night of the Living Dead.1968.MKV • 25 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "10 · İndirilebilir · Archive",
+      "quality": "960×720 ✓",
+      "type": "mkv",
+      "size": "8.05 GiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 01 · Night of the Living Dead.1968.YTS AM • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 02 · Night of the Living Dead.1968.Tigole • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 03 · Night of the Living Dead.1968.917 MB • 25 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 04 · Night of the Living Dead.1968.MKV • 25 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        }
+      ]
+    }
+  ],
+  "deviceTest": "not-run"
+}

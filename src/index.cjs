@@ -74,7 +74,7 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs = 24000, r
     async getStreams(tmdbId, mediaType, season, episode) {
       const allowHttp = settings.allowHttp === true;
       const catalogs = parseUrls(settings.catalogUrls, allowHttp), addons = parseUrls(settings.addonUrls, allowHttp);
-      const filesLane = lane === 'all' || lane === 'files', onlineLane = lane === 'all' || lane === 'online', animeLane = lane === 'all' || lane === 'anime';
+      const filesLane = ['all','main','files'].includes(lane), onlineLane = ['all','main','online'].includes(lane), animeLane = lane === 'all' || lane === 'anime';
       if (settings.autoDiscover === false && !catalogs.length && !addons.length) return [];
       const started = Date.now(), scheduler = createScheduler();
       const report = { tmdbId: String(tmdbId), lane, sources: [], rejected: {}, http: {}, subtitleText: {}, results: 0, reason: 'searching' };
@@ -275,16 +275,17 @@ async function getStreams(tmdbId, mediaType, season, episode) {
   return createProvider({ settings, tmdbKey }).getStreams(tmdbId, mediaType, season, episode);
 }
 function createEntry(lane) {
-  const titles = { files: 'Dosyalar', online: 'Hızlı kaynaklar', anime: 'Anime' };
+  const titles = { main: 'Film/dizi · online ve dosyalar', files: 'Dosyalar', online: 'Hızlı kaynaklar', anime: 'Anime' };
   const only = { files: ['hdhubEnabled','directoryEnabled','archiveEnabled','catalogUrls','addonUrls'], online: ['playImdbEnabled','vixsrcEnabled','hlsView'], anime: ['animecixEnabled'] };
+  only.main = [...only.files, ...only.online];
   const sourceFields = Object.values(only).flat();
   return {
     async getStreams(...args) {
       const settings = typeof globalThis.SCRAPER_SETTINGS === 'object' && globalThis.SCRAPER_SETTINGS || {};
       const tmdbKey = typeof globalThis.TMDB_API_KEY === 'string' ? globalThis.TMDB_API_KEY : '';
-      return createProvider({ settings, tmdbKey, lane, budgetMs: lane === 'online' ? 16000 : lane === 'anime' ? 20000 : 28000 }).getStreams(...args);
+      return createProvider({ settings, tmdbKey, lane, budgetMs: lane === 'main' ? 24000 : lane === 'online' ? 16000 : lane === 'anime' ? 20000 : 28000 }).getStreams(...args);
     },
-    onSettings: () => [{ type: 'info', label: `Bu ayarlar yalnız ${titles[lane]} taramasına aittir. Üç tarama bağımsız tamamlanır; hazır sonuçlar diğer taramaları beklemeden görünür. En fazla kaynak sınırı bu tarama içindir.` },
+    onSettings: () => [{ type: 'info', label: lane === 'main' ? 'Film/dizi araması online HLS ile gerçek MP4/MKV dosyalarını aynı listede sunar. Dosya araması boşsa online alternatifler korunur. Anime ayrı taramadır.' : `Bu ayarlar yalnız ${titles[lane]} taramasına aittir. En fazla kaynak sınırı bu tarama içindir.` },
       ...onSettings().filter(field => !sourceFields.includes(field.key) || only[lane].includes(field.key))]
   };
 }

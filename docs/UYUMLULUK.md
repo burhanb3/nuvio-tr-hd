@@ -1,5 +1,7 @@
 # Nuvio Kotlin Multiplatform uyumluluğu
 
+**1.6.1 — 26Ekim:** eski scraper ID tek başına online ve dosya döndürür; manifestte ana+anime iki kayıt vardır. Eski online JS yolu uyumluluk için üretilir ama kurulum girdisi değildir. ABI aynı, yeni ana paket gerçek QuickJS’te tek başına karma sonuç ve Shameless grup önekiyle test edildi.20kilitli dosya/güncel0.6.4-beta doğrulaması compatibility/upstream-161-check.json. Fiziksel cihaz testi yok. [Ayrıntılar](ONLINE_VE_DIZI_DUZELTMELERI.md).
+
 **1.6.0 kontrolü — 26 Ekim 2026:** 0.6.4-beta üzerinde bağımsız scraper tamamlamalarının birleştirildiği StreamsRepository incelendi; aynı dosya güncel cmp-rewrite dalında da aynı SHA’da. İncelenen bu dosya kilide eklenerek 20 dosyaya çıkıldı; önceki 19 dosya değiştirilmedi. Üç CommonJS giriş, movie/tv, getStreams ve onSettings ABI’si kullanılır; streaming callback veya font alanı uydurulmadı.
 
 Yerel100/100 ve GitHub Actions Windows/Linux doğrulaması başarılı. Üç üretilmiş paket QuickJS’te sınandı. GitHub Pages1.6.0 manifest/üç sağlayıcı/sayfa HTTP200 ve yerel hash eşitliği [yayın kanıtında](../compatibility/github-publication.json). iPhone/tam oynatma/indirme/senkron hâlâ çalıştırılmadı.
@@ -75,7 +77,7 @@ Son yerel `npm run check` çalıştırması: **68 test başarılı**, hata yok. 
 
 Tam film indirilmedi. Kaynak servisleri değişebildiğinden bu gözlem sonraki gün/başka ağ için kullanılabilirlik garantisi değildir. Telefon üzerinde oynatma, sesle senkron ve tam çevrimdışı indirme kabul testleri aşağıda açık bırakılmıştır.
 
-### 1.2.0 / kullanıcının iPhone bildirimi
+## # 1.2.0 / kullanıcının iPhone bildirimi
 
 Kullanıcı 1.1.1 üzerinde Dune (2021) ve Spider-Man aramalarında uzun bekleme/boş sonuç bildirdi. Yeni sürümün fiziksel iPhone testi henüz yapılmadı. 25 Ekim canlı kaynak tekrarı:
 

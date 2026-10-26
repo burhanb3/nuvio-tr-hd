@@ -1,5 +1,13 @@
 # Değişiklik günlüğü
 
+## 1.6.1 — 26 Ekim 2026
+
+- 1.6.0 geçiş sorunu giderildi: eski ana scraper ID yeniden online HLS+doğrulanmış MP4/MKV’yi birlikte getirir. Yeni online scraper’a/ayrı filtreye bağımlılık kaldırıldı; manifest ana+anime olarak iki kayıt. Eski online JS yolu uyumluluk için korunur.
+- Shameless doğru IMDb/S01E01 olsa da untouchables- gibi grup öneki nedeniyle eleniyordu. Kanonik seri klasörü+dosyada tam başlık+kesin bölüm bağı korunarak düzeltildi; farklı başlık/bölüm ve sample reddi.
+- Archive daha çok arama sonucu, küçük türevler ve HD asıllar birlikte; metadatası eksik sürenin gerçek konteynerde doğrulanması. MP4 kuyruk moov süresi, yalnız ses ve kısa video reddi, IMDb önek eşleşmesi hatasının giderilmesi.
+- Büyük dosya desteği korunur. Küçük Dune sayfaları bulundu; çalışan yeni dosya doğrulanmadı, varsayılan kaynağa eklendi diye sunulmadı. Mevcut Sites köprüsü erişimi hâlâ NOT_FOUND; kimlik korunur.
+- Canlı sabit referans kontrolü: Dune: 10, Fleabag S01E01 10, Shameless ABD S01E01 7 online/TR. Fixture/QuickJS107 test. Fiziksel cihaz/tam oynatma/indirme/senkron yok.
+
 ## 1.6.0 — 26 Ekim 2026
 
 - Tek manifestte üç bağımsız scraper: Hızlı kaynaklar, Dosyalar, Anime. Native tamamlanma birleştirmesiyle erken grup sonucu; aynı scraper içinde satır akışı iddiası yok. Eski kimlik/kişisel ayarlar Dosyalar için korunur; yeni scraper ayarları ayrıdır.

@@ -1,5 +1,7 @@
 # 1.6.0: anime, erken sonuçlar ve Türkçe harfler
 
+**Güncel 1.6.1:** Ana Nuvio TR HD yeniden online HLS+MP4/MKV’yi birlikte sunar; ayrı Hızlı kaynaklar kaydı kaldırıldı, Anime bağımsızdır. Grup önekli Shameless bölümü düzeltildi. Archive küçük türevleri/süre doğrulaması genişledi; yeni küçük Dune dosyası doğrulanmadı. [Geçiş, kanıt ve sınırlar](ONLINE_VE_DIZI_DUZELTMELERI.md). Aşağıdaki1.6.0 üçlü tarama düzeni tarihseldir.
+
 ## Tek bağlantıyla üç bağımsız tarama
 
 Kurulum adresi değişmedi: https://burhanb3.github.io/nuvio-tr-hd/manifest.json . Nuvio'da depoyu yenileyin. **Dosyalar**, **Hızlı kaynaklar**, **Anime** adlarında üç sağlayıcının 1.6.0 ve etkin olduğunu kontrol edin. Eski Sites kopyasını kapalı tutun.

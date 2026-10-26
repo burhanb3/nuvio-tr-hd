@@ -1,5 +1,5 @@
 'use strict';
-const { inspectContainer, mp4TailDimensions, ascii } = require('./containers.cjs');
+const { inspectContainer, mp4TailInfo, ascii } = require('./containers.cjs');
 const { opensubtitlesHash } = require('./hash.cjs');
 const { inspectHls } = require('./hls.cjs');
 function sameFile(first, second) {
@@ -39,7 +39,6 @@ async function probe(http, candidate, includeHls = false, hashEnabled = false) {
   const info = inspectContainer(sample.bytes);
   if (!info) return null;
   const expectedDuration = candidate.identity?.runtimeMinutes * 60;
-  if (info.duration && expectedDuration > 0 && (info.duration < expectedDuration * 0.7 || info.duration > expectedDuration * 1.35)) return null;
   if (/mpegurl|dash\+xml/.test(sample.mime) || /\.m3u8(?:$|[?#])/i.test(sample.url)) return null;
   const aliasMatches = info.container === 'mkv' ? /\.mkv(?:$|[?#])/i : /\.mp4(?:$|[?#])/i;
   const outputUrl = aliasMatches.test(candidate.downloadAlias || '') ? candidate.downloadAlias : sample.url;
@@ -48,12 +47,19 @@ async function probe(http, candidate, includeHls = false, hashEnabled = false) {
   if (info.container === 'mp4' && /\.mkv(?:$|[?#])/i.test(sample.url)) return null;
   if (info.container === 'mkv' && /\.mp4(?:$|[?#])/i.test(sample.url)) return null;
   let tailSample = null;
-  if (!info.dimensions && info.container === 'mp4' && sample.total > sample.bytes.length && !http.expired()) {
+  if ((!info.dimensions || (candidate.requireDuration && !info.duration)) && info.container === 'mp4' && sample.total > sample.bytes.length && !http.expired()) {
     const start = Math.max(sample.bytes.length, sample.total - 262144);
     const tail = await http.bytes(candidate.url, candidate.headers, start, sample.total - 1);
     tailSample = tail;
-    if (sameFile(sample, tail)) info.dimensions = mp4TailDimensions(tail.bytes);
+    if (sameFile(sample, tail)) {
+      const extra = mp4TailInfo(tail.bytes);
+      if (extra?.invalidVideo) return null;
+      if (extra?.dimensions && !info.dimensions) info.dimensions = extra.dimensions;
+      if (extra?.duration && !info.duration) info.duration = extra.duration;
+    }
   }
+  if (candidate.requireDuration && !info.duration) return null;
+  if (info.duration && expectedDuration > 0 && (info.duration < expectedDuration * 0.7 || info.duration > expectedDuration * 1.35)) return null;
   let videoHash = null;
   if (hashEnabled && sample.total >= 131072 && !http.expired()) {
     if (!tailSample || tailSample.bytes.length < 65536) tailSample = await http.bytes(candidate.url, candidate.headers, sample.total - 65536, sample.total - 1);

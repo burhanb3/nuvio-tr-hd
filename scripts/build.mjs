@@ -7,8 +7,11 @@ const manifest = JSON.parse(await readFile(resolve(root, 'manifest.json'), 'utf8
 const pkg = JSON.parse(await readFile(resolve(root, 'package.json'), 'utf8'));
 if (manifest.name !== 'Nuvio TR HD' || manifest.version !== pkg.version || !manifest.scrapers.length) throw new Error('Manifest sürümü/adı tutarsız');
 const entries = { 'providers/nuvio-tr-hd.js': 'src/entry-files.cjs', 'providers/nuvio-tr-hd-online.js': 'src/entry-online.cjs', 'providers/nuvio-tr-hd-anime.js': 'src/entry-anime.cjs' };
-if (manifest.scrapers.length !== Object.keys(entries).length) throw new Error('Tarama sayısı tutarsız');
-for (const scraper of manifest.scrapers) if (scraper.version !== pkg.version || !entries[scraper.filename]) throw new Error('Sağlayıcı yolu/sürümü tutarsız');
+if (manifest.scrapers.length !== 2) throw new Error('Tarama sayısı tutarsız');
+for (const scraper of manifest.scrapers) {
+  const path = scraper.filename.split('?')[0];
+  if (scraper.version !== pkg.version || !entries[path] || scraper.filename !== `${path}?v=${pkg.version}`) throw new Error('Sağlayıcı yolu/sürümü tutarsız');
+}
 await mkdir(resolve(root, 'providers'), { recursive: true });
 const dist = resolve(root, 'dist');
 if (!dist.startsWith(root + sep) || basename(dist) !== 'dist') throw new Error('Güvensiz paket dizini');
@@ -26,4 +29,4 @@ for (const [filename, entry] of Object.entries(entries)) {
 await mkdir(resolve(root, 'dist/examples'), { recursive: true });
 await copyFile(resolve(root, 'examples/catalog.example.json'), resolve(root, 'dist/examples/catalog.example.json'));
 await copyFile(resolve(root, 'site/index.html'), resolve(root, 'dist/index.html'));
-console.log(`Nuvio TR HD ${pkg.version}: 3 bağımsız tarama + dist/ hazır`);
+console.log(`Nuvio TR HD ${pkg.version}: birleşik film/dizi + anime; eski online paket yolu korunuyor; dist/ hazır`);

@@ -1,5 +1,13 @@
 # Sonraki işler
 
+## 1.6.1 öncelik
+
+1. Ana ID online+dosya gerilemesi ve Shameless grup öneki düzeltmesini yayınla;107 test/QuickJS ve upstream20 geçti. Depoyu yenileyince ana+anime iki kayıt.
+2. iPhone’da Dune online satırları, Shameless ABD/Fleabag kullanıcının gerçek S/E’si kontrol edilmeli; kullanıcıya üç scraper açık mı ve S/E soruldu, yanıt bekleniyor.
+3. Küçük Dune indirmesi hâlâ çözülmedi. MoviesDrive/HubCloud küçük sayfalar TLS hatalı Worker/Pixel uçları verdi; metadata/büyük Range200 koşullarını gevşeterek ekleme. Büyük HDHub desteklenir.
+4. Sites köprüsü get_site yineNOT_FOUND; mevcut kimlik korunur, yeni Site ile erişim engeli aşılmaz, kullanıcıya aynı hesap sorusu tekrarlanmaz.
+5. Fiziksel iPhone/tam indirme/çevrimdışı/senkron, anime sezon mapping ve native Türkçe font düzeltmesi bekleyen işlerdir.
+
 ## 1.6.0 güncel öncelik
 
 1. **Tamamlandı:** GitHub1.6.0 af89eda, Windows/Linux100 test ve Pages başarılı; manifest/üç scraper/sayfa HTTP200+yerel SHA eşit. Kanıt compatibility/github-publication.json. Mevcut eski scraper ayarları Dosyalar’da; yeni iki scraper varsayılan.

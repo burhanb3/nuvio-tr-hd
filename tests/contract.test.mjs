@@ -12,6 +12,10 @@ test('manifest KMP scrapers şeması, yayın yolu ve sürümleri tutarlı', asyn
   assert.equal(manifest.name, 'Nuvio TR HD');
   assert.equal(manifest.version, pkg.version);
   assert.ok(manifest.scrapers.length > 0);
+  const main=manifest.scrapers.find(s=>s.id==='nuvio-tr-hd');
+  assert.equal(main?.name,'Nuvio TR HD');
+  assert.ok(main?.formats.includes('hls'));
+  assert.ok(!manifest.scrapers.some(s=>s.id==='nuvio-tr-hd-online'),'Film/dizi araması yeni online scraper kurulmasına bağımlı olmamalı');
   for (const scraper of manifest.scrapers) {
     for (const key of ['id', 'name', 'version', 'filename']) assert.equal(typeof scraper[key], 'string');
     assert.equal(scraper.version, manifest.version);

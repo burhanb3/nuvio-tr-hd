@@ -1,5 +1,11 @@
 # Tasarım kararları
 
+## 1.6.1 gerileme kararı
+
+- Eski ana scraper ID her zaman online+dosya aramasını kapsar. Yeni scraper kurulmasını zorunlu kılan geçiş kullanılmaz. Anime bağımsız; eski online script yolu yayımlanır ama manifestte kurulmaz.
+- Shameless gibi grup öneki yalnız canonicalfolder+exactleaf/S/E+IMDb bağı varsa kabul edilir; fuzzy başlık yok.
+- Küçük dosya sayfası doğrulanmış medya değildir; TLS/kimlik/Range engelleri kaldırılarak başarı uydurulmaz. Büyük dosya tavanı konmaz. Archive’da eksik metadata süresi gerçek video süresiyle tamamlanır; kısa/audio-only elenir.
+
 ## 1.6.0 ek kararları
 
 - Native destekli bağımsız scraper tamamlaması kullanılır; tek getStreams içinde progressive callback uydurulmaz. Ayarlar/sonuç sınırları ayrıdır, geçiş rehberde açık yazılır.

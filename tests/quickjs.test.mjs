@@ -171,8 +171,27 @@ test('QuickJS: yıl içermeyen doğru dizi bölümü ve AltyazıDB Türkçe SRT 
   'https://altyazidb.online/subtitles/series/tt5687612%3A1%3A1.json':{json:{subtitles:[{lang:'tur',title:'S01E01 WEB-DL',url:'https://subs.test/tr.srt'}]}},
   'https://subs.test/tr.srt':{body:'1\n00:00:00,000 --> 00:25:00,000\nÖrnek\n',mime:'application/x-subrip'}
  };
- const streams=await runInQuickJs(fixture,{args:['67070','tv',1,1],settings:{vixsrcEnabled:false,hdhubEnabled:false},code:onlineBundle});
+ const streams=await runInQuickJs(fixture,{args:['67070','tv',1,1],settings:{vixsrcEnabled:false,hdhubEnabled:false}});
  assert.equal(streams.length,1);assert.equal(streams[0].subtitles[0].language,'tr');assert.match(streams[0].subtitles[0].name,/AltyazıDB/);
+});
+
+test('QuickJS: eski ana sağlayıcı tek başına dosyayı ve online HLS alternatifini birlikte getirir',async()=>{
+ const fixture=makeFixture({items:[{...identity,streams:[{url:'https://media.test/movie.mkv'}]}],extra:{
+  'https://streamdata.vaplayer.ru/api.php?tmdb=603&type=movie':{json:{status_code:200,data:{imdb_id:'tt0133093',file_name:'The.Matrix.1999.WEB-DL.mkv',stream_urls:['https://media.test/online.m3u8']}}},
+  'https://media.test/online.m3u8':{body:'#EXTM3U\n#EXT-X-TARGETDURATION:10\n#EXTINF:10,\nsegment.ts\n#EXT-X-ENDLIST\n'}
+ }});
+ const streams=await runInQuickJs(fixture,{settings:{catalogUrls:'https://library.test/catalog.json',autoSubtitles:false,vixsrcEnabled:false,hdhubEnabled:false,archiveEnabled:false}});
+ assert.equal(streams.length,2);assert.ok(streams.some(s=>s.type==='mkv'&&s.name.includes('İndirilebilir')));assert.ok(streams.some(s=>s.type==='hls'&&s.name.includes('Online')));
+});
+
+test('QuickJS: ana sağlayıcı grup önekli Shameless bölümünü kaybetmez',async()=>{
+ const fixture={
+  'https://api.themoviedb.org/3/tv/34307?api_key=test&append_to_response=external_ids':{json:{id:34307,original_name:'Shameless',first_air_date:'2011-01-09',external_ids:{imdb_id:'tt1586680'}}},
+  'https://streamdata.vaplayer.ru/api.php?tmdb=34307&type=tv&season=1&episode=1':{json:{status_code:200,data:{imdb_id:'tt1586680',file_name:'Shameless.US.S01.1080p.BluRay.X264-UNTOUCHABLES/untouchables-shameless.us.s01e01.1080p.mkv',stream_urls:['https://media.test/show.m3u8']}}},
+  'https://media.test/show.m3u8':{body:'#EXTM3U\n#EXT-X-TARGETDURATION:10\n#EXTINF:10,\nsegment.ts\n#EXT-X-ENDLIST\n'}
+ };
+ const streams=await runInQuickJs(fixture,{args:['34307','tv',1,1],settings:{autoSubtitles:false,vixsrcEnabled:false,hdhubEnabled:false}});
+ assert.equal(streams.length,1);assert.equal(streams[0].type,'hls');
 });
 
 test('QuickJS: clearTimeout native beklemeyi iptal etmese de hızlı çağrı uzun bütçeyi beklemez', async () => {

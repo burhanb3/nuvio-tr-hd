@@ -1,0 +1,406 @@
+{
+  "checkedAt": "2026-10-26T09:43:17.156Z",
+  "version": "1.6.1",
+  "film": "shameless",
+  "metadata": "fixed known TMDB reference; upstream source/subtitle requests are live",
+  "elapsedMs": 5196,
+  "firstResultsMs": 5195,
+  "bytesRead": 994180,
+  "settings": "Combined main24s + anime20s; all resolutions; prefer TR; balanced; HLS; up to20 per scraper; public bridge enabled; legacy diagnostic online/files lanes optional",
+  "lanes": [
+    {
+      "lane": "main",
+      "elapsedMs": 5195,
+      "diagnostic": {
+        "tmdbId": "34307",
+        "lane": "main",
+        "sources": [
+          {
+            "name": "Internet Archive",
+            "candidates": 0
+          },
+          {
+            "name": "PlayIMDb",
+            "candidates": 3
+          },
+          {
+            "name": "4KHDHub / HubCloud",
+            "candidates": 0
+          },
+          {
+            "name": "VixSrc",
+            "candidates": 1
+          }
+        ],
+        "rejected": {},
+        "http": {
+          "api.themoviedb.org:200": 1,
+          "vixsrc.to:200": 8,
+          "streamdata.vaplayer.ru:200": 1,
+          "4khdhub.one:200": 1,
+          "smartmarketingacademy.site:200": 12,
+          "altyazidb.online:200": 3,
+          "opensubtitles-v3.strem.io:200": 1,
+          "opensubtitles.stremio.homes:200": 3,
+          "nuvio-tr-hd-download-bridge.kamilbsr03.chatgpt.site:timeout_or_network": 1,
+          "smartmarketingacademy.site:429": 2,
+          "smartmarketingacademy.site:timeout_or_network": 1,
+          "sc-u12-01.secretanchor70.boats:200": 1
+        },
+        "subtitleText": {
+          "turkishCharacters": 5
+        },
+        "results": 7,
+        "reason": "ok",
+        "elapsedMs": 5194
+      },
+      "streams": [
+        {
+          "name": "01 · Online · PlayIMDb 3",
+          "quality": "640×360 HLS",
+          "type": "hls",
+          "size": "≤~314.1 MiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 01 · Shameless.2011.S01E01 • nazo82 & Shagrathian • Paket • DivxPlanet Arşivi • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 02 · Shameless.2011.S01E01 • nazo82 & Shagrathian • DivxPlanet Arşivi • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 03 · Shameless.US.S01E01.720p.BluRay.x265.HEVC.AAC.5.1.Condo · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 04 · shameless.us.s01e01.bdrip.xvid-reward · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "02 · Online · PlayIMDb 1",
+          "quality": "640×360 HLS",
+          "type": "hls",
+          "size": "≤~314.1 MiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 01 · Shameless.2011.S01E01 • nazo82 & Shagrathian • Paket • DivxPlanet Arşivi • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 02 · Shameless.2011.S01E01 • nazo82 & Shagrathian • DivxPlanet Arşivi • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 03 · Shameless.US.S01E01.720p.BluRay.x265.HEVC.AAC.5.1.Condo · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 04 · shameless.us.s01e01.bdrip.xvid-reward · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "03 · Online · PlayIMDb 2",
+          "quality": "640×360 HLS",
+          "type": "hls",
+          "size": "≤~390.2 MiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 01 · Shameless.2011.S01E01 • nazo82 & Shagrathian • Paket • DivxPlanet Arşivi • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 02 · Shameless.2011.S01E01 • nazo82 & Shagrathian • DivxPlanet Arşivi • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 03 · Shameless.US.S01E01.720p.BluRay.x265.HEVC.AAC.5.1.Condo · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 04 · shameless.us.s01e01.bdrip.xvid-reward · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "04 · Online · VixSrc",
+          "quality": "Otomatik kalite HLS",
+          "type": "hls",
+          "language": "TR",
+          "subtitles": [
+            {
+              "name": "Türkçe · VTT · 01 · VixSrc Türkçe · Kaynakla eşlenmiş",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "05 · Online · PlayIMDb 2",
+          "quality": "1280×720 HLS",
+          "type": "hls",
+          "size": "≤~1.21 GiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 01 · Shameless.2011.S01E01 • nazo82 & Shagrathian • Paket • DivxPlanet Arşivi • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 02 · Shameless.2011.S01E01 • nazo82 & Shagrathian • DivxPlanet Arşivi • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 03 · Shameless.US.S01E01.720p.BluRay.x265.HEVC.AAC.5.1.Condo · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 04 · shameless.us.s01e01.bdrip.xvid-reward · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "06 · Online · PlayIMDb 3",
+          "quality": "1280×720 HLS",
+          "type": "hls",
+          "size": "≤~1.25 GiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 01 · Shameless.2011.S01E01 • nazo82 & Shagrathian • Paket • DivxPlanet Arşivi • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 02 · Shameless.2011.S01E01 • nazo82 & Shagrathian • DivxPlanet Arşivi • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 03 · Shameless.US.S01E01.720p.BluRay.x265.HEVC.AAC.5.1.Condo · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 04 · shameless.us.s01e01.bdrip.xvid-reward · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "07 · Online · PlayIMDb 1",
+          "quality": "1280×720 HLS",
+          "type": "hls",
+          "size": "≤~1.25 GiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 01 · Shameless.2011.S01E01 • nazo82 & Shagrathian • Paket • DivxPlanet Arşivi • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 02 · Shameless.2011.S01E01 • nazo82 & Shagrathian • DivxPlanet Arşivi • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 03 · Shameless.US.S01E01.720p.BluRay.x265.HEVC.AAC.5.1.Condo · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 04 · shameless.us.s01e01.bdrip.xvid-reward · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "lane": "anime",
+      "elapsedMs": 72,
+      "diagnostic": {
+        "tmdbId": "34307",
+        "lane": "anime",
+        "sources": [],
+        "rejected": {},
+        "http": {
+          "api.themoviedb.org:200": 1
+        },
+        "subtitleText": {},
+        "results": 0,
+        "reason": "not_anime",
+        "elapsedMs": 69
+      },
+      "streams": []
+    }
+  ],
+  "streams": [
+    {
+      "name": "01 · Online · PlayIMDb 3",
+      "quality": "640×360 HLS",
+      "type": "hls",
+      "size": "≤~314.1 MiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 01 · Shameless.2011.S01E01 • nazo82 & Shagrathian • Paket • DivxPlanet Arşivi • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 02 · Shameless.2011.S01E01 • nazo82 & Shagrathian • DivxPlanet Arşivi • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 03 · Shameless.US.S01E01.720p.BluRay.x265.HEVC.AAC.5.1.Condo · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 04 · shameless.us.s01e01.bdrip.xvid-reward · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "02 · Online · PlayIMDb 1",
+      "quality": "640×360 HLS",
+      "type": "hls",
+      "size": "≤~314.1 MiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 01 · Shameless.2011.S01E01 • nazo82 & Shagrathian • Paket • DivxPlanet Arşivi • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 02 · Shameless.2011.S01E01 • nazo82 & Shagrathian • DivxPlanet Arşivi • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 03 · Shameless.US.S01E01.720p.BluRay.x265.HEVC.AAC.5.1.Condo · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 04 · shameless.us.s01e01.bdrip.xvid-reward · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "03 · Online · PlayIMDb 2",
+      "quality": "640×360 HLS",
+      "type": "hls",
+      "size": "≤~390.2 MiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 01 · Shameless.2011.S01E01 • nazo82 & Shagrathian • Paket • DivxPlanet Arşivi • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 02 · Shameless.2011.S01E01 • nazo82 & Shagrathian • DivxPlanet Arşivi • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 03 · Shameless.US.S01E01.720p.BluRay.x265.HEVC.AAC.5.1.Condo · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 04 · shameless.us.s01e01.bdrip.xvid-reward · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "04 · Online · VixSrc",
+      "quality": "Otomatik kalite HLS",
+      "type": "hls",
+      "language": "TR",
+      "subtitles": [
+        {
+          "name": "Türkçe · VTT · 01 · VixSrc Türkçe · Kaynakla eşlenmiş",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "05 · Online · PlayIMDb 2",
+      "quality": "1280×720 HLS",
+      "type": "hls",
+      "size": "≤~1.21 GiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 01 · Shameless.2011.S01E01 • nazo82 & Shagrathian • Paket • DivxPlanet Arşivi • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 02 · Shameless.2011.S01E01 • nazo82 & Shagrathian • DivxPlanet Arşivi • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 03 · Shameless.US.S01E01.720p.BluRay.x265.HEVC.AAC.5.1.Condo · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 04 · shameless.us.s01e01.bdrip.xvid-reward · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "06 · Online · PlayIMDb 3",
+      "quality": "1280×720 HLS",
+      "type": "hls",
+      "size": "≤~1.25 GiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 01 · Shameless.2011.S01E01 • nazo82 & Shagrathian • Paket • DivxPlanet Arşivi • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 02 · Shameless.2011.S01E01 • nazo82 & Shagrathian • DivxPlanet Arşivi • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 03 · Shameless.US.S01E01.720p.BluRay.x265.HEVC.AAC.5.1.Condo · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 04 · shameless.us.s01e01.bdrip.xvid-reward · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "07 · Online · PlayIMDb 1",
+      "quality": "1280×720 HLS",
+      "type": "hls",
+      "size": "≤~1.25 GiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 01 · Shameless.2011.S01E01 • nazo82 & Shagrathian • Paket • DivxPlanet Arşivi • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 02 · Shameless.2011.S01E01 • nazo82 & Shagrathian • DivxPlanet Arşivi • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 03 · Shameless.US.S01E01.720p.BluRay.x265.HEVC.AAC.5.1.Condo · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 04 · shameless.us.s01e01.bdrip.xvid-reward · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        }
+      ]
+    }
+  ],
+  "deviceTest": "not-run"
+}

@@ -1,0 +1,55 @@
+{
+  "checkedAt": "2026-10-26",
+  "version": "1.6.1",
+  "constraint": "free and accountless; no third-party private keys",
+  "dune": {
+    "newSmallDownloadVerified": false,
+    "largeFiles": "user reports 18–71 GB; no size ceiling added",
+    "moviesDrive": {
+      "discovery": "title search finds exact Dune (2021); IMDb field empty so not bound by IMDb search",
+      "pageClaims": [
+        "480p 550 MB",
+        "720p 10bit 900 MB",
+        "720p 1.3 GB",
+        "1080p 10bit 1.9 GB",
+        "1080p 3.8 GB"
+      ],
+      "probedBytes": false,
+      "hubTerminals": "selected pages exposed Pixel/10Gbps links; no FSL terminal",
+      "redirectTests": [
+        {
+          "entry": "480p",
+          "firstHost": "pixel.hubcloud.ist",
+          "firstStatus": 302,
+          "nextHost": "pixel.rohitkiskk.workers.dev",
+          "error": "ERR_SSL_PACKET_LENGTH_TOO_LONG"
+        },
+        {
+          "entry": "720p10bit",
+          "firstHost": "gpdl.hubcloud.ist",
+          "firstStatus": 302,
+          "nextHost": "gpdl.rohitkiskk.workers.dev",
+          "error": "ERR_SSL_PACKET_LENGTH_TOO_LONG"
+        }
+      ],
+      "addedToProduction": false
+    },
+    "archive": "broader searches showed trailer/review and a contradictory 2004 metadata year; these were not accepted"
+  },
+  "movieBox": {
+    "v1": "HTTP200 empty search",
+    "v2": "HTTP400 invalid token",
+    "addedToProduction": false
+  },
+  "bridge": {
+    "getSite": "NOT_FOUND",
+    "newSiteCreated": false,
+    "sourceCheckoutChanged": false
+  },
+  "mainResults": {
+    "dune": "10 online/TR",
+    "fleabag": "S01E01 10 online/TR",
+    "shamelessUS": "S01E01 7 online/TR"
+  },
+  "hardware": "No physical iPhone/full playback/full download/offline/audio sync tests"
+}

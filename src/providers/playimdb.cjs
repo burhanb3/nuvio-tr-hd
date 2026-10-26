@@ -10,12 +10,19 @@ async function scanPlayImdb(http, target) {
   if (String(result?.status_code) !== '200' || !Array.isArray(result?.data?.stream_urls)) return [];
   const data = result.data;
   if (data.imdb_id && target.imdbId && data.imdb_id !== target.imdbId) return [];
-  const filename = String(data.file_name || '').split('/').pop();
+  const path = String(data.file_name || '').split('/');
+  const filename = path.pop();
+  const extraName = normalizeTitle(filename).replace(normalizeTitle(target.originalTitle), '');
+  if (/\b(sample|trailer|featurette)\b/.test(extraName)) return [];
   if (target.type === 'tv') {
     // Episode release names commonly omit the series' first-air year. The
     // API's exact IMDb binding replaces that missing filename evidence only.
-    if (!target.imdbId || data.imdb_id !== target.imdbId || !matchesEpisode(filename, target) ||
-      !normalizeTitle(filename).startsWith(normalizeTitle(target.originalTitle) + ' ')) return [];
+    const title = normalizeTitle(target.originalTitle), leaf = normalizeTitle(filename);
+    // Some scene files start with their release group (e.g. untouchables-).
+    // Their canonical series folder is separate API evidence; do not discard
+    // it before matching. The leaf must still contain this exact title/S/E.
+    const titleBound = leaf.startsWith(title + ' ') || (path.some(folder => normalizeTitle(folder).startsWith(title + ' ')) && (' ' + leaf + ' ').includes(' ' + title + ' '));
+    if (!target.imdbId || data.imdb_id !== target.imdbId || !matchesEpisode(filename, target) || !titleBound) return [];
   } else if (!filenameIdentity(filename, target)) return [];
   const subtitles = (Array.isArray(result.default_subs) ? result.default_subs : []).map(s => ({ ...s,
     language: s.lang || s.language, url: s.url || s.file, _scope: 'paired' }));

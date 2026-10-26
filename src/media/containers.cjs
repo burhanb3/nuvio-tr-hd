@@ -62,17 +62,19 @@ function mp4Duration(bytes) {
   return null;
 }
 
+function mp4HasVideo(bytes, movie) {
+  return boxes(bytes, movie.data, movie.end).filter(x => x.type === 'trak' && x.complete).some(track => {
+    const media = boxes(bytes, track.data, track.end).find(x => x.type === 'mdia' && x.complete);
+    if (!media) return false;
+    const handler = boxes(bytes, media.data, media.end).find(x => x.type === 'hdlr' && x.complete);
+    return handler && ascii(bytes, handler.data + 8, 4) === 'vide';
+  });
+}
 function mp4Info(bytes) {
   if (!boxes(bytes).some(x => ['moov', 'mdat'].includes(x.type) && x.end > x.data)) return null;
   const movie = boxes(bytes).find(x => x.type === 'moov' && x.complete);
   if (movie) {
-    const hasVideo = boxes(bytes, movie.data, movie.end).filter(x => x.type === 'trak' && x.complete).some(track => {
-      const media = boxes(bytes, track.data, track.end).find(x => x.type === 'mdia' && x.complete);
-      if (!media) return false;
-      const handler = boxes(bytes, media.data, media.end).find(x => x.type === 'hdlr' && x.complete);
-      return handler && ascii(bytes, handler.data + 8, 4) === 'vide';
-    });
-    if (!hasVideo) return null;
+    if (!mp4HasVideo(bytes, movie)) return null;
   }
   const ftyp = boxes(bytes, 0, Math.min(bytes.length, 128)).find(x => x.type === 'ftyp' && x.complete);
   if (!ftyp || ftyp.end - ftyp.data < 8) return null;
@@ -167,16 +169,18 @@ function mkvInfo(bytes) {
 
 // For a tail range, moov need not be aligned at byte zero. Validate its complete
 // box size and video track hierarchy before accepting any dimensions.
-function mp4TailDimensions(bytes) {
+function mp4TailInfo(bytes) {
   for (let at = 4; at + 4 < bytes.length; at++) {
     if (ascii(bytes, at, 4) !== 'moov') continue;
     const start = at - 4, size = u32(bytes, start);
     if (size >= 8 && start + size <= bytes.length) {
-      const dims = mp4Dimensions(bytes.subarray(start, start + size));
-      if (dims) return dims;
+      const movie = bytes.subarray(start, start + size), dimensions = mp4Dimensions(movie), duration = mp4Duration(movie);
+      if (!mp4HasVideo(movie, boxes(movie)[0])) return { invalidVideo: true };
+      if (dimensions || duration) return { dimensions, duration };
     }
   }
   return null;
 }
+function mp4TailDimensions(bytes) { return mp4TailInfo(bytes)?.dimensions || null; }
 function inspectContainer(bytes) { return mp4Info(bytes) || mkvInfo(bytes); }
-module.exports = { inspectContainer, mp4Dimensions, mp4Duration, mp4TailDimensions, ascii };
+module.exports = { inspectContainer, mp4Dimensions, mp4Duration, mp4TailDimensions, mp4TailInfo, ascii };

@@ -22,6 +22,25 @@ test('IMDb ile kimliği bağlı yıl içermeyen dizi dosyası kabul edilir; yanl
   assert.equal(matchesEpisode('Fleabag.S01E01-E02.mkv',target),false);
  }finally{http.close();}
 });
+
+test('Shameless: release grubu önekli bölüm doğru IMDb ve kanonik seri klasörüyle kabul edilir',async()=>{
+ const wanted={...target,tmdbId:34307,originalTitle:'Shameless',year:2011,imdbId:'tt1586680'};
+ const url=PLAY_API+'?tmdb=34307&type=tv&season=1&episode=1';
+ const data={imdb_id:wanted.imdbId,file_name:'Shameless.US.S01.1080p.BluRay.X264-UNTOUCHABLES/untouchables-shameless.us.s01e01.1080p.mkv',stream_urls:['https://media.test/episode.m3u8']};
+ const fixture={[url]:{json:{status_code:200,data}}},http=createHttp({fetchImpl:fixtureFetch(fixture)});
+ try{assert.equal((await scanPlayImdb(http,wanted)).length,1);
+  data.file_name='Shameless.US.S01/untouchables-other.show.s01e01.mkv';assert.deepEqual(await scanPlayImdb(http,wanted),[]);
+  data.file_name='Other.Show.S01/untouchables-shameless.us.s01e01.mkv';assert.deepEqual(await scanPlayImdb(http,wanted),[]);
+  data.file_name='Shameless.US.S01/untouchables-shameless.us.s01e02.mkv';assert.deepEqual(await scanPlayImdb(http,wanted),[]);
+  data.file_name='Shameless.US.S01/untouchables-shameless.us.s01e01.sample.mkv';assert.deepEqual(await scanPlayImdb(http,wanted),[]);
+ }finally{http.close();}
+});
+
+test('Dizi adındaki Trailer/Sample sözcükleri bölümün fragman olduğu anlamına gelmez',async()=>{
+ const fixture={[api]:{json:{status_code:200,data:{imdb_id:target.imdbId,file_name:'Trailer.Park.Boys.S01E01.WEB.mkv',stream_urls:['https://media.test/episode.m3u8']}}}};
+ const http=createHttp({fetchImpl:fixtureFetch(fixture)});
+ try{assert.equal((await scanPlayImdb(http,{...target,originalTitle:'Trailer Park Boys'})).length,1);}finally{http.close();}
+});
 test('VixSrc film yerine tam dizi/bölüm yolunu sorgular; farklı başlık reddedilir',async()=>{
  const calls=[],expires=String(Math.floor(Date.now()/1000)+3600),base='https://vixsrc.to';
  const fixture={

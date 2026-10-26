@@ -601,12 +601,12 @@ var require_archive = __commonJS({
     function archiveQuery(target, preferHd = false) {
       const title = target.originalTitle.replace(/["\\]/g, " ");
       const q = `mediatype:movies AND title:"${title}" AND year:${target.year}` + (preferHd ? " AND (title:(1080p OR 720p OR 2160p OR remastered) OR description:1080p)" : "");
-      return `https://archive.org/advancedsearch.php?q=${encodeURIComponent(q)}&fl[]=identifier&fl[]=title&fl[]=year&rows=4&output=json`;
+      return `https://archive.org/advancedsearch.php?q=${encodeURIComponent(q)}&fl[]=identifier&fl[]=title&fl[]=year&rows=12&sort[]=downloads%20desc&output=json`;
     }
     async function scanArchive(http, target) {
       if (target.type !== "movie") return [];
       const results = await Promise.all([http.json(archiveQuery(target, true)), http.json(archiveQuery(target))]);
-      const docs = [...new Map(results.flatMap((r) => Array.isArray(r?.response?.docs) ? r.response.docs : []).map((d) => [d.identifier, d])).values()];
+      const docs = [...new Map(results.flatMap((r) => Array.isArray(r?.response?.docs) ? r.response.docs : []).map((d) => [d.identifier, d])).values()].filter((d) => !/\b(trailer|featurette|review|podcast|commercial|teaser)\b/.test(normalizeTitle(d.title || "").replace(normalizeTitle(target.originalTitle), "")));
       const groups = await mapLimit(docs.slice(0, 6), 2, async (doc) => {
         if (typeof doc.identifier !== "string" || !/^[\w.-]+$/.test(doc.identifier)) return [];
         const data = await http.json(`https://archive.org/metadata/${encodeURIComponent(doc.identifier)}`);
@@ -619,21 +619,29 @@ var require_archive = __commonJS({
         const releaseTitle = releaseSuffix && new RegExp(`^(?:${target.year}|1080p|720p|2160p|remastered|restored)\\b`).test(releaseSuffix) && !/\b(trailer|commercial|review|opening|teaser|documentary)\b/.test(releaseSuffix);
         if (actualTitle !== expectedTitle && !releaseTitle || year !== target.year) return [];
         if (meta.tmdb_id != null && Number(meta.tmdb_id) !== target.tmdbId) return [];
-        if (meta.imdb_id && target.imdbId && !String(meta.imdb_id).includes(target.imdbId)) return [];
+        if (meta.imdb_id && target.imdbId) {
+          const ids = String(meta.imdb_id).match(/tt\d+/g) || [];
+          if (!ids.length || ids.some((id) => id !== target.imdbId)) return [];
+        }
         const files = data.files.filter((f) => typeof f.name === "string" && f.private !== "true");
         const urlFor = (name) => safeUrl(`https://archive.org/download/${encodeURIComponent(doc.identifier)}/${name.split("/").map(encodeURIComponent).join("/")}`);
         const subtitles = files.filter((f) => /\.(srt|vtt)$/i.test(f.name) && /(?:[._-](tr|tur)|turkish)/i.test(f.name)).map((f) => ({ url: urlFor(f.name), language: "tr", releaseName: f.name, _scope: "release" }));
-        return files.filter((f) => {
-          if (!/\.(mp4|mkv)$/i.test(f.name) || /\b(sample|trailer|commercial|teaser)\b/i.test(f.name)) return false;
+        const videos = files.filter((f) => {
+          const extraName = normalizeTitle(f.name).replace(expectedTitle, "");
+          if (!/\.(mp4|mkv)$/i.test(f.name) || /\b(sample|trailer|commercial|teaser)\b/.test(extraName)) return false;
           const duration = Number(f.length);
-          if (target.runtimeMinutes && (!duration || duration < target.runtimeMinutes * 60 * 0.7 || duration > target.runtimeMinutes * 60 * 1.35)) return false;
+          if (target.runtimeMinutes && duration > 0 && (duration < target.runtimeMinutes * 60 * 0.7 || duration > target.runtimeMinutes * 60 * 1.35)) return false;
           return true;
-        }).sort((a, b) => (Number(b.height) || 0) - (Number(a.height) || 0)).slice(0, 6).map((f) => ({
+        });
+        const small = videos.slice().sort((a, b) => (Number(a.size) || Infinity) - (Number(b.size) || Infinity)).slice(0, 3);
+        const hd = videos.slice().sort((a, b) => (Number(b.height) || 0) - (Number(a.height) || 0)).slice(0, 3);
+        return [...new Map([...small, ...hd].map((f) => [f.name, f])).values()].map((f) => ({
           url: urlFor(f.name),
           filename: String(f.original || f.name).split("/").pop(),
           headers: {},
           subtitles,
           subtitleBase: "https://archive.org/",
+          requireDuration: target.runtimeMinutes > 0 && !(Number(f.length) > 0),
           source: "Internet Archive",
           identity: target,
           identityConfidence: meta.tmdb_id ? 100 : 90
@@ -659,9 +667,14 @@ var require_playimdb = __commonJS({
       if (String(result?.status_code) !== "200" || !Array.isArray(result?.data?.stream_urls)) return [];
       const data = result.data;
       if (data.imdb_id && target.imdbId && data.imdb_id !== target.imdbId) return [];
-      const filename = String(data.file_name || "").split("/").pop();
+      const path = String(data.file_name || "").split("/");
+      const filename = path.pop();
+      const extraName = normalizeTitle(filename).replace(normalizeTitle(target.originalTitle), "");
+      if (/\b(sample|trailer|featurette)\b/.test(extraName)) return [];
       if (target.type === "tv") {
-        if (!target.imdbId || data.imdb_id !== target.imdbId || !matchesEpisode(filename, target) || !normalizeTitle(filename).startsWith(normalizeTitle(target.originalTitle) + " ")) return [];
+        const title = normalizeTitle(target.originalTitle), leaf = normalizeTitle(filename);
+        const titleBound = leaf.startsWith(title + " ") || path.some((folder) => normalizeTitle(folder).startsWith(title + " ")) && (" " + leaf + " ").includes(" " + title + " ");
+        if (!target.imdbId || data.imdb_id !== target.imdbId || !matchesEpisode(filename, target) || !titleBound) return [];
       } else if (!filenameIdentity(filename, target)) return [];
       const subtitles = (Array.isArray(result.default_subs) ? result.default_subs : []).map((s) => ({
         ...s,
@@ -1159,17 +1172,19 @@ var require_containers = __commonJS({
       }
       return null;
     }
+    function mp4HasVideo(bytes, movie) {
+      return boxes(bytes, movie.data, movie.end).filter((x) => x.type === "trak" && x.complete).some((track) => {
+        const media = boxes(bytes, track.data, track.end).find((x) => x.type === "mdia" && x.complete);
+        if (!media) return false;
+        const handler = boxes(bytes, media.data, media.end).find((x) => x.type === "hdlr" && x.complete);
+        return handler && ascii(bytes, handler.data + 8, 4) === "vide";
+      });
+    }
     function mp4Info(bytes) {
       if (!boxes(bytes).some((x) => ["moov", "mdat"].includes(x.type) && x.end > x.data)) return null;
       const movie = boxes(bytes).find((x) => x.type === "moov" && x.complete);
       if (movie) {
-        const hasVideo = boxes(bytes, movie.data, movie.end).filter((x) => x.type === "trak" && x.complete).some((track) => {
-          const media = boxes(bytes, track.data, track.end).find((x) => x.type === "mdia" && x.complete);
-          if (!media) return false;
-          const handler = boxes(bytes, media.data, media.end).find((x) => x.type === "hdlr" && x.complete);
-          return handler && ascii(bytes, handler.data + 8, 4) === "vide";
-        });
-        if (!hasVideo) return null;
+        if (!mp4HasVideo(bytes, movie)) return null;
       }
       const ftyp = boxes(bytes, 0, Math.min(bytes.length, 128)).find((x) => x.type === "ftyp" && x.complete);
       if (!ftyp || ftyp.end - ftyp.data < 8) return null;
@@ -1266,21 +1281,25 @@ var require_containers = __commonJS({
       }
       return { container: "mkv", dimensions, ...subtitleTracks.length ? { subtitleTracks, embeddedTurkish: true } : {}, ...duration ? { duration } : {} };
     }
-    function mp4TailDimensions(bytes) {
+    function mp4TailInfo(bytes) {
       for (let at = 4; at + 4 < bytes.length; at++) {
         if (ascii(bytes, at, 4) !== "moov") continue;
         const start = at - 4, size = u32(bytes, start);
         if (size >= 8 && start + size <= bytes.length) {
-          const dims = mp4Dimensions(bytes.subarray(start, start + size));
-          if (dims) return dims;
+          const movie = bytes.subarray(start, start + size), dimensions = mp4Dimensions(movie), duration = mp4Duration(movie);
+          if (!mp4HasVideo(movie, boxes(movie)[0])) return { invalidVideo: true };
+          if (dimensions || duration) return { dimensions, duration };
         }
       }
       return null;
     }
+    function mp4TailDimensions(bytes) {
+      return mp4TailInfo(bytes)?.dimensions || null;
+    }
     function inspectContainer(bytes) {
       return mp4Info(bytes) || mkvInfo(bytes);
     }
-    module2.exports = { inspectContainer, mp4Dimensions, mp4Duration, mp4TailDimensions, ascii };
+    module2.exports = { inspectContainer, mp4Dimensions, mp4Duration, mp4TailDimensions, mp4TailInfo, ascii };
   }
 });
 
@@ -1495,7 +1514,7 @@ var require_hls = __commonJS({
 var require_probe = __commonJS({
   "src/media/probe.cjs"(exports2, module2) {
     "use strict";
-    var { inspectContainer, mp4TailDimensions, ascii } = require_containers();
+    var { inspectContainer, mp4TailInfo, ascii } = require_containers();
     var { opensubtitlesHash } = require_hash();
     var { inspectHls } = require_hls();
     function sameFile(first, second) {
@@ -1529,7 +1548,6 @@ var require_probe = __commonJS({
       const info = inspectContainer(sample.bytes);
       if (!info) return null;
       const expectedDuration = candidate.identity?.runtimeMinutes * 60;
-      if (info.duration && expectedDuration > 0 && (info.duration < expectedDuration * 0.7 || info.duration > expectedDuration * 1.35)) return null;
       if (/mpegurl|dash\+xml/.test(sample.mime) || /\.m3u8(?:$|[?#])/i.test(sample.url)) return null;
       const aliasMatches = info.container === "mkv" ? /\.mkv(?:$|[?#])/i : /\.mp4(?:$|[?#])/i;
       const outputUrl = aliasMatches.test(candidate.downloadAlias || "") ? candidate.downloadAlias : sample.url;
@@ -1537,12 +1555,19 @@ var require_probe = __commonJS({
       if (info.container === "mp4" && /\.mkv(?:$|[?#])/i.test(sample.url)) return null;
       if (info.container === "mkv" && /\.mp4(?:$|[?#])/i.test(sample.url)) return null;
       let tailSample = null;
-      if (!info.dimensions && info.container === "mp4" && sample.total > sample.bytes.length && !http.expired()) {
+      if ((!info.dimensions || candidate.requireDuration && !info.duration) && info.container === "mp4" && sample.total > sample.bytes.length && !http.expired()) {
         const start = Math.max(sample.bytes.length, sample.total - 262144);
         const tail = await http.bytes(candidate.url, candidate.headers, start, sample.total - 1);
         tailSample = tail;
-        if (sameFile(sample, tail)) info.dimensions = mp4TailDimensions(tail.bytes);
+        if (sameFile(sample, tail)) {
+          const extra = mp4TailInfo(tail.bytes);
+          if (extra?.invalidVideo) return null;
+          if (extra?.dimensions && !info.dimensions) info.dimensions = extra.dimensions;
+          if (extra?.duration && !info.duration) info.duration = extra.duration;
+        }
       }
+      if (candidate.requireDuration && !info.duration) return null;
+      if (info.duration && expectedDuration > 0 && (info.duration < expectedDuration * 0.7 || info.duration > expectedDuration * 1.35)) return null;
       let videoHash = null;
       if (hashEnabled && sample.total >= 131072 && !http.expired()) {
         if (!tailSample || tailSample.bytes.length < 65536) tailSample = await http.bytes(candidate.url, candidate.headers, sample.total - 65536, sample.total - 1);
@@ -1851,7 +1876,7 @@ var require_index = __commonJS({
         async getStreams(tmdbId, mediaType, season, episode) {
           const allowHttp = settings.allowHttp === true;
           const catalogs = parseUrls(settings.catalogUrls, allowHttp), addons = parseUrls(settings.addonUrls, allowHttp);
-          const filesLane = lane === "all" || lane === "files", onlineLane = lane === "all" || lane === "online", animeLane = lane === "all" || lane === "anime";
+          const filesLane = ["all", "main", "files"].includes(lane), onlineLane = ["all", "main", "online"].includes(lane), animeLane = lane === "all" || lane === "anime";
           if (settings.autoDiscover === false && !catalogs.length && !addons.length) return [];
           const started = Date.now(), scheduler = createScheduler();
           const report = { tmdbId: String(tmdbId), lane, sources: [], rejected: {}, http: {}, subtitleText: {}, results: 0, reason: "searching" };
@@ -2116,17 +2141,18 @@ var require_index = __commonJS({
       return createProvider({ settings, tmdbKey }).getStreams(tmdbId, mediaType, season, episode);
     }
     function createEntry(lane) {
-      const titles = { files: "Dosyalar", online: "Hızlı kaynaklar", anime: "Anime" };
+      const titles = { main: "Film/dizi · online ve dosyalar", files: "Dosyalar", online: "Hızlı kaynaklar", anime: "Anime" };
       const only = { files: ["hdhubEnabled", "directoryEnabled", "archiveEnabled", "catalogUrls", "addonUrls"], online: ["playImdbEnabled", "vixsrcEnabled", "hlsView"], anime: ["animecixEnabled"] };
+      only.main = [...only.files, ...only.online];
       const sourceFields = Object.values(only).flat();
       return {
         async getStreams(...args) {
           const settings = typeof globalThis.SCRAPER_SETTINGS === "object" && globalThis.SCRAPER_SETTINGS || {};
           const tmdbKey = typeof globalThis.TMDB_API_KEY === "string" ? globalThis.TMDB_API_KEY : "";
-          return createProvider({ settings, tmdbKey, lane, budgetMs: lane === "online" ? 16e3 : lane === "anime" ? 2e4 : 28e3 }).getStreams(...args);
+          return createProvider({ settings, tmdbKey, lane, budgetMs: lane === "main" ? 24e3 : lane === "online" ? 16e3 : lane === "anime" ? 2e4 : 28e3 }).getStreams(...args);
         },
         onSettings: () => [
-          { type: "info", label: `Bu ayarlar yalnız ${titles[lane]} taramasına aittir. Üç tarama bağımsız tamamlanır; hazır sonuçlar diğer taramaları beklemeden görünür. En fazla kaynak sınırı bu tarama içindir.` },
+          { type: "info", label: lane === "main" ? "Film/dizi araması online HLS ile gerçek MP4/MKV dosyalarını aynı listede sunar. Dosya araması boşsa online alternatifler korunur. Anime ayrı taramadır." : `Bu ayarlar yalnız ${titles[lane]} taramasına aittir. En fazla kaynak sınırı bu tarama içindir.` },
           ...onSettings().filter((field) => !sourceFields.includes(field.key) || only[lane].includes(field.key))
         ]
       };

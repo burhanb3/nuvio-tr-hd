@@ -1,5 +1,17 @@
 # Proje hafızası
 
+## 1.6.1 güncel durum — 26Ekim 2026
+
+Kullanıcı Dune18–71GB büyük dosyaların kalmasını, küçük indirmeler eklenmesini istedi; online sonuçların gittiğini ve Shameless/Fleabag boşluğunu bildirdi.1.6.0’da eski nuvio-tr-hd ID’sini files-only yapmak geçiş/filtre gerilemesiydi. **Eski ana ID bir daha yalnız dosya arar hale getirilmemeli.**1.6.1 createEntry(main) files+online birlikte,24 saniye mantıksal bütçe; Anime ayrı20 saniye. Manifestte ana+anime2kayıt, online kaldırıldı; eski providers/nuvio-tr-hd-online.js uyumluluk/tanı için üretilir. src/entry-files.cjs adı tarihseldir, artık main çağırır. Ayarlar eski ID’de korunur; tek ana liste per-stream streaming değildir.
+
+Shameless ABD34307/tt1586680 API filename Shameless.US.S01.../untouchables-shameless.us.s01e01... idi. Klasörü atmadan canonical folder + exact title leaf + exactS/E + IMDb kontrolü eklendi; diğer başlık/bölüm/sample reddedilir. Fleabag için canlı online vardı; files-only eski ID bunu gizleyebiliyordu, kullanıcı cihazı/etkin scraper durumu kesinleşmedi.
+
+Archive rows12/popularity/bariz fragman önfiltre; en küçük3+HD3; eksik metadata süresi varsa candidate.requireDuration ile gerçek konteyner süresi şart. MP4 tail moov boyut+duration, audio-only tail reddi; IMDb tam token, prefix değil. Büyük HDHub dosyalarına boyut tavanı yok. Yeni küçük Dune dosyası **henüz doğrulanmadı**.
+
+MoviesDrive title araması Dune2021 kaydını bulur (IMDb alanı boş);550MB/900MB/1,3GB/1,9GB/3,8GB sayfaları ve HubCloud pointer’ları incelendi. İlk iki10Gbps zinciri rohitkiskk.workers.dev uçlarında ERR_SSL_PACKET_LENGTH_TOO_LONG; diğerleri aynı terminal aileleri, gerçek dosya probe yok. Sayfa iddiaları verified byte/piksel değildir. Archive Dune yanlış2004yılı ve fragman kayıtları reddedildi. MovieBox v1 boş, v2 invalid token; eklenmedi. Sites get_site yineNOT_FOUND, yeniden create/checkout düzenleme/hesap değiştirme sorusu yok.
+
+Canlı ana arama: Dune: 10 online/TR~6s, Fleabag S01E01: 10 online/TR~4s, Shameless (ABD) S01E01: 7 online/TR~5s. Metadata sabit kanonik referans; gerçek kaynak/subtitle sorguları; cihaz değil. Night of Living Dead küçük318/388MiB gerçekMP4+TR verdi; bu Dune küçük dosyası bulundu diye sunulamaz. Yerel107 test/QuickJS başarılı; authenticated upstream tekrar20dosya drift yok (ilk oturumsuz403rate-limit raporu değil başarılı yeni rapor saklandı). GitHub yayını henüz tamamlanmadı; sonuç sonradan güncellenecek.
+
 ## 1.6.0 çalışma durumu — 26 Ekim 2026
 
 **GitHub yayını tamamlandı:** af89edae8999303b56e3191411fa6ead0e340d3c kod commit'i. Windows/Linux Test ve paket 40298554965 ve Pages40298554973 başarılı. Yerel100/100; oturumsuz manifest, üç sağlayıcı ve sayfa HTTP200 ve yerel SHA eşitliği compatibility/github-publication.json ile doğrulandı. Kurulum adresi aynı. Köprü1.4 ve fiziksel cihaz/tam oynatma/indirme/senkron sınırları değişmedi.

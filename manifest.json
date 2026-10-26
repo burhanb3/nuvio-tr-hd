@@ -1,45 +1,56 @@
 {
   "name": "Nuvio TR HD",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "description": "Otomatik çoklu kaynak tarama, doğrulanmış MP4/MKV ve kaynak başına Türkçe altyazı eşleştirme.",
   "author": "Nuvio TR HD",
   "scrapers": [
     {
       "id": "nuvio-tr-hd",
-      "name": "Nuvio TR HD · Dosyalar",
-      "version": "1.6.0",
-      "description": "Doğrulanmış dosyalar; küçük boyutlu alternatifler ve Türkçe altyazı. JSON/Stremio ek kaynakları burada yapılandırılır.",
-      "filename": "providers/nuvio-tr-hd.js",
-      "supportedTypes": ["movie", "tv"],
-      "supportedPlatforms": ["android", "ios"],
-      "contentLanguage": ["tr"],
-      "formats": ["mp4", "mkv", "hls"],
-      "enabled": true,
-      "hasSettings": true
-    },
-    {
-      "id": "nuvio-tr-hd-online",
-      "name": "Nuvio TR HD · Hızlı kaynaklar",
-      "version": "1.6.0",
-      "description": "PlayIMDb/VixSrc araması dosya taramasını beklemeden tamamlanır. HLS yalnız online, gerçek MP4/MKV ayrıca indirilebilir.",
-      "filename": "providers/nuvio-tr-hd-online.js",
-      "supportedTypes": ["movie", "tv"],
-      "supportedPlatforms": ["android", "ios"],
-      "contentLanguage": ["tr"],
-      "formats": ["mp4", "mkv", "hls"],
+      "name": "Nuvio TR HD",
+      "version": "1.6.1",
+      "description": "Film/dizi: online HLS ve indirilebilir MP4/MKV aynı listede. Türkçe altyazı ve isteğe bağlı JSON/Stremio.",
+      "filename": "providers/nuvio-tr-hd.js?v=1.6.1",
+      "supportedTypes": [
+        "movie",
+        "tv"
+      ],
+      "supportedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "contentLanguage": [
+        "tr"
+      ],
+      "formats": [
+        "mp4",
+        "mkv",
+        "hls"
+      ],
       "enabled": true,
       "hasSettings": true
     },
     {
       "id": "nuvio-tr-hd-anime",
       "name": "Nuvio TR HD · Anime",
-      "version": "1.6.0",
+      "version": "1.6.1",
       "description": "Animecix/Tau: kanonik TMDB + özgün başlık + yıl + tam bölüm ile MP4 araması. Mevcut Türkçe altyazılar ayrıca aranır.",
-      "filename": "providers/nuvio-tr-hd-anime.js",
-      "supportedTypes": ["movie", "tv"],
-      "supportedPlatforms": ["android", "ios"],
-      "contentLanguage": ["tr"],
-      "formats": ["mp4", "mkv", "hls"],
+      "filename": "providers/nuvio-tr-hd-anime.js?v=1.6.1",
+      "supportedTypes": [
+        "movie",
+        "tv"
+      ],
+      "supportedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "contentLanguage": [
+        "tr"
+      ],
+      "formats": [
+        "mp4",
+        "mkv",
+        "hls"
+      ],
       "enabled": true,
       "hasSettings": true
     }
