@@ -7,7 +7,7 @@
 3. DiziBak tarih/kategori koruması eksikse sonucu gevşetme; başka yapımın ilk bölümünü birleştirme. Anime sonraki sezon/mutlak bölüm tahmini yok. FilmModu alt/TRdubmevcutkaynakdilleri; harici sesABI’si yok.
 4. En son tam turda GOT/Breaking Bad çoklu-hosttimeout oldu; yeniden aramada toparlandı. coverage-170-full-run ve-recheck birlikte raporlanmalı; kararsızlık çözüldü deme. Eski pin metadata’sı artık genel aramadan önce paralel başlar.
 5. Türkçe font appyamasının kaynak check’i başarılı; iOS derleme/kurulum ve gerçek glif/oynatma doğrulaması hâlâ yok. Physical tam video+TRindirme/uçakmodu/senkron yapılmadan başarı deme.
-6. 1.7.0 yayın sonrası CI/Pages/beşassetSHA kanıtını ve hafızayı güncelle;153test ve güncel upstreamcheck korunur.
+6. **Tamamlandı:**1.7.0 ab9f139 yayımlandı; Test40370600453/Pages40370600251 başarılı;153test/QuickJS ve beşassetHTTP200/SHA eşit. Yayın kanıtı ve hafıza güncel. Kapsam/fiziksel hedefler açık.
 
 
 ## 1.6.4 öncelik

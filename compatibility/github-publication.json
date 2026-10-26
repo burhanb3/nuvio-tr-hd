@@ -1,15 +1,15 @@
 {
-  "checkedAt": "2026-10-26T13:59:50.059Z",
-  "version": "1.6.4",
+  "checkedAt": "2026-10-26T17:40:37.686Z",
+  "version": "1.7.0",
   "origin": "https://burhanb3.github.io/nuvio-tr-hd",
   "authenticated": false,
   "assetRequestsAuthenticated": false,
   "ciMetadataAuthenticated": true,
   "repository": "https://github.com/burhanb3/nuvio-tr-hd",
-  "sourceCommit": "b673412696a172a5f77967558a8bdaf9aa7ff4fb",
+  "sourceCommit": "ab9f1391df6a5a2d4a12838d3ebe417f975ab6f6",
   "branch": "codex/publish-nuvio-tr-hd",
   "actions": {
-    "tests": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40335362672",
+    "tests": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40370600453",
     "testsConclusion": "success",
     "jobs": [
       {
@@ -21,7 +21,7 @@
         "conclusion": "success"
       }
     ],
-    "pages": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40335362557",
+    "pages": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40370600251",
     "pagesConclusion": "success"
   },
   "mode": "original scraper ID combines online + files; independent anime; versioned code URLs; legacy online file remains available but is not installed",
@@ -30,61 +30,79 @@
       "path": "/manifest.json",
       "status": 200,
       "type": "application/json; charset=utf-8",
-      "bytes": 1446,
-      "sha256": "ced757429964bbc9d1c75f627c6e42d761c3c8fa9d3a14b08a0a1e199a1ae9c7",
+      "bytes": 1436,
+      "sha256": "2a44384c814c731f4fa64cb4ab1428fcf2b111b45ee0de21b601e35bd0fbf9d6",
       "matchesLocal": true
     },
     {
-      "path": "/providers/nuvio-tr-hd.js?v=1.6.4",
+      "path": "/providers/nuvio-tr-hd.js?v=1.7.0",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 150153,
-      "sha256": "da54f0b55751e7021c3b7a6e5d1be29fce64bbcf988b42ca02fffed0eef98117",
+      "bytes": 173946,
+      "sha256": "7997fa1fb737798ac3b6a32f1987feafbe55c95d5e71b1363792ace2343c0b03",
       "matchesLocal": true
     },
     {
-      "path": "/providers/nuvio-tr-hd-anime.js?v=1.6.4",
+      "path": "/providers/nuvio-tr-hd-anime.js?v=1.7.0",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 150154,
-      "sha256": "aff35fbc5ea8d99c38b09c52e60cc2d82bd399449a05f84f9c15ed7b06d4d134",
+      "bytes": 173947,
+      "sha256": "9a2d82fc27198967a4822b243056715d1396e62be9339a3ce03143640f0d0e91",
       "matchesLocal": true
     },
     {
       "path": "/providers/nuvio-tr-hd-online.js",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 150156,
-      "sha256": "aa6650aadddcf1b24da4ace026a6188d7faad8a79ac4afa1c09fc537199c7463",
+      "bytes": 173949,
+      "sha256": "7fe6fcc918c616b52a5201638f61b8b1a9b2c4e970c4f3d624dac76cb21bf1d7",
       "matchesLocal": true
     },
     {
       "path": "/",
       "status": 200,
       "type": "text/html; charset=utf-8",
-      "bytes": 5679,
-      "sha256": "c36b36a1b5678a95def06f466e537d5e104759f0dba9f39acd85aa9cb7d091e6",
+      "bytes": 5653,
+      "sha256": "ccbac6384ee01620a4f6c24c0d569c4d940fb1e89a9a6b68f1467fb97a073bb5",
       "matchesLocal": true
     }
   ],
   "tests": {
-    "local": 140,
-    "quickjs": "passed; compiled settings show1.6.4; incremental subtitle groups/tracks, retained strict-TR deadline results, native fetch quota, pinned episodes and burned-subtitle regression fixtures passed",
-    "upstream": "0.6.4-beta; 20 locked files verified"
+    "local": 153,
+    "quickjs": "passed; SonAnime canonical alias/actual MP4, DiziYou TR HLS/conflicting rendition, denied requests, subtitle encoding, exact episode, existing file early metadata regressions",
+    "upstream": "0.6.4-beta; 20 locked files verified; current HEAD7de46ead80c28ccd008cfd92bd69947e487992d0"
   },
-  "recoveryEvidence": "compatibility/coverage-164.json",
-  "contentEvidence": "compatibility/content-164.json",
+  "recoveryEvidence": "compatibility/coverage-170.json",
+  "sourceEvidence": "compatibility/source-expansion-170.json",
   "sourceCoverage": {
     "cases": 14,
-    "onlineWithTr": 14,
-    "smallDownloadWithTr": 11,
-    "smallDownloadWithoutKnownForeignBurnedSubtitles": 10,
-    "allSourceCriteriaPassed": 6,
+    "latestObservations": {
+      "onlineWithTr": 14,
+      "smallDownloadWithTr": 11,
+      "smallDownloadWithoutKnownForeignBurnedSubtitles": 10,
+      "allSourceCriteriaPassed": 6
+    },
+    "fullPass": {
+      "onlineWithTr": 12,
+      "smallDownloadWithTr": 10,
+      "multiHostTimeoutTitles": [
+        "got-s1e1",
+        "breaking-bad-s1e1"
+      ]
+    },
+    "recheck": "two failed cases recovered; not one uninterrupted 14/14 pass",
     "allSourceCriteriaMet": false
   },
-  "iphoneEmptyResultsRootCause": "not confirmed; awaiting phone diagnostic after known source regressions fixed",
-  "smallDuneDownloadVerified": true,
-  "largeFileSupport": "retained; no size ceiling",
+  "newProviders": [
+    "DiziYou",
+    "DiziBak",
+    "FilmModu",
+    "SonAnime"
+  ],
+  "newHelperBackend": false,
+  "newPerTitleVideoPins": 0,
+  "animeSupplement": "AoT S01E01:9 MP4/3 measured pixel sizes/existing TR; actual playback not run",
+  "fontPatch": "git apply --check passed, not compiled/installed",
   "bridge": {
     "newVersionDeployed": false,
     "existingVersion": "1.4.0",
