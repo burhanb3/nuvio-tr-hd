@@ -5,7 +5,7 @@ Bu sürüm daha fazla gerçek dosya getirir; her başlık ve her kalite için so
 ## Somut kaynaklar
 
 - Breaking Bad S01E01: yaklaşık 329 MiB MP4 (853×480) ve 465 MiB MKV (1280×720). MKV ses track’i İngilizce. MP4 ses dili okunamadı; özgün ses otomatik varsayılmaz.
-- Inception: yaklaşık 830/861 MiB MP4, ikisi de 1280×536. Bunlar iki çözünürlük değildir. Ses dili okunamadı. Portuguese başlıklı kayıt, yalnız başlık benzerliğiyle kabul edilmedi; kanonik filmle iki ayrı hareketli örnek eşleştirildi.
+- Inception: yaklaşık 830/861 MiB MP4, ikisi de 1280×536. Bunlar iki çözünürlük değildir. Ses dili okunamadı. Portekizce başlıklı kayıt, yalnız başlık benzerliğiyle kabul edilmedi; kanonik filmle iki ayrı hareketli örnek eşleştirildi.
 - Fleabag S01E01: önceki 99 MiB MKV yanında 155 MiB MP4; ikisi de 848×354.
 - Fleabag S02E01: 147 MiB MP4 / 604 MiB MKV, 853×480 / 1280×720. İspanyolca altyazı görüntüye işlenmiş; kapatılamaz. Türkçe dosya ayrıca verilir ama sabit yabancı yazı kaybolmaz. Kartın dilinde **ES görüntüde**, açıklamada açık Türkçe bilgi vardır. Önerilen sıralamada temiz online önce gelir; boyut/kalite sırası kullanıcı seçimine göre kalır.
 
@@ -31,4 +31,6 @@ Referans 25 fps örneklenerek yarım saniyeye yuvarlama azaltılır. Siyah bantl
 
 Görüntü eşleşmesi film/bölüm kimliğine kanıttır. Tam filmin doğru kurgu olduğu, ses uyumu veya altyazı senkronu kanıtı değildir. Ölçülen başlangıç farkı otomatik altyazı kaydırması olarak uygulanmaz. Görüntüler ve geçici medya bağlantıları commit edilmez; yalnız sayısal özet/hash yayımlanır.
 
-139 önceki test üzerine native fetch sınırı testiyle **140 yerel test**, gerçek QuickJS, kilitli 20 upstream dosya doğrulaması vardır. Tam film oynatma/indirme, fiziksel iPhone ve uçak modu testi yapılmadı. Matrix/GoT ZIP dosyaları ve Shameless eksikleri çözülmüş sayılmaz. Mevcut Sites köprüsü 1.4.0; yeni servis kurulmadı/yayımlanmadı.
+**140 yerel test**, gerçek QuickJS, kilitli 20 upstream dosya doğrulaması vardır. Tam film oynatma/indirme, fiziksel iPhone ve uçak modu testi yapılmadı. Matrix/GoT ZIP dosyaları ve Shameless eksikleri çözülmüş sayılmaz. Mevcut Sites köprüsü 1.4.0; yeni servis kurulmadı/yayımlanmadı.
+
+Yayın: kod b673412696a172a5f77967558a8bdaf9aa7ff4fb; [Windows/Linux testleri](https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40335362672) ve [Pages](https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40335362557) başarılı. Beş public varlık oturumsuz HTTP200 ve yerel SHA eşitliği [yayın kanıtında](../compatibility/github-publication.json).

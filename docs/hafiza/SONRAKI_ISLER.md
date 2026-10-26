@@ -2,7 +2,7 @@
 
 ## 1.6.4 öncelik
 
-1. Kod ve üretilmiş paketler hazır; son yerel140/140 + QuickJS. Windows/Linux CI ve Pages/public beş varlık SHA doğrulaması tamamlanmalı; compatibility/github-publication.json hâlâ1.6.3. Yayın bitince hafıza ve kanıtı güncelle.
+1. **Tamamlandı:** 1.6.4 b673412696a172a5f77967558a8bdaf9aa7ff4fb yayımlandı. Yerel140/140 ve QuickJS, Windows/Linux40335362672, Pages40335362557 başarılı; beş public varlık HTTP200 + yerel SHA eşit. compatibility/github-publication.json güncel. Kapsam ve cihaz hedefi tamamlanmadı.
 2. Aktif goal tamamlanmadı: Matrix, Shameless ABD S01E01 ve GoT S01E01 indirme yok. Spider-Man iki başlıkta ek kalite; Inception ve Fleabag S01E01 ikinci piksel seçeneği eksik. Fleabag S02E01 ES sabit kaynak temiz TR hedefine sayılmaz. 11 küçük+TR ile10 temiz değerini karıştırma.
 3. Archive ZIP üye linkleri .cache/zip164-{matrix,got}.html; GOT üye GET200 gerçekMKV ama Range/Content-Length yok. ZIP Range d1/d2 ve Matrix HEAD timeout; saf native doğrulamaya eklenmedi. Sunuculu hazırlama prototipi hâlâ yapılmadı. Sites kayıp hesap engeli aynı; yeni Site açma.
 4. İçerik kanıtları compatibility/content-164.json, test aracı npm run test:archive:content. .cache/breaking-content164.json eski araştırma yerine yayımlanan yeni UUID’li kanıtı esas al. Fleabag2 ilk sonuçlar geometri yüzünden zayıftı; düzeltilen iki örnekte40/40 eşleşti. Sabit İspanyolca yazı manuel raster kontrolünde görüldü; temiz izleme sayma.

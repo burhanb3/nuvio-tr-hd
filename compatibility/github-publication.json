@@ -1,15 +1,15 @@
 {
-  "checkedAt": "2026-10-26T12:59:31.292Z",
-  "version": "1.6.3",
+  "checkedAt": "2026-10-26T13:59:50.059Z",
+  "version": "1.6.4",
   "origin": "https://burhanb3.github.io/nuvio-tr-hd",
   "authenticated": false,
   "assetRequestsAuthenticated": false,
   "ciMetadataAuthenticated": true,
   "repository": "https://github.com/burhanb3/nuvio-tr-hd",
-  "sourceCommit": "edc8a0527477b8208c8a4274691d44cb4f89e8c4",
+  "sourceCommit": "b673412696a172a5f77967558a8bdaf9aa7ff4fb",
   "branch": "codex/publish-nuvio-tr-hd",
   "actions": {
-    "tests": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40326657313",
+    "tests": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40335362672",
     "testsConclusion": "success",
     "jobs": [
       {
@@ -21,7 +21,7 @@
         "conclusion": "success"
       }
     ],
-    "pages": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40326657180",
+    "pages": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40335362557",
     "pagesConclusion": "success"
   },
   "mode": "original scraper ID combines online + files; independent anime; versioned code URLs; legacy online file remains available but is not installed",
@@ -31,54 +31,55 @@
       "status": 200,
       "type": "application/json; charset=utf-8",
       "bytes": 1446,
-      "sha256": "b683e79e36b62db0fbd9c4998a28343bdc746d1ea0ed53141e20c60ffbd76eed",
+      "sha256": "ced757429964bbc9d1c75f627c6e42d761c3c8fa9d3a14b08a0a1e199a1ae9c7",
       "matchesLocal": true
     },
     {
-      "path": "/providers/nuvio-tr-hd.js?v=1.6.3",
+      "path": "/providers/nuvio-tr-hd.js?v=1.6.4",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 143931,
-      "sha256": "f8adf7223068d2eeab187667e7e845dc8b73bb5a087fd3106b4c4f5cba01fde7",
+      "bytes": 150153,
+      "sha256": "da54f0b55751e7021c3b7a6e5d1be29fce64bbcf988b42ca02fffed0eef98117",
       "matchesLocal": true
     },
     {
-      "path": "/providers/nuvio-tr-hd-anime.js?v=1.6.3",
+      "path": "/providers/nuvio-tr-hd-anime.js?v=1.6.4",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 143932,
-      "sha256": "e68586721fdffb8866742bc52e13a6378f8bc73661679773ac623564a85fce0f",
+      "bytes": 150154,
+      "sha256": "aff35fbc5ea8d99c38b09c52e60cc2d82bd399449a05f84f9c15ed7b06d4d134",
       "matchesLocal": true
     },
     {
       "path": "/providers/nuvio-tr-hd-online.js",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 143934,
-      "sha256": "94558daaf0607f43d838a0f896769ef99d1b791ee827906cdd7e1ab15a805321",
+      "bytes": 150156,
+      "sha256": "aa6650aadddcf1b24da4ace026a6188d7faad8a79ac4afa1c09fc537199c7463",
       "matchesLocal": true
     },
     {
       "path": "/",
       "status": 200,
       "type": "text/html; charset=utf-8",
-      "bytes": 6673,
-      "sha256": "41d353b699df9e7155db3088a36988f1c9681dd8a24d9fddecec8fd73f6fb322",
+      "bytes": 5679,
+      "sha256": "c36b36a1b5678a95def06f466e537d5e104759f0dba9f39acd85aa9cb7d091e6",
       "matchesLocal": true
     }
   ],
   "tests": {
-    "local": 128,
-    "quickjs": "passed; compiled settings show1.6.3; Archive content pin, forced hash, replica, audio and coverage regression fixtures also passed",
+    "local": 140,
+    "quickjs": "passed; compiled settings show1.6.4; incremental subtitle groups/tracks, retained strict-TR deadline results, native fetch quota, pinned episodes and burned-subtitle regression fixtures passed",
     "upstream": "0.6.4-beta; 20 locked files verified"
   },
-  "recoveryEvidence": "compatibility/coverage-163.json",
-  "contentEvidence": "compatibility/content-163.json",
+  "recoveryEvidence": "compatibility/coverage-164.json",
+  "contentEvidence": "compatibility/content-164.json",
   "sourceCoverage": {
     "cases": 14,
     "onlineWithTr": 14,
-    "smallDownloadWithTr": 8,
-    "allSourceCriteriaPassed": 5,
+    "smallDownloadWithTr": 11,
+    "smallDownloadWithoutKnownForeignBurnedSubtitles": 10,
+    "allSourceCriteriaPassed": 6,
     "allSourceCriteriaMet": false
   },
   "iphoneEmptyResultsRootCause": "not confirmed; awaiting phone diagnostic after known source regressions fixed",

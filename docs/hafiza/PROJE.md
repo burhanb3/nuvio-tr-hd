@@ -2,6 +2,8 @@
 
 ## 1.6.4 çalışma durumu — 26 Ekim 2026
 
+**Yayın tamamlandı:** kod b673412696a172a5f77967558a8bdaf9aa7ff4fb. Windows/Linux Test ve paket 40335362672 ve Pages 40335362557 başarılı. 140/140 yerel test/QuickJS; beş public varlık HTTP200 + yerel SHA eşit. Aynı manifest adresi ve kimlikler. Kanıt compatibility/github-publication.json. Aktif goal açık; kaynak ve fiziksel test eksikleri sürer.
+
 Önceki goal turu ilerlemeydi: 1.6.3 yayımlandı ve yeni adaylar araştırıldı. Bu turda Breaking Bad S01E01 (329 MiB MP4 / 465 MiB MKV), Inception (830/861 MiB MP4) ve Fleabag S01E01 MP4 türevi (155 MiB) kesin dosya pinleriyle eklendi. Fleabag S02E01 (147/604 MiB) iki kanonik örnekle doğrulandı ama görüntüye işlenmiş İspanyolca altyazı var; ES görüntüde etiketi, önerilende temiz online önceliği ve temiz kapsam hedefine saymama uygulanır. Diğer sezon/bölümlere onay taşınmaz.
 
 Canlı 14 vakada online+TR14, küçük dosya+TR11, bilinen yabancı sabit altyazısız küçük dosya+TR10, bütün kaynak ölçütleri6. Matrix, Shameless ABD S01E01 ve GoT S01E01 indirme hâlâ sıfır; Spider-Man ek kaliteleri ve Inception/Fleabag S01E01 ikinci çözünürlük eksik. compatibility/coverage-164.json / content-164.json ve docs/ALTYAZI_VE_DIZI_164.md. İlk tam tur Dune’da yavaş altyazı yüzünden dosyalar TR’siz kaldı; bu saklanmadı, altyazı bekleme hatası düzeltildi ve yeni tam tur ölçüldü. Node sabit TMDB referansı, fiziksel telefon değildir.
@@ -10,7 +12,7 @@ Altyazı API grupları ve tekil geçerli gövdeler onBatch/onTrack ile sağlayı
 
 Görüntü geliştirme aracı scripts/verify-archive-content.mjs ve content-fingerprint.mjs: UUID çalışma klasörü, sabit/karanlık örnek reddi, sıralı iki hareketli sahne, hassas25fps referans, display-width/16:9 crop ile letterbox farkı giderilir. Önceki araştırmada geçici dosya adı çakışması fark edildi; o yeni aday raporları kullanılmadan ayrı çalışmalarda yeniden üretildi. 1.6.3 bu adayları içermiyordu. Görüntü eşleşmesi altyazı offset’i veya kurgu/ses/senkron kanıtı değildir. Çekilen kareler commit edilmedi; yalnız sayısal özet/hash var.
 
-1.6.4 kod/manifest/build hazır; son check140/140 + QuickJS. Güncel0.6.4-beta ve20 kilitli dosya drift yok; upstream-164-check.json. Henüz yayın kanıtı1.6.3’tür; CI/Pages/publicSHA tamamlanmadan1.6.4 yayımlandı deme. Aynı kurulum adresi/ID’ler. Mevcut Sites köprüsü1.4 değişmedi; PC hazırlama servisi veya tünel kurulmadı. Fiziksel cihaz/tam film/indirme/uçak modu/senkron yok. Kullanıcının telefon ve ses tercihi sorularına yanıt henüz gelmedi; tekrarlama.
+1.6.4 kod/manifest/build hazır; son check140/140 + QuickJS. Güncel0.6.4-beta ve20 kilitli dosya drift yok; upstream-164-check.json. 1.6.4 CI/Pages/publicSHA tamamlandı; yayın kanıtı güncellendi. Aynı kurulum adresi/ID’ler. Mevcut Sites köprüsü1.4 değişmedi; PC hazırlama servisi veya tünel kurulmadı. Fiziksel cihaz/tam film/indirme/uçak modu/senkron yok. Kullanıcının telefon ve ses tercihi sorularına yanıt henüz gelmedi; tekrarlama.
 
 Archive ZIP araştırması: Matrix1080p ve GOTSeason1 dosyaları ZIP içinde; resmi üye linkleri mevcut. GOT üye GET200 gerçekMKV prefix döndü ama Range/Content-Length yok; native fetch tam dosyayı doğrulama sırasında tüketebilir. ZIP parent Range d1/d2 timeout, Matrix üye HEAD timeout. Üretime eklenmedi; Range200 koruması gevşetilmedi. Gelecekte doğrulanmış dosya hazırlama/backend olmadan bunları hazır kaynak sayma.
 
