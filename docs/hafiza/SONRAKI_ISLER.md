@@ -2,7 +2,7 @@
 
 ## 1.7.3 öncelik
 
-1. Yayını aynı manifest/ID’lerde tamamla;178check/QuickJS ve20upstream kanıtı var. CI/Pages/public SHA sonrası hafızayı güncelle.
+1. **Tamamlandı:**1.7.3 a46d6838c257d7a21320e432a0c6be766b24fadd aynı manifest/ID’lerle yayımlandı.178check/QuickJS,20upstream drift yok; Windows/Linux40391651511/Pages40391651671 ve5publicHTTP200/SHA başarılı. Yayın kanıtı/hafıza güncel; kapsam hedefi açık.
 2. Yeni kararlı film/dizi MP4/MKV sağlayıcısı hâlâ0. Önce terminal dosya/kararlılık, sonra genel katalog; kaynak sayısı diye HLS/embed/401/403 ekleme. download-research-173.json yeni engelleri içerir.
 3. AniMOM varsayılan kapalı. DN1tekil720p/0,36GB+TR;DN2vebirleşik0. Birden çok bölüm ve birleşik kararlılık olmadan default açma; aynı başarısız düğümü durmadan sınama.
 4. Büyükmoov/ilkCDNRange düzeltmesi gerçek dosya bilgisi içindir; fiziksel iPhone indirme/offline/senkron ve genel kapsam garantisi değildir.

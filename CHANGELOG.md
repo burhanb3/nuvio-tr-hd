@@ -6,6 +6,7 @@
 - Sonraki metadata/hash aralıkları ilk byte’ı veren gerçek CDN adresinde kalır; boyut/URL/ETag denetimi sürer.
 - İsteğe bağlı AniMOM/YourUpload anime adaptörü; kanonik ad/yıl/bölüm ve gerçek MP4/süre kontrolü. Tekil dosya+TR doğrulandı, birleşik kararsızlık nedeniyle varsayılan kapalı.
 - 178 test/QuickJS; 20 upstream dosyada drift yok. Yeni varsayılan kararlı film/dizi kaynağı0; hesap/sunucu/pin eklenmedi. Fiziksel cihaz/tam indirme/offline/senkron yok.
+- Aynı GitHub Pages adresinde yayımlandı; Windows/Linux CI ve beş public varlığın HTTP200/SHA kontrolü başarılı.
 
 ## 1.7.2 — 2026-10-26
 

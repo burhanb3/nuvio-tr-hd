@@ -6,7 +6,9 @@ Varsayılan yeni kararlı film/dizi dosya sağlayıcısı0. AniMOM/YourUpload ge
 
 Gerçek kod: büyük moov için gerçek mdat kutu sınırına en fazla1 ek<=256KiBRange; video handler/tkhd ile piksel. Sonraki Range’ler ilk byte’ın gerçek CDN adresinde kalır; URL/boyut/ETag koruması sürer. Deneysel YourUpload7s mantıksal pay/yalnız ağ hatasında1resmi yenileme; auth/HTML tekrar yok, toplam bütçe/native3/altyazı4/EN1 aynı. 178test/QuickJS;20upstream drift yok. source-pool/fair-scheduling denemesi üretime alınmadı; mevcut FIFO/kotalar aynı.
 
-Canlı Dune1/Fleabag2 dosya ilk; Dune1/Fleabag1 tekrar. Archive ağ arızaları açık. DN ham6 çift/farklı4, mevcut kaynaklar; AniMOM birleşik turda0. Kapsam arttı/kararlı diye sunma. compatibility/download-research-173.json; fiziksel cihaz/tam indirme/offline/senkron yok. Yayın kanıtı iş sonunda güncellenecek.
+Canlı Dune1/Fleabag2 dosya ilk; Dune1/Fleabag1 tekrar. Archive ağ arızaları açık. DN ham6 çift/farklı4, mevcut kaynaklar; AniMOM birleşik turda0. Kapsam arttı/kararlı diye sunma. compatibility/download-research-173.json; fiziksel cihaz/tam indirme/offline/senkron yok.
+
+**1.7.3 yayın tamamlandı:** kod a46d6838c257d7a21320e432a0c6be766b24fadd; Windows/Linux Test40391651511 ve Pages40391651671 başarılı.178test/QuickJS; beş public varlık HTTP200/yerelSHA eşit. compatibility/github-publication.json güncel. Aynı manifest/ID’ler, AniMOM varsayılan kapalı; film/dizi kapsamı hedefi açık.
 
 ## 1.7.2 — tek kart düzeni ve TR/EN
 

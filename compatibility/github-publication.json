@@ -1,15 +1,15 @@
 {
-  "checkedAt": "2026-10-26T19:04:02.865Z",
-  "version": "1.7.2",
+  "checkedAt": "2026-10-26T20:00:59.951Z",
+  "version": "1.7.3",
   "origin": "https://burhanb3.github.io/nuvio-tr-hd",
   "authenticated": false,
   "assetRequestsAuthenticated": false,
   "ciMetadataAuthenticated": true,
   "repository": "https://github.com/burhanb3/nuvio-tr-hd",
-  "sourceCommit": "f6cdc270f3534d528bfd1df53834a8f23902a23b",
+  "sourceCommit": "a46d6838c257d7a21320e432a0c6be766b24fadd",
   "branch": "codex/publish-nuvio-tr-hd",
   "actions": {
-    "tests": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40383064585",
+    "tests": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40391651511",
     "testsConclusion": "success",
     "jobs": [
       {
@@ -21,96 +21,90 @@
         "conclusion": "success"
       }
     ],
-    "pages": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40383064008",
+    "pages": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40391651671",
     "pagesConclusion": "success"
   },
-  "mode": "Stable original scraper ID combines online + files; independent anime; versioned code URLs; legacy online file remains available but is not installed",
   "checks": [
     {
       "path": "/manifest.json",
       "status": 200,
       "type": "application/json; charset=utf-8",
-      "bytes": 1384,
-      "sha256": "e4fa4efe356a2a4dbe209cbcdcd359b2a3e63d3e23cba33eba11b5a40fb5e926",
+      "bytes": 1426,
+      "sha256": "0788b04cf3d6bc19e3fc530ed0b698e9c9a217ae27ccb0eeb1f2f08e899cef77",
       "matchesLocal": true
     },
     {
-      "path": "/providers/nuvio-tr-hd.js?v=1.7.2",
+      "path": "/providers/nuvio-tr-hd.js?v=1.7.3",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 182423,
-      "sha256": "1a670f928708d1b50872efccc9ba8a1b4b1f74dc4da9de7859f86ddf8a5267e1",
+      "bytes": 190743,
+      "sha256": "3b874f4ce7707d67f5a18e9c739eb74c3eb713058c79ac83592387679f00bb93",
       "matchesLocal": true
     },
     {
-      "path": "/providers/nuvio-tr-hd-anime.js?v=1.7.2",
+      "path": "/providers/nuvio-tr-hd-anime.js?v=1.7.3",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 182424,
-      "sha256": "bfb9a466c998ff8d90af25dcf1ade2ee97d8bb7a5028bda03030462a11a33898",
+      "bytes": 190744,
+      "sha256": "de1d78e789d00b34c351e2587ccf8b69f37b60cb33c30df25083a00c85905b68",
       "matchesLocal": true
     },
     {
       "path": "/providers/nuvio-tr-hd-online.js",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 182426,
-      "sha256": "dc9293adc3b960488f4b69c6f9b6e8d5b606a525a333b3a19b87b09162789983",
+      "bytes": 190746,
+      "sha256": "9893a818c40dbb3d95cfa82f6d44fe0be5a30b807789e309966c254f79602da3",
       "matchesLocal": true
     },
     {
       "path": "/",
       "status": 200,
       "type": "text/html; charset=utf-8",
-      "bytes": 5467,
-      "sha256": "7ea98d1534fb5e83c0f7ad7814d70a8ac476f2ee9f6ea5e37522045488bdb534",
+      "bytes": 5663,
+      "sha256": "147f60aff89f24a9721afe8e4ddeaa562d92812db2997f8268295b1a8332b763",
       "matchesLocal": true
     }
   ],
   "tests": {
-    "local": 168,
-    "quickjs": "passed; compiled bilingual output, uniform fields, EN-only rejection when Turkish required",
+    "local": 178,
+    "quickjs": "passed; compiled anime adapter opt-in, exact identity rejection and large-moov measured pixels",
     "upstream": "0.6.4-beta;20lockedfiles;HEAD7de46ead80c28ccd008cfd92bd69947e487992d0;no drift"
   },
-  "sourceEvidence": "compatibility/subtitles-and-cards-172.json",
-  "upstreamEvidence": "compatibility/upstream-172-check.json",
+  "sourceEvidence": "compatibility/download-research-173.json",
+  "upstreamEvidence": "compatibility/upstream-173-check.json",
   "features": {
-    "uniformFields": [
-      "quality",
-      "size in decimal GB",
-      "audio language",
-      "subtitle language"
-    ],
-    "missingTurkish": "TR altyazı yok",
-    "bilingualSubtitleLabel": "TR/EN altyazı",
-    "externalSubtitlesPerLanguage": 4,
-    "totalExternalSubtitles": 8,
-    "strictTurkishAcceptsEnglishOnly": false,
-    "sharedPhysicalSubtitleFetchLimit": 4,
-    "physicalEnglishSubtitleFetchLimit": 1
+    "largeMp4Metadata": "At most one extra <=262144-byte Range at a true box boundary; no filename quality.",
+    "cdn": "Metadata/hash reads stay on the exact first-byte server; URL/size/ETag validation retained.",
+    "aniMom": {
+      "experimental": true,
+      "defaultEnabled": false,
+      "isolatedVerifiedMp4": {
+        "size": 356493310,
+        "width": 1280,
+        "height": 720,
+        "duration": 1390.661,
+        "turkishSubtitles": 4
+      },
+      "combinedSearchReliable": false,
+      "secondEpisodeVerified": false
+    }
   },
-  "newVerifiedDownloadProviders": 0,
+  "newDefaultDownloadProviders": 0,
+  "newStableFilmTvDownloadProviders": 0,
+  "newExperimentalDownloadProviders": 1,
   "newHelperBackends": 0,
+  "newAccounts": 0,
   "newPerTitleVideoPins": 0,
-  "sourceCoverage": {
-    "partialLiveCases": 3,
-    "bilingualCases": [
-      "Dune (2021)",
-      "Fleabag S01E01",
-      "Death Note S01E01"
-    ],
-    "duneFilesWithTrAndEn": 2,
-    "deathNoteFilesWithTrAndEn": 2,
-    "fleabagFilesFirstRun": 1,
-    "fleabagFilesRepeat": 0,
-    "fleabagRepeatFailure": "Archive network/Range timeouts; not resolved by subtitle/card changes",
-    "fullFourteenCaseRepeat": false,
-    "allSourceCriteriaMet": false
+  "allSourceCriteriaMet": false,
+  "mainCoverage": {
+    "duneFilesFirst": 1,
+    "duneFilesRepeat": 1,
+    "fleabagFilesFirst": 2,
+    "fleabagFilesRepeat": 1,
+    "networkVariabilityResolved": false
   },
-  "bridge": {
-    "newVersionDeployed": false,
-    "existingVersion": "1.4.0"
-  },
+  "mode": "Original main ID still combines online+files; separate anime; stable IDs and versioned code URLs; legacy online file retained.",
   "deviceTest": "not-run",
   "fullPlayback": "not-run",
   "fullDownload": "not-run",

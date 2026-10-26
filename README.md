@@ -8,6 +8,8 @@ Bu depo medya barındırmaz. SonAnime, DiziYou, DiziBak, FilmModu, Animecix/Tau,
 
 ## 1.7.3: gerçek dosya bilgisi ve indirme araştırması
 
+Mevcut GitHub deposunu Nuvio Pluginler ekranından yenileyip sürümün **1.7.3** olduğunu kontrol edin. Sağlayıcıları kaldırmak gerekmez.
+
 Büyük MP4 metadata kutularında gerçek piksel/süreyi okumak için en fazla bir ek küçük Range kullanılır. Sonraki aralıklar ilk byte sunucusunda kalır; dönen CDN’den veri karıştırılmaz. Mevcut kaynaklar/TR-EN ve varsayılan ayarlar korunur.
 
 AniMOM/YourUpload anime adaptörü tekil720p/0,36GB MP4+TR verdi; birleşik arama/bazı bölümlerde kararsız olduğu için **deneysel ve varsayılan kapalı**. Film/dizi indirme kapsamı henüz büyümüş sayılmaz.178test/QuickJS; telefon/tam indirme/offline/senkron testi yok. [Araştırma ve sınırlar](docs/INDIRME_ARASTIRMASI_173.md).
