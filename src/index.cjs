@@ -10,6 +10,7 @@ const { scanArchive } = require('./providers/archive.cjs');
 const { scanPlayImdb } = require('./providers/playimdb.cjs');
 const { scanVixDirect } = require('./providers/vixsrc.cjs');
 const { scanHdHub } = require('./providers/hdhub.cjs');
+const { scanWaploaded } = require('./providers/waploaded.cjs');
 const { scanAnimecix } = require('./providers/animecix.cjs');
 const { scanSonAnime } = require('./providers/sonanime.cjs');
 const { scanDiziYou } = require('./providers/diziyou.cjs');
@@ -257,6 +258,7 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs = 24000, r
             if (filesLane && settings.hdhubEnabled !== false && !sourceFactories.some(s => s.name === '4KHDHub / HubCloud')) sourceJobs.push({ name: '4KHDHub / HubCloud', run: async () => {
               return scanHdHub(http, target, { allowExtensionless: settings.useDownloadBridge !== false, onCandidates: candidates => acceptCandidates(candidates, true) });
             } });
+            if (filesLane && settings.waploadedEnabled !== false && !target.isAnime) sourceJobs.push({ name: 'Waploaded', run: () => scanWaploaded(http, target) });
           }
           for (const source of sourceFactories) sourceJobs.push({ name: source.name, run: () => source.run(http, target) });
           // Adding an online fallback must not shrink the existing file quota.
@@ -326,6 +328,7 @@ function onSettings() {
     { type: 'toggle', key: 'useDownloadBridge', label: 'MKV indirme adını koruyan dosya köprüsü', defaultValue: true, description: 'Kaynaklar telefondan aranır. Yalnız bulunan public dosya adresi ve film metadatası köprüde doğrulanır. Video doğrudan kaynaktan gelir; kişisel katalog/anahtar gönderilmez.' },
     { type: 'toggle', key: 'vixsrcEnabled', label: 'VixSrc çevrimiçi alternatifleri', defaultValue: true },
     { type: 'toggle', key: 'hdhubEnabled', label: '4KHDHub / HubCloud doğrudan dosya araması', defaultValue: true, description: 'Ücretsiz public FSL dosyaları doğrulanır. Kaynak metadatası boyut/piksel doğrulaması sayılmaz.' },
+    { type: 'toggle', key: 'waploadedEnabled', label: 'Waploaded güncel film/dizi dosyaları', defaultValue: true, description: 'Kısmi kapsam: kaynağın son güncellenen listesi taranır; tüm arşivi kapsamaz. Gerçek dosya, yıl ve bölüm doğrulanır. Mevcut TR/EN araması uygulanır.' },
     { type: 'toggle', key: 'directoryEnabled', label: 'DahmerMovies dizin taraması (deneysel yerel yedek)', defaultValue: false, description: 'Dosya CDN’i sık 403/429 döndürdüğünden varsayılan kapalıdır.' },
     { type: 'toggle', key: 'archiveEnabled', label: 'Internet Archive film araması', defaultValue: true },
     { type: 'toggle', key: 'playImdbEnabled', label: 'PlayIMDb API araması', defaultValue: true, description: 'Bazı sonuçlar HLS olabilir; dosya indirmesi olarak gösterilmez.' },
@@ -364,7 +367,7 @@ async function getStreams(tmdbId, mediaType, season, episode) {
 }
 function createEntry(lane) {
   const titles = { main: 'Film/dizi · online ve dosyalar', files: 'Dosyalar', online: 'Hızlı kaynaklar', anime: 'Anime', extraAnime:'Ek Anime' };
-  const only = { files: ['hdhubEnabled','directoryEnabled','archiveEnabled','catalogUrls','addonUrls'], online: ['playImdbEnabled','vixsrcEnabled','diziyouEnabled','dizibakEnabled','filmmoduEnabled','hlsView'], anime: ['animecixEnabled','sonanimeEnabled'],extraAnime:['animomEnabled','seicodeEnabled'] };
+  const only = { files: ['hdhubEnabled','directoryEnabled','archiveEnabled','waploadedEnabled','catalogUrls','addonUrls'], online: ['playImdbEnabled','vixsrcEnabled','diziyouEnabled','dizibakEnabled','filmmoduEnabled','hlsView'], anime: ['animecixEnabled','sonanimeEnabled'],extraAnime:['animomEnabled','seicodeEnabled'] };
   only.main = [...only.files, ...only.online];
   const sourceFields = Object.values(only).flat();
   return {

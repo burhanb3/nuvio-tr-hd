@@ -10,6 +10,7 @@ function configuration(settings = {}, injectedKey) {
     autoDiscover: settings.autoDiscover !== false, includeHls: settings.includeHls !== false,
     playImdbEnabled: settings.playImdbEnabled !== false, vixsrcEnabled: settings.vixsrcEnabled !== false,
     hdhubEnabled: settings.hdhubEnabled !== false, archiveEnabled: settings.archiveEnabled !== false,
+    waploadedEnabled: settings.waploadedEnabled !== false,
     autoSubtitles: settings.autoSubtitles !== false, subtitleRequired: settings.subtitlePolicy === 'require',
     detailedHlsMetadata: settings.detailedHlsMetadata === true,
     minimumQuality: [0,480,720,1080].includes(Number(settings.minimumQuality || 0)) ? Number(settings.minimumQuality || 0) : 0,

@@ -1,5 +1,13 @@
 # Nuvio Kotlin Multiplatform uyumluluğu
 
+## 1.7.5 — film/dizi dosyaları
+
+27 Ekim 2026: Nuvio `0.6.4-beta`, güncel `cmp-rewrite` HEAD `168aeaf3477edd42129f63252a7746d56de81d93`. Kilitli 20 kaynak dosyada drift yok; kilit değiştirilmedi. Yeni manifest girdisi veya ABI alanı eklenmedi. Waploaded ana sağlayıcıda çalışır; mevcut üç scraper kimliği korunur.
+
+199 yerel test ve gerçek QuickJS WASM testi başarılı. Yeni public ticket çözümünde ikili/NUL veri native `atob` aktarımından geçirilmez. Üretilmiş paket normal film araması, gerçek MKV Range, doğru uzantı ve ayarın kapatılmasıyla sınandı. Bu, Nuvio'nun fiziksel iOS taşımasını veya tam indirmeyi çalıştırdığımız anlamına gelmez.
+
+[Upstream kanıtı](../compatibility/upstream-175-check.json), [kaynak/altyazı ve birleşik tarama](../compatibility/download-research-175.json), [sınırlar](FILM_DIZI_INDIRME_175.md). Fiziksel iPhone/Android, Kotlin derlemesi, tam oynatma/indirme/offline/sahne senkronu yapılmadı.
+
 ## 1.7.4 — üçüncü bağımsız scraper
 
 Mevcut iki ID korunur; nuvio-tr-hd-extra-anime yalnız tv destekleyen üçüncü kayıttır. Native0.6.4-beta StreamsRepository her scraper’ı ayrılaunch eder ve hercompletion’ı mevcut gruba ekler; boşcompletion önceki stream’leri korur. Bu davranış mevcut20dosyalı lock içinde doğrulandı; yeniABI alanı veya per-resultcallback yok.189fixture/gerçekQuickJS;20dosyadadriftyok (upstream-174-check.json). Altıpublicvarlık/üçaktifJS/legacyJS yayınlanır. Source/Node ölçümü fiziksel iPhone erken-görünüm/indirme kanıtı değildir.

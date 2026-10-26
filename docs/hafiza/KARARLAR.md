@@ -1,5 +1,13 @@
 # Tasarım kararları
 
+## 1.7.5 film/dizi dosya kararları
+
+- Birkaç yapımda sağlam dosya veren kısmi kaynak da kullanılabilir. Waploaded güncel50 film/50dizi listesi tam katalog diye sunulmaz. Araması boşken aynı sorguyu tekrarlamak veya tüm eski arşivi telefondan gezmek yok.
+- Dosya adı segmentini doğru uzantıyla kullanmak yalnız aynı kaynak/imza yolu ve bu tam adreste gerçek Range/konteyner kanıtıyla kabul edilir. HLS'ye MP4 adı verilmez. Yeni host için mevcut R2 köprüsünün destek verdiği varsayılmaz.
+- Geçici public bilet ve yanıt anahtarı native normal indirme düğmesinin akışıdır; sabit üçüncü taraf key/token veya challenge çözümü değildir. İkili veriyi atob/native string üzerinden taşımak yerine JS içinde decode et; NUL içeren gerçek veri QuickJS fixture'ında sınanmalı.
+- Yayıncının en sondaki 4–10 haneli dosya sayacı, gerçek S/E ve çoklu bölüm aralığından ayrı tutulur. Üst kayıt/yıl ve açık sezon/bölüm her aşamada zorunludur.
+- Southland 2006 festival girişi bu tur sabit test referansıdır. Güncel telefon TMDB yanıtı kanıtı sayılmaz; üretimde yalnız resolveIdentity'nin verdiği releaseYears ve aynı IMDb geçerlidir. TR35/EN35, senkron başarı ölçütü değildir.
+
 ## 1.7.4 kısmi kaynak kararı (öncelikli)
 
 - Kullanıcı birkaç sağlam seri/bölümü yeterli gördü; bir sağlayıcının bütün kataloğu çalışmak zorunda değil. Önceki geniş kapsam kapısı bu talimatla kalktı.

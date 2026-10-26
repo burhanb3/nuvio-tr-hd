@@ -1308,6 +1308,206 @@ var require_page_data = __commonJS({
   }
 });
 
+// src/media/audio.cjs
+var require_audio = __commonJS({
+  "src/media/audio.cjs"(exports2, module2) {
+    "use strict";
+    var { normalizeTitle } = require_util();
+    var aliases = { eng: "en", english: "en", tur: "tr", turkish: "tr", türkçe: "tr", turkce: "tr", hin: "hi", hindi: "hi", fra: "fr", fre: "fr", french: "fr", jpn: "ja", japanese: "ja", rus: "ru", deu: "de", ger: "de", spa: "es", spanish: "es", por: "pt", ita: "it", kor: "ko" };
+    function audioCode(value) {
+      const code = String(value || "").trim().toLowerCase().split(/[-_]/)[0];
+      return aliases[code] || code;
+    }
+    function describeAudio(video, candidate) {
+      const codes = [...new Set((video.audioLanguages || []).map(audioCode))].filter((c) => /^[a-z]{2}$/.test(c));
+      if (codes.length) return { codes, evidence: video.container === "hls" ? "playlist" : "container", text: codes.slice(0, 6).map((c) => c.toUpperCase()).join("/") };
+      const declared = [...new Set((candidate.claimedAudioLanguages || []).map(audioCode))].filter((c) => /^[a-z]{2}$/.test(c));
+      if (declared.length) return { codes: declared, evidence: "source", text: declared.slice(0, 6).map((c) => c.toUpperCase() + "?").join("/") };
+      const file = normalizeTitle(candidate.filename || "").replace(normalizeTitle(candidate.identity?.originalTitle || ""), "");
+      const hints = [["en", /\b(english|eng)\b/i], ["hi", /\b(hindi|hin)\b/i], ["fr", /\b(french|fra)\b/i], ["tr", /\b(turkish|tur)\b/i]].filter(([, re]) => re.test(file)).map(([code]) => code);
+      return hints.length ? { codes: hints, evidence: "filename", text: hints.map((c) => c.toUpperCase() + "?").join("/") } : null;
+    }
+    module2.exports = { audioCode, describeAudio };
+  }
+});
+
+// src/providers/waploaded.cjs
+var require_waploaded = __commonJS({
+  "src/providers/waploaded.cjs"(exports2, module2) {
+    "use strict";
+    var { safeUrl, normalizeTitle } = require_util();
+    var { anchors, decodeEntities } = require_directory();
+    var { canonicalNames } = require_page_data();
+    var { matchesEpisode } = require_matching();
+    var { audioCode } = require_audio();
+    var ORIGINS = { movie: "https://films.waploaded.com", tv: "https://shows.waploaded.com" };
+    var indexes = /* @__PURE__ */ new Map();
+    function heading(html) {
+      return decodeEntities(String(html).match(/<h1\b[^>]*>([\s\S]{0,500}?)<\/h1>/i)?.[1] || "");
+    }
+    function sameTitle(value, target) {
+      return canonicalNames(target).includes(normalizeTitle(value));
+    }
+    function primaryPost(html) {
+      return String(html).slice(String(html).search(/<h1\b/i)).split(/<a\b[^>]*href=["']\/dl\//i)[0].slice(0, 8e4);
+    }
+    function movieYears(target) {
+      return [.../* @__PURE__ */ new Set([target.year, ...target.releaseYears || []])];
+    }
+    function pageMatches(html, target) {
+      const title = heading(html);
+      const match = title.match(/^(.+?)\s*\((\d{4})(?:\s+TV series)?\)(?:\s*\[[^\]]{1,50}\])?$/i);
+      if (!match || !sameTitle(match[1], target)) return false;
+      const post = primaryPost(html);
+      const ids = anchors(post).map((a) => a.href.match(/^https?:\/\/(?:www\.)?imdb\.com\/title\/(tt\d+)(?:$|[/?#])/i)?.[1]).filter(Boolean);
+      if (target.imdbId && ids.some((id) => id !== target.imdbId)) return false;
+      return Number(match[2]) === target.year || target.type === "movie" && target.imdbId && ids.includes(target.imdbId) && movieYears(target).includes(Number(match[2]));
+    }
+    function indexEntries(xml, target) {
+      const origin = ORIGINS[target.type], kind = target.type === "movie" ? "movie" : "series";
+      if (!origin) return [];
+      const names = canonicalNames(target), out = [];
+      for (const m of String(xml).matchAll(/<loc>\s*([^<]{1,500})\s*<\/loc>/gi)) {
+        const url = safeUrl(decodeEntities(m[1]));
+        if (!url || new URL(url).origin !== origin) continue;
+        const slug = new URL(url).pathname.match(new RegExp("^/" + kind + "/[1-9]\\d{0,9}/([a-z0-9-]{1,180})$"))?.[1];
+        if (!slug) continue;
+        const text = normalizeTitle(slug);
+        if (!names.some((name) => text.startsWith(name + " ") || text === name || text.length >= 12 && name.startsWith(text))) continue;
+        const year = text.match(/\b(?:19|20)\d{2}\b/)?.[0];
+        if (year && !(target.type === "movie" ? movieYears(target) : [target.year]).includes(Number(year))) continue;
+        if (!out.includes(url)) out.push(url);
+        if (out.length === 2) break;
+      }
+      return out;
+    }
+    function childPage(html, base, target, episode) {
+      const origin = ORIGINS.tv, names = canonicalNames(target);
+      return anchors(html, 1800).map((a) => ({ ...a, url: safeUrl(a.href, base) })).find((a) => {
+        if (!a.url || new URL(a.url).origin !== origin || !/^\/(?:series|season)\/[1-9]\d{0,9}\/[a-z0-9-]+$/.test(new URL(a.url).pathname)) return false;
+        const text = normalizeTitle(a.text), prefix = names.find((n) => text.startsWith(n + " "));
+        if (!prefix) return false;
+        if (episode) return matchesEpisode(a.text, target);
+        const seasons = [...text.slice(prefix.length).matchAll(/\bseason\s+(\d{1,3})\b/g)];
+        return seasons.length === 1 && Number(seasons[0][1]) === target.season;
+      })?.url || null;
+    }
+    function sameEpisodeHeading(html, target) {
+      const text = heading(html), normalized = normalizeTitle(text);
+      const name = canonicalNames(target).find((n) => normalized.startsWith(n + " s"));
+      return !!name && matchesEpisode(text, target) && /^s\d{1,3}\s*e\d{1,3}$/.test(normalized.slice(name.length).trim());
+    }
+    function decodeLink(key, value) {
+      if (typeof key !== "string" || !key.length || key.length > 200 || typeof value !== "string" || value.length > 12e3 || !/^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/.test(value)) return null;
+      const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/", data = value.replace(/=+$/, "");
+      let buffer = 0, bits = 0, out = "", index = 0;
+      for (const char of data) {
+        buffer = buffer << 6 | alphabet.indexOf(char);
+        bits += 6;
+        if (bits >= 8) {
+          bits -= 8;
+          out += String.fromCharCode(buffer >> bits & 255 ^ key.charCodeAt(index++ % key.length));
+          buffer &= (1 << bits) - 1;
+        }
+      }
+      return safeUrl(out);
+    }
+    function namedFile(url, slug) {
+      const address = safeUrl(url);
+      if (!address || !/^[a-z0-9-]+\.kissorgrab\.com$/i.test(new URL(address).hostname) || !new URL(address).pathname.endsWith("/" + slug)) return null;
+      return /-(mkv|mp4)$/i.test(slug) ? address.replace(/-(mkv|mp4)(?=$|[?#])/i, ".$1") : null;
+    }
+    async function resolveDownload(http, page, target) {
+      const link = anchors(page.text, 1800).find((a) => a.text === "Download Video");
+      const url = safeUrl(link?.href, page.url), match = url && new URL(url).pathname.match(/^\/dl\/([a-f0-9]{32})\/([a-z0-9-]{1,220})$/);
+      if (!match || new URL(url).origin !== ORIGINS[target.type]) return null;
+      const slug = match[2], normalized = normalizeTitle(slug);
+      const displaySlug = slug.replace(/-\d{4,10}-(mkv|mp4)$/i, "");
+      if (!canonicalNames(target).some((n) => normalized.startsWith(n + " ")) || (target.type === "movie" ? !movieYears(target).some((y) => normalized.includes(" " + y + " ")) : !matchesEpisode(displaySlug, target))) return null;
+      const filePage = await http.text(url);
+      if (!filePage) return null;
+      const fileOrigin = new URL(filePage.url).origin;
+      if (fileOrigin !== "https://meetdownload.com" && !(fileOrigin === ORIGINS[target.type] && new URL(filePage.url).pathname === new URL(url).pathname)) return null;
+      const fileTitle = normalizeTitle(heading(filePage.text).replace(/^Download\s+/i, ""));
+      if (fileTitle !== normalizeTitle(displaySlug)) return null;
+      const api = safeUrl(filePage.text.match(/\bdata-md-dl=["']([^"']+)["']/)?.[1], filePage.url);
+      const ticket = filePage.text.match(/\bdata-md-t=["']([^"']{1,200})["']/)?.[1];
+      if (!api || new URL(api).origin !== fileOrigin || new URL(api).pathname !== "/api/v1/dl-link/" + match[1] || !ticket) return null;
+      const result = await http.json(api, { method: "POST", headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "X-Requested-With": "XMLHttpRequest",
+        Referer: filePage.url
+      }, body: "t=" + encodeURIComponent(ticket) });
+      if (result?.ok !== true) return null;
+      const video = namedFile(decodeLink(result.k, result.d), slug);
+      if (!video) return null;
+      const text = decodeEntities(primaryPost(page.text).replace(/<(script|style)\b[^>]*>[\s\S]*?<\/\1>/gi, "").replace(/<[^>]*>/g, " "));
+      const declared = text.match(/\bAudio:\s*(English|Turkish|Hindi|French|Spanish|Japanese)\b/i)?.[1];
+      const subtitle = decodeLink(result.k, result.s), subSlug = subtitle && new URL(subtitle).pathname.split("/").pop();
+      const language = subSlug?.match(/(eng|tur)\d?-\d+-(?:srt|vtt)$/i)?.[1]?.toLowerCase();
+      const compact = normalizeTitle(subSlug || "").replace(/ /g, "");
+      let releaseName = subSlug;
+      if (target.type === "movie") for (const name of canonicalNames(target)) {
+        const year = movieYears(target).find((y) => compact.startsWith(name.replace(/ /g, "") + y));
+        if (year) {
+          releaseName = target.originalTitle + "." + year + "." + compact.slice(name.replace(/ /g, "").length + 4);
+          break;
+        }
+      }
+      const subtitles = subtitle && /^[a-z0-9-]+\.kissorgrab\.com$/i.test(new URL(subtitle).hostname) && language ? [{
+        url: subtitle.replace(/-(srt|vtt)(?=$|[?#])/i, ".$1"),
+        language: language === "tur" ? "tr" : "en",
+        releaseName,
+        identity: target,
+        _identityBound: true,
+        _scope: "title"
+      }] : [];
+      return {
+        url: video,
+        filename: slug.replace(/-\d{4,10}-(mkv|mp4)$/i, ".$1"),
+        headers: { Referer: filePage.url },
+        source: "Waploaded",
+        identity: target,
+        identityConfidence: target.imdbId && text.includes(target.imdbId) ? 100 : 90,
+        requireDuration: true,
+        ...target.runtimeMinutes > 0 ? { durationTolerance: 0.1 } : {},
+        ...declared ? { claimedAudioLanguages: [audioCode(declared)] } : {},
+        subtitles,
+        subtitleBase: filePage.url
+      };
+    }
+    async function scanWaploaded(http, target) {
+      if (target.isAnime || !ORIGINS[target.type]) return [];
+      const indexUrl = ORIGINS[target.type] + "/sitemap/" + (target.type === "movie" ? "movie" : "series");
+      let index = indexes.get(indexUrl);
+      if (!index || Date.now() - index.at > 3e5) {
+        const response = await http.text(indexUrl, { maxChars: 8e4 });
+        if (!response || !/<urlset\b/.test(response.text)) return [];
+        index = { text: response.text, at: Date.now() };
+        indexes.set(indexUrl, index);
+      }
+      const candidates = [];
+      for (const url of indexEntries(index.text, target)) {
+        if (http.expired()) break;
+        let page = await http.text(url);
+        if (!page || !pageMatches(page.text, target)) continue;
+        if (target.type === "tv") {
+          const seasonUrl = childPage(page.text, page.url, target, false), season = seasonUrl && await http.text(seasonUrl);
+          const seasonTitle = season && normalizeTitle(heading(season.text));
+          if (!seasonTitle || !canonicalNames(target).some((n) => seasonTitle === n + " season " + target.season)) continue;
+          const episodeUrl = childPage(season.text, season.url, target, true);
+          page = episodeUrl && await http.text(episodeUrl);
+          if (!page || !sameEpisodeHeading(page.text, target)) continue;
+        }
+        const candidate = await resolveDownload(http, page, target);
+        if (candidate) candidates.push(candidate);
+      }
+      return candidates;
+    }
+    module2.exports = { scanWaploaded, pageMatches, indexEntries, childPage, sameEpisodeHeading, decodeLink, namedFile, resolveDownload };
+  }
+});
+
 // src/providers/animecix.cjs
 var require_animecix = __commonJS({
   "src/providers/animecix.cjs"(exports2, module2) {
@@ -2557,29 +2757,6 @@ var require_subtitle_discovery = __commonJS({
   }
 });
 
-// src/media/audio.cjs
-var require_audio = __commonJS({
-  "src/media/audio.cjs"(exports2, module2) {
-    "use strict";
-    var { normalizeTitle } = require_util();
-    var aliases = { eng: "en", english: "en", tur: "tr", turkish: "tr", türkçe: "tr", turkce: "tr", hin: "hi", hindi: "hi", fra: "fr", fre: "fr", french: "fr", jpn: "ja", japanese: "ja", rus: "ru", deu: "de", ger: "de", spa: "es", spanish: "es", por: "pt", ita: "it", kor: "ko" };
-    function audioCode(value) {
-      const code = String(value || "").trim().toLowerCase().split(/[-_]/)[0];
-      return aliases[code] || code;
-    }
-    function describeAudio(video, candidate) {
-      const codes = [...new Set((video.audioLanguages || []).map(audioCode))].filter((c) => /^[a-z]{2}$/.test(c));
-      if (codes.length) return { codes, evidence: video.container === "hls" ? "playlist" : "container", text: codes.slice(0, 6).map((c) => c.toUpperCase()).join("/") };
-      const declared = [...new Set((candidate.claimedAudioLanguages || []).map(audioCode))].filter((c) => /^[a-z]{2}$/.test(c));
-      if (declared.length) return { codes: declared, evidence: "source", text: declared.slice(0, 6).map((c) => c.toUpperCase() + "?").join("/") };
-      const file = normalizeTitle(candidate.filename || "").replace(normalizeTitle(candidate.identity?.originalTitle || ""), "");
-      const hints = [["en", /\b(english|eng)\b/i], ["hi", /\b(hindi|hin)\b/i], ["fr", /\b(french|fra)\b/i], ["tr", /\b(turkish|tur)\b/i]].filter(([, re]) => re.test(file)).map(([code]) => code);
-      return hints.length ? { codes: hints, evidence: "filename", text: hints.map((c) => c.toUpperCase() + "?").join("/") } : null;
-    }
-    module2.exports = { audioCode, describeAudio };
-  }
-});
-
 // src/ranking.cjs
 var require_ranking = __commonJS({
   "src/ranking.cjs"(exports2, module2) {
@@ -2707,7 +2884,7 @@ var require_presentation = __commonJS({
 var require_diagnostics = __commonJS({
   "src/diagnostics.cjs"(exports2, module2) {
     "use strict";
-    var VERSION = true ? "1.7.4" : "dev";
+    var VERSION = true ? "1.7.5" : "dev";
     function effectiveTmdbKey(settings, injectedKey) {
       return typeof settings.tmdbApiKey === "string" && settings.tmdbApiKey.trim() ? settings.tmdbApiKey.trim() : typeof injectedKey === "string" ? injectedKey.trim() : "";
     }
@@ -2721,6 +2898,7 @@ var require_diagnostics = __commonJS({
         vixsrcEnabled: settings.vixsrcEnabled !== false,
         hdhubEnabled: settings.hdhubEnabled !== false,
         archiveEnabled: settings.archiveEnabled !== false,
+        waploadedEnabled: settings.waploadedEnabled !== false,
         autoSubtitles: settings.autoSubtitles !== false,
         subtitleRequired: settings.subtitlePolicy === "require",
         detailedHlsMetadata: settings.detailedHlsMetadata === true,
@@ -2759,6 +2937,7 @@ var require_index = __commonJS({
     var { scanPlayImdb } = require_playimdb();
     var { scanVixDirect } = require_vixsrc();
     var { scanHdHub } = require_hdhub();
+    var { scanWaploaded } = require_waploaded();
     var { scanAnimecix } = require_animecix();
     var { scanSonAnime } = require_sonanime();
     var { scanDiziYou } = require_diziyou();
@@ -3093,6 +3272,7 @@ var require_index = __commonJS({
                 if (filesLane && settings.hdhubEnabled !== false && !sourceFactories.some((s) => s.name === "4KHDHub / HubCloud")) sourceJobs.push({ name: "4KHDHub / HubCloud", run: async () => {
                   return scanHdHub(http, target, { allowExtensionless: settings.useDownloadBridge !== false, onCandidates: (candidates) => acceptCandidates(candidates, true) });
                 } });
+                if (filesLane && settings.waploadedEnabled !== false && !target.isAnime) sourceJobs.push({ name: "Waploaded", run: () => scanWaploaded(http, target) });
               }
               for (const source of sourceFactories) sourceJobs.push({ name: source.name, run: () => source.run(http, target) });
               const quota = 10;
@@ -3187,6 +3367,7 @@ var require_index = __commonJS({
         { type: "toggle", key: "useDownloadBridge", label: "MKV indirme adını koruyan dosya köprüsü", defaultValue: true, description: "Kaynaklar telefondan aranır. Yalnız bulunan public dosya adresi ve film metadatası köprüde doğrulanır. Video doğrudan kaynaktan gelir; kişisel katalog/anahtar gönderilmez." },
         { type: "toggle", key: "vixsrcEnabled", label: "VixSrc çevrimiçi alternatifleri", defaultValue: true },
         { type: "toggle", key: "hdhubEnabled", label: "4KHDHub / HubCloud doğrudan dosya araması", defaultValue: true, description: "Ücretsiz public FSL dosyaları doğrulanır. Kaynak metadatası boyut/piksel doğrulaması sayılmaz." },
+        { type: "toggle", key: "waploadedEnabled", label: "Waploaded güncel film/dizi dosyaları", defaultValue: true, description: "Kısmi kapsam: kaynağın son güncellenen listesi taranır; tüm arşivi kapsamaz. Gerçek dosya, yıl ve bölüm doğrulanır. Mevcut TR/EN araması uygulanır." },
         { type: "toggle", key: "directoryEnabled", label: "DahmerMovies dizin taraması (deneysel yerel yedek)", defaultValue: false, description: "Dosya CDN’i sık 403/429 döndürdüğünden varsayılan kapalıdır." },
         { type: "toggle", key: "archiveEnabled", label: "Internet Archive film araması", defaultValue: true },
         { type: "toggle", key: "playImdbEnabled", label: "PlayIMDb API araması", defaultValue: true, description: "Bazı sonuçlar HLS olabilir; dosya indirmesi olarak gösterilmez." },
@@ -3241,7 +3422,7 @@ var require_index = __commonJS({
     }
     function createEntry(lane) {
       const titles = { main: "Film/dizi · online ve dosyalar", files: "Dosyalar", online: "Hızlı kaynaklar", anime: "Anime", extraAnime: "Ek Anime" };
-      const only = { files: ["hdhubEnabled", "directoryEnabled", "archiveEnabled", "catalogUrls", "addonUrls"], online: ["playImdbEnabled", "vixsrcEnabled", "diziyouEnabled", "dizibakEnabled", "filmmoduEnabled", "hlsView"], anime: ["animecixEnabled", "sonanimeEnabled"], extraAnime: ["animomEnabled", "seicodeEnabled"] };
+      const only = { files: ["hdhubEnabled", "directoryEnabled", "archiveEnabled", "waploadedEnabled", "catalogUrls", "addonUrls"], online: ["playImdbEnabled", "vixsrcEnabled", "diziyouEnabled", "dizibakEnabled", "filmmoduEnabled", "hlsView"], anime: ["animecixEnabled", "sonanimeEnabled"], extraAnime: ["animomEnabled", "seicodeEnabled"] };
       only.main = [...only.files, ...only.online];
       const sourceFields = Object.values(only).flat();
       return {

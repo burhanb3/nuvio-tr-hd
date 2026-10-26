@@ -1,5 +1,14 @@
 # Değişiklik günlüğü
 
+## 1.7.5 — 2026-10-27
+
+- Yeni Waploaded film/dizi dosya adaptörü, ana sağlayıcıda varsayılan açık. Kapsam son güncellenen public listeyle sınırlı; tüm arşiv taranmış veya her yapım desteklenmiş sayılmaz.
+- Tam ad/yıl, varsa açık IMDb, dizi üst kaydı ve tam sezon/bölüm denetimi. Alternatif film yılı yalnız kanonik release_dates ve aynı açık IMDb ile kullanılabilir.
+- Public indirme düğmesinin geçici biletiyle gerçek MP4/MKV bağlantısı; doğru uzantılı adresin kendisi Range, konteyner, byte, piksel ve süreyle denetlenir. Yeni sunucu/hesap veya film başına pin yok.
+- İkili bağlantı verisini native atob üzerinden geçirmeden JavaScript içinde çözme; QuickJS testindeki NUL kesilmesi giderildi. Yayıncının dosya sayacı bölüm aralığıyla karıştırılmaz.
+- Southland Tales: 421.697.346 byte / 1024×512; TR ve EN SRT bulundu, senkron belirsiz. Heartland S20E04: 169.427.901 byte / 1024×512 / EN ses ve altyazı; TR yok. S20E01 ağ hatası verdi.
+- 199 test/QuickJS ve güncel Nuvio 0.6.4-beta üzerinde kilitli 20 dosyada drift yok. Fiziksel iPhone, tam oynatma/indirme/offline/senkron testi yapılmadı. Film/dizi indirme açığı sürüyor.
+
 ## 1.7.4 — 2026-10-27
 
 - Çalışan birkaç seri/bölümü de değerlendiren kısmi kaynak yaklaşımı. AniMOM yeni bağımsız Ek Anime sağlayıcısında varsayılan açık; önceki iki kimlik/ayar korunur.

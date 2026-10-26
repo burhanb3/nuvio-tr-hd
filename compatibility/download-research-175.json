@@ -1,0 +1,612 @@
+{
+  "checkedAt": "2026-10-26T23:23:55.511Z",
+  "version": "1.7.5",
+  "method": "Source implementation and public HTTP inspected; fixed canonical reference metadata, real bounded media/subtitle HTTP; generated bundle tested in QuickJS. Signed file URLs, tickets and keys omitted.",
+  "exhaustive": false,
+  "newPartialFilmTvDownloadAdapters": 1,
+  "newUniversalFilmTvDownloadAdapters": 0,
+  "newBackends": 0,
+  "newAccounts": 0,
+  "newPerTitleVideoPins": 0,
+  "tests": 199,
+  "source": {
+    "name": "Waploaded",
+    "defaultEnabled": true,
+    "lane": "main",
+    "setting": "waploadedEnabled",
+    "index": "publisher recent sitemap only; not full archive",
+    "movieIndexEntries": 50,
+    "tvIndexEntries": 50,
+    "indexCache": "5 minutes within JS lifetime; successful small index only, no signed URL cache",
+    "maximumDetailMatches": 2,
+    "requiresExistingDownloadBridge": false,
+    "identity": "exact canonical name/year; explicit IMDb contradictions rejected; TV parent/season/episode chain",
+    "alternativeMovieYear": "canonical release_dates year plus same explicit IMDb, not arbitrary plus/minus one",
+    "fileChecks": "named URL itself gets bounded Range, actual container/size/pixels/duration/hash; no HLS or HTML files",
+    "base64": "pure JS bytes; NUL never crosses a native atob string boundary"
+  },
+  "isolated": {
+    "checkedAt": "2026-10-26T23:19:45.358Z",
+    "metadataMode": "fixed canonical references; 2006 festival date is a supplied test input, not a current TMDB API observation; real source and subtitles HTTP",
+    "rows": [
+      {
+        "key": "southland",
+        "inputMetadata": {
+          "id": 4723,
+          "original_title": "Southland Tales",
+          "release_date": "2007-11-14",
+          "imdb_id": "tt0405336",
+          "runtime": 145,
+          "release_dates": {
+            "results": [
+              {
+                "iso_3166_1": "FR",
+                "release_dates": [
+                  {
+                    "type": 1,
+                    "release_date": "2006-05-21T00:00:00.000Z"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "elapsedMs": 8575,
+        "streamRows": 1,
+        "sources": [
+          {
+            "name": "Waploaded",
+            "candidates": 1
+          }
+        ],
+        "rejected": {},
+        "files": [
+          {
+            "source": "Waploaded",
+            "filename": "southland-tales-2006.mkv",
+            "video": {
+              "container": "mkv",
+              "downloadable": true,
+              "size": 421697346,
+              "dimensions": {
+                "width": 1024,
+                "height": 512
+              },
+              "duration": 8682.751,
+              "videoHash": "0a6c46f98bbaf195"
+            },
+            "subtitles": [
+              {
+                "language": "tr",
+                "score": 35,
+                "name": "Türkçe · SRT · AltyazıDB · 01 · Southland Tales.2007.Emre Bekman • FGT • 23.976 · Aynı film; sürüm/senkron belirsiz"
+              },
+              {
+                "language": "tr",
+                "score": 35,
+                "name": "Türkçe · SRT · AltyazıDB · 04 · Southland Tales.2007.7G Etkinlik • SEPTiC • 23.976 · Aynı film; sürüm/senkron belirsiz"
+              },
+              {
+                "language": "tr",
+                "score": 35,
+                "name": "Türkçe · SRT · AltyazıDB · 05 · Southland Tales.2007.Emre Bekman • TSRG • 25 · Aynı film; sürüm/senkron belirsiz"
+              },
+              {
+                "language": "tr",
+                "score": 35,
+                "name": "Türkçe · SRT · AltyazıDB · 06 · Southland Tales.2007.Emre Bekman • DG|FxM|CODE • 23.976 · Aynı film; sürüm/senkron belirsiz"
+              },
+              {
+                "language": "en",
+                "score": 35,
+                "name": "İngilizce · SRT · 01 · Southland Tales.2006.1080pblurayh264aacrarbgeng133149srt · Aynı film; sürüm/senkron belirsiz"
+              }
+            ]
+          }
+        ],
+        "onlinePairCount": 0
+      },
+      {
+        "key": "heartland20e4",
+        "inputMetadata": {
+          "id": 14929,
+          "original_name": "Heartland",
+          "first_air_date": "2007-10-14",
+          "external_ids": {
+            "imdb_id": "tt1094229"
+          },
+          "episode_run_time": [
+            43
+          ]
+        },
+        "elapsedMs": 8624,
+        "streamRows": 1,
+        "sources": [
+          {
+            "name": "Waploaded",
+            "candidates": 1
+          }
+        ],
+        "rejected": {},
+        "files": [
+          {
+            "source": "Waploaded",
+            "filename": "heartland-ca-s20e04.mkv",
+            "video": {
+              "container": "mkv",
+              "downloadable": true,
+              "size": 169427901,
+              "dimensions": {
+                "width": 1024,
+                "height": 512
+              },
+              "duration": 2651.044,
+              "videoHash": "d0ea16b14bb14ea3",
+              "audioLanguages": [
+                "eng"
+              ],
+              "subtitleTracks": [
+                {
+                  "language": "en",
+                  "codec": "S_TEXT/ASS"
+                },
+                {
+                  "language": "en",
+                  "codec": "S_TEXT/ASS"
+                }
+              ],
+              "embeddedEnglish": true
+            },
+            "subtitles": [
+              {
+                "language": "en",
+                "score": 69,
+                "name": "İngilizce · SRT · OpenSubtitles · 01 · Heartland S20E04.srt · Süre uyumu; senkron doğrulanmadı"
+              }
+            ]
+          }
+        ],
+        "onlinePairCount": 0
+      }
+    ]
+  },
+  "combined": {
+    "checkedAt": "2026-10-26T23:21:14.425Z",
+    "mode": "all default main sources, bridge off",
+    "metadataMode": "fixed canonical references; 2006 festival date is a supplied test input, not a current TMDB API observation; real source and subtitles HTTP",
+    "rows": [
+      {
+        "key": "southland",
+        "inputMetadata": {
+          "id": 4723,
+          "original_title": "Southland Tales",
+          "release_date": "2007-11-14",
+          "imdb_id": "tt0405336",
+          "runtime": 145,
+          "release_dates": {
+            "results": [
+              {
+                "iso_3166_1": "FR",
+                "release_dates": [
+                  {
+                    "type": 1,
+                    "release_date": "2006-05-21T00:00:00.000Z"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "elapsedMs": 10111,
+        "streamRows": 15,
+        "sources": [
+          {
+            "name": "PlayIMDb",
+            "candidates": 3
+          },
+          {
+            "name": "FilmModu",
+            "candidates": 0
+          },
+          {
+            "name": "VixSrc",
+            "candidates": 1
+          },
+          {
+            "name": "4KHDHub / HubCloud",
+            "candidates": 0
+          },
+          {
+            "name": "Internet Archive",
+            "candidates": 4
+          },
+          {
+            "name": "Waploaded",
+            "candidates": 1
+          }
+        ],
+        "rejected": {},
+        "files": [
+          {
+            "source": "Internet Archive",
+            "filename": "Southland Tales (2007).mp4",
+            "video": {
+              "container": "mp4",
+              "downloadable": true,
+              "size": 842352404,
+              "dimensions": {
+                "width": 854,
+                "height": 356
+              },
+              "duration": 8672.704,
+              "videoHash": "9fe4d61470f4c5f1"
+            },
+            "subtitles": [
+              {
+                "language": "tr",
+                "score": 35,
+                "name": "Türkçe · SRT · AltyazıDB · 01 · Southland Tales.2007.Emre Bekman • FGT • 23.976 · Aynı film; sürüm/senkron belirsiz"
+              },
+              {
+                "language": "tr",
+                "score": 35,
+                "name": "Türkçe · SRT · AltyazıDB · 04 · Southland Tales.2007.7G Etkinlik • SEPTiC • 23.976 · Aynı film; sürüm/senkron belirsiz"
+              },
+              {
+                "language": "tr",
+                "score": 35,
+                "name": "Türkçe · SRT · AltyazıDB · 06 · Southland Tales.2007.Emre Bekman • DG|FxM|CODE • 23.976 · Aynı film; sürüm/senkron belirsiz"
+              },
+              {
+                "language": "tr",
+                "score": 35,
+                "name": "Türkçe · SRT · AltyazıDB · 05 · Southland Tales.2007.Emre Bekman • TSRG • 25 · Aynı film; sürüm/senkron belirsiz"
+              },
+              {
+                "language": "en",
+                "score": 35,
+                "name": "İngilizce · SRT · OpenSubtitles · 01 · Southland.Tales.2007.DvDRip.Eng-FxM.srt · 23.976 fps · Aynı film; sürüm/senkron belirsiz"
+              }
+            ]
+          },
+          {
+            "source": "Internet Archive",
+            "filename": "Southland Tales (2007).mp4",
+            "video": {
+              "container": "mp4",
+              "downloadable": true,
+              "size": 842352404,
+              "dimensions": {
+                "width": 854,
+                "height": 356
+              },
+              "duration": 8672.704,
+              "videoHash": "fd689d9855ce0f63"
+            },
+            "subtitles": [
+              {
+                "language": "tr",
+                "score": 35,
+                "name": "Türkçe · SRT · AltyazıDB · 01 · Southland Tales.2007.Emre Bekman • FGT • 23.976 · Aynı film; sürüm/senkron belirsiz"
+              },
+              {
+                "language": "tr",
+                "score": 35,
+                "name": "Türkçe · SRT · AltyazıDB · 04 · Southland Tales.2007.7G Etkinlik • SEPTiC • 23.976 · Aynı film; sürüm/senkron belirsiz"
+              },
+              {
+                "language": "tr",
+                "score": 35,
+                "name": "Türkçe · SRT · AltyazıDB · 05 · Southland Tales.2007.Emre Bekman • TSRG • 25 · Aynı film; sürüm/senkron belirsiz"
+              },
+              {
+                "language": "tr",
+                "score": 35,
+                "name": "Türkçe · SRT · AltyazıDB · 06 · Southland Tales.2007.Emre Bekman • DG|FxM|CODE • 23.976 · Aynı film; sürüm/senkron belirsiz"
+              },
+              {
+                "language": "en",
+                "score": 35,
+                "name": "İngilizce · SRT · OpenSubtitles · 01 · Southland.Tales.2007.DvDRip.Eng-FxM.srt · 23.976 fps · Aynı film; sürüm/senkron belirsiz"
+              }
+            ]
+          },
+          {
+            "source": "Internet Archive",
+            "filename": "Southland Tales_t00.mkv",
+            "video": {
+              "container": "mkv",
+              "downloadable": true,
+              "size": 5220527741,
+              "dimensions": {
+                "width": 720,
+                "height": 480
+              },
+              "duration": 8672.997,
+              "videoHash": "fe3d6fe82e699363",
+              "audioLanguages": [
+                "eng"
+              ],
+              "subtitleTracks": [
+                {
+                  "language": "en",
+                  "codec": "S_VOBSUB"
+                },
+                {
+                  "language": "en",
+                  "codec": "S_TEXT/UTF8"
+                }
+              ],
+              "embeddedEnglish": true
+            },
+            "subtitles": [
+              {
+                "language": "tr",
+                "score": 35,
+                "name": "Türkçe · SRT · AltyazıDB · 01 · Southland Tales.2007.Emre Bekman • FGT • 23.976 · Aynı film; sürüm/senkron belirsiz"
+              },
+              {
+                "language": "tr",
+                "score": 35,
+                "name": "Türkçe · SRT · AltyazıDB · 04 · Southland Tales.2007.7G Etkinlik • SEPTiC • 23.976 · Aynı film; sürüm/senkron belirsiz"
+              },
+              {
+                "language": "tr",
+                "score": 35,
+                "name": "Türkçe · SRT · AltyazıDB · 05 · Southland Tales.2007.Emre Bekman • TSRG • 25 · Aynı film; sürüm/senkron belirsiz"
+              },
+              {
+                "language": "tr",
+                "score": 35,
+                "name": "Türkçe · SRT · AltyazıDB · 06 · Southland Tales.2007.Emre Bekman • DG|FxM|CODE • 23.976 · Aynı film; sürüm/senkron belirsiz"
+              },
+              {
+                "language": "en",
+                "score": 35,
+                "name": "İngilizce · SRT · OpenSubtitles · 01 · Southland.Tales.2007.DvDRip.Eng-FxM.srt · 23.976 fps · Aynı film; sürüm/senkron belirsiz"
+              }
+            ]
+          },
+          {
+            "source": "Internet Archive",
+            "filename": "Southland Tales_t00.mkv",
+            "video": {
+              "container": "mp4",
+              "downloadable": true,
+              "size": 878643939,
+              "dimensions": {
+                "width": 853,
+                "height": 480
+              },
+              "duration": 8673.014,
+              "videoHash": "231d4713599adb54"
+            },
+            "subtitles": [
+              {
+                "language": "tr",
+                "score": 35,
+                "name": "Türkçe · SRT · AltyazıDB · 01 · Southland Tales.2007.Emre Bekman • FGT • 23.976 · Aynı film; sürüm/senkron belirsiz"
+              },
+              {
+                "language": "tr",
+                "score": 35,
+                "name": "Türkçe · SRT · AltyazıDB · 04 · Southland Tales.2007.7G Etkinlik • SEPTiC • 23.976 · Aynı film; sürüm/senkron belirsiz"
+              },
+              {
+                "language": "tr",
+                "score": 35,
+                "name": "Türkçe · SRT · AltyazıDB · 05 · Southland Tales.2007.Emre Bekman • TSRG • 25 · Aynı film; sürüm/senkron belirsiz"
+              },
+              {
+                "language": "tr",
+                "score": 35,
+                "name": "Türkçe · SRT · AltyazıDB · 06 · Southland Tales.2007.Emre Bekman • DG|FxM|CODE • 23.976 · Aynı film; sürüm/senkron belirsiz"
+              },
+              {
+                "language": "en",
+                "score": 35,
+                "name": "İngilizce · SRT · OpenSubtitles · 01 · Southland.Tales.2007.DvDRip.Eng-FxM.srt · 23.976 fps · Aynı film; sürüm/senkron belirsiz"
+              }
+            ]
+          },
+          {
+            "source": "Waploaded",
+            "filename": "southland-tales-2006.mkv",
+            "video": {
+              "container": "mkv",
+              "downloadable": true,
+              "size": 421697346,
+              "dimensions": {
+                "width": 1024,
+                "height": 512
+              },
+              "duration": 8682.751,
+              "videoHash": "0a6c46f98bbaf195"
+            },
+            "subtitles": [
+              {
+                "language": "tr",
+                "score": 35,
+                "name": "Türkçe · SRT · AltyazıDB · 01 · Southland Tales.2007.Emre Bekman • FGT • 23.976 · Aynı film; sürüm/senkron belirsiz"
+              },
+              {
+                "language": "tr",
+                "score": 35,
+                "name": "Türkçe · SRT · AltyazıDB · 04 · Southland Tales.2007.7G Etkinlik • SEPTiC • 23.976 · Aynı film; sürüm/senkron belirsiz"
+              },
+              {
+                "language": "tr",
+                "score": 35,
+                "name": "Türkçe · SRT · AltyazıDB · 05 · Southland Tales.2007.Emre Bekman • TSRG • 25 · Aynı film; sürüm/senkron belirsiz"
+              },
+              {
+                "language": "tr",
+                "score": 35,
+                "name": "Türkçe · SRT · AltyazıDB · 06 · Southland Tales.2007.Emre Bekman • DG|FxM|CODE • 23.976 · Aynı film; sürüm/senkron belirsiz"
+              },
+              {
+                "language": "en",
+                "score": 35,
+                "name": "İngilizce · SRT · 01 · Southland Tales.2006.1080pblurayh264aacrarbgeng133149srt · Aynı film; sürüm/senkron belirsiz"
+              }
+            ]
+          }
+        ],
+        "onlinePairCount": 4
+      },
+      {
+        "key": "heartland20e4",
+        "inputMetadata": {
+          "id": 14929,
+          "original_name": "Heartland",
+          "first_air_date": "2007-10-14",
+          "external_ids": {
+            "imdb_id": "tt1094229"
+          },
+          "episode_run_time": [
+            43
+          ]
+        },
+        "elapsedMs": 11191,
+        "streamRows": 11,
+        "sources": [
+          {
+            "name": "PlayIMDb",
+            "candidates": 3
+          },
+          {
+            "name": "VixSrc",
+            "candidates": 1
+          },
+          {
+            "name": "DiziYou",
+            "candidates": 0
+          },
+          {
+            "name": "DiziBak",
+            "candidates": 0
+          },
+          {
+            "name": "4KHDHub / HubCloud",
+            "candidates": 0
+          },
+          {
+            "name": "Internet Archive",
+            "candidates": 0
+          },
+          {
+            "name": "Waploaded",
+            "candidates": 1
+          }
+        ],
+        "rejected": {},
+        "files": [
+          {
+            "source": "Waploaded",
+            "filename": "heartland-ca-s20e04.mkv",
+            "video": {
+              "container": "mkv",
+              "downloadable": true,
+              "size": 169427901,
+              "dimensions": {
+                "width": 1024,
+                "height": 512
+              },
+              "duration": 2651.044,
+              "videoHash": "d0ea16b14bb14ea3",
+              "audioLanguages": [
+                "eng"
+              ],
+              "subtitleTracks": [
+                {
+                  "language": "en",
+                  "codec": "S_TEXT/ASS"
+                },
+                {
+                  "language": "en",
+                  "codec": "S_TEXT/ASS"
+                }
+              ],
+              "embeddedEnglish": true
+            },
+            "subtitles": [
+              {
+                "language": "en",
+                "score": 69,
+                "name": "İngilizce · SRT · OpenSubtitles · 01 · Heartland S20E04.srt · Süre uyumu; senkron doğrulanmadı"
+              }
+            ]
+          }
+        ],
+        "onlinePairCount": 4
+      }
+    ]
+  },
+  "failure": {
+    "title": "Heartland S20E01",
+    "reason": "one file CDN request timeout/network",
+    "allEpisodesReliable": false
+  },
+  "research": [
+    {
+      "source": "PrimeSrc",
+      "catalog": "200, exact movie and episode metadata",
+      "fileLink": "403",
+      "integrated": false
+    },
+    {
+      "source": "RogMovies",
+      "catalog": "approximate IMDb matches returned other works",
+      "integrated": false
+    },
+    {
+      "source": "CTG",
+      "catalog": "public site/API timeout",
+      "integrated": false
+    },
+    {
+      "source": "FilmGo",
+      "catalog": "release pages and normal download redirects responded",
+      "files": "Firefiles deleted; ClicknUpload network failure",
+      "integrated": false
+    },
+    {
+      "source": "TVShows",
+      "catalog": "Shameless seasons/episodes listed",
+      "files": "premium host routes",
+      "integrated": false
+    },
+    {
+      "source": "Waploaded",
+      "catalog": "normal searches empty, recent public list and ordinary download ticket worked",
+      "integrated": true
+    },
+    {
+      "source": "Pixeldrain",
+      "files": "extensionless MKV naming cannot use unchanged R2-only bridge; not admitted",
+      "integrated": false
+    },
+    {
+      "source": "Archive broad title/IMDb search",
+      "files": "no new identity-valid downloadable sample",
+      "integrated": false
+    }
+  ],
+  "limitations": {
+    "southlandFestivalDate": "2006 festival supplied as fixed reference input; not a current TMDB API observation. Production requires real canonical release_dates and matching explicit IMDb.",
+    "subtitleSync": "Southland TR/EN title-level only; Heartland EN duration estimate, no scene sync proof",
+    "fullArchiveCoverage": false,
+    "physicalIPhone": "not-run",
+    "fullPlayback": "not-run",
+    "fullDownload": "not-run",
+    "offline": "not-run",
+    "newSourceClosesDuneFleabagShamelessGaps": false
+  },
+  "upstream": {
+    "release": "0.6.4-beta",
+    "head": "168aeaf3477edd42129f63252a7746d56de81d93",
+    "lockedFiles": 20,
+    "sourceDrift": []
+  },
+  "allSourceCriteriaMet": false
+}

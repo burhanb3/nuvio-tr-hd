@@ -13,6 +13,27 @@ const onlineBundle = await readFile(new URL('../providers/nuvio-tr-hd-online.js'
 const animeBundle = await readFile(new URL('../providers/nuvio-tr-hd-anime.js', import.meta.url), 'utf8');
 const extraAnimeBundle = await readFile(new URL('../providers/nuvio-tr-hd-extra-anime.js', import.meta.url), 'utf8');
 
+test('QuickJS: güncel film dosyası public ticket ile bulunur; gerçek MKV ve ad uzantısı korunur',async()=>{
+ const token='a'.repeat(32),origin='https://films.waploaded.com',slug='the-matrix-1999-4321-mkv';
+ const page='https://meetdownload.com/'+token+'/'+slug,raw='https://files.kissorgrab.com/public/'+slug,url=raw.replace(/-mkv$/,'.mkv');
+ const duration=Buffer.alloc(8);duration.writeDoubleBE(60000);
+ const body=Buffer.concat([helpers.ebml('1a45dfa3',helpers.ebml('4282',Buffer.from('matroska'))),helpers.ebml('18538067',Buffer.concat([
+  helpers.ebml('1549a966',helpers.ebml('4489',duration)),helpers.mkv(1280,720).subarray(helpers.mkv(1280,720).indexOf(Buffer.from('1654ae6b','hex')))
+ ]))]);
+ const fixture=makeFixture({extra:{
+  [origin+'/sitemap/movie']:{body:`<urlset><loc>${origin}/movie/123/the-matrix-1999</loc></urlset>`},
+  [origin+'/movie/123/the-matrix-1999']:{body:`<h1>The Matrix (1999)</h1><a href="/dl/${token}/${slug}">Download Video</a>`},
+  [origin+'/dl/'+token+'/'+slug]:{status:303,headers:{location:page}},
+  [page]:{body:`<h1>The Matrix (1999)</h1><div data-md-dl="/api/v1/dl-link/${token}" data-md-t="fixture-ticket"></div>`},
+  ['https://meetdownload.com/api/v1/dl-link/'+token]:{json:{ok:true,k:'fixture',d:Buffer.from(Array.from(raw,(c,i)=>c.charCodeAt(0)^'fixture'.charCodeAt(i%7))).toString('base64'),s:''}},
+  [url]:{body,mime:'video/x-matroska'}
+ }});
+ const settings={autoSubtitles:false,archiveEnabled:false,hdhubEnabled:false,playImdbEnabled:false,vixsrcEnabled:false,filmmoduEnabled:false};
+ const fetchCalls=[];const streams=await runInQuickJs(fixture,{settings,fetchCalls});assert.equal(streams.length,1,JSON.stringify(fetchCalls));assert.equal(streams[0].url,url);
+ assert.equal(streams[0].type,'mkv');assert.equal(streams[0].quality,'1280×720 ✓');assert.match(streams[0].name,/Waploaded/);
+ assert.deepEqual(await runInQuickJs(fixture,{settings:{...settings,waploadedEnabled:false}}),[]);
+});
+
 test('QuickJS AniMOM: generic title/year/episode lookup and large-moov metadata stay native compatible',async()=>{
  const root='https://animom.org/anime/example-anime',embed='https://www.yourupload.com/embed/Example1',url='https://vidcache.net:8161/example/video.mp4';
  const ftyp=helpers.box('ftyp',Buffer.from('isom\0\0\0\0isommp42','binary'));
@@ -90,7 +111,7 @@ test('QuickJS HDHub public zincirini çözer; köprü adı ve gerçek MKV piksel
   assert.match(streams[0].name,/İndirilebilir/);assert.equal(streams[0].type,'mkv');assert.ok(streams[0].size);
 });
 
-async function runInQuickJs(fixture, { settings, args = ['603', 'movie'], invokeSettings = false, nativeTimers = false, code = bundle } = {}) {
+async function runInQuickJs(fixture, { settings, args = ['603', 'movie'], invokeSettings = false, nativeTimers = false, code = bundle, fetchCalls } = {}) {
   const engine = await getQuickJS();
   const runtime = engine.newRuntime();
   runtime.setMemoryLimit(64 * 1024 * 1024);
@@ -115,7 +136,10 @@ async function runInQuickJs(fixture, { settings, args = ['603', 'movie'], invoke
   try {
     // Deliberately minimal Nuvio-shaped bridge: no Node require/Buffer/process,
     // no browser fetch streaming, no effective AbortSignal, read-only URL.
-    setHost('__fixture_fetch', (url, options) => vm.newString(JSON.stringify(responseFor(fixture, vm.getString(url), JSON.parse(vm.getString(options))))));
+    setHost('__fixture_fetch', (url, options) => {
+      const address=vm.getString(url);fetchCalls?.push(address);
+      return vm.newString(JSON.stringify(responseFor(fixture, address, JSON.parse(vm.getString(options)))));
+    });
     setHost('__fixture_parse_url', url => {
       const parsed = new URL(vm.getString(url));
       return vm.newString(JSON.stringify({ href: parsed.href, protocol: parsed.protocol, hostname: parsed.hostname, origin: parsed.origin, pathname: parsed.pathname, search: parsed.search, hash: parsed.hash, params: Object.fromEntries(parsed.searchParams) }));

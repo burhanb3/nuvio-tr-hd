@@ -1,5 +1,15 @@
 # Proje hafızası
 
+## 1.7.5 — 27 Ekim, film/dizi indirme odağı
+
+Yeni Waploaded genel adaptörü ana sağlayıcıya eklendi; varsayılan açık `waploadedEnabled`. Yeni scraper yok; üç kimlik/ayar korunur. Ücretsiz/hesapsız; yeni PC/backend/film-bölüm pini yok. Kaynağın araması boş döndü; film ve dizi sitemap'leri yalnız son güncellenen 50'şer kayıt içeriyor. Bu **kısmi güncel liste**, tam arşiv veya Dune/Fleabag/Shameless çözümü değildir. Başarılı küçük indeks aynı JS ömründe 5 dakika tutulur, imzalı adres tutulmaz.
+
+Kimlik: tam kanonik ad/yıl, açık IMDb çelişkisini reddetme; TV üst kayıt/sezon/bölüm zinciri. Film alternatif yılı yalnız gerçek TMDB release_dates + aynı açık IMDb. Normal public bilet POST ve yanıtın kendi kodlama anahtarı kullanılır; native atob/C-string NUL kesilmesi QuickJS testinde görüldü, binary çözüm JS içinde kaldı. Yayıncının son dosya adı segmenti .mkv/.mp4 kabul ediyor; bu tam URL gerçek Range/konteyner/byte/piksel/süre/hash ile doğrulanıyor. Kaynak sayacı episode range sanılmıyor; gerçek bölüm aralığı reddediliyor. HLS yine indirilemez.
+
+Southland Tales: 421.697.346 byte, 1024×512, 8.682,751s, hash0a6c46f98bbaf195; dört TR ve bir EN SRT, 35 puan/film düzeyi; senkron belirsiz. Kaynak2006/kanonik2007: canlı test **verilmiş festival tarihi olan sabit metadata** kullanır; güncel TMDB yanıtının 2006'yı içerdiği doğrulanmadı. Telefonda gerçek release_dates olmadan bu yıl aşılmaz. Heartland S20E04:169.427.901 byte,1024×512,2.651,044s,hashd0ea16b14bb14ea3,EN ses/gömülüEN ve hariciEN69;TR yok. S20E01 dosya CDN timeout oldu.
+
+Diğer varsayılan kaynaklar açık ve köprü kapalı birleşik Node testinde Wap dosyaları korundu; 10,1/11,2s, online HLS de var. Eski Archive seçenekleri kaldı. Regresyon Dune2 dosya+TR, Fleabag2 dosya+TR/tek piksel grubu, Shameless0 indirme. Bunları yeni kaynak kapsamı sayma.199test/QuickJS;Nuvio0.6.4-beta/güncel168aeaf3477edd42129f63252a7746d56de81d93,20dosya drift yok. Kanıt download-research-175/coverage-175/upstream-175-check. Fiziksel iPhone/tam indirme/offline/senkron yok. Yayın bu kayıt yazılırken hazırlanıyor; tamamlanma kanıtını github-publication.json'dan kontrol et.
+
 ## 1.7.4 — 27 Ekim, kısmi kapsama izin
 
 Kullanıcı birkaç seri/bölümde sağlam çalışan sağlayıcıları da kullanmamızı istedi. Bu talimat eski “birden çok bölüm/birleşik kararlılık yoksa varsayılan açma” kapısının önüne geçer; yanlış kimlik/yıl/bölüm veya sahte dosya kabul edilmez. YeniID nuvio-tr-hd-extra-anime, TV, varsayılan açık; ana+animeID/ayarları aynı. AniMOM bu bağımsız taramaya taşındı, eskiAnime’de tekrar çalışmaz. Yeni SeiCode/MP4Upload genel adaptörü: tamtmdbID/ad/yıl/ilkdate ve açıkS/E, yalnız gerçekVideo.jsMP4, fallbackbaşkabölüm yok.

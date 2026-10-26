@@ -10,7 +10,7 @@
   </style>
 </head>
 <body><main>
-  <div class="eyebrow">KİŞİSEL JAVASCRIPT SAĞLAYICISI · V1.7.4</div>
+  <div class="eyebrow">KİŞİSEL JAVASCRIPT SAĞLAYICISI · V1.7.5</div>
   <h1>Nuvio TR HD</h1>
   <p>Film, dizi veya anime seç. Online izleme seçeneklerini ve doğrulanmış MP4/MKV dosyalarını mevcut Türkçe altyazılarla birlikte gör.</p>
   <section class="panel" aria-label="Kurulum bağlantısı">
@@ -20,7 +20,7 @@
     <p id="status" class="status" role="status" aria-live="polite"></p>
   </section>
   <h2>Eski adresten geçiyorsan</h2>
-  <p>Yukarıdaki <strong>GitHub Pages manifestini</strong> yeni depo olarak ekle. Aynı adlı eski sağlayıcıyı kapat; iki kopya birlikte çalışırsa aynı kaynaklar tekrar listelenebilir. Sağlayıcı sürümü <strong>1.7.4</strong> olmalı.</p>
+  <p>Yukarıdaki <strong>GitHub Pages manifestini</strong> yeni depo olarak ekle. Aynı adlı eski sağlayıcıyı kapat; iki kopya birlikte çalışırsa aynı kaynaklar tekrar listelenebilir. Sağlayıcı sürümü <strong>1.7.5</strong> olmalı.</p>
   <ol>
     <li>Plugin destekli <strong>Nuvio Full</strong> kullan ve depodaki <strong>Nuvio TR HD ve Anime</strong> taramalarını etkinleştir.</li>
     <li>Sağlayıcı ayarları: <strong>çözünürlük Tümü · en fazla 20 alternatif · HLS açık</strong>. Önceden kaydedilmiş 6/10 veya 720p tercihini gerekiyorsa değiştir.</li>
@@ -29,7 +29,11 @@
   </ol>
   <h2>Hangi seçenek indirilebilir?</h2>
   <p><strong>Online izlenebilir · İndirilebilir</strong> etiketi gerçek MP4/MKV dosyalarında görünür. <strong>Online izlenebilir · İndirilemez</strong> etiketi HLS içindir. HLS, MP4/MKV dosyası olarak sunulmaz. Dosya adındaki kalite gerçek çözünürlük sayılmaz; okunabilen piksel boyutları ayrıca yazılır.</p>
-  <h2>1.7.4 ile değişenler</h2><p><strong>Ek Anime:</strong> AniMOM/YourUpload ve yeni SeiCode/MP4Upload kısmi dosya kaynakları bağımsız taranır. Üçüncü sağlayıcı varsayılan açık; mevcut film/dizi ve anime taramaları korunur.</p><p>Bir sağlayıcının birkaç bölümü sağlamsa bunlar kullanılır; eksik bölümde başka bölüm seçilmez. Gerçek MP4/Range/byte kontrolü gerekir. Yavaş metadata geçerli dosyayı düşürmez; bilinmeyen kalite uydurulmaz.</p><div class="panel"><strong>Canlı ek dosya örnekleri</strong><p>SHIBOYUGI S01E03 ve S01E11: 0,29 GB · 1920×1080 ✓ · EN altyazı · TR altyazı yok.</p><p>Death Note S01E01: bir paralel turda AniMOM0,36GB MP4 ve TR/EN altyazı; başka tur/bölümde boş dönebildi.</p></div><p class="note">Sürüm1.7.4 için depoyu Pluginler ekranından yenileyin. Tüm sezon veya her filmde dosya garantisi yok; film/dizi indirme açığı sürüyor. HLS online kalır.189test/QuickJS; fiziksel iPhone/tamindirme/offline/senkron testi yapılmadı. <a href="https://github.com/burhanb3/nuvio-tr-hd/blob/codex/publish-nuvio-tr-hd/docs/KISMI_KAYNAKLAR_174.md">Kısmi kaynaklar ve doğrulama</a></p>
+  <h2>1.7.5 ile değişenler</h2>
+  <p><strong>Film/dizi indirmeleri:</strong> Waploaded güncel dosya kaynağı ana sağlayıcıya eklendi. Kaynağın son güncellenen listesi taranır; tüm arşivi kapsamaz. Yeni bilgisayar, sunucu veya hesap gerekmez.</p>
+  <div class="panel"><strong>Gerçek dosya örnekleri</strong><p>Southland Tales: 0,42 GB · 1024×512 ✓ · TR/EN SRT. Türkçe senkron doğrulanmadı.</p><p>Heartland S20E04: 0,17 GB · 1024×512 ✓ · EN ses ve altyazı · TR altyazı yok.</p></div>
+  <p>Doğru film, yıl, sezon/bölüm ve gerçek dosya kontrolü korunur. Çalışmayan bağlantı atlanır. Mevcut film/dizi, Anime ve Ek Anime kimlikleri aynı kalır; Waploaded ayarı ana sağlayıcıda varsayılan açıktır.</p>
+  <p class="note">Pluginler ekranından depoyu yenileyin. 199 test/QuickJS geçti; Nuvio 0.6.4-beta sözleşmesi kontrol edildi. Shameless gibi yapılarda indirme açığı sürüyor. Fiziksel iPhone, tam indirme, çevrimdışı izleme ve senkron testi yapılmadı. <a href="https://github.com/burhanb3/nuvio-tr-hd/blob/codex/publish-nuvio-tr-hd/docs/FILM_DIZI_INDIRME_175.md">Kapsam ve doğrulama ayrıntıları</a></p>
   <footer>Medya barındırılmaz. GitHub Pages yalnız kurulum sayfası, manifest ve sağlayıcı kodunu sunar. MIT lisansı.</footer>
 </main><script>
   const input=document.querySelector('#manifest');input.value=new URL('manifest.json',location.href).href;

@@ -1,5 +1,13 @@
 # Sonraki işler
 
+## 1.7.5 öncelik
+
+1. Waploaded ana sağlayıcıda varsayılan açık; kısmi son50 film/50dizi listesi. Aynı adreste 1.7.5 yayını hazırlanıyor; github-publication.json ve CI/public SHA kanıtını tamamla.199check/QuickJS,20upstream drift yok.
+2. Yeni gerçek film ve bölüm dosyaları var; yine de Matrix/Shameless/GoT indirme açığı kapanmadı. Genel dosya hostu/katalog araştırmasına devam. Waploaded'ın bozuk aramasını veya önceki başarısız API'leri dış değişiklik olmadan sürekli çağırma; manuel film pinine dönme.
+3. Yeni kaynağın arşiv keşfini ancak küçük ve sağlam genel bir yol bulunursa genişlet; güncel50 kayıt dışında kapsam varmış gibi davranma. İki dosya Node'da ve birleşik taramada geçti; S20E01 dosya timeout oldu, tüm sezonun kararlı olduğunu söyleme.
+4. Southland alternatif yılının gerçek telefon TMDB release_dates yanıtında bulunması ve gerçek iPhone indirme/TR altyazı/offline/senkron hâlâ test edilmedi. Sabit festival tarihi fixture'ını canlı TMDB API kanıtı sayma. TR35 puan aynı film düzeyidir; senkron garantisi yok.
+5. Yeni PC/backend/hesap/secret/videoPin ekleme. Aynı mevcut köprü hesabı sorusunu tekrarlama. Wap yeni dosyaları köprü kapalıyken de doğrulandı; eski akış korunur.
+
 ## 1.7.4 öncelik
 
 1. **Tamamlandı:**1.7.4 c6815144c5586d999f5509d907ef41c9f820d7f3 aynı manifest/üçscraperile yayımlandı.189check/QuickJS,20upstreamdriftyok; Windows/Linux40414456692/Pages40414456949 vealtıpublicHTTP200/SHAbaşarılı. Kanıt/hafızagüncel.

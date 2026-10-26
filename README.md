@@ -1,10 +1,18 @@
 # Nuvio TR HD
 
-Nuvio Mobile'ın Kotlin Multiplatform **Full** sürümü için JavaScript sağlayıcı deposu. Film/bölüm seçildiğinde birden çok gerçek kaynağı otomatik tarar, MP4/MKV bağlantılarını doğrular ve her video için mevcut Türkçe ve İngilizce altyazıları arayıp eşleştirir. Seçilen boyut/kalite/uygunluk sırasıyla sunar. Her taramada varsayılan üst sınır **20**, çözünürlük filtresi **Tümü**. İstenirse 6/10 seçilebilir. Sürüm **1.7.4**.
+Nuvio Mobile'ın Kotlin Multiplatform **Full** sürümü için JavaScript sağlayıcı deposu. Film/bölüm seçildiğinde birden çok gerçek kaynağı otomatik tarar, MP4/MKV bağlantılarını doğrular ve her video için mevcut Türkçe ve İngilizce altyazıları arayıp eşleştirir. Seçilen boyut/kalite/uygunluk sırasıyla sunar. Her taramada varsayılan üst sınır **20**, çözünürlük filtresi **Tümü**. İstenirse 6/10 seçilebilir. Sürüm **1.7.5**.
 
-**26 Ekim 2026 uyumluluk kontrolü:** `0.6.4-beta` ve güncel `cmp-rewrite` dalının ilgili kaynak sözleşmeleri karşılaştırıldı. Derlenmiş sağlayıcı gerçek QuickJS WASM motorunda test edilir. Fiziksel Android/iOS cihazında oynatma ve indirme testi henüz yapılmadı. Ayrıntılar: [uyumluluk raporu](docs/UYUMLULUK.md).
+**27 Ekim 2026 uyumluluk kontrolü:** `0.6.4-beta` ve güncel `cmp-rewrite` dalının ilgili kaynak sözleşmeleri karşılaştırıldı. Derlenmiş sağlayıcı gerçek QuickJS WASM motorunda test edilir. Fiziksel Android/iOS cihazında oynatma ve indirme testi henüz yapılmadı. Ayrıntılar: [uyumluluk raporu](docs/UYUMLULUK.md).
 
-Bu depo medya barındırmaz. SonAnime, AniMOM, SeiCode, DiziYou, DiziBak, FilmModu, Animecix/Tau, 4KHDHub/HubCloud, VixSrc, Internet Archive ve PlayIMDb yerleşiktir; DahmerMovies deneysel yerel yedektir ve varsayılan kapalıdır. JSON/Stremio adresi girmek zorunlu değildir. Kişisel JSON ve Stremio kaynakları ek alternatif olarak korunmuştur. Her film için erişilebilir HD dosya veya uygun Türkçe altyazı bulunması garanti değildir; başarısız/engelli kaynaklar atlanır.
+Bu depo medya barındırmaz. Waploaded güncel dosyalar, SonAnime, AniMOM, SeiCode, DiziYou, DiziBak, FilmModu, Animecix/Tau, 4KHDHub/HubCloud, VixSrc, Internet Archive ve PlayIMDb yerleşiktir; DahmerMovies deneysel yerel yedektir ve varsayılan kapalıdır. JSON/Stremio adresi girmek zorunlu değildir. Kişisel JSON ve Stremio kaynakları ek alternatif olarak korunmuştur. Her film için erişilebilir HD dosya veya uygun Türkçe altyazı bulunması garanti değildir; başarısız/engelli kaynaklar atlanır.
+
+## 1.7.5: film/dizi indirmelerine kısmi yeni kaynak
+
+Pluginler ekranından mevcut depoyu yenileyin. Ana sağlayıcıdaki **Waploaded güncel film/dizi dosyaları** varsayılan açık; üç sağlayıcı kimliği ve mevcut ayarlar korunur. Kaynağın son güncellenen listesi kullanılır; arşivin tümünü kapsamaz. Yeni PC/sunucu veya hesap gerekmez.
+
+Gerçek kontrollerde Southland Tales **0,42 GB / 1024×512 / TR ve EN SRT**, Heartland S20E04 **0,17 GB / 1024×512 / EN ses ve altyazı** verdi. Filmde Türkçe senkron doğrulanmadı; dizide Türkçe bulunmadı. Bazı dosya sunucuları hâlâ zaman aşımına uğruyor. Dune ve Fleabag'in ikişer dosyası regresyon kontrolünde korundu; Shameless indirmesi hâlâ boş.
+
+**199 test/QuickJS; telefon, tam indirme, çevrimdışı izleme ve senkron testi yok.** [Yöntem, kanıtlar ve kapsam sınırı](docs/FILM_DIZI_INDIRME_175.md).
 
 ## 1.7.4: kısmi kaynaklar da katkı verir
 
