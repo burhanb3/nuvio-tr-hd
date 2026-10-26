@@ -9,6 +9,8 @@
 - Southland Tales: 421.697.346 byte / 1024×512; TR ve EN SRT bulundu, senkron belirsiz. Heartland S20E04: 169.427.901 byte / 1024×512 / EN ses ve altyazı; TR yok. S20E01 ağ hatası verdi.
 - 199 test/QuickJS ve güncel Nuvio 0.6.4-beta üzerinde kilitli 20 dosyada drift yok. Fiziksel iPhone, tam oynatma/indirme/offline/senkron testi yapılmadı. Film/dizi indirme açığı sürüyor.
 
+- Aynı GitHub Pages adresine yayımlandı; Windows/Linux CI ve altı public varlığın HTTP200/SHA doğrulaması başarılı. Manifestte üç mevcut scraper kimliği korunur.
+
 ## 1.7.4 — 2026-10-27
 
 - Çalışan birkaç seri/bölümü de değerlendiren kısmi kaynak yaklaşımı. AniMOM yeni bağımsız Ek Anime sağlayıcısında varsayılan açık; önceki iki kimlik/ayar korunur.

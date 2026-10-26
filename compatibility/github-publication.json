@@ -1,15 +1,15 @@
 {
-  "checkedAt": "2026-10-26T22:43:52.903Z",
-  "version": "1.7.4",
+  "checkedAt": "2026-10-26T23:28:20.769Z",
+  "version": "1.7.5",
   "origin": "https://burhanb3.github.io/nuvio-tr-hd",
   "authenticated": false,
   "assetRequestsAuthenticated": false,
   "ciMetadataAuthenticated": true,
   "repository": "https://github.com/burhanb3/nuvio-tr-hd",
-  "sourceCommit": "c6815144c5586d999f5509d907ef41c9f820d7f3",
+  "sourceCommit": "327a3765269ef2d1b8059bf6d43696bc76470630",
   "branch": "codex/publish-nuvio-tr-hd",
   "actions": {
-    "tests": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40414456692",
+    "tests": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40419829204",
     "testsConclusion": "success",
     "jobs": [
       {
@@ -21,7 +21,7 @@
         "conclusion": "success"
       }
     ],
-    "pages": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40414456949",
+    "pages": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40419829111",
     "pagesConclusion": "success"
   },
   "checks": [
@@ -30,113 +30,80 @@
       "status": 200,
       "type": "application/json; charset=utf-8",
       "bytes": 2056,
-      "sha256": "eb68305f65bd81f00ec79a7d1ae8283533c8ed356ed1635a9920cf3bfc794c50",
+      "sha256": "3364623e4b5dcebea6b0f3d56241c367d7d78c70c668bec25b0f2b8d84019557",
       "matchesLocal": true
     },
     {
-      "path": "/providers/nuvio-tr-hd.js?v=1.7.4",
+      "path": "/providers/nuvio-tr-hd.js?v=1.7.5",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 196727,
-      "sha256": "a8d03ee6a7efd63394ce8cb6b3c28f5a9a1f26a0bb7a8405a8a51daa3ece28d6",
+      "bytes": 207696,
+      "sha256": "c07f2ab70e3de70fbc62049098eb2a8db37aef84ed1127c1ccb9e3c9242de71f",
       "matchesLocal": true
     },
     {
-      "path": "/providers/nuvio-tr-hd-anime.js?v=1.7.4",
+      "path": "/providers/nuvio-tr-hd-anime.js?v=1.7.5",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 196728,
-      "sha256": "7aeb8222f46341319a1ccd2a3a1d803cc8dccc159269cd82836356337edfa839",
+      "bytes": 207697,
+      "sha256": "d25aa55e39843a28299b573aef2e6341a6cc2121b3f979da102262d47da1b5fd",
       "matchesLocal": true
     },
     {
-      "path": "/providers/nuvio-tr-hd-extra-anime.js?v=1.7.4",
+      "path": "/providers/nuvio-tr-hd-extra-anime.js?v=1.7.5",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 196739,
-      "sha256": "6c759531175f9a4d7a4dec09df7f57d634e15491e667e796205234a506d83e35",
+      "bytes": 207708,
+      "sha256": "4507c6bfc68a442ffbfe669f07156ca0a54c17f2886b11458d8fda3ddd805a81",
       "matchesLocal": true
     },
     {
       "path": "/providers/nuvio-tr-hd-online.js",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 196730,
-      "sha256": "a26b033ade2cdd66502b66896dc85855d361f07f16a7ce9910f15839445c65dd",
+      "bytes": 207699,
+      "sha256": "847693c2b09a9351dbb97957e22f94c421e4c2bf8def30aef2de89f63de7cf6c",
       "matchesLocal": true
     },
     {
       "path": "/",
       "status": 200,
       "type": "text/html; charset=utf-8",
-      "bytes": 5596,
-      "sha256": "5cda704d287cc355dccd8c9d08e5a1c552e95020ea4fff9ab5011db3cd796d6a",
+      "bytes": 5593,
+      "sha256": "358b8d02252526cf2e3efee639f01581ecd1552fe03fff0a56a36aafe8d126e7",
       "matchesLocal": true
     }
   ],
   "tests": {
-    "local": 189,
-    "quickjs": "passed; third standalone scraper, partial SeiCode and absent-episode rejection, independent source isolation, native settings",
-    "upstream": "0.6.4-beta;20lockedfiles;HEAD7de46ead80c28ccd008cfd92bd69947e487992d0;no drift"
+    "local": 199,
+    "compiledQuickJs": true
   },
-  "sourceEvidence": "compatibility/partial-sources-174.json",
-  "upstreamEvidence": "compatibility/upstream-174-check.json",
+  "upstreamEvidence": "compatibility/upstream-175-check.json",
+  "sourceEvidence": "compatibility/download-research-175.json",
+  "regressionEvidence": "compatibility/coverage-175.json",
   "manifestIds": [
     "nuvio-tr-hd",
     "nuvio-tr-hd-anime",
     "nuvio-tr-hd-extra-anime"
   ],
-  "newScraperEntry": {
-    "id": "nuvio-tr-hd-extra-anime",
-    "supportedTypes": [
-      "tv"
-    ],
-    "defaultEnabled": true,
-    "sources": [
-      "AniMOM / YourUpload",
-      "SeiCode / MP4Upload"
-    ]
-  },
-  "features": {
-    "partialCoverageAccepted": true,
-    "realIdentityAndFileChecksRetained": true,
-    "failedExtraFileDoesNotStartSubtitleTraffic": true,
-    "optionalMetadataFailureDoesNotInventQuality": true,
-    "extraConcurrentFileProbes": 1,
-    "independentNativeScraperCompletion": "source-verified; physical iPhone untested"
-  },
-  "newCatalogAdapters": 1,
-  "activatedPreviousExperimentalProvider": 1,
-  "newUniversalMovieTvDownloadProviders": 0,
+  "newPartialFilmTvDownloadAdapters": 1,
+  "newUniversalFilmTvDownloadAdapters": 0,
+  "newScraperEntries": 0,
   "newHelperBackends": 0,
   "newAccounts": 0,
   "newPerTitleVideoPins": 0,
-  "sourceCoverage": {
-    "SeiCode": {
-      "cases": [
-        "SHIBOYUGI S01E03",
-        "SHIBOYUGI S01E11"
-      ],
-      "files": 2,
-      "dimensions": {
-        "width": 1920,
-        "height": 1080
-      },
-      "sizes": [
-        293996724,
-        291531575
-      ],
-      "subtitles": [
-        "en"
-      ],
-      "turkishFound": false,
-      "allEpisodesVerified": false
-    },
-    "AniMOM": {
-      "oneParallelDeathNoteFileWithTrEn": true,
-      "repeatCanBeEmpty": true,
-      "nextEpisodeFailed": true
-    }
+  "features": {
+    "source": "Waploaded",
+    "lane": "main",
+    "setting": "waploadedEnabled",
+    "defaultEnabled": true,
+    "coverage": "recent 50 movie/50 TV index entries only",
+    "maximumDetailMatches": 2,
+    "nativeSafeBinaryDecode": true,
+    "rangeProbeOnNamedFileUrl": true,
+    "requiresDownloadBridge": false,
+    "existingOnlineSourcesPreserved": true,
+    "mainFileProbeQuota": 3
   },
   "allSourceCriteriaMet": false,
   "deviceTest": "not-run",
