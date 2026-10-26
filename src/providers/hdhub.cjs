@@ -102,10 +102,10 @@ async function scanHdHub(http, target, options = {}) {
   // A terminal URL is not yet a working file. Feed each release to the probe
   // pipeline as soon as it resolves; dead small mirrors must not consume the
   // entire quota or make every other release wait for one batch to finish.
-  const maximum = options.onCandidates ? 12 : 6;
-  for (let offset = 0; offset < Math.min(maximum, entries.length) && !http.expired(); offset += 3) {
-    if (offset > 0 && (options.verifiedCount ? options.verifiedCount() >= 5 : resolved.length >= 3)) break;
-    await mapLimit(entries.slice(offset, offset + 3), 3, async entry => {
+  const maximum = 12;
+  for (let offset = 0; offset < Math.min(maximum, entries.length) && !http.expired(); offset += 2) {
+    if (offset > 0 && !options.onCandidates && resolved.length >= 3) break;
+    await mapLimit(entries.slice(offset, offset + 2), 2, async entry => {
       const found = await resolveRelease(http, entry, target, options.allowExtensionless === true);
       resolved.push(...found);
       if (found.length && options.onCandidates) await options.onCandidates(found);

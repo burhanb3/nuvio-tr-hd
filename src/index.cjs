@@ -18,6 +18,7 @@ const { safeUrl, mapLimit } = require('./util.cjs');
 const { rankStreams } = require('./ranking.cjs');
 const { describeQuality, describeSize } = require('./media/presentation.cjs');
 const { profileAddress } = require('./media/hls.cjs');
+const { configuration, configurationLabel, effectiveTmdbKey, writeDiagnostic } = require('./diagnostics.cjs');
 
 function parseUrls(value, allowHttp) {
   if (typeof value !== 'string') return [];
@@ -75,10 +76,16 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs = 24000, r
       const allowHttp = settings.allowHttp === true;
       const catalogs = parseUrls(settings.catalogUrls, allowHttp), addons = parseUrls(settings.addonUrls, allowHttp);
       const filesLane = ['all','main','files'].includes(lane), onlineLane = ['all','main','online'].includes(lane), animeLane = lane === 'all' || lane === 'anime';
-      if (settings.autoDiscover === false && !catalogs.length && !addons.length) return [];
       const started = Date.now(), scheduler = createScheduler();
-      const report = { tmdbId: String(tmdbId), lane, sources: [], rejected: {}, http: {}, subtitleText: {}, results: 0, reason: 'searching' };
+      const report = { tmdbId: /^\d+$/.test(String(tmdbId)) ? String(tmdbId) : 'invalid', lane, configuration: configuration(settings, tmdbKey),
+        identity: { reason: 'not_requested' }, sources: [], rejected: {}, http: {}, subtitleText: {}, results: 0, reason: 'searching' };
+      if (settings.autoDiscover === false && !catalogs.length && !addons.length) {
+        report.reason = 'automatic_search_disabled'; report.elapsedMs = Date.now() - started;
+        lastReport = report; lastPairs = []; scheduler.close(); writeDiagnostic(report, true);
+        return [];
+      }
       const emit = event => {
+        if (event.stage === 'identity') report.identity = { reason: event.reason, ...(event.year ? { year: event.year, type: event.type } : {}) };
         if (event.stage === 'http') {
           const key = `${event.host}:${event.status || event.reason}`;
           report.http[key] = (report.http[key] || 0) + 1;
@@ -108,7 +115,9 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs = 24000, r
         if (unique.has(key)) { unique.get(key).subtitles.push(...candidate.subtitles); return; }
         unique.set(key, candidate);
         if (/\.m3u8(?:$|[?#])/i.test(candidate.url) && settings.includeHls === false) { reject('hls_disabled'); return; }
-        const video = await withProbeSlot(() => probe(http, candidate, settings.includeHls !== false, settings.autoSubtitles !== false));
+        const lightweightHls = ['PlayIMDb', 'VixSrc'].includes(candidate.source) && settings.detailedHlsMetadata !== true;
+        const video = await withProbeSlot(() => probe(http, candidate, settings.includeHls !== false, settings.autoSubtitles !== false,
+          { detailedHls: !lightweightHls }));
         if (!video || http.expired()) { reject('video_unavailable'); return; }
         const minimum = Number(settings.minimumQuality ?? 0);
         if (video.dimensions && Math.min(video.dimensions.width, video.dimensions.height) < minimum) { reject('quality'); return; }
@@ -120,7 +129,8 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs = 24000, r
           return match ? { ...sub, _match: match } : null;
         }).filter(Boolean).sort((a, b) => b._match.score - a._match.score);
         if (declared.length) {
-          pair.subtitles = await loadSubtitles(http, { ...candidate, subtitles: declared }, target, allowHttp, { keepScore: true, videoDuration: video.duration });
+          pair.subtitles = await loadSubtitles(http, { ...candidate, subtitles: declared }, target, allowHttp,
+            { keepScore: true, videoDuration: video.durationSource === 'tmdb' ? undefined : video.duration });
           if (pair.subtitles.length) {
             if (strictSubtitles && !embedded) completed.push(pair);
             return;
@@ -132,7 +142,8 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs = 24000, r
           const match = scoreSubtitle(sub, candidate, video, target, settings.subtitleMatchMode !== 'strict');
           return match ? { ...sub, _match: match } : null;
         }).filter(Boolean).sort((a, b) => b._match.score - a._match.score);
-        const subtitles = await loadSubtitles(http, { ...candidate, subtitles: entries }, target, allowHttp, { keepScore: true, videoDuration: video.duration });
+        const subtitles = await loadSubtitles(http, { ...candidate, subtitles: entries }, target, allowHttp,
+          { keepScore: true, videoDuration: video.durationSource === 'tmdb' ? undefined : video.duration });
         if (http.expired()) return;
         if (!subtitles.length) { reject(entries.length ? 'subtitle_unavailable' : 'subtitle_no_match'); return; }
         pair.subtitles = subtitles;
@@ -140,7 +151,7 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs = 24000, r
       };
       const run = async () => {
         try {
-          target = await resolveIdentity(http, tmdbId, mediaType, season, episode, settings.tmdbApiKey || tmdbKey);
+          target = await resolveIdentity(http, tmdbId, mediaType, season, episode, effectiveTmdbKey(settings, tmdbKey));
           if (!target) { report.reason = 'identity_unavailable'; return []; }
           if (lane === 'anime' && !target.isAnime) { report.reason = 'not_anime'; return []; }
           discoverSubtitles = createSubtitleDiscovery(http, target, settings);
@@ -186,8 +197,7 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs = 24000, r
               sourceJobs.push({ name: 'VixSrc', run: () => scanVixDirect(http, target) });
             if (animeLane && settings.animecixEnabled !== false && target.isAnime) sourceJobs.push({ name: 'Animecix', run: () => scanAnimecix(http, target) });
             if (filesLane && settings.hdhubEnabled !== false && !sourceFactories.some(s => s.name === '4KHDHub / HubCloud')) sourceJobs.push({ name: '4KHDHub / HubCloud', run: async () => {
-              return scanHdHub(http, target, { allowExtensionless: settings.useDownloadBridge !== false, onCandidates: acceptHdHub,
-                verifiedCount: () => completed.filter(pair => pair.candidate.source === '4KHDHub / HubCloud').length });
+              return scanHdHub(http, target, { allowExtensionless: settings.useDownloadBridge !== false, onCandidates: acceptHdHub });
             } });
           }
           for (const source of sourceFactories) sourceJobs.push({ name: source.name, run: () => source.run(http, target) });
@@ -220,15 +230,18 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs = 24000, r
         report.elapsedMs = Date.now() - started;
         lastReport = JSON.parse(JSON.stringify(report));
         lastPairs = completed.slice();
-        if (settings.debug === true) console.info('[Nuvio TR HD] ' + JSON.stringify(lastReport));
+        writeDiagnostic(lastReport, settings.debug === true || !report.results);
       }
     }
   };
 }
 
 function onSettings() {
+  const settings = typeof globalThis.SCRAPER_SETTINGS === 'object' && globalThis.SCRAPER_SETTINGS || {};
+  const tmdbKey = typeof globalThis.TMDB_API_KEY === 'string' ? globalThis.TMDB_API_KEY : '';
   return [
     { type: 'header', label: 'Nuvio TR HD · Otomatik kaynak ve Türkçe altyazı' },
+    { type: 'info', label: configurationLabel(settings, tmdbKey) },
     { type: 'info', label: 'Varsayılan: tüm çözünürlükler, en fazla 20 alternatif. Online izlenebilir kaynaklar gösterilir; doğrulanmış MP4/MKV ayrıca İndirilebilir etiketlidir. Türkçe bulunamazsa video gizlenmez. Nuvio altyazı dilini Türkçe seçin.' },
     { type: 'toggle', key: 'autoDiscover', label: 'Otomatik kaynak tarama', defaultValue: true },
     { type: 'toggle', key: 'compactLabels', label: 'Kısa ve sade kaynak başlıkları', defaultValue: true },
@@ -242,6 +255,8 @@ function onSettings() {
     { type: 'select', key: 'hlsView', label: 'HLS kalite seçenekleri', defaultValue: 'separate', options: [
       { value: 'separate', label: 'Her çözünürlüğü ayrı göster' }, { value: 'auto', label: 'Tek otomatik kalite' },
       { value: 'both', label: 'Ayrı kaliteler ve otomatik' }] },
+    { type: 'toggle', key: 'detailedHlsMetadata', label: 'HLS için ek süre ve boyut ölçümleri', defaultValue: false,
+      description: 'Ek profil/parça istekleri aramayı uzatabilir. Kapalıyken doğrulanan ana liste korunur; boyut varsa bitrate ve TMDB süresinden açıkça tahmin edilir. MP4/MKV dosya doğrulaması her zaman yapılır.' },
     { type: 'toggle', key: 'useDownloadBridge', label: 'MKV indirme adını koruyan dosya köprüsü', defaultValue: true, description: 'Kaynaklar telefondan aranır. Yalnız bulunan public dosya adresi ve film metadatası köprüde doğrulanır. Video doğrudan kaynaktan gelir; kişisel katalog/anahtar gönderilmez.' },
     { type: 'toggle', key: 'vixsrcEnabled', label: 'VixSrc çevrimiçi alternatifleri', defaultValue: true },
     { type: 'toggle', key: 'hdhubEnabled', label: '4KHDHub / HubCloud doğrudan dosya araması', defaultValue: true, description: 'Ücretsiz public FSL dosyaları doğrulanır. Kaynak metadatası boyut/piksel doğrulaması sayılmaz.' },
@@ -265,7 +280,7 @@ function onSettings() {
     { type: 'text', key: 'subtitleUrls', label: 'Ek/alternatif altyazı addon adresleri', description: 'Boşsa AltyazıDB, Türkçe OpenSubtitles v3+ ve resmî v3 kullanılır.' },
     { type: 'text', key: 'tmdbApiKey', label: 'TMDB v3 anahtarı (isteğe bağlı)', description: 'Boşsa Nuvio tarafından sağlanan anahtar kullanılır.' },
     { type: 'toggle', key: 'includeHls', label: 'HLS çevrimiçi izleme alternatiflerini göster', defaultValue: true, description: 'Doğrudan dosyalar önce gelir. HLS yalnız oynatma içindir; Nuvio üzerinden dosya olarak indirilemez.' },
-    { type: 'toggle', key: 'debug', label: 'Hata ayıklama özeti', defaultValue: false, description: 'Uygulama günlüklerine kaynak/adet/HTTP durumlarını yazar; erişim anahtarı veya video adresi yazılmaz.' },
+    { type: 'toggle', key: 'debug', label: 'Hata ayıklama özeti', defaultValue: false, description: 'Boş sonuçlarda tanı zaten yazılır; açıkken başarılı aramaları da yazar. Günlükte ayar/kimlik/kaynak/adet/HTTP durumları vardır; anahtar ve video adresi yoktur.' },
     { type: 'toggle', key: 'allowHttp', label: 'Kişisel HTTP kaynaklarına izin ver', defaultValue: false }
   ];
 }

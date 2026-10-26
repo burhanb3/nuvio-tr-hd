@@ -13,10 +13,11 @@ test('doğrudan VixSrc: gerçek HLS gövdesi ve native indirme filtresi birlikte
   [master]:{body:'#EXTM3U\n#EXT-X-STREAM-INF:BANDWIDTH=1,RESOLUTION=1280x720\nhttps://vixsrc.to/playlist/77?type=video',mime:'application/vnd.apple.mpegurl'},
   [master+'&nuvio_format=master.m3u8']:{body:'#EXTM3U\n#EXT-X-STREAM-INF:BANDWIDTH=1,RESOLUTION=1280x720\nhttps://vixsrc.to/playlist/77?type=video',mime:'application/vnd.apple.mpegurl'}
  };
- const http=createHttp({fetchImpl:fixtureFetch(fixture)});
+ const calls=[],http=createHttp({fetchImpl:fixtureFetch(fixture,calls)});
  const [candidate]=await scanVixDirect(http,target);assert.ok(candidate);
- const result=await probe(http,candidate,true);
+ const result=await probe(http,candidate,true,false,{detailedHls:false});
  assert.equal(result.container,'hls');assert.equal(result.downloadable,false);
+ assert.equal(calls.filter(c=>c.url.startsWith(base+'/playlist/')).length,1,'daha önce okunan master yeniden indirilmez; child sorgusu başlamaz');
  const normalized=candidate.url.trim().toLowerCase();
  assert.ok(normalized.endsWith('.m3u8')||normalized.includes('.m3u8?'));
  assert.deepEqual(await scanVixDirect(http,{...target,type:'tv'}),[]);http.close();

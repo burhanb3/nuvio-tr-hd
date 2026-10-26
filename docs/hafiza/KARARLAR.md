@@ -1,5 +1,14 @@
 # Tasarım kararları
 
+## 1.6.2 düzeltme kararları
+
+- Kullanıcıdaki 1.6.1 bilgisi korunur; boşluğu yalnız cache/eski sürüm varsayımıyla açıklama. Sabit metadata kullanan bilgisayar testini iPhone/TMDB API testi diye sunma.
+- Filmde festival/genel gösterim yılı farkı yalnız aynı TMDB release_dates kanıtı + kesin IMDb/başlık ile aşılır. Kişisel katalogların kanonik yıl/kimlik eşleşmesi gevşetilmez. Altyazı alternatif yılı kimliğe bağlı olmalı; TMDB süresi senkron kanıtı değildir.
+- HLS isteğe bağlı ağ işleri başlatılmayarak azaltılır; Promise.race/Abort tek başına native iOS iptali sayılmaz. Hafif yol yerleşik Play/Vix içindir; kişisel HLS ayrıntılı kalır. MP4/MKV doğrulaması ve HLS indirilemez kuralı korunur.
+- Ayarlardaki Tanı ağsızdır; gizli anahtar/adres yoktur. Boş sonuç günlüğü kaynak/kimlik nedenlerini ayırır; sahte oynatılabilir hata kartı yoktur. Eski ayarlar izinsiz sıfırlanmaz.
+- HDHub erken ayna sayacı release kapsamını daraltmaz. Aynı CDN aynası bağımsız sağlayıcı sayılmaz. Büyük boyut tavanı yok, küçük Dune hâlâ eksik.
+
+
 ## 1.6.1 gerileme kararı
 
 - Eski ana scraper ID her zaman online+dosya aramasını kapsar. Yeni scraper kurulmasını zorunlu kılan geçiş kullanılmaz. Anime bağımsız; eski online script yolu yayımlanır ama manifestte kurulmaz.

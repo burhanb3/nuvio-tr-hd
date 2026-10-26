@@ -43,7 +43,7 @@ const vtt = readFileSync(resolve(__dirname, '../examples/turkce.tr.vtt'), 'utf8'
 
 function makeFixture({ items, files = {}, addonManifest, addonMeta, addonStreams, addonSubs, extra = {} } = {}) {
   return {
-    'https://api.themoviedb.org/3/movie/603?api_key=test&append_to_response=external_ids': { json: tmdb },
+    'https://api.themoviedb.org/3/movie/603?api_key=test&append_to_response=external_ids,release_dates': { json: tmdb },
     'https://library.test/catalog.json': { json: { version: 1, items: items || [{ ...identity, streams: [{ url: 'https://media.test/movie.mp4' }] }] } },
     'https://media.test/movie.mp4': { body: mp4(), mime: 'video/mp4' },
     'https://media.test/movie.mkv': { body: mkv(), mime: 'video/x-matroska' },

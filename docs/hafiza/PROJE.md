@@ -1,5 +1,18 @@
 # Proje hafızası
 
+## 1.6.2 çalışma durumu — 26 Ekim 2026
+
+Kullanıcı iPhone’da 1.6.1 gördüğünü doğruladı; eski sürüm varsayımı geçersiz. Fleabag ilk bölüm S01E01 olarak alındı; Obsession son Curry Barker filmi, 1339713/tt37287335. Telefonda ortak boş sonuç kök nedeni henüz bilinmiyor. Canlı pipeline TMDB metadata’sını sabit verir; Nuvio’nun enjekte ettiği anahtarla gerçek TMDB API adımını sınamaz.
+
+Somut Obsession hatası: TMDB public başlığı 2026, PlayIMDb aynı IMDb ile dosya yılı 2025; TMDB gösterim sayfasında 2025 prömiyerleri var. Metadata’ya external_ids,release_dates aynı istekte eklenir; yalnız aynı TMDB’nin type 1–4 ve asıl yıla en çok bir yıl uzak gerçek gösterim yılları alınır. PlayIMDb alternatif yıl kabulünde aynı IMDb ve kesin dosya başlığı şart; genel yıl toleransı yok. Altyazıda alternatif yıl doğru kimlik sorgusuna veya IMDb bağı olan eşlenmiş kaynağa bağlıdır; çelişen kimlikler reddedilir.
+
+Yerleşik PlayIMDb/VixSrc HLS varsayılanı hafif metadata: gerçek master doğrulanır, ek child/segment HEAD başlatılmaz; Vix master tekrar istenmez. Ayrı sesli master korunur. İsteğe bağlı detailedHlsMetadata açılabilir. Kişisel JSON/Stremio eski ayrıntılı yolda kalır; MP4/MKV gerçek probe şart. TMDB süresi yalnız boyut tahmini; altyazı süre uyumu sayılmaz. HDHub erken ayna sayacı kaldırıldı, en çok 12 release/ikili çözümleme; büyük dosya tavanı yok.
+
+Tanı info alanı ağsız sürüm/ayar/anahtar varlığı gösterir; anahtarın geçerlilik testi değildir. Boş sonuç günlüğünde kimlik nedeni, sayaçlar ve HTTP host/durum bulunur; anahtar/tam URL/metin yok. Zorunlu kimlik sorgusuna 10 saniye JS süresi ayrılır; toplam bütçe geçerlidir. iOS native 60 saniye, iptal eksikliği ve bekleyen işlerin tüketilmesi riski sürer; telefonda düzeldi iddiası yok.
+
+Canlı referans: Obsession 10 online/TR 2,9 saniye, Fleabag 10 online/TR 3,8 saniye, Dune 10 online/TR 4,3 saniye. Dune’da 5 dosya adayı Workers TLS/ağ hatası verdi; gerçek indirme sıfır, küçük Dune çözülmedi. Bu raporlar sabit metadata ve canlı kaynaktır, telefon testi değildir. Yerel check 114/114; yayın kanıtı tamamlanınca güncellenir. Köprü 1.4 değişmedi/Sites erişimi açılmadı. Rehber docs/IPHONE_BOS_SONUC_162.md; upstream 20 dosyada drift yok; lock değişmedi.
+
+
 ## 1.6.1 güncel durum — 26 Ekim 2026
 
 **Yayın tamamlandı:** kod commit’i e5824c9005805b366c52770f086c967c85ecdee8. Test ve paket 40303952952 (Windows/Linux) ve Pages 40303952928 başarılı. Yerel 107/107; oturumsuz manifest, sürümlü iki sağlayıcı URL’si, eski online JS yolu ve sayfa HTTP 200 + yerel SHA eşit. Kanıt compatibility/github-publication.json. Scraper kimliği değişmeden kod URL’sine ?v=1.6.1 eklendi. Yeni küçük Dune indirmesi hâlâ doğrulanmadı; büyük dosya desteği korunur.

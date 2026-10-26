@@ -6,6 +6,8 @@ const pkg=JSON.parse(await readFile(new URL('../package.json',import.meta.url),'
 const references={
  night:{id:10331,original_title:'Night of the Living Dead',release_date:'1968-10-04',imdb_id:'tt0063350',runtime:96},
  dune:{id:438631,original_title:'Dune',release_date:'2021-09-15',imdb_id:'tt1160419',runtime:155},
+ obsession:{id:1339713,original_title:'Obsession',release_date:'2026-05-13',imdb_id:'tt37287335',runtime:109,
+  release_dates:{results:[{iso_3166_1:'CA',release_dates:[{type:1,release_date:'2025-09-06T00:00:00.000Z'}]}]}},
  'spider-man':{id:969681,original_title:'Spider-Man: Brand New Day',release_date:'2026-07-31',imdb_id:'tt22084616',runtime:145},
  got:{id:1399,original_name:'Game of Thrones',first_air_date:'2011-04-17',external_ids:{imdb_id:'tt0944947'},episode_run_time:[60],poster_path:'/1XS1oqL89opfnbLl8WnZY1O1uJx.jpg'},
  fleabag:{id:67070,original_name:'Fleabag',first_air_date:'2016-07-21',external_ids:{imdb_id:'tt5687612'},episode_run_time:[26],poster_path:'/27vEYsRKa3eAniwmoccOoluEXQ1.jpg'},
@@ -15,7 +17,7 @@ const references={
 };
 const selection=process.argv.find(arg=>arg.startsWith('--film='))?.slice(7)||'night';
 const reference=references[selection];
-if(!reference)throw new Error('--film=night, dune, spider-man, got, fleabag, death-note veya aot kullanın');
+if(!reference)throw new Error('--film=night, dune, obsession, spider-man, got, fleabag, shameless, death-note veya aot kullanın');
 const mediaType=reference.original_name?'tv':'movie';
 const season=Number(process.argv.find(a=>a.startsWith('--season='))?.slice(9)||1);
 const episode=Number(process.argv.find(a=>a.startsWith('--episode='))?.slice(10)||1);
@@ -38,7 +40,7 @@ const completed=await Promise.all(lanes.map(async lane=>{
  const elapsedMs=Date.now()-start;console.log(JSON.stringify({completedLane:lane,elapsedMs,results:streams.length}));
  return{lane,elapsedMs,diagnostic:provider.getReport(),streams:streams.map(s=>({name:s.name,quality:s.quality,type:s.type,size:s.size,language:s.language,subtitles:s.subtitles.map(t=>({name:t.name,language:t.language}))}))};
 }));
-const report={checkedAt:new Date().toISOString(),version:pkg.version,film:selection,metadata:'fixed known TMDB reference; upstream source/subtitle requests are live',elapsedMs:Date.now()-start,firstResultsMs:Math.min(...completed.filter(l=>l.streams.length).map(l=>l.elapsedMs)),bytesRead,settings:'Combined main24s + anime20s; all resolutions; prefer TR; balanced; HLS; up to20 per scraper; public bridge enabled; legacy diagnostic online/files lanes optional',lanes:completed,streams:completed.flatMap(l=>l.streams),deviceTest:'not-run'};
+const report={checkedAt:new Date().toISOString(),version:pkg.version,film:selection,metadata:'fixed reference, not a live TMDB API test; Obsession identity/premiere reference checked against public TMDB releases page and IFCO IMDb link; source/subtitle requests are live',elapsedMs:Date.now()-start,firstResultsMs:Math.min(...completed.filter(l=>l.streams.length).map(l=>l.elapsedMs)),bytesRead,settings:'Combined main24s + anime20s; all resolutions; prefer TR; balanced; HLS; up to20 per scraper; public bridge enabled; legacy diagnostic online/files lanes optional',lanes:completed,streams:completed.flatMap(l=>l.streams),deviceTest:'not-run'};
 await mkdir(new URL('../.cache/',import.meta.url),{recursive:true});
 const filename=selection==='night'?'pipeline-live-report.json':`pipeline-${selection}-report.json`;
 await writeFile(new URL('../.cache/'+filename,import.meta.url),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report,null,2));if(!report.streams.length)process.exitCode=1;

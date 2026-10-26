@@ -1,0 +1,580 @@
+{
+  "checkedAt": "2026-10-26T10:32:50.648Z",
+  "version": "1.6.2",
+  "film": "obsession",
+  "metadata": "fixed reference, not a live TMDB API test; Obsession identity/premiere reference checked against public TMDB releases page and IFCO IMDb link; source/subtitle requests are live",
+  "elapsedMs": 2915,
+  "firstResultsMs": 2914,
+  "bytesRead": 797689,
+  "settings": "Combined main24s + anime20s; all resolutions; prefer TR; balanced; HLS; up to20 per scraper; public bridge enabled; legacy diagnostic online/files lanes optional",
+  "lanes": [
+    {
+      "lane": "main",
+      "elapsedMs": 2914,
+      "diagnostic": {
+        "tmdbId": "1339713",
+        "lane": "main",
+        "configuration": {
+          "version": "dev",
+          "tmdbKeyPresent": true,
+          "autoDiscover": true,
+          "includeHls": true,
+          "playImdbEnabled": true,
+          "vixsrcEnabled": true,
+          "hdhubEnabled": true,
+          "archiveEnabled": true,
+          "autoSubtitles": true,
+          "subtitleRequired": false,
+          "detailedHlsMetadata": false,
+          "minimumQuality": 0,
+          "maxResults": 20
+        },
+        "identity": {
+          "reason": "ok",
+          "year": 2026,
+          "type": "movie"
+        },
+        "sources": [
+          {
+            "name": "PlayIMDb",
+            "candidates": 3
+          },
+          {
+            "name": "4KHDHub / HubCloud",
+            "candidates": 0
+          },
+          {
+            "name": "VixSrc",
+            "candidates": 1
+          },
+          {
+            "name": "Internet Archive",
+            "candidates": 0
+          }
+        ],
+        "rejected": {},
+        "http": {
+          "api.themoviedb.org:200": 1,
+          "vixsrc.to:200": 3,
+          "streamdata.vaplayer.ru:200": 1,
+          "opensubtitles-v3.strem.io:200": 1,
+          "4khdhub.one:200": 1,
+          "altyazidb.online:200": 5,
+          "scalablecontentengine.site:200": 3,
+          "archive.org:200": 8,
+          "opensubtitles.stremio.homes:200": 3,
+          "nuvio-tr-hd-download-bridge.kamilbsr03.chatgpt.site:200": 1
+        },
+        "subtitleText": {
+          "turkishCharacters": 6
+        },
+        "results": 10,
+        "reason": "ok",
+        "elapsedMs": 2914
+      },
+      "streams": [
+        {
+          "name": "01 · Online · PlayIMDb 2",
+          "quality": "540×360 HLS",
+          "type": "hls",
+          "size": "≤~473.4 MiB",
+          "language": "TR",
+          "subtitles": [
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 01 · Obsession.2025.1080p.WEBRip.x264.AAC5.1-[YTS.GG - YTS.BZ].mp4 · Tam sürüm eşleşmesi",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 02 · Obsession.2026.sacrer • WEBRip 1080p • NeoNoir • 23.976 · Sürüm benzerliği; senkron kontrolü önerilir",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 03 · Obsession.2026.Vasko • WEBRip 1080p • 23.976 · Sürüm benzerliği; senkron kontrolü önerilir",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 04 · Obsession.2026.1080p.DS4K.WEBRip.10Bit.DDP5.1.Atmos.x265-NeoNoir · Sürüm benzerliği; senkron kontrolü önerilir",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "02 · Online · PlayIMDb 1",
+          "quality": "540×360 HLS",
+          "type": "hls",
+          "size": "≤~517.1 MiB",
+          "language": "TR",
+          "subtitles": [
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 01 · Obsession.2025.1080p.WEBRip.x264.AAC5.1-[YTS.GG - YTS.BZ].mp4 · Tam sürüm eşleşmesi",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 02 · Obsession.2026.sacrer • WEBRip 1080p • NeoNoir • 23.976 · Sürüm benzerliği; senkron kontrolü önerilir",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 03 · Obsession.2026.Vasko • WEBRip 1080p • 23.976 · Sürüm benzerliği; senkron kontrolü önerilir",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 04 · Obsession.2026.1080p.DS4K.WEBRip.10Bit.DDP5.1.Atmos.x265-NeoNoir · Sürüm benzerliği; senkron kontrolü önerilir",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "03 · Online · PlayIMDb 3",
+          "quality": "540×360 HLS",
+          "type": "hls",
+          "size": "≤~517.1 MiB",
+          "language": "TR",
+          "subtitles": [
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 01 · Obsession.2025.1080p.WEBRip.x264.AAC5.1-[YTS.GG - YTS.BZ].mp4 · Tam sürüm eşleşmesi",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 02 · Obsession.2026.sacrer • WEBRip 1080p • NeoNoir • 23.976 · Sürüm benzerliği; senkron kontrolü önerilir",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 03 · Obsession.2026.Vasko • WEBRip 1080p • 23.976 · Sürüm benzerliği; senkron kontrolü önerilir",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 04 · Obsession.2026.1080p.DS4K.WEBRip.10Bit.DDP5.1.Atmos.x265-NeoNoir · Sürüm benzerliği; senkron kontrolü önerilir",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "04 · Online · PlayIMDb 2",
+          "quality": "1080×720 HLS",
+          "type": "hls",
+          "size": "≤~1.61 GiB",
+          "language": "TR",
+          "subtitles": [
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 01 · Obsession.2025.1080p.WEBRip.x264.AAC5.1-[YTS.GG - YTS.BZ].mp4 · Tam sürüm eşleşmesi",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 02 · Obsession.2026.sacrer • WEBRip 1080p • NeoNoir • 23.976 · Sürüm benzerliği; senkron kontrolü önerilir",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 03 · Obsession.2026.Vasko • WEBRip 1080p • 23.976 · Sürüm benzerliği; senkron kontrolü önerilir",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 04 · Obsession.2026.1080p.DS4K.WEBRip.10Bit.DDP5.1.Atmos.x265-NeoNoir · Sürüm benzerliği; senkron kontrolü önerilir",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "05 · Online · PlayIMDb 1",
+          "quality": "1080×720 HLS",
+          "type": "hls",
+          "size": "≤~1.65 GiB",
+          "language": "TR",
+          "subtitles": [
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 01 · Obsession.2025.1080p.WEBRip.x264.AAC5.1-[YTS.GG - YTS.BZ].mp4 · Tam sürüm eşleşmesi",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 02 · Obsession.2026.sacrer • WEBRip 1080p • NeoNoir • 23.976 · Sürüm benzerliği; senkron kontrolü önerilir",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 03 · Obsession.2026.Vasko • WEBRip 1080p • 23.976 · Sürüm benzerliği; senkron kontrolü önerilir",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 04 · Obsession.2026.1080p.DS4K.WEBRip.10Bit.DDP5.1.Atmos.x265-NeoNoir · Sürüm benzerliği; senkron kontrolü önerilir",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "06 · Online · PlayIMDb 3",
+          "quality": "1080×720 HLS",
+          "type": "hls",
+          "size": "≤~1.65 GiB",
+          "language": "TR",
+          "subtitles": [
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 01 · Obsession.2025.1080p.WEBRip.x264.AAC5.1-[YTS.GG - YTS.BZ].mp4 · Tam sürüm eşleşmesi",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 02 · Obsession.2026.sacrer • WEBRip 1080p • NeoNoir • 23.976 · Sürüm benzerliği; senkron kontrolü önerilir",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 03 · Obsession.2026.Vasko • WEBRip 1080p • 23.976 · Sürüm benzerliği; senkron kontrolü önerilir",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 04 · Obsession.2026.1080p.DS4K.WEBRip.10Bit.DDP5.1.Atmos.x265-NeoNoir · Sürüm benzerliği; senkron kontrolü önerilir",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "07 · Online · VixSrc",
+          "quality": "Otomatik kalite HLS",
+          "type": "hls",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 01 · Obsession.2026.sacrer • WEBRip 1080p • NeoNoir • 23.976 · Film eşleşmesi; senkron belirsiz",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 02 · Obsession.2026.BluRay 2160p • HiDt • 23.976 · Film eşleşmesi; senkron belirsiz",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 03 · Obsession.2026.sacrer • BluRay 1080p • 23.976 · Film eşleşmesi; senkron belirsiz",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 04 · Obsession.2026.Vasko • WEBRip 1080p • 23.976 · Film eşleşmesi; senkron belirsiz",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "08 · Online · PlayIMDb 2",
+          "quality": "1620×1080 HLS",
+          "type": "hls",
+          "size": "≤~3.10 GiB",
+          "language": "TR",
+          "subtitles": [
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 01 · Obsession.2025.1080p.WEBRip.x264.AAC5.1-[YTS.GG - YTS.BZ].mp4 · Tam sürüm eşleşmesi",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 02 · Obsession.2026.sacrer • WEBRip 1080p • NeoNoir • 23.976 · Sürüm benzerliği; senkron kontrolü önerilir",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 03 · Obsession.2026.Vasko • WEBRip 1080p • 23.976 · Sürüm benzerliği; senkron kontrolü önerilir",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 04 · Obsession.2026.1080p.DS4K.WEBRip.10Bit.DDP5.1.Atmos.x265-NeoNoir · Sürüm benzerliği; senkron kontrolü önerilir",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "09 · Online · PlayIMDb 1",
+          "quality": "1620×1080 HLS",
+          "type": "hls",
+          "size": "≤~3.17 GiB",
+          "language": "TR",
+          "subtitles": [
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 01 · Obsession.2025.1080p.WEBRip.x264.AAC5.1-[YTS.GG - YTS.BZ].mp4 · Tam sürüm eşleşmesi",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 02 · Obsession.2026.sacrer • WEBRip 1080p • NeoNoir • 23.976 · Sürüm benzerliği; senkron kontrolü önerilir",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 03 · Obsession.2026.Vasko • WEBRip 1080p • 23.976 · Sürüm benzerliği; senkron kontrolü önerilir",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 04 · Obsession.2026.1080p.DS4K.WEBRip.10Bit.DDP5.1.Atmos.x265-NeoNoir · Sürüm benzerliği; senkron kontrolü önerilir",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "10 · Online · PlayIMDb 3",
+          "quality": "1620×1080 HLS",
+          "type": "hls",
+          "size": "≤~3.17 GiB",
+          "language": "TR",
+          "subtitles": [
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 01 · Obsession.2025.1080p.WEBRip.x264.AAC5.1-[YTS.GG - YTS.BZ].mp4 · Tam sürüm eşleşmesi",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 02 · Obsession.2026.sacrer • WEBRip 1080p • NeoNoir • 23.976 · Sürüm benzerliği; senkron kontrolü önerilir",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 03 · Obsession.2026.Vasko • WEBRip 1080p • 23.976 · Sürüm benzerliği; senkron kontrolü önerilir",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 04 · Obsession.2026.1080p.DS4K.WEBRip.10Bit.DDP5.1.Atmos.x265-NeoNoir · Sürüm benzerliği; senkron kontrolü önerilir",
+              "language": "tr"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "streams": [
+    {
+      "name": "01 · Online · PlayIMDb 2",
+      "quality": "540×360 HLS",
+      "type": "hls",
+      "size": "≤~473.4 MiB",
+      "language": "TR",
+      "subtitles": [
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 01 · Obsession.2025.1080p.WEBRip.x264.AAC5.1-[YTS.GG - YTS.BZ].mp4 · Tam sürüm eşleşmesi",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 02 · Obsession.2026.sacrer • WEBRip 1080p • NeoNoir • 23.976 · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 03 · Obsession.2026.Vasko • WEBRip 1080p • 23.976 · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 04 · Obsession.2026.1080p.DS4K.WEBRip.10Bit.DDP5.1.Atmos.x265-NeoNoir · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "02 · Online · PlayIMDb 1",
+      "quality": "540×360 HLS",
+      "type": "hls",
+      "size": "≤~517.1 MiB",
+      "language": "TR",
+      "subtitles": [
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 01 · Obsession.2025.1080p.WEBRip.x264.AAC5.1-[YTS.GG - YTS.BZ].mp4 · Tam sürüm eşleşmesi",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 02 · Obsession.2026.sacrer • WEBRip 1080p • NeoNoir • 23.976 · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 03 · Obsession.2026.Vasko • WEBRip 1080p • 23.976 · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 04 · Obsession.2026.1080p.DS4K.WEBRip.10Bit.DDP5.1.Atmos.x265-NeoNoir · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "03 · Online · PlayIMDb 3",
+      "quality": "540×360 HLS",
+      "type": "hls",
+      "size": "≤~517.1 MiB",
+      "language": "TR",
+      "subtitles": [
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 01 · Obsession.2025.1080p.WEBRip.x264.AAC5.1-[YTS.GG - YTS.BZ].mp4 · Tam sürüm eşleşmesi",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 02 · Obsession.2026.sacrer • WEBRip 1080p • NeoNoir • 23.976 · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 03 · Obsession.2026.Vasko • WEBRip 1080p • 23.976 · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 04 · Obsession.2026.1080p.DS4K.WEBRip.10Bit.DDP5.1.Atmos.x265-NeoNoir · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "04 · Online · PlayIMDb 2",
+      "quality": "1080×720 HLS",
+      "type": "hls",
+      "size": "≤~1.61 GiB",
+      "language": "TR",
+      "subtitles": [
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 01 · Obsession.2025.1080p.WEBRip.x264.AAC5.1-[YTS.GG - YTS.BZ].mp4 · Tam sürüm eşleşmesi",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 02 · Obsession.2026.sacrer • WEBRip 1080p • NeoNoir • 23.976 · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 03 · Obsession.2026.Vasko • WEBRip 1080p • 23.976 · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 04 · Obsession.2026.1080p.DS4K.WEBRip.10Bit.DDP5.1.Atmos.x265-NeoNoir · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "05 · Online · PlayIMDb 1",
+      "quality": "1080×720 HLS",
+      "type": "hls",
+      "size": "≤~1.65 GiB",
+      "language": "TR",
+      "subtitles": [
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 01 · Obsession.2025.1080p.WEBRip.x264.AAC5.1-[YTS.GG - YTS.BZ].mp4 · Tam sürüm eşleşmesi",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 02 · Obsession.2026.sacrer • WEBRip 1080p • NeoNoir • 23.976 · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 03 · Obsession.2026.Vasko • WEBRip 1080p • 23.976 · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 04 · Obsession.2026.1080p.DS4K.WEBRip.10Bit.DDP5.1.Atmos.x265-NeoNoir · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "06 · Online · PlayIMDb 3",
+      "quality": "1080×720 HLS",
+      "type": "hls",
+      "size": "≤~1.65 GiB",
+      "language": "TR",
+      "subtitles": [
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 01 · Obsession.2025.1080p.WEBRip.x264.AAC5.1-[YTS.GG - YTS.BZ].mp4 · Tam sürüm eşleşmesi",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 02 · Obsession.2026.sacrer • WEBRip 1080p • NeoNoir • 23.976 · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 03 · Obsession.2026.Vasko • WEBRip 1080p • 23.976 · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 04 · Obsession.2026.1080p.DS4K.WEBRip.10Bit.DDP5.1.Atmos.x265-NeoNoir · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "07 · Online · VixSrc",
+      "quality": "Otomatik kalite HLS",
+      "type": "hls",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 01 · Obsession.2026.sacrer • WEBRip 1080p • NeoNoir • 23.976 · Film eşleşmesi; senkron belirsiz",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 02 · Obsession.2026.BluRay 2160p • HiDt • 23.976 · Film eşleşmesi; senkron belirsiz",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 03 · Obsession.2026.sacrer • BluRay 1080p • 23.976 · Film eşleşmesi; senkron belirsiz",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 04 · Obsession.2026.Vasko • WEBRip 1080p • 23.976 · Film eşleşmesi; senkron belirsiz",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "08 · Online · PlayIMDb 2",
+      "quality": "1620×1080 HLS",
+      "type": "hls",
+      "size": "≤~3.10 GiB",
+      "language": "TR",
+      "subtitles": [
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 01 · Obsession.2025.1080p.WEBRip.x264.AAC5.1-[YTS.GG - YTS.BZ].mp4 · Tam sürüm eşleşmesi",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 02 · Obsession.2026.sacrer • WEBRip 1080p • NeoNoir • 23.976 · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 03 · Obsession.2026.Vasko • WEBRip 1080p • 23.976 · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 04 · Obsession.2026.1080p.DS4K.WEBRip.10Bit.DDP5.1.Atmos.x265-NeoNoir · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "09 · Online · PlayIMDb 1",
+      "quality": "1620×1080 HLS",
+      "type": "hls",
+      "size": "≤~3.17 GiB",
+      "language": "TR",
+      "subtitles": [
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 01 · Obsession.2025.1080p.WEBRip.x264.AAC5.1-[YTS.GG - YTS.BZ].mp4 · Tam sürüm eşleşmesi",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 02 · Obsession.2026.sacrer • WEBRip 1080p • NeoNoir • 23.976 · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 03 · Obsession.2026.Vasko • WEBRip 1080p • 23.976 · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 04 · Obsession.2026.1080p.DS4K.WEBRip.10Bit.DDP5.1.Atmos.x265-NeoNoir · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "10 · Online · PlayIMDb 3",
+      "quality": "1620×1080 HLS",
+      "type": "hls",
+      "size": "≤~3.17 GiB",
+      "language": "TR",
+      "subtitles": [
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 01 · Obsession.2025.1080p.WEBRip.x264.AAC5.1-[YTS.GG - YTS.BZ].mp4 · Tam sürüm eşleşmesi",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 02 · Obsession.2026.sacrer • WEBRip 1080p • NeoNoir • 23.976 · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 03 · Obsession.2026.Vasko • WEBRip 1080p • 23.976 · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 04 · Obsession.2026.1080p.DS4K.WEBRip.10Bit.DDP5.1.Atmos.x265-NeoNoir · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        }
+      ]
+    }
+  ],
+  "deviceTest": "not-run"
+}

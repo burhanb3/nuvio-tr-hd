@@ -1,0 +1,86 @@
+{
+  "checkedAt": "2026-10-26T10:36:42.376Z",
+  "version": "1.6.2",
+  "userReport": {
+    "device": "iPhone",
+    "installedProviderVersion": "1.6.1",
+    "fleabagEpisode": "first episode; S01E01 used as reference",
+    "obsession": "latest Curry Barker feature"
+  },
+  "confirmedDefects": [
+    "PlayIMDb exact IMDb tt37287335 returns Obsession.2025 while TMDB1339713 canonical page is 2026; TMDB lists2025premieres",
+    "optional HLS child/segment probes could keep valid master pending until JS deadline",
+    "early verified mirror count could stop later HDHub releases"
+  ],
+  "unconfirmed": "shared cause of user iPhone empty results remains unknown; no phone/network credentials inspected",
+  "obsession": {
+    "tmdbId": 1339713,
+    "imdbId": "tt37287335",
+    "canonicalPublicTitle": "Obsession (2026)",
+    "fileYear": 2025,
+    "sources": [
+      "https://www.themoviedb.org/movie/1339713-obsession?language=en-US",
+      "https://www.themoviedb.org/movie/1339713-obsession/releases?language=en-US",
+      "https://www.ifco.ie/en/ifco/pages/F4F81130005EB8DB",
+      "https://developer.themoviedb.org/reference/movie-release-dates"
+    ],
+    "publicReleasePage": {
+      "status": 200,
+      "bytes": 216221,
+      "sha256": "41e53913d08bbe39d0d985978d110a82f938c10503900336e932426595b2a4a1",
+      "premiereYears": [
+        2025
+      ],
+      "apiWithPhoneKey": "not-tested"
+    }
+  },
+  "nativeReview": {
+    "release": "0.6.4-beta",
+    "files": [
+      {
+        "file": "JsBindings.kt",
+        "gitBlob": "f19b11a939ded987ec0fd83ed959364414a0ab07"
+      },
+      {
+        "file": "PluginRuntime.kt",
+        "gitBlob": "04fc61ba488b3ba0a146fb5a83286e2c5cbb092d"
+      },
+      {
+        "file": "FetchBridge.kt",
+        "gitBlob": "757ca33ab2fffda34384999f42bea748533d185d"
+      },
+      {
+        "file": "AddonPlatform.ios.kt",
+        "gitBlob": "c556d5b8fd3c15d8dca9a88898ef4c0224206883"
+      },
+      {
+        "file": "TmdbService.kt",
+        "gitBlob": "6f3ac216b671c9b657b52305f307ddc3ca79d0ec"
+      },
+      {
+        "file": "PluginContentIds.kt",
+        "gitBlob": "446794daf7698ab2525631856ae31eeb072bf43a"
+      },
+      {
+        "file": "HostFunctions.kt",
+        "gitBlob": "8e76c3e0778b5ef589be5d5c0852452659778a15"
+      }
+    ],
+    "findings": [
+      "TMDB key injected by effectiveApiKey; ID normalized natively; no evidence for speculative ID fallback",
+      "iOS request/connect/socket60s; JS abort not forwarded; native jobs may delay result",
+      "exact native User-Agent worked for Fleabag source APIs in this PC transport; not evidence of phone success"
+    ]
+  },
+  "tests": {
+    "sourceFixtureAndQuickjs": "see npm run check and publication evidence",
+    "phoneTmdbApi": "not-run",
+    "physicalIphone": "not-run",
+    "fullPlayback": "not-run",
+    "fullDownload": "not-run",
+    "offlineSubtitles": "not-run",
+    "subtitleAudioSync": "not-run"
+  },
+  "smallDuneDownloadVerified": false,
+  "bridgeVersion": "1.4.0; unchanged"
+}

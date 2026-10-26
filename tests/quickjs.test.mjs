@@ -145,6 +145,8 @@ test('derlenmiş ayar formu KMP onSettings sözleşmesine uyar', async () => {
   assert.ok(Array.isArray(layout));
   assert.ok(layout.some(field => field.type === 'toggle' && field.key === 'includeHls'));
   assert.ok(layout.every(field => ['header', 'info', 'text', 'toggle', 'select'].includes(field.type)));
+  const pkg=JSON.parse(await readFile(new URL('../package.json',import.meta.url),'utf8'));
+  assert.ok(layout.some(field=>field.type==='info' && field.label.includes(`Tanı · ${pkg.version} · TMDB anahtarı: var`)));
 });
 
 test('QuickJS anime paketi: doğru kanonik bölüm, gerçek 720p MP4 ve eşlenmiş TR',async()=>{

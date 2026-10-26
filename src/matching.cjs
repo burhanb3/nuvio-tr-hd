@@ -4,14 +4,29 @@ const { normalizeTitle, positiveInt } = require('./util.cjs');
 async function resolveIdentity(http, tmdbId, mediaType, season, episode, key) {
   const id = positiveInt(tmdbId);
   const type = mediaType === 'movie' ? 'movie' : ['tv', 'series', 'show', 'other'].includes(mediaType) ? 'tv' : null;
-  if (!id || !type || !key || (type === 'tv' && (!positiveInt(season) || !positiveInt(episode)))) return null;
-  const meta = await http.json(`https://api.themoviedb.org/3/${type}/${id}?api_key=${encodeURIComponent(key)}&append_to_response=external_ids`);
-  if (!meta || meta.id !== id) return null;
+  const fail = reason => { http.note?.({ stage: 'identity', reason }); return null; };
+  if (!id) return fail('invalid_tmdb_id');
+  if (!type) return fail('invalid_media_type');
+  if (!key) return fail('missing_tmdb_key');
+  if (type === 'tv' && (!positiveInt(season) || !positiveInt(episode))) return fail('missing_episode');
+  http.note?.({ stage: 'identity', reason: 'request_started' });
+  const append = type === 'movie' ? 'external_ids,release_dates' : 'external_ids';
+  const meta = await http.json(`https://api.themoviedb.org/3/${type}/${id}?api_key=${encodeURIComponent(key)}&append_to_response=${append}`, { timeoutMs: 10000 });
+  if (!meta) return fail('tmdb_request_failed');
+  if (meta.id !== id) return fail('tmdb_id_mismatch');
   const originalTitle = type === 'movie' ? meta.original_title : meta.original_name;
   const date = type === 'movie' ? meta.release_date : meta.first_air_date;
   const year = typeof date === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(date) ? Number(date.slice(0, 4)) : null;
-  if (!normalizeTitle(originalTitle) || !year) return null;
-  return { tmdbId: id, originalTitle, year, type, season: type === 'tv' ? Number(season) : null,
+  if (!normalizeTitle(originalTitle) || !year) return fail('tmdb_metadata_incomplete');
+  // A festival premiere and the wide release can fall in adjacent years.
+  // Accept only years actually returned for this exact TMDB movie, never an
+  // unverified +/- one-year filename heuristic or a later re-release.
+  const releaseYears = type === 'movie' && Array.isArray(meta.release_dates?.results) ? [...new Set([year,
+    ...meta.release_dates.results.slice(0,250).flatMap(country => Array.isArray(country?.release_dates) ? country.release_dates.slice(0,40) : [])
+      .filter(r => [1,2,3,4].includes(r?.type) && /^\d{4}-\d{2}-\d{2}T/.test(String(r.release_date)))
+      .map(r => Number(r.release_date.slice(0,4))).filter(y => Math.abs(y - year) <= 1)])].sort() : [year];
+  http.note?.({ stage: 'identity', reason: 'ok', year, type });
+  return { tmdbId: id, originalTitle, year, releaseYears, type, season: type === 'tv' ? Number(season) : null,
     searchTitles: [...new Set([meta.title || meta.name, originalTitle].filter(v => typeof v === 'string' && v.trim()))].slice(0, 2),
     isAnime: meta.genres?.some(g => g.id === 16) === true && (meta.original_language === 'ja' || meta.origin_country?.includes('JP') === true),
     ...(typeof meta.poster_path === 'string' && /^\/[A-Za-z0-9]+\.(jpg|png)$/i.test(meta.poster_path) ? { posterPath: meta.poster_path } : {}),

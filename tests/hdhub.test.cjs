@@ -49,6 +49,24 @@ test('HDHub hızlı release, diğer release beklerken doğrulama kuyruğuna veri
  try{await first;assert.equal(fed,1);assert.equal(scanDone,false);}finally{release();await scan;http.close();}
 });
 
+test('çok sayıda erken ayna daha sonraki büyük dosya sürümünün taranmasını durdurmaz', async () => {
+  const { fixture, page } = hdFixture();
+  fixture[HDHUB_ORIGIN + '/matrix-movie-1/'].body = page.split('<div class="download-item">')[0] + Array.from({ length: 6 }, (_, i) =>
+    `<div class="download-item"><div class="file-title">The.Matrix.1999.${i === 5 ? '2160p.LARGE' : '1080p.RELEASE' + i}.mkv</div><span>${i + 1}.0 GB</span><a href="https://greenmotors.club/release${i}">Download HubCloud</a></div>`).join('');
+  for (let i = 0; i < 6; i++) {
+    fixture['https://greenmotors.club/release' + i] = { body: shortPage('https://hubcloud.example/release' + i) };
+    fixture['https://hubcloud.example/release' + i] = { body: `<script>var url = 'https://gamerxyt.com/hubcloud.php?token=release${i}'</script>` };
+    fixture['https://gamerxyt.com/hubcloud.php?token=release' + i] = { body: Array.from({ length: 3 }, (_, mirror) =>
+      `<a href="https://mirror${mirror}.workers.dev/The.Matrix.1999.${i}.mkv">FSL Server</a>`).join('') };
+  }
+  const http = createHttp({ fetchImpl: fixtureFetch(fixture) }), accepted = [];
+  try {
+    await scanHdHub(http, target, { onCandidates: async found => { accepted.push(...found); }, verifiedCount: () => 99 });
+    assert.equal(accepted.length, 18);
+    assert.ok(accepted.some(c => c.filename.includes('2160p.LARGE')));
+  } finally { http.close(); }
+});
+
 test('yanlış TMDB/yıl, bozuk kısa bağlantı ve keyfi hedef reddedilir', () => {
   const { page } = hdFixture();
   assert.equal(pageMatches(page, target), true);

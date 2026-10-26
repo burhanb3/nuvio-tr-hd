@@ -1,5 +1,14 @@
 # Sonraki işler
 
+## 1.6.2 öncelik
+
+1. 1.6.2 Obsession yıl/HLS ek ölçüm/HDHub erken durdurma/tanı düzeltmeleri yerelde 114 testten geçti. Aynı GitHub adresine yayımla; CI ve public SHA kanıtını yaz. Kurulum kimlikleri değişmesin.
+2. iPhone’da yeni Tanı satırıyla gerçek ayarlar/anahtar varlığı ve sonuç alınmalı. Fleabag S01E01/Dune/Obsession telefon kontrolünden önce çözüldü deme. Sabit metadata testi gerçek TMDB API değildir; gerekirse yalnız online için HDHub/Archive geçici izolasyonu dene, varsayılanları sıfırlama.
+3. Native iOS 60 saniye/iptal eksikliği/bekleyen işler kalan risktir. Plugin mantıksal bütçesi fiziksel garanti değildir. API erişimi ve HTTP durumları gizli veri içermeyen özetle ayrılmalı.
+4. Küçük Dune dosyası, fiziksel tam oynatma/indirme, çevrimdışı altyazı ve senkron çözülmedi. Canlı Dune dosya CDN’i ağ hatası verdi; kimlik/konteyner/Range kontrollerini kaldırma. Büyük dosyalar kalsın.
+5. Sites erişimi yok; aynı hesap sorusunu tekrarlama/yeni Site ile etrafından dolanma. Köprü 1.4 korunur.
+
+
 ## 1.6.1 öncelik
 
 1. **Tamamlandı:** 1.6.1 e5824c9 yayımlandı; 107 test/QuickJS, Windows/Linux ve Pages başarılı. Manifest/sürümlü JS/legacy JS/sayfa HTTP200+yerel SHA eşit. Depoyu yenileyince ana+anime iki kayıt; kimlik/ayarlar korunur.

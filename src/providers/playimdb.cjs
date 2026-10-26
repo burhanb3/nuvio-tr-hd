@@ -23,11 +23,12 @@ async function scanPlayImdb(http, target) {
     // it before matching. The leaf must still contain this exact title/S/E.
     const titleBound = leaf.startsWith(title + ' ') || (path.some(folder => normalizeTitle(folder).startsWith(title + ' ')) && (' ' + leaf + ' ').includes(' ' + title + ' '));
     if (!target.imdbId || data.imdb_id !== target.imdbId || !matchesEpisode(filename, target) || !titleBound) return [];
-  } else if (!filenameIdentity(filename, target)) return [];
+  } else if (!filenameIdentity(filename, target) && !(target.imdbId && data.imdb_id === target.imdbId &&
+    target.releaseYears?.some(year => filenameIdentity(filename, { ...target, year })))) return [];
   const subtitles = (Array.isArray(result.default_subs) ? result.default_subs : []).map(s => ({ ...s,
     language: s.lang || s.language, url: s.url || s.file, _scope: 'paired' }));
   return data.stream_urls.slice(0, 6).map((url, index) => ({ url: safeUrl(url), filename, serverIndex: index + 1,
     headers: { Referer: 'https://nextgencloudfabric.com/', Origin: 'https://nextgencloudfabric.com' },
-    subtitles, subtitleBase: PLAY_API, source: 'PlayIMDb', identity: target, identityConfidence: 95 })).filter(x => x.url);
+    subtitles, subtitleBase: PLAY_API, source: 'PlayIMDb', identity: target, identityImdbBound: !!target.imdbId && data.imdb_id === target.imdbId, identityConfidence: 95 })).filter(x => x.url);
 }
 module.exports = { scanPlayImdb, PLAY_API };

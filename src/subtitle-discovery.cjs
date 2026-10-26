@@ -27,6 +27,8 @@ function cutSignature(value) {
 }
 function scoreSubtitle(sub, candidate, video, target, allowLoose = false) {
   if (!isTurkish(sub.language || sub.lang || sub.lang_code) || sub.ai_translated === true || sub.ai_translated === 'true') return null;
+  if ((sub.imdbId || sub.imdb_id) && (sub.imdbId || sub.imdb_id) !== target.imdbId) return null;
+  if (sub.tmdbId != null && Number(sub.tmdbId) !== target.tmdbId) return null;
   if (target.type === 'tv' && ((Number(sub.season) > 0 && Number(sub.season) !== target.season) ||
     (Number(sub.episode) > 0 && Number(sub.episode) !== target.episode))) return null;
   const name = String(sub.releaseName || sub.movieReleaseName || sub.title || sub.subtitleFileName || '');
@@ -34,12 +36,15 @@ function scoreSubtitle(sub, candidate, video, target, allowLoose = false) {
   const a = releaseKey(file), b = releaseKey(name);
   if (target.type === 'tv' && /\bs\d+[ ._-]*e\d+\b|\b\d+x\d+\b/i.test(name) && !matchesEpisode(name, target)) return null;
   const years = b.match(/\b(?:19|20)\d{2}\b/g);
-  if (years?.some(y => Number(y) !== target.year) && !(target.type === 'tv' && sub._identityBound === true &&
+  const releaseYears = target.type === 'movie' && (sub._identityBound === true || (sub._scope === 'paired' && candidate.identityImdbBound === true)) ?
+    [target.year, ...(target.releaseYears || [])] : [target.year];
+  if (years?.some(y => !releaseYears.includes(Number(y))) && !(target.type === 'tv' && sub._identityBound === true &&
     years.every(y => Number(y) >= target.year && Number(y) <= new Date().getFullYear() + 1))) return null;
   const hash = String(sub.moviehash || sub.videoHash || '').toLowerCase();
   if (video.videoHash && hash === video.videoHash.toLowerCase()) return { score: 100, label: 'Dosya hash eşleşmesi' };
   if (cutSignature(file) !== cutSignature(name) && sub._scope !== 'paired') return null;
-  const titleYear = `${normalizeTitle(target.originalTitle)} ${target.year}`;
+  const nameYear = Number(years?.[0]);
+  const titleYear = `${normalizeTitle(target.originalTitle)} ${releaseYears.includes(nameYear) ? nameYear : target.year}`;
   const hasReleaseDetail = a.startsWith(titleYear + ' ') && a.length > titleYear.length + 4;
   if (!sub._releaseNotesOnly && hasReleaseDetail && b && (a === b || (' ' + b + ' ').includes(' ' + a + ' '))) return { score: 95, label: 'Tam sürüm eşleşmesi' };
   if (!sub._scope || sub._scope === 'paired') return { score: 90, label: 'Kaynakla eşlenmiş' };
@@ -50,13 +55,13 @@ function scoreSubtitle(sub, candidate, video, target, allowLoose = false) {
       !(target.type === 'tv' && sub._identityBound === true && b.startsWith(title + ' ') && matchesEpisode(name, target))) return null;
   const family = sourceFamily(file);
   if (family && family === sourceFamily(name)) {
-    const ignore = new Set((title + ' ' + target.year).split(' '));
+    const ignore = new Set((title + ' ' + releaseYears.join(' ')).split(' '));
     const words = value => new Set(value.split(' ').filter(w => w.length >= 3 && !ignore.has(w)));
     const x = words(a), y = words(b);
     const common = [...x].filter(w => y.has(w)).length;
     if (common >= 2) return { score: Math.min(85, 70 + common * 2), label: 'Sürüm benzerliği; senkron kontrolü önerilir' };
   }
-  if (video.duration > 60) return { score: 50, label: 'Film eşleşmesi; süre kontrolü bekleniyor', requireDuration: true, ...(allowLoose ? { allowFilmFallback: true } : {}) };
+  if (video.duration > 60 && video.durationSource !== 'tmdb') return { score: 50, label: 'Film eşleşmesi; süre kontrolü bekleniyor', requireDuration: true, ...(allowLoose ? { allowFilmFallback: true } : {}) };
   return allowLoose ? { score: 35, label: 'Film eşleşmesi; senkron belirsiz' } : null;
 }
 function decodeFilename(url) {

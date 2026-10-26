@@ -89,6 +89,7 @@ async function scanVixDirect(http, target) {
   // master. Keep the hint last so Nuvio cannot offer it as an MP4 download.
   const url = bundle.masterUrl + '&nuvio_format=master.m3u8';
   return [{ url, filename: `${target.originalTitle}.${target.year}.VixSrc`, headers,
+    hlsMaster: { url, text: bundle.master },
     subtitles: bundle.subtitleUrl ? [{ url: bundle.subtitleUrl, language: 'tr', releaseName: 'VixSrc Türkçe', _scope: 'paired' }] : [],
     embeddedTurkish: bundle.embeddedTurkish, claimedQuality: 'Otomatik HLS',
     subtitleBase: VIX_ORIGIN + '/', source: 'VixSrc', identity: target, identityConfidence: 95 }];

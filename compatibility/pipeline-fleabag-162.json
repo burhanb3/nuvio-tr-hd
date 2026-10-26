@@ -1,0 +1,561 @@
+{
+  "checkedAt": "2026-10-26T10:33:04.610Z",
+  "version": "1.6.2",
+  "film": "fleabag",
+  "metadata": "fixed reference, not a live TMDB API test; Obsession identity/premiere reference checked against public TMDB releases page and IFCO IMDb link; source/subtitle requests are live",
+  "elapsedMs": 3828,
+  "firstResultsMs": 3827,
+  "bytesRead": 468990,
+  "settings": "Combined main24s + anime20s; all resolutions; prefer TR; balanced; HLS; up to20 per scraper; public bridge enabled; legacy diagnostic online/files lanes optional",
+  "lanes": [
+    {
+      "lane": "main",
+      "elapsedMs": 3827,
+      "diagnostic": {
+        "tmdbId": "67070",
+        "lane": "main",
+        "configuration": {
+          "version": "dev",
+          "tmdbKeyPresent": true,
+          "autoDiscover": true,
+          "includeHls": true,
+          "playImdbEnabled": true,
+          "vixsrcEnabled": true,
+          "hdhubEnabled": true,
+          "archiveEnabled": true,
+          "autoSubtitles": true,
+          "subtitleRequired": false,
+          "detailedHlsMetadata": false,
+          "minimumQuality": 0,
+          "maxResults": 20
+        },
+        "identity": {
+          "reason": "ok",
+          "year": 2016,
+          "type": "tv"
+        },
+        "sources": [
+          {
+            "name": "Internet Archive",
+            "candidates": 0
+          },
+          {
+            "name": "PlayIMDb",
+            "candidates": 3
+          },
+          {
+            "name": "VixSrc",
+            "candidates": 1
+          },
+          {
+            "name": "4KHDHub / HubCloud",
+            "candidates": 0
+          }
+        ],
+        "rejected": {},
+        "http": {
+          "api.themoviedb.org:200": 1,
+          "nuvio-tr-hd-download-bridge.kamilbsr03.chatgpt.site:200": 1,
+          "vixsrc.to:200": 4,
+          "streamdata.vaplayer.ru:200": 1,
+          "4khdhub.one:200": 2,
+          "opensubtitles-v3.strem.io:200": 1,
+          "altyazidb.online:200": 1,
+          "digitalnomadventures.site:200": 3,
+          "greenmotors.club:302": 3,
+          "greenmotors.cc:200": 3,
+          "opensubtitles.stremio.homes:200": 4,
+          "sc-u12-01.secretanchor70.boats:200": 1,
+          "subs5.strem.io:200": 1,
+          "hubcloud.ist:200": 3,
+          "gamerxyt.com:200": 3
+        },
+        "subtitleText": {
+          "turkishCharacters": 5
+        },
+        "results": 10,
+        "reason": "ok",
+        "elapsedMs": 3827
+      },
+      "streams": [
+        {
+          "name": "01 · Online · PlayIMDb 1",
+          "quality": "640×270 HLS",
+          "type": "hls",
+          "size": "≤~113.1 MiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 01 · Fleabag.S01E01.720p.BluRay.x264-SHORTBREHD · Sürüm benzerliği; senkron kontrolü önerilir",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · OpenSubtitles · 02 · Fleabag.S01E01.720p.BluRay.x264-SHORTBREHD.srt · 25.000 fps · Sürüm benzerliği; senkron kontrolü önerilir",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 03 · Fleabag.S01E01.Episode.1.1080p.WEB-DL.AAC2.0.H.264-NTb · Film eşleşmesi; senkron belirsiz",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 04 · Fleabag.S01E01.720p.WEB.h264-spamTV · Film eşleşmesi; senkron belirsiz",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "02 · Online · PlayIMDb 2",
+          "quality": "640×270 HLS",
+          "type": "hls",
+          "size": "≤~113.1 MiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 01 · Fleabag.S01E01.720p.BluRay.x264-SHORTBREHD · Sürüm benzerliği; senkron kontrolü önerilir",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · OpenSubtitles · 02 · Fleabag.S01E01.720p.BluRay.x264-SHORTBREHD.srt · 25.000 fps · Sürüm benzerliği; senkron kontrolü önerilir",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 03 · Fleabag.S01E01.Episode.1.1080p.WEB-DL.AAC2.0.H.264-NTb · Film eşleşmesi; senkron belirsiz",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 04 · Fleabag.S01E01.720p.WEB.h264-spamTV · Film eşleşmesi; senkron belirsiz",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "03 · Online · PlayIMDb 3",
+          "quality": "640×270 HLS",
+          "type": "hls",
+          "size": "≤~113.1 MiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 01 · Fleabag.S01E01.720p.BluRay.x264-SHORTBREHD · Sürüm benzerliği; senkron kontrolü önerilir",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · OpenSubtitles · 02 · Fleabag.S01E01.720p.BluRay.x264-SHORTBREHD.srt · 25.000 fps · Sürüm benzerliği; senkron kontrolü önerilir",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 03 · Fleabag.S01E01.Episode.1.1080p.WEB-DL.AAC2.0.H.264-NTb · Film eşleşmesi; senkron belirsiz",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 04 · Fleabag.S01E01.720p.WEB.h264-spamTV · Film eşleşmesi; senkron belirsiz",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "04 · Online · PlayIMDb 1",
+          "quality": "1280×538 HLS",
+          "type": "hls",
+          "size": "≤~389.5 MiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 01 · Fleabag.S01E01.720p.BluRay.x264-SHORTBREHD · Sürüm benzerliği; senkron kontrolü önerilir",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · OpenSubtitles · 02 · Fleabag.S01E01.720p.BluRay.x264-SHORTBREHD.srt · 25.000 fps · Sürüm benzerliği; senkron kontrolü önerilir",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 03 · Fleabag.S01E01.Episode.1.1080p.WEB-DL.AAC2.0.H.264-NTb · Film eşleşmesi; senkron belirsiz",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 04 · Fleabag.S01E01.720p.WEB.h264-spamTV · Film eşleşmesi; senkron belirsiz",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "05 · Online · PlayIMDb 2",
+          "quality": "1280×538 HLS",
+          "type": "hls",
+          "size": "≤~389.5 MiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 01 · Fleabag.S01E01.720p.BluRay.x264-SHORTBREHD · Sürüm benzerliği; senkron kontrolü önerilir",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · OpenSubtitles · 02 · Fleabag.S01E01.720p.BluRay.x264-SHORTBREHD.srt · 25.000 fps · Sürüm benzerliği; senkron kontrolü önerilir",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 03 · Fleabag.S01E01.Episode.1.1080p.WEB-DL.AAC2.0.H.264-NTb · Film eşleşmesi; senkron belirsiz",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 04 · Fleabag.S01E01.720p.WEB.h264-spamTV · Film eşleşmesi; senkron belirsiz",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "06 · Online · PlayIMDb 3",
+          "quality": "1280×538 HLS",
+          "type": "hls",
+          "size": "≤~389.5 MiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 01 · Fleabag.S01E01.720p.BluRay.x264-SHORTBREHD · Sürüm benzerliği; senkron kontrolü önerilir",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · OpenSubtitles · 02 · Fleabag.S01E01.720p.BluRay.x264-SHORTBREHD.srt · 25.000 fps · Sürüm benzerliği; senkron kontrolü önerilir",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 03 · Fleabag.S01E01.Episode.1.1080p.WEB-DL.AAC2.0.H.264-NTb · Film eşleşmesi; senkron belirsiz",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 04 · Fleabag.S01E01.720p.WEB.h264-spamTV · Film eşleşmesi; senkron belirsiz",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "07 · Online · VixSrc",
+          "quality": "Otomatik kalite HLS",
+          "type": "hls",
+          "language": "TR",
+          "subtitles": [
+            {
+              "name": "Türkçe · VTT · 01 · VixSrc Türkçe · Kaynakla eşlenmiş",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "08 · Online · PlayIMDb 1",
+          "quality": "1920×808 HLS",
+          "type": "hls",
+          "size": "≤~590.5 MiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 01 · Fleabag.S01E01.720p.BluRay.x264-SHORTBREHD · Sürüm benzerliği; senkron kontrolü önerilir",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · OpenSubtitles · 02 · Fleabag.S01E01.720p.BluRay.x264-SHORTBREHD.srt · 25.000 fps · Sürüm benzerliği; senkron kontrolü önerilir",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 03 · Fleabag.S01E01.Episode.1.1080p.WEB-DL.AAC2.0.H.264-NTb · Film eşleşmesi; senkron belirsiz",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 04 · Fleabag.S01E01.720p.WEB.h264-spamTV · Film eşleşmesi; senkron belirsiz",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "09 · Online · PlayIMDb 2",
+          "quality": "1920×808 HLS",
+          "type": "hls",
+          "size": "≤~590.5 MiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 01 · Fleabag.S01E01.720p.BluRay.x264-SHORTBREHD · Sürüm benzerliği; senkron kontrolü önerilir",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · OpenSubtitles · 02 · Fleabag.S01E01.720p.BluRay.x264-SHORTBREHD.srt · 25.000 fps · Sürüm benzerliği; senkron kontrolü önerilir",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 03 · Fleabag.S01E01.Episode.1.1080p.WEB-DL.AAC2.0.H.264-NTb · Film eşleşmesi; senkron belirsiz",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 04 · Fleabag.S01E01.720p.WEB.h264-spamTV · Film eşleşmesi; senkron belirsiz",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "10 · Online · PlayIMDb 3",
+          "quality": "1920×808 HLS",
+          "type": "hls",
+          "size": "≤~590.5 MiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 01 · Fleabag.S01E01.720p.BluRay.x264-SHORTBREHD · Sürüm benzerliği; senkron kontrolü önerilir",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · OpenSubtitles · 02 · Fleabag.S01E01.720p.BluRay.x264-SHORTBREHD.srt · 25.000 fps · Sürüm benzerliği; senkron kontrolü önerilir",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 03 · Fleabag.S01E01.Episode.1.1080p.WEB-DL.AAC2.0.H.264-NTb · Film eşleşmesi; senkron belirsiz",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 04 · Fleabag.S01E01.720p.WEB.h264-spamTV · Film eşleşmesi; senkron belirsiz",
+              "language": "tr"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "streams": [
+    {
+      "name": "01 · Online · PlayIMDb 1",
+      "quality": "640×270 HLS",
+      "type": "hls",
+      "size": "≤~113.1 MiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 01 · Fleabag.S01E01.720p.BluRay.x264-SHORTBREHD · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · OpenSubtitles · 02 · Fleabag.S01E01.720p.BluRay.x264-SHORTBREHD.srt · 25.000 fps · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 03 · Fleabag.S01E01.Episode.1.1080p.WEB-DL.AAC2.0.H.264-NTb · Film eşleşmesi; senkron belirsiz",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 04 · Fleabag.S01E01.720p.WEB.h264-spamTV · Film eşleşmesi; senkron belirsiz",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "02 · Online · PlayIMDb 2",
+      "quality": "640×270 HLS",
+      "type": "hls",
+      "size": "≤~113.1 MiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 01 · Fleabag.S01E01.720p.BluRay.x264-SHORTBREHD · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · OpenSubtitles · 02 · Fleabag.S01E01.720p.BluRay.x264-SHORTBREHD.srt · 25.000 fps · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 03 · Fleabag.S01E01.Episode.1.1080p.WEB-DL.AAC2.0.H.264-NTb · Film eşleşmesi; senkron belirsiz",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 04 · Fleabag.S01E01.720p.WEB.h264-spamTV · Film eşleşmesi; senkron belirsiz",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "03 · Online · PlayIMDb 3",
+      "quality": "640×270 HLS",
+      "type": "hls",
+      "size": "≤~113.1 MiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 01 · Fleabag.S01E01.720p.BluRay.x264-SHORTBREHD · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · OpenSubtitles · 02 · Fleabag.S01E01.720p.BluRay.x264-SHORTBREHD.srt · 25.000 fps · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 03 · Fleabag.S01E01.Episode.1.1080p.WEB-DL.AAC2.0.H.264-NTb · Film eşleşmesi; senkron belirsiz",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 04 · Fleabag.S01E01.720p.WEB.h264-spamTV · Film eşleşmesi; senkron belirsiz",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "04 · Online · PlayIMDb 1",
+      "quality": "1280×538 HLS",
+      "type": "hls",
+      "size": "≤~389.5 MiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 01 · Fleabag.S01E01.720p.BluRay.x264-SHORTBREHD · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · OpenSubtitles · 02 · Fleabag.S01E01.720p.BluRay.x264-SHORTBREHD.srt · 25.000 fps · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 03 · Fleabag.S01E01.Episode.1.1080p.WEB-DL.AAC2.0.H.264-NTb · Film eşleşmesi; senkron belirsiz",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 04 · Fleabag.S01E01.720p.WEB.h264-spamTV · Film eşleşmesi; senkron belirsiz",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "05 · Online · PlayIMDb 2",
+      "quality": "1280×538 HLS",
+      "type": "hls",
+      "size": "≤~389.5 MiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 01 · Fleabag.S01E01.720p.BluRay.x264-SHORTBREHD · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · OpenSubtitles · 02 · Fleabag.S01E01.720p.BluRay.x264-SHORTBREHD.srt · 25.000 fps · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 03 · Fleabag.S01E01.Episode.1.1080p.WEB-DL.AAC2.0.H.264-NTb · Film eşleşmesi; senkron belirsiz",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 04 · Fleabag.S01E01.720p.WEB.h264-spamTV · Film eşleşmesi; senkron belirsiz",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "06 · Online · PlayIMDb 3",
+      "quality": "1280×538 HLS",
+      "type": "hls",
+      "size": "≤~389.5 MiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 01 · Fleabag.S01E01.720p.BluRay.x264-SHORTBREHD · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · OpenSubtitles · 02 · Fleabag.S01E01.720p.BluRay.x264-SHORTBREHD.srt · 25.000 fps · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 03 · Fleabag.S01E01.Episode.1.1080p.WEB-DL.AAC2.0.H.264-NTb · Film eşleşmesi; senkron belirsiz",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 04 · Fleabag.S01E01.720p.WEB.h264-spamTV · Film eşleşmesi; senkron belirsiz",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "07 · Online · VixSrc",
+      "quality": "Otomatik kalite HLS",
+      "type": "hls",
+      "language": "TR",
+      "subtitles": [
+        {
+          "name": "Türkçe · VTT · 01 · VixSrc Türkçe · Kaynakla eşlenmiş",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "08 · Online · PlayIMDb 1",
+      "quality": "1920×808 HLS",
+      "type": "hls",
+      "size": "≤~590.5 MiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 01 · Fleabag.S01E01.720p.BluRay.x264-SHORTBREHD · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · OpenSubtitles · 02 · Fleabag.S01E01.720p.BluRay.x264-SHORTBREHD.srt · 25.000 fps · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 03 · Fleabag.S01E01.Episode.1.1080p.WEB-DL.AAC2.0.H.264-NTb · Film eşleşmesi; senkron belirsiz",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 04 · Fleabag.S01E01.720p.WEB.h264-spamTV · Film eşleşmesi; senkron belirsiz",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "09 · Online · PlayIMDb 2",
+      "quality": "1920×808 HLS",
+      "type": "hls",
+      "size": "≤~590.5 MiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 01 · Fleabag.S01E01.720p.BluRay.x264-SHORTBREHD · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · OpenSubtitles · 02 · Fleabag.S01E01.720p.BluRay.x264-SHORTBREHD.srt · 25.000 fps · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 03 · Fleabag.S01E01.Episode.1.1080p.WEB-DL.AAC2.0.H.264-NTb · Film eşleşmesi; senkron belirsiz",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 04 · Fleabag.S01E01.720p.WEB.h264-spamTV · Film eşleşmesi; senkron belirsiz",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "10 · Online · PlayIMDb 3",
+      "quality": "1920×808 HLS",
+      "type": "hls",
+      "size": "≤~590.5 MiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 01 · Fleabag.S01E01.720p.BluRay.x264-SHORTBREHD · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · OpenSubtitles · 02 · Fleabag.S01E01.720p.BluRay.x264-SHORTBREHD.srt · 25.000 fps · Sürüm benzerliği; senkron kontrolü önerilir",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 03 · Fleabag.S01E01.Episode.1.1080p.WEB-DL.AAC2.0.H.264-NTb · Film eşleşmesi; senkron belirsiz",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 04 · Fleabag.S01E01.720p.WEB.h264-spamTV · Film eşleşmesi; senkron belirsiz",
+          "language": "tr"
+        }
+      ]
+    }
+  ],
+  "deviceTest": "not-run"
+}

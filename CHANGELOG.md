@@ -1,5 +1,14 @@
 # Değişiklik günlüğü
 
+## 1.6.2 — 26 Ekim 2026
+
+- Obsession’da TMDB genel gösterim yılı ile doğru IMDb’ye bağlı dosyanın festival yılı farkından kaynaklanan yanlış eleme giderildi. Yalnız TMDB’nin aynı film için doğruladığı yakın gösterim yılları kabul edilir; farklı kimlik/başlık/yıl reddi korunur. Altyazıda ek kimlik kontrolü vardır.
+- PlayIMDb/VixSrc HLS aramasında ek profil/parça ölçümleri varsayılan kapalı; doğrulanan master korunur ve VixSrc master tekrar indirilmez. Ses/altyazı grupları korunur. Bitrate × TMDB süre tahmini gerçek dosya ölçümü veya altyazı süre uyumu sayılmaz. MP4/MKV doğrulaması gevşetilmedi.
+- HDHub erken ayna sayacı sonraki release’leri durdurmaz; en çok 12 release, ikili çözümleme. Büyük dosyaya boyut tavanı yoktur; küçük Dune indirmesi hâlâ doğrulanmadı.
+- Kimlik sorgusuna en çok 10 saniye mantıksal süre; ağ gerektirmeyen sürüm/ayar/anahtar varlığı Tanı satırı ve anahtar/URL içermeyen boş sonuç tanısı. Telefonda ortak boş sonuç kök nedeni henüz kesinleşmedi.
+- Kullanıcı 1.6.1’i iPhone’da gördüğünü doğruladı. Sabit TMDB referanslı canlı kaynak kontrolü telefonun TMDB API çağrısını sınamaz; fiziksel iPhone/tam oynatma/indirme/senkron testi yapılmadı.
+
+
 ## 1.6.1 — 26 Ekim 2026
 
 - Yayın tamamlandı: e5824c9, yerel 107/107, Windows/Linux ve Pages başarılı; manifest/sürümlü JS/legacy JS/sayfa HTTP200 ve yerel SHA eşit. Kod URL’sindeki sürüm parametresi eski JS önbelleğini azaltır; ana scraper kimliği değişmez.

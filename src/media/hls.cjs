@@ -83,9 +83,31 @@ async function sampledBytes(http, media, headers, totalDuration, base) {
   return { bytes: Math.round(valid.reduce((sum, s) => sum + s.bytes, 0) / valid.reduce((sum, s) => sum + s.duration, 0) * totalDuration), samples: valid.length };
 }
 
-async function inspectHls(http, text, url, candidate) {
+async function inspectHls(http, text, url, candidate, options = {}) {
   const master = inspectPlaylist(text, url);
   if (!master?.valid) return null;
+  // A working master must not wait for every rendition and segment HEAD.
+  // Native iOS fetches are not cancelled by the JS deadline; avoid starting
+  // optional work in the default recovery path.
+  if (options.detailed === false) {
+    const duration = master.duration || (!master.live && Number(candidate.identity?.runtimeMinutes) > 0 ? candidate.identity.runtimeMinutes * 60 : null);
+    const durationSource = master.duration ? 'playlist' : duration ? 'tmdb' : null;
+    const renditions = master.variants.filter(v => v.dimensions).slice(0,5).map(variant => {
+      const bitrate = variant.averageBandwidth || variant.bandwidth;
+      const bytes = duration && bitrate ? Math.round(duration * bitrate / 8) : null;
+      return { url: variant.url, dimensions: variant.dimensions, playlist: selectedMaster(master, variant),
+        sizeEstimate: bytes ? { minimum: bytes, maximum: bytes, basis: variant.averageBandwidth ? 'average-bitrate' : 'peak-bitrate', durationSource } : null,
+        duration, hasExternalAudio: !!variant.audioGroup, hasExternalSubtitles: !!variant.subtitlesGroup };
+    });
+    const resolutionOptions = [...new Map(renditions.map(r => [r.dimensions.width+'x'+r.dimensions.height,r.dimensions])).values()]
+      .sort((a,b) => Math.min(a.width,a.height) - Math.min(b.width,b.height));
+    const sizes = renditions.map(r => r.sizeEstimate).filter(Boolean);
+    return { url, container: 'hls', dimensions: null, size: null, downloadable: false, renditions, resolutionOptions,
+      resolutionEvidence: resolutionOptions.length ? 'hls-manifest' : null,
+      sizeEstimate: sizes.length ? { minimum: Math.min(...sizes.map(s=>s.minimum)), maximum: Math.max(...sizes.map(s=>s.maximum)),
+        basis: master.variants.every(v=>!!v.averageBandwidth) ? 'average-bitrate' : 'peak-or-average-bitrate', durationSource } : null,
+      ...(duration ? { duration, durationSource } : {}) };
+  }
   let duration = master.duration, durationSource = duration ? 'playlist' : null, live = master.live;
   const variants = master.variants;
   let firstMedia = null, firstUrl = null;

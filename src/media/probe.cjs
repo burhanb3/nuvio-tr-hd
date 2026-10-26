@@ -7,17 +7,18 @@ function sameFile(first, second) {
     (first.etag && !first.etag.startsWith('W/') && first.etag === second.etag));
 }
 
-async function probe(http, candidate, includeHls = false, hashEnabled = false) {
+async function probe(http, candidate, includeHls = false, hashEnabled = false, options = {}) {
   const path = candidate.url.split(/[?#]/)[0].toLowerCase();
   if (/\.(mpd|torrent|zip|rar|exe)$/.test(path)) return null;
   const hlsUrl = /\.m3u8(?:$|[?#])/i.test(candidate.url);
   if (hlsUrl && !includeHls) return null;
   if (hlsUrl) {
-    const playlist = await http.text(candidate.url, { headers: candidate.headers });
+    const cached = candidate.source === 'VixSrc' && candidate.hlsMaster;
+    const playlist = cached && cached.url === candidate.url && typeof cached.text === 'string' ? cached : await http.text(candidate.url, { headers: candidate.headers });
     if (!playlist || playlist.text.length > 131072 || !/\.m3u8(?:$|[?#])/i.test(playlist.url)) return null;
     const text = playlist.text.replace(/^\uFEFF/, '').trimStart();
     if (!text.startsWith('#EXTM3U') || !/#EXT-X-(STREAM-INF|TARGETDURATION):/.test(text)) return null;
-    return inspectHls(http, text, playlist.url, candidate);
+    return inspectHls(http, text, playlist.url, candidate, { detailed: options.detailedHls });
   }
   // S3/R2 presigned GET links sign the HTTP method. HEAD on a working GET
   // URL can legitimately be 403; inspect only a bounded GET range instead.
@@ -34,7 +35,7 @@ async function probe(http, candidate, includeHls = false, hashEnabled = false) {
     // Nuvio's download filter relies on the URL extension. Never expose an
     // extensionless HLS URL that its download UI would mistake for an MP4.
     if (!includeHls || !/\.m3u8(?:$|[?#])/i.test(sample.url) || !/#EXT-X-(STREAM-INF|TARGETDURATION):/.test(textPrefix)) return null;
-    return inspectHls(http, textPrefix, sample.url, candidate);
+    return inspectHls(http, textPrefix, sample.url, candidate, { detailed: options.detailedHls });
   }
   const info = inspectContainer(sample.bytes);
   if (!info) return null;

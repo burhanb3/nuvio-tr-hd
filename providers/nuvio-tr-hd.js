@@ -284,17 +284,33 @@ var require_matching = __commonJS({
     async function resolveIdentity(http, tmdbId, mediaType, season, episode, key) {
       const id = positiveInt(tmdbId);
       const type = mediaType === "movie" ? "movie" : ["tv", "series", "show", "other"].includes(mediaType) ? "tv" : null;
-      if (!id || !type || !key || type === "tv" && (!positiveInt(season) || !positiveInt(episode))) return null;
-      const meta = await http.json(`https://api.themoviedb.org/3/${type}/${id}?api_key=${encodeURIComponent(key)}&append_to_response=external_ids`);
-      if (!meta || meta.id !== id) return null;
+      const fail = (reason) => {
+        http.note?.({ stage: "identity", reason });
+        return null;
+      };
+      if (!id) return fail("invalid_tmdb_id");
+      if (!type) return fail("invalid_media_type");
+      if (!key) return fail("missing_tmdb_key");
+      if (type === "tv" && (!positiveInt(season) || !positiveInt(episode))) return fail("missing_episode");
+      http.note?.({ stage: "identity", reason: "request_started" });
+      const append = type === "movie" ? "external_ids,release_dates" : "external_ids";
+      const meta = await http.json(`https://api.themoviedb.org/3/${type}/${id}?api_key=${encodeURIComponent(key)}&append_to_response=${append}`, { timeoutMs: 1e4 });
+      if (!meta) return fail("tmdb_request_failed");
+      if (meta.id !== id) return fail("tmdb_id_mismatch");
       const originalTitle = type === "movie" ? meta.original_title : meta.original_name;
       const date = type === "movie" ? meta.release_date : meta.first_air_date;
       const year = typeof date === "string" && /^\d{4}-\d{2}-\d{2}$/.test(date) ? Number(date.slice(0, 4)) : null;
-      if (!normalizeTitle(originalTitle) || !year) return null;
+      if (!normalizeTitle(originalTitle) || !year) return fail("tmdb_metadata_incomplete");
+      const releaseYears = type === "movie" && Array.isArray(meta.release_dates?.results) ? [.../* @__PURE__ */ new Set([
+        year,
+        ...meta.release_dates.results.slice(0, 250).flatMap((country) => Array.isArray(country?.release_dates) ? country.release_dates.slice(0, 40) : []).filter((r) => [1, 2, 3, 4].includes(r?.type) && /^\d{4}-\d{2}-\d{2}T/.test(String(r.release_date))).map((r) => Number(r.release_date.slice(0, 4))).filter((y) => Math.abs(y - year) <= 1)
+      ])].sort() : [year];
+      http.note?.({ stage: "identity", reason: "ok", year, type });
       return {
         tmdbId: id,
         originalTitle,
         year,
+        releaseYears,
         type,
         season: type === "tv" ? Number(season) : null,
         searchTitles: [...new Set([meta.title || meta.name, originalTitle].filter((v) => typeof v === "string" && v.trim()))].slice(0, 2),
@@ -675,7 +691,7 @@ var require_playimdb = __commonJS({
         const title = normalizeTitle(target.originalTitle), leaf = normalizeTitle(filename);
         const titleBound = leaf.startsWith(title + " ") || path.some((folder) => normalizeTitle(folder).startsWith(title + " ")) && (" " + leaf + " ").includes(" " + title + " ");
         if (!target.imdbId || data.imdb_id !== target.imdbId || !matchesEpisode(filename, target) || !titleBound) return [];
-      } else if (!filenameIdentity(filename, target)) return [];
+      } else if (!filenameIdentity(filename, target) && !(target.imdbId && data.imdb_id === target.imdbId && target.releaseYears?.some((year) => filenameIdentity(filename, { ...target, year })))) return [];
       const subtitles = (Array.isArray(result.default_subs) ? result.default_subs : []).map((s) => ({
         ...s,
         language: s.lang || s.language,
@@ -691,6 +707,7 @@ var require_playimdb = __commonJS({
         subtitleBase: PLAY_API,
         source: "PlayIMDb",
         identity: target,
+        identityImdbBound: !!target.imdbId && data.imdb_id === target.imdbId,
         identityConfidence: 95
       })).filter((x) => x.url);
     }
@@ -912,6 +929,7 @@ var require_vixsrc = __commonJS({
         url,
         filename: `${target.originalTitle}.${target.year}.VixSrc`,
         headers,
+        hlsMaster: { url, text: bundle.master },
         subtitles: bundle.subtitleUrl ? [{ url: bundle.subtitleUrl, language: "tr", releaseName: "VixSrc Türkçe", _scope: "paired" }] : [],
         embeddedTurkish: bundle.embeddedTurkish,
         claimedQuality: "Otomatik HLS",
@@ -1031,10 +1049,10 @@ var require_hdhub = __commonJS({
       if (!page || !pageMatches(page.text, target)) return [];
       const entries = releaseEntries(page.text, target);
       const resolved = [];
-      const maximum = options.onCandidates ? 12 : 6;
-      for (let offset = 0; offset < Math.min(maximum, entries.length) && !http.expired(); offset += 3) {
-        if (offset > 0 && (options.verifiedCount ? options.verifiedCount() >= 5 : resolved.length >= 3)) break;
-        await mapLimit(entries.slice(offset, offset + 3), 3, async (entry) => {
+      const maximum = 12;
+      for (let offset = 0; offset < Math.min(maximum, entries.length) && !http.expired(); offset += 2) {
+        if (offset > 0 && !options.onCandidates && resolved.length >= 3) break;
+        await mapLimit(entries.slice(offset, offset + 2), 2, async (entry) => {
           const found = await resolveRelease(http, entry, target, options.allowExtensionless === true);
           resolved.push(...found);
           if (found.length && options.onCandidates) await options.onCandidates(found);
@@ -1431,9 +1449,45 @@ var require_hls = __commonJS({
       if (valid.length < Math.min(2, indices.length)) return null;
       return { bytes: Math.round(valid.reduce((sum, s) => sum + s.bytes, 0) / valid.reduce((sum, s) => sum + s.duration, 0) * totalDuration), samples: valid.length };
     }
-    async function inspectHls(http, text, url, candidate) {
+    async function inspectHls(http, text, url, candidate, options = {}) {
       const master = inspectPlaylist(text, url);
       if (!master?.valid) return null;
+      if (options.detailed === false) {
+        const duration2 = master.duration || (!master.live && Number(candidate.identity?.runtimeMinutes) > 0 ? candidate.identity.runtimeMinutes * 60 : null);
+        const durationSource2 = master.duration ? "playlist" : duration2 ? "tmdb" : null;
+        const renditions2 = master.variants.filter((v) => v.dimensions).slice(0, 5).map((variant) => {
+          const bitrate = variant.averageBandwidth || variant.bandwidth;
+          const bytes = duration2 && bitrate ? Math.round(duration2 * bitrate / 8) : null;
+          return {
+            url: variant.url,
+            dimensions: variant.dimensions,
+            playlist: selectedMaster(master, variant),
+            sizeEstimate: bytes ? { minimum: bytes, maximum: bytes, basis: variant.averageBandwidth ? "average-bitrate" : "peak-bitrate", durationSource: durationSource2 } : null,
+            duration: duration2,
+            hasExternalAudio: !!variant.audioGroup,
+            hasExternalSubtitles: !!variant.subtitlesGroup
+          };
+        });
+        const resolutionOptions2 = [...new Map(renditions2.map((r) => [r.dimensions.width + "x" + r.dimensions.height, r.dimensions])).values()].sort((a, b) => Math.min(a.width, a.height) - Math.min(b.width, b.height));
+        const sizes = renditions2.map((r) => r.sizeEstimate).filter(Boolean);
+        return {
+          url,
+          container: "hls",
+          dimensions: null,
+          size: null,
+          downloadable: false,
+          renditions: renditions2,
+          resolutionOptions: resolutionOptions2,
+          resolutionEvidence: resolutionOptions2.length ? "hls-manifest" : null,
+          sizeEstimate: sizes.length ? {
+            minimum: Math.min(...sizes.map((s) => s.minimum)),
+            maximum: Math.max(...sizes.map((s) => s.maximum)),
+            basis: master.variants.every((v) => !!v.averageBandwidth) ? "average-bitrate" : "peak-or-average-bitrate",
+            durationSource: durationSource2
+          } : null,
+          ...duration2 ? { duration: duration2, durationSource: durationSource2 } : {}
+        };
+      }
       let duration = master.duration, durationSource = duration ? "playlist" : null, live = master.live;
       const variants = master.variants;
       let firstMedia = null, firstUrl = null;
@@ -1520,17 +1574,18 @@ var require_probe = __commonJS({
     function sameFile(first, second) {
       return first && second && first.total === second.total && (first.url === second.url || first.etag && !first.etag.startsWith("W/") && first.etag === second.etag);
     }
-    async function probe(http, candidate, includeHls = false, hashEnabled = false) {
+    async function probe(http, candidate, includeHls = false, hashEnabled = false, options = {}) {
       const path = candidate.url.split(/[?#]/)[0].toLowerCase();
       if (/\.(mpd|torrent|zip|rar|exe)$/.test(path)) return null;
       const hlsUrl = /\.m3u8(?:$|[?#])/i.test(candidate.url);
       if (hlsUrl && !includeHls) return null;
       if (hlsUrl) {
-        const playlist = await http.text(candidate.url, { headers: candidate.headers });
+        const cached = candidate.source === "VixSrc" && candidate.hlsMaster;
+        const playlist = cached && cached.url === candidate.url && typeof cached.text === "string" ? cached : await http.text(candidate.url, { headers: candidate.headers });
         if (!playlist || playlist.text.length > 131072 || !/\.m3u8(?:$|[?#])/i.test(playlist.url)) return null;
         const text = playlist.text.replace(/^\uFEFF/, "").trimStart();
         if (!text.startsWith("#EXTM3U") || !/#EXT-X-(STREAM-INF|TARGETDURATION):/.test(text)) return null;
-        return inspectHls(http, text, playlist.url, candidate);
+        return inspectHls(http, text, playlist.url, candidate, { detailed: options.detailedHls });
       }
       const signedGet = /[?&]X-Amz-Algorithm=AWS4-HMAC-SHA256(?:&|$)/i.test(candidate.url) && /[?&]X-Amz-Signature=[a-f0-9]{64}(?:&|$)/i.test(candidate.url);
       const head = signedGet || candidate.getOnly === true ? null : await http.request(candidate.url, { method: "HEAD", headers: candidate.headers });
@@ -1543,7 +1598,7 @@ var require_probe = __commonJS({
       const textPrefix = ascii(sample.bytes, 0, Math.min(sample.bytes.length, 2048)).replace(/^\u00ef\u00bb\u00bf/, "").trimStart();
       if (textPrefix.startsWith("#EXTM3U")) {
         if (!includeHls || !/\.m3u8(?:$|[?#])/i.test(sample.url) || !/#EXT-X-(STREAM-INF|TARGETDURATION):/.test(textPrefix)) return null;
-        return inspectHls(http, textPrefix, sample.url, candidate);
+        return inspectHls(http, textPrefix, sample.url, candidate, { detailed: options.detailedHls });
       }
       const info = inspectContainer(sample.bytes);
       if (!info) return null;
@@ -1609,17 +1664,21 @@ var require_subtitle_discovery = __commonJS({
     }
     function scoreSubtitle(sub, candidate, video, target, allowLoose = false) {
       if (!isTurkish(sub.language || sub.lang || sub.lang_code) || sub.ai_translated === true || sub.ai_translated === "true") return null;
+      if ((sub.imdbId || sub.imdb_id) && (sub.imdbId || sub.imdb_id) !== target.imdbId) return null;
+      if (sub.tmdbId != null && Number(sub.tmdbId) !== target.tmdbId) return null;
       if (target.type === "tv" && (Number(sub.season) > 0 && Number(sub.season) !== target.season || Number(sub.episode) > 0 && Number(sub.episode) !== target.episode)) return null;
       const name = String(sub.releaseName || sub.movieReleaseName || sub.title || sub.subtitleFileName || "");
       const file = candidate.filename || decodeFilename(candidate.url);
       const a = releaseKey(file), b = releaseKey(name);
       if (target.type === "tv" && /\bs\d+[ ._-]*e\d+\b|\b\d+x\d+\b/i.test(name) && !matchesEpisode(name, target)) return null;
       const years = b.match(/\b(?:19|20)\d{2}\b/g);
-      if (years?.some((y) => Number(y) !== target.year) && !(target.type === "tv" && sub._identityBound === true && years.every((y) => Number(y) >= target.year && Number(y) <= (/* @__PURE__ */ new Date()).getFullYear() + 1))) return null;
+      const releaseYears = target.type === "movie" && (sub._identityBound === true || sub._scope === "paired" && candidate.identityImdbBound === true) ? [target.year, ...target.releaseYears || []] : [target.year];
+      if (years?.some((y) => !releaseYears.includes(Number(y))) && !(target.type === "tv" && sub._identityBound === true && years.every((y) => Number(y) >= target.year && Number(y) <= (/* @__PURE__ */ new Date()).getFullYear() + 1))) return null;
       const hash = String(sub.moviehash || sub.videoHash || "").toLowerCase();
       if (video.videoHash && hash === video.videoHash.toLowerCase()) return { score: 100, label: "Dosya hash eşleşmesi" };
       if (cutSignature(file) !== cutSignature(name) && sub._scope !== "paired") return null;
-      const titleYear = `${normalizeTitle(target.originalTitle)} ${target.year}`;
+      const nameYear = Number(years?.[0]);
+      const titleYear = `${normalizeTitle(target.originalTitle)} ${releaseYears.includes(nameYear) ? nameYear : target.year}`;
       const hasReleaseDetail = a.startsWith(titleYear + " ") && a.length > titleYear.length + 4;
       if (!sub._releaseNotesOnly && hasReleaseDetail && b && (a === b || (" " + b + " ").includes(" " + a + " "))) return { score: 95, label: "Tam sürüm eşleşmesi" };
       if (!sub._scope || sub._scope === "paired") return { score: 90, label: "Kaynakla eşlenmiş" };
@@ -1627,13 +1686,13 @@ var require_subtitle_discovery = __commonJS({
       if (b !== title && b !== titleYear && !b.startsWith(titleYear + " ") && !(target.type === "tv" && sub._identityBound === true && b.startsWith(title + " ") && matchesEpisode(name, target))) return null;
       const family = sourceFamily(file);
       if (family && family === sourceFamily(name)) {
-        const ignore = new Set((title + " " + target.year).split(" "));
+        const ignore = new Set((title + " " + releaseYears.join(" ")).split(" "));
         const words = (value) => new Set(value.split(" ").filter((w) => w.length >= 3 && !ignore.has(w)));
         const x = words(a), y = words(b);
         const common = [...x].filter((w) => y.has(w)).length;
         if (common >= 2) return { score: Math.min(85, 70 + common * 2), label: "Sürüm benzerliği; senkron kontrolü önerilir" };
       }
-      if (video.duration > 60) return { score: 50, label: "Film eşleşmesi; süre kontrolü bekleniyor", requireDuration: true, ...allowLoose ? { allowFilmFallback: true } : {} };
+      if (video.duration > 60 && video.durationSource !== "tmdb") return { score: 50, label: "Film eşleşmesi; süre kontrolü bekleniyor", requireDuration: true, ...allowLoose ? { allowFilmFallback: true } : {} };
       return allowLoose ? { score: 35, label: "Film eşleşmesi; senkron belirsiz" } : null;
     }
     function decodeFilename(url) {
@@ -1797,6 +1856,47 @@ var require_presentation = __commonJS({
   }
 });
 
+// src/diagnostics.cjs
+var require_diagnostics = __commonJS({
+  "src/diagnostics.cjs"(exports2, module2) {
+    "use strict";
+    var VERSION = true ? "1.6.2" : "dev";
+    function effectiveTmdbKey(settings, injectedKey) {
+      return typeof settings.tmdbApiKey === "string" && settings.tmdbApiKey.trim() ? settings.tmdbApiKey.trim() : typeof injectedKey === "string" ? injectedKey.trim() : "";
+    }
+    function configuration(settings = {}, injectedKey) {
+      return {
+        version: VERSION,
+        tmdbKeyPresent: !!effectiveTmdbKey(settings, injectedKey),
+        autoDiscover: settings.autoDiscover !== false,
+        includeHls: settings.includeHls !== false,
+        playImdbEnabled: settings.playImdbEnabled !== false,
+        vixsrcEnabled: settings.vixsrcEnabled !== false,
+        hdhubEnabled: settings.hdhubEnabled !== false,
+        archiveEnabled: settings.archiveEnabled !== false,
+        autoSubtitles: settings.autoSubtitles !== false,
+        subtitleRequired: settings.subtitlePolicy === "require",
+        detailedHlsMetadata: settings.detailedHlsMetadata === true,
+        minimumQuality: [0, 480, 720, 1080].includes(Number(settings.minimumQuality || 0)) ? Number(settings.minimumQuality || 0) : 0,
+        maxResults: Math.max(3, Math.min(20, Number(settings.maxResults) || 20))
+      };
+    }
+    function configurationLabel(settings, injectedKey) {
+      const c = configuration(settings, injectedKey), state = (value) => value ? "açık" : "kapalı";
+      return `Tanı · ${c.version} · TMDB anahtarı: ${c.tmdbKeyPresent ? "var" : "yok"} · Tarama: ${state(c.autoDiscover)} · HLS: ${state(c.includeHls)} · Play: ${state(c.playImdbEnabled)} · Vix: ${state(c.vixsrcEnabled)} · HDHub: ${state(c.hdhubEnabled)} · Archive: ${state(c.archiveEnabled)} · TR arama: ${state(c.autoSubtitles)} · TR zorunlu: ${c.subtitleRequired ? "evet" : "hayır"} · En az: ${c.minimumQuality || "tümü"} · Liste: ${c.maxResults}`;
+    }
+    function writeDiagnostic(report, enabled) {
+      if (enabled && typeof globalThis.console?.info === "function") {
+        try {
+          globalThis.console.info("[Nuvio TR HD] " + JSON.stringify(report));
+        } catch {
+        }
+      }
+    }
+    module2.exports = { configuration, configurationLabel, effectiveTmdbKey, writeDiagnostic };
+  }
+});
+
 // src/index.cjs
 var require_index = __commonJS({
   "src/index.cjs"(exports2, module2) {
@@ -1820,6 +1920,7 @@ var require_index = __commonJS({
     var { rankStreams } = require_ranking();
     var { describeQuality, describeSize } = require_presentation();
     var { profileAddress } = require_hls();
+    var { configuration, configurationLabel, effectiveTmdbKey, writeDiagnostic } = require_diagnostics();
     function parseUrls(value, allowHttp) {
       if (typeof value !== "string") return [];
       return [...new Set(value.trim().split(/\s+/).map((url) => safeUrl(url, void 0, allowHttp)).filter(Boolean))].slice(0, 3);
@@ -1877,10 +1978,30 @@ var require_index = __commonJS({
           const allowHttp = settings.allowHttp === true;
           const catalogs = parseUrls(settings.catalogUrls, allowHttp), addons = parseUrls(settings.addonUrls, allowHttp);
           const filesLane = ["all", "main", "files"].includes(lane), onlineLane = ["all", "main", "online"].includes(lane), animeLane = lane === "all" || lane === "anime";
-          if (settings.autoDiscover === false && !catalogs.length && !addons.length) return [];
           const started = Date.now(), scheduler = createScheduler();
-          const report = { tmdbId: String(tmdbId), lane, sources: [], rejected: {}, http: {}, subtitleText: {}, results: 0, reason: "searching" };
+          const report = {
+            tmdbId: /^\d+$/.test(String(tmdbId)) ? String(tmdbId) : "invalid",
+            lane,
+            configuration: configuration(settings, tmdbKey),
+            identity: { reason: "not_requested" },
+            sources: [],
+            rejected: {},
+            http: {},
+            subtitleText: {},
+            results: 0,
+            reason: "searching"
+          };
+          if (settings.autoDiscover === false && !catalogs.length && !addons.length) {
+            report.reason = "automatic_search_disabled";
+            report.elapsedMs = Date.now() - started;
+            lastReport = report;
+            lastPairs = [];
+            scheduler.close();
+            writeDiagnostic(report, true);
+            return [];
+          }
           const emit = (event) => {
+            if (event.stage === "identity") report.identity = { reason: event.reason, ...event.year ? { year: event.year, type: event.type } : {} };
             if (event.stage === "http") {
               const key = `${event.host}:${event.status || event.reason}`;
               report.http[key] = (report.http[key] || 0) + 1;
@@ -1925,7 +2046,14 @@ var require_index = __commonJS({
               reject("hls_disabled");
               return;
             }
-            const video = await withProbeSlot(() => probe(http, candidate, settings.includeHls !== false, settings.autoSubtitles !== false));
+            const lightweightHls = ["PlayIMDb", "VixSrc"].includes(candidate.source) && settings.detailedHlsMetadata !== true;
+            const video = await withProbeSlot(() => probe(
+              http,
+              candidate,
+              settings.includeHls !== false,
+              settings.autoSubtitles !== false,
+              { detailedHls: !lightweightHls }
+            ));
             if (!video || http.expired()) {
               reject("video_unavailable");
               return;
@@ -1943,7 +2071,13 @@ var require_index = __commonJS({
               return match ? { ...sub, _match: match } : null;
             }).filter(Boolean).sort((a, b) => b._match.score - a._match.score);
             if (declared.length) {
-              pair.subtitles = await loadSubtitles(http, { ...candidate, subtitles: declared }, target, allowHttp, { keepScore: true, videoDuration: video.duration });
+              pair.subtitles = await loadSubtitles(
+                http,
+                { ...candidate, subtitles: declared },
+                target,
+                allowHttp,
+                { keepScore: true, videoDuration: video.durationSource === "tmdb" ? void 0 : video.duration }
+              );
               if (pair.subtitles.length) {
                 if (strictSubtitles && !embedded) completed.push(pair);
                 return;
@@ -1955,7 +2089,13 @@ var require_index = __commonJS({
               const match = scoreSubtitle(sub, candidate, video, target, settings.subtitleMatchMode !== "strict");
               return match ? { ...sub, _match: match } : null;
             }).filter(Boolean).sort((a, b) => b._match.score - a._match.score);
-            const subtitles = await loadSubtitles(http, { ...candidate, subtitles: entries }, target, allowHttp, { keepScore: true, videoDuration: video.duration });
+            const subtitles = await loadSubtitles(
+              http,
+              { ...candidate, subtitles: entries },
+              target,
+              allowHttp,
+              { keepScore: true, videoDuration: video.durationSource === "tmdb" ? void 0 : video.duration }
+            );
             if (http.expired()) return;
             if (!subtitles.length) {
               reject(entries.length ? "subtitle_unavailable" : "subtitle_no_match");
@@ -1966,7 +2106,7 @@ var require_index = __commonJS({
           };
           const run = async () => {
             try {
-              target = await resolveIdentity(http, tmdbId, mediaType, season, episode, settings.tmdbApiKey || tmdbKey);
+              target = await resolveIdentity(http, tmdbId, mediaType, season, episode, effectiveTmdbKey(settings, tmdbKey));
               if (!target) {
                 report.reason = "identity_unavailable";
                 return [];
@@ -2016,11 +2156,7 @@ var require_index = __commonJS({
                   sourceJobs.push({ name: "VixSrc", run: () => scanVixDirect(http, target) });
                 if (animeLane && settings.animecixEnabled !== false && target.isAnime) sourceJobs.push({ name: "Animecix", run: () => scanAnimecix(http, target) });
                 if (filesLane && settings.hdhubEnabled !== false && !sourceFactories.some((s) => s.name === "4KHDHub / HubCloud")) sourceJobs.push({ name: "4KHDHub / HubCloud", run: async () => {
-                  return scanHdHub(http, target, {
-                    allowExtensionless: settings.useDownloadBridge !== false,
-                    onCandidates: acceptHdHub,
-                    verifiedCount: () => completed.filter((pair) => pair.candidate.source === "4KHDHub / HubCloud").length
-                  });
+                  return scanHdHub(http, target, { allowExtensionless: settings.useDownloadBridge !== false, onCandidates: acceptHdHub });
                 } });
               }
               for (const source of sourceFactories) sourceJobs.push({ name: source.name, run: () => source.run(http, target) });
@@ -2063,14 +2199,17 @@ var require_index = __commonJS({
             report.elapsedMs = Date.now() - started;
             lastReport = JSON.parse(JSON.stringify(report));
             lastPairs = completed.slice();
-            if (settings.debug === true) console.info("[Nuvio TR HD] " + JSON.stringify(lastReport));
+            writeDiagnostic(lastReport, settings.debug === true || !report.results);
           }
         }
       };
     }
     function onSettings() {
+      const settings = typeof globalThis.SCRAPER_SETTINGS === "object" && globalThis.SCRAPER_SETTINGS || {};
+      const tmdbKey = typeof globalThis.TMDB_API_KEY === "string" ? globalThis.TMDB_API_KEY : "";
       return [
         { type: "header", label: "Nuvio TR HD · Otomatik kaynak ve Türkçe altyazı" },
+        { type: "info", label: configurationLabel(settings, tmdbKey) },
         { type: "info", label: "Varsayılan: tüm çözünürlükler, en fazla 20 alternatif. Online izlenebilir kaynaklar gösterilir; doğrulanmış MP4/MKV ayrıca İndirilebilir etiketlidir. Türkçe bulunamazsa video gizlenmez. Nuvio altyazı dilini Türkçe seçin." },
         { type: "toggle", key: "autoDiscover", label: "Otomatik kaynak tarama", defaultValue: true },
         { type: "toggle", key: "compactLabels", label: "Kısa ve sade kaynak başlıkları", defaultValue: true },
@@ -2092,6 +2231,13 @@ var require_index = __commonJS({
           { value: "auto", label: "Tek otomatik kalite" },
           { value: "both", label: "Ayrı kaliteler ve otomatik" }
         ] },
+        {
+          type: "toggle",
+          key: "detailedHlsMetadata",
+          label: "HLS için ek süre ve boyut ölçümleri",
+          defaultValue: false,
+          description: "Ek profil/parça istekleri aramayı uzatabilir. Kapalıyken doğrulanan ana liste korunur; boyut varsa bitrate ve TMDB süresinden açıkça tahmin edilir. MP4/MKV dosya doğrulaması her zaman yapılır."
+        },
         { type: "toggle", key: "useDownloadBridge", label: "MKV indirme adını koruyan dosya köprüsü", defaultValue: true, description: "Kaynaklar telefondan aranır. Yalnız bulunan public dosya adresi ve film metadatası köprüde doğrulanır. Video doğrudan kaynaktan gelir; kişisel katalog/anahtar gönderilmez." },
         { type: "toggle", key: "vixsrcEnabled", label: "VixSrc çevrimiçi alternatifleri", defaultValue: true },
         { type: "toggle", key: "hdhubEnabled", label: "4KHDHub / HubCloud doğrudan dosya araması", defaultValue: true, description: "Ücretsiz public FSL dosyaları doğrulanır. Kaynak metadatası boyut/piksel doğrulaması sayılmaz." },
@@ -2131,7 +2277,7 @@ var require_index = __commonJS({
         { type: "text", key: "subtitleUrls", label: "Ek/alternatif altyazı addon adresleri", description: "Boşsa AltyazıDB, Türkçe OpenSubtitles v3+ ve resmî v3 kullanılır." },
         { type: "text", key: "tmdbApiKey", label: "TMDB v3 anahtarı (isteğe bağlı)", description: "Boşsa Nuvio tarafından sağlanan anahtar kullanılır." },
         { type: "toggle", key: "includeHls", label: "HLS çevrimiçi izleme alternatiflerini göster", defaultValue: true, description: "Doğrudan dosyalar önce gelir. HLS yalnız oynatma içindir; Nuvio üzerinden dosya olarak indirilemez." },
-        { type: "toggle", key: "debug", label: "Hata ayıklama özeti", defaultValue: false, description: "Uygulama günlüklerine kaynak/adet/HTTP durumlarını yazar; erişim anahtarı veya video adresi yazılmaz." },
+        { type: "toggle", key: "debug", label: "Hata ayıklama özeti", defaultValue: false, description: "Boş sonuçlarda tanı zaten yazılır; açıkken başarılı aramaları da yazar. Günlükte ayar/kimlik/kaynak/adet/HTTP durumları vardır; anahtar ve video adresi yoktur." },
         { type: "toggle", key: "allowHttp", label: "Kişisel HTTP kaynaklarına izin ver", defaultValue: false }
       ];
     }
