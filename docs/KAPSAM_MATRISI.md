@@ -1,5 +1,11 @@
 # Film ve dizi kapsam hedefi
 
+## 1.7.0 genel sağlayıcı turu
+
+Yeni manuel video pini eklenmedi. DiziYou/DiziBak/FilmModu online kapsamı, SonAnime/kanonik anime adları ve genel Archive bölüm araması eklendi. Son per-case gözlemler: 14 online+TR, 11 küçük+TR, 10 bilinen yabancı sabit altyazısız küçük+TR; bütün kaynak ölçütleri6. Bunlar tek kesintisiz tur değildir: tam tur12 online/10 küçük verdi, GOT/Breaking Bad aynı anda birden çok hostta timeout oldu; iki-vaka tekrarında online ve Breaking Bad dosyaları döndü. [Tam tur](../compatibility/coverage-170-full-run.json), [tekrar](../compatibility/coverage-170-recheck.json), [son gözlemler](../compatibility/coverage-170.json). Ağ kararsızlığı giderildi iddiası yok.
+
+Ek genel anime kontrolü: Attack on Titan S01E01 için 9 MP4, 853×480 / 1280×720 / 1920×1080, 164,7–568,5 MiB ve mevcut Türkçe alternatifler. [Kanıt](../compatibility/anime-aot-170.json). Yeni sağlayıcı aynı videoyu kullanıyorsa bağımsız dosya artışı sayılmaz. Matrix/Shameless/GoT indirmeleri hâlâ eksik; fiziksel oynatma/indirme/offline/senkron yok. [Yöntem](KAYNAK_GENISLETME_170.md).
+
 Kullanıcı yalnız birkaç deneme filminde sonuç istemiyor: farklı film/dizilerde küçük ve büyük, farklı gerçek çözünürlükte, online ve indirilebilir Türkçe altyazılı seçenekler istiyor. **Bu hedef tamamlanmadı; 1.6.3 ilk kapsam artışıdır.**
 
 Deneme listesi [validation/titles.json](../validation/titles.json) içinde 14 vaka içerir. Başlıklar ve yıllar 26 Ekim 2026’da TMDB’nin public film/dizi sayfalarıyla karşılaştırıldı. Çalıştırıcı gerçek kaynak ve altyazı istekleri yapar, TMDB API metadata’sını sabit referans verir; telefonun enjekte anahtarını veya native ağ köprüsünü sınamaz.

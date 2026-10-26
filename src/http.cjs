@@ -5,7 +5,7 @@ const { createScheduler } = require('./scheduler.cjs');
 function createHttp({ fetchImpl, allowHttp = false, timeoutMs = 4500, deadline = Date.now() + 30000, scheduler, onEvent = () => {} }) {
   const fetcher = fetchImpl || globalThis.fetch;
   const clock = scheduler || createScheduler();
-  const failures = new Map(), rateLimited = new Map();
+  const failures = new Map(), rateLimited = new Map(), denied = new Set();
   const controllers = new Set();
   let closed = false;
   const expired = () => closed || Date.now() >= deadline;
@@ -32,6 +32,8 @@ function createHttp({ fetchImpl, allowHttp = false, timeoutMs = 4500, deadline =
     const { timeoutMs: localTimeout, nativeGroup, ...fetchOptions } = options;
     let url = safeUrl(rawUrl, undefined, allowHttp);
     if (!url || expired()) return null;
+    const denialKey=JSON.stringify([options.method||'GET',url,Object.entries(options.headers||{}).sort()]);
+    if(denied.has(denialKey))return null;
     const started = Date.now();
     const requestedTimeout = Number.isFinite(localTimeout) ? Math.max(1, Math.min(localTimeout, 20000)) : timeoutMs;
     const end = Math.min(deadline, started + requestedTimeout);
@@ -54,6 +56,7 @@ function createHttp({ fetchImpl, allowHttp = false, timeoutMs = 4500, deadline =
         const finalUrl = safeUrl(response.url || url, undefined, allowHttp);
         if (!finalUrl || !response.ok) {
           failures.set(rawUrl, { status: response.status });
+          if([401,403,404,410].includes(response.status))denied.add(denialKey);
           if (response.status === 429) {
             const retry = Number(response.headers.get('retry-after'));
             rateLimited.set(new URL(finalUrl || url).origin, Date.now() + Math.max(1000, Math.min(60000, (retry || 30) * 1000)));

@@ -164,6 +164,33 @@ test('QuickJS anime paketi: doğru kanonik bölüm, gerçek 720p MP4 ve eşlenmi
  const ordinary=makeFixture();assert.deepEqual(await runInQuickJs(ordinary,{code:animeBundle,settings:{}}),[]);
 });
 
+test('QuickJS SonAnime: Japonca özgün adın kanonik İngilizce karşılığı, tam bölüm ve gerçek MP4',async()=>{
+ const row={anime_id:20,tmdb_id:13916,anime_name:'Death Note',anime_year:2006,anime_type:'anime',anime_link:'death-note'};
+ const fixture={
+  'https://api.themoviedb.org/3/tv/13916?api_key=test&append_to_response=external_ids':{json:{id:13916,name:'Death Note',original_name:'デスノート',first_air_date:'2006-10-04',genres:[{id:16}],original_language:'ja'}},
+  'https://api.sonanime.com/api/anime/search?q=Death%20Note':{json:[row]},
+  'https://api.sonanime.com/api/anime/link/death-note':{json:{...row,episodes:[{anime_id:20,anime_season:1,episode_number:1,episode_link_480:'https://video.konununuzmani.com/video/fixture'}]}},
+  'https://video.konununuzmani.com/video/fixture':{body:helpers.mp4({width:852,height:480})}
+ };
+ const streams=await runInQuickJs(fixture,{code:animeBundle,args:['13916','tv',1,1],settings:{autoSubtitles:false}});
+ assert.equal(streams.length,1);assert.match(streams[0].name,/SonAnime/);assert.equal(streams[0].quality,'852×480 ✓');assert.equal(streams[0].type,'mp4');
+});
+
+test('QuickJS DiziYou: yeni kaynaktan online HLS + eşlenmiş TR, yanlış üç kalite tek Auto',async()=>{
+ const ld=data=>'<script type="application/ld+json">'+JSON.stringify(data)+'</script>';
+ const fixture={
+  'https://api.themoviedb.org/3/tv/67070?api_key=test&append_to_response=external_ids':{json:{id:67070,original_name:'Fleabag',first_air_date:'2016-07-21',original_language:'en'}},
+  'https://www.diziyou.one/fleabag/':{body:ld({'@type':'TVSeries',name:'Fleabag',startDate:'2016'})+'<a href="/fleabag-1-sezon-1-bolum/">1</a>'},
+  'https://www.diziyou.one/fleabag-1-sezon-1-bolum/':{body:ld({'@type':'TVEpisode',partOfSeries:{name:'Fleabag'},partOfSeason:{seasonNumber:1},episodeNumber:1})+'<iframe id="diziyouPlayer" src="/player/12.html"></iframe>'},
+  'https://www.diziyou.one/player/12.html':{body:'<video id="diziyou"><source src="https://stream.test/master.m3u8"><track srclang="tr" src="https://subs.test/tr.vtt"></video>'},
+  'https://stream.test/master.m3u8':{body:'#EXTM3U\n#EXT-X-STREAM-INF:BANDWIDTH=1000000,RESOLUTION=854x480\nsame.m3u8\n#EXT-X-STREAM-INF:BANDWIDTH=2000000,RESOLUTION=1280x720\nsame.m3u8\n'},
+  'https://subs.test/tr.vtt':{body:helpers.vtt}
+ };
+ const streams=await runInQuickJs(fixture,{args:['67070','tv',1,1],settings:{autoSubtitles:false}});
+ assert.equal(streams.length,1);assert.match(streams[0].name,/DiziYou/);assert.equal(streams[0].subtitles[0].language,'tr');assert.equal(streams[0].type,'hls');assert.match(streams[0].language,/EN\?/);
+ assert.doesNotMatch(streams[0].quality,/1080|720|480/);
+});
+
 test('QuickJS: yıl içermeyen doğru dizi bölümü ve AltyazıDB Türkçe SRT birlikte döner',async()=>{
  const tv={id:67070,original_name:'Fleabag',first_air_date:'2016-07-21',external_ids:{imdb_id:'tt5687612'},episode_run_time:[26]};
  const fixture={

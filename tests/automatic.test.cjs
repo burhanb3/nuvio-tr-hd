@@ -147,7 +147,7 @@ test('süreye dayalı altyazı ancak gerçek video uzunluğuna yakınsa kabul ed
   assert.deepEqual(await loadSubtitles(tooShort, candidate, target, false, { videoDuration: 600, keepScore: true }), []);
   const close = createHttp({ fetchImpl: fixtureFetch({ [url]: { body: 'WEBVTT\n\n00:09:00.000 --> 00:09:30.000\nTürkçe\n', mime: 'text/vtt' } }) });
   const tracks = await loadSubtitles(close, candidate, target, false, { videoDuration: 600, keepScore: true });
-  assert.equal(tracks[0]._score, 65);
+  assert.equal(tracks[0]._score, 69);
   assert.match(tracks[0].name, /senkron doğrulanmadı/);
 });
 test('daha güçlü altyazı eşleşmesi daha yüksek çözünürlüğün önüne geçer', () => {

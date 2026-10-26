@@ -1,5 +1,16 @@
 # Proje hafızası
 
+## 1.7.0 genel sağlayıcı çalışması — 26 Ekim 2026
+
+Kullanıcı artık tek tek film pinleri/görüntü senkron incelemelerini ana yöntem istemiyor. Yeni yardımcı PC/sunucu/backend yok; topluluk depolarından fikir edin, uygulamalarını kopyalama. Bu talimat eski PC remux önerilerinin önüne geçer. Şu an goal aracı null; eski “aktif goal” ifadeleri tarihsel, otomasyon/goal oluşturma yetkisi değildir.
+
+DiziYou, DiziBak, FilmModu, SonAnime genel adaptörleri eklendi; Animecix kanonik çok dilli ad eşleşmesi ve genel Archive TV tam bölüm araması. Yeni video pini yok. SonAnime MP4 gerçek480/720; AoT genel test9 MP4/üç ölçülen piksel/TR. Film/dizi yeni örnekleri HLS’dir, indirilebilir sayılmaz. Eski dosya kotası küçülmez;40 aday/3 probe,4 altyazı temel fetch sınırı sürer. Mevcut pin metadata’sı genel aramayı beklemeden başlar. EN/TR/JA kodları, kaynak iddiası ?, önerilen seste özgün/TR/EN tercihi; boyut/kalite sırası korunur. Aynı hash/boyut/piksel aynaları birleşir; ES sabit altyazı ses diline dönüştürülmez.
+
+Yılsız tam TV release puanı, sentetik adın güçlü kanıt sayılmaması,65–69 süre yakınlık tahmini ve mojibake eleme. Remote altyazı gövdesi onarılmış değildir. iOS eksik glif sorunu plugin ABI’siyle çözülmez; patches/nuvio-ios-subtitle-font.patch0.6.4-beta üzerinde git apply --check geçti, uygulama derlenmedi/kurulmadı. Ayrı sesURL/mux yok.
+
+153 test/QuickJS;20 upstream dosya drift yok, güncelHEAD7de46ead80c28ccd008cfd92bd69947e487992d0; lock değişmedi. Kapsam tam tur12online/10küçük, GOT/Breaking Bad çoklu-hosttimeout; tekrar online+BDdosyaları döndü. Son gözlemler14online/11küçük/10temiz/6kaynakölçütü, tek kesintisiz tur gibi sunma. Matrix/Shameless/GoT indirme eksik. Fiziksel iPhone/tam film/indirme/offline/senkron yok. Yayın kontrolü iş bitiminde güncellenecek.
+
+
 ## 1.6.4 çalışma durumu — 26 Ekim 2026
 
 **Yayın tamamlandı:** kod b673412696a172a5f77967558a8bdaf9aa7ff4fb. Windows/Linux Test ve paket 40335362672 ve Pages 40335362557 başarılı. 140/140 yerel test/QuickJS; beş public varlık HTTP200 + yerel SHA eşit. Aynı manifest adresi ve kimlikler. Kanıt compatibility/github-publication.json. Aktif goal açık; kaynak ve fiziksel test eksikleri sürer.

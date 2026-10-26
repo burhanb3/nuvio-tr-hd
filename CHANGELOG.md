@@ -1,5 +1,14 @@
 # Değişiklik günlüğü
 
+## 1.7.0 — 2026-10-26
+
+- DiziYou/DiziBak/FilmModu/SonAnime genel kaynak taramaları; kanonik anime ad karşılıkları ve genel Archive TV dosya araması. Yeni manuel video pini veya yardımcı sunucu yok.
+- EN/TR/JA ses kodları ve kaynak iddiasında ?; önerilen seste özgün/TR/EN tercihi, kullanıcı boyut/kalite sırası korunur. Aynı hash/boyut dosyalar tek satırdır.
+- Reklam MP4 ve HTML .mp4 oynatıcıları video sayılmaz; çelişen aynı HLS URL kaliteleri tek Auto; sınırlı uzun HLS listeleri desteklenir.
+- Yılsız tam TV release eşlemesi, yakın süre tahmin sırası ve bozuk Türkçe kodlamalı altyazıyı eleme. Aynı aramada kesin 401/403/404/410 tekrar zorlanmaz; geçerli sonuçlar korunur.
+- 153 test/QuickJS; iOS font yaması uygulanabilirlik kontrolü, cihaz derleme/kurulum yok. Normal film/dizi indirme ve fiziksel offline/senkron hedefi açık.
+
+
 ## 1.6.4 — 26 Ekim 2026
 
 - Breaking Bad S01E01, Inception ve Fleabag S01E01 MP4 türevi için dar içerik pinleri; gerçek metadata/hash/boyut/piksel/süre şart. Diğer bölümlere taşınmaz.

@@ -37,12 +37,24 @@ function inspectPlaylist(text, base) {
     if (line.startsWith('#EXT-X-MEDIA:')) {
       const info = attributes(line.slice(13));
       const uri = safeUrl(info.URI, base);
-      if (uri) media.push({ type: info.TYPE, group: info['GROUP-ID'], line: line.replace(/URI="[^"]*"/, `URI="${uri}"`), url: uri });
+      if (uri || info.TYPE === 'AUDIO' && !info.URI) media.push({ type: info.TYPE, group: info['GROUP-ID'], language: info.LANGUAGE || null,
+        line: uri ? line.replace(/URI="[^"]*"/, `URI="${uri}"`) : line, url: uri });
+    }
+  }
+  // One URI cannot prove three different resolutions. Some public masters
+  // advertise 480/720/1080 for the identical child: keep Auto, clear claims.
+  const unique = new Map();
+  for (const variant of variants) {
+    const key = JSON.stringify([variant.url,variant.audioGroup,variant.subtitlesGroup]);
+    const previous = unique.get(key);
+    if (!previous) unique.set(key,variant);
+    else if (JSON.stringify(previous.dimensions) !== JSON.stringify(variant.dimensions) || previous.bandwidth !== variant.bandwidth || previous.averageBandwidth !== variant.averageBandwidth) {
+      previous.dimensions = null; previous.bandwidth = null; previous.averageBandwidth = null;
     }
   }
   const ended = lines.includes('#EXT-X-ENDLIST');
   const live = segments > 0 && !ended;
-  return { variants: variants.slice(0, 16), media: media.slice(0, 40), segments: mediaSegments,
+  return { variants: [...unique.values()].slice(0, 16), media: media.slice(0, 40), segments: mediaSegments,
     duration: ended && duration > 0 && duration < 86400 ? duration : null, live,
     valid: variants.length > 0 || (segments > 0 && lines.some(l => l.startsWith('#EXT-X-TARGETDURATION:'))) };
 }
@@ -86,6 +98,8 @@ async function sampledBytes(http, media, headers, totalDuration, base) {
 async function inspectHls(http, text, url, candidate, options = {}) {
   const master = inspectPlaylist(text, url);
   if (!master?.valid) return null;
+  const groups = new Set(master.variants.map(v => v.audioGroup).filter(Boolean));
+  const audioLanguages = [...new Set(master.media.filter(m => m.type === 'AUDIO' && groups.has(m.group) && m.language).map(m => m.language))];
   // A working master must not wait for every rendition and segment HEAD.
   // Native iOS fetches are not cancelled by the JS deadline; avoid starting
   // optional work in the default recovery path.
@@ -97,12 +111,13 @@ async function inspectHls(http, text, url, candidate, options = {}) {
       const bytes = duration && bitrate ? Math.round(duration * bitrate / 8) : null;
       return { url: variant.url, dimensions: variant.dimensions, playlist: selectedMaster(master, variant),
         sizeEstimate: bytes ? { minimum: bytes, maximum: bytes, basis: variant.averageBandwidth ? 'average-bitrate' : 'peak-bitrate', durationSource } : null,
-        duration, hasExternalAudio: !!variant.audioGroup, hasExternalSubtitles: !!variant.subtitlesGroup };
+        duration, audioLanguages: master.media.filter(m=>m.type==='AUDIO'&&m.group===variant.audioGroup&&m.language).map(m=>m.language),
+        hasExternalAudio: !!variant.audioGroup, hasExternalSubtitles: !!variant.subtitlesGroup };
     });
     const resolutionOptions = [...new Map(renditions.map(r => [r.dimensions.width+'x'+r.dimensions.height,r.dimensions])).values()]
       .sort((a,b) => Math.min(a.width,a.height) - Math.min(b.width,b.height));
     const sizes = renditions.map(r => r.sizeEstimate).filter(Boolean);
-    return { url, container: 'hls', dimensions: null, size: null, downloadable: false, renditions, resolutionOptions,
+    return { url, container: 'hls', dimensions: null, size: null, downloadable: false, renditions, resolutionOptions, audioLanguages,
       resolutionEvidence: resolutionOptions.length ? 'hls-manifest' : null,
       sizeEstimate: sizes.length ? { minimum: Math.min(...sizes.map(s=>s.minimum)), maximum: Math.max(...sizes.map(s=>s.maximum)),
         basis: master.variants.every(v=>!!v.averageBandwidth) ? 'average-bitrate' : 'peak-or-average-bitrate', durationSource } : null,
@@ -153,10 +168,11 @@ async function inspectHls(http, text, url, candidate, options = {}) {
       if (sample) estimate = { minimum: sample.bytes, maximum: sample.bytes, basis: 'segment-samples', samples: sample.samples, durationSource: 'playlist' };
     }
     return { url: variant.url, dimensions: variant.dimensions, playlist: selectedMaster(master, variant), sizeEstimate: estimate,
-      duration: seconds, hasExternalAudio: !!variant.audioGroup, hasExternalSubtitles: !!variant.subtitlesGroup };
+      duration: seconds, audioLanguages: master.media.filter(m=>m.type==='AUDIO'&&m.group===variant.audioGroup&&m.language).map(m=>m.language),
+      hasExternalAudio: !!variant.audioGroup, hasExternalSubtitles: !!variant.subtitlesGroup };
   });
   return { url, container: 'hls', dimensions: null, size: null, downloadable: false,
-    renditions,
+    renditions, audioLanguages,
     resolutionOptions, resolutionEvidence: resolutionOptions.length ? 'hls-manifest' : null,
     sizeEstimate, ...(duration ? { duration, durationSource } : {}) };
 }

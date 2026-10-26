@@ -1,0 +1,589 @@
+{
+  "checkedAt": "2026-10-26T17:34:35.042Z",
+  "version": "1.7.0",
+  "metadata": "Canonical fixed reference + bounded live HTTP. Metadata/probe evidence, not full playback or sync.",
+  "newProviders": [
+    "DiziYou",
+    "DiziBak",
+    "FilmModu",
+    "SonAnime"
+  ],
+  "newPerTitlePins": 0,
+  "newHelperServers": 0,
+  "newAccounts": 0,
+  "subtitleFontPatch": {
+    "appliesTo": "NuvioMedia/NuvioMobile 0.6.4-beta",
+    "gitApplyCheck": "passed",
+    "compiled": false,
+    "installedOnPhone": false
+  },
+  "adapterTests": {
+    "youAndFilm": [
+      {
+        "key": "dune",
+        "ms": 1119,
+        "candidates": 0,
+        "checked": [],
+        "http": [
+          {
+            "host": "www.filmmodu.one",
+            "status": 200
+          },
+          {
+            "host": "www.filmmodu.one",
+            "status": 200
+          },
+          {
+            "host": "www.filmmodu.one",
+            "status": 404
+          }
+        ]
+      },
+      {
+        "key": "no-way-home",
+        "ms": 2029,
+        "candidates": 6,
+        "checked": [
+          {
+            "container": "hls",
+            "size": null,
+            "dimensions": null,
+            "resolutionOptions": [],
+            "downloadable": false,
+            "subtitles": 1,
+            "audio": []
+          },
+          {
+            "container": "hls",
+            "size": null,
+            "dimensions": null,
+            "resolutionOptions": [],
+            "downloadable": false,
+            "subtitles": 1,
+            "audio": []
+          }
+        ],
+        "http": [
+          {
+            "host": "www.filmmodu.one",
+            "status": 301
+          },
+          {
+            "host": "www.filmmodu.one",
+            "status": 200
+          },
+          {
+            "host": "www.filmmodu.one",
+            "status": 200
+          },
+          {
+            "host": "www.filmmodu.one",
+            "status": 200
+          },
+          {
+            "host": "imgsapi.pro",
+            "status": 200
+          },
+          {
+            "host": "www.filmmodu.one",
+            "status": 200
+          },
+          {
+            "host": "imgsapi.pro",
+            "status": 200
+          }
+        ]
+      },
+      {
+        "key": "spider-verse",
+        "ms": 1337,
+        "candidates": 6,
+        "checked": [
+          {
+            "container": "hls",
+            "size": null,
+            "dimensions": null,
+            "resolutionOptions": [],
+            "downloadable": false,
+            "subtitles": 1,
+            "audio": []
+          },
+          {
+            "container": "hls",
+            "size": null,
+            "dimensions": null,
+            "resolutionOptions": [],
+            "downloadable": false,
+            "subtitles": 1,
+            "audio": []
+          }
+        ],
+        "http": [
+          {
+            "host": "www.filmmodu.one",
+            "status": 301
+          },
+          {
+            "host": "www.filmmodu.one",
+            "status": 200
+          },
+          {
+            "host": "www.filmmodu.one",
+            "status": 200
+          },
+          {
+            "host": "www.filmmodu.one",
+            "status": 200
+          },
+          {
+            "host": "imgsapi.pro",
+            "status": 200
+          },
+          {
+            "host": "www.filmmodu.one",
+            "status": 200
+          },
+          {
+            "host": "imgsapi.pro",
+            "status": 200
+          }
+        ]
+      },
+      {
+        "key": "fleabag-s1e1",
+        "ms": 2629,
+        "candidates": 1,
+        "checked": [
+          {
+            "container": "hls",
+            "size": null,
+            "dimensions": null,
+            "resolutionOptions": [],
+            "downloadable": false,
+            "subtitles": 1,
+            "audio": []
+          }
+        ],
+        "http": [
+          {
+            "host": "www.diziyou.one",
+            "status": 200
+          },
+          {
+            "host": "www.diziyou.one",
+            "status": 200
+          },
+          {
+            "host": "www.diziyou.one",
+            "status": 200
+          },
+          {
+            "host": "storage.diziyou.one",
+            "status": 200
+          },
+          {
+            "host": "storage.diziyou.one",
+            "status": 200
+          }
+        ]
+      },
+      {
+        "key": "fleabag-s2e1",
+        "ms": 2257,
+        "candidates": 1,
+        "checked": [
+          {
+            "container": "hls",
+            "size": null,
+            "dimensions": null,
+            "resolutionOptions": [],
+            "downloadable": false,
+            "subtitles": 1,
+            "audio": []
+          }
+        ],
+        "http": [
+          {
+            "host": "www.diziyou.one",
+            "status": 200
+          },
+          {
+            "host": "www.diziyou.one",
+            "status": 200
+          },
+          {
+            "host": "www.diziyou.one",
+            "status": 200
+          },
+          {
+            "host": "storage.diziyou.one",
+            "status": 200
+          },
+          {
+            "host": "storage.diziyou.one",
+            "status": 200
+          }
+        ]
+      },
+      {
+        "key": "shameless-s1e1",
+        "ms": 1470,
+        "candidates": 0,
+        "checked": [],
+        "http": [
+          {
+            "host": "www.diziyou.one",
+            "status": 404
+          },
+          {
+            "host": "www.diziyou.one",
+            "status": 200
+          }
+        ]
+      },
+      {
+        "key": "got-s1e1",
+        "ms": 1473,
+        "candidates": 0,
+        "checked": [],
+        "http": [
+          {
+            "host": "www.diziyou.one",
+            "status": 404
+          },
+          {
+            "host": "www.diziyou.one",
+            "status": 200
+          }
+        ]
+      },
+      {
+        "key": "death-note-s1e1",
+        "ms": 2171,
+        "candidates": 2,
+        "checked": [
+          {
+            "container": "mp4",
+            "size": 108188435,
+            "dimensions": {
+              "width": 852,
+              "height": 480
+            },
+            "downloadable": true,
+            "subtitles": 0
+          },
+          {
+            "container": "mp4",
+            "size": 240288551,
+            "dimensions": {
+              "width": 1280,
+              "height": 720
+            },
+            "downloadable": true,
+            "subtitles": 0
+          }
+        ],
+        "http": [
+          {
+            "host": "api.sonanime.com",
+            "status": 200
+          },
+          {
+            "host": "api.sonanime.com",
+            "status": 200
+          },
+          {
+            "host": "video.konununuzmani.com",
+            "status": 206
+          },
+          {
+            "host": "video.konununuzmani.com",
+            "status": 206
+          },
+          {
+            "host": "video.konununuzmani.com",
+            "status": 206
+          },
+          {
+            "host": "video.konununuzmani.com",
+            "status": 206
+          }
+        ]
+      }
+    ],
+    "bakAndFilm": [
+      {
+        "key": "dune",
+        "ms": 1197,
+        "candidates": 0,
+        "checked": [],
+        "http": [
+          {
+            "host": "www.filmmodu.one",
+            "status": 200
+          },
+          {
+            "host": "www.filmmodu.one",
+            "status": 200
+          },
+          {
+            "host": "www.filmmodu.one",
+            "status": 404
+          }
+        ]
+      },
+      {
+        "key": "no-way-home",
+        "ms": 2359,
+        "candidates": 6,
+        "checked": [
+          {
+            "container": "hls",
+            "size": null,
+            "dimensions": null,
+            "resolutionOptions": [],
+            "downloadable": false,
+            "subtitles": 1,
+            "audio": []
+          },
+          {
+            "container": "hls",
+            "size": null,
+            "dimensions": null,
+            "resolutionOptions": [],
+            "downloadable": false,
+            "subtitles": 1,
+            "audio": []
+          }
+        ],
+        "http": [
+          {
+            "host": "www.filmmodu.one",
+            "status": 301
+          },
+          {
+            "host": "www.filmmodu.one",
+            "status": 200
+          },
+          {
+            "host": "www.filmmodu.one",
+            "status": 200
+          },
+          {
+            "host": "www.filmmodu.one",
+            "status": 200
+          },
+          {
+            "host": "imgsapi.pro",
+            "status": 200
+          },
+          {
+            "host": "www.filmmodu.one",
+            "status": 200
+          },
+          {
+            "host": "imgsapi.pro",
+            "status": 200
+          }
+        ]
+      },
+      {
+        "key": "spider-verse",
+        "ms": 1325,
+        "candidates": 6,
+        "checked": [
+          {
+            "container": "hls",
+            "size": null,
+            "dimensions": null,
+            "resolutionOptions": [],
+            "downloadable": false,
+            "subtitles": 1,
+            "audio": []
+          },
+          {
+            "container": "hls",
+            "size": null,
+            "dimensions": null,
+            "resolutionOptions": [],
+            "downloadable": false,
+            "subtitles": 1,
+            "audio": []
+          }
+        ],
+        "http": [
+          {
+            "host": "www.filmmodu.one",
+            "status": 301
+          },
+          {
+            "host": "www.filmmodu.one",
+            "status": 200
+          },
+          {
+            "host": "www.filmmodu.one",
+            "status": 200
+          },
+          {
+            "host": "www.filmmodu.one",
+            "status": 200
+          },
+          {
+            "host": "imgsapi.pro",
+            "status": 200
+          },
+          {
+            "host": "www.filmmodu.one",
+            "status": 200
+          },
+          {
+            "host": "imgsapi.pro",
+            "status": 200
+          }
+        ]
+      },
+      {
+        "key": "fleabag-s1e1",
+        "ms": 2941,
+        "candidates": 1,
+        "checked": [
+          {
+            "container": "hls",
+            "size": null,
+            "dimensions": null,
+            "resolutionOptions": [],
+            "downloadable": false,
+            "subtitles": 0,
+            "audio": []
+          }
+        ],
+        "http": [
+          {
+            "host": "dizibak.net",
+            "status": 200
+          },
+          {
+            "host": "dizibak.net",
+            "status": 200
+          },
+          {
+            "host": "dizibak.net",
+            "status": 200
+          },
+          {
+            "host": "player.dizibak.net",
+            "status": 200
+          },
+          {
+            "host": "man.d1iz-b0ok.xyz",
+            "status": 200
+          }
+        ]
+      },
+      {
+        "key": "fleabag-s2e1",
+        "ms": 9427,
+        "candidates": 1,
+        "checked": [
+          null
+        ],
+        "http": [
+          {
+            "host": "dizibak.net",
+            "status": 200
+          },
+          {
+            "host": "dizibak.net",
+            "status": 200
+          },
+          {
+            "host": "dizibak.net",
+            "status": 200
+          },
+          {
+            "host": "player.dizibak.net",
+            "status": 200
+          },
+          {
+            "host": "man.d1iz-b0ok.xyz",
+            "reason": "timeout_or_network"
+          }
+        ]
+      },
+      {
+        "key": "shameless-s1e1",
+        "ms": 2052,
+        "candidates": 1,
+        "checked": [
+          {
+            "container": "hls",
+            "size": null,
+            "dimensions": null,
+            "resolutionOptions": [],
+            "downloadable": false,
+            "subtitles": 0,
+            "audio": []
+          }
+        ],
+        "http": [
+          {
+            "host": "dizibak.net",
+            "status": 200
+          },
+          {
+            "host": "dizibak.net",
+            "status": 200
+          },
+          {
+            "host": "dizibak.net",
+            "status": 200
+          },
+          {
+            "host": "player.dizibak.net",
+            "status": 200
+          },
+          {
+            "host": "dan.d1iz-b0ok.xyz",
+            "status": 200
+          }
+        ]
+      },
+      {
+        "key": "got-s1e1",
+        "ms": 149,
+        "candidates": 0,
+        "checked": [],
+        "http": [
+          {
+            "host": "dizibak.net",
+            "status": 200
+          }
+        ]
+      },
+      {
+        "key": "death-note-s1e1",
+        "ms": 4507,
+        "candidates": 0,
+        "checked": [],
+        "http": [
+          {
+            "host": "api.sonanime.com",
+            "reason": "timeout_or_network"
+          }
+        ]
+      }
+    ]
+  },
+  "animeEvidence": "compatibility/anime-aot-170.json",
+  "caveats": [
+    "SonAnime and Animecix may deliver the same file; hash/size mirrors are merged, not counted as independent files.",
+    "DiziBak first episode date agreement is metadata evidence, not audio/video identity verification.",
+    "FilmModu/DiziYou/DiziBak tested examples are HLS online, not direct downloads.",
+    "No external audio mux field in plugin ABI.",
+    "Physical iPhone/full download/offline/subtitle audio sync not run."
+  ],
+  "deviceTest": "not-run",
+  "fullPlayback": "not-run",
+  "fullDownload": "not-run",
+  "subtitleSync": "not-run"
+}

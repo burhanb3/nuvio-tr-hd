@@ -1,15 +1,15 @@
 {
   "name": "Nuvio TR HD",
-  "version": "1.6.4",
+  "version": "1.7.0",
   "description": "Otomatik çoklu kaynak tarama, doğrulanmış MP4/MKV ve kaynak başına Türkçe altyazı eşleştirme.",
   "author": "Nuvio TR HD",
   "scrapers": [
     {
       "id": "nuvio-tr-hd",
       "name": "Nuvio TR HD",
-      "version": "1.6.4",
+      "version": "1.7.0",
       "description": "Film/dizi: online HLS ve indirilebilir MP4/MKV aynı listede. Türkçe altyazı ve isteğe bağlı JSON/Stremio.",
-      "filename": "providers/nuvio-tr-hd.js?v=1.6.4",
+      "filename": "providers/nuvio-tr-hd.js?v=1.7.0",
       "supportedTypes": [
         "movie",
         "tv"
@@ -32,9 +32,9 @@
     {
       "id": "nuvio-tr-hd-anime",
       "name": "Nuvio TR HD · Anime",
-      "version": "1.6.4",
-      "description": "Animecix/Tau: kanonik TMDB + özgün başlık + yıl + tam bölüm ile MP4 araması. Mevcut Türkçe altyazılar ayrıca aranır.",
-      "filename": "providers/nuvio-tr-hd-anime.js?v=1.6.4",
+      "version": "1.7.0",
+      "description": "Animecix + SonAnime: TMDB, kanonik başlık, yıl ve tam bölüm ile gerçek MP4 araması; mevcut Türkçe altyazılar.",
+      "filename": "providers/nuvio-tr-hd-anime.js?v=1.7.0",
       "supportedTypes": [
         "movie",
         "tv"

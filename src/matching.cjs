@@ -26,7 +26,8 @@ async function resolveIdentity(http, tmdbId, mediaType, season, episode, key) {
       .filter(r => [1,2,3,4].includes(r?.type) && /^\d{4}-\d{2}-\d{2}T/.test(String(r.release_date)))
       .map(r => Number(r.release_date.slice(0,4))).filter(y => Math.abs(y - year) <= 1)])].sort() : [year];
   http.note?.({ stage: 'identity', reason: 'ok', year, type });
-  return { tmdbId: id, originalTitle, year, releaseYears, type, season: type === 'tv' ? Number(season) : null,
+  return { tmdbId: id, originalTitle, year, releaseYears, type, originalLanguage: typeof meta.original_language === 'string' ? meta.original_language : null,
+    firstAirDate: type === 'tv' ? date : null, season: type === 'tv' ? Number(season) : null,
     searchTitles: [...new Set([meta.title || meta.name, originalTitle].filter(v => typeof v === 'string' && v.trim()))].slice(0, 2),
     isAnime: meta.genres?.some(g => g.id === 16) === true && (meta.original_language === 'ja' || meta.origin_country?.includes('JP') === true),
     ...(typeof meta.poster_path === 'string' && /^\/[A-Za-z0-9]+\.(jpg|png)$/i.test(meta.poster_path) ? { posterPath: meta.poster_path } : {}),

@@ -55,7 +55,10 @@ async function loadSubtitles(http, candidate, target, allowHttp, options = {}) {
       http.note?.({ stage: 'subtitle_text', invalidUtf8: text === null,
         turkishCharacters: /[şŞğĞıİçÇöÖüÜ]/.test(text || ''), combiningCharacters: /[\u0300-\u036f]/.test(text || ''),
         inlineFont: /<font\b|font-family\s*:|\{\\fn/i.test(text || ''), mojibake: /Å[ŸžŞş]|Ä[±°Ÿž]|Ã[¶¼§–œ‡]/.test(text || '') });
-      return format ? { bytes, url: result.url, text, format } : null;
+      // Nuvio downloads the original URL again. We cannot repair its remote
+      // bytes here, but can skip broken encodings in favour of clean tracks.
+      const corrupted = /\uFFFD|Å[ŸžŞş]|Ä[±°Ÿž]|Ã[¶¼§–œ‡]/.test(text || '');
+      return format && !corrupted ? { bytes, url: result.url, text, format } : null;
     }));
     const result = await http.subtitleCache.get(key);
     if (!result) return null;
@@ -65,7 +68,7 @@ async function loadSubtitles(http, candidate, target, allowHttp, options = {}) {
     if (match?.requireDuration) {
       const last = lastCueSeconds(text), duration = options.videoDuration;
       const close = duration > 0 && last / duration >= 0.9 && last / duration <= 1.01 && Math.abs(duration - last) <= 420;
-      if (close) match = { score: 65, label: 'Süre uyumu; senkron doğrulanmadı' };
+      if (close) match = { score: 65 + Math.max(0,4-Math.floor(Math.abs(duration-last)/60)), label: 'Süre uyumu; senkron doğrulanmadı' };
       else if (match.allowFilmFallback && duration > 0 && last / duration >= 0.75 && last / duration <= 1.03)
         match = { score: 35, label: 'Aynı film; sürüm/senkron belirsiz' };
       else return null;

@@ -4,6 +4,14 @@ const {verifiedArchiveRecords,verifiedMetadataFile}=require('../src/providers/ar
 const {scanArchive}=require('../src/providers/archive.cjs');const {createHttp}=require('../src/http.cjs');const{probe}=require('../src/media/probe.cjs');
 const{fixtureFetch,box,moov}=require('./helpers.cjs');const {opensubtitlesHash}=require('../src/media/hash.cjs');
 const fleabag={tmdbId:67070,imdbId:'tt5687612',originalTitle:'Fleabag',year:2016,type:'tv',season:1,episode:1,runtimeMinutes:26};
+test('Mevcut kesin dosya genel arama takılsa da metadata/erken aday işine başlar',{timeout:2000},async()=>{
+ const record=verifiedArchiveRecords(fleabag)[0],file=record.files[0];let releaseSearch,early;
+ const gate=new Promise(r=>{releaseSearch=r;}),candidateReady=new Promise(r=>{early=r;});
+ const http={expired:()=>false,json:async url=>url.includes('/metadata/') ? {metadata:{title:'Fleabag'},files:[{name:file.name,size:file.size,sha1:file.sha1}]} : gate};
+ const work=scanArchive(http,fleabag,{onCandidates:rows=>{early(rows);}});
+ try{const rows=await candidateReady;assert.ok(rows[0].expectedFile);}
+ finally{releaseSearch({response:{docs:[]}});await work;}
+});
 test('Archive içerik kanıtı yalnız kesin kanonik kimlik ve bölümde geçer',()=>{
  assert.equal(verifiedArchiveRecords(fleabag).length,1);
  for(const patch of[{tmdbId:1},{imdbId:'tt1'},{year:2017},{originalTitle:'Other Fleabag'},{season:3},{episode:2}])assert.deepEqual(verifiedArchiveRecords({...fleabag,...patch}),[]);

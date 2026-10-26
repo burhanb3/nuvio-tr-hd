@@ -11,6 +11,10 @@ const { scanPlayImdb } = require('./providers/playimdb.cjs');
 const { scanVixDirect } = require('./providers/vixsrc.cjs');
 const { scanHdHub } = require('./providers/hdhub.cjs');
 const { scanAnimecix } = require('./providers/animecix.cjs');
+const { scanSonAnime } = require('./providers/sonanime.cjs');
+const { scanDiziYou } = require('./providers/diziyou.cjs');
+const { scanFilmModu } = require('./providers/filmmodu.cjs');
+const { scanDiziBak } = require('./providers/dizibak.cjs');
 const { probe } = require('./media/probe.cjs');
 const { loadSubtitles } = require('./subtitles.cjs');
 const { createSubtitleDiscovery, scoreSubtitle } = require('./subtitle-discovery.cjs');
@@ -27,7 +31,18 @@ function parseUrls(value, allowHttp) {
 }
 function formatResults(completed, settings, target) {
   const maximum = Math.max(3, Math.min(20, Number(settings.maxResults) || 20));
-  const expanded = completed.flatMap(pair => {
+  const files = new Map(), distinct = [];
+  for (const pair of completed) {
+    const v=pair.video, key=v.downloadable&&v.videoHash&&v.size ? `${v.videoHash}:${v.size}:${v.dimensions?.width}x${v.dimensions?.height}` : null;
+    const previous=key&&files.get(key);
+    if(previous) {
+      const tracks=new Map();
+      for(const sub of [...previous.subtitles,...pair.subtitles].sort((a,b)=>(b._score||0)-(a._score||0)))if(!tracks.has(sub.url))tracks.set(sub.url,sub);
+      previous.subtitles=[...tracks.values()].slice(0,4);
+      if(pair.candidate.burnedSubtitleLanguage)previous.candidate={...previous.candidate,burnedSubtitleLanguage:pair.candidate.burnedSubtitleLanguage};
+    } else { const copy={...pair,subtitles:pair.subtitles.slice()}; distinct.push(copy);if(key)files.set(key,copy); }
+  }
+  const expanded = distinct.flatMap(pair => {
     const { video } = pair;
     if (video.container !== 'hls' || !video.renditions?.length || settings.hlsView === 'auto') return [pair];
     const profiles = video.renditions.map(r => {
@@ -36,7 +51,8 @@ function formatResults(completed, settings, target) {
       const address = settings.useDownloadBridge !== false && settings.hlsProfileBridgeReady === true && publicSource ? profileAddress(r.playlist, SERVICE_ORIGIN) :
         !r.hasExternalAudio && !r.hasExternalSubtitles && /\.m3u8(?:$|[?#])/i.test(r.url) ? r.url : null;
       if (!address) return null;
-      return { ...pair, video: { ...video, url: address, renditions: undefined, resolutionOptions: [r.dimensions], sizeEstimate: r.sizeEstimate, duration: r.duration } };
+      return { ...pair, video: { ...video, url: address, renditions: undefined, resolutionOptions: [r.dimensions], sizeEstimate: r.sizeEstimate, duration: r.duration,
+        audioLanguages: r.audioLanguages || video.audioLanguages } };
     }).filter(Boolean);
     return profiles.length ? settings.hlsView === 'both' ? [pair, ...profiles] : profiles : [pair];
   });
@@ -51,10 +67,11 @@ function formatResults(completed, settings, target) {
     const embedded = candidate.embeddedTurkish || video.embeddedTurkish;
     const burnedForeign = candidate.burnedSubtitleLanguage === 'es' ? 'İspanyolca altyazı görüntüye işlenmiş' : '';
     const subtitleText = subtitles.length ? ` · TR altyazı (${matchText})` : embedded ? ` · TR altyazı (${video.container === 'hls' ? 'HLS' : 'dosya'} içi)` : ' · TR altyazı bulunamadı';
-    const title = `${target.originalTitle} (${target.year}) · ${kind}${dimensionText} · ${size.text}${audio ? ' · Ses: '+audio.text : ''}${subtitleText}${burnedForeign ? ' · '+burnedForeign : ''}`;
+    const detailedTitle = `${target.originalTitle} (${target.year}) · ${kind}${dimensionText} · ${size.text}${audio ? ' · Ses: '+audio.text : ''}${subtitleText}${burnedForeign ? ' · '+burnedForeign : ''}`;
+    const title = settings.compactLabels === false ? detailedTitle : `${quality.text} · ${size.text}${audio ? ' · '+audio.text : ''}${subtitleText}${burnedForeign ? ' · '+burnedForeign : ''}${video.container === 'hls' ? ' · Online izlenebilir · İndirilemez' : ''}`;
     const source = String(candidate.source || 'Kaynak').replace('4KHDHub / HubCloud', '4KHDHub').replace('Internet Archive', 'Archive') +
       (candidate.serverIndex ? ` ${candidate.serverIndex}` : '') + (candidate.source === 'Animecix' && candidate.sourceNote ? ` · ${candidate.sourceNote.slice(0, 40)}` : '');
-    const subTag = subtitles.length ? 'TR' : embedded ? 'TR içi' : candidate.turkishSource ? 'TR kaynak · altyazı doğrulanmadı' : 'TR yok';
+    const subTag = subtitles.length ? 'Türkçe Altyazı' : embedded ? 'TR içi' : candidate.turkishSource ? 'TR kaynak · altyazı doğrulanmadı' : 'TR yok';
     const badge = video.downloadable ? 'İndirilebilir' : 'Online';
     const details = video.dimensions ? `${video.dimensions.width}×${video.dimensions.height}` :
       video.resolutionOptions?.length === 1 ? `${video.resolutionOptions[0].width}×${video.resolutionOptions[0].height}` :
@@ -64,7 +81,7 @@ function formatResults(completed, settings, target) {
       title, url: video.url, quality: quality.quality,
       ...(size.size ? { size: size.size } : {}),
       ...(settings.compactLabels !== false ? { quality: `${details}${video.dimensions ? ' ✓' : video.container === 'hls' ? ' HLS' : quality.quality === 'Bilinmiyor' ? '' : ' tahmin'}` } : {}),
-      language: subTag + (subtitles.length && subScore < 90 ? ' · senkron belirsiz' : '') + (audio ? ' · Ses: '+audio.text : '') + (burnedForeign ? ' · ES görüntüde' : ''), provider: 'Nuvio TR HD', type: video.container,
+      language: (audio ? audio.text+' · ' : '') + subTag + (burnedForeign ? ' · ES görüntüde' : ''), provider: 'Nuvio TR HD', type: video.container,
       ...(Object.keys(candidate.headers).length ? { headers: candidate.headers } : {}),
       subtitles: subtitles.map(({ _score, ...subtitle }) => subtitle) };
   });
@@ -116,9 +133,10 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs = 24000, r
       const processCandidate = async candidate => {
         const key = candidate.url + JSON.stringify(Object.entries(candidate.headers).sort());
         if (unique.has(key)) { unique.get(key).subtitles.push(...candidate.subtitles); return; }
+        if (unique.size >= 40) { reject('candidate_limit'); return; }
         unique.set(key, candidate);
         if (/\.m3u8(?:$|[?#])/i.test(candidate.url) && settings.includeHls === false) { reject('hls_disabled'); return; }
-        const lightweightHls = ['PlayIMDb', 'VixSrc'].includes(candidate.source) && settings.detailedHlsMetadata !== true;
+        const lightweightHls = ['PlayIMDb', 'VixSrc', 'DiziYou', 'DiziBak', 'FilmModu'].includes(candidate.source) && settings.detailedHlsMetadata !== true;
         const video = await withProbeSlot(() => probe(http, candidate, settings.includeHls !== false, settings.autoSubtitles !== false,
           { detailedHls: !lightweightHls }));
         if (!video || http.expired()) { reject('video_unavailable'); return; }
@@ -222,12 +240,21 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs = 24000, r
             if (onlineLane && settings.vixsrcEnabled !== false && settings.includeHls !== false && !sourceFactories.some(s => s.name === 'VixSrc'))
               sourceJobs.push({ name: 'VixSrc', run: () => scanVixDirect(http, target) });
             if (animeLane && settings.animecixEnabled !== false && target.isAnime) sourceJobs.push({ name: 'Animecix', run: () => scanAnimecix(http, target) });
+            if (animeLane && settings.sonanimeEnabled !== false && target.isAnime) sourceJobs.push({ name: 'SonAnime', run: () => scanSonAnime(http, target) });
+            if (onlineLane && settings.includeHls !== false && settings.diziyouEnabled !== false && target.type === 'tv' && !target.isAnime)
+              sourceJobs.push({ name: 'DiziYou', run: () => scanDiziYou(http, target) });
+            if (onlineLane && settings.includeHls !== false && settings.dizibakEnabled !== false && target.type === 'tv' && !target.isAnime)
+              sourceJobs.push({ name: 'DiziBak', run: () => scanDiziBak(http, target) });
+            if (onlineLane && settings.includeHls !== false && settings.filmmoduEnabled !== false && target.type === 'movie' && !target.isAnime)
+              sourceJobs.push({ name: 'FilmModu', run: () => scanFilmModu(http, target) });
             if (filesLane && settings.hdhubEnabled !== false && !sourceFactories.some(s => s.name === '4KHDHub / HubCloud')) sourceJobs.push({ name: '4KHDHub / HubCloud', run: async () => {
               return scanHdHub(http, target, { allowExtensionless: settings.useDownloadBridge !== false, onCandidates: candidates => acceptCandidates(candidates, true) });
             } });
           }
           for (const source of sourceFactories) sourceJobs.push({ name: source.name, run: () => source.run(http, target) });
-          const quota = Math.max(1, Math.floor(40 / Math.max(1, sourceJobs.length)));
+          // Adding an online fallback must not shrink the existing file quota.
+          // The common admission/probe limit still bounds the whole search.
+          const quota = 10;
           await mapLimit(sourceJobs, 4, async job => {
             let candidates;
             try { candidates = await job.run(); } catch { candidates = []; }
@@ -274,6 +301,9 @@ function onSettings() {
     { type: 'info', label: 'Varsayılan: tüm çözünürlükler, en fazla 20 alternatif. Online izlenebilir kaynaklar gösterilir; doğrulanmış MP4/MKV ayrıca İndirilebilir etiketlidir. Türkçe bulunamazsa video gizlenmez. Nuvio altyazı dilini Türkçe seçin.' },
     { type: 'toggle', key: 'autoDiscover', label: 'Otomatik kaynak tarama', defaultValue: true },
     { type: 'toggle', key: 'compactLabels', label: 'Kısa ve sade kaynak başlıkları', defaultValue: true },
+    { type: 'select', key: 'audioPreference', label: 'Önerilen sıralamada ses tercihi', defaultValue: 'preferred', options: [
+      { value: 'preferred', label: 'Özgün ses / TR / EN önce' }, { value: 'all', label: 'Bütün ses dilleri eşit' }],
+      description: 'Dosyalar gizlenmez. Önerilen sırada ölçülmüş farklı dublaj geriye alınır; boyut/kalite sıralaması tercihiniz korunur. Harici ses otomatik birleştirilmez.' },
     { type: 'select', key: 'sortOrder', label: 'Kaynak sıralaması', defaultValue: 'size_asc', options: [
       { value: 'size_asc', label: 'Boyut: küçükten büyüğe' }, { value: 'size_desc', label: 'Boyut: büyükten küçüğe' },
       { value: 'quality_desc', label: 'Kalite: yüksekten düşüğe' }, { value: 'quality_asc', label: 'Kalite: düşükten yükseğe' },
@@ -293,6 +323,11 @@ function onSettings() {
     { type: 'toggle', key: 'archiveEnabled', label: 'Internet Archive film araması', defaultValue: true },
     { type: 'toggle', key: 'playImdbEnabled', label: 'PlayIMDb API araması', defaultValue: true, description: 'Bazı sonuçlar HLS olabilir; dosya indirmesi olarak gösterilmez.' },
     { type: 'toggle', key: 'animecixEnabled', label: 'Animecix anime MP4 araması', defaultValue: true, description: 'TMDB kimliği, özgün başlık, yıl ve tam sezon/bölüm doğrulanır. TR kaynak bilgisi tek başına altyazı kanıtı değildir.' },
+    { type: 'toggle', key: 'sonanimeEnabled', label: 'SonAnime anime dosyası araması', defaultValue: true, description: 'Tam TMDB/yıl/bölüm bağı ve gerçek dosya kontrolü. Aynı dosyanın aynası ek kalite sayılmaz.' },
+    { type: 'toggle', key: 'diziyouEnabled', label: 'DiziYou dizi ve eşlenmiş TR altyazılar', defaultValue: true },
+    { type: 'toggle', key: 'dizibakEnabled', label: 'DiziBak dizi alternatifi', defaultValue: true, description: 'Küçük public metadata yanıtları kullanılır. İlk bölüm tarihi ve dizi kategorisi uyuşmazsa sonuç eklenmez.' },
+    { type: 'toggle', key: 'filmmoduEnabled', label: 'FilmModu online film ve kaynak ses seçenekleri', defaultValue: true },
+    { type: 'info', label: 'Ses kodları: EN İngilizce, TR Türkçe, JA Japonca, HI Hintçe. ? işareti kaynak/dosya adı iddiasıdır. ES görüntüde, İspanyolca sabit altyazıdır; ses dili değildir.' },
     { type: 'toggle', key: 'autoSubtitles', label: 'Türkçe altyazıyı otomatik ara', defaultValue: true },
     { type: 'select', key: 'subtitlePolicy', label: 'Türkçe altyazı bulunamazsa', defaultValue: 'prefer', options: [
       { value: 'prefer', label: 'Videoyu göster; TR yok bilgisini yaz' }, { value: 'require', label: 'Videoyu gizle' }] },
@@ -320,7 +355,7 @@ async function getStreams(tmdbId, mediaType, season, episode) {
 }
 function createEntry(lane) {
   const titles = { main: 'Film/dizi · online ve dosyalar', files: 'Dosyalar', online: 'Hızlı kaynaklar', anime: 'Anime' };
-  const only = { files: ['hdhubEnabled','directoryEnabled','archiveEnabled','catalogUrls','addonUrls'], online: ['playImdbEnabled','vixsrcEnabled','hlsView'], anime: ['animecixEnabled'] };
+  const only = { files: ['hdhubEnabled','directoryEnabled','archiveEnabled','catalogUrls','addonUrls'], online: ['playImdbEnabled','vixsrcEnabled','diziyouEnabled','dizibakEnabled','filmmoduEnabled','hlsView'], anime: ['animecixEnabled','sonanimeEnabled'] };
   only.main = [...only.files, ...only.online];
   const sourceFields = Object.values(only).flat();
   return {

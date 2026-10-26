@@ -1,4 +1,5 @@
 'use strict';
+const { describeAudio, audioCode } = require('./media/audio.cjs');
 
 function balancedCandidates(groups, maximum = 18) {
   const result = [];
@@ -9,7 +10,7 @@ function balancedCandidates(groups, maximum = 18) {
   }
   return result;
 }
-function streamScore(entry) {
+function streamScore(entry, settings = {}) {
   const dimensions = entry.video.dimensions;
   const pixels = dimensions ? Math.min(dimensions.width, dimensions.height) : 0;
   const subScore = Math.max(entry.video.embeddedTurkish || entry.candidate.embeddedTurkish ? 90 : 0, ...entry.subtitles.map(s => s._score || 0));
@@ -17,7 +18,15 @@ function streamScore(entry) {
   return (entry.video.downloadable ? 1000000000 : 0) + subScore * 1000000 +
     (entry.candidate.identityConfidence || 100) * 1000 + Math.min(pixels, 2160) -
     (entry.video.size > 12 * 1024 ** 3 ? 2000 : 0) -
-    (entry.candidate.burnedSubtitleLanguage && entry.candidate.burnedSubtitleLanguage !== 'tr' ? 1200000000 : 0);
+    (entry.candidate.burnedSubtitleLanguage && entry.candidate.burnedSubtitleLanguage !== 'tr' ? 1200000000 : 0) -
+    audioPenalty(entry,settings);
+}
+function audioPenalty(entry,settings) {
+  if(settings.audioPreference==='all')return 0;
+  const audio=describeAudio(entry.video,entry.candidate),preferred=['tr','en',audioCode(entry.candidate.identity?.originalLanguage)].filter(Boolean);
+  // Container/playlist evidence only. An unverified filename cannot hide or
+  // demote an otherwise usable file. Explicit size/quality sorting stays intact.
+  return audio && ['container','playlist'].includes(audio.evidence) && !audio.codes.some(c=>preferred.includes(c)) ? 1100000000 : 0;
 }
 function sizeValue(entry) {
   if (entry.video.size > 0) return entry.video.size;
@@ -46,7 +55,7 @@ function rankStreams(entries, maximum = 6, settings = {}) {
       if (x == null || y == null) { if (x == null && y != null) return 1; if (y == null && x != null) return -1; }
       else if (x !== y) return mode.endsWith('_asc') ? x - y : y - x;
     }
-    return streamScore(b) - streamScore(a) || a.candidate.url.localeCompare(b.candidate.url);
+    return streamScore(b,settings) - streamScore(a,settings) || a.candidate.url.localeCompare(b.candidate.url);
   }).slice(0, maximum);
 }
-module.exports = { balancedCandidates, rankStreams, streamScore, sizeValue, qualityValue, groupValue };
+module.exports = { balancedCandidates, rankStreams, streamScore, sizeValue, qualityValue, groupValue, audioPenalty };

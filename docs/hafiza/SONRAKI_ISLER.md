@@ -1,5 +1,15 @@
 # Sonraki işler
 
+## 1.7.0 öncelik — kullanıcının son yönlendirmesi
+
+1. Genel ve ücretsiz/hesapsız **farklı gerçek MP4/MKV** sağlayıcıları araştırmaya devam et. Yeni film/dizi adaptörlerinin HLS olması indirme hedefini tamamlamaz. Aynı hash/boyut aynasını yeni dosya sayma. Matrix/Shameless/GoT indirme boş.
+2. Yeni manuel video pinleri/film başına sahne incelemesi ana yöntem değil; yeni PC/sunucu remux servisi kurma. Mevcut köprü/Sites hesap sorusunu tekrarlama.
+3. DiziBak tarih/kategori koruması eksikse sonucu gevşetme; başka yapımın ilk bölümünü birleştirme. Anime sonraki sezon/mutlak bölüm tahmini yok. FilmModu alt/TRdubmevcutkaynakdilleri; harici sesABI’si yok.
+4. En son tam turda GOT/Breaking Bad çoklu-hosttimeout oldu; yeniden aramada toparlandı. coverage-170-full-run ve-recheck birlikte raporlanmalı; kararsızlık çözüldü deme. Eski pin metadata’sı artık genel aramadan önce paralel başlar.
+5. Türkçe font appyamasının kaynak check’i başarılı; iOS derleme/kurulum ve gerçek glif/oynatma doğrulaması hâlâ yok. Physical tam video+TRindirme/uçakmodu/senkron yapılmadan başarı deme.
+6. 1.7.0 yayın sonrası CI/Pages/beşassetSHA kanıtını ve hafızayı güncelle;153test ve güncel upstreamcheck korunur.
+
+
 ## 1.6.4 öncelik
 
 1. **Tamamlandı:** 1.6.4 b673412696a172a5f77967558a8bdaf9aa7ff4fb yayımlandı. Yerel140/140 ve QuickJS, Windows/Linux40335362672, Pages40335362557 başarılı; beş public varlık HTTP200 + yerel SHA eşit. compatibility/github-publication.json güncel. Kapsam ve cihaz hedefi tamamlanmadı.

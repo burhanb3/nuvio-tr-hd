@@ -2,35 +2,45 @@
 const { safeUrl, normalizeTitle, mapLimit } = require('../util.cjs');
 const { filenameIdentity } = require('./directory.cjs');
 const { verifiedArchiveRecords, verifiedMetadataFile } = require('./archive-verified.cjs');
+const { matchesEpisode } = require('../matching.cjs');
 
 function archiveQuery(target, preferHd = false, titleYear = !preferHd) {
   const title = target.originalTitle.replace(/["\\]/g, ' ');
   const exclusions = ['sample','trailer','featurette','review','podcast','commercial','teaser']
     .filter(word => !normalizeTitle(title).split(' ').includes(word));
-  const q = `mediatype:movies AND title:"${title}" AND ` + (titleYear ? `(year:${target.year} OR title:${target.year})` : `year:${target.year}`) +
+  const binding = target.type === 'tv' && preferHd && /^tt\d+$/.test(target.imdbId || '') ? `(title:"${title}" AND imdb_id:${target.imdbId})` :
+    `title:"${title}" AND ` + (titleYear ? `(year:${target.year} OR title:${target.year})` : `year:${target.year}`);
+  const q = `mediatype:movies AND ${binding}` +
     (titleYear && exclusions.length ? ` AND NOT title:(${exclusions.join(' OR ')})` : '') +
-    (preferHd ? ' AND (title:(1080p OR 720p OR 2160p OR remastered) OR description:1080p)' : '');
+    (preferHd && target.type === 'movie' ? ' AND (title:(1080p OR 720p OR 2160p OR remastered) OR description:1080p)' : '');
   return `https://archive.org/advancedsearch.php?q=${encodeURIComponent(q)}&fl[]=identifier&fl[]=title&fl[]=year&rows=12&sort[]=downloads%20desc&output=json`;
 }
 async function scanArchive(http, target, options = {}) {
-  // Missing series IDs/years are never guessed from a title. Specific file
-  // repairs require independent content evidence and exact episode/hash pins.
+  // General TV search requires an exact episode plus independent series
+  // title/year or explicit IMDb binding. Content pins remain narrow repairs.
   const verifiedRecords = verifiedArchiveRecords(target);
-  if (target.type !== 'movie' && !verifiedRecords.length) return [];
-  const results = target.type === 'movie' ? await Promise.all([http.json(archiveQuery(target, true), { timeoutMs: 6500 }), http.json(archiveQuery(target), { timeoutMs: 6500 })]) : [];
-  results.unshift({ response:{ docs:verifiedRecords.map(r => ({identifier:r.item,title:target.originalTitle+' '+target.year})) } });
   const expected = normalizeTitle(target.originalTitle);
+  const searches = Promise.all([http.json(archiveQuery(target, true), { timeoutMs: 6500 }), http.json(archiveQuery(target), { timeoutMs: 6500 })]);
+  // Existing exact repairs are checked while the general search is in flight.
+  // A stalled search must not delay a known file's own metadata/probe work.
+  const pinnedWork = mapLimit(verifiedRecords.map(r=>({identifier:r.item})),2,loadDoc);
+  const results = await searches;
   const priority = doc => {
     if (!doc.title) return 1; // Older/custom search fixtures may omit this field.
     const title = normalizeTitle(String(doc.title));
     if (title === expected + ' ' + target.year || title.startsWith(expected + ' ' + target.year + ' ')) return 3;
     if (title === expected || new RegExp(`^(?:1080p|720p|2160p|remastered|restored)\\b`).test(title.startsWith(expected + ' ') ? title.slice(expected.length + 1) : '')) return 2;
+    if (target.type === 'tv' && title.startsWith(expected+' ') && /^(?:season|sezon|s\d|complete|all seasons)\b/.test(title.slice(expected.length+1))) return 1;
     return 0;
   };
   const docs = [...new Map(results.flatMap(r => Array.isArray(r?.response?.docs) ? r.response.docs : []).map(d => [d.identifier, d])).values()]
+    .filter(d=>!verifiedRecords.some(r=>r.item===d.identifier))
     .filter(d => priority(d) > 0 && !/\b(sample|trailer|featurette|review|podcast|commercial|teaser)\b/.test(normalizeTitle(d.title || '').replace(expected, '')))
     .sort((a,b) => priority(b) - priority(a));
-  const groups = await mapLimit(docs.slice(0, options.onCandidates ? 12 : 8), 2, async doc => {
+  const groups = await mapLimit(docs.slice(0, Math.max(0,(options.onCandidates ? 12 : 8)-verifiedRecords.length)),2,loadDoc);
+  const pinned = await pinnedWork;
+  return [...pinned,...groups].flat().filter(x=>x.url);
+  async function loadDoc(doc) {
     if (typeof doc.identifier !== 'string' || !/^[\w.-]+$/.test(doc.identifier)) return [];
     const data = await http.json(`https://archive.org/metadata/${encodeURIComponent(doc.identifier)}`, { timeoutMs: 6500 });
     const meta = data?.metadata;
@@ -50,11 +60,13 @@ async function scanArchive(http, target, options = {}) {
     const fullTitle = normalizeTitle(rawTitle);
     const titleYearBound = fullTitle === expectedTitle + ' ' + target.year || fullTitle.startsWith(expectedTitle + ' ' + target.year + ' ');
     const yearFromTitle = !explicitYear && datedYear !== target.year && titleYearBound;
+    const seriesImdbBound = target.type === 'tv' && target.imdbId && String(meta.imdb_id || '').trim() === target.imdbId;
+    const seriesTitle = target.type === 'tv' && (actualTitle === expectedTitle || actualTitle.startsWith(expectedTitle+' ') && /^(?:season|sezon|s\d|complete|all seasons)\b/.test(releaseSuffix));
     if (!pinnedItem && yearFromTitle && !(target.runtimeMinutes > 0)) return [];
     if (!pinnedItem && yearFromTitle && datedYear > 0 && datedYear < target.year) return [];
     if (explicitYear && explicitYear !== target.year) return [];
-    if (!pinnedItem && ((actualTitle !== expectedTitle && !releaseTitle && !titleYearBound) ||
-      (!explicitYear && datedYear !== target.year && !yearFromTitle))) return [];
+    if (!pinnedItem && ((actualTitle !== expectedTitle && !releaseTitle && !titleYearBound && !seriesTitle) ||
+      (!explicitYear && datedYear !== target.year && !yearFromTitle && !seriesImdbBound))) return [];
     if (meta.tmdb_id != null && Number(meta.tmdb_id) !== target.tmdbId) return [];
     if (meta.imdb_id && target.imdbId) {
       const ids = String(meta.imdb_id).match(/tt\d+/g) || [];
@@ -78,6 +90,9 @@ async function scanArchive(http, target, options = {}) {
       if (pinnedItem && !verifiedMetadataFile(verifiedRecord,f)) return false;
       const extraName = normalizeTitle(f.name).replace(expectedTitle, '');
       if (!/\.(mp4|mkv)$/i.test(f.name) || /\b(sample|trailer|commercial|teaser)\b/.test(extraName)) return false;
+      if (!pinnedItem && target.type === 'tv' && (!matchesEpisode(f.name,target) ||
+        !normalizeTitle(f.name.split('/').pop()).startsWith(expectedTitle+' ') ||
+        !seriesImdbBound && !filenameIdentity(f.name.split('/').pop(),target))) return false;
       // Missing release-year metadata is filled only by both the exact item
       // title/year AND an exact filename/year. An upload date is not a release
       // year. The real container duration is required again during probing.
@@ -104,7 +119,6 @@ async function scanArchive(http, target, options = {}) {
         source: 'Internet Archive', identity: target, identityConfidence: meta.tmdb_id ? 100 : 90 }));
     if (candidates.length && options.onCandidates && !http.expired()) await options.onCandidates(candidates);
     return candidates;
-  });
-  return groups.flat().filter(x => x.url);
+  }
 }
 module.exports = { scanArchive, archiveQuery };

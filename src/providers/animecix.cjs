@@ -1,6 +1,7 @@
 'use strict';
 const { safeUrl, normalizeTitle, mapLimit } = require('../util.cjs');
 const { isTurkish } = require('../subtitles.cjs');
+const { sameName } = require('./page-data.cjs');
 const ORIGIN = 'https://animecix.tv';
 const PLAYER = 'https://tau-video.xyz';
 
@@ -11,7 +12,7 @@ function matchesAnime(record, target) {
   if (record.imdb_id && target.imdbId && record.imdb_id !== target.imdbId) return false;
   if (target.type === 'tv' ? record.is_series !== true : record.is_series === true) return false;
   return [record.original_title, record.name, record.name_english, record.name_romanji]
-    .some(title => normalizeTitle(title) === normalizeTitle(target.originalTitle));
+    .some(title => sameName(title, target));
 }
 async function scanAnimecix(http, target) {
   if (!target.isAnime) return [];
@@ -46,7 +47,7 @@ async function scanAnimecix(http, target) {
     return video.urls.slice(0, 4).map(entry => {
       const url = safeUrl(entry?.url);
       if (!url || !/\.(mp4|mkv|m3u8)(?:$|[?#])/i.test(url)) return null;
-      return { url, filename: `${filename}.${String(entry.label || '').replace(/[^A-Za-z0-9]/g, '')}.mp4`,
+      return { url, filename: `${filename}.${String(entry.label || '').replace(/[^A-Za-z0-9]/g, '')}.mp4`, filenameSynthetic: true,
         identity: target, identityConfidence: 100, source: 'Animecix', sourceNote: String(source.extra || '').slice(0, 65),
         turkishSource: isTurkish(source.language), headers: { Referer: PLAYER + '/', Origin: PLAYER }, subtitles: captions };
     }).filter(Boolean);

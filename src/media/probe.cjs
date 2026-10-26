@@ -15,7 +15,9 @@ async function probeOne(http, candidate, includeHls = false, hashEnabled = false
   if (hlsUrl) {
     const cached = candidate.source === 'VixSrc' && candidate.hlsMaster;
     const playlist = cached && cached.url === candidate.url && typeof cached.text === 'string' ? cached : await http.text(candidate.url, { headers: candidate.headers });
-    if (!playlist || playlist.text.length > 131072 || !/\.m3u8(?:$|[?#])/i.test(playlist.url)) return null;
+    // Long signed segment names can make a valid feature playlist >128 KiB.
+    // Still bounded by http.text and below the native bridge's body limit.
+    if (!playlist || playlist.text.length > 700000 || !/\.m3u8(?:$|[?#])/i.test(playlist.url)) return null;
     const text = playlist.text.replace(/^\uFEFF/, '').trimStart();
     if (!text.startsWith('#EXTM3U') || !/#EXT-X-(STREAM-INF|TARGETDURATION):/.test(text)) return null;
     return inspectHls(http, text, playlist.url, candidate, { detailed: options.detailedHls });

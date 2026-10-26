@@ -6,11 +6,11 @@ function decodeEntities(text) {
   return String(text).replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#39;|&apos;/g, "'")
     .replace(/&#(\d+);/g, (_, n) => String.fromCodePoint(Number(n))).replace(/<[^>]*>/g, '').trim();
 }
-function anchors(html) {
+function anchors(html, limit = 500) {
   const result = [];
   for (const match of html.matchAll(/<a\b[^>]*\bhref\s*=\s*["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi)) {
     result.push({ href: decodeEntities(match[1]), text: decodeEntities(match[2]) });
-    if (result.length >= 500) break;
+    if (result.length >= Math.min(2000,limit)) break;
   }
   return result;
 }
@@ -58,4 +58,4 @@ async function scanDirectory(http, target, settings = {}) {
   }
   return [];
 }
-module.exports = { scanDirectory, filenameIdentity, anchors, DIRECTORY_ORIGIN };
+module.exports = { scanDirectory, filenameIdentity, anchors, decodeEntities, DIRECTORY_ORIGIN };

@@ -1,5 +1,15 @@
 # Tasarım kararları
 
+## 26 Ekim 2026 — 1.7.0 kullanıcı yönlendirmesi
+
+- Genel sağlayıcı yöntemleri öncelikli; yeni manuel film/bölüm pini veya her yapımda sahne/senkron analizi ana yol değil.
+- Yeni yardımcı bilgisayar/sunucu/backend bağımlılığı yok. Eski PC hazırlama prototipi önerisi artık geçerli değil. Mevcut isteğe bağlı1.4köprü değişmez; yeni sağlayıcılar onsuz çalışır.
+- Kodları EN/TR/JA şeklinde göster; iddia ?; sabit altyazı uyarısı ses dili değildir. Harici dublajı varmış gibi üretme.
+- Kaynak kalite iddiasını ölçülmüş gösterme: aynı HLS URL farklıkalite tekAuto, embed.mp4HTML video sayılmaz, reklamvideo seçilmez.
+- Aynı aramada kesin izin/kayıp hatası tekrar zorlanmaz; yeni arama yeniden dener. Cache arama içidir; Nuvio VM ömrü kanıtlanmadan kalıcı cache iddiası yok.
+- Altyazı süre yakınlığı tahmindir; otomatikoffset yok. Mojibake remote dosyası değiştirilmez; temiz alternatif seçilir. Font appyaması uygulanabilirlik kontrolüdür, telefon düzeltmesi değil.
+
+
 ## 1.6.4 ek kararlar
 
 - Yabancı sabit altyazı kaynak sayısı için gizlenmez; görüntüye işlenmiş olduğu açık etiketlenir. Temiz TR hedefi başarısı sayılmaz; önerilende temiz online önce, kullanıcının boyut/kalite sırası korunur.

@@ -1,0 +1,13 @@
+diff --git a/iosApp/iosApp/Player/MPVPlayerBridge.swift b/iosApp/iosApp/Player/MPVPlayerBridge.swift
+--- a/iosApp/iosApp/Player/MPVPlayerBridge.swift
++++ b/iosApp/iosApp/Player/MPVPlayerBridge.swift
+@@ -572,7 +572,7 @@
+         fontDirectory.withCString { path in
+             checkError(mpv_set_option_string(mpv, "sub-fonts-dir", path))
+         }
+-        checkError(mpv_set_option_string(mpv, "sub-font", "Noto Sans CJK SC"))
+-        print("[MPV] Using bundled CJK subtitle font: \(fontURL.lastPathComponent)")
++        checkError(mpv_set_option_string(mpv, "sub-font", "Arial"))
++        print("[MPV] Using Arial subtitles with bundled CJK fallback: \(fontURL.lastPathComponent)")
+     }
+ 

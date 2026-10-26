@@ -1,10 +1,18 @@
 # Nuvio TR HD
 
-Nuvio Mobile'ın Kotlin Multiplatform **Full** sürümü için JavaScript sağlayıcı deposu. Film/bölüm seçildiğinde birden çok gerçek kaynağı otomatik tarar, MP4/MKV bağlantılarını doğrular ve her video için mevcut Türkçe altyazıları arayıp eşleştirir. Seçilen boyut/kalite/uygunluk sırasıyla sunar. Her taramada varsayılan üst sınır **20**, çözünürlük filtresi **Tümü**. İstenirse 6/10 seçilebilir. Sürüm **1.6.4**.
+Nuvio Mobile'ın Kotlin Multiplatform **Full** sürümü için JavaScript sağlayıcı deposu. Film/bölüm seçildiğinde birden çok gerçek kaynağı otomatik tarar, MP4/MKV bağlantılarını doğrular ve her video için mevcut Türkçe altyazıları arayıp eşleştirir. Seçilen boyut/kalite/uygunluk sırasıyla sunar. Her taramada varsayılan üst sınır **20**, çözünürlük filtresi **Tümü**. İstenirse 6/10 seçilebilir. Sürüm **1.7.0**.
 
 **26 Ekim 2026 uyumluluk kontrolü:** `0.6.4-beta` ve güncel `cmp-rewrite` dalının ilgili kaynak sözleşmeleri karşılaştırıldı. Derlenmiş sağlayıcı gerçek QuickJS WASM motorunda test edilir. Fiziksel Android/iOS cihazında oynatma ve indirme testi henüz yapılmadı. Ayrıntılar: [uyumluluk raporu](docs/UYUMLULUK.md).
 
-Bu depo medya barındırmaz. Animecix/Tau, 4KHDHub/HubCloud, VixSrc, Internet Archive ve PlayIMDb yerleşiktir; DahmerMovies deneysel yerel yedektir ve varsayılan kapalıdır. JSON/Stremio adresi girmek zorunlu değildir. Kişisel JSON ve Stremio kaynakları ek alternatif olarak korunmuştur. Her film için erişilebilir HD dosya veya uygun Türkçe altyazı bulunması garanti değildir; başarısız/engelli kaynaklar atlanır.
+Bu depo medya barındırmaz. SonAnime, DiziYou, DiziBak, FilmModu, Animecix/Tau, 4KHDHub/HubCloud, VixSrc, Internet Archive ve PlayIMDb yerleşiktir; DahmerMovies deneysel yerel yedektir ve varsayılan kapalıdır. JSON/Stremio adresi girmek zorunlu değildir. Kişisel JSON ve Stremio kaynakları ek alternatif olarak korunmuştur. Her film için erişilebilir HD dosya veya uygun Türkçe altyazı bulunması garanti değildir; başarısız/engelli kaynaklar atlanır.
+
+## 1.7.0: genel kaynaklar, ses kodları ve altyazı seçimi
+
+Tek tek yapımlara yeni dosya pini eklemek yerine DiziYou, DiziBak, FilmModu ve SonAnime genel taramaları eklendi. Animecix kanonik farklı dil adlarını tanır; Archive tam bölüm dosyalarını genel olarak arar. Yeni yardımcı sunucu kurulmadı; önceki kaynaklar/kimlikler ve JSON/Stremio desteği korunur.
+
+Sesler EN/TR/JA gibi kısa kodlarla, doğrulanmamış kaynak iddiası ? ile görünür. Önerilen sırada özgün/TR/EN tercih edilebilir; boyut/kalite sıralaması değişmez. Aynı dosya aynaları tekilleşir. Çelişen HLS kaliteleri çoğalmaz. Yılsız tam dizi release eşleşmesi ve bozuk Türkçe kodlama kontrolü geliştirildi.
+
+**Yeni film/dizi alternatifleri çoğunlukla online HLS’dir. Normal film/dizi için küçük MP4/MKV boşluğu sürer; her yapım/her kalite hedefi tamamlanmadı.** Harici ses birleştirme plugin ABI’sinde yoktur. iPhone’daki eksik Türkçe font glifleri uygulama düzeltmesi gerektirir; hazır yama kaynak üzerinde kontrol edildi, cihazda uygulanmadı. 153 yerel test ve gerçek QuickJS geçti. Tam oynatma/indirme/çevrimdışı/senkron testi yok. [Yöntemler, sınırlar ve araştırma](docs/KAYNAK_GENISLETME_170.md).
 
 ## 1.6.4: normal diziler ve erken korunan altyazılar
 

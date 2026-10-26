@@ -46,7 +46,9 @@ function scoreSubtitle(sub, candidate, video, target, allowLoose = false) {
   const nameYear = Number(years?.[0]);
   const titleYear = `${normalizeTitle(target.originalTitle)} ${releaseYears.includes(nameYear) ? nameYear : target.year}`;
   const hasReleaseDetail = a.startsWith(titleYear + ' ') && a.length > titleYear.length + 4;
-  if (!sub._releaseNotesOnly && hasReleaseDetail && b && (a === b || (' ' + b + ' ').includes(' ' + a + ' '))) return { score: 95, label: 'Tam sürüm eşleşmesi' };
+  const exactEpisodeRelease = target.type === 'tv' && sub._identityBound === true && matchesEpisode(file,target) && matchesEpisode(name,target) &&
+    a.startsWith(normalizeTitle(target.originalTitle)+' ') && a===b;
+  if (!candidate.filenameSynthetic && !sub._releaseNotesOnly && b && ((hasReleaseDetail && (a === b || (' ' + b + ' ').includes(' ' + a + ' '))) || exactEpisodeRelease)) return { score: 95, label: 'Tam sürüm eşleşmesi' };
   if (!sub._scope || sub._scope === 'paired') return { score: 90, label: 'Kaynakla eşlenmiş' };
   const title = normalizeTitle(target.originalTitle);
   // A looser release match must still be this film. The title-scoped IMDb
