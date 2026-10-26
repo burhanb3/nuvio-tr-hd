@@ -1,5 +1,14 @@
 # Sonraki işler
 
+## 1.6.4 öncelik
+
+1. Kod ve üretilmiş paketler hazır; son yerel140/140 + QuickJS. Windows/Linux CI ve Pages/public beş varlık SHA doğrulaması tamamlanmalı; compatibility/github-publication.json hâlâ1.6.3. Yayın bitince hafıza ve kanıtı güncelle.
+2. Aktif goal tamamlanmadı: Matrix, Shameless ABD S01E01 ve GoT S01E01 indirme yok. Spider-Man iki başlıkta ek kalite; Inception ve Fleabag S01E01 ikinci piksel seçeneği eksik. Fleabag S02E01 ES sabit kaynak temiz TR hedefine sayılmaz. 11 küçük+TR ile10 temiz değerini karıştırma.
+3. Archive ZIP üye linkleri .cache/zip164-{matrix,got}.html; GOT üye GET200 gerçekMKV ama Range/Content-Length yok. ZIP Range d1/d2 ve Matrix HEAD timeout; saf native doğrulamaya eklenmedi. Sunuculu hazırlama prototipi hâlâ yapılmadı. Sites kayıp hesap engeli aynı; yeni Site açma.
+4. İçerik kanıtları compatibility/content-164.json, test aracı npm run test:archive:content. .cache/breaking-content164.json eski araştırma yerine yayımlanan yeni UUID’li kanıtı esas al. Fleabag2 ilk sonuçlar geometri yüzünden zayıftı; düzeltilen iki örnekte40/40 eşleşti. Sabit İspanyolca yazı manuel raster kontrolünde görüldü; temiz izleme sayma.
+5. Yeni erken altyazı akışı ve bitmemiş native fetch sınırını koru. Genel URL rezervi metadata bitince uygun durumda geri açılır. Yeni kaynağı sadece adıyla ekleme; yeni arama native iş sayısını gereksiz büyütmesin. Bilinen Archive pinini genel arama beklemeden doğrulamaya alma ileride ayrı incelenebilir.
+6. Fiziksel iPhone video+TR tam indirme/uçak modu/senkron ve ses tercihi yanıtları bekleniyor; aynı soruları tekrarlama. Bu testler ve kaynak boşlukları olmadan goal complete yapma.
+
 ## 1.6.3 ve aktif kapsam hedefi
 
 Sonraki araştırma notu (henüz üretimde değil): `.cache/compare-next164.mjs breaking` iki ayrı 20 saniyelik sıralı örnekte kanonik Breaking Bad S01E01 ile 40/40 kare eşleştirdi; offset -1 saniye, hash/boyut/süre bilgisi `.cache/breaking-content164.json` içinde. Kaynak `breaking-bad-s-01e-01-720p.-brrip.-sujaidr_202411`; MKV 487.194.215 byte, MP4 344.478.919 byte. Bu dosyalar daha pinlere eklenmedi; 1.6.3 kapsam sayıları bunları içermez. MP4 türevi `original` bağı ve gerçek hash/piksel/süre ayrıca doğrulanmalı. Fleabag S02E01 `FL34B4G SUB T02XE01.mkv` örnekleri +3,5 saniye benzerlik verdi fakat ilk örnek katı eşiği geçmedi; `.cache/fleabag2-content164.json` contentSamplesMatch=false. Eşiği düşürüp başarılı sayma; farklı bağımsız sahne/ekranda yakılmış yazı etkisini incele. Streamline’ın güncel VegaMovies `search.php?q=IMDb` yöntemi iki başlıkta 404; kaynak diye eklenmedi. Üretim hâlâ 1.6.3/8 küçük+TR, 14 online+TR, 5 kaynak ölçütü.

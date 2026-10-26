@@ -8,6 +8,23 @@ Deneme listesi [validation/titles.json](../validation/titles.json) içinde 14 va
 
 **Bu ölçütlerin geçmesi tam oynatma, ses tercihi, doğru sahne senkronu ve uçak modu testi değildir.** Altyazı puanı ayrıca raporlanır; süre uyumu tam senkron diye sunulmaz.
 
+## 1.6.4 kaynak kontrolü
+
+Son ölçüm [coverage-164.json](../compatibility/coverage-164.json): **14/14 online+TR, 11/14 küçük dosya+TR; 10/14 bilinen yabancı sabit altyazı olmadan küçük dosya+TR; 6/14 bütün kaynak ölçütleri.** İkinci değer yabancı sabit altyazısı bilinen dosyaları temiz başarı saymaz; bilinmeyen her görüntünün tüm film boyunca altyazısız olduğunu kanıtlamaz. Tam cihaz/senkron hedefi hâlâ açık.
+
+| Değişen vaka | Dosyalar ve gerçek piksel | Kalan sınırlama |
+| --- | --- | --- |
+| Breaking Bad S01E01 | 329 MiB MP4 853×480; 465 MiB MKV 1280×720 | MKV’de İngilizce ses track’i ölçüldü; tam oynatma/senkron yok |
+| Inception | 830/861 MiB MP4, ikisi de 1280×536 | İkinci çözünürlük değil; ses dili okunamadı |
+| Fleabag S01E01 | 99 MiB MKV + 155 MiB MP4, ikisi de 848×354 | İkinci çözünürlük eksik |
+| Fleabag S02E01 | 147 MiB MP4 853×480; 604 MiB MKV 1280×720 | İspanyolca sabit altyazı var; temiz TR hedefi geçmedi |
+
+Matrix, Shameless ABD S01E01 ve Game of Thrones S01E01 hâlâ indirilebilir sonuç vermedi. ZIP içindeki videoları sunan Archive adresleri, bounded probe koşullarını karşılamadı; ZIP veya büyük Range200 yanıtı dosya diye eklenmedi. Yeni dosyalar [content-164.json](../compatibility/content-164.json) örnekleriyle kesin kimlik/bölüme bağlıdır. Farklı geçici dosya adları ve hareketli/sıralı örnek kontrolü kullanılır; karanlık/sabit görüntü kanıt sayılmaz. Sayısal eşleşme eşiği düşürülmedi.
+
+Altyazı servisleri ayrı sonuç gruplarıyla işlenir; ilk geçerli gövde hemen korunur. Sonradan gelen güçlü eşleşmeler birleştirilir; her videoda toplam en çok 12 farklı URL, genel eşleşmelerde 8 ve güçlü eşleşmeler için ayrılan kalan yer vardır. Gövde okuma işleri ve altında bitmemiş native fetch için ayrı dört istek sınırı bulunur. Native iOS bütün çağrıyı fiziksel olarak aynı sürede bitirecek diye sunulmaz.
+
+Aşağıdaki 1.6.3 tablosu kendi ölçüm tarihine ait tarihsel kayıttır.
+
 ## 1.6.3 kaynak kontrolü
 
 | Deneme | Doğrulanan farklı dosya | Küçük dosya + TR | Ölçülen piksel seçenekleri | Durum |

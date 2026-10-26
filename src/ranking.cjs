@@ -16,7 +16,8 @@ function streamScore(entry) {
   // Matched subtitles and real downloads first; avoid overvaluing huge files.
   return (entry.video.downloadable ? 1000000000 : 0) + subScore * 1000000 +
     (entry.candidate.identityConfidence || 100) * 1000 + Math.min(pixels, 2160) -
-    (entry.video.size > 12 * 1024 ** 3 ? 2000 : 0);
+    (entry.video.size > 12 * 1024 ** 3 ? 2000 : 0) -
+    (entry.candidate.burnedSubtitleLanguage && entry.candidate.burnedSubtitleLanguage !== 'tr' ? 1200000000 : 0);
 }
 function sizeValue(entry) {
   if (entry.video.size > 0) return entry.video.size;

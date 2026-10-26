@@ -6,10 +6,18 @@ const{fixtureFetch,box,moov}=require('./helpers.cjs');const {opensubtitlesHash}=
 const fleabag={tmdbId:67070,imdbId:'tt5687612',originalTitle:'Fleabag',year:2016,type:'tv',season:1,episode:1,runtimeMinutes:26};
 test('Archive içerik kanıtı yalnız kesin kanonik kimlik ve bölümde geçer',()=>{
  assert.equal(verifiedArchiveRecords(fleabag).length,1);
- for(const patch of[{tmdbId:1},{imdbId:'tt1'},{year:2017},{originalTitle:'Other Fleabag'},{season:2},{episode:2}])assert.deepEqual(verifiedArchiveRecords({...fleabag,...patch}),[]);
+ for(const patch of[{tmdbId:1},{imdbId:'tt1'},{year:2017},{originalTitle:'Other Fleabag'},{season:3},{episode:2}])assert.deepEqual(verifiedArchiveRecords({...fleabag,...patch}),[]);
  const record=verifiedArchiveRecords(fleabag)[0],f=record.files[0];
  assert.ok(verifiedMetadataFile(record,{name:f.name,size:String(f.size),sha1:f.sha1}));
  for(const patch of[{size:f.size+1},{sha1:'0'.repeat(40)},{name:'Another.S01E01.mkv'}])assert.equal(verifiedMetadataFile(record,{name:f.name,size:f.size,sha1:f.sha1,...patch}),null);
+});
+test('Yeni bölüm pini başka sezon/bölümü kapsamaz; sabit yabancı altyazı bilgisi korunur',async()=>{
+ const wanted={...fleabag,season:2},record=verifiedArchiveRecords(wanted)[0],file=record.files[0];
+ const http=createHttp({fetchImpl:fixtureFetch({['https://archive.org/metadata/'+record.item]:{json:{metadata:{title:'Fleabag'},files:[{name:file.name,size:file.size,sha1:file.sha1}]}}})});
+ try{const[c]=await scanArchive(http,wanted);assert.equal(c.burnedSubtitleLanguage,'es');assert.equal(c.expectedFile.hash,file.hash);
+ assert.deepEqual(await scanArchive(http,{...wanted,episode:2}),[]);
+ assert.deepEqual(await scanArchive(http,{...wanted,tmdbId:1396}),[]);
+ }finally{http.close();}
 });
 test('Archive yıl/ID eksik bölümde pin şarttır; açık yanlış kimlik/yıl ve değişen metadata yine reddedilir',async()=>{
  const record=verifiedArchiveRecords(fleabag)[0],file=record.files[0],url='https://archive.org/metadata/'+record.item;

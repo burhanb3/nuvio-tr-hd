@@ -9,6 +9,15 @@ function createHttp({ fetchImpl, allowHttp = false, timeoutMs = 4500, deadline =
   const controllers = new Set();
   let closed = false;
   const expired = () => closed || Date.now() >= deadline;
+  const subtitleNetwork = { active:0, waiting:[] };
+  async function fetchNetwork(url, options, group, end) {
+    if(group!=='subtitle-body')return fetcher(url,options);
+    if(subtitleNetwork.active>=4)await new Promise(resolve=>subtitleNetwork.waiting.push(resolve));else subtitleNetwork.active++;
+    // Keep the lease until the underlying native fetch actually settles.
+    // A logical JS timeout does not cancel Nuvio iOS networking.
+    try{return expired()||Date.now()>=end?null:await fetcher(url,options);}
+    finally{if(subtitleNetwork.waiting.length)subtitleNetwork.waiting.shift()();else subtitleNetwork.active--;}
+  }
   const emit = event => { try { onEvent(event); } catch {} };
   async function bounded(work, end, controller) {
     let timer;
@@ -20,7 +29,7 @@ function createHttp({ fetchImpl, allowHttp = false, timeoutMs = 4500, deadline =
     finally { clock.cancel(timer); }
   }
   async function request(rawUrl, options = {}) {
-    const { timeoutMs: localTimeout, ...fetchOptions } = options;
+    const { timeoutMs: localTimeout, nativeGroup, ...fetchOptions } = options;
     let url = safeUrl(rawUrl, undefined, allowHttp);
     if (!url || expired()) return null;
     const started = Date.now();
@@ -31,7 +40,7 @@ function createHttp({ fetchImpl, allowHttp = false, timeoutMs = 4500, deadline =
     const work = (async () => {
       for (let redirects = 0; redirects <= 3; redirects++) {
         if (expired() || Date.now() >= end || (rateLimited.get(new URL(url).origin) || 0) > Date.now()) return null;
-        const response = await fetcher(url, { ...fetchOptions, ...(controller ? { signal: controller.signal } : {}), redirect: 'manual' });
+        const response = await fetchNetwork(url, { ...fetchOptions, ...(controller ? { signal: controller.signal } : {}), redirect: 'manual' }, nativeGroup, end);
         if (!response) return null;
         emit({ stage: 'http', host: new URL(url).hostname, status: response.status, method: options.method || 'GET' });
         if ([301, 302, 303, 307, 308].includes(response.status)) {

@@ -145,6 +145,18 @@ var require_http = __commonJS({
       const controllers = /* @__PURE__ */ new Set();
       let closed = false;
       const expired = () => closed || Date.now() >= deadline;
+      const subtitleNetwork = { active: 0, waiting: [] };
+      async function fetchNetwork(url, options, group, end) {
+        if (group !== "subtitle-body") return fetcher(url, options);
+        if (subtitleNetwork.active >= 4) await new Promise((resolve) => subtitleNetwork.waiting.push(resolve));
+        else subtitleNetwork.active++;
+        try {
+          return expired() || Date.now() >= end ? null : await fetcher(url, options);
+        } finally {
+          if (subtitleNetwork.waiting.length) subtitleNetwork.waiting.shift()();
+          else subtitleNetwork.active--;
+        }
+      }
       const emit = (event) => {
         try {
           onEvent(event);
@@ -167,7 +179,7 @@ var require_http = __commonJS({
         }
       }
       async function request(rawUrl, options = {}) {
-        const { timeoutMs: localTimeout, ...fetchOptions } = options;
+        const { timeoutMs: localTimeout, nativeGroup, ...fetchOptions } = options;
         let url = safeUrl(rawUrl, void 0, allowHttp);
         if (!url || expired()) return null;
         const started = Date.now();
@@ -178,7 +190,7 @@ var require_http = __commonJS({
         const work = (async () => {
           for (let redirects = 0; redirects <= 3; redirects++) {
             if (expired() || Date.now() >= end || (rateLimited.get(new URL(url).origin) || 0) > Date.now()) return null;
-            const response = await fetcher(url, { ...fetchOptions, ...controller ? { signal: controller.signal } : {}, redirect: "manual" });
+            const response = await fetchNetwork(url, { ...fetchOptions, ...controller ? { signal: controller.signal } : {}, redirect: "manual" }, nativeGroup, end);
             if (!response) return null;
             emit({ stage: "http", host: new URL(url).hostname, status: response.status, method: options.method || "GET" });
             if ([301, 302, 303, 307, 308].includes(response.status)) {
@@ -626,7 +638,35 @@ var require_archive_verified = __commonJS({
       {
         identity: { tmdbId: 67070, imdbId: "tt5687612", originalTitle: "Fleabag", year: 2016, type: "tv", season: 1, episode: 1 },
         item: "fleabag.s01e01.480p.webdl.tehmovies.biz",
-        files: [{ name: "Fleabag.S01E01.480p.WEB-DL.Tehmovies.biz.mkv", size: 103770149, sha1: "c783319a7077fd2b9a41b529e537bfeeeb2d5b4d", hash: "cb34679d109bcf50", width: 848, height: 354, duration: 1564.874 }]
+        files: [
+          { name: "Fleabag.S01E01.480p.WEB-DL.Tehmovies.biz.mkv", size: 103770149, sha1: "c783319a7077fd2b9a41b529e537bfeeeb2d5b4d", hash: "cb34679d109bcf50", width: 848, height: 354, duration: 1564.874 },
+          { name: "Fleabag.S01E01.480p.WEB-DL.Tehmovies.biz.mp4", original: "Fleabag.S01E01.480p.WEB-DL.Tehmovies.biz.mkv", size: 162737999, sha1: "7e8083c62d4b4161f74385bcd3cd5d15867b7c12", hash: "8e6bf44636bf0129", width: 848, height: 354, duration: 1564.866 }
+        ]
+      },
+      {
+        identity: { tmdbId: 1396, imdbId: "tt0903747", originalTitle: "Breaking Bad", year: 2008, type: "tv", season: 1, episode: 1 },
+        item: "breaking-bad-s-01e-01-720p.-brrip.-sujaidr_202411",
+        files: [
+          { name: "Breaking Bad s01e01 720p.BRrip.Sujaidr.mkv", size: 487194215, sha1: "b40be1b6f824e49ae65b4159aa66994a573438f4", hash: "413c8dd909a585e5", width: 1280, height: 720, duration: 3486.44175 },
+          { name: "Breaking Bad s01e01 720p.BRrip.Sujaidr.mp4", original: "Breaking Bad s01e01 720p.BRrip.Sujaidr.mkv", size: 344478919, sha1: "917145d4d613abcb9dab30d0c25575f27875dad0", hash: "ceadfd558a25d8bd", width: 853, height: 480, duration: 3486.592 }
+        ]
+      },
+      {
+        identity: { tmdbId: 27205, imdbId: "tt1375666", originalTitle: "Inception", year: 2010, type: "movie" },
+        item: "a.-origem.-2010.baixarfilmesretro.blogspot.com-1",
+        files: [
+          { name: "A.Origem.[2010].baixarfilmesretro.blogspot.com (1).mp4", size: 902428472, sha1: "988398362ed184ef3ab9c3d81b603f20d4747dc8", hash: "631861977ab6e240", width: 1280, height: 536, duration: 8888.086666666666 },
+          { name: "A.Origem.[2010].baixarfilmesretro.blogspot.com (1).ia.mp4", original: "A.Origem.[2010].baixarfilmesretro.blogspot.com (1).mp4", size: 869895874, sha1: "65e2c5f9cd5caa8ab3089db2adec365330cd5892", hash: "42a8f8835109f629", width: 1280, height: 536, duration: 8888.088 }
+        ]
+      },
+      {
+        identity: { tmdbId: 67070, imdbId: "tt5687612", originalTitle: "Fleabag", year: 2016, type: "tv", season: 2, episode: 1 },
+        item: "fleabag.-s-01-e-05.-hdtv.-subtitulado-esp.-sc",
+        burnedSubtitleLanguage: "es",
+        files: [
+          { name: "Fleabag Season 2/FL34B4G SUB T02XE01.mkv", size: 633782892, sha1: "c03771c90754fc202f30fd4b091ff997d225f5ae", hash: "3b9c37b915e36b3b", width: 1280, height: 720, duration: 1531.389 },
+          { name: "Fleabag Season 2/FL34B4G SUB T02XE01.mp4", original: "Fleabag Season 2/FL34B4G SUB T02XE01.mkv", size: 154176179, sha1: "936487684937f18a46e3146801c6c725e9693ef9", hash: "a90bdbfc69a01f2d", width: 853, height: 480, duration: 1531.455 }
+        ]
       }
     ];
     function verifiedArchiveRecords(target) {
@@ -723,6 +763,7 @@ var require_archive = __commonJS({
           alternateUrls: urlsFor(f.name).slice(1),
           getOnly: true,
           ...pinnedItem ? { expectedFile: verifiedMetadataFile(verifiedRecord, f) } : {},
+          ...pinnedItem && verifiedRecord.burnedSubtitleLanguage ? { burnedSubtitleLanguage: verifiedRecord.burnedSubtitleLanguage } : {},
           sourceItemId: doc.identifier,
           mediaFilename: f.name,
           releaseYearBasis: pinnedItem ? "content-sample-pinned-file" : yearFromTitle ? "exact-title-and-filename" : "metadata",
@@ -809,6 +850,17 @@ var require_subtitles = __commonJS({
       }
       return last;
     }
+    async function subtitleSlot(http, task) {
+      const pool = http.subtitlePool || (http.subtitlePool = { active: 0, waiting: [] });
+      if (pool.active >= 4) await new Promise((resolve) => pool.waiting.push(resolve));
+      else pool.active++;
+      try {
+        return http.expired() ? null : await task();
+      } finally {
+        if (pool.waiting.length) pool.waiting.shift()();
+        else pool.active--;
+      }
+    }
     async function loadSubtitles(http, candidate, target, allowHttp, options = {}) {
       const seen = /* @__PURE__ */ new Set();
       const entries = candidate.subtitles.slice(0, 120).filter((sub) => {
@@ -825,8 +877,8 @@ var require_subtitles = __commonJS({
         const headers = cleanHeaders(sub.headers);
         const key = url + JSON.stringify(headers);
         if (!http.subtitleCache) http.subtitleCache = /* @__PURE__ */ new Map();
-        if (!http.subtitleCache.has(key)) http.subtitleCache.set(key, (async () => {
-          const result2 = await http.request(url, { headers, timeoutMs: 9e3 });
+        if (!http.subtitleCache.has(key)) http.subtitleCache.set(key, subtitleSlot(http, async () => {
+          const result2 = await http.request(url, { headers, timeoutMs: 9e3, nativeGroup: "subtitle-body" });
           if (!result2 || /html|zip|gzip|json/.test(result2.response.headers.get("content-type") || "")) return null;
           const bytes = new Uint8Array(await result2.response.arrayBuffer());
           if (!bytes.length || bytes.length > 262144) return null;
@@ -840,7 +892,7 @@ var require_subtitles = __commonJS({
             mojibake: /Å[ŸžŞş]|Ä[±°Ÿž]|Ã[¶¼§–œ‡]/.test(text2 || "")
           });
           return format2 ? { bytes, url: result2.url, text: text2, format: format2 } : null;
-        })());
+        }));
         const result = await http.subtitleCache.get(key);
         if (!result) return null;
         const { text, format } = result;
@@ -869,19 +921,21 @@ var require_subtitles = __commonJS({
         };
       };
       const tracks = [], collected = /* @__PURE__ */ new Set();
+      const acceptTrack = (track) => {
+        if (!track || collected.has(track._contentKey) || tracks.length >= 4) return;
+        collected.add(track._contentKey);
+        tracks.push(track);
+        if (options.onTrack) options.onTrack(track);
+      };
       for (let offset = 0; offset < entries.length && tracks.length < 4 && !http.expired(); offset += 2) {
-        const batch = await mapLimit(entries.slice(offset, offset + 2), 2, (sub, index) => loadTrack(sub, offset + index));
-        for (const track of batch) if (track && !collected.has(track._contentKey)) {
-          collected.add(track._contentKey);
-          tracks.push(track);
-        }
+        await mapLimit(entries.slice(offset, offset + 2), 2, async (sub, index) => acceptTrack(await loadTrack(sub, offset + index)));
       }
       const contents = /* @__PURE__ */ new Set();
       return tracks.filter((t) => {
         if (!t || contents.has(t._contentKey)) return false;
         contents.add(t._contentKey);
         return true;
-      }).slice(0, 4).map(({ _contentKey, ...track }) => track);
+      }).sort((a, b) => (b._score || 0) - (a._score || 0)).slice(0, 4).map(({ _contentKey, ...track }) => track);
     }
     function decodeUtf8(bytes) {
       try {
@@ -1864,12 +1918,12 @@ var require_subtitle_discovery = __commonJS({
         if (settings.autoSubtitles === false || !target.imdbId || http.expired()) return Promise.resolve([]);
         return mapLimit(bases, 3, async (base) => normalize(await lookup(`${base}/subtitles/${type}/${encodeURIComponent(id)}.json`), base));
       }
-      const discover = async (candidate, video) => {
+      const discover = async (candidate, video, options = {}) => {
         if (settings.autoSubtitles === false || !target.imdbId || http.expired()) return [];
         const filename = candidate.filename || decodeFilename(video.url);
         const extras = [`filename=${encodeURIComponent(filename)}`, `videoSize=${video.size || 0}`];
         if (video.videoHash) extras.push(`videoHash=${video.videoHash}`);
-        const titleResults = prefetch();
+        const titleResults = bases.map((base) => lookup(`${base}/subtitles/${type}/${encodeURIComponent(id)}.json`).then((data) => normalize(data, base)));
         let hashResults = Promise.resolve([]);
         const hashBase = bases.find((base) => base.includes("opensubtitles.stremio.homes"));
         if (settings.hashLookups !== false && video.videoHash && hashBase && !http.expired()) {
@@ -1879,8 +1933,12 @@ var require_subtitle_discovery = __commonJS({
             hashResults = lookup(hashUrl).then((data) => normalize(data, hashBase));
           }
         }
-        const [groups, hashed] = await Promise.all([titleResults, hashResults]);
-        return [...hashed, ...groups.flat()];
+        const groups = await Promise.all([...titleResults, hashResults].map(async (job) => {
+          const rows = await job;
+          if (rows.length && options.onBatch) await options.onBatch(rows);
+          return rows;
+        }));
+        return groups.flat();
       };
       discover.prefetch = prefetch;
       return discover;
@@ -1910,7 +1968,7 @@ var require_ranking = __commonJS({
       const dimensions = entry.video.dimensions;
       const pixels = dimensions ? Math.min(dimensions.width, dimensions.height) : 0;
       const subScore = Math.max(entry.video.embeddedTurkish || entry.candidate.embeddedTurkish ? 90 : 0, ...entry.subtitles.map((s) => s._score || 0));
-      return (entry.video.downloadable ? 1e9 : 0) + subScore * 1e6 + (entry.candidate.identityConfidence || 100) * 1e3 + Math.min(pixels, 2160) - (entry.video.size > 12 * 1024 ** 3 ? 2e3 : 0);
+      return (entry.video.downloadable ? 1e9 : 0) + subScore * 1e6 + (entry.candidate.identityConfidence || 100) * 1e3 + Math.min(pixels, 2160) - (entry.video.size > 12 * 1024 ** 3 ? 2e3 : 0) - (entry.candidate.burnedSubtitleLanguage && entry.candidate.burnedSubtitleLanguage !== "tr" ? 12e8 : 0);
     }
     function sizeValue(entry) {
       if (entry.video.size > 0) return entry.video.size;
@@ -1991,7 +2049,7 @@ var require_presentation = __commonJS({
 var require_diagnostics = __commonJS({
   "src/diagnostics.cjs"(exports2, module2) {
     "use strict";
-    var VERSION = true ? "1.6.3" : "dev";
+    var VERSION = true ? "1.6.4" : "dev";
     function effectiveTmdbKey(settings, injectedKey) {
       return typeof settings.tmdbApiKey === "string" && settings.tmdbApiKey.trim() ? settings.tmdbApiKey.trim() : typeof injectedKey === "string" ? injectedKey.trim() : "";
     }
@@ -2101,8 +2159,9 @@ var require_index = __commonJS({
         const subScore = subtitles[0]?._score || 0;
         const matchText = subScore >= 90 ? "eşleşti" : subScore >= 70 ? "sürüm benzerliği" : subScore >= 65 ? "süre uyumu" : "film düzeyi; senkron belirsiz";
         const embedded = candidate.embeddedTurkish || video.embeddedTurkish;
+        const burnedForeign = candidate.burnedSubtitleLanguage === "es" ? "İspanyolca altyazı görüntüye işlenmiş" : "";
         const subtitleText = subtitles.length ? ` · TR altyazı (${matchText})` : embedded ? ` · TR altyazı (${video.container === "hls" ? "HLS" : "dosya"} içi)` : " · TR altyazı bulunamadı";
-        const title = `${target.originalTitle} (${target.year}) · ${kind}${dimensionText} · ${size.text}${audio ? " · Ses: " + audio.text : ""}${subtitleText}`;
+        const title = `${target.originalTitle} (${target.year}) · ${kind}${dimensionText} · ${size.text}${audio ? " · Ses: " + audio.text : ""}${subtitleText}${burnedForeign ? " · " + burnedForeign : ""}`;
         const source = String(candidate.source || "Kaynak").replace("4KHDHub / HubCloud", "4KHDHub").replace("Internet Archive", "Archive") + (candidate.serverIndex ? ` ${candidate.serverIndex}` : "") + (candidate.source === "Animecix" && candidate.sourceNote ? ` · ${candidate.sourceNote.slice(0, 40)}` : "");
         const subTag = subtitles.length ? "TR" : embedded ? "TR içi" : candidate.turkishSource ? "TR kaynak · altyazı doğrulanmadı" : "TR yok";
         const badge = video.downloadable ? "İndirilebilir" : "Online";
@@ -2115,7 +2174,7 @@ var require_index = __commonJS({
           quality: quality.quality,
           ...size.size ? { size: size.size } : {},
           ...settings.compactLabels !== false ? { quality: `${details}${video.dimensions ? " ✓" : video.container === "hls" ? " HLS" : quality.quality === "Bilinmiyor" ? "" : " tahmin"}` } : {},
-          language: subTag + (subtitles.length && subScore < 90 ? " · senkron belirsiz" : "") + (audio ? " · Ses: " + audio.text : ""),
+          language: subTag + (subtitles.length && subScore < 90 ? " · senkron belirsiz" : "") + (audio ? " · Ses: " + audio.text : "") + (burnedForeign ? " · ES görüntüde" : ""),
           provider: "Nuvio TR HD",
           type: video.container,
           ...Object.keys(candidate.headers).length ? { headers: candidate.headers } : {},
@@ -2220,44 +2279,71 @@ var require_index = __commonJS({
             }
             const pair = { candidate, video, subtitles: [] };
             const embedded = candidate.embeddedTurkish || video.embeddedTurkish;
-            if (!strictSubtitles || embedded) completed.push(pair);
+            let published = !strictSubtitles || embedded;
+            if (published) completed.push(pair);
+            const validatedTracks = /* @__PURE__ */ new Map();
+            const acceptTrack = (track) => {
+              if (http.expired()) return;
+              const key2 = track._contentKey || track.url, previous = validatedTracks.get(key2);
+              const { _contentKey, ...clean } = track;
+              if (!previous || (clean._score || 0) > (previous._score || 0)) validatedTracks.set(key2, clean);
+              pair.subtitles = [...validatedTracks.values()].sort((a, b) => (b._score || 0) - (a._score || 0)).slice(0, 4);
+              if (pair.subtitles.length && !published) {
+                completed.push(pair);
+                published = true;
+              }
+            };
             const declared = candidate.subtitles.map((sub) => {
               const match = sub && scoreSubtitle(sub, candidate, video, target, settings.subtitleMatchMode !== "strict");
               return match ? { ...sub, _match: match } : null;
             }).filter(Boolean).sort((a, b) => b._match.score - a._match.score);
             if (declared.length) {
-              pair.subtitles = await loadSubtitles(
+              await loadSubtitles(
                 http,
                 { ...candidate, subtitles: declared },
                 target,
                 allowHttp,
-                { keepScore: true, videoDuration: video.durationSource === "tmdb" ? void 0 : video.duration }
+                { keepScore: true, onTrack: acceptTrack, videoDuration: video.durationSource === "tmdb" ? void 0 : video.duration }
               );
-              if (pair.subtitles.length) {
-                if (strictSubtitles && !embedded) completed.push(pair);
-                return;
-              }
+              if (pair.subtitles.length) return;
             }
-            const discovered = await discoverSubtitles(candidate, video);
-            const entries = [...candidate.subtitles, ...discovered].map((sub) => {
-              if (!sub || typeof sub !== "object") return null;
-              const match = scoreSubtitle(sub, candidate, video, target, settings.subtitleMatchMode !== "strict");
-              return match ? { ...sub, _match: match } : null;
-            }).filter(Boolean).sort((a, b) => b._match.score - a._match.score);
-            const subtitles = await loadSubtitles(
-              http,
-              { ...candidate, subtitles: entries },
-              target,
-              allowHttp,
-              { keepScore: true, videoDuration: video.durationSource === "tmdb" ? void 0 : video.duration }
-            );
-            if (http.expired()) return;
-            if (!subtitles.length) {
-              reject(entries.length ? "subtitle_unavailable" : "subtitle_no_match");
-              return;
+            const scheduled = /* @__PURE__ */ new Set(), deferred = [];
+            let generalCount = 0, totalCount = 0, releaseReserved = false;
+            const acceptBatch = async (rows) => {
+              if (http.expired()) return;
+              const entries = rows.map((sub) => {
+                if (!sub || typeof sub !== "object") return null;
+                const match = scoreSubtitle(sub, candidate, video, target, settings.subtitleMatchMode !== "strict");
+                return match ? { ...sub, _match: match } : null;
+              }).filter(Boolean).sort((a, b) => b._match.score - a._match.score).filter((sub) => {
+                const url = safeUrl(sub.url, candidate.subtitleBase, allowHttp);
+                const key2 = url + JSON.stringify(sub.headers || {}), strong = sub._match.score >= 90;
+                if (!url || scheduled.has(key2) || totalCount >= 12 || /\.(zip|ass|ssa|rar)(?:\/?$|[?#])/i.test(url)) return false;
+                const generalLimit = video.videoHash && !releaseReserved ? 8 : 12;
+                if (!strong && generalCount >= generalLimit) {
+                  deferred.push(sub);
+                  return false;
+                }
+                if (pair.subtitles.length === 4 && sub._match.score <= (pair.subtitles[3]._score || 0)) return false;
+                scheduled.add(key2);
+                totalCount++;
+                if (!strong) generalCount++;
+                return true;
+              });
+              if (entries.length) await loadSubtitles(
+                http,
+                { ...candidate, subtitles: entries },
+                target,
+                allowHttp,
+                { keepScore: true, onTrack: acceptTrack, videoDuration: video.durationSource === "tmdb" ? void 0 : video.duration }
+              );
+            };
+            await discoverSubtitles(candidate, video, { onBatch: acceptBatch });
+            if (!http.expired() && pair.subtitles.length < 4 && deferred.length) {
+              releaseReserved = true;
+              await acceptBatch(deferred.slice());
             }
-            pair.subtitles = subtitles;
-            if (strictSubtitles && !embedded) completed.push(pair);
+            if (!http.expired() && !pair.subtitles.length) reject(totalCount ? "subtitle_unavailable" : "subtitle_no_match");
           };
           const run = async () => {
             try {

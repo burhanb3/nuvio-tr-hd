@@ -49,8 +49,9 @@ function formatResults(completed, settings, target) {
     const subScore = subtitles[0]?._score || 0;
     const matchText = subScore >= 90 ? 'eşleşti' : subScore >= 70 ? 'sürüm benzerliği' : subScore >= 65 ? 'süre uyumu' : 'film düzeyi; senkron belirsiz';
     const embedded = candidate.embeddedTurkish || video.embeddedTurkish;
+    const burnedForeign = candidate.burnedSubtitleLanguage === 'es' ? 'İspanyolca altyazı görüntüye işlenmiş' : '';
     const subtitleText = subtitles.length ? ` · TR altyazı (${matchText})` : embedded ? ` · TR altyazı (${video.container === 'hls' ? 'HLS' : 'dosya'} içi)` : ' · TR altyazı bulunamadı';
-    const title = `${target.originalTitle} (${target.year}) · ${kind}${dimensionText} · ${size.text}${audio ? ' · Ses: '+audio.text : ''}${subtitleText}`;
+    const title = `${target.originalTitle} (${target.year}) · ${kind}${dimensionText} · ${size.text}${audio ? ' · Ses: '+audio.text : ''}${subtitleText}${burnedForeign ? ' · '+burnedForeign : ''}`;
     const source = String(candidate.source || 'Kaynak').replace('4KHDHub / HubCloud', '4KHDHub').replace('Internet Archive', 'Archive') +
       (candidate.serverIndex ? ` ${candidate.serverIndex}` : '') + (candidate.source === 'Animecix' && candidate.sourceNote ? ` · ${candidate.sourceNote.slice(0, 40)}` : '');
     const subTag = subtitles.length ? 'TR' : embedded ? 'TR içi' : candidate.turkishSource ? 'TR kaynak · altyazı doğrulanmadı' : 'TR yok';
@@ -63,7 +64,7 @@ function formatResults(completed, settings, target) {
       title, url: video.url, quality: quality.quality,
       ...(size.size ? { size: size.size } : {}),
       ...(settings.compactLabels !== false ? { quality: `${details}${video.dimensions ? ' ✓' : video.container === 'hls' ? ' HLS' : quality.quality === 'Bilinmiyor' ? '' : ' tahmin'}` } : {}),
-      language: subTag + (subtitles.length && subScore < 90 ? ' · senkron belirsiz' : '') + (audio ? ' · Ses: '+audio.text : ''), provider: 'Nuvio TR HD', type: video.container,
+      language: subTag + (subtitles.length && subScore < 90 ? ' · senkron belirsiz' : '') + (audio ? ' · Ses: '+audio.text : '') + (burnedForeign ? ' · ES görüntüde' : ''), provider: 'Nuvio TR HD', type: video.container,
       ...(Object.keys(candidate.headers).length ? { headers: candidate.headers } : {}),
       subtitles: subtitles.map(({ _score, ...subtitle }) => subtitle) };
   });
@@ -125,31 +126,48 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs = 24000, r
         if (video.dimensions && Math.min(video.dimensions.width, video.dimensions.height) < minimum) { reject('quality'); return; }
         const pair = { candidate, video, subtitles: [] };
         const embedded = candidate.embeddedTurkish || video.embeddedTurkish;
-        if (!strictSubtitles || embedded) completed.push(pair);
+        let published = !strictSubtitles || embedded;
+        if (published) completed.push(pair);
+        const validatedTracks = new Map();
+        const acceptTrack = track => {
+          if(http.expired())return;
+          const key=track._contentKey||track.url,previous=validatedTracks.get(key);
+          const { _contentKey, ...clean }=track;
+          if(!previous||(clean._score||0)>(previous._score||0))validatedTracks.set(key,clean);
+          pair.subtitles=[...validatedTracks.values()].sort((a,b)=>(b._score||0)-(a._score||0)).slice(0,4);
+          if(pair.subtitles.length&&!published){completed.push(pair);published=true;}
+        };
         const declared = candidate.subtitles.map(sub => {
           const match = sub && scoreSubtitle(sub, candidate, video, target, settings.subtitleMatchMode !== 'strict');
           return match ? { ...sub, _match: match } : null;
         }).filter(Boolean).sort((a, b) => b._match.score - a._match.score);
         if (declared.length) {
-          pair.subtitles = await loadSubtitles(http, { ...candidate, subtitles: declared }, target, allowHttp,
-            { keepScore: true, videoDuration: video.durationSource === 'tmdb' ? undefined : video.duration });
-          if (pair.subtitles.length) {
-            if (strictSubtitles && !embedded) completed.push(pair);
-            return;
-          }
+          await loadSubtitles(http, { ...candidate, subtitles: declared }, target, allowHttp,
+            { keepScore: true, onTrack: acceptTrack, videoDuration: video.durationSource === 'tmdb' ? undefined : video.duration });
+          if (pair.subtitles.length) return;
         }
-        const discovered = await discoverSubtitles(candidate, video);
-        const entries = [...candidate.subtitles, ...discovered].map(sub => {
+        const scheduled = new Set(), deferred=[];let generalCount=0,totalCount=0,releaseReserved=false;
+        const acceptBatch = async rows => {
+          if(http.expired())return;
+          const entries = rows.map(sub => {
           if (!sub || typeof sub !== 'object') return null;
           const match = scoreSubtitle(sub, candidate, video, target, settings.subtitleMatchMode !== 'strict');
           return match ? { ...sub, _match: match } : null;
-        }).filter(Boolean).sort((a, b) => b._match.score - a._match.score);
-        const subtitles = await loadSubtitles(http, { ...candidate, subtitles: entries }, target, allowHttp,
-          { keepScore: true, videoDuration: video.durationSource === 'tmdb' ? undefined : video.duration });
-        if (http.expired()) return;
-        if (!subtitles.length) { reject(entries.length ? 'subtitle_unavailable' : 'subtitle_no_match'); return; }
-        pair.subtitles = subtitles;
-        if (strictSubtitles && !embedded) completed.push(pair);
+          }).filter(Boolean).sort((a,b)=>b._match.score-a._match.score).filter(sub=>{
+            const url=safeUrl(sub.url,candidate.subtitleBase,allowHttp);
+            const key=url+JSON.stringify(sub.headers||{}),strong=sub._match.score>=90;
+            if(!url||scheduled.has(key)||totalCount>=12||/\.(zip|ass|ssa|rar)(?:\/?$|[?#])/i.test(url))return false;
+            const generalLimit=video.videoHash&&!releaseReserved?8:12;
+            if(!strong&&generalCount>=generalLimit){deferred.push(sub);return false;}
+            if(pair.subtitles.length===4&&sub._match.score<=(pair.subtitles[3]._score||0))return false;
+            scheduled.add(key);totalCount++;if(!strong)generalCount++;return true;
+          });
+          if(entries.length)await loadSubtitles(http,{...candidate,subtitles:entries},target,allowHttp,
+            {keepScore:true,onTrack:acceptTrack,videoDuration:video.durationSource==='tmdb'?undefined:video.duration});
+        };
+        await discoverSubtitles(candidate,video,{onBatch:acceptBatch});
+        if(!http.expired()&&pair.subtitles.length<4&&deferred.length){releaseReserved=true;await acceptBatch(deferred.slice());}
+        if(!http.expired()&&!pair.subtitles.length)reject(totalCount?'subtitle_unavailable':'subtitle_no_match');
       };
       const run = async () => {
         try {

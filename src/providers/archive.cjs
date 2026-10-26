@@ -97,6 +97,7 @@ async function scanArchive(http, target, options = {}) {
         alternateUrls: urlsFor(f.name).slice(1),
         getOnly: true,
         ...(pinnedItem ? { expectedFile: verifiedMetadataFile(verifiedRecord,f) } : {}),
+        ...(pinnedItem && verifiedRecord.burnedSubtitleLanguage ? { burnedSubtitleLanguage: verifiedRecord.burnedSubtitleLanguage } : {}),
         sourceItemId: doc.identifier, mediaFilename: f.name, releaseYearBasis: pinnedItem ? 'content-sample-pinned-file' : yearFromTitle ? 'exact-title-and-filename' : 'metadata',
         ...(yearFromTitle ? { durationTolerance: 0.1 } : {}),
         requireDuration: pinnedItem || yearFromTitle || target.runtimeMinutes > 0 && !(Number(f.length) > 0),

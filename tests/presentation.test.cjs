@@ -6,6 +6,13 @@ const {describeSize}=require('../src/media/presentation.cjs');
 const {createHttp}=require('../src/http.cjs');
 const {fixtureFetch,target}=require('./helpers.cjs');
 const pair=(id,size,height,type='mp4')=>({candidate:{url:`https://media.test/${id}.${type}`,source:'Source '+id,filename:'The.Matrix.1999.mkv',headers:{},subtitles:[]},video:{url:`https://media.test/${id}.${type}`,size,dimensions:{width:height*2,height},container:type,downloadable:type!=='hls'},subtitles:[]});
+test('Görüntüye işlenmiş yabancı altyazı etiketlenir; önerilende temiz online öne geçer, boyut sırası korunur',()=>{
+ const burned=pair('burned',1000,720),online=pair('online',2000,720,'hls');burned.candidate.burnedSubtitleLanguage='es';
+ for(const p of[burned,online])p.subtitles=[{url:'https://subs.test/tr.srt',language:'tr',name:'Türkçe',_score:90}];
+ const bySize=formatResults([burned,online],{},target);assert.match(bySize[0].language,/ES görüntüde/);assert.match(bySize[0].title,/İspanyolca altyazı görüntüye işlenmiş/);
+ const recommended=formatResults([burned,online],{sortOrder:'recommended'},target);assert.match(recommended[0].name,/Online/);
+ assert.equal(recommended[1].subtitles[0].language,'tr');
+});
 test('kısa kartlar native alanlara bölünür; varsayılan küçükten büyüğe, bilinmeyen sonda',()=>{
  const entries=[pair('big',5000,1080),pair('small',1000,720),pair('unknown',null,2160)];
  const list=formatResults(entries,{},target);

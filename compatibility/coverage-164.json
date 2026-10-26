@@ -1,0 +1,2333 @@
+{
+  "checkedAt": "2026-10-26T13:46:04.070Z",
+  "version": "1.6.4",
+  "metadata": "fixed canonical reference; does not test phone TMDB API credentials",
+  "acceptance": {
+    "movieSmallFileBytes": 3221225472,
+    "episodeSmallFileBytes": 1073741824,
+    "minimumDistinctDownloadQualities": 2,
+    "requireTurkishSubtitle": true,
+    "physicalPlaybackAndOfflineTest": "not-run"
+  },
+  "transport": "Node limited1MiB, actual source and subtitle HTTP; native iPhone transport not tested",
+  "physicalDevice": "not-run",
+  "fullPlayback": "not-run",
+  "fullDownload": "not-run",
+  "cases": [
+    {
+      "key": "no-way-home",
+      "tmdbId": 634649,
+      "title": "Spider-Man: No Way Home",
+      "type": "movie",
+      "control": false,
+      "elapsedMs": 6824,
+      "bytesRead": 2388691,
+      "diagnostics": [
+        {
+          "tmdbId": "634649",
+          "lane": "main",
+          "configuration": {
+            "version": "dev",
+            "tmdbKeyPresent": true,
+            "autoDiscover": true,
+            "includeHls": true,
+            "playImdbEnabled": true,
+            "vixsrcEnabled": true,
+            "hdhubEnabled": true,
+            "archiveEnabled": true,
+            "autoSubtitles": true,
+            "subtitleRequired": false,
+            "detailedHlsMetadata": false,
+            "minimumQuality": 0,
+            "maxResults": 20
+          },
+          "identity": {
+            "reason": "ok",
+            "year": 2021,
+            "type": "movie"
+          },
+          "sources": [
+            {
+              "name": "VixSrc",
+              "candidates": 1
+            },
+            {
+              "name": "PlayIMDb",
+              "candidates": 3
+            },
+            {
+              "name": "Internet Archive",
+              "candidates": 1
+            },
+            {
+              "name": "4KHDHub / HubCloud",
+              "candidates": 9
+            }
+          ],
+          "rejected": {
+            "video_unavailable": 9
+          },
+          "http": {
+            "api.themoviedb.org:200": 1,
+            "nuvio-tr-hd-download-bridge.kamilbsr03.chatgpt.site:200": 1,
+            "vixsrc.to:200": 3,
+            "4khdhub.one:200": 2,
+            "archive.org:200": 6,
+            "streamdata.vaplayer.ru:200": 1,
+            "greenmotors.club:302": 11,
+            "opensubtitles-v3.strem.io:200": 1,
+            "subs5.strem.io:200": 4,
+            "altyazidb.online:200": 6,
+            "greenmotors.cc:200": 11,
+            "onlineempireblueprint.site:200": 3,
+            "hubcloud.ist:200": 11,
+            "gamerxyt.com:200": 11,
+            "dn600302.us.archive.org:206": 2,
+            "opensubtitles.stremio.homes:200": 3,
+            "hubcloud.downloadservers.workers.dev:timeout_or_network": 1,
+            "nf-cdn.movies-server.workers.dev:timeout_or_network": 1,
+            "flat-glade-7058.welikap1127100.workers.dev:timeout_or_network": 1,
+            "small-brook-3e88.terapiyo248.workers.dev:timeout_or_network": 1,
+            "cdn.primevideos.workers.dev:timeout_or_network": 1,
+            "nameless-mountain-a418.babafe7002.workers.dev:timeout_or_network": 1,
+            "twilight-lake-88c1.falihog1983218.workers.dev:timeout_or_network": 1,
+            "drive.hubfilesserver2.workers.dev:timeout_or_network": 1,
+            "dl.amazonserver.workers.dev:timeout_or_network": 1
+          },
+          "subtitleText": {
+            "turkishCharacters": 10,
+            "inlineFont": 3
+          },
+          "results": 11,
+          "reason": "ok",
+          "elapsedMs": 6823
+        }
+      ],
+      "onlineWithTr": true,
+      "downloadUrls": 1,
+      "estimatedDistinctFiles": 1,
+      "downloadQualities": [
+        "720x304"
+      ],
+      "cleanOnlineWithTr": true,
+      "cleanDownloadQualities": [
+        "720x304"
+      ],
+      "cleanSmallWithTr": true,
+      "smallWithTr": true,
+      "smallLimitBytes": 3221225472,
+      "sourceCoverageCriteriaMet": false,
+      "gaps": [
+        "multiple_verified_download_qualities_missing"
+      ],
+      "files": [
+        {
+          "source": "Internet Archive",
+          "container": "mp4",
+          "bytes": 881009469,
+          "filename": "Spider-Man.No.Way.Home.2021.FRENCH.BDRip.XviD.Wawacity.blue.avi",
+          "sourceItemId": "spider-man.-no.-way.-home.-2021.-french.-bdrip.-xvi-d.-wawacity.blue",
+          "releaseYearBasis": "exact-title-and-filename",
+          "mediaFilename": "Spider-Man.No.Way.Home.2021.FRENCH.BDRip.XviD.Wawacity.blue.mp4",
+          "audioLanguages": [],
+          "subtitleBestScore": 65,
+          "burnedSubtitleLanguage": null,
+          "knownForeignBurnedSubtitles": false,
+          "dimensions": {
+            "width": 720,
+            "height": 304
+          },
+          "quality": "720x304",
+          "turkishSubtitle": true,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 8889.931,
+          "hashAvailable": true
+        }
+      ]
+    },
+    {
+      "key": "spider-verse",
+      "tmdbId": 324857,
+      "title": "Spider-Man: Into the Spider-Verse",
+      "type": "movie",
+      "control": false,
+      "elapsedMs": 3793,
+      "bytesRead": 1179204,
+      "diagnostics": [
+        {
+          "tmdbId": "324857",
+          "lane": "main",
+          "configuration": {
+            "version": "dev",
+            "tmdbKeyPresent": true,
+            "autoDiscover": true,
+            "includeHls": true,
+            "playImdbEnabled": true,
+            "vixsrcEnabled": true,
+            "hdhubEnabled": true,
+            "archiveEnabled": true,
+            "autoSubtitles": true,
+            "subtitleRequired": false,
+            "detailedHlsMetadata": false,
+            "minimumQuality": 0,
+            "maxResults": 20
+          },
+          "identity": {
+            "reason": "ok",
+            "year": 2018,
+            "type": "movie"
+          },
+          "sources": [
+            {
+              "name": "PlayIMDb",
+              "candidates": 3
+            },
+            {
+              "name": "VixSrc",
+              "candidates": 1
+            },
+            {
+              "name": "Internet Archive",
+              "candidates": 1
+            },
+            {
+              "name": "4KHDHub / HubCloud",
+              "candidates": 6
+            }
+          ],
+          "rejected": {
+            "video_unavailable": 6
+          },
+          "http": {
+            "api.themoviedb.org:200": 1,
+            "nuvio-tr-hd-download-bridge.kamilbsr03.chatgpt.site:200": 1,
+            "vixsrc.to:200": 3,
+            "streamdata.vaplayer.ru:200": 1,
+            "altyazidb.online:200": 5,
+            "opensubtitles-v3.strem.io:200": 1,
+            "4khdhub.one:200": 2,
+            "archive.org:200": 6,
+            "greenmotors.club:302": 7,
+            "digitalnomadventures.site:200": 3,
+            "greenmotors.cc:200": 7,
+            "opensubtitles.stremio.homes:200": 2,
+            "hubcloud.ist:200": 7,
+            "gamerxyt.com:200": 7,
+            "steep-butterfly-1810.jarog56524.workers.dev:timeout_or_network": 1,
+            "dn600304.us.archive.org:206": 2,
+            "download.amazonfilexcdn.workers.dev:timeout_or_network": 1,
+            "jiocloud.dl-yixosaj751.workers.dev:timeout_or_network": 1,
+            "green-limit-7572.terapiyo236.workers.dev:timeout_or_network": 1,
+            "hubcloud.downloadservers.workers.dev:timeout_or_network": 1,
+            "fancy-forest-e349.terapiyo234.workers.dev:timeout_or_network": 1
+          },
+          "subtitleText": {
+            "turkishCharacters": 4
+          },
+          "results": 11,
+          "reason": "ok",
+          "elapsedMs": 3793
+        }
+      ],
+      "onlineWithTr": true,
+      "downloadUrls": 1,
+      "estimatedDistinctFiles": 1,
+      "downloadQualities": [
+        "1920x800"
+      ],
+      "cleanOnlineWithTr": true,
+      "cleanDownloadQualities": [
+        "1920x800"
+      ],
+      "cleanSmallWithTr": true,
+      "smallWithTr": true,
+      "smallLimitBytes": 3221225472,
+      "sourceCoverageCriteriaMet": false,
+      "gaps": [
+        "multiple_verified_download_qualities_missing"
+      ],
+      "files": [
+        {
+          "source": "Internet Archive",
+          "container": "mp4",
+          "bytes": 2016133619,
+          "filename": "Spider-Man Into the Spider-Verse (2018) [1080p] [BluRay] [YTS.MX].torrent",
+          "sourceItemId": "spider-man-into-the-spider-verse-2018-1080p-blu-ray-yts.-mx",
+          "releaseYearBasis": "exact-title-and-filename",
+          "mediaFilename": "Spider-Man Into The Spider-Verse (2018) [BluRay] [1080p] [YTS.AM]/Spider-Man.Into.The.Spider-Verse.2018.1080p.BluRay.x264-[YTS.AM].mp4",
+          "audioLanguages": [],
+          "subtitleBestScore": 65,
+          "burnedSubtitleLanguage": null,
+          "knownForeignBurnedSubtitles": false,
+          "dimensions": {
+            "width": 1920,
+            "height": 800
+          },
+          "quality": "1920x800",
+          "turkishSubtitle": true,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 7010.059,
+          "hashAvailable": true
+        }
+      ]
+    },
+    {
+      "key": "dune",
+      "tmdbId": 438631,
+      "title": "Dune",
+      "type": "movie",
+      "control": false,
+      "elapsedMs": 3177,
+      "bytesRead": 1539293,
+      "diagnostics": [
+        {
+          "tmdbId": "438631",
+          "lane": "main",
+          "configuration": {
+            "version": "dev",
+            "tmdbKeyPresent": true,
+            "autoDiscover": true,
+            "includeHls": true,
+            "playImdbEnabled": true,
+            "vixsrcEnabled": true,
+            "hdhubEnabled": true,
+            "archiveEnabled": true,
+            "autoSubtitles": true,
+            "subtitleRequired": false,
+            "detailedHlsMetadata": false,
+            "minimumQuality": 0,
+            "maxResults": 20
+          },
+          "identity": {
+            "reason": "ok",
+            "year": 2021,
+            "type": "movie"
+          },
+          "sources": [
+            {
+              "name": "PlayIMDb",
+              "candidates": 3
+            },
+            {
+              "name": "Internet Archive",
+              "candidates": 2
+            },
+            {
+              "name": "VixSrc",
+              "candidates": 1
+            },
+            {
+              "name": "4KHDHub / HubCloud",
+              "candidates": 5
+            }
+          ],
+          "rejected": {
+            "video_unavailable": 5
+          },
+          "http": {
+            "api.themoviedb.org:200": 1,
+            "vixsrc.to:200": 4,
+            "nuvio-tr-hd-download-bridge.kamilbsr03.chatgpt.site:200": 1,
+            "streamdata.vaplayer.ru:200": 1,
+            "opensubtitles-v3.strem.io:200": 1,
+            "altyazidb.online:200": 5,
+            "archive.org:200": 4,
+            "4khdhub.one:200": 2,
+            "opensubtitles.stremio.homes:200": 6,
+            "greenmotors.club:302": 6,
+            "nicheauthorityengine.site:200": 3,
+            "greenmotors.cc:200": 6,
+            "hubcloud.ist:200": 6,
+            "gamerxyt.com:200": 6,
+            "wispy-bread-0fb3.mexanig1569602.workers.dev:timeout_or_network": 1,
+            "sc-u20-01.freshkoala11.boats:200": 1,
+            "shiny-haze-7998.vepec461006995.workers.dev:timeout_or_network": 1,
+            "ia600400.us.archive.org:206": 4,
+            "still-cloud-afc6.forab43160.workers.dev:timeout_or_network": 1,
+            "goldmines-cdn.picipa8782.workers.dev:timeout_or_network": 1,
+            "fileshub.fivay65193.workers.dev:timeout_or_network": 1
+          },
+          "subtitleText": {
+            "turkishCharacters": 8,
+            "inlineFont": 1
+          },
+          "results": 12,
+          "reason": "ok",
+          "elapsedMs": 3177
+        }
+      ],
+      "onlineWithTr": true,
+      "downloadUrls": 2,
+      "estimatedDistinctFiles": 2,
+      "downloadQualities": [
+        "1146x480",
+        "1280x536"
+      ],
+      "cleanOnlineWithTr": true,
+      "cleanDownloadQualities": [
+        "1146x480",
+        "1280x536"
+      ],
+      "cleanSmallWithTr": true,
+      "smallWithTr": true,
+      "smallLimitBytes": 3221225472,
+      "sourceCoverageCriteriaMet": true,
+      "gaps": [],
+      "files": [
+        {
+          "source": "Internet Archive",
+          "container": "mp4",
+          "bytes": 949160267,
+          "filename": "Dune_2021_720p_BluRay_x265_HEVC_10bit_AAC_2_0_Hindi_PSA_ASAP.mkv",
+          "sourceItemId": "dune-2021-720p-blu-ray-x-265-hevc-10bit-aac-2-0-hindi-psa-asap_202507",
+          "releaseYearBasis": "content-sample-pinned-file",
+          "mediaFilename": "Dune_2021_720p_BluRay_x265_HEVC_10bit_AAC_2_0_Hindi_PSA_ASAP.mp4",
+          "audioLanguages": [],
+          "subtitleBestScore": 65,
+          "burnedSubtitleLanguage": null,
+          "knownForeignBurnedSubtitles": false,
+          "dimensions": {
+            "width": 1146,
+            "height": 480
+          },
+          "quality": "1146x480",
+          "turkishSubtitle": true,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 9326.698,
+          "hashAvailable": true
+        },
+        {
+          "source": "Internet Archive",
+          "container": "mkv",
+          "bytes": 792903325,
+          "filename": "Dune_2021_720p_BluRay_x265_HEVC_10bit_AAC_2_0_Hindi_PSA_ASAP.mkv",
+          "sourceItemId": "dune-2021-720p-blu-ray-x-265-hevc-10bit-aac-2-0-hindi-psa-asap_202507",
+          "releaseYearBasis": "content-sample-pinned-file",
+          "mediaFilename": "Dune_2021_720p_BluRay_x265_HEVC_10bit_AAC_2_0_Hindi_PSA_ASAP.mkv",
+          "audioLanguages": [
+            "hi"
+          ],
+          "subtitleBestScore": 65,
+          "burnedSubtitleLanguage": null,
+          "knownForeignBurnedSubtitles": false,
+          "dimensions": {
+            "width": 1280,
+            "height": 536
+          },
+          "quality": "1280x536",
+          "turkishSubtitle": true,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 9326.659,
+          "hashAvailable": true
+        }
+      ]
+    },
+    {
+      "key": "matrix",
+      "tmdbId": 603,
+      "title": "The Matrix",
+      "type": "movie",
+      "control": false,
+      "elapsedMs": 3297,
+      "bytesRead": 1031963,
+      "diagnostics": [
+        {
+          "tmdbId": "603",
+          "lane": "main",
+          "configuration": {
+            "version": "dev",
+            "tmdbKeyPresent": true,
+            "autoDiscover": true,
+            "includeHls": true,
+            "playImdbEnabled": true,
+            "vixsrcEnabled": true,
+            "hdhubEnabled": true,
+            "archiveEnabled": true,
+            "autoSubtitles": true,
+            "subtitleRequired": false,
+            "detailedHlsMetadata": false,
+            "minimumQuality": 0,
+            "maxResults": 20
+          },
+          "identity": {
+            "reason": "ok",
+            "year": 1999,
+            "type": "movie"
+          },
+          "sources": [
+            {
+              "name": "PlayIMDb",
+              "candidates": 3
+            },
+            {
+              "name": "VixSrc",
+              "candidates": 1
+            },
+            {
+              "name": "Internet Archive",
+              "candidates": 0
+            },
+            {
+              "name": "4KHDHub / HubCloud",
+              "candidates": 6
+            }
+          ],
+          "rejected": {
+            "video_unavailable": 6
+          },
+          "http": {
+            "api.themoviedb.org:200": 1,
+            "vixsrc.to:200": 3,
+            "streamdata.vaplayer.ru:200": 1,
+            "opensubtitles-v3.strem.io:200": 1,
+            "altyazidb.online:200": 6,
+            "4khdhub.one:200": 2,
+            "opensubtitles.stremio.homes:200": 1,
+            "greenmotors.club:302": 8,
+            "archive.org:200": 10,
+            "greenmotors.cc:200": 8,
+            "nextgenmarketinghub.site:200": 3,
+            "hubcloud.ist:200": 8,
+            "gamerxyt.com:200": 8,
+            "nuvio-tr-hd-download-bridge.kamilbsr03.chatgpt.site:200": 1,
+            "long-mountain-bb68.xibala6906.workers.dev:timeout_or_network": 1,
+            "hubcloud-download.pexigic4913492.workers.dev:timeout_or_network": 1,
+            "netflix.fakegij908.workers.dev:timeout_or_network": 1,
+            "icy-river-3bdb.terapiyo233.workers.dev:timeout_or_network": 1,
+            "green-term-3a8c.vahoweg883.workers.dev:timeout_or_network": 1,
+            "misty-rice-9825.papot35183.workers.dev:timeout_or_network": 1
+          },
+          "subtitleText": {
+            "turkishCharacters": 5
+          },
+          "results": 10,
+          "reason": "ok",
+          "elapsedMs": 3297
+        }
+      ],
+      "onlineWithTr": true,
+      "downloadUrls": 0,
+      "estimatedDistinctFiles": 0,
+      "downloadQualities": [],
+      "cleanOnlineWithTr": true,
+      "cleanDownloadQualities": [],
+      "cleanSmallWithTr": false,
+      "smallWithTr": false,
+      "smallLimitBytes": 3221225472,
+      "sourceCoverageCriteriaMet": false,
+      "gaps": [
+        "download_missing",
+        "small_download_with_tr_missing",
+        "multiple_verified_download_qualities_missing"
+      ],
+      "files": []
+    },
+    {
+      "key": "inception",
+      "tmdbId": 27205,
+      "title": "Inception",
+      "type": "movie",
+      "control": false,
+      "elapsedMs": 4346,
+      "bytesRead": 1692635,
+      "diagnostics": [
+        {
+          "tmdbId": "27205",
+          "lane": "main",
+          "configuration": {
+            "version": "dev",
+            "tmdbKeyPresent": true,
+            "autoDiscover": true,
+            "includeHls": true,
+            "playImdbEnabled": true,
+            "vixsrcEnabled": true,
+            "hdhubEnabled": true,
+            "archiveEnabled": true,
+            "autoSubtitles": true,
+            "subtitleRequired": false,
+            "detailedHlsMetadata": false,
+            "minimumQuality": 0,
+            "maxResults": 20
+          },
+          "identity": {
+            "reason": "ok",
+            "year": 2010,
+            "type": "movie"
+          },
+          "sources": [
+            {
+              "name": "PlayIMDb",
+              "candidates": 3
+            },
+            {
+              "name": "VixSrc",
+              "candidates": 1
+            },
+            {
+              "name": "Internet Archive",
+              "candidates": 2
+            },
+            {
+              "name": "4KHDHub / HubCloud",
+              "candidates": 7
+            }
+          ],
+          "rejected": {
+            "video_unavailable": 7
+          },
+          "http": {
+            "api.themoviedb.org:200": 1,
+            "nuvio-tr-hd-download-bridge.kamilbsr03.chatgpt.site:200": 1,
+            "vixsrc.to:200": 3,
+            "streamdata.vaplayer.ru:200": 1,
+            "opensubtitles-v3.strem.io:200": 1,
+            "altyazidb.online:200": 5,
+            "archive.org:200": 11,
+            "4khdhub.one:200": 2,
+            "opensubtitles.stremio.homes:200": 5,
+            "greenmotors.club:302": 7,
+            "greenmotors.cc:200": 7,
+            "hubcloud.ist:200": 7,
+            "onlinevisibilitysystem.site:200": 3,
+            "gamerxyt.com:200": 7,
+            "raspy-art-dcac.pawolis5466501.workers.dev:timeout_or_network": 1,
+            "drive.googleusercontents.workers.dev:timeout_or_network": 1,
+            "filexdcn.google-cdn.workers.dev:timeout_or_network": 1,
+            "broad-water-0d54.xidoyo1675.workers.dev:timeout_or_network": 1,
+            "ia600900.us.archive.org:206": 4,
+            "files.amznaws.workers.dev:timeout_or_network": 1,
+            "broad-breeze-a56a.jegik209786862.workers.dev:timeout_or_network": 1,
+            "nf-cdn.ripah90951.workers.dev:timeout_or_network": 1
+          },
+          "subtitleText": {
+            "turkishCharacters": 6
+          },
+          "results": 12,
+          "reason": "ok",
+          "elapsedMs": 4346
+        }
+      ],
+      "onlineWithTr": true,
+      "downloadUrls": 2,
+      "estimatedDistinctFiles": 2,
+      "downloadQualities": [
+        "1280x536"
+      ],
+      "cleanOnlineWithTr": true,
+      "cleanDownloadQualities": [
+        "1280x536"
+      ],
+      "cleanSmallWithTr": true,
+      "smallWithTr": true,
+      "smallLimitBytes": 3221225472,
+      "sourceCoverageCriteriaMet": false,
+      "gaps": [
+        "multiple_verified_download_qualities_missing"
+      ],
+      "files": [
+        {
+          "source": "Internet Archive",
+          "container": "mp4",
+          "bytes": 902428472,
+          "filename": "A.Origem.[2010].baixarfilmesretro.blogspot.com (1).mp4",
+          "sourceItemId": "a.-origem.-2010.baixarfilmesretro.blogspot.com-1",
+          "releaseYearBasis": "content-sample-pinned-file",
+          "mediaFilename": "A.Origem.[2010].baixarfilmesretro.blogspot.com (1).mp4",
+          "audioLanguages": [],
+          "subtitleBestScore": 65,
+          "burnedSubtitleLanguage": null,
+          "knownForeignBurnedSubtitles": false,
+          "dimensions": {
+            "width": 1280,
+            "height": 536
+          },
+          "quality": "1280x536",
+          "turkishSubtitle": true,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 8888.086666666666,
+          "hashAvailable": true
+        },
+        {
+          "source": "Internet Archive",
+          "container": "mp4",
+          "bytes": 869895874,
+          "filename": "A.Origem.[2010].baixarfilmesretro.blogspot.com (1).mp4",
+          "sourceItemId": "a.-origem.-2010.baixarfilmesretro.blogspot.com-1",
+          "releaseYearBasis": "content-sample-pinned-file",
+          "mediaFilename": "A.Origem.[2010].baixarfilmesretro.blogspot.com (1).ia.mp4",
+          "audioLanguages": [],
+          "subtitleBestScore": 65,
+          "burnedSubtitleLanguage": null,
+          "knownForeignBurnedSubtitles": false,
+          "dimensions": {
+            "width": 1280,
+            "height": 536
+          },
+          "quality": "1280x536",
+          "turkishSubtitle": true,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 8888.088,
+          "hashAvailable": true
+        }
+      ]
+    },
+    {
+      "key": "interstellar",
+      "tmdbId": 157336,
+      "title": "Interstellar",
+      "type": "movie",
+      "control": false,
+      "elapsedMs": 6494,
+      "bytesRead": 2648730,
+      "diagnostics": [
+        {
+          "tmdbId": "157336",
+          "lane": "main",
+          "configuration": {
+            "version": "dev",
+            "tmdbKeyPresent": true,
+            "autoDiscover": true,
+            "includeHls": true,
+            "playImdbEnabled": true,
+            "vixsrcEnabled": true,
+            "hdhubEnabled": true,
+            "archiveEnabled": true,
+            "autoSubtitles": true,
+            "subtitleRequired": false,
+            "detailedHlsMetadata": false,
+            "minimumQuality": 0,
+            "maxResults": 20
+          },
+          "identity": {
+            "reason": "ok",
+            "year": 2014,
+            "type": "movie"
+          },
+          "sources": [
+            {
+              "name": "PlayIMDb",
+              "candidates": 3
+            },
+            {
+              "name": "VixSrc",
+              "candidates": 1
+            },
+            {
+              "name": "Internet Archive",
+              "candidates": 4
+            },
+            {
+              "name": "4KHDHub / HubCloud",
+              "candidates": 8
+            }
+          ],
+          "rejected": {
+            "video_unavailable": 8
+          },
+          "http": {
+            "api.themoviedb.org:200": 1,
+            "vixsrc.to:200": 4,
+            "nuvio-tr-hd-download-bridge.kamilbsr03.chatgpt.site:200": 2,
+            "4khdhub.one:200": 2,
+            "streamdata.vaplayer.ru:200": 1,
+            "archive.org:200": 8,
+            "altyazidb.online:200": 5,
+            "opensubtitles-v3.strem.io:200": 1,
+            "greenmotors.club:302": 9,
+            "opensubtitles.stremio.homes:200": 5,
+            "greenmotors.cc:200": 9,
+            "hubcloud.ist:200": 9,
+            "gamerxyt.com:200": 9,
+            "startupmomentumengine.site:200": 2,
+            "files.jiocloud-cdn.workers.dev:timeout_or_network": 1,
+            "startupmomentumengine.site:404": 1,
+            "sc-u14-01.neonwolf57.boats:200": 1,
+            "fileserver.amazonaws-eu.workers.dev:timeout_or_network": 1,
+            "4dad9ad3e94138b7447532d7884e3068.r2.cloudflarestorage.com:206": 2,
+            "dn600306.us.archive.org:206": 2,
+            "ia601607.us.archive.org:206": 2,
+            "ia600506.us.archive.org:206": 4,
+            "nameless-mountain-a418.babafe7002.workers.dev:timeout_or_network": 1,
+            "files.jiomovies.workers.dev:timeout_or_network": 1,
+            "drive.hubfilesserver2.workers.dev:timeout_or_network": 1,
+            "filecdn.airtel-faver29768.workers.dev:timeout_or_network": 1,
+            "cdn.netflixprod.workers.dev:timeout_or_network": 1
+          },
+          "subtitleText": {
+            "turkishCharacters": 6
+          },
+          "results": 12,
+          "reason": "ok",
+          "elapsedMs": 6494
+        }
+      ],
+      "onlineWithTr": true,
+      "downloadUrls": 5,
+      "estimatedDistinctFiles": 5,
+      "downloadQualities": [
+        "1920x1080",
+        "1152x480",
+        "853x480"
+      ],
+      "cleanOnlineWithTr": true,
+      "cleanDownloadQualities": [
+        "1920x1080",
+        "1152x480",
+        "853x480"
+      ],
+      "cleanSmallWithTr": true,
+      "smallWithTr": true,
+      "smallLimitBytes": 3221225472,
+      "sourceCoverageCriteriaMet": true,
+      "gaps": [],
+      "files": [
+        {
+          "source": "4KHDHub / HubCloud",
+          "container": "mkv",
+          "bytes": 15021267028,
+          "filename": "Interstellar (2014) IMAX 1080p BluRay 10bit HEVC [Hindi DDP 5.1 + English DDP 5.1] x265 (WiKi-LUMiX).mkv",
+          "sourceItemId": null,
+          "releaseYearBasis": null,
+          "mediaFilename": null,
+          "audioLanguages": [
+            "hi",
+            "en"
+          ],
+          "subtitleBestScore": 65,
+          "burnedSubtitleLanguage": null,
+          "knownForeignBurnedSubtitles": false,
+          "dimensions": {
+            "width": 1920,
+            "height": 1080
+          },
+          "quality": "1920x1080",
+          "turkishSubtitle": true,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 10144.981,
+          "hashAvailable": true
+        },
+        {
+          "source": "Internet Archive",
+          "container": "mp4",
+          "bytes": 826272676,
+          "filename": "Interstellar(2014).mp4",
+          "sourceItemId": "interstellar-2014_202409",
+          "releaseYearBasis": "exact-title-and-filename",
+          "mediaFilename": "Interstellar(2014).mp4",
+          "audioLanguages": [],
+          "subtitleBestScore": 65,
+          "burnedSubtitleLanguage": null,
+          "knownForeignBurnedSubtitles": false,
+          "dimensions": {
+            "width": 1152,
+            "height": 480
+          },
+          "quality": "1152x480",
+          "turkishSubtitle": true,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 10148.865,
+          "hashAvailable": true
+        },
+        {
+          "source": "Internet Archive",
+          "container": "mp4",
+          "bytes": 2431697820,
+          "filename": "Interstellar.2014.2014.1080p.BluRay.x264.YIFY.mp4",
+          "sourceItemId": "interstellar.-2014.2014.1080p.-blu-ray.x-264.-yify_202604",
+          "releaseYearBasis": "metadata",
+          "mediaFilename": "Interstellar.2014.2014.1080p.BluRay.x264.YIFY.mp4",
+          "audioLanguages": [],
+          "subtitleBestScore": 95,
+          "burnedSubtitleLanguage": null,
+          "knownForeignBurnedSubtitles": false,
+          "dimensions": {
+            "width": 1920,
+            "height": 1080
+          },
+          "quality": "1920x1080",
+          "turkishSubtitle": true,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 10144,
+          "hashAvailable": true
+        },
+        {
+          "source": "Internet Archive",
+          "container": "mp4",
+          "bytes": 996584705,
+          "filename": "Interstellar (2014) - [1080 BluRay] {H.264 + AAC + eSub}.mkv",
+          "sourceItemId": "interstellar-2014-english",
+          "releaseYearBasis": "exact-title-and-filename",
+          "mediaFilename": "Interstellar (2014) - [1080 BluRay] {H.264 + AAC + eSub}.mp4",
+          "audioLanguages": [],
+          "subtitleBestScore": 65,
+          "burnedSubtitleLanguage": null,
+          "knownForeignBurnedSubtitles": false,
+          "dimensions": {
+            "width": 853,
+            "height": 480
+          },
+          "quality": "853x480",
+          "turkishSubtitle": true,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 10144,
+          "hashAvailable": true
+        },
+        {
+          "source": "Internet Archive",
+          "container": "mkv",
+          "bytes": 2431810472,
+          "filename": "Interstellar (2014) - [1080 BluRay] {H.264 + AAC + eSub}.mkv",
+          "sourceItemId": "interstellar-2014-english",
+          "releaseYearBasis": "exact-title-and-filename",
+          "mediaFilename": "Interstellar (2014) - [1080 BluRay] {H.264 + AAC + eSub}.mkv",
+          "audioLanguages": [
+            "eng"
+          ],
+          "subtitleBestScore": 65,
+          "burnedSubtitleLanguage": null,
+          "knownForeignBurnedSubtitles": false,
+          "dimensions": {
+            "width": 1920,
+            "height": 1080
+          },
+          "quality": "1920x1080",
+          "turkishSubtitle": true,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 10144.008,
+          "hashAvailable": true
+        }
+      ]
+    },
+    {
+      "key": "obsession",
+      "tmdbId": 1339713,
+      "title": "Obsession",
+      "type": "movie",
+      "control": false,
+      "elapsedMs": 8294,
+      "bytesRead": 3835604,
+      "diagnostics": [
+        {
+          "tmdbId": "1339713",
+          "lane": "main",
+          "configuration": {
+            "version": "dev",
+            "tmdbKeyPresent": true,
+            "autoDiscover": true,
+            "includeHls": true,
+            "playImdbEnabled": true,
+            "vixsrcEnabled": true,
+            "hdhubEnabled": true,
+            "archiveEnabled": true,
+            "autoSubtitles": true,
+            "subtitleRequired": false,
+            "detailedHlsMetadata": false,
+            "minimumQuality": 0,
+            "maxResults": 20
+          },
+          "identity": {
+            "reason": "ok",
+            "year": 2026,
+            "type": "movie"
+          },
+          "sources": [
+            {
+              "name": "PlayIMDb",
+              "candidates": 3
+            },
+            {
+              "name": "VixSrc",
+              "candidates": 1
+            },
+            {
+              "name": "Internet Archive",
+              "candidates": 6
+            },
+            {
+              "name": "4KHDHub / HubCloud",
+              "candidates": 9
+            }
+          ],
+          "rejected": {
+            "video_unavailable": 2
+          },
+          "http": {
+            "api.themoviedb.org:200": 1,
+            "nuvio-tr-hd-download-bridge.kamilbsr03.chatgpt.site:200": 10,
+            "vixsrc.to:200": 3,
+            "streamdata.vaplayer.ru:200": 1,
+            "4khdhub.one:200": 2,
+            "opensubtitles-v3.strem.io:200": 1,
+            "scalablecontentengine.site:timeout_or_network": 1,
+            "altyazidb.online:200": 6,
+            "greenmotors.club:302": 9,
+            "archive.org:200": 7,
+            "greenmotors.cc:200": 9,
+            "subs5.strem.io:200": 2,
+            "scalablecontentengine.site:200": 2,
+            "hubcloud.ist:200": 9,
+            "opensubtitles.stremio.homes:200": 8,
+            "gamerxyt.com:200": 9,
+            "ia903205.us.archive.org:206": 4,
+            "ia600704.us.archive.org:206": 4,
+            "ia601407.us.archive.org:206": 4,
+            "8330eb239b8516a8e389893f23dcdc32.r2.cloudflarestorage.com:206": 2,
+            "ia801407.us.archive.org:206": 2
+          },
+          "subtitleText": {
+            "turkishCharacters": 11
+          },
+          "results": 13,
+          "reason": "ok",
+          "elapsedMs": 8294
+        }
+      ],
+      "onlineWithTr": true,
+      "downloadUrls": 6,
+      "estimatedDistinctFiles": 6,
+      "downloadQualities": [
+        "1920x920",
+        "1002x480",
+        "1280x720",
+        "853x480",
+        "1620x1080",
+        "3240x2160"
+      ],
+      "cleanOnlineWithTr": true,
+      "cleanDownloadQualities": [
+        "1920x920",
+        "1002x480",
+        "1280x720",
+        "853x480",
+        "1620x1080",
+        "3240x2160"
+      ],
+      "cleanSmallWithTr": true,
+      "smallWithTr": true,
+      "smallLimitBytes": 3221225472,
+      "sourceCoverageCriteriaMet": true,
+      "gaps": [],
+      "files": [
+        {
+          "source": "Internet Archive",
+          "container": "mkv",
+          "bytes": 2011972441,
+          "filename": "Obsession (2026) English HQ HDTS - 1080p - x264 - HQ Clean - AAC - 1.8GB.mkv",
+          "sourceItemId": "obsession-2026-english-hq-hdts-1080p-x-264-hq-clean-aac-1.8-gb",
+          "releaseYearBasis": "exact-title-and-filename",
+          "mediaFilename": "Obsession (2026) English HQ HDTS - 1080p - x264 - HQ Clean - AAC - 1.8GB.mkv",
+          "audioLanguages": [],
+          "subtitleBestScore": 35,
+          "burnedSubtitleLanguage": null,
+          "knownForeignBurnedSubtitles": false,
+          "dimensions": {
+            "width": 1920,
+            "height": 920
+          },
+          "quality": "1920x920",
+          "turkishSubtitle": true,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 6329.6,
+          "hashAvailable": true
+        },
+        {
+          "source": "Internet Archive",
+          "container": "mp4",
+          "bytes": 611829303,
+          "filename": "Obsession (2026) English HQ HDTS - 1080p - x264 - HQ Clean - AAC - 1.8GB.mkv",
+          "sourceItemId": "obsession-2026-english-hq-hdts-1080p-x-264-hq-clean-aac-1.8-gb",
+          "releaseYearBasis": "exact-title-and-filename",
+          "mediaFilename": "Obsession (2026) English HQ HDTS - 1080p - x264 - HQ Clean - AAC - 1.8GB.mp4",
+          "audioLanguages": [],
+          "subtitleBestScore": 35,
+          "burnedSubtitleLanguage": null,
+          "knownForeignBurnedSubtitles": false,
+          "dimensions": {
+            "width": 1002,
+            "height": 480
+          },
+          "quality": "1002x480",
+          "turkishSubtitle": true,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 6329.599,
+          "hashAvailable": true
+        },
+        {
+          "source": "Internet Archive",
+          "container": "mkv",
+          "bytes": 199803298,
+          "filename": "Obsession.2026.NaijaPrey.com.mkv",
+          "sourceItemId": "obsession.-2026.-naija-prey.com",
+          "releaseYearBasis": "exact-title-and-filename",
+          "mediaFilename": "Obsession.2026.NaijaPrey.com.mkv",
+          "audioLanguages": [
+            "eng"
+          ],
+          "subtitleBestScore": 65,
+          "burnedSubtitleLanguage": null,
+          "knownForeignBurnedSubtitles": false,
+          "dimensions": {
+            "width": 1280,
+            "height": 720
+          },
+          "quality": "1280x720",
+          "turkishSubtitle": true,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 6533.237,
+          "hashAvailable": true
+        },
+        {
+          "source": "Internet Archive",
+          "container": "mp4",
+          "bytes": 656963833,
+          "filename": "Obsession.2026.NaijaPrey.com.mkv",
+          "sourceItemId": "obsession.-2026.-naija-prey.com",
+          "releaseYearBasis": "exact-title-and-filename",
+          "mediaFilename": "Obsession.2026.NaijaPrey.com.mp4",
+          "audioLanguages": [],
+          "subtitleBestScore": 65,
+          "burnedSubtitleLanguage": null,
+          "knownForeignBurnedSubtitles": false,
+          "dimensions": {
+            "width": 853,
+            "height": 480
+          },
+          "quality": "853x480",
+          "turkishSubtitle": true,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 6533.248,
+          "hashAvailable": true
+        },
+        {
+          "source": "Internet Archive",
+          "container": "mp4",
+          "bytes": 587309888,
+          "filename": "Obsession 2026 1080p AMZN WEB-DL H264 ENG MULTISUB - BT.mp4",
+          "sourceItemId": "obsession-2026-1080p-amzn-web-dl-h-264-eng-multisub-bt",
+          "releaseYearBasis": "exact-title-and-filename",
+          "mediaFilename": "Obsession 2026 1080p AMZN WEB-DL H264 ENG MULTISUB - BT.ia.mp4",
+          "audioLanguages": [],
+          "subtitleBestScore": 76,
+          "burnedSubtitleLanguage": null,
+          "knownForeignBurnedSubtitles": false,
+          "dimensions": {
+            "width": 1620,
+            "height": 1080
+          },
+          "quality": "1620x1080",
+          "turkishSubtitle": true,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 6533.237,
+          "hashAvailable": true
+        },
+        {
+          "source": "4KHDHub / HubCloud",
+          "container": "mkv",
+          "bytes": 10800319090,
+          "filename": "Obsession (2026) 2160p 10bit SDR iT WEB-DL HEVC x265 [Hindi AMZN DDP 5.1 640kbps + English DDP Atmos 5.1] ESub-(MYOTTMYSUBS-4kHdHub).mkv",
+          "sourceItemId": null,
+          "releaseYearBasis": null,
+          "mediaFilename": null,
+          "audioLanguages": [
+            "hi",
+            "en"
+          ],
+          "subtitleBestScore": 76,
+          "burnedSubtitleLanguage": null,
+          "knownForeignBurnedSubtitles": false,
+          "dimensions": {
+            "width": 3240,
+            "height": 2160
+          },
+          "quality": "3240x2160",
+          "turkishSubtitle": true,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 6613.266,
+          "hashAvailable": true
+        }
+      ]
+    },
+    {
+      "key": "fleabag-s1e1",
+      "tmdbId": 67070,
+      "title": "Fleabag",
+      "type": "tv",
+      "season": 1,
+      "episode": 1,
+      "control": false,
+      "elapsedMs": 4515,
+      "bytesRead": 986457,
+      "diagnostics": [
+        {
+          "tmdbId": "67070",
+          "lane": "main",
+          "configuration": {
+            "version": "dev",
+            "tmdbKeyPresent": true,
+            "autoDiscover": true,
+            "includeHls": true,
+            "playImdbEnabled": true,
+            "vixsrcEnabled": true,
+            "hdhubEnabled": true,
+            "archiveEnabled": true,
+            "autoSubtitles": true,
+            "subtitleRequired": false,
+            "detailedHlsMetadata": false,
+            "minimumQuality": 0,
+            "maxResults": 20
+          },
+          "identity": {
+            "reason": "ok",
+            "year": 2016,
+            "type": "tv"
+          },
+          "sources": [
+            {
+              "name": "PlayIMDb",
+              "candidates": 3
+            },
+            {
+              "name": "Internet Archive",
+              "candidates": 2
+            },
+            {
+              "name": "VixSrc",
+              "candidates": 1
+            },
+            {
+              "name": "4KHDHub / HubCloud",
+              "candidates": 0
+            }
+          ],
+          "rejected": {},
+          "http": {
+            "api.themoviedb.org:200": 1,
+            "nuvio-tr-hd-download-bridge.kamilbsr03.chatgpt.site:200": 1,
+            "vixsrc.to:200": 4,
+            "streamdata.vaplayer.ru:200": 1,
+            "4khdhub.one:200": 2,
+            "altyazidb.online:200": 1,
+            "opensubtitles-v3.strem.io:200": 1,
+            "archive.org:200": 1,
+            "greenmotors.club:302": 3,
+            "digitalnomadventures.site:200": 3,
+            "greenmotors.cc:200": 3,
+            "subs5.strem.io:200": 4,
+            "hubcloud.ist:200": 3,
+            "gamerxyt.com:200": 3,
+            "sc-u12-01.secretanchor70.boats:200": 1,
+            "dn600309.us.archive.org:206": 4,
+            "opensubtitles.stremio.homes:200": 7
+          },
+          "subtitleText": {
+            "turkishCharacters": 9
+          },
+          "results": 12,
+          "reason": "ok",
+          "elapsedMs": 4515
+        }
+      ],
+      "onlineWithTr": true,
+      "downloadUrls": 2,
+      "estimatedDistinctFiles": 2,
+      "downloadQualities": [
+        "848x354"
+      ],
+      "cleanOnlineWithTr": true,
+      "cleanDownloadQualities": [
+        "848x354"
+      ],
+      "cleanSmallWithTr": true,
+      "smallWithTr": true,
+      "smallLimitBytes": 1073741824,
+      "sourceCoverageCriteriaMet": false,
+      "gaps": [
+        "multiple_verified_download_qualities_missing"
+      ],
+      "files": [
+        {
+          "source": "Internet Archive",
+          "container": "mp4",
+          "bytes": 162737999,
+          "filename": "Fleabag.S01E01.480p.WEB-DL.Tehmovies.biz.mkv",
+          "sourceItemId": "fleabag.s01e01.480p.webdl.tehmovies.biz",
+          "releaseYearBasis": "content-sample-pinned-file",
+          "mediaFilename": "Fleabag.S01E01.480p.WEB-DL.Tehmovies.biz.mp4",
+          "audioLanguages": [],
+          "subtitleBestScore": 74,
+          "burnedSubtitleLanguage": null,
+          "knownForeignBurnedSubtitles": false,
+          "dimensions": {
+            "width": 848,
+            "height": 354
+          },
+          "quality": "848x354",
+          "turkishSubtitle": true,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 1564.866,
+          "hashAvailable": true
+        },
+        {
+          "source": "Internet Archive",
+          "container": "mkv",
+          "bytes": 103770149,
+          "filename": "Fleabag.S01E01.480p.WEB-DL.Tehmovies.biz.mkv",
+          "sourceItemId": "fleabag.s01e01.480p.webdl.tehmovies.biz",
+          "releaseYearBasis": "content-sample-pinned-file",
+          "mediaFilename": "Fleabag.S01E01.480p.WEB-DL.Tehmovies.biz.mkv",
+          "audioLanguages": [],
+          "subtitleBestScore": 74,
+          "burnedSubtitleLanguage": null,
+          "knownForeignBurnedSubtitles": false,
+          "dimensions": {
+            "width": 848,
+            "height": 354
+          },
+          "quality": "848x354",
+          "turkishSubtitle": true,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 1564.874,
+          "hashAvailable": true
+        }
+      ]
+    },
+    {
+      "key": "fleabag-s2e1",
+      "tmdbId": 67070,
+      "title": "Fleabag",
+      "type": "tv",
+      "season": 2,
+      "episode": 1,
+      "control": false,
+      "elapsedMs": 3346,
+      "bytesRead": 1053193,
+      "diagnostics": [
+        {
+          "tmdbId": "67070",
+          "lane": "main",
+          "configuration": {
+            "version": "dev",
+            "tmdbKeyPresent": true,
+            "autoDiscover": true,
+            "includeHls": true,
+            "playImdbEnabled": true,
+            "vixsrcEnabled": true,
+            "hdhubEnabled": true,
+            "archiveEnabled": true,
+            "autoSubtitles": true,
+            "subtitleRequired": false,
+            "detailedHlsMetadata": false,
+            "minimumQuality": 0,
+            "maxResults": 20
+          },
+          "identity": {
+            "reason": "ok",
+            "year": 2016,
+            "type": "tv"
+          },
+          "sources": [
+            {
+              "name": "PlayIMDb",
+              "candidates": 3
+            },
+            {
+              "name": "Internet Archive",
+              "candidates": 2
+            },
+            {
+              "name": "VixSrc",
+              "candidates": 1
+            },
+            {
+              "name": "4KHDHub / HubCloud",
+              "candidates": 0
+            }
+          ],
+          "rejected": {},
+          "http": {
+            "api.themoviedb.org:200": 1,
+            "nuvio-tr-hd-download-bridge.kamilbsr03.chatgpt.site:200": 1,
+            "vixsrc.to:200": 4,
+            "4khdhub.one:200": 2,
+            "streamdata.vaplayer.ru:200": 1,
+            "archive.org:200": 1,
+            "opensubtitles-v3.strem.io:200": 1,
+            "greenmotors.club:302": 3,
+            "altyazidb.online:200": 1,
+            "greenmotors.cc:200": 3,
+            "opensubtitles.stremio.homes:200": 4,
+            "hubcloud.ist:200": 3,
+            "growthmindsetcollective.site:200": 3,
+            "subs5.strem.io:200": 2,
+            "gamerxyt.com:200": 3,
+            "opensubtitles.stremio.homes:429": 1,
+            "opensubtitles.stremio.homes:timeout_or_network": 5,
+            "dn600303.us.archive.org:206": 4,
+            "sc-u12-01.secretanchor70.boats:200": 1
+          },
+          "subtitleText": {
+            "turkishCharacters": 6
+          },
+          "results": 12,
+          "reason": "ok",
+          "elapsedMs": 3346
+        }
+      ],
+      "onlineWithTr": true,
+      "downloadUrls": 2,
+      "estimatedDistinctFiles": 2,
+      "downloadQualities": [
+        "1280x720",
+        "853x480"
+      ],
+      "cleanOnlineWithTr": true,
+      "cleanDownloadQualities": [],
+      "cleanSmallWithTr": false,
+      "smallWithTr": true,
+      "smallLimitBytes": 1073741824,
+      "sourceCoverageCriteriaMet": false,
+      "gaps": [
+        "only_known_foreign_burned_subtitle_small_downloads",
+        "multiple_verified_download_qualities_missing"
+      ],
+      "files": [
+        {
+          "source": "Internet Archive",
+          "container": "mkv",
+          "bytes": 633782892,
+          "filename": "FL34B4G SUB T02XE01.mkv",
+          "sourceItemId": "fleabag.-s-01-e-05.-hdtv.-subtitulado-esp.-sc",
+          "releaseYearBasis": "content-sample-pinned-file",
+          "mediaFilename": "Fleabag Season 2/FL34B4G SUB T02XE01.mkv",
+          "audioLanguages": [],
+          "subtitleBestScore": 65,
+          "burnedSubtitleLanguage": "es",
+          "knownForeignBurnedSubtitles": true,
+          "dimensions": {
+            "width": 1280,
+            "height": 720
+          },
+          "quality": "1280x720",
+          "turkishSubtitle": true,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 1531.389,
+          "hashAvailable": true
+        },
+        {
+          "source": "Internet Archive",
+          "container": "mp4",
+          "bytes": 154176179,
+          "filename": "FL34B4G SUB T02XE01.mkv",
+          "sourceItemId": "fleabag.-s-01-e-05.-hdtv.-subtitulado-esp.-sc",
+          "releaseYearBasis": "content-sample-pinned-file",
+          "mediaFilename": "Fleabag Season 2/FL34B4G SUB T02XE01.mp4",
+          "audioLanguages": [],
+          "subtitleBestScore": 65,
+          "burnedSubtitleLanguage": "es",
+          "knownForeignBurnedSubtitles": true,
+          "dimensions": {
+            "width": 853,
+            "height": 480
+          },
+          "quality": "853x480",
+          "turkishSubtitle": true,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 1531.455,
+          "hashAvailable": true
+        }
+      ]
+    },
+    {
+      "key": "shameless-s1e1",
+      "tmdbId": 34307,
+      "title": "Shameless",
+      "type": "tv",
+      "season": 1,
+      "episode": 1,
+      "control": false,
+      "elapsedMs": 2431,
+      "bytesRead": 405961,
+      "diagnostics": [
+        {
+          "tmdbId": "34307",
+          "lane": "main",
+          "configuration": {
+            "version": "dev",
+            "tmdbKeyPresent": true,
+            "autoDiscover": true,
+            "includeHls": true,
+            "playImdbEnabled": true,
+            "vixsrcEnabled": true,
+            "hdhubEnabled": true,
+            "archiveEnabled": true,
+            "autoSubtitles": true,
+            "subtitleRequired": false,
+            "detailedHlsMetadata": false,
+            "minimumQuality": 0,
+            "maxResults": 20
+          },
+          "identity": {
+            "reason": "ok",
+            "year": 2011,
+            "type": "tv"
+          },
+          "sources": [
+            {
+              "name": "Internet Archive",
+              "candidates": 0
+            },
+            {
+              "name": "PlayIMDb",
+              "candidates": 3
+            },
+            {
+              "name": "4KHDHub / HubCloud",
+              "candidates": 0
+            },
+            {
+              "name": "VixSrc",
+              "candidates": 1
+            }
+          ],
+          "rejected": {},
+          "http": {
+            "api.themoviedb.org:200": 1,
+            "nuvio-tr-hd-download-bridge.kamilbsr03.chatgpt.site:200": 1,
+            "vixsrc.to:200": 4,
+            "streamdata.vaplayer.ru:200": 1,
+            "opensubtitles-v3.strem.io:200": 1,
+            "altyazidb.online:200": 3,
+            "4khdhub.one:200": 1,
+            "opensubtitles.stremio.homes:200": 4,
+            "smartmarketingacademy.site:200": 3,
+            "sc-u12-01.secretanchor70.boats:200": 1,
+            "opensubtitles.stremio.homes:429": 1,
+            "opensubtitles.stremio.homes:timeout_or_network": 2
+          },
+          "subtitleText": {
+            "turkishCharacters": 6
+          },
+          "results": 7,
+          "reason": "ok",
+          "elapsedMs": 2431
+        }
+      ],
+      "onlineWithTr": true,
+      "downloadUrls": 0,
+      "estimatedDistinctFiles": 0,
+      "downloadQualities": [],
+      "cleanOnlineWithTr": true,
+      "cleanDownloadQualities": [],
+      "cleanSmallWithTr": false,
+      "smallWithTr": false,
+      "smallLimitBytes": 1073741824,
+      "sourceCoverageCriteriaMet": false,
+      "gaps": [
+        "download_missing",
+        "small_download_with_tr_missing",
+        "multiple_verified_download_qualities_missing"
+      ],
+      "files": []
+    },
+    {
+      "key": "got-s1e1",
+      "tmdbId": 1399,
+      "title": "Game of Thrones",
+      "type": "tv",
+      "season": 1,
+      "episode": 1,
+      "control": false,
+      "elapsedMs": 4766,
+      "bytesRead": 1408475,
+      "diagnostics": [
+        {
+          "tmdbId": "1399",
+          "lane": "main",
+          "configuration": {
+            "version": "dev",
+            "tmdbKeyPresent": true,
+            "autoDiscover": true,
+            "includeHls": true,
+            "playImdbEnabled": true,
+            "vixsrcEnabled": true,
+            "hdhubEnabled": true,
+            "archiveEnabled": true,
+            "autoSubtitles": true,
+            "subtitleRequired": false,
+            "detailedHlsMetadata": false,
+            "minimumQuality": 0,
+            "maxResults": 20
+          },
+          "identity": {
+            "reason": "ok",
+            "year": 2011,
+            "type": "tv"
+          },
+          "sources": [
+            {
+              "name": "Internet Archive",
+              "candidates": 0
+            },
+            {
+              "name": "PlayIMDb",
+              "candidates": 3
+            },
+            {
+              "name": "VixSrc",
+              "candidates": 1
+            },
+            {
+              "name": "4KHDHub / HubCloud",
+              "candidates": 6
+            }
+          ],
+          "rejected": {
+            "video_unavailable": 6
+          },
+          "http": {
+            "api.themoviedb.org:200": 1,
+            "nuvio-tr-hd-download-bridge.kamilbsr03.chatgpt.site:200": 1,
+            "vixsrc.to:200": 4,
+            "streamdata.vaplayer.ru:200": 1,
+            "opensubtitles-v3.strem.io:200": 1,
+            "altyazidb.online:200": 1,
+            "4khdhub.one:200": 2,
+            "opensubtitles.stremio.homes:200": 5,
+            "highperformancebrands.site:200": 3,
+            "greenmotors.club:302": 6,
+            "greenmotors.cc:200": 6,
+            "sc-u19-01.freshkoala11.boats:200": 1,
+            "hubcloud.ist:200": 6,
+            "gamerxyt.com:200": 6,
+            "misty-rice-9825.papot35183.workers.dev:timeout_or_network": 1,
+            "cdn.netflixprod.workers.dev:timeout_or_network": 1,
+            "goldmines.server-8.workers.dev:timeout_or_network": 1,
+            "still-recipe-8ec8.pibigoj4497600.workers.dev:timeout_or_network": 1,
+            "old-resonance-1076.pixovev8821914.workers.dev:timeout_or_network": 1,
+            "square-brook-3179.fedem30672fgh.workers.dev:timeout_or_network": 1
+          },
+          "subtitleText": {
+            "turkishCharacters": 5
+          },
+          "results": 7,
+          "reason": "ok",
+          "elapsedMs": 4766
+        }
+      ],
+      "onlineWithTr": true,
+      "downloadUrls": 0,
+      "estimatedDistinctFiles": 0,
+      "downloadQualities": [],
+      "cleanOnlineWithTr": true,
+      "cleanDownloadQualities": [],
+      "cleanSmallWithTr": false,
+      "smallWithTr": false,
+      "smallLimitBytes": 1073741824,
+      "sourceCoverageCriteriaMet": false,
+      "gaps": [
+        "download_missing",
+        "small_download_with_tr_missing",
+        "multiple_verified_download_qualities_missing"
+      ],
+      "files": []
+    },
+    {
+      "key": "breaking-bad-s1e1",
+      "tmdbId": 1396,
+      "title": "Breaking Bad",
+      "type": "tv",
+      "season": 1,
+      "episode": 1,
+      "control": false,
+      "elapsedMs": 5014,
+      "bytesRead": 1405833,
+      "diagnostics": [
+        {
+          "tmdbId": "1396",
+          "lane": "main",
+          "configuration": {
+            "version": "dev",
+            "tmdbKeyPresent": true,
+            "autoDiscover": true,
+            "includeHls": true,
+            "playImdbEnabled": true,
+            "vixsrcEnabled": true,
+            "hdhubEnabled": true,
+            "archiveEnabled": true,
+            "autoSubtitles": true,
+            "subtitleRequired": false,
+            "detailedHlsMetadata": false,
+            "minimumQuality": 0,
+            "maxResults": 20
+          },
+          "identity": {
+            "reason": "ok",
+            "year": 2008,
+            "type": "tv"
+          },
+          "sources": [
+            {
+              "name": "PlayIMDb",
+              "candidates": 3
+            },
+            {
+              "name": "VixSrc",
+              "candidates": 1
+            },
+            {
+              "name": "4KHDHub / HubCloud",
+              "candidates": 0
+            },
+            {
+              "name": "Internet Archive",
+              "candidates": 2
+            }
+          ],
+          "rejected": {},
+          "http": {
+            "api.themoviedb.org:200": 1,
+            "nuvio-tr-hd-download-bridge.kamilbsr03.chatgpt.site:200": 1,
+            "vixsrc.to:200": 3,
+            "streamdata.vaplayer.ru:200": 1,
+            "opensubtitles-v3.strem.io:200": 1,
+            "4khdhub.one:200": 2,
+            "altyazidb.online:200": 5,
+            "opensubtitles.stremio.homes:200": 7,
+            "archive.org:200": 1,
+            "quietmidnightgardeningideas.site:200": 3,
+            "dn801203.us.archive.org:206": 4
+          },
+          "subtitleText": {
+            "turkishCharacters": 8
+          },
+          "results": 9,
+          "reason": "ok",
+          "elapsedMs": 5014
+        }
+      ],
+      "onlineWithTr": true,
+      "downloadUrls": 2,
+      "estimatedDistinctFiles": 2,
+      "downloadQualities": [
+        "853x480",
+        "1280x720"
+      ],
+      "cleanOnlineWithTr": true,
+      "cleanDownloadQualities": [
+        "853x480",
+        "1280x720"
+      ],
+      "cleanSmallWithTr": true,
+      "smallWithTr": true,
+      "smallLimitBytes": 1073741824,
+      "sourceCoverageCriteriaMet": true,
+      "gaps": [],
+      "files": [
+        {
+          "source": "Internet Archive",
+          "container": "mp4",
+          "bytes": 344478919,
+          "filename": "Breaking Bad s01e01 720p.BRrip.Sujaidr.mkv",
+          "sourceItemId": "breaking-bad-s-01e-01-720p.-brrip.-sujaidr_202411",
+          "releaseYearBasis": "content-sample-pinned-file",
+          "mediaFilename": "Breaking Bad s01e01 720p.BRrip.Sujaidr.mp4",
+          "audioLanguages": [],
+          "subtitleBestScore": 74,
+          "burnedSubtitleLanguage": null,
+          "knownForeignBurnedSubtitles": false,
+          "dimensions": {
+            "width": 853,
+            "height": 480
+          },
+          "quality": "853x480",
+          "turkishSubtitle": true,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 3486.592,
+          "hashAvailable": true
+        },
+        {
+          "source": "Internet Archive",
+          "container": "mkv",
+          "bytes": 487194215,
+          "filename": "Breaking Bad s01e01 720p.BRrip.Sujaidr.mkv",
+          "sourceItemId": "breaking-bad-s-01e-01-720p.-brrip.-sujaidr_202411",
+          "releaseYearBasis": "content-sample-pinned-file",
+          "mediaFilename": "Breaking Bad s01e01 720p.BRrip.Sujaidr.mkv",
+          "audioLanguages": [
+            "eng"
+          ],
+          "subtitleBestScore": 74,
+          "burnedSubtitleLanguage": null,
+          "knownForeignBurnedSubtitles": false,
+          "dimensions": {
+            "width": 1280,
+            "height": 720
+          },
+          "quality": "1280x720",
+          "turkishSubtitle": true,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 3486.44175,
+          "hashAvailable": true
+        }
+      ]
+    },
+    {
+      "key": "death-note-s1e1",
+      "tmdbId": 13916,
+      "title": "DEATH NOTE",
+      "type": "tv",
+      "season": 1,
+      "episode": 1,
+      "control": false,
+      "elapsedMs": 9480,
+      "bytesRead": 1661931,
+      "diagnostics": [
+        {
+          "tmdbId": "13916",
+          "lane": "main",
+          "configuration": {
+            "version": "dev",
+            "tmdbKeyPresent": true,
+            "autoDiscover": true,
+            "includeHls": true,
+            "playImdbEnabled": true,
+            "vixsrcEnabled": true,
+            "hdhubEnabled": true,
+            "archiveEnabled": true,
+            "autoSubtitles": true,
+            "subtitleRequired": false,
+            "detailedHlsMetadata": false,
+            "minimumQuality": 0,
+            "maxResults": 20
+          },
+          "identity": {
+            "reason": "ok",
+            "year": 2006,
+            "type": "tv"
+          },
+          "sources": [
+            {
+              "name": "Internet Archive",
+              "candidates": 0
+            },
+            {
+              "name": "VixSrc",
+              "candidates": 0
+            },
+            {
+              "name": "PlayIMDb",
+              "candidates": 3
+            },
+            {
+              "name": "4KHDHub / HubCloud",
+              "candidates": 0
+            }
+          ],
+          "rejected": {
+            "video_unavailable": 1
+          },
+          "http": {
+            "api.themoviedb.org:200": 1,
+            "nuvio-tr-hd-download-bridge.kamilbsr03.chatgpt.site:200": 1,
+            "4khdhub.one:200": 2,
+            "vixsrc.to:404": 1,
+            "streamdata.vaplayer.ru:200": 1,
+            "opensubtitles-v3.strem.io:200": 1,
+            "altyazidb.online:200": 5,
+            "mindfulwealthjourney.site:200": 2,
+            "subs5.strem.io:200": 1,
+            "mindfulwealthjourney.site:404": 1,
+            "opensubtitles.stremio.homes:200": 3
+          },
+          "subtitleText": {
+            "turkishCharacters": 7
+          },
+          "results": 6,
+          "reason": "ok",
+          "elapsedMs": 2435
+        },
+        {
+          "tmdbId": "13916",
+          "lane": "anime",
+          "configuration": {
+            "version": "dev",
+            "tmdbKeyPresent": true,
+            "autoDiscover": true,
+            "includeHls": true,
+            "playImdbEnabled": true,
+            "vixsrcEnabled": true,
+            "hdhubEnabled": true,
+            "archiveEnabled": true,
+            "autoSubtitles": true,
+            "subtitleRequired": false,
+            "detailedHlsMetadata": false,
+            "minimumQuality": 0,
+            "maxResults": 20
+          },
+          "identity": {
+            "reason": "ok",
+            "year": 2006,
+            "type": "tv"
+          },
+          "sources": [
+            {
+              "name": "Animecix",
+              "candidates": 4
+            }
+          ],
+          "rejected": {},
+          "http": {
+            "api.themoviedb.org:200": 1,
+            "animecix.tv:200": 2,
+            "tau-video.xyz:200": 2,
+            "opensubtitles-v3.strem.io:200": 1,
+            "altyazidb.online:200": 5,
+            "alice-4.cfd:200": 1,
+            "voxen-2.asia:200": 1,
+            "alfreda-1.cfd:200": 1,
+            "alice-4.cfd:206": 2,
+            "alfreda-1.cfd:206": 2,
+            "opensubtitles.stremio.homes:200": 6,
+            "subs5.strem.io:200": 1,
+            "voxen-2.asia:206": 2,
+            "valenx-2.asia:200": 1,
+            "valenx-2.asia:206": 1,
+            "valenx-2.asia:timeout_or_network": 1
+          },
+          "subtitleText": {
+            "turkishCharacters": 7
+          },
+          "results": 4,
+          "reason": "ok",
+          "elapsedMs": 9480
+        }
+      ],
+      "onlineWithTr": true,
+      "downloadUrls": 4,
+      "estimatedDistinctFiles": 4,
+      "downloadQualities": [
+        "852x480",
+        "1280x720"
+      ],
+      "cleanOnlineWithTr": true,
+      "cleanDownloadQualities": [
+        "852x480",
+        "1280x720"
+      ],
+      "cleanSmallWithTr": true,
+      "smallWithTr": true,
+      "smallLimitBytes": 1073741824,
+      "sourceCoverageCriteriaMet": true,
+      "gaps": [],
+      "files": [
+        {
+          "source": "Animecix",
+          "container": "mp4",
+          "bytes": 108188435,
+          "filename": "DEATH NOTE.2006.S01E01.480p.mp4",
+          "sourceItemId": null,
+          "releaseYearBasis": null,
+          "mediaFilename": null,
+          "audioLanguages": [],
+          "subtitleBestScore": 65,
+          "burnedSubtitleLanguage": null,
+          "knownForeignBurnedSubtitles": false,
+          "dimensions": {
+            "width": 852,
+            "height": 480
+          },
+          "quality": "852x480",
+          "turkishSubtitle": true,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 1390.656,
+          "hashAvailable": true
+        },
+        {
+          "source": "Animecix",
+          "container": "mp4",
+          "bytes": 240288551,
+          "filename": "DEATH NOTE.2006.S01E01.720p.mp4",
+          "sourceItemId": null,
+          "releaseYearBasis": null,
+          "mediaFilename": null,
+          "audioLanguages": [],
+          "subtitleBestScore": 65,
+          "burnedSubtitleLanguage": null,
+          "knownForeignBurnedSubtitles": false,
+          "dimensions": {
+            "width": 1280,
+            "height": 720
+          },
+          "quality": "1280x720",
+          "turkishSubtitle": true,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 1390.656,
+          "hashAvailable": true
+        },
+        {
+          "source": "Animecix",
+          "container": "mp4",
+          "bytes": 94687213,
+          "filename": "DEATH NOTE.2006.S01E01.480p.mp4",
+          "sourceItemId": null,
+          "releaseYearBasis": null,
+          "mediaFilename": null,
+          "audioLanguages": [],
+          "subtitleBestScore": 65,
+          "burnedSubtitleLanguage": null,
+          "knownForeignBurnedSubtitles": false,
+          "dimensions": {
+            "width": 852,
+            "height": 480
+          },
+          "quality": "852x480",
+          "turkishSubtitle": true,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 1376.201,
+          "hashAvailable": true
+        },
+        {
+          "source": "Animecix",
+          "container": "mp4",
+          "bytes": 179688354,
+          "filename": "DEATH NOTE.2006.S01E01.720p.mp4",
+          "sourceItemId": null,
+          "releaseYearBasis": null,
+          "mediaFilename": null,
+          "audioLanguages": [],
+          "subtitleBestScore": 65,
+          "burnedSubtitleLanguage": null,
+          "knownForeignBurnedSubtitles": false,
+          "dimensions": {
+            "width": 1280,
+            "height": 720
+          },
+          "quality": "1280x720",
+          "turkishSubtitle": true,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 1376.201,
+          "hashAvailable": false
+        }
+      ]
+    },
+    {
+      "key": "night-control",
+      "tmdbId": 10331,
+      "title": "Night of the Living Dead",
+      "type": "movie",
+      "control": true,
+      "elapsedMs": 14591,
+      "bytesRead": 3409908,
+      "diagnostics": [
+        {
+          "tmdbId": "10331",
+          "lane": "main",
+          "configuration": {
+            "version": "dev",
+            "tmdbKeyPresent": true,
+            "autoDiscover": true,
+            "includeHls": true,
+            "playImdbEnabled": true,
+            "vixsrcEnabled": true,
+            "hdhubEnabled": true,
+            "archiveEnabled": true,
+            "autoSubtitles": true,
+            "subtitleRequired": false,
+            "detailedHlsMetadata": false,
+            "minimumQuality": 0,
+            "maxResults": 20
+          },
+          "identity": {
+            "reason": "ok",
+            "year": 1968,
+            "type": "movie"
+          },
+          "sources": [
+            {
+              "name": "PlayIMDb",
+              "candidates": 3
+            },
+            {
+              "name": "4KHDHub / HubCloud",
+              "candidates": 0
+            },
+            {
+              "name": "VixSrc",
+              "candidates": 1
+            },
+            {
+              "name": "Internet Archive",
+              "candidates": 18
+            }
+          ],
+          "rejected": {},
+          "http": {
+            "api.themoviedb.org:200": 1,
+            "nuvio-tr-hd-download-bridge.kamilbsr03.chatgpt.site:200": 1,
+            "vixsrc.to:200": 3,
+            "streamdata.vaplayer.ru:200": 1,
+            "opensubtitles-v3.strem.io:200": 1,
+            "4khdhub.one:200": 1,
+            "altyazidb.online:200": 5,
+            "archive.org:200": 14,
+            "premiumleadgeneration.site:200": 3,
+            "opensubtitles.stremio.homes:200": 4,
+            "dn801205.us.archive.org:206": 2,
+            "ia600905.us.archive.org:206": 4,
+            "dn601206.us.archive.org:206": 2,
+            "dn800308.us.archive.org:206": 2,
+            "dn801207.us.archive.org:206": 6,
+            "dn801207.us.archive.org:timeout_or_network": 1,
+            "dn801208.us.archive.org:206": 4
+          },
+          "subtitleText": {
+            "turkishCharacters": 4
+          },
+          "results": 17,
+          "reason": "ok",
+          "elapsedMs": 14591
+        }
+      ],
+      "onlineWithTr": true,
+      "downloadUrls": 10,
+      "estimatedDistinctFiles": 10,
+      "downloadQualities": [
+        "853x480",
+        "661x480",
+        "1488x1080",
+        "636x480",
+        "640x480",
+        "320x240"
+      ],
+      "cleanOnlineWithTr": true,
+      "cleanDownloadQualities": [
+        "853x480",
+        "661x480",
+        "1488x1080",
+        "636x480",
+        "640x480",
+        "320x240"
+      ],
+      "cleanSmallWithTr": true,
+      "smallWithTr": true,
+      "smallLimitBytes": 3221225472,
+      "sourceCoverageCriteriaMet": true,
+      "gaps": [],
+      "files": [
+        {
+          "source": "Internet Archive",
+          "container": "mp4",
+          "bytes": 550635353,
+          "filename": "NightOfTheLivingDead.m2ts",
+          "sourceItemId": "night-of-the-living-dead_pnm_alternate",
+          "releaseYearBasis": "metadata",
+          "mediaFilename": "NightOfTheLivingDead.mp4",
+          "audioLanguages": [],
+          "subtitleBestScore": 65,
+          "burnedSubtitleLanguage": null,
+          "knownForeignBurnedSubtitles": false,
+          "dimensions": {
+            "width": 853,
+            "height": 480
+          },
+          "quality": "853x480",
+          "turkishSubtitle": true,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 5753.415,
+          "hashAvailable": true
+        },
+        {
+          "source": "Internet Archive",
+          "container": "mp4",
+          "bytes": 557335091,
+          "filename": "Night.of.the.Living.Dead.1968.REMASTERED.1080p.BluRay.X264-AMIABLE.mkv",
+          "sourceItemId": "night-of-the-living-dead-1968-remastered-1080p-bluray-x264-amiab",
+          "releaseYearBasis": "metadata",
+          "mediaFilename": "Night.of.the.Living.Dead.1968.REMASTERED.1080p.BluRay.X264-AMIABLE.mp4",
+          "audioLanguages": [],
+          "subtitleBestScore": 65,
+          "burnedSubtitleLanguage": null,
+          "knownForeignBurnedSubtitles": false,
+          "dimensions": {
+            "width": 661,
+            "height": 480
+          },
+          "quality": "661x480",
+          "turkishSubtitle": true,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 5796.46,
+          "hashAvailable": true
+        },
+        {
+          "source": "Internet Archive",
+          "container": "mkv",
+          "bytes": 10564835435,
+          "filename": "Night.of.the.Living.Dead.1968.REMASTERED.1080p.BluRay.X264-AMIABLE.mkv",
+          "sourceItemId": "night-of-the-living-dead-1968-remastered-1080p-bluray-x264-amiab",
+          "releaseYearBasis": "metadata",
+          "mediaFilename": "Night.of.the.Living.Dead.1968.REMASTERED.1080p.BluRay.X264-AMIABLE.mkv",
+          "audioLanguages": [],
+          "subtitleBestScore": 65,
+          "burnedSubtitleLanguage": null,
+          "knownForeignBurnedSubtitles": false,
+          "dimensions": {
+            "width": 1488,
+            "height": 1080
+          },
+          "quality": "1488x1080",
+          "turkishSubtitle": true,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 5796.46,
+          "hashAvailable": true
+        },
+        {
+          "source": "Internet Archive",
+          "container": "mp4",
+          "bytes": 552140510,
+          "filename": "Night of the Living Dead (1968) English.m4v",
+          "sourceItemId": "night-of-the-living-dead-1968-english",
+          "releaseYearBasis": "metadata",
+          "mediaFilename": "Night of the Living Dead (1968) English.mp4",
+          "audioLanguages": [],
+          "subtitleBestScore": 65,
+          "burnedSubtitleLanguage": null,
+          "knownForeignBurnedSubtitles": false,
+          "dimensions": {
+            "width": 636,
+            "height": 480
+          },
+          "quality": "636x480",
+          "turkishSubtitle": true,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 5752.794,
+          "hashAvailable": true
+        },
+        {
+          "source": "Internet Archive",
+          "container": "mp4",
+          "bytes": 596399542,
+          "filename": "Night.iso",
+          "sourceItemId": "night_of_the_living_dead_dvd",
+          "releaseYearBasis": "metadata",
+          "mediaFilename": "Night.mp4",
+          "audioLanguages": [],
+          "subtitleBestScore": 65,
+          "burnedSubtitleLanguage": null,
+          "knownForeignBurnedSubtitles": false,
+          "dimensions": {
+            "width": 640,
+            "height": 480
+          },
+          "quality": "640x480",
+          "turkishSubtitle": true,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 5731.832,
+          "hashAvailable": true
+        },
+        {
+          "source": "Internet Archive",
+          "container": "mp4",
+          "bytes": 817380054,
+          "filename": "NightOfTheLivingDeadWSInternationalPrint.mp4",
+          "sourceItemId": "Night_Of_The_Living_Dead_raw_HD_WS",
+          "releaseYearBasis": "metadata",
+          "mediaFilename": "NightOfTheLivingDeadWSInternationalPrint.mp4",
+          "audioLanguages": [],
+          "subtitleBestScore": 35,
+          "burnedSubtitleLanguage": null,
+          "knownForeignBurnedSubtitles": false,
+          "dimensions": null,
+          "quality": "unknown",
+          "turkishSubtitle": true,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": null,
+          "hashAvailable": true
+        },
+        {
+          "source": "Internet Archive",
+          "container": "mp4",
+          "bytes": 815842023,
+          "filename": "NightOfTheLivingDeadRawUnrestored.mp4",
+          "sourceItemId": "Night_Of_The_Living_Dead_raw_HD_WS",
+          "releaseYearBasis": "metadata",
+          "mediaFilename": "NightOfTheLivingDeadRawUnrestored.mp4",
+          "audioLanguages": [],
+          "subtitleBestScore": 35,
+          "burnedSubtitleLanguage": null,
+          "knownForeignBurnedSubtitles": false,
+          "dimensions": null,
+          "quality": "unknown",
+          "turkishSubtitle": true,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": null,
+          "hashAvailable": true
+        },
+        {
+          "source": "Internet Archive",
+          "container": "mp4",
+          "bytes": 1902907166,
+          "filename": "NightOfTheLivingDeadRemasteredHD.mp4",
+          "sourceItemId": "Night_Of_The_Living_Dead_raw_HD_WS",
+          "releaseYearBasis": "metadata",
+          "mediaFilename": "NightOfTheLivingDeadRemasteredHD.mp4",
+          "audioLanguages": [],
+          "subtitleBestScore": 35,
+          "burnedSubtitleLanguage": null,
+          "knownForeignBurnedSubtitles": false,
+          "dimensions": null,
+          "quality": "unknown",
+          "turkishSubtitle": true,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": null,
+          "hashAvailable": true
+        },
+        {
+          "source": "Internet Archive",
+          "container": "mp4",
+          "bytes": 333943758,
+          "filename": "NightOfTheLivingDead_DVD9.mpg",
+          "sourceItemId": "Night.Of.The.Living.Dead_1080p",
+          "releaseYearBasis": "metadata",
+          "mediaFilename": "NightOfTheLivingDead_DVD9_512kb.mp4",
+          "audioLanguages": [],
+          "subtitleBestScore": 65,
+          "burnedSubtitleLanguage": null,
+          "knownForeignBurnedSubtitles": false,
+          "dimensions": {
+            "width": 320,
+            "height": 240
+          },
+          "quality": "320x240",
+          "turkishSubtitle": true,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 5752.119,
+          "hashAvailable": true
+        },
+        {
+          "source": "Internet Archive",
+          "container": "mp4",
+          "bytes": 333938666,
+          "filename": "NightOfTheLivingDead_DVD5.mpg",
+          "sourceItemId": "Night.Of.The.Living.Dead_1080p",
+          "releaseYearBasis": "metadata",
+          "mediaFilename": "NightOfTheLivingDead_DVD5_512kb.mp4",
+          "audioLanguages": [],
+          "subtitleBestScore": 65,
+          "burnedSubtitleLanguage": null,
+          "knownForeignBurnedSubtitles": false,
+          "dimensions": {
+            "width": 320,
+            "height": 240
+          },
+          "quality": "320x240",
+          "turkishSubtitle": true,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 5752.119,
+          "hashAvailable": true
+        }
+      ]
+    }
+  ],
+  "finishedAt": "2026-10-26T13:47:24.468Z",
+  "allSourceCriteriaMet": false
+}

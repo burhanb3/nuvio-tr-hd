@@ -98,14 +98,14 @@ function createSubtitleDiscovery(http, target, settings) {
     if (settings.autoSubtitles === false || !target.imdbId || http.expired()) return Promise.resolve([]);
     return mapLimit(bases, 3, async base => normalize(await lookup(`${base}/subtitles/${type}/${encodeURIComponent(id)}.json`), base));
   }
-  const discover = async (candidate, video) => {
+  const discover = async (candidate, video, options = {}) => {
     if (settings.autoSubtitles === false || !target.imdbId || http.expired()) return [];
     const filename = candidate.filename || decodeFilename(video.url);
     const extras = [`filename=${encodeURIComponent(filename)}`, `videoSize=${video.size || 0}`];
     if (video.videoHash) extras.push(`videoHash=${video.videoHash}`);
     // Start title and hash requests together; one slow service must not add a
     // second serial timeout to every candidate. URL/credentials stay private.
-    const titleResults = prefetch();
+    const titleResults = bases.map(base => lookup(`${base}/subtitles/${type}/${encodeURIComponent(id)}.json`).then(data=>normalize(data,base)));
     let hashResults = Promise.resolve([]);
     // A title lookup is shared across alternatives. Request hash-aware results
     // only where a real hash exists, without losing the fast title response.
@@ -119,8 +119,12 @@ function createSubtitleDiscovery(http, target, settings) {
         hashResults = lookup(hashUrl).then(data => normalize(data, hashBase));
       }
     }
-    const [groups, hashed] = await Promise.all([titleResults, hashResults]);
-    return [...hashed, ...groups.flat()];
+    const groups = await Promise.all([...titleResults,hashResults].map(async job=>{
+      const rows=await job;
+      if(rows.length&&options.onBatch)await options.onBatch(rows);
+      return rows;
+    }));
+    return groups.flat();
   };
   discover.prefetch = prefetch;
   return discover;

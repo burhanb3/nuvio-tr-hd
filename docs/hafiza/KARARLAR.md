@@ -1,5 +1,13 @@
 # Tasarım kararları
 
+## 1.6.4 ek kararlar
+
+- Yabancı sabit altyazı kaynak sayısı için gizlenmez; görüntüye işlenmiş olduğu açık etiketlenir. Temiz TR hedefi başarısı sayılmaz; önerilende temiz online önce, kullanıcının boyut/kalite sırası korunur.
+- Hızlı geçerli altyazı, diğer API veya aynı gruptaki takılan gövde bitmeden korunur. Daha güçlü hash/sürüm sonucu sonradan iyileştirebilir; veri tekilleşir. Zorunlu TR modunda süre sonu geçerli çifti silmez.
+- Alttaki native fetch bitmeden kotayı bırakma. Sadece Promise.race mantıksal zaman aşımı olduğu için yeni fiziksel istek başlatıp sınırı aşma. Bu kota fiziksel iPhone dönüş garantisi değildir.
+- Görüntü kimliğinde eşiği düşürmek yerine kare piksel/letterbox geometri ve zaman örneklemesi düzeltilir. Tek kare, karanlık veya sabit logo yeterli değildir. Geliştirme aracının geçici dosyaları çalışmaya göre izole edilir.
+- ZIP üyesinin gerçekMKV olması tek başına bounded native probe demek değildir; Range200/uzun gövde korumasını kaldırarak kaynak çoğaltma. Kaynak/kanıt/cihaz kapsamları ayrı kalır.
+
 ## 1.6.3 kapsam ve kanıt kararları
 
 - Kullanıcı hedefi 14 vakalık deneme listesinden daha geniştir; bu liste regresyon ve kapsam ölçümüdür. 8 küçük dosya veya128 geçen test tüm hedef tamamlandı demek değildir. Aktif goal bu yüzden açık kalır.

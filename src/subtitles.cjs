@@ -20,6 +20,13 @@ function lastCueSeconds(text) {
   return last;
 }
 
+async function subtitleSlot(http, task) {
+  const pool=http.subtitlePool||(http.subtitlePool={active:0,waiting:[]});
+  if(pool.active>=4)await new Promise(resolve=>pool.waiting.push(resolve));else pool.active++;
+  try{return http.expired()?null:await task();}
+  finally{if(pool.waiting.length)pool.waiting.shift()();else pool.active--;}
+}
+
 async function loadSubtitles(http, candidate, target, allowHttp, options = {}) {
   const seen = new Set();
   const entries = candidate.subtitles.slice(0, 120).filter(sub => {
@@ -37,8 +44,8 @@ async function loadSubtitles(http, candidate, target, allowHttp, options = {}) {
     const headers = cleanHeaders(sub.headers);
     const key = url + JSON.stringify(headers);
     if (!http.subtitleCache) http.subtitleCache = new Map();
-    if (!http.subtitleCache.has(key)) http.subtitleCache.set(key, (async () => {
-      const result = await http.request(url, { headers, timeoutMs: 9000 });
+    if (!http.subtitleCache.has(key)) http.subtitleCache.set(key, subtitleSlot(http, async () => {
+      const result = await http.request(url, { headers, timeoutMs: 9000, nativeGroup:'subtitle-body' });
       if (!result || /html|zip|gzip|json/.test(result.response.headers.get('content-type') || '')) return null;
       const bytes = new Uint8Array(await result.response.arrayBuffer());
       if (!bytes.length || bytes.length > 262144) return null;
@@ -49,7 +56,7 @@ async function loadSubtitles(http, candidate, target, allowHttp, options = {}) {
         turkishCharacters: /[şŞğĞıİçÇöÖüÜ]/.test(text || ''), combiningCharacters: /[\u0300-\u036f]/.test(text || ''),
         inlineFont: /<font\b|font-family\s*:|\{\\fn/i.test(text || ''), mojibake: /Å[ŸžŞş]|Ä[±°Ÿž]|Ã[¶¼§–œ‡]/.test(text || '') });
       return format ? { bytes, url: result.url, text, format } : null;
-    })());
+    }));
     const result = await http.subtitleCache.get(key);
     if (!result) return null;
     // Nuvio decodes UTF-8; reject compressed/HTML bodies and malformed cues.
@@ -75,18 +82,21 @@ async function loadSubtitles(http, candidate, target, allowHttp, options = {}) {
       ...(options.keepScore ? { _score: match?.score || 90 } : {}), ...(Object.keys(headers).length ? { headers } : {}) };
   };
   const tracks = [], collected = new Set();
+  const acceptTrack = track => {
+    if(!track||collected.has(track._contentKey)||tracks.length>=4)return;
+    collected.add(track._contentKey);tracks.push(track);
+    // Keep a validated fast track even if another body in the same batch stalls.
+    if(options.onTrack)options.onTrack(track);
+  };
   // Try later alternatives when an earlier URL is broken. Stop after four
   // distinct valid bodies, instead of waiting on every subtitle in a release.
   for (let offset = 0; offset < entries.length && tracks.length < 4 && !http.expired(); offset += 2) {
-    const batch = await mapLimit(entries.slice(offset, offset + 2), 2, (sub, index) => loadTrack(sub, offset + index));
-    for (const track of batch) if (track && !collected.has(track._contentKey)) {
-      collected.add(track._contentKey); tracks.push(track);
-    }
+    await mapLimit(entries.slice(offset, offset + 2), 2, async (sub,index) => acceptTrack(await loadTrack(sub,offset+index)));
   }
   // Same payload mirrored at two URLs is one subtitle, not two choices.
   const contents = new Set();
   return tracks.filter(t => { if (!t || contents.has(t._contentKey)) return false; contents.add(t._contentKey); return true; })
-    .slice(0, 4).map(({ _contentKey, ...track }) => track);
+    .sort((a,b)=>(b._score||0)-(a._score||0)).slice(0, 4).map(({ _contentKey, ...track }) => track);
 }
 
 function decodeUtf8(bytes) {

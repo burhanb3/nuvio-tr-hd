@@ -8,6 +8,14 @@ test('kapsam raporu aynaları ayrı başarı saymaz; gerçek pikseli p etiketiyl
  assert.equal(result.downloadUrls,3);assert.equal(result.estimatedDistinctFiles,2);
  assert.deepEqual(result.downloadQualities,['1280x536','1920x800']);assert.equal(result.sourceCoverageCriteriaMet,true);
 });
+test('Bilinen yabancı sabit altyazı temiz TR hedefini doldurmaz; başka ayna bu bilgiyi silmez',()=>{
+ const burned=pair();burned.candidate.burnedSubtitleLanguage='es';
+ const result=summarizeCoverage([burned,pair(),pair({type:'hls'})],limits,'tv');
+ assert.equal(result.smallWithTr,true);assert.equal(result.cleanSmallWithTr,false);
+ assert.equal(result.cleanOnlineWithTr,true);assert.equal(result.files[0].knownForeignBurnedSubtitles,true);
+ assert.ok(result.gaps.includes('only_known_foreign_burned_subtitle_small_downloads'));
+ assert.equal(result.sourceCoverageCriteriaMet,false);
+});
 test('HLS kaliteleri indirme kapsamını doldurmaz; altyazısız veya büyük dosya küçük/TR başarısı olmaz',()=>{
  const result=summarizeCoverage([pair({type:'hls'}),pair({tr:false}),pair({hash:'2222334455667788',size:8*1024**3})],limits,'movie');
  assert.equal(result.onlineWithTr,true);assert.equal(result.smallWithTr,false);

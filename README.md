@@ -1,10 +1,20 @@
 # Nuvio TR HD
 
-Nuvio Mobile'ın Kotlin Multiplatform **Full** sürümü için JavaScript sağlayıcı deposu. Film/bölüm seçildiğinde birden çok gerçek kaynağı otomatik tarar, MP4/MKV bağlantılarını doğrular ve her video için mevcut Türkçe altyazıları arayıp eşleştirir. Seçilen boyut/kalite/uygunluk sırasıyla sunar. Her taramada varsayılan üst sınır **20**, çözünürlük filtresi **Tümü**. İstenirse 6/10 seçilebilir. Sürüm **1.6.3**.
+Nuvio Mobile'ın Kotlin Multiplatform **Full** sürümü için JavaScript sağlayıcı deposu. Film/bölüm seçildiğinde birden çok gerçek kaynağı otomatik tarar, MP4/MKV bağlantılarını doğrular ve her video için mevcut Türkçe altyazıları arayıp eşleştirir. Seçilen boyut/kalite/uygunluk sırasıyla sunar. Her taramada varsayılan üst sınır **20**, çözünürlük filtresi **Tümü**. İstenirse 6/10 seçilebilir. Sürüm **1.6.4**.
 
 **26 Ekim 2026 uyumluluk kontrolü:** `0.6.4-beta` ve güncel `cmp-rewrite` dalının ilgili kaynak sözleşmeleri karşılaştırıldı. Derlenmiş sağlayıcı gerçek QuickJS WASM motorunda test edilir. Fiziksel Android/iOS cihazında oynatma ve indirme testi henüz yapılmadı. Ayrıntılar: [uyumluluk raporu](docs/UYUMLULUK.md).
 
 Bu depo medya barındırmaz. Animecix/Tau, 4KHDHub/HubCloud, VixSrc, Internet Archive ve PlayIMDb yerleşiktir; DahmerMovies deneysel yerel yedektir ve varsayılan kapalıdır. JSON/Stremio adresi girmek zorunlu değildir. Kişisel JSON ve Stremio kaynakları ek alternatif olarak korunmuştur. Her film için erişilebilir HD dosya veya uygun Türkçe altyazı bulunması garanti değildir; başarısız/engelli kaynaklar atlanır.
+
+## 1.6.4: normal diziler ve erken korunan altyazılar
+
+Breaking Bad S01E01 için yaklaşık 329 MiB 853×480 MP4 ve 465 MiB 1280×720 MKV; Inception için 830/861 MiB 1280×536 MP4 eklendi. Fleabag S01E01 artık aynı 848×354 çözünürlükte 99 MiB MKV yanında 155 MiB MP4 de sunar. Her kaynak canlı metadata ve gerçek dosya hash/boyut/piksel/süre kontrolüne bağlıdır; bölüm onayı tüm sezona taşınmaz.
+
+Fleabag S02E01’de 147 MiB MP4 / 604 MiB MKV ve TR var, fakat **İspanyolca altyazı görüntüye işlenmiş**. Listede “ES görüntüde” yazılır. Önerilen sırada temiz online seçenek önce gelir; kullanıcının boyut/kalite sırası korunur. Bu dosyalar temiz Türkçe izleme hedefini tamamlamış sayılmaz.
+
+Son 14 vaka kontrolü: 14/14 online+TR; 11/14 küçük indirme+TR, bunun 10’unda bilinen yabancı sabit altyazı yok; 6/14 bütün kaynak ölçütlerini geçti. Matrix, Shameless ABD S01E01 ve Game of Thrones S01E01 indirme boşluğu sürüyor. No Way Home/Spider-Verse ek kalite, Inception/Fleabag S01E01 ikinci çözünürlük istiyor. **Hedef tamamlanmadı.**
+
+Hızlı geçerli altyazı, yavaş servis/aynı gruptaki takılan gövde bitmeden korunur; güçlü hash eşleşmeleri sonradan daha zayıf olanları değiştirebilir. Aynı gövdeler birleşir. Altyazı gövdeleri dört temel ağ isteğiyle sınırlandırılır; JS timeout’u native isteği bitmiş saymaz. Native iOS bekleyen işleri yine dönüşü geciktirebilir. Bu iç akış Nuvio’ya yeni bir canlı liste callback’i eklemez. **140 yerel test/QuickJS; fiziksel telefon, tam video indirme ve çevrimdışı senkron sınanmadı.** [Detaylar ve geliştirme aracı](docs/ALTYAZI_VE_DIZI_164.md).
 
 ## 1.6.3: ölçülen indirme kapsamı
 

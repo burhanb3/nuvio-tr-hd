@@ -1,5 +1,13 @@
 # Değişiklik günlüğü
 
+## 1.6.4 — 26 Ekim 2026
+
+- Breaking Bad S01E01, Inception ve Fleabag S01E01 MP4 türevi için dar içerik pinleri; gerçek metadata/hash/boyut/piksel/süre şart. Diğer bölümlere taşınmaz.
+- Fleabag S02E01 küçük MP4/MKV: görüntüye işlenmiş İspanyolca altyazı açık etiketli, temiz TR hedefine sayılmaz; önerilende temiz online önce.
+- Geçerli hızlı altyazı yavaş servis veya takılan komşu gövdeyi beklemeden korunur; daha güçlü sonuçlar sonradan birleşir, aynı içerik tekrarlanmaz. Dört altyazı gövdesi/native fetch sınırı mantıksal timeout ile erken bırakılmaz.
+- 14 vaka: 11 küçük indirme+TR, 10 bilinen yabancı sabit altyazısız küçük indirme+TR; 6 kaynak ölçütü. Matrix/GoT/Shameless ve ek kaliteler eksik.
+- Tekrarlanabilir görüntü karşılaştırma aracı, örnek izolasyonu, sabit/karanlık görüntü reddi ve hassas zaman/letterbox normalizasyonu; 140 test/QuickJS. Fiziksel cihaz/tam indirme/çevrimdışı/senkron çalıştırılmadı.
+
 ## 1.6.3 — 26 Ekim 2026
 
 - 14 film/dizi vakası için sabit kanonik metadata + canlı kaynak/altyazı kapsam ölçümü. Küçük indirme+TR 3/14’ten 8/14’e çıktı; bütün kaynak ölçütleri 5/14. Hedef tamamlanmadı; diğer normal diziler, Matrix/Inception ve ek Spider-Man kaliteleri eksik.
