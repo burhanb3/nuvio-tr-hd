@@ -107,7 +107,7 @@ function createHttp({ fetchImpl, allowHttp = false, timeoutMs = 4500, deadline =
     return { bytes: body, url: result.url, mime, total: total || length, etag: response.headers.get('etag') || null };
   }
 
-  return { request, json, text, bytes, expired, failureFor: url => failures.get(url),
+  return { request, json, text, bytes, expired, note: emit, failureFor: url => failures.get(url),
     close: () => {
       closed = true;
       for (const controller of controllers) controller.abort();

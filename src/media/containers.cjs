@@ -140,20 +140,29 @@ function mkvInfo(bytes) {
       if (Number.isFinite(seconds) && seconds > 0 && seconds < 86400) duration = seconds;
     }
   }
+  let dimensions = null;
+  const subtitleTracks = [];
   if (segment) {
     const tracks = elements(bytes, segment.data, segment.end).find(x => x.id === 0x1654ae6b);
     if (tracks) for (const entry of elements(bytes, tracks.data, tracks.end).filter(x => x.id === 0xae)) {
       const children = elements(bytes, entry.data, entry.end);
+      if (ebmlNumber(bytes, children.find(x => x.id === 0x83)) === 17) {
+        const field = id => { const item = children.find(x => x.id === id && x.complete); return item ? ascii(bytes, item.data, item.end - item.data) : ''; };
+        const language = field(0x22b59d) || field(0x22b59c);
+        const codec = field(0x86);
+        if (/^(tr|tur)(?:-|$)/i.test(language) && /^S_(TEXT\/(UTF8|WEBVTT|ASS|SSA)|VOBSUB|HDMV\/PGS)$/.test(codec))
+          subtitleTracks.push({ language: 'tr', codec });
+      }
       if (ebmlNumber(bytes, children.find(x => x.id === 0x83)) !== 1) continue;
       const video = children.find(x => x.id === 0xe0 && x.complete);
       if (!video) continue;
       const fields = elements(bytes, video.data, video.end);
       const width = ebmlNumber(bytes, fields.find(x => x.id === 0xb0));
       const height = ebmlNumber(bytes, fields.find(x => x.id === 0xba));
-      if (width > 0 && height > 0 && width <= 16384 && height <= 16384) return { container: 'mkv', dimensions: { width, height }, ...(duration ? { duration } : {}) };
+      if (!dimensions && width > 0 && height > 0 && width <= 16384 && height <= 16384) dimensions = { width, height };
     }
   }
-  return { container: 'mkv', dimensions: null, ...(duration ? { duration } : {}) };
+  return { container: 'mkv', dimensions, ...(subtitleTracks.length ? { subtitleTracks, embeddedTurkish: true } : {}), ...(duration ? { duration } : {}) };
 }
 
 // For a tail range, moov need not be aligned at byte zero. Validate its complete

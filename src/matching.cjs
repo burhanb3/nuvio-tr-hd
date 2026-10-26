@@ -12,6 +12,8 @@ async function resolveIdentity(http, tmdbId, mediaType, season, episode, key) {
   const year = typeof date === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(date) ? Number(date.slice(0, 4)) : null;
   if (!normalizeTitle(originalTitle) || !year) return null;
   return { tmdbId: id, originalTitle, year, type, season: type === 'tv' ? Number(season) : null,
+    searchTitles: [...new Set([meta.title || meta.name, originalTitle].filter(v => typeof v === 'string' && v.trim()))].slice(0, 2),
+    isAnime: meta.genres?.some(g => g.id === 16) === true && (meta.original_language === 'ja' || meta.origin_country?.includes('JP') === true),
     ...(typeof meta.poster_path === 'string' && /^\/[A-Za-z0-9]+\.(jpg|png)$/i.test(meta.poster_path) ? { posterPath: meta.poster_path } : {}),
     episode: type === 'tv' ? Number(episode) : null, imdbId: meta.imdb_id || meta.external_ids?.imdb_id || null,
     runtimeMinutes: type === 'movie' && Number(meta.runtime) > 0 ? Number(meta.runtime) :

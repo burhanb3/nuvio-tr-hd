@@ -1,0 +1,436 @@
+{
+  "checkedAt": "2026-10-26T09:06:05.939Z",
+  "version": "1.6.0",
+  "film": "aot",
+  "metadata": "fixed known TMDB reference; upstream source/subtitle requests are live",
+  "elapsedMs": 6679,
+  "firstResultsMs": 6678,
+  "bytesRead": 1963903,
+  "settings": "Production lanes in parallel; online16s/files28s/anime20s logical budgets; all resolutions; prefer TR; balanced; HLS; up to20 per lane; public bridge enabled",
+  "lanes": [
+    {
+      "lane": "anime",
+      "elapsedMs": 6678,
+      "diagnostic": {
+        "tmdbId": "1429",
+        "lane": "anime",
+        "sources": [
+          {
+            "name": "Animecix",
+            "candidates": 9
+          }
+        ],
+        "rejected": {},
+        "http": {
+          "api.themoviedb.org:200": 1,
+          "animecix.tv:200": 2,
+          "tau-video.xyz:200": 3,
+          "altyazidb.online:200": 5,
+          "opensubtitles-v3.strem.io:200": 1,
+          "ichigokurosaki.cfd:200": 1,
+          "itachiuchiha.cfd:200": 1,
+          "irtau1.online:200": 3,
+          "ichigokurosaki.cfd:206": 2,
+          "itachiuchiha.cfd:206": 2,
+          "opensubtitles.stremio.homes:200": 3,
+          "irtau1.online:206": 6,
+          "opensubtitles.stremio.homes:429": 1,
+          "takurox-2.asia:200": 1,
+          "rhyzoku-2.asia:200": 1,
+          "takurox-2.asia:206": 2,
+          "rhyzoku-2.asia:206": 2,
+          "albrecht-3.cfd:200": 1,
+          "zorami-2.asia:200": 1,
+          "zorami-2.asia:206": 2,
+          "albrecht-3.cfd:206": 2
+        },
+        "results": 9,
+        "reason": "ok",
+        "elapsedMs": 6677
+      },
+      "streams": [
+        {
+          "name": "01 · İndirilebilir · Animecix · Clauseover",
+          "quality": "853×480 ✓",
+          "type": "mp4",
+          "size": "164.7 MiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 01 · 進撃の巨人.2013.S01E01 • clauseover • Paket • [Coalgirls] • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 03 · 進撃の巨人.2013.S01E01 • nephie • Paket • gg • 25 · Aynı film; sürüm/senkron belirsiz",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 04 · 進撃の巨人.2013.S01E01 • darkness_age • Paket • [gg] • 23.976 · Aynı film; sürüm/senkron belirsiz",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "02 · İndirilebilir · Animecix · Türkçe Dublaj",
+          "quality": "853×480 ✓",
+          "type": "mp4",
+          "size": "207.7 MiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 01 · 進撃の巨人.2013.S01E01 • clauseover • Paket • [Coalgirls] • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 03 · 進撃の巨人.2013.S01E01 • nephie • Paket • gg • 25 · Aynı film; sürüm/senkron belirsiz",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 04 · 進撃の巨人.2013.S01E01 • darkness_age • Paket • [gg] • 23.976 · Aynı film; sürüm/senkron belirsiz",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "03 · İndirilebilir · Animecix · Çeviri: Bradley Redakte: Mansur35 Dizgi:",
+          "quality": "853×480 ✓",
+          "type": "mp4",
+          "size": "208.3 MiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 01 · 進撃の巨人.2013.S01E01 • clauseover • Paket • [Coalgirls] • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 03 · 進撃の巨人.2013.S01E01 • nephie • Paket • gg • 25 · Aynı film; sürüm/senkron belirsiz",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 04 · 進撃の巨人.2013.S01E01 • darkness_age • Paket • [gg] • 23.976 · Aynı film; sürüm/senkron belirsiz",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "04 · İndirilebilir · Animecix · Clauseover",
+          "quality": "1280×720 ✓",
+          "type": "mp4",
+          "size": "280.6 MiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 01 · 進撃の巨人.2013.S01E01 • clauseover • Paket • [Coalgirls] • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 03 · 進撃の巨人.2013.S01E01 • nephie • Paket • gg • 25 · Aynı film; sürüm/senkron belirsiz",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 04 · 進撃の巨人.2013.S01E01 • darkness_age • Paket • [gg] • 23.976 · Aynı film; sürüm/senkron belirsiz",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "05 · İndirilebilir · Animecix · Türkçe Dublaj",
+          "quality": "1280×720 ✓",
+          "type": "mp4",
+          "size": "354.9 MiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 01 · 進撃の巨人.2013.S01E01 • clauseover • Paket • [Coalgirls] • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 03 · 進撃の巨人.2013.S01E01 • nephie • Paket • gg • 25 · Aynı film; sürüm/senkron belirsiz",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 04 · 進撃の巨人.2013.S01E01 • darkness_age • Paket • [gg] • 23.976 · Aynı film; sürüm/senkron belirsiz",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "06 · İndirilebilir · Animecix · Çeviri: Bradley Redakte: Mansur35 Dizgi:",
+          "quality": "1280×720 ✓",
+          "type": "mp4",
+          "size": "355.0 MiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 01 · 進撃の巨人.2013.S01E01 • clauseover • Paket • [Coalgirls] • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 03 · 進撃の巨人.2013.S01E01 • nephie • Paket • gg • 25 · Aynı film; sürüm/senkron belirsiz",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 04 · 進撃の巨人.2013.S01E01 • darkness_age • Paket • [gg] • 23.976 · Aynı film; sürüm/senkron belirsiz",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "07 · İndirilebilir · Animecix · Clauseover",
+          "quality": "1920×1080 ✓",
+          "type": "mp4",
+          "size": "541.2 MiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 01 · 進撃の巨人.2013.S01E01 • clauseover • Paket • [Coalgirls] • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 03 · 進撃の巨人.2013.S01E01 • nephie • Paket • gg • 25 · Aynı film; sürüm/senkron belirsiz",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 04 · 進撃の巨人.2013.S01E01 • darkness_age • Paket • [gg] • 23.976 · Aynı film; sürüm/senkron belirsiz",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "08 · İndirilebilir · Animecix · Türkçe Dublaj",
+          "quality": "1920×1080 ✓",
+          "type": "mp4",
+          "size": "564.7 MiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 01 · 進撃の巨人.2013.S01E01 • clauseover • Paket • [Coalgirls] • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 03 · 進撃の巨人.2013.S01E01 • nephie • Paket • gg • 25 · Aynı film; sürüm/senkron belirsiz",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 04 · 進撃の巨人.2013.S01E01 • darkness_age • Paket • [gg] • 23.976 · Aynı film; sürüm/senkron belirsiz",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "09 · İndirilebilir · Animecix · Çeviri: Bradley Redakte: Mansur35 Dizgi:",
+          "quality": "1920×1080 ✓",
+          "type": "mp4",
+          "size": "568.5 MiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 01 · 進撃の巨人.2013.S01E01 • clauseover • Paket • [Coalgirls] • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 03 · 進撃の巨人.2013.S01E01 • nephie • Paket • gg • 25 · Aynı film; sürüm/senkron belirsiz",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 04 · 進撃の巨人.2013.S01E01 • darkness_age • Paket • [gg] • 23.976 · Aynı film; sürüm/senkron belirsiz",
+              "language": "tr"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "streams": [
+    {
+      "name": "01 · İndirilebilir · Animecix · Clauseover",
+      "quality": "853×480 ✓",
+      "type": "mp4",
+      "size": "164.7 MiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 01 · 進撃の巨人.2013.S01E01 • clauseover • Paket • [Coalgirls] • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 03 · 進撃の巨人.2013.S01E01 • nephie • Paket • gg • 25 · Aynı film; sürüm/senkron belirsiz",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 04 · 進撃の巨人.2013.S01E01 • darkness_age • Paket • [gg] • 23.976 · Aynı film; sürüm/senkron belirsiz",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "02 · İndirilebilir · Animecix · Türkçe Dublaj",
+      "quality": "853×480 ✓",
+      "type": "mp4",
+      "size": "207.7 MiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 01 · 進撃の巨人.2013.S01E01 • clauseover • Paket • [Coalgirls] • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 03 · 進撃の巨人.2013.S01E01 • nephie • Paket • gg • 25 · Aynı film; sürüm/senkron belirsiz",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 04 · 進撃の巨人.2013.S01E01 • darkness_age • Paket • [gg] • 23.976 · Aynı film; sürüm/senkron belirsiz",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "03 · İndirilebilir · Animecix · Çeviri: Bradley Redakte: Mansur35 Dizgi:",
+      "quality": "853×480 ✓",
+      "type": "mp4",
+      "size": "208.3 MiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 01 · 進撃の巨人.2013.S01E01 • clauseover • Paket • [Coalgirls] • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 03 · 進撃の巨人.2013.S01E01 • nephie • Paket • gg • 25 · Aynı film; sürüm/senkron belirsiz",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 04 · 進撃の巨人.2013.S01E01 • darkness_age • Paket • [gg] • 23.976 · Aynı film; sürüm/senkron belirsiz",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "04 · İndirilebilir · Animecix · Clauseover",
+      "quality": "1280×720 ✓",
+      "type": "mp4",
+      "size": "280.6 MiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 01 · 進撃の巨人.2013.S01E01 • clauseover • Paket • [Coalgirls] • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 03 · 進撃の巨人.2013.S01E01 • nephie • Paket • gg • 25 · Aynı film; sürüm/senkron belirsiz",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 04 · 進撃の巨人.2013.S01E01 • darkness_age • Paket • [gg] • 23.976 · Aynı film; sürüm/senkron belirsiz",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "05 · İndirilebilir · Animecix · Türkçe Dublaj",
+      "quality": "1280×720 ✓",
+      "type": "mp4",
+      "size": "354.9 MiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 01 · 進撃の巨人.2013.S01E01 • clauseover • Paket • [Coalgirls] • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 03 · 進撃の巨人.2013.S01E01 • nephie • Paket • gg • 25 · Aynı film; sürüm/senkron belirsiz",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 04 · 進撃の巨人.2013.S01E01 • darkness_age • Paket • [gg] • 23.976 · Aynı film; sürüm/senkron belirsiz",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "06 · İndirilebilir · Animecix · Çeviri: Bradley Redakte: Mansur35 Dizgi:",
+      "quality": "1280×720 ✓",
+      "type": "mp4",
+      "size": "355.0 MiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 01 · 進撃の巨人.2013.S01E01 • clauseover • Paket • [Coalgirls] • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 03 · 進撃の巨人.2013.S01E01 • nephie • Paket • gg • 25 · Aynı film; sürüm/senkron belirsiz",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 04 · 進撃の巨人.2013.S01E01 • darkness_age • Paket • [gg] • 23.976 · Aynı film; sürüm/senkron belirsiz",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "07 · İndirilebilir · Animecix · Clauseover",
+      "quality": "1920×1080 ✓",
+      "type": "mp4",
+      "size": "541.2 MiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 01 · 進撃の巨人.2013.S01E01 • clauseover • Paket • [Coalgirls] • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 03 · 進撃の巨人.2013.S01E01 • nephie • Paket • gg • 25 · Aynı film; sürüm/senkron belirsiz",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 04 · 進撃の巨人.2013.S01E01 • darkness_age • Paket • [gg] • 23.976 · Aynı film; sürüm/senkron belirsiz",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "08 · İndirilebilir · Animecix · Türkçe Dublaj",
+      "quality": "1920×1080 ✓",
+      "type": "mp4",
+      "size": "564.7 MiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 01 · 進撃の巨人.2013.S01E01 • clauseover • Paket • [Coalgirls] • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 03 · 進撃の巨人.2013.S01E01 • nephie • Paket • gg • 25 · Aynı film; sürüm/senkron belirsiz",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 04 · 進撃の巨人.2013.S01E01 • darkness_age • Paket • [gg] • 23.976 · Aynı film; sürüm/senkron belirsiz",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "09 · İndirilebilir · Animecix · Çeviri: Bradley Redakte: Mansur35 Dizgi:",
+      "quality": "1920×1080 ✓",
+      "type": "mp4",
+      "size": "568.5 MiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 01 · 進撃の巨人.2013.S01E01 • clauseover • Paket • [Coalgirls] • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 03 · 進撃の巨人.2013.S01E01 • nephie • Paket • gg • 25 · Aynı film; sürüm/senkron belirsiz",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 04 · 進撃の巨人.2013.S01E01 • darkness_age • Paket • [gg] • 23.976 · Aynı film; sürüm/senkron belirsiz",
+          "language": "tr"
+        }
+      ]
+    }
+  ],
+  "deviceTest": "not-run"
+}

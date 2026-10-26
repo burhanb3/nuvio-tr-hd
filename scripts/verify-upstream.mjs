@@ -30,6 +30,7 @@ await Promise.all(Array.from({ length: 3 }, async () => {
 const drift = paths.filter(path => gitBlobSha(sources.get(path)) !== lock.sourceFiles[path]);
 const abiAssertions = [
   ['PluginModels.kt', /val scrapers: List<PluginManifestScraper>/, 'scrapers manifest listesi'],
+  ['StreamsRepository.kt', /\(group\.streams \+ completion\.streams\)\.sortedForGroupedDisplay\(\)/, 'bağımsız scraper tamamlandığında sonuçların birleştirilmesi'],
   ['PluginModels.kt', /val filename: String/, 'filename alanı'],
   ['JsBindings.kt', /getStreams\(args\.tmdbId, args\.mediaType, season, episode\)/, 'getStreams dört argüman ABI'],
   ['JsBindings.kt', /globalThis\.SCRAPER_SETTINGS/, 'ayar enjeksiyonu'],

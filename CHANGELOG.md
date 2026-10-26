@@ -1,5 +1,15 @@
 # Değişiklik günlüğü
 
+## 1.6.0 — 26 Ekim 2026
+
+- Tek manifestte üç bağımsız scraper: Hızlı kaynaklar, Dosyalar, Anime. Native tamamlanma birleştirmesiyle erken grup sonucu; aynı scraper içinde satır akışı iddiası yok. Eski kimlik/kişisel ayarlar Dosyalar için korunur; yeni scraper ayarları ayrıdır.
+- Animecix/Tau MP4: TMDB+özgün başlık+yıl, doğru title ID ve tam sezon/bölüm bağı; çelişkili kimlik ve tahmini mutlak bölüm reddi. Gerçek konteyner/byte/piksel kontrolü, mevcut TR SRT/VTT eşleştirme.
+- HDHub bağlantısı çözülürken dosya doğrulaması; bozuk küçük aynalar sonrası en çok 12 release; dosya sayfasında 120 release’e kadar küçükten büyüğe önseçim.
+- MKV gerçek Türkçe altyazı track dili/codec algılama; TR içi etiketi, sıkı altyazı filtresinde koruma ve önerilen sırada puan.
+- Altyazı gövdesi arama başına bir kez UTF-8 çözülür; ilk üç farklı hash sorgusuyla istek patlaması sınırlanır. Metinsiz/adressiz karakter tanısı sayaçları.
+- iOS 0.6.4-beta font seçimi CJK olarak doğrulandı; gerçek font cmap tablosunda ş/Ş/ğ/Ğ/ı/İ glifleri eksik. Plugin font/offset alanı yok; font sorunu giderilmiş sayılmadı. MoviesMod/DriveSeed/MoviesDrive araştırması; uygun olmayan Range/kimlik/ad koşulları üretime alınmadı.
+- 20 dosyalık upstream kilidi gözle incelenerek genişletildi; StreamsRepository bağımsız tamamlama kanıtı eklendi. Üç paket gerçek QuickJS’te sınanır. Fiziksel cihaz/tam oynatma/indirme/senkron testi yapılmadı.
+
 ## 1.5.0 — 25 Ekim 2026
 
 - TV kapsamı düzeltildi: VixSrc bölüm rotası, PlayIMDb doğru IMDb+tam bölüm ile yıl içermeyen dizi release'leri. Native desteklenen show/other türleri güvenli TV normalizasyonuna eklendi.

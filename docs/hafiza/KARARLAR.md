@@ -1,5 +1,12 @@
 # Tasarım kararları
 
+## 1.6.0 ek kararları
+
+- Native destekli bağımsız scraper tamamlaması kullanılır; tek getStreams içinde progressive callback uydurulmaz. Ayarlar/sonuç sınırları ayrıdır, geçiş rehberde açık yazılır.
+- Anime eşleştirmesinde sayısal TMDB+özgün ad+yıl ve tam sezon/bölüm şart; çelişkili IMDb reddedilir. API kalite/byte iddiası gerçek probe’un yerini almaz. Türkçe kaynak hard-sub kanıtı sayılmaz.
+- MKV içi TR dil+codec konteynerden okunur; tam oynatma/senkron doğrulaması sayılmaz.
+- Font fallback plugin tarafından düzeltildi diye sunulmaz. Altyazı tanısı yalnız sayaç ve özgün URL korunur. Özel/başka repo anahtarı kullanılmaz. Range 200 büyük video iOS tampon riski nedeniyle geçmez.
+
 ## 1.5.0 ek kararları
 
 - TV'de yıl içermeyen release adı yalnız doğru IMDb sorgu bağı + tam özgün başlık + kesin S/E ile kabul edilir. Filmde yıl zorunluluğu aynı kalır. Sezon paketi tek bölüm diye sunulmaz. Poster bağı, HDHub'ın numeric TMDB ID göstermeyen dizi sayfasını kanonik metadata'ya bağlayan ek kanıttır.

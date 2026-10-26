@@ -1,0 +1,951 @@
+{
+  "checkedAt": "2026-10-26T09:06:13.401Z",
+  "version": "1.6.0",
+  "film": "spider-man",
+  "metadata": "fixed known TMDB reference; upstream source/subtitle requests are live",
+  "elapsedMs": 14090,
+  "firstResultsMs": 4243,
+  "bytesRead": 7444529,
+  "settings": "Production lanes in parallel; online16s/files28s/anime20s logical budgets; all resolutions; prefer TR; balanced; HLS; up to20 per lane; public bridge enabled",
+  "lanes": [
+    {
+      "lane": "online",
+      "elapsedMs": 4243,
+      "diagnostic": {
+        "tmdbId": "969681",
+        "lane": "online",
+        "sources": [
+          {
+            "name": "PlayIMDb",
+            "candidates": 3
+          },
+          {
+            "name": "VixSrc",
+            "candidates": 1
+          }
+        ],
+        "rejected": {},
+        "http": {
+          "api.themoviedb.org:200": 1,
+          "streamdata.vaplayer.ru:200": 1,
+          "vixsrc.to:200": 7,
+          "opensubtitles-v3.strem.io:200": 1,
+          "onlinecoachingacademy.site:200": 21,
+          "altyazidb.online:200": 2,
+          "opensubtitles.stremio.homes:200": 3,
+          "nuvio-tr-hd-download-bridge.kamilbsr03.chatgpt.site:timeout_or_network": 1,
+          "opensubtitles.stremio.homes:429": 1
+        },
+        "results": 10,
+        "reason": "ok",
+        "elapsedMs": 4242
+      },
+      "streams": [
+        {
+          "name": "01 · Online · PlayIMDb 3",
+          "quality": "640×266 HLS",
+          "type": "hls",
+          "size": "≤~784.8 MiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 01 · Spider-Man: Brand New Day.2026.[{\"grup\":\"KyoGo\",\"dosya\":\"\"… • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 02 · Spider-Man.Brand.New.Day.2026.1080p.AMZN.WEB-DL.DDP5.1.H.264-KyoGo · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 04 · Spider-Man.Brand.New.Day.2026.2160p.MA.WEB-DL.DDP5.1.Atmos.H.265-ASTRiD · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "02 · Online · PlayIMDb 2",
+          "quality": "640×266 HLS",
+          "type": "hls",
+          "size": "≤~784.8 MiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 01 · Spider-Man: Brand New Day.2026.[{\"grup\":\"KyoGo\",\"dosya\":\"\"… • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 02 · Spider-Man.Brand.New.Day.2026.1080p.AMZN.WEB-DL.DDP5.1.H.264-KyoGo · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 04 · Spider-Man.Brand.New.Day.2026.2160p.MA.WEB-DL.DDP5.1.Atmos.H.265-ASTRiD · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "03 · Online · PlayIMDb 1",
+          "quality": "640×266 HLS",
+          "type": "hls",
+          "size": "≤~784.8 MiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 01 · Spider-Man: Brand New Day.2026.[{\"grup\":\"KyoGo\",\"dosya\":\"\"… • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 02 · Spider-Man.Brand.New.Day.2026.1080p.AMZN.WEB-DL.DDP5.1.H.264-KyoGo · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 04 · Spider-Man.Brand.New.Day.2026.2160p.MA.WEB-DL.DDP5.1.Atmos.H.265-ASTRiD · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "04 · Online · VixSrc",
+          "quality": "Otomatik kalite HLS",
+          "type": "hls",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 01 · Spider-Man: Brand New Day.2026.[{\"grup\":\"KyoGo\",\"dosya\":\"\"… • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 02 · Spider-Man.Brand.New.Day.2026.1080p.AMZN.WEB-DL.DDP5.1.H.264-KyoGo · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 04 · Spider-Man.Brand.New.Day.2026.2160p.MA.WEB-DL.DDP5.1.Atmos.H.265-ASTRiD · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "05 · Online · PlayIMDb 3",
+          "quality": "1280×534 HLS",
+          "type": "hls",
+          "size": "≤~2.83 GiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 01 · Spider-Man: Brand New Day.2026.[{\"grup\":\"KyoGo\",\"dosya\":\"\"… • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 02 · Spider-Man.Brand.New.Day.2026.1080p.AMZN.WEB-DL.DDP5.1.H.264-KyoGo · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 04 · Spider-Man.Brand.New.Day.2026.2160p.MA.WEB-DL.DDP5.1.Atmos.H.265-ASTRiD · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "06 · Online · PlayIMDb 2",
+          "quality": "1280×534 HLS",
+          "type": "hls",
+          "size": "≤~2.83 GiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 01 · Spider-Man: Brand New Day.2026.[{\"grup\":\"KyoGo\",\"dosya\":\"\"… • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 02 · Spider-Man.Brand.New.Day.2026.1080p.AMZN.WEB-DL.DDP5.1.H.264-KyoGo · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 04 · Spider-Man.Brand.New.Day.2026.2160p.MA.WEB-DL.DDP5.1.Atmos.H.265-ASTRiD · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "07 · Online · PlayIMDb 1",
+          "quality": "1280×534 HLS",
+          "type": "hls",
+          "size": "≤~2.83 GiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 01 · Spider-Man: Brand New Day.2026.[{\"grup\":\"KyoGo\",\"dosya\":\"\"… • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 02 · Spider-Man.Brand.New.Day.2026.1080p.AMZN.WEB-DL.DDP5.1.H.264-KyoGo · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 04 · Spider-Man.Brand.New.Day.2026.2160p.MA.WEB-DL.DDP5.1.Atmos.H.265-ASTRiD · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "08 · Online · PlayIMDb 3",
+          "quality": "1920×800 HLS",
+          "type": "hls",
+          "size": "≤~4.65 GiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 01 · Spider-Man: Brand New Day.2026.[{\"grup\":\"KyoGo\",\"dosya\":\"\"… • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 02 · Spider-Man.Brand.New.Day.2026.1080p.AMZN.WEB-DL.DDP5.1.H.264-KyoGo · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 04 · Spider-Man.Brand.New.Day.2026.2160p.MA.WEB-DL.DDP5.1.Atmos.H.265-ASTRiD · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "09 · Online · PlayIMDb 2",
+          "quality": "1920×800 HLS",
+          "type": "hls",
+          "size": "≤~4.65 GiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 01 · Spider-Man: Brand New Day.2026.[{\"grup\":\"KyoGo\",\"dosya\":\"\"… • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 02 · Spider-Man.Brand.New.Day.2026.1080p.AMZN.WEB-DL.DDP5.1.H.264-KyoGo · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 04 · Spider-Man.Brand.New.Day.2026.2160p.MA.WEB-DL.DDP5.1.Atmos.H.265-ASTRiD · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "10 · Online · PlayIMDb 1",
+          "quality": "1920×800 HLS",
+          "type": "hls",
+          "size": "≤~4.65 GiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 01 · Spider-Man: Brand New Day.2026.[{\"grup\":\"KyoGo\",\"dosya\":\"\"… • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 02 · Spider-Man.Brand.New.Day.2026.1080p.AMZN.WEB-DL.DDP5.1.H.264-KyoGo · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · VTT · OpenSubtitles · 04 · Spider-Man.Brand.New.Day.2026.2160p.MA.WEB-DL.DDP5.1.Atmos.H.265-ASTRiD · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "lane": "files",
+      "elapsedMs": 14089,
+      "diagnostic": {
+        "tmdbId": "969681",
+        "lane": "files",
+        "sources": [
+          {
+            "name": "Internet Archive",
+            "candidates": 3
+          },
+          {
+            "name": "4KHDHub / HubCloud",
+            "candidates": 13
+          }
+        ],
+        "rejected": {},
+        "http": {
+          "api.themoviedb.org:200": 1,
+          "4khdhub.one:200": 2,
+          "archive.org:200": 8,
+          "greenmotors.club:302": 12,
+          "greenmotors.cc:200": 12,
+          "hubcloud.ist:200": 12,
+          "opensubtitles-v3.strem.io:200": 1,
+          "gamerxyt.com:200": 12,
+          "archive.org:302": 9,
+          "altyazidb.online:200": 2,
+          "nuvio-tr-hd-download-bridge.kamilbsr03.chatgpt.site:200": 12,
+          "opensubtitles.stremio.homes:429": 1,
+          "ia600102.us.archive.org:200": 1,
+          "ia800901.us.archive.org:200": 1,
+          "ia800102.us.archive.org:200": 1,
+          "ia600102.us.archive.org:206": 1,
+          "ia800102.us.archive.org:206": 3,
+          "ia600901.us.archive.org:206": 1,
+          "opensubtitles.stremio.homes:timeout_or_network": 3,
+          "4dad9ad3e94138b7447532d7884e3068.r2.cloudflarestorage.com:206": 16,
+          "ia800901.us.archive.org:206": 1,
+          "b4d59c62522ca804dbeb6ad6c6715e3c.r2.cloudflarestorage.com:206": 6,
+          "e3e6566c13b3d740733c1c229e6b3683.r2.cloudflarestorage.com:206": 2,
+          "8330eb239b8516a8e389893f23dcdc32.r2.cloudflarestorage.com:206": 2
+        },
+        "results": 16,
+        "reason": "ok",
+        "elapsedMs": 14086
+      },
+      "streams": [
+        {
+          "name": "01 · İndirilebilir · Archive",
+          "quality": "1152×480 ✓",
+          "type": "mp4",
+          "size": "665.6 MiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 01 · Spider-Man: Brand New Day.2026.[{\"grup\":\"KyoGo\",\"dosya\":\"\"… • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "02 · İndirilebilir · Archive",
+          "quality": "853×480 ✓",
+          "type": "mp4",
+          "size": "835.3 MiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 01 · Spider-Man: Brand New Day.2026.[{\"grup\":\"KyoGo\",\"dosya\":\"\"… • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "03 · İndirilebilir · 4KHDHub",
+          "quality": "1920×800 ✓",
+          "type": "mkv",
+          "size": "2.64 GiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 01 · Spider-Man: Brand New Day.2026.[{\"grup\":\"KyoGo\",\"dosya\":\"\"… • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "04 · İndirilebilir · 4KHDHub",
+          "quality": "1920×800 ✓",
+          "type": "mkv",
+          "size": "7.71 GiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 01 · Spider-Man: Brand New Day.2026.[{\"grup\":\"KyoGo\",\"dosya\":\"\"… • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "05 · İndirilebilir · 4KHDHub",
+          "quality": "1920×802 ✓",
+          "type": "mkv",
+          "size": "9.69 GiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 01 · Spider-Man: Brand New Day.2026.[{\"grup\":\"KyoGo\",\"dosya\":\"\"… • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "06 · İndirilebilir · 4KHDHub",
+          "quality": "1920×1012 ✓",
+          "type": "mkv",
+          "size": "11.35 GiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 01 · Spider-Man: Brand New Day.2026.[{\"grup\":\"KyoGo\",\"dosya\":\"\"… • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "07 · İndirilebilir · 4KHDHub",
+          "quality": "1920×800 ✓",
+          "type": "mkv",
+          "size": "12.36 GiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 01 · Spider-Man: Brand New Day.2026.[{\"grup\":\"KyoGo\",\"dosya\":\"\"… • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "08 · İndirilebilir · 4KHDHub",
+          "quality": "1920×1012 ✓",
+          "type": "mkv",
+          "size": "18.02 GiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 01 · Spider-Man: Brand New Day.2026.[{\"grup\":\"KyoGo\",\"dosya\":\"\"… • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "09 · İndirilebilir · 4KHDHub",
+          "quality": "3840×1600 ✓",
+          "type": "mkv",
+          "size": "19.17 GiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 01 · Spider-Man: Brand New Day.2026.[{\"grup\":\"KyoGo\",\"dosya\":\"\"… • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "10 · İndirilebilir · 4KHDHub",
+          "quality": "3840×2160 ✓",
+          "type": "mkv",
+          "size": "27.74 GiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 01 · Spider-Man: Brand New Day.2026.[{\"grup\":\"KyoGo\",\"dosya\":\"\"… • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "11 · İndirilebilir · 4KHDHub",
+          "quality": "3840×2160 ✓",
+          "type": "mkv",
+          "size": "27.80 GiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 01 · Spider-Man: Brand New Day.2026.[{\"grup\":\"KyoGo\",\"dosya\":\"\"… • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "12 · İndirilebilir · 4KHDHub",
+          "quality": "3840×2024 ✓",
+          "type": "mkv",
+          "size": "28.04 GiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 01 · Spider-Man: Brand New Day.2026.[{\"grup\":\"KyoGo\",\"dosya\":\"\"… • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "13 · İndirilebilir · 4KHDHub",
+          "quality": "3840×2024 ✓",
+          "type": "mkv",
+          "size": "28.04 GiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 01 · Spider-Man: Brand New Day.2026.[{\"grup\":\"KyoGo\",\"dosya\":\"\"… • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "14 · İndirilebilir · 4KHDHub",
+          "quality": "3840×2024 ✓",
+          "type": "mkv",
+          "size": "59.22 GiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 01 · Spider-Man: Brand New Day.2026.[{\"grup\":\"KyoGo\",\"dosya\":\"\"… • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "15 · İndirilebilir · 4KHDHub",
+          "quality": "3840×2160 ✓",
+          "type": "mkv",
+          "size": "81.94 GiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 01 · Spider-Man: Brand New Day.2026.[{\"grup\":\"KyoGo\",\"dosya\":\"\"… • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "16 · İndirilebilir · Archive",
+          "quality": "3840×2160 ✓",
+          "type": "mkv",
+          "size": "85.47 GiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 01 · Spider-Man: Brand New Day.2026.[{\"grup\":\"KyoGo\",\"dosya\":\"\"… • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "lane": "anime",
+      "elapsedMs": 65,
+      "diagnostic": {
+        "tmdbId": "969681",
+        "lane": "anime",
+        "sources": [],
+        "rejected": {},
+        "http": {
+          "api.themoviedb.org:200": 1
+        },
+        "results": 0,
+        "reason": "not_anime",
+        "elapsedMs": 61
+      },
+      "streams": []
+    }
+  ],
+  "streams": [
+    {
+      "name": "01 · Online · PlayIMDb 3",
+      "quality": "640×266 HLS",
+      "type": "hls",
+      "size": "≤~784.8 MiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 01 · Spider-Man: Brand New Day.2026.[{\"grup\":\"KyoGo\",\"dosya\":\"\"… • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 02 · Spider-Man.Brand.New.Day.2026.1080p.AMZN.WEB-DL.DDP5.1.H.264-KyoGo · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 04 · Spider-Man.Brand.New.Day.2026.2160p.MA.WEB-DL.DDP5.1.Atmos.H.265-ASTRiD · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "02 · Online · PlayIMDb 2",
+      "quality": "640×266 HLS",
+      "type": "hls",
+      "size": "≤~784.8 MiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 01 · Spider-Man: Brand New Day.2026.[{\"grup\":\"KyoGo\",\"dosya\":\"\"… • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 02 · Spider-Man.Brand.New.Day.2026.1080p.AMZN.WEB-DL.DDP5.1.H.264-KyoGo · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 04 · Spider-Man.Brand.New.Day.2026.2160p.MA.WEB-DL.DDP5.1.Atmos.H.265-ASTRiD · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "03 · Online · PlayIMDb 1",
+      "quality": "640×266 HLS",
+      "type": "hls",
+      "size": "≤~784.8 MiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 01 · Spider-Man: Brand New Day.2026.[{\"grup\":\"KyoGo\",\"dosya\":\"\"… • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 02 · Spider-Man.Brand.New.Day.2026.1080p.AMZN.WEB-DL.DDP5.1.H.264-KyoGo · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 04 · Spider-Man.Brand.New.Day.2026.2160p.MA.WEB-DL.DDP5.1.Atmos.H.265-ASTRiD · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "04 · Online · VixSrc",
+      "quality": "Otomatik kalite HLS",
+      "type": "hls",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 01 · Spider-Man: Brand New Day.2026.[{\"grup\":\"KyoGo\",\"dosya\":\"\"… • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 02 · Spider-Man.Brand.New.Day.2026.1080p.AMZN.WEB-DL.DDP5.1.H.264-KyoGo · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 04 · Spider-Man.Brand.New.Day.2026.2160p.MA.WEB-DL.DDP5.1.Atmos.H.265-ASTRiD · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "05 · Online · PlayIMDb 3",
+      "quality": "1280×534 HLS",
+      "type": "hls",
+      "size": "≤~2.83 GiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 01 · Spider-Man: Brand New Day.2026.[{\"grup\":\"KyoGo\",\"dosya\":\"\"… • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 02 · Spider-Man.Brand.New.Day.2026.1080p.AMZN.WEB-DL.DDP5.1.H.264-KyoGo · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 04 · Spider-Man.Brand.New.Day.2026.2160p.MA.WEB-DL.DDP5.1.Atmos.H.265-ASTRiD · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "06 · Online · PlayIMDb 2",
+      "quality": "1280×534 HLS",
+      "type": "hls",
+      "size": "≤~2.83 GiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 01 · Spider-Man: Brand New Day.2026.[{\"grup\":\"KyoGo\",\"dosya\":\"\"… • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 02 · Spider-Man.Brand.New.Day.2026.1080p.AMZN.WEB-DL.DDP5.1.H.264-KyoGo · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 04 · Spider-Man.Brand.New.Day.2026.2160p.MA.WEB-DL.DDP5.1.Atmos.H.265-ASTRiD · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "07 · Online · PlayIMDb 1",
+      "quality": "1280×534 HLS",
+      "type": "hls",
+      "size": "≤~2.83 GiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 01 · Spider-Man: Brand New Day.2026.[{\"grup\":\"KyoGo\",\"dosya\":\"\"… • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 02 · Spider-Man.Brand.New.Day.2026.1080p.AMZN.WEB-DL.DDP5.1.H.264-KyoGo · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 04 · Spider-Man.Brand.New.Day.2026.2160p.MA.WEB-DL.DDP5.1.Atmos.H.265-ASTRiD · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "08 · Online · PlayIMDb 3",
+      "quality": "1920×800 HLS",
+      "type": "hls",
+      "size": "≤~4.65 GiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 01 · Spider-Man: Brand New Day.2026.[{\"grup\":\"KyoGo\",\"dosya\":\"\"… • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 02 · Spider-Man.Brand.New.Day.2026.1080p.AMZN.WEB-DL.DDP5.1.H.264-KyoGo · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 04 · Spider-Man.Brand.New.Day.2026.2160p.MA.WEB-DL.DDP5.1.Atmos.H.265-ASTRiD · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "09 · Online · PlayIMDb 2",
+      "quality": "1920×800 HLS",
+      "type": "hls",
+      "size": "≤~4.65 GiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 01 · Spider-Man: Brand New Day.2026.[{\"grup\":\"KyoGo\",\"dosya\":\"\"… • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 02 · Spider-Man.Brand.New.Day.2026.1080p.AMZN.WEB-DL.DDP5.1.H.264-KyoGo · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 04 · Spider-Man.Brand.New.Day.2026.2160p.MA.WEB-DL.DDP5.1.Atmos.H.265-ASTRiD · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "10 · Online · PlayIMDb 1",
+      "quality": "1920×800 HLS",
+      "type": "hls",
+      "size": "≤~4.65 GiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 01 · Spider-Man: Brand New Day.2026.[{\"grup\":\"KyoGo\",\"dosya\":\"\"… • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 02 · Spider-Man.Brand.New.Day.2026.1080p.AMZN.WEB-DL.DDP5.1.H.264-KyoGo · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · VTT · OpenSubtitles · 04 · Spider-Man.Brand.New.Day.2026.2160p.MA.WEB-DL.DDP5.1.Atmos.H.265-ASTRiD · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "01 · İndirilebilir · Archive",
+      "quality": "1152×480 ✓",
+      "type": "mp4",
+      "size": "665.6 MiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 01 · Spider-Man: Brand New Day.2026.[{\"grup\":\"KyoGo\",\"dosya\":\"\"… • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "02 · İndirilebilir · Archive",
+      "quality": "853×480 ✓",
+      "type": "mp4",
+      "size": "835.3 MiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 01 · Spider-Man: Brand New Day.2026.[{\"grup\":\"KyoGo\",\"dosya\":\"\"… • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "03 · İndirilebilir · 4KHDHub",
+      "quality": "1920×800 ✓",
+      "type": "mkv",
+      "size": "2.64 GiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 01 · Spider-Man: Brand New Day.2026.[{\"grup\":\"KyoGo\",\"dosya\":\"\"… • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "04 · İndirilebilir · 4KHDHub",
+      "quality": "1920×800 ✓",
+      "type": "mkv",
+      "size": "7.71 GiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 01 · Spider-Man: Brand New Day.2026.[{\"grup\":\"KyoGo\",\"dosya\":\"\"… • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "05 · İndirilebilir · 4KHDHub",
+      "quality": "1920×802 ✓",
+      "type": "mkv",
+      "size": "9.69 GiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 01 · Spider-Man: Brand New Day.2026.[{\"grup\":\"KyoGo\",\"dosya\":\"\"… • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "06 · İndirilebilir · 4KHDHub",
+      "quality": "1920×1012 ✓",
+      "type": "mkv",
+      "size": "11.35 GiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 01 · Spider-Man: Brand New Day.2026.[{\"grup\":\"KyoGo\",\"dosya\":\"\"… • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "07 · İndirilebilir · 4KHDHub",
+      "quality": "1920×800 ✓",
+      "type": "mkv",
+      "size": "12.36 GiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 01 · Spider-Man: Brand New Day.2026.[{\"grup\":\"KyoGo\",\"dosya\":\"\"… • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "08 · İndirilebilir · 4KHDHub",
+      "quality": "1920×1012 ✓",
+      "type": "mkv",
+      "size": "18.02 GiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 01 · Spider-Man: Brand New Day.2026.[{\"grup\":\"KyoGo\",\"dosya\":\"\"… • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "09 · İndirilebilir · 4KHDHub",
+      "quality": "3840×1600 ✓",
+      "type": "mkv",
+      "size": "19.17 GiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 01 · Spider-Man: Brand New Day.2026.[{\"grup\":\"KyoGo\",\"dosya\":\"\"… • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "10 · İndirilebilir · 4KHDHub",
+      "quality": "3840×2160 ✓",
+      "type": "mkv",
+      "size": "27.74 GiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 01 · Spider-Man: Brand New Day.2026.[{\"grup\":\"KyoGo\",\"dosya\":\"\"… • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "11 · İndirilebilir · 4KHDHub",
+      "quality": "3840×2160 ✓",
+      "type": "mkv",
+      "size": "27.80 GiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 01 · Spider-Man: Brand New Day.2026.[{\"grup\":\"KyoGo\",\"dosya\":\"\"… • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "12 · İndirilebilir · 4KHDHub",
+      "quality": "3840×2024 ✓",
+      "type": "mkv",
+      "size": "28.04 GiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 01 · Spider-Man: Brand New Day.2026.[{\"grup\":\"KyoGo\",\"dosya\":\"\"… • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "13 · İndirilebilir · 4KHDHub",
+      "quality": "3840×2024 ✓",
+      "type": "mkv",
+      "size": "28.04 GiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 01 · Spider-Man: Brand New Day.2026.[{\"grup\":\"KyoGo\",\"dosya\":\"\"… • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "14 · İndirilebilir · 4KHDHub",
+      "quality": "3840×2024 ✓",
+      "type": "mkv",
+      "size": "59.22 GiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 01 · Spider-Man: Brand New Day.2026.[{\"grup\":\"KyoGo\",\"dosya\":\"\"… • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "15 · İndirilebilir · 4KHDHub",
+      "quality": "3840×2160 ✓",
+      "type": "mkv",
+      "size": "81.94 GiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 01 · Spider-Man: Brand New Day.2026.[{\"grup\":\"KyoGo\",\"dosya\":\"\"… • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "16 · İndirilebilir · Archive",
+      "quality": "3840×2160 ✓",
+      "type": "mkv",
+      "size": "85.47 GiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 01 · Spider-Man: Brand New Day.2026.[{\"grup\":\"KyoGo\",\"dosya\":\"\"… • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        }
+      ]
+    }
+  ],
+  "deviceTest": "not-run"
+}

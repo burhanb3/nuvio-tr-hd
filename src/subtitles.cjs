@@ -42,14 +42,18 @@ async function loadSubtitles(http, candidate, target, allowHttp, options = {}) {
       if (!result || /html|zip|gzip|json/.test(result.response.headers.get('content-type') || '')) return null;
       const bytes = new Uint8Array(await result.response.arrayBuffer());
       if (!bytes.length || bytes.length > 262144) return null;
-      return { bytes, url: result.url };
+      // Decode/inspect a shared body once per search, rather than once for
+      // every video mirror. Diagnostics contain counts/flags, never cue text.
+      const text = decodeUtf8(bytes), format = text && subtitleFormat(text);
+      http.note?.({ stage: 'subtitle_text', invalidUtf8: text === null,
+        turkishCharacters: /[şŞğĞıİçÇöÖüÜ]/.test(text || ''), combiningCharacters: /[\u0300-\u036f]/.test(text || ''),
+        inlineFont: /<font\b|font-family\s*:|\{\\fn/i.test(text || ''), mojibake: /Å[ŸžŞş]|Ä[±°Ÿž]|Ã[¶¼§–œ‡]/.test(text || '') });
+      return format ? { bytes, url: result.url, text, format } : null;
     })());
     const result = await http.subtitleCache.get(key);
     if (!result) return null;
     // Nuvio decodes UTF-8; reject compressed/HTML bodies and malformed cues.
-    const text = await decodeUtf8(result.bytes);
-    const format = text && subtitleFormat(text);
-    if (!format) return null;
+    const { text, format } = result;
     let match = sub._match;
     if (match?.requireDuration) {
       const last = lastCueSeconds(text), duration = options.videoDuration;

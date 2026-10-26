@@ -39,6 +39,16 @@ test('ücretsiz HDHub zinciri kanonik film kimliği ve gerçek konteyner ile do�
     assert.ok(calls.some(c => c.url === file && c.headers.Range));
   } finally { http.close(); }
 });
+test('HDHub hızlı release, diğer release beklerken doğrulama kuyruğuna verilir',{timeout:2000},async()=>{
+ const {fixture,page}=hdFixture();
+ fixture[HDHUB_ORIGIN+'/matrix-movie-1/'].body=page+'<div class="download-item"><div class="file-title">The.Matrix.1999.720p.WEB-DL.SLOW.mkv</div><span>3.0 GB</span><a href="https://greenmotors.club/slow">Download HubCloud</a></div>';
+ let release;const gate=new Promise(resolve=>release=resolve);const fetcher=fixtureFetch(fixture);let fed=0,scanDone=false;
+ const http=createHttp({fetchImpl:async(url,options)=>{if(url.endsWith('/slow'))await gate;return fetcher(url,options);}});
+ let gotCandidate;const first=new Promise(resolve=>gotCandidate=resolve);
+ const scan=scanHdHub(http,target,{allowExtensionless:true,onCandidates:async candidates=>{fed+=candidates.length;gotCandidate();}}).then(r=>{scanDone=true;return r;});
+ try{await first;assert.equal(fed,1);assert.equal(scanDone,false);}finally{release();await scan;http.close();}
+});
+
 test('yanlış TMDB/yıl, bozuk kısa bağlantı ve keyfi hedef reddedilir', () => {
   const { page } = hdFixture();
   assert.equal(pageMatches(page, target), true);

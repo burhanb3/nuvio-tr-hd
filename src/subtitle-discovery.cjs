@@ -65,6 +65,7 @@ function decodeFilename(url) {
 
 function createSubtitleDiscovery(http, target, settings) {
   const cache = new Map();
+  let hashRequests = 0;
   const bases = settings.subtitleUrls ? String(settings.subtitleUrls).split(/\s+/)
     .map(url => safeUrl(url, undefined, settings.allowHttp === true)?.replace(/\/manifest\.json(?:\?.*)?$/, '').replace(/\/$/, '')).filter(Boolean).slice(0, 3) :
     [...TURKISH_SUBTITLE_SERVICES, ...SUBTITLE_SERVICES];
@@ -106,7 +107,12 @@ function createSubtitleDiscovery(http, target, settings) {
     const hashBase = bases.find(base => base.includes('opensubtitles.stremio.homes'));
     if (settings.hashLookups !== false && video.videoHash && hashBase && !http.expired()) {
       const hashUrl = `${hashBase}/subtitles/${type}/${encodeURIComponent(id)}/${extras.join('&')}.json`;
-      hashResults = lookup(hashUrl).then(data => normalize(data, hashBase));
+      // Avoid a burst of one hash query per mirror/quality. The shared title
+      // lookup still covers every file; cached hash results remain reusable.
+      if (cache.has(hashUrl) || hashRequests < 3) {
+        if (!cache.has(hashUrl)) hashRequests++;
+        hashResults = lookup(hashUrl).then(data => normalize(data, hashBase));
+      }
     }
     const [groups, hashed] = await Promise.all([titleResults, hashResults]);
     return [...hashed, ...groups.flat()];

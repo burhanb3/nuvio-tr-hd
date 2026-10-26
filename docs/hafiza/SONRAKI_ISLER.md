@@ -1,5 +1,14 @@
 # Sonraki işler
 
+## 1.6.0 güncel öncelik
+
+1. Üç scraper ile GitHub1.6.0 yayını ve HTTP/SHA doğrulamasını tamamla. Mevcut eski scraper ayarları Dosyalar’da; yeni iki scraper varsayılan.
+2. iPhone’da hızlı grup diğer taramalar sürerken gerçekten görünüyor mu, Death Note/AoT S01E01 MP4+TR tam indirme ve uçak modunu doğrula. Sabit referans metadata/QuickJS telefon testi değildir.
+3. Küçük film/dizi dosyaları hâlâ eksik; Dune/GOT dosya aynaları26Ekim ağ hatası verdi. MoviesMod/DriveSeed uzantısız+Range200 MKV’yi korumayı kaldırarak ekleme. Yeni kaynakları gerçek dosya ile doğrula.
+4. Anime sonraki sezon/mutlak bölüm eşlemesi yapılmadı; kanonik episode mapping olmadan tahmin ekleme. Yakılmış altyazı otomatik tanınmıyor; harici metin üst üste binebilir.
+5. Nuvio iOS Türkçe font kapsamı uygulama tarafında çözülmeli; plugin font alanı yok. Gerçek OTF cmap ş/ğ/ı/İ ve büyüklerinde eksik glif doğruladı. Kullanıcının kurulu sürümü/görüntüsü doğrulanmadı; mevcut plugin font düzeltmesi diye sunma.
+6. Sites çalışma alanına erişim gelmedi; mevcut köprü1.4 sürer, ayrı sesli HLS master korunur. Kullanıcıdan aynı hesap geçişini yeniden isteme.
+
 ## 1.5.0 güncel öncelik
 
 1. **Tamamlandı:** GitHub Pages 1.5.0, 92/92 yerel check, Windows/Linux testleri ve Pages başarılı. Oturumsuz manifest/provider/sayfa SHA eşitliği compatibility/github-publication.json'da; kod commit'i 62bf0b31ae1a767cd63b442c3bbde113a4601dfb. Yeni Sites HLS servisi bu yayına dahil değildir.

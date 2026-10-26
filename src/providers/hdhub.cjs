@@ -42,7 +42,7 @@ function pageMatches(html, target) {
 function releaseEntries(html, target) {
   const out = [];
   const sections = target.type === 'tv' ? html.split(/<div\s+class="episode-download-item\b/).slice(1, 650) :
-    html.split(/<div\s+class="download-item\b/).slice(1, 30);
+    html.split(/<div\s+class="download-item\b/).slice(1, 121);
   for (const section of sections) {
     const filename = section.match(/<div\s+class="(?:episode-)?file-title">\s*([^<]+)</)?.[1]?.trim();
     if (!filename || !/\.(mkv|mp4)$/i.test(filename)) continue;
@@ -99,11 +99,18 @@ async function scanHdHub(http, target, options = {}) {
   if (!page || !pageMatches(page.text, target)) return [];
   const entries = releaseEntries(page.text, target);
   const resolved = [];
-  // If the first small releases have dead mirrors, inspect the next bounded
-  // group instead of declaring that this title has no downloadable file.
-  for (let offset = 0; offset < Math.min(6, entries.length) && resolved.length < 3 && !http.expired(); offset += 3)
-    resolved.push(...(await mapLimit(entries.slice(offset, offset + 3), 2,
-      entry => resolveRelease(http, entry, target, options.allowExtensionless === true))).flat());
-  return resolved.slice(0, 6);
+  // A terminal URL is not yet a working file. Feed each release to the probe
+  // pipeline as soon as it resolves; dead small mirrors must not consume the
+  // entire quota or make every other release wait for one batch to finish.
+  const maximum = options.onCandidates ? 12 : 6;
+  for (let offset = 0; offset < Math.min(maximum, entries.length) && !http.expired(); offset += 3) {
+    if (offset > 0 && (options.verifiedCount ? options.verifiedCount() >= 5 : resolved.length >= 3)) break;
+    await mapLimit(entries.slice(offset, offset + 3), 3, async entry => {
+      const found = await resolveRelease(http, entry, target, options.allowExtensionless === true);
+      resolved.push(...found);
+      if (found.length && options.onCandidates) await options.onCandidates(found);
+    });
+  }
+  return options.onCandidates ? resolved : resolved.slice(0, 6);
 }
 module.exports = { scanHdHub, shortlinkTarget, pageMatches, releaseEntries, HDHUB_ORIGIN };

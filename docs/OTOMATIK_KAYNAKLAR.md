@@ -1,5 +1,7 @@
 # Otomatik kaynak ve altyazı sistemi
 
+**Güncel 1.6.0:** üç bağımsız tarama, Animecix/Tau, MKV içi TR algılama ve karakter tanısı. [Yeni kurulum ve sınırlar](ANIME_HIZ_VE_ALTYAZI.md). Aşağıdaki 1.5/1.4 süre, kapsam ve test gözlemleri tarihseldir; üretim taramaları 16/28/20 saniye mantıksal bütçe kullanır.
+
 **Güncel sürüm 1.5.0:** dizilerde PlayIMDb yıl filtresi ve VixSrc TV rotası düzeltildi, HDHub tek bölüm dosyaları ve AltyazıDB eklendi. Kısa başlık, küçükten büyüğe varsayılan sıra, kalite/gruplama seçenekleri var. Sesi birlikte gelen HLS ayrı kalite satırlarıdır; ayrı sesli HLS için profil servisi Sites erişimi olmadığı için yayımlanamadı ve otomatik master korunur. Aşağıdaki 1.4.0 notları tarihsel bağlamdır. [Yeni araştırma ve sınırlar](KAYNAK_ARASTIRMASI.md).
 
 

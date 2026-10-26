@@ -9,6 +9,8 @@ const {SERVICE_ORIGIN}=require('../src/hosted.cjs');
 
 const { makeFixture, responseFor, identity, target, mkv } = helpers;
 const bundle = await readFile(new URL('../providers/nuvio-tr-hd.js', import.meta.url), 'utf8');
+const onlineBundle = await readFile(new URL('../providers/nuvio-tr-hd-online.js', import.meta.url), 'utf8');
+const animeBundle = await readFile(new URL('../providers/nuvio-tr-hd-anime.js', import.meta.url), 'utf8');
 
 test('QuickJS HDHub public zincirini çözer; köprü adı ve gerçek MKV piksel/boyutu korunur', async () => {
   const file='https://bucket.r2.cloudflarestorage.com/object?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Signature='+'a'.repeat(64);
@@ -29,7 +31,7 @@ test('QuickJS HDHub public zincirini çözer; köprü adı ve gerçek MKV piksel
   assert.match(streams[0].name,/İndirilebilir/);assert.equal(streams[0].type,'mkv');assert.ok(streams[0].size);
 });
 
-async function runInQuickJs(fixture, { settings, args = ['603', 'movie'], invokeSettings = false, nativeTimers = false } = {}) {
+async function runInQuickJs(fixture, { settings, args = ['603', 'movie'], invokeSettings = false, nativeTimers = false, code = bundle } = {}) {
   const engine = await getQuickJS();
   const runtime = engine.newRuntime();
   runtime.setMemoryLimit(64 * 1024 * 1024);
@@ -95,7 +97,7 @@ async function runInQuickJs(fixture, { settings, args = ['603', 'movie'], invoke
           arrayBuffer: () => Promise.resolve(Uint8Array.from(result.body).buffer) };
       };
       var module = { exports: {} }; var exports = module.exports;
-      (function() { ${bundle}\n })();
+      (function() { ${code}\n })();
       globalThis.__done = false;
       Promise.resolve(${invokeSettings ? 'module.exports.onSettings()' : `module.exports.getStreams(...${JSON.stringify(args)})`})
         .then(value => { globalThis.__result = JSON.stringify(value); globalThis.__done = true; },
@@ -145,6 +147,21 @@ test('derlenmiş ayar formu KMP onSettings sözleşmesine uyar', async () => {
   assert.ok(layout.every(field => ['header', 'info', 'text', 'toggle', 'select'].includes(field.type)));
 });
 
+test('QuickJS anime paketi: doğru kanonik bölüm, gerçek 720p MP4 ve eşlenmiş TR',async()=>{
+ const id='a'.repeat(24),identity={tmdbId:13916,type:'tv',originalTitle:'DEATH NOTE',year:2006,season:1,episode:1};
+ const fixture={
+  'https://api.themoviedb.org/3/tv/13916?api_key=test&append_to_response=external_ids':{json:{id:13916,name:'Death Note',original_name:'DEATH NOTE',first_air_date:'2006-10-04',genres:[{id:16}],original_language:'ja'}},
+  'https://animecix.tv/secure/search/Death-Note?type=&limit=20':{json:{results:[{id:7585,tmdb_id:13916,original_title:'DEATH NOTE',year:2006,is_series:true}]}},
+  'https://animecix.tv/secure/episode-videos?titleId=7585&episode=1&season=1':{json:[{title_id:7585,season_num:1,episode_num:1,category:'full',url:'https://tau-video.xyz/embed/'+id,captions:[{url:'https://subs.test/tr.srt',language:'tr'}]}]},
+  ['https://tau-video.xyz/api/video/'+id]:{json:{_id:id,title_id:7585,season_number:1,episode_number:1,urls:[{label:'1080p',url:'https://media.test/anime.mp4'}]}},
+  'https://media.test/anime.mp4':{body:helpers.mp4({width:1280,height:720})},
+  'https://subs.test/tr.srt':{body:helpers.srt,mime:'text/plain'}
+ };
+ const streams=await runInQuickJs(fixture,{code:animeBundle,args:['13916','tv',1,1],settings:{autoSubtitles:false}});
+ assert.equal(streams.length,1);assert.equal(streams[0].quality,'1280×720 ✓');assert.equal(streams[0].subtitles[0].language,'tr');
+ const ordinary=makeFixture();assert.deepEqual(await runInQuickJs(ordinary,{code:animeBundle,settings:{}}),[]);
+});
+
 test('QuickJS: yıl içermeyen doğru dizi bölümü ve AltyazıDB Türkçe SRT birlikte döner',async()=>{
  const tv={id:67070,original_name:'Fleabag',first_air_date:'2016-07-21',external_ids:{imdb_id:'tt5687612'},episode_run_time:[26]};
  const fixture={
@@ -154,7 +171,7 @@ test('QuickJS: yıl içermeyen doğru dizi bölümü ve AltyazıDB Türkçe SRT 
   'https://altyazidb.online/subtitles/series/tt5687612%3A1%3A1.json':{json:{subtitles:[{lang:'tur',title:'S01E01 WEB-DL',url:'https://subs.test/tr.srt'}]}},
   'https://subs.test/tr.srt':{body:'1\n00:00:00,000 --> 00:25:00,000\nÖrnek\n',mime:'application/x-subrip'}
  };
- const streams=await runInQuickJs(fixture,{args:['67070','tv',1,1],settings:{vixsrcEnabled:false,hdhubEnabled:false}});
+ const streams=await runInQuickJs(fixture,{args:['67070','tv',1,1],settings:{vixsrcEnabled:false,hdhubEnabled:false},code:onlineBundle});
  assert.equal(streams.length,1);assert.equal(streams[0].subtitles[0].language,'tr');assert.match(streams[0].subtitles[0].name,/AltyazıDB/);
 });
 

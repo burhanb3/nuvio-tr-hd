@@ -1,12 +1,22 @@
 # Nuvio TR HD
 
-Nuvio Mobile'ın Kotlin Multiplatform **Full** sürümü için JavaScript sağlayıcı deposu. Film/bölüm seçildiğinde birden çok gerçek kaynağı otomatik tarar, MP4/MKV bağlantılarını doğrular ve her video için mevcut Türkçe altyazıları arayıp eşleştirir. Seçilen boyut/kalite/uygunluk sırasıyla sunar. Varsayılan üst sınır **20**, çözünürlük filtresi **Tümü**. İstenirse 6/10 seçilebilir. Sürüm **1.5.0**.
+Nuvio Mobile'ın Kotlin Multiplatform **Full** sürümü için JavaScript sağlayıcı deposu. Film/bölüm seçildiğinde birden çok gerçek kaynağı otomatik tarar, MP4/MKV bağlantılarını doğrular ve her video için mevcut Türkçe altyazıları arayıp eşleştirir. Seçilen boyut/kalite/uygunluk sırasıyla sunar. Her taramada varsayılan üst sınır **20**, çözünürlük filtresi **Tümü**. İstenirse 6/10 seçilebilir. Sürüm **1.6.0**.
 
-**25 Ekim 2026 uyumluluk kontrolü:** `0.6.4-beta` ve güncel `cmp-rewrite` dalının ilgili kaynak sözleşmeleri karşılaştırıldı. Derlenmiş sağlayıcı gerçek QuickJS WASM motorunda test edilir. Fiziksel Android/iOS cihazında oynatma ve indirme testi henüz yapılmadı. Ayrıntılar: [uyumluluk raporu](docs/UYUMLULUK.md).
+**26 Ekim 2026 uyumluluk kontrolü:** `0.6.4-beta` ve güncel `cmp-rewrite` dalının ilgili kaynak sözleşmeleri karşılaştırıldı. Derlenmiş sağlayıcı gerçek QuickJS WASM motorunda test edilir. Fiziksel Android/iOS cihazında oynatma ve indirme testi henüz yapılmadı. Ayrıntılar: [uyumluluk raporu](docs/UYUMLULUK.md).
 
-Bu depo medya barındırmaz. 4KHDHub/HubCloud, VixSrc, Internet Archive ve PlayIMDb yerleşiktir; DahmerMovies deneysel yerel yedektir ve varsayılan kapalıdır. JSON/Stremio adresi girmek zorunlu değildir. Kişisel JSON ve Stremio kaynakları ek alternatif olarak korunmuştur. Her film için erişilebilir HD dosya veya uygun Türkçe altyazı bulunması garanti değildir; başarısız/engelli kaynaklar atlanır.
+Bu depo medya barındırmaz. Animecix/Tau, 4KHDHub/HubCloud, VixSrc, Internet Archive ve PlayIMDb yerleşiktir; DahmerMovies deneysel yerel yedektir ve varsayılan kapalıdır. JSON/Stremio adresi girmek zorunlu değildir. Kişisel JSON ve Stremio kaynakları ek alternatif olarak korunmuştur. Her film için erişilebilir HD dosya veya uygun Türkçe altyazı bulunması garanti değildir; başarısız/engelli kaynaklar atlanır.
 
-## 1.5.0: diziler ve sade kaynak listesi
+## 1.6.0: anime ve beklemeden gelen kaynak grupları
+
+Tek manifest artık **Hızlı kaynaklar**, **Dosyalar**, **Anime** olarak üç bağımsız tarama yükler. Hızlı sonuçlar dosya taramasının bitmesini beklemez; aynı taramanın her satırı için canlı ekleme ABI’si yoktur. Eski sağlayıcı kimliği Dosyalar olarak korunur. **Ayarlar ve 20 sonuç sınırı her tarama içindir**; özel altyazı/sıralama tercihlerini yeni taramalarda da ayarlayın. Nuvio grupları arasındaki genel sıralamayı plugin belirlemez.
+
+Animecix/Tau; kesin TMDB ID, özgün başlık, yıl ve sezon/bölümle aranır. Canlı bilgisayar kontrolünde Death Note S01E01 90–229 MiB 480p/720p MP4 ve dört TR SRT; Attack on Titan S01E01 165–569 MiB 480p/720p/1080p MP4 ve üç TR SRT verdi. SRT senkronu ölçülmedi. MKV içindeki gerçek Türkçe altyazı izleri de algılanır; harici dosya yokken TR içi bilgisi korunur.
+
+HDHub release bağlantıları çözülürken doğrulama başlar; bozuk küçük aynalar sonrası en çok 12 release denenir. Altyazı gövdesi bir kez çözülür, hash sorguları sınırlanır. **Küçük film/dizi dosyası kapsamı hâlâ eksiktir:** bu kontrolde Dune ve GOT yalnız online/TR verdi. Nuvio iOS’un varsayılan fontunda ş/Ş/ğ/Ğ/ı/İ gliflerinin eksik olduğu gerçek OTF tablosundan doğrulandı; plugin font ailesini değiştiremez ve sorun giderilmiş sayılmadı.
+
+Kurulum geçişi, süre sınırları, anime sezonları, karakter tanısı ve birincil kanıtlar: [ayrıntılı Türkçe rehber](docs/ANIME_HIZ_VE_ALTYAZI.md). Fiziksel iPhone/tam oynatma/indirme testi yapılmadı.
+
+## 1.5.0’dan korunan dizi ve liste özellikleri
 
 Game of Thrones ve Fleabag için TV yolu düzeltildi. PlayIMDb'nin doğru IMDb/bölüme ait, yıl içermeyen release adları artık yanlış elenmez; VixSrc tam TV bölüm rotasını kullanır. HDHub tek bölüm MKV'lerini sezon ZIP/RAR paketlerinden ayırır. Hesapsız AltyazıDB, mevcut Türkçe SRT kaynağı olarak eklendi.
 
@@ -27,9 +37,9 @@ HLS, sesi birlikte gelen kaynaklarda her kalite için ayrı satırdır. Her sat�
 
 Varsayılanlar: otomatik tarama ve Türkçe altyazı araması açık; çözünürlük filtresi Tümü; Türkçe altyazısız videolar TR bulunamadı etiketiyle görünür; **HLS çevrimiçi alternatifleri açık**. Varsayılan boyut sırası uygulanır; Önce indirilebilir gruplaması ayrıca seçilebilir. HLS yalnız online etiketi taşır. Çözünürlük okunamazsa mevcut dosya adı ipucu tahmin diye sunulur; hiçbir kanıt yoksa eksik bilgi açık kalır. İstenirse ayarlardan kaynaklar ayrı kapatılabilir, düşük kalite veya altyazısız sonuçlar gösterilebilir.
 
-**Altı sonuç Nuvio'nun sınırı değildir.** Bu eklentinin ayarlanabilir liste sınırıdır. Arka planda en çok 40 video adayı için kaynak başına eşit kota ayrılır. Sonuç sayısını 20 seçmek yeni sağlayıcı eklemez. Mantıksal süre bütçesi 24 saniyedir; başlamış native ağ isteklerinin bitişi ayrıca Nuvio'ya bağlıdır.
+**Altı sonuç Nuvio'nun sınırı değildir.** Bu eklentinin ayarlanabilir liste sınırıdır. Genel kaynaklara tarama başına 40 aday kotası ayrılır; HDHub ayrıca en çok 12 release’i aşamalı işler. Sonuç sayısını 20 seçmek yeni sağlayıcı eklemez. Mantıksal bütçeler Hızlı kaynaklar 16, Dosyalar 28, Anime 20 saniyedir; başlamış native ağ işlerinin bitişi ayrıca Nuvio’ya bağlıdır.
 
-**1.5.0'a geçiş:** GitHub Pages manifestini yeni depo olarak ekleyin ve eski Sites kopyasını kapatın. Nuvio Pluginler ekranında depoyu yenileyin/güncelleyin ve sağlayıcı sürümünün **1.5.0** olduğunu kontrol edin. Önceden kaydedilmiş HLS kapalı ayarı değişmez; Dune gibi çevrimiçi alternatifler için sağlayıcı ayarındaki **HLS çevrimiçi izleme alternatiflerini göster** seçeneğini açın. Yenileme yoksa aynı depoyu kaldırıp yeniden eklemek yerel sağlayıcı ayarlarını sıfırlayabilir.
+**1.6.0’a geçiş:** GitHub Pages manifestini yeni depo olarak ekleyin ve eski Sites kopyasını kapatın. Nuvio Pluginler ekranında depoyu yenileyin/güncelleyin ve sağlayıcı üç sağlayıcının sürümünün **1.6.0** olduğunu kontrol edin. Önceden kaydedilmiş HLS kapalı ayarı değişmez; Dune gibi çevrimiçi alternatifler için sağlayıcı ayarındaki **HLS çevrimiçi izleme alternatiflerini göster** seçeneğini açın. Yenileme yoksa aynı depoyu kaldırıp yeniden eklemek yerel sağlayıcı ayarlarını sıfırlayabilir.
 
 Dune (2021) / Spider-Man denemesi, uzun bekleme düzeltmesi ve sonuçların sınırları: [sorun giderme](docs/SORUN_GIDERME.md).
 
@@ -50,9 +60,9 @@ https://burhanb3.github.io/nuvio-tr-hd/manifest.json
 Eklenti adı **Nuvio TR HD**'dir. Bu yayın GitHub'a giriş gerektirmez. Aşağıdaki GitHub Pages seçeneği plugin dosyalarının kendi kopyasını barındırabilir; ortak tarama servisi için ayrıca Worker gerekir. [Servis rehberi](hosting/README.md).
 
 1. [Resmî Nuvio Mobile Releases](https://github.com/NuvioMedia/NuvioMobile/releases) sayfasından plugin destekli **Full** Android APK veya Full iOS paketini kullanın. Play Store/App Store varyantları aynı plugin çalışma ortamını içermez.
-2. Bu deponun `manifest.json` ve `providers/nuvio-tr-hd.js` dosyalarını aynı HTTPS kökü altında barındırın. Kolay seçenek: aşağıdaki GitHub Pages akışı.
+2. Bu deponun `manifest.json` ve `providers/` içindeki üç üretilmiş dosyayı aynı HTTPS kökü altında barındırın. Kolay seçenek: aşağıdaki GitHub Pages akışı.
 3. Nuvio'da **Ayarlar → Content & Discovery → Plugins → Add Repository** yolundan yukarıdaki manifest adresini ekleyin. Kendi kopyanızı barındırıyorsanız kendi HTTPS manifest adresinizi kullanın. Menü adları uygulama diline göre değişebilir.
-4. **Nuvio TR HD** sağlayıcısını etkinleştirin. Otomatik tarama varsayılan açıktır. İsterseniz ek JSON katalog veya Stremio **manifest** adresleri girin; birden fazla adresi boşlukla ayırın. Her türden en çok üç ek adres kullanılır.
+4. **Nuvio TR HD** deposundaki üç sağlayıcıyı etkinleştirin. JSON/Stremio adreslerini Dosyalar ayarına yazın. Otomatik tarama varsayılan açıktır. İsterseniz ek JSON katalog veya Stremio **manifest** adresleri girin; birden fazla adresi boşlukla ayırın. Her türden en çok üç ek adres kullanılır.
 5. TMDB anahtarı alanını boş bırakabilirsiniz; Nuvio'nun sağladığı anahtar kullanılır. Gerekirse kendi TMDB **v3 API anahtarınızı** girin.
 6. Nuvio'nun **Playback / Oynatma → Subtitles / Altyazılar → Preferred subtitle language / Tercih edilen altyazı dili** ayarını **Türkçe** yapın. Daha önce o film için altyazıyı elle kapattıysanız bu manuel tercihi kaldırın. Plugin uygulamanın dil tercihini değiştiremez.
 7. Filmi açın; `01`, `02`… sıralı video–altyazı alternatiflerinden birini seçin. Nuvio Türkçe dil tercihiyle altyazıyı otomatik seçer. İndirmeyi Nuvio'nun kaynak/indirme menüsünden başlatın ve altyazıların da hazırlanması tamamlandıktan sonra çevrimdışı açın. Nuvio aynı kaynak altyazılarını yerel video yanına kaydeder ve `tr` dil kodunu korur. Cihaz davranışı için [kabul testi](docs/UYUMLULUK.md) henüz yapılmalıdır.
@@ -130,7 +140,7 @@ npm run test:live:pipeline
 npm run test:live:bridge
 ```
 
-`npm run build`, modülleri Node bağımlılığı olmayan tek CommonJS sağlayıcısına paketler. `providers/nuvio-tr-hd.js` depoda tutulur; uygulama kaynak modüllerini ayrı ayrı yüklemez. `dist/` her derlemede temizlenen yayın paketidir. Normal testler ağsızdır; `test:live` gerçek servislerde metadata, sınırlı video aralıkları ve altyazı gövdelerini denetler, tam film indirmez. Canlı kontrolün dış servisler yüzünden başarısız olması fixture testinden ayrı raporlanır.
+`npm run build`, modülleri Node bağımlılığı olmayan üç CommonJS sağlayıcısına paketler. `providers/nuvio-tr-hd*.js` dosyaları depoda tutulur; uygulama kaynak modüllerini ayrı ayrı yüklemez. `dist/` her derlemede temizlenen yayın paketidir. Normal testler ağsızdır; `test:live` gerçek servislerde metadata, sınırlı video aralıkları ve altyazı gövdelerini denetler, tam film indirmez. Canlı kontrolün dış servisler yüzünden başarısız olması fixture testinden ayrı raporlanır.
 
 - [Mimari ve katkı rehberi](docs/GELISTIRME.md)
 - [Basit anlatım ve birlikte geliştirme sırası](docs/BASIT_REHBER.md)

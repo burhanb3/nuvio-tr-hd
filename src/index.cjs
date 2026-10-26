@@ -10,6 +10,7 @@ const { scanArchive } = require('./providers/archive.cjs');
 const { scanPlayImdb } = require('./providers/playimdb.cjs');
 const { scanVixDirect } = require('./providers/vixsrc.cjs');
 const { scanHdHub } = require('./providers/hdhub.cjs');
+const { scanAnimecix } = require('./providers/animecix.cjs');
 const { probe } = require('./media/probe.cjs');
 const { loadSubtitles } = require('./subtitles.cjs');
 const { createSubtitleDiscovery, scoreSubtitle } = require('./subtitle-discovery.cjs');
@@ -44,11 +45,12 @@ function formatResults(completed, settings, target) {
     const dimensionText = ` · ${quality.text}`;
     const subScore = subtitles[0]?._score || 0;
     const matchText = subScore >= 90 ? 'eşleşti' : subScore >= 70 ? 'sürüm benzerliği' : subScore >= 65 ? 'süre uyumu' : 'film düzeyi; senkron belirsiz';
-    const subtitleText = subtitles.length ? ` · TR altyazı (${matchText})` : candidate.embeddedTurkish ? ' · TR altyazı (HLS içi)' : ' · TR altyazı bulunamadı';
+    const embedded = candidate.embeddedTurkish || video.embeddedTurkish;
+    const subtitleText = subtitles.length ? ` · TR altyazı (${matchText})` : embedded ? ` · TR altyazı (${video.container === 'hls' ? 'HLS' : 'dosya'} içi)` : ' · TR altyazı bulunamadı';
     const title = `${target.originalTitle} (${target.year}) · ${kind}${dimensionText} · ${size.text}${subtitleText}`;
     const source = String(candidate.source || 'Kaynak').replace('4KHDHub / HubCloud', '4KHDHub').replace('Internet Archive', 'Archive') +
-      (candidate.serverIndex ? ` ${candidate.serverIndex}` : '');
-    const subTag = subtitles.length ? 'TR' : candidate.embeddedTurkish ? 'TR içi' : 'TR yok';
+      (candidate.serverIndex ? ` ${candidate.serverIndex}` : '') + (candidate.source === 'Animecix' && candidate.sourceNote ? ` · ${candidate.sourceNote.slice(0, 40)}` : '');
+    const subTag = subtitles.length ? 'TR' : embedded ? 'TR içi' : candidate.turkishSource ? 'TR kaynak · altyazı doğrulanmadı' : 'TR yok';
     const badge = video.downloadable ? 'İndirilebilir' : 'Online';
     const details = video.dimensions ? `${video.dimensions.width}×${video.dimensions.height}` :
       video.resolutionOptions?.length === 1 ? `${video.resolutionOptions[0].width}×${video.resolutionOptions[0].height}` :
@@ -64,7 +66,7 @@ function formatResults(completed, settings, target) {
   });
 }
 
-function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs = 24000, requestTimeoutMs = 4500, onEvent = () => {}, sourceFactories = [] } = {}) {
+function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs = 24000, requestTimeoutMs = 4500, onEvent = () => {}, sourceFactories = [], lane = 'all' } = {}) {
   let lastReport = null, lastPairs = [];
   return {
     getReport: () => lastReport,
@@ -72,13 +74,17 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs = 24000, r
     async getStreams(tmdbId, mediaType, season, episode) {
       const allowHttp = settings.allowHttp === true;
       const catalogs = parseUrls(settings.catalogUrls, allowHttp), addons = parseUrls(settings.addonUrls, allowHttp);
+      const filesLane = lane === 'all' || lane === 'files', onlineLane = lane === 'all' || lane === 'online', animeLane = lane === 'all' || lane === 'anime';
       if (settings.autoDiscover === false && !catalogs.length && !addons.length) return [];
       const started = Date.now(), scheduler = createScheduler();
-      const report = { tmdbId: String(tmdbId), sources: [], rejected: {}, http: {}, results: 0, reason: 'searching' };
+      const report = { tmdbId: String(tmdbId), lane, sources: [], rejected: {}, http: {}, subtitleText: {}, results: 0, reason: 'searching' };
       const emit = event => {
         if (event.stage === 'http') {
           const key = `${event.host}:${event.status || event.reason}`;
           report.http[key] = (report.http[key] || 0) + 1;
+        }
+        if (event.stage === 'subtitle_text') for (const [key, value] of Object.entries(event)) {
+          if (key !== 'stage' && value === true) report.subtitleText[key] = (report.subtitleText[key] || 0) + 1;
         }
         try { onEvent(event); } catch {}
       };
@@ -107,7 +113,8 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs = 24000, r
         const minimum = Number(settings.minimumQuality ?? 0);
         if (video.dimensions && Math.min(video.dimensions.width, video.dimensions.height) < minimum) { reject('quality'); return; }
         const pair = { candidate, video, subtitles: [] };
-        if (!strictSubtitles || candidate.embeddedTurkish) completed.push(pair);
+        const embedded = candidate.embeddedTurkish || video.embeddedTurkish;
+        if (!strictSubtitles || embedded) completed.push(pair);
         const declared = candidate.subtitles.map(sub => {
           const match = sub && scoreSubtitle(sub, candidate, video, target, settings.subtitleMatchMode !== 'strict');
           return match ? { ...sub, _match: match } : null;
@@ -115,7 +122,7 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs = 24000, r
         if (declared.length) {
           pair.subtitles = await loadSubtitles(http, { ...candidate, subtitles: declared }, target, allowHttp, { keepScore: true, videoDuration: video.duration });
           if (pair.subtitles.length) {
-            if (strictSubtitles && !candidate.embeddedTurkish) completed.push(pair);
+            if (strictSubtitles && !embedded) completed.push(pair);
             return;
           }
         }
@@ -129,17 +136,18 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs = 24000, r
         if (http.expired()) return;
         if (!subtitles.length) { reject(entries.length ? 'subtitle_unavailable' : 'subtitle_no_match'); return; }
         pair.subtitles = subtitles;
-        if (strictSubtitles && !candidate.embeddedTurkish) completed.push(pair);
+        if (strictSubtitles && !embedded) completed.push(pair);
       };
       const run = async () => {
         try {
           target = await resolveIdentity(http, tmdbId, mediaType, season, episode, settings.tmdbApiKey || tmdbKey);
           if (!target) { report.reason = 'identity_unavailable'; return []; }
+          if (lane === 'anime' && !target.isAnime) { report.reason = 'not_anime'; return []; }
           discoverSubtitles = createSubtitleDiscovery(http, target, settings);
-          if (settings.autoDiscover !== false && settings.useDownloadBridge !== false && settings.hlsView !== 'auto')
+          if (onlineLane && settings.autoDiscover !== false && settings.useDownloadBridge !== false && settings.hlsView !== 'auto')
             void http.json(SERVICE_ORIGIN + '/api/health', { timeoutMs: 1500 }).then(data => { profileBridgeReady = data?.features?.hlsProfiles === true; });
           let hosted = null;
-          if (settings.autoDiscover !== false && settings.hostedDiscovery === true) {
+          if (lane === 'all' && settings.autoDiscover !== false && settings.hostedDiscovery === true) {
             hosted = await loadHosted(http, target);
             if (hosted && !hosted.length) hosted = null;
             if (hosted) {
@@ -157,17 +165,29 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs = 24000, r
               report.sources.push({ name: 'Ortak tarama', candidates: hosted.length });
             }
           }
-          const sourceJobs = [...catalogs.map(url => ({ name: 'JSON', run: () => loadCatalog(http, url, target, allowHttp) })),
-            ...addons.map(url => ({ name: 'Stremio', run: () => loadAddon(http, url, target, allowHttp) }))];
+          const pending = [], streamed = new Set();
+          const acceptHdHub = async candidates => {
+            const ready = settings.useDownloadBridge !== false ? await registerDownloads(http, candidates, target) : candidates;
+            for (const candidate of ready) {
+              const key = candidate.url + JSON.stringify(Object.entries(candidate.headers).sort());
+              if (streamed.has(key)) continue;
+              streamed.add(key);
+              void discoverSubtitles.prefetch();
+              pending.push(processCandidate(candidate).catch(() => reject('candidate_error')));
+            }
+          };
+          const sourceJobs = filesLane ? [...catalogs.map(url => ({ name: 'JSON', run: () => loadCatalog(http, url, target, allowHttp) })),
+            ...addons.map(url => ({ name: 'Stremio', run: () => loadAddon(http, url, target, allowHttp) }))] : [];
           if (settings.autoDiscover !== false && hosted === null) {
-            if (settings.directoryEnabled === true) sourceJobs.push({ name: 'DahmerMovies', run: () => scanDirectory(http, target, settings) });
-            if (settings.archiveEnabled !== false) sourceJobs.push({ name: 'Internet Archive', run: () => scanArchive(http, target) });
-            if (settings.playImdbEnabled !== false) sourceJobs.push({ name: 'PlayIMDb', run: () => scanPlayImdb(http, target) });
-            if (settings.vixsrcEnabled !== false && settings.includeHls !== false && !sourceFactories.some(s => s.name === 'VixSrc'))
+            if (filesLane && settings.directoryEnabled === true) sourceJobs.push({ name: 'DahmerMovies', run: () => scanDirectory(http, target, settings) });
+            if (filesLane && settings.archiveEnabled !== false) sourceJobs.push({ name: 'Internet Archive', run: () => scanArchive(http, target) });
+            if (onlineLane && settings.playImdbEnabled !== false) sourceJobs.push({ name: 'PlayIMDb', run: () => scanPlayImdb(http, target) });
+            if (onlineLane && settings.vixsrcEnabled !== false && settings.includeHls !== false && !sourceFactories.some(s => s.name === 'VixSrc'))
               sourceJobs.push({ name: 'VixSrc', run: () => scanVixDirect(http, target) });
-            if (settings.hdhubEnabled !== false && !sourceFactories.some(s => s.name === '4KHDHub / HubCloud')) sourceJobs.push({ name: '4KHDHub / HubCloud', run: async () => {
-              const candidates = await scanHdHub(http, target, { allowExtensionless: settings.useDownloadBridge !== false });
-              return settings.useDownloadBridge !== false ? registerDownloads(http, candidates, target) : candidates;
+            if (animeLane && settings.animecixEnabled !== false && target.isAnime) sourceJobs.push({ name: 'Animecix', run: () => scanAnimecix(http, target) });
+            if (filesLane && settings.hdhubEnabled !== false && !sourceFactories.some(s => s.name === '4KHDHub / HubCloud')) sourceJobs.push({ name: '4KHDHub / HubCloud', run: async () => {
+              return scanHdHub(http, target, { allowExtensionless: settings.useDownloadBridge !== false, onCandidates: acceptHdHub,
+                verifiedCount: () => completed.filter(pair => pair.candidate.source === '4KHDHub / HubCloud').length });
             } });
           }
           for (const source of sourceFactories) sourceJobs.push({ name: source.name, run: () => source.run(http, target) });
@@ -178,11 +198,13 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs = 24000, r
             report.sources.push({ name: job.name, candidates: candidates.length });
             emit({ stage: 'source', source: job.name, candidates: candidates.length });
             if (!candidates.length || http.expired()) return;
+            if (job.name === '4KHDHub / HubCloud' && !sourceFactories.some(s => s.name === job.name)) return;
             // Warm the shared title lookup while media probes run. It is not
             // started for wholly empty searches, and never blocks other sources.
             void discoverSubtitles.prefetch();
             await mapLimit(candidates.slice(0, quota), 3, processCandidate);
           });
+          await Promise.all(pending);
           return formatResults(completed, renderSettings(), target);
         } catch { report.reason = 'internal_error'; return target ? formatResults(completed, renderSettings(), target) : []; }
       };
@@ -226,6 +248,7 @@ function onSettings() {
     { type: 'toggle', key: 'directoryEnabled', label: 'DahmerMovies dizin taraması (deneysel yerel yedek)', defaultValue: false, description: 'Dosya CDN’i sık 403/429 döndürdüğünden varsayılan kapalıdır.' },
     { type: 'toggle', key: 'archiveEnabled', label: 'Internet Archive film araması', defaultValue: true },
     { type: 'toggle', key: 'playImdbEnabled', label: 'PlayIMDb API araması', defaultValue: true, description: 'Bazı sonuçlar HLS olabilir; dosya indirmesi olarak gösterilmez.' },
+    { type: 'toggle', key: 'animecixEnabled', label: 'Animecix anime MP4 araması', defaultValue: true, description: 'TMDB kimliği, özgün başlık, yıl ve tam sezon/bölüm doğrulanır. TR kaynak bilgisi tek başına altyazı kanıtı değildir.' },
     { type: 'toggle', key: 'autoSubtitles', label: 'Türkçe altyazıyı otomatik ara', defaultValue: true },
     { type: 'select', key: 'subtitlePolicy', label: 'Türkçe altyazı bulunamazsa', defaultValue: 'prefer', options: [
       { value: 'prefer', label: 'Videoyu göster; TR yok bilgisini yaz' }, { value: 'require', label: 'Videoyu gizle' }] },
@@ -251,4 +274,18 @@ async function getStreams(tmdbId, mediaType, season, episode) {
   const tmdbKey = typeof globalThis.TMDB_API_KEY === 'string' ? globalThis.TMDB_API_KEY : '';
   return createProvider({ settings, tmdbKey }).getStreams(tmdbId, mediaType, season, episode);
 }
-module.exports = { getStreams, onSettings, createProvider, formatResults };
+function createEntry(lane) {
+  const titles = { files: 'Dosyalar', online: 'Hızlı kaynaklar', anime: 'Anime' };
+  const only = { files: ['hdhubEnabled','directoryEnabled','archiveEnabled','catalogUrls','addonUrls'], online: ['playImdbEnabled','vixsrcEnabled','hlsView'], anime: ['animecixEnabled'] };
+  const sourceFields = Object.values(only).flat();
+  return {
+    async getStreams(...args) {
+      const settings = typeof globalThis.SCRAPER_SETTINGS === 'object' && globalThis.SCRAPER_SETTINGS || {};
+      const tmdbKey = typeof globalThis.TMDB_API_KEY === 'string' ? globalThis.TMDB_API_KEY : '';
+      return createProvider({ settings, tmdbKey, lane, budgetMs: lane === 'online' ? 16000 : lane === 'anime' ? 20000 : 28000 }).getStreams(...args);
+    },
+    onSettings: () => [{ type: 'info', label: `Bu ayarlar yalnız ${titles[lane]} taramasına aittir. Üç tarama bağımsız tamamlanır; hazır sonuçlar diğer taramaları beklemeden görünür. En fazla kaynak sınırı bu tarama içindir.` },
+      ...onSettings().filter(field => !sourceFields.includes(field.key) || only[lane].includes(field.key))]
+  };
+}
+module.exports = { getStreams, onSettings, createProvider, formatResults, createEntry };

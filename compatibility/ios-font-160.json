@@ -1,0 +1,60 @@
+{
+  "checkedAt": "2026-10-26T09:17:25.897Z",
+  "source": "https://raw.githubusercontent.com/NuvioMedia/NuvioMobile/0.6.4-beta/iosApp/iosApp/Resources/Fonts/NotoSansCJKsc-Regular.otf",
+  "rangeOnly": true,
+  "bytes": 240929,
+  "table": {
+    "offset": 2628,
+    "length": 236833
+  },
+  "turkish": {
+    "ş": {
+      "codepoint": "15f",
+      "glyph": 0
+    },
+    "Ş": {
+      "codepoint": "15e",
+      "glyph": 0
+    },
+    "ğ": {
+      "codepoint": "11f",
+      "glyph": 0
+    },
+    "Ğ": {
+      "codepoint": "11e",
+      "glyph": 0
+    },
+    "ı": {
+      "codepoint": "131",
+      "glyph": 0
+    },
+    "İ": {
+      "codepoint": "130",
+      "glyph": 0
+    },
+    "ç": {
+      "codepoint": "e7",
+      "glyph": 165
+    },
+    "Ç": {
+      "codepoint": "c7",
+      "glyph": 133
+    },
+    "ö": {
+      "codepoint": "f6",
+      "glyph": 180
+    },
+    "Ö": {
+      "codepoint": "d6",
+      "glyph": 148
+    },
+    "ü": {
+      "codepoint": "fc",
+      "glyph": 186
+    },
+    "Ü": {
+      "codepoint": "dc",
+      "glyph": 154
+    }
+  }
+}

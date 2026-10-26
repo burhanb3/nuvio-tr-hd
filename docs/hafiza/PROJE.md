@@ -1,5 +1,19 @@
 # Proje hafızası
 
+## 1.6.0 çalışma durumu — 26 Ekim 2026
+
+Üç bağımsız scraper hazır: eski nuvio-tr-hd kimliği Dosyalar, yeni nuvio-tr-hd-online Hızlı kaynaklar ve nuvio-tr-hd-anime Anime. Native StreamsRepository her scraper tamamlandığında ekler (release/current SHA aynı); bir çağrıda per-stream callback yok. Mantıksal bütçeler 28/16/20 sn; native iPhone drain garantisi yok. Ayarlar/20 sonuç sınırı scraper başına; eski kişisel JSON/Stremio ayarları Dosyalar’da korunur. Global sıralama native gruplara bağlıdır.
+
+Animecix/Tau doğru TMDB ID+özgün ad+yıl ve exact title/season/episode ile çalışır; ilk sonuç/fuzzy/mutlak bölüm fallback yok. TMDB görünen başlığı arama yardımıdır. API boyut/kalitesi kanıt sayılmaz. Canlı Death Note 4 MP4 (90–229 MiB; 480/720) +4 TR; AoT 9 MP4 (165–569 MiB; 480/720/1080)+3 TR. Süre benzerliği gerçek senkron değildir; TR kaynak hard-sub kanıtı değildir.
+
+HDHub erken çözümleme→probe kuyruğu, max12 release, poster/kimlik kuralları korunur. MKV’de gerçek TR subtitle track (type17, tur/tr/IETF, desteklenen codec) algılanır; sıkı TR’de kalır. Altyazı gövdesi bir kez decode edilir, hash sorguları ilk3 farklı istekle sınırlıdır. Karakter tanısı yalnız sayaç; URL/metin loglanmaz.
+
+iOS 0.6.4-beta ve güncel MPVPlayerBridge varsayılan sub-font Noto Sans CJK SC. Gerçek bundled OTF cmap tablosu 240.929 byte range ile okundu: ş/Ş/ğ/Ğ/ı/İ glifleri0 (eksik), ç/ö/ü ve büyükleri mevcut. compatibility/ios-font-160.json kanıtı; npm run verify:ios-font yeniden inceler. Bu somut uygulama/font bulgusudur; kullanıcı cihazının kurulu sürümü/görseli doğrulanmadı. Plugin ABI font ailesi/inline body vermez. Bu sürüm font sorunu düzeldi diye sunulamaz. Kodlama/inline-font/combining sayaçları ayırt etmeye yardım eder.
+
+26 Ekim canlı: Spider-Man ilk online4,2s, dosyalar14,1s; 665,6/835,3 MiB MP4 ve2,64GiB MKV+TR. Dune online4,6s/TR, GOT online3,5s/TR; ikisinde bu kontrolde dosya aynaları ağ hatası. Önceki1.5 büyük dosya başarısı bugünün erişim garantisi değildir. MoviesMod sayfasında1,3GB listelenen Dune public zinciri Google MKV’ye ulaştı; URL uzantısız+Range200, üretime alınmadı. MoviesDrive IMDb benzer ama yanlış kimlikler verdi, eklenmedi.
+
+Ücretsiz/hesapsız, sa deposuna yazmama, Sites eski kimliğini yeniden oluşturmama sınırları sürer. Mevcut köprü1.4 değişmedi; yeni HLS profile servisi yayımlanmadı. Yeni docs/ANIME_HIZ_VE_ALTYAZI.md. Yerel npm run check 100/100; gerçek QuickJS’te üç paket ve upstream20 dosya geçti. GitHub yayın kanıtı tamamlanınca durum güncellenecek. Fiziksel iPhone/tam oynatma/indirme/senkron yok.
+
 ## Güncel yönlendirme — 1.5.0, 25 Ekim 2026
 
 **1.5.0 GitHub yayını tamamlandı:** 62bf0b31ae1a767cd63b442c3bbde113a4601dfb kod commit'i. Test ve paket 40229105237 (Windows/Linux) ve Pages 40229105202 başarılı; yerel check 92/92, güncel upstream drift yok. Manifest/provider/sayfa HTTP 200 ve yerel SHA eşitliği compatibility/github-publication.json ile doğrulanır. Ayrı Sites servisinin yeni kodu yayımlanmadı; mevcut köprü 1.4.0, aşağıdaki capability gate sınırı geçerli.

@@ -1,0 +1,253 @@
+{
+  "checkedAt": "2026-10-26T08:49:21.613Z",
+  "version": "1.6.0",
+  "film": "death-note",
+  "metadata": "fixed known TMDB reference; upstream source/subtitle requests are live",
+  "elapsedMs": 5632,
+  "firstResultsMs": 5630,
+  "bytesRead": 997339,
+  "settings": "Production lanes in parallel; online16s/files28s/anime20s logical budgets; all resolutions; prefer TR; balanced; HLS; up to20 per lane; public bridge enabled",
+  "lanes": [
+    {
+      "lane": "anime",
+      "elapsedMs": 5630,
+      "diagnostic": {
+        "tmdbId": "13916",
+        "lane": "anime",
+        "sources": [
+          {
+            "name": "Animecix",
+            "candidates": 4
+          }
+        ],
+        "rejected": {},
+        "http": {
+          "api.themoviedb.org:200": 1,
+          "animecix.tv:200": 2,
+          "tau-video.xyz:200": 2,
+          "opensubtitles-v3.strem.io:200": 1,
+          "alfreda-1.cfd:200": 1,
+          "alice-4.cfd:200": 1,
+          "voxen-2.asia:200": 1,
+          "altyazidb.online:200": 5,
+          "opensubtitles.stremio.homes:200": 3,
+          "alfreda-1.cfd:206": 2,
+          "alice-4.cfd:206": 2,
+          "voxen-2.asia:206": 2,
+          "opensubtitles.stremio.homes:429": 1,
+          "opensubtitles.stremio.homes:timeout_or_network": 3,
+          "valenx-2.asia:200": 1,
+          "valenx-2.asia:206": 2
+        },
+        "results": 4,
+        "reason": "ok",
+        "elapsedMs": 5630
+      },
+      "streams": [
+        {
+          "name": "01 · İndirilebilir · Animecix · anisekai.com",
+          "quality": "852×480 ✓",
+          "type": "mp4",
+          "size": "90.3 MiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 03 · DEATH NOTE.2006.S01E01 • Paket • 1080p • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 04 · DEATH NOTE.2006.S01E01 • KR-ÇT • Paket • [TSR] • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 05 · DEATH NOTE.2006.S01E01 • KR-ÇT • Paket • EasyMOOVEE • 25 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 06 · DEATH NOTE.2006.S01E01 • KR-ÇT • Paket • All ENG subbed • 30 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "02 · İndirilebilir · Animecix · Net-rip",
+          "quality": "852×480 ✓",
+          "type": "mp4",
+          "size": "103.2 MiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 01 · DEATH NOTE.2006.S01E01 • Paket • 1080p • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 02 · DEATH NOTE.2006.S01E01 • KR-ÇT • Paket • [TSR] • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 03 · DEATH NOTE.2006.S01E01 • KR-ÇT • Paket • EasyMOOVEE • 25 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 04 · DEATH NOTE.2006.S01E01 • KR-ÇT • Paket • All ENG subbed • 30 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "03 · İndirilebilir · Animecix · anisekai.com",
+          "quality": "1280×720 ✓",
+          "type": "mp4",
+          "size": "171.4 MiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 01 · DEATH NOTE.2006.S01E01 • Paket • 1080p • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 02 · DEATH NOTE.2006.S01E01 • KR-ÇT • Paket • [TSR] • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 03 · DEATH NOTE.2006.S01E01 • KR-ÇT • Paket • EasyMOOVEE • 25 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 04 · DEATH NOTE.2006.S01E01 • KR-ÇT • Paket • All ENG subbed • 30 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            }
+          ]
+        },
+        {
+          "name": "04 · İndirilebilir · Animecix · Net-rip",
+          "quality": "1280×720 ✓",
+          "type": "mp4",
+          "size": "229.2 MiB",
+          "language": "TR · senkron belirsiz",
+          "subtitles": [
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 03 · DEATH NOTE.2006.S01E01 • Paket • 1080p • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 04 · DEATH NOTE.2006.S01E01 • KR-ÇT • Paket • [TSR] • 23.976 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 05 · DEATH NOTE.2006.S01E01 • KR-ÇT • Paket • EasyMOOVEE • 25 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            },
+            {
+              "name": "Türkçe · SRT · AltyazıDB · 06 · DEATH NOTE.2006.S01E01 • KR-ÇT • Paket • All ENG subbed • 30 · Süre uyumu; senkron doğrulanmadı",
+              "language": "tr"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "streams": [
+    {
+      "name": "01 · İndirilebilir · Animecix · anisekai.com",
+      "quality": "852×480 ✓",
+      "type": "mp4",
+      "size": "90.3 MiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 03 · DEATH NOTE.2006.S01E01 • Paket • 1080p • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 04 · DEATH NOTE.2006.S01E01 • KR-ÇT • Paket • [TSR] • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 05 · DEATH NOTE.2006.S01E01 • KR-ÇT • Paket • EasyMOOVEE • 25 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 06 · DEATH NOTE.2006.S01E01 • KR-ÇT • Paket • All ENG subbed • 30 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "02 · İndirilebilir · Animecix · Net-rip",
+      "quality": "852×480 ✓",
+      "type": "mp4",
+      "size": "103.2 MiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 01 · DEATH NOTE.2006.S01E01 • Paket • 1080p • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 02 · DEATH NOTE.2006.S01E01 • KR-ÇT • Paket • [TSR] • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 03 · DEATH NOTE.2006.S01E01 • KR-ÇT • Paket • EasyMOOVEE • 25 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 04 · DEATH NOTE.2006.S01E01 • KR-ÇT • Paket • All ENG subbed • 30 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "03 · İndirilebilir · Animecix · anisekai.com",
+      "quality": "1280×720 ✓",
+      "type": "mp4",
+      "size": "171.4 MiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 01 · DEATH NOTE.2006.S01E01 • Paket • 1080p • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 02 · DEATH NOTE.2006.S01E01 • KR-ÇT • Paket • [TSR] • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 03 · DEATH NOTE.2006.S01E01 • KR-ÇT • Paket • EasyMOOVEE • 25 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 04 · DEATH NOTE.2006.S01E01 • KR-ÇT • Paket • All ENG subbed • 30 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        }
+      ]
+    },
+    {
+      "name": "04 · İndirilebilir · Animecix · Net-rip",
+      "quality": "1280×720 ✓",
+      "type": "mp4",
+      "size": "229.2 MiB",
+      "language": "TR · senkron belirsiz",
+      "subtitles": [
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 03 · DEATH NOTE.2006.S01E01 • Paket • 1080p • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 04 · DEATH NOTE.2006.S01E01 • KR-ÇT • Paket • [TSR] • 23.976 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 05 · DEATH NOTE.2006.S01E01 • KR-ÇT • Paket • EasyMOOVEE • 25 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        },
+        {
+          "name": "Türkçe · SRT · AltyazıDB · 06 · DEATH NOTE.2006.S01E01 • KR-ÇT • Paket • All ENG subbed • 30 · Süre uyumu; senkron doğrulanmadı",
+          "language": "tr"
+        }
+      ]
+    }
+  ],
+  "deviceTest": "not-run"
+}

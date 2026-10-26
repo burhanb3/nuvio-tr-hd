@@ -1,0 +1,32 @@
+{
+  "checkedAt": "2026-10-26",
+  "version": "1.6.0",
+  "repository": "NuvioMedia/NuvioMobile",
+  "release": "0.6.4-beta",
+  "head": "56ae37081afaff820b6073da84e711320238de36",
+  "incremental": {
+    "path": "composeApp/src/commonMain/kotlin/com/nuvio/app/features/streams/StreamsRepository.kt",
+    "releaseSha": "58fd52c0006c9766778400be22ae9216ab1d91fd",
+    "headSha": "58fd52c0006c9766778400be22ae9216ab1d91fd",
+    "verified": "each PluginScraper completion merges group.streams + completion.streams; other scrapers may remain loading",
+    "limitation": "one getStreams call returns one array; no per-stream append callback"
+  },
+  "font": {
+    "path": "iosApp/iosApp/Player/MPVPlayerBridge.swift",
+    "releaseSha": "9d3469fc1a42fdde42c32e7ffa5802a0e98fec12",
+    "headSha": "7fce2594115ae51b1dca34fffb5849c8d27b32ff",
+    "verified": "both revisions set sub-font to Noto Sans CJK SC; plugin model has no font-family field",
+    "diagnosis": "glyph fallback is a source-supported hypothesis, not confirmed on the user's device",
+    "fixed": false
+  },
+  "settings": {
+    "storage": "per scraper ID; old nuvio-tr-hd preserved for files; new lanes start with defaults",
+    "maximumResults": "20 per lane; no plugin control over global native group ordering"
+  },
+  "deviceTests": {
+    "ios": "not-run",
+    "fullPlayback": "not-run",
+    "fullDownload": "not-run",
+    "subtitleAudioSync": "not-run"
+  }
+}
