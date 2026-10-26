@@ -1,5 +1,14 @@
 # Değişiklik günlüğü
 
+## 1.7.1 — 2026-10-26
+
+- Dosya kontrolünde ayrı HEAD kaldırıldı; Range GET gerçek format/boyut/piksel kontrolü sürer. Native bitmemiş dosya fetch kotası3; altyazı kotası ayrı4.
+- Kaynak dosya adı MP4 ise uzantısız aday opsiyonel MKV köprüsünü beklemez; gerçek MKV/HTML/HLS reddi sürer.
+- Genel indirme sağlayıcısı araştırma raporu: bu tur yeni çalışan sağlayıcı doğrulanmadı. Hesap, yardımcı servis, anahtar kopyalama veya yeni manuel video pini yok.
+- Mevcut Nuvio iOS VLC/font seçimi rehberi; dahili Nuvio fontu değişmedi, telefon/offline aktarım testi yok.
+- 156 test/gerçek QuickJS; upstream20kilitli dosya kontrolü; sınırlı canlı dosya/altyazı kontrolleri ayrı kanıtlanır.
+
+
 ## 1.7.0 — 2026-10-26
 
 - DiziYou/DiziBak/FilmModu/SonAnime genel kaynak taramaları; kanonik anime ad karşılıkları ve genel Archive TV dosya araması. Yeni manuel video pini veya yardımcı sunucu yok.

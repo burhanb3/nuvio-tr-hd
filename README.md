@@ -1,10 +1,18 @@
 # Nuvio TR HD
 
-Nuvio Mobile'ın Kotlin Multiplatform **Full** sürümü için JavaScript sağlayıcı deposu. Film/bölüm seçildiğinde birden çok gerçek kaynağı otomatik tarar, MP4/MKV bağlantılarını doğrular ve her video için mevcut Türkçe altyazıları arayıp eşleştirir. Seçilen boyut/kalite/uygunluk sırasıyla sunar. Her taramada varsayılan üst sınır **20**, çözünürlük filtresi **Tümü**. İstenirse 6/10 seçilebilir. Sürüm **1.7.0**.
+Nuvio Mobile'ın Kotlin Multiplatform **Full** sürümü için JavaScript sağlayıcı deposu. Film/bölüm seçildiğinde birden çok gerçek kaynağı otomatik tarar, MP4/MKV bağlantılarını doğrular ve her video için mevcut Türkçe altyazıları arayıp eşleştirir. Seçilen boyut/kalite/uygunluk sırasıyla sunar. Her taramada varsayılan üst sınır **20**, çözünürlük filtresi **Tümü**. İstenirse 6/10 seçilebilir. Sürüm **1.7.1**.
 
 **26 Ekim 2026 uyumluluk kontrolü:** `0.6.4-beta` ve güncel `cmp-rewrite` dalının ilgili kaynak sözleşmeleri karşılaştırıldı. Derlenmiş sağlayıcı gerçek QuickJS WASM motorunda test edilir. Fiziksel Android/iOS cihazında oynatma ve indirme testi henüz yapılmadı. Ayrıntılar: [uyumluluk raporu](docs/UYUMLULUK.md).
 
 Bu depo medya barındırmaz. SonAnime, DiziYou, DiziBak, FilmModu, Animecix/Tau, 4KHDHub/HubCloud, VixSrc, Internet Archive ve PlayIMDb yerleşiktir; DahmerMovies deneysel yerel yedektir ve varsayılan kapalıdır. JSON/Stremio adresi girmek zorunlu değildir. Kişisel JSON ve Stremio kaynakları ek alternatif olarak korunmuştur. Her film için erişilebilir HD dosya veya uygun Türkçe altyazı bulunması garanti değildir; başarısız/engelli kaynaklar atlanır.
+
+## 1.7.1: indirme kontrolü ve iPhone font alternatifi
+
+Gereksiz dosya HEAD isteği kaldırıldı; gerçek Range GET/format/boyut/piksel kontrolü korunur. Bitmemiş temel dosya fetch işleri üçle sınırlıdır; native iOS iptal sınırı hâlâ vardır. Kaynağın MP4 dediği uzantısız dosya, gerçek MP4 probuna doğrudan girebilir; isteğe bağlı MKV köprüsünü beklemez. Gerçek MKV/HTML/HLS MP4 diye sunulmaz.
+
+**Bu turda yeni çalışan indirme sağlayıcısı doğrulanmadı.** Araştırılan bazı kataloglar hesap istiyor, yalnız embed/HLS veriyor veya yanlış film/kayıp dosya döndürüyor. Bunlar kaynak artışı sayılmadı. [Ayrıntılı araştırma ve sonraki yöntem](docs/INDIRME_ARASTIRMASI_171.md).
+
+Uygulama kodunu değiştirmeden Türkçe font için mevcut iOS harici oynatıcı/VLC seçeneği kullanılabilir; VLC font seçimi sunar. Kaynakta video+ilk altyazı aktarımı vardır, fiziksel iPhone/offline aktarım sınanmadı. Nuvio’nun dahili fontu eklentiyle değişmez. [Kurulum ve sınırlar](docs/IPHONE_TURKCE_FONT.md). 156 test/QuickJS; fiziksel cihaz/tam film/indirme/senkron yok.
 
 ## 1.7.0: genel kaynaklar, ses kodları ve altyazı seçimi
 

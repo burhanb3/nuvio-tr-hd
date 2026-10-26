@@ -93,7 +93,7 @@ async function resolveRelease(http, entry, target, allowExtensionless) {
     if (!r2 && !publicFile) return null;
     // Raw R2 object keys often lack .mkv. A published bridge must supply the
     // filename-preserving alias; direct fallback cannot promise native naming.
-    if (!allowExtensionless && !/\.(?:mkv|mp4)(?:$|[?#])/i.test(url)) return null;
+    if (!allowExtensionless && !/\.(?:mkv|mp4)(?:$|[?#])/i.test(url) && !/\.mp4$/i.test(filename)) return null;
     return { url, filename, headers: { Referer: 'https://gamerxyt.com/' }, subtitles: [],
       ...(publicFile ? { getOnly: true } : {}),
       subtitleBase: result.url, source: '4KHDHub / HubCloud', identity: target, identityConfidence: 95 };

@@ -10,7 +10,7 @@
   </style>
 </head>
 <body><main>
-  <div class="eyebrow">KİŞİSEL JAVASCRIPT SAĞLAYICISI · V1.7.0</div>
+  <div class="eyebrow">KİŞİSEL JAVASCRIPT SAĞLAYICISI · V1.7.1</div>
   <h1>Nuvio TR HD</h1>
   <p>Film, dizi veya anime seç. Online izleme seçeneklerini ve doğrulanmış MP4/MKV dosyalarını mevcut Türkçe altyazılarla birlikte gör.</p>
   <section class="panel" aria-label="Kurulum bağlantısı">
@@ -20,7 +20,7 @@
     <p id="status" class="status" role="status" aria-live="polite"></p>
   </section>
   <h2>Eski adresten geçiyorsan</h2>
-  <p>Yukarıdaki <strong>GitHub Pages manifestini</strong> yeni depo olarak ekle. Aynı adlı eski sağlayıcıyı kapat; iki kopya birlikte çalışırsa aynı kaynaklar tekrar listelenebilir. Sağlayıcı sürümü <strong>1.7.0</strong> olmalı.</p>
+  <p>Yukarıdaki <strong>GitHub Pages manifestini</strong> yeni depo olarak ekle. Aynı adlı eski sağlayıcıyı kapat; iki kopya birlikte çalışırsa aynı kaynaklar tekrar listelenebilir. Sağlayıcı sürümü <strong>1.7.1</strong> olmalı.</p>
   <ol>
     <li>Plugin destekli <strong>Nuvio Full</strong> kullan ve depodaki <strong>Nuvio TR HD ve Anime</strong> taramalarını etkinleştir.</li>
     <li>Sağlayıcı ayarları: <strong>çözünürlük Tümü · en fazla 20 alternatif · HLS açık</strong>. Önceden kaydedilmiş 6/10 veya 720p tercihini gerekiyorsa değiştir.</li>
@@ -29,7 +29,7 @@
   </ol>
   <h2>Hangi seçenek indirilebilir?</h2>
   <p><strong>Online izlenebilir · İndirilebilir</strong> etiketi gerçek MP4/MKV dosyalarında görünür. <strong>Online izlenebilir · İndirilemez</strong> etiketi HLS içindir. HLS, MP4/MKV dosyası olarak sunulmaz. Dosya adındaki kalite gerçek çözünürlük sayılmaz; okunabilen piksel boyutları ayrıca yazılır.</p>
-  <h2>1.7.0 ile değişenler</h2><p><strong>Genel kaynak taraması genişledi:</strong> DiziYou ve DiziBak dizi, FilmModu film, SonAnime anime alternatifi. Anime adlarının kanonik farklı dil karşılıkları tanınır; Archive tam bölüm dosyalarını genel olarak arar. Mevcut kaynaklar korunur.</p><p><strong>Kısa dil kodları:</strong> EN/TR/JA gibi kodlar ses dilidir. ? kaynak iddiası demektir. ES görüntüde, sabit İspanyolca altyazıdır. Önerilen sıralamada özgün/TR/EN tercih edilebilir; küçükten büyüğe sıralama korunur.</p><p><strong>Altyazı ve doğruluk:</strong> Yılsız tam dizi sürümleri daha iyi eşleşir, bozuk Türkçe kodlamalar elenir. Aynı dosya aynaları tekilleşir; aynı URL için çelişen HLS kaliteleri Auto kalır.</p><p class="note">Yeni film/dizi alternatiflerinin çoğu online HLS’dir; MP4 indirme sayılmaz. Her yapımda her kalitede indirme henüz sağlanmadı. Yeni yardımcı sunucu kurulmadı. iPhone font sorunu uygulama tarafında düzeltme gerektirir; fiziksel tam indirme/çevrimdışı/senkron testi yapılmadı. <a href="https://github.com/burhanb3/nuvio-tr-hd/blob/codex/publish-nuvio-tr-hd/docs/KAYNAK_GENISLETME_170.md">Yapılanlar ve sınırlar</a></p>
+  <h2>1.7.1 ile değişenler</h2><p><strong>Dosya kontrolü:</strong> Gereksiz HEAD isteği kaldırıldı; gerçek boyut/piksel yine sınırlı Range GET ile ölçülür. Bitmemiş temel dosya fetch sayısı üçle sınırlıdır; iPhone iptal sınırı devam eder.</p><p><strong>Köprüsüz MP4:</strong> Kaynağın MP4 dediği uzantısız aday doğrudan gerçek konteyner kontrolüne girebilir. MKV/HLS/HTML MP4 diye sunulmaz. Mevcut kaynaklar ve ayarlar korunur.</p><p><strong>Türkçe font:</strong> Uygulama kodunu değiştirmeden mevcut harici oynatıcı/VLC yolu kullanılabilir. VLC’de font seçimi vardır; Nuvio’nun kendi fontu eklentiyle değişmez. Altyazı aktarımı ve offline açılış telefonda henüz sınanmadı.</p><p class="note">Bu turda yeni çalışan indirme sağlayıcısı doğrulanmadı. Yeni araştırmalarda login isteyen, bozuk veya yanlış film döndüren kaynaklar eklenmedi. Genel MP4/MKV kapsamı hâlâ eksik; her yapım/her kalite hedefi tamamlanmadı. <a href="https://github.com/burhanb3/nuvio-tr-hd/blob/codex/publish-nuvio-tr-hd/docs/INDIRME_ARASTIRMASI_171.md">Araştırma ve gerçek değişiklikler</a> · <a href="https://github.com/burhanb3/nuvio-tr-hd/blob/codex/publish-nuvio-tr-hd/docs/IPHONE_TURKCE_FONT.md">VLC ve Türkçe font</a></p>
   <footer>Medya barındırılmaz. GitHub Pages yalnız kurulum sayfası, manifest ve sağlayıcı kodunu sunar. MIT lisansı.</footer>
 </main><script>
   const input=document.querySelector('#manifest');input.value=new URL('manifest.json',location.href).href;

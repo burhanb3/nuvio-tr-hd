@@ -1,6 +1,6 @@
 {
   "name": "nuvio-tr-hd",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "private": true,
   "description": "Nuvio KMP için kişisel MP4/MKV ve Türkçe altyazı sağlayıcısı",
   "license": "MIT",

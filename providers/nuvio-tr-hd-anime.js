@@ -145,16 +145,17 @@ var require_http = __commonJS({
       const controllers = /* @__PURE__ */ new Set();
       let closed = false;
       const expired = () => closed || Date.now() >= deadline;
-      const subtitleNetwork = { active: 0, waiting: [] };
+      const networkPools = { "subtitle-body": { limit: 4, active: 0, waiting: [] }, "media-probe": { limit: 3, active: 0, waiting: [] } };
       async function fetchNetwork(url, options, group, end) {
-        if (group !== "subtitle-body") return fetcher(url, options);
-        if (subtitleNetwork.active >= 4) await new Promise((resolve) => subtitleNetwork.waiting.push(resolve));
-        else subtitleNetwork.active++;
+        const pool = networkPools[group];
+        if (!pool) return fetcher(url, options);
+        if (pool.active >= pool.limit) await new Promise((resolve) => pool.waiting.push(resolve));
+        else pool.active++;
         try {
           return expired() || Date.now() >= end ? null : await fetcher(url, options);
         } finally {
-          if (subtitleNetwork.waiting.length) subtitleNetwork.waiting.shift()();
-          else subtitleNetwork.active--;
+          if (pool.waiting.length) pool.waiting.shift()();
+          else pool.active--;
         }
       }
       const emit = (event) => {
@@ -252,7 +253,7 @@ var require_http = __commonJS({
       async function bytes(url, headers, start = 0, end = 131071) {
         const limit = end - start + 1;
         if (limit <= 0 || limit > 262144) return null;
-        const result = await request(url, { headers: { ...headers, Range: `bytes=${start}-${end}` } });
+        const result = await request(url, { headers: { ...headers, Range: `bytes=${start}-${end}` }, nativeGroup: "media-probe" });
         if (!result) return null;
         const response = result.response;
         const mime = (response.headers.get("content-type") || "").split(";")[0].toLowerCase().trim();
@@ -435,7 +436,7 @@ var require_hosted = __commonJS({
       }).filter(Boolean);
     }
     async function registerDownloads(http, candidates, target) {
-      const direct = candidates.filter((c) => /\.(mkv|mp4)(?:$|[?#])/i.test(c.url));
+      const direct = candidates.filter((c) => /\.(mkv|mp4)(?:$|[?#])/i.test(c.url) || /\.mp4$/i.test(c.filename || ""));
       const pending = candidates.filter((c) => !direct.includes(c)).slice(0, 3);
       if (!pending.length) return direct;
       const data = await http.json(SERVICE_ORIGIN + "/api/files", {
@@ -1170,7 +1171,7 @@ var require_hdhub = __commonJS({
         const r2 = hostname.endsWith(".r2.cloudflarestorage.com");
         const publicFile = hostname.endsWith(".workers.dev") && /\.(mkv|mp4)(?:$|[?#])/i.test(url);
         if (!r2 && !publicFile) return null;
-        if (!allowExtensionless && !/\.(?:mkv|mp4)(?:$|[?#])/i.test(url)) return null;
+        if (!allowExtensionless && !/\.(?:mkv|mp4)(?:$|[?#])/i.test(url) && !/\.mp4$/i.test(filename)) return null;
         return {
           url,
           filename,
@@ -2077,12 +2078,6 @@ var require_probe = __commonJS({
         if (!text.startsWith("#EXTM3U") || !/#EXT-X-(STREAM-INF|TARGETDURATION):/.test(text)) return null;
         return inspectHls(http, text, playlist.url, candidate, { detailed: options.detailedHls });
       }
-      const signedGet = /[?&]X-Amz-Algorithm=AWS4-HMAC-SHA256(?:&|$)/i.test(candidate.url) && /[?&]X-Amz-Signature=[a-f0-9]{64}(?:&|$)/i.test(candidate.url);
-      const head = signedGet || candidate.getOnly === true ? null : await http.request(candidate.url, { method: "HEAD", headers: candidate.headers });
-      if (!head && [401, 403, 404, 410, 429].includes(http.failureFor?.(candidate.url)?.status)) return null;
-      const mime = (head?.response.headers.get("content-type") || "").toLowerCase();
-      if (/html|json/.test(mime)) return null;
-      if (/mpegurl/.test(mime) && !includeHls) return null;
       const sample = await http.bytes(candidate.url, candidate.headers);
       if (!sample) return null;
       const textPrefix = ascii(sample.bytes, 0, Math.min(sample.bytes.length, 2048)).replace(/^\u00ef\u00bb\u00bf/, "").trimStart();
@@ -2406,7 +2401,7 @@ var require_presentation = __commonJS({
 var require_diagnostics = __commonJS({
   "src/diagnostics.cjs"(exports2, module2) {
     "use strict";
-    var VERSION = true ? "1.7.0" : "dev";
+    var VERSION = true ? "1.7.1" : "dev";
     function effectiveTmdbKey(settings, injectedKey) {
       return typeof settings.tmdbApiKey === "string" && settings.tmdbApiKey.trim() ? settings.tmdbApiKey.trim() : typeof injectedKey === "string" ? injectedKey.trim() : "";
     }

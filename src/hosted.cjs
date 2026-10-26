@@ -32,7 +32,10 @@ async function loadHosted(http, target) {
   }).filter(Boolean);
 }
 async function registerDownloads(http, candidates, target) {
-  const direct = candidates.filter(c => /\.(mkv|mp4)(?:$|[?#])/i.test(c.url));
+  // Nuvio's default suffix for an extensionless URL is MP4. A source-declared
+  // MP4 can therefore go straight to the real container probe, without waiting
+  // for the optional MKV naming bridge. A real MKV will still be rejected.
+  const direct = candidates.filter(c => /\.(mkv|mp4)(?:$|[?#])/i.test(c.url) || /\.mp4$/i.test(c.filename || ''));
   const pending = candidates.filter(c => !direct.includes(c)).slice(0, 3);
   if (!pending.length) return direct;
   const data = await http.json(SERVICE_ORIGIN + '/api/files', { method: 'POST', timeoutMs: 6500,

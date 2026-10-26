@@ -1,5 +1,14 @@
 # Tasarım kararları
 
+## 1.7.1 ek kararlar
+
+- Harici ses dosyası birleştirme yolu kullanıcı tarafından bırakıldı; kaynak içi özgün/TR/EN ses aranır.
+- Nuvio kodunu değiştirmeden VLC harici oynatıcı font alternatifi var; mevcut0.6.4-beta yolu. İlk subtitle gönderilebilir; otomatik bizim TR seçimi/cihaz/offline aktarım kanıtı değildir.
+- Yeni sağlayıcı için önce hesapsız gerçek RangeGETdosyası, sonra katalog entegrasyonu. Login,challenge veya imza sabiti ile boşluğu doldurma. Kurtarma araması yanlış film döndürebilir; release kimliğini tekrar kontrol et.
+- AyrıHEAD zorunlu değil: gerçekRangeGET zaten izin/format/bytekanıtı taşır. Native fiziksel dosyafetch3 lease mantıksaltimeout’tan sonra bırakılmaz.
+- MP4adlı uzantısız kaynağı MKVköprüsüne bağımlı yapma; gerçekkonteynerprobe belirler. Uzantısız gerçekMKV hâlâ uygunad gerektirir.
+
+
 ## 26 Ekim 2026 — 1.7.0 kullanıcı yönlendirmesi
 
 - Genel sağlayıcı yöntemleri öncelikli; yeni manuel film/bölüm pini veya her yapımda sahne/senkron analizi ana yol değil.

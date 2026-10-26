@@ -22,14 +22,9 @@ async function probeOne(http, candidate, includeHls = false, hashEnabled = false
     if (!text.startsWith('#EXTM3U') || !/#EXT-X-(STREAM-INF|TARGETDURATION):/.test(text)) return null;
     return inspectHls(http, text, playlist.url, candidate, { detailed: options.detailedHls });
   }
-  // S3/R2 presigned GET links sign the HTTP method. HEAD on a working GET
-  // URL can legitimately be 403; inspect only a bounded GET range instead.
-  const signedGet = /[?&]X-Amz-Algorithm=AWS4-HMAC-SHA256(?:&|$)/i.test(candidate.url) && /[?&]X-Amz-Signature=[a-f0-9]{64}(?:&|$)/i.test(candidate.url);
-  const head = signedGet || candidate.getOnly === true ? null : await http.request(candidate.url, { method: 'HEAD', headers: candidate.headers });
-  if (!head && [401, 403, 404, 410, 429].includes(http.failureFor?.(candidate.url)?.status)) return null;
-  const mime = (head?.response.headers.get('content-type') || '').toLowerCase();
-  if (/html|json/.test(mime)) return null;
-  if (/mpegurl/.test(mime) && !includeHls) return null;
+  // The range GET already supplies type, size and actual container bytes.
+  // A separate HEAD adds a native job and may reject valid signed GET links.
+  // Every GET still enforces permissions, ranges, bounded bodies and format.
   const sample = await http.bytes(candidate.url, candidate.headers);
   if (!sample) return null;
   const textPrefix = ascii(sample.bytes, 0, Math.min(sample.bytes.length, 2048)).replace(/^\u00ef\u00bb\u00bf/, '').trimStart();

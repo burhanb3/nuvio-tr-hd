@@ -1,5 +1,14 @@
 # Proje hafızası
 
+## 1.7.1 indirme araştırması — 26 Ekim 2026
+
+Kullanıcı harici ses birleştirmeyi bıraktı; kendi içinde uygun ses olan kaynaklarla devam. Font için uygulama kodunu değiştirmeden mevcut harici VLC yolu0.6.4-beta kaynaklarında doğrulandı; VLC font seçer ve iOS bridge request’teki ilk subtitle URL’sini alabilir. Native hazırlık addon/language/local subtitle yoluna bağlı; bizim pluginin ilk TR’si kesin aktarılır veya offline sorunsuz demeyin. Fiziksel telefon yok. docs/IPHONE_TURKCE_FONT.md. Dahili Nuvio fontu hâlâ pluginle seçilemiyor.
+
+**Bu tur yeni çalışan indirme sağlayıcısı doğrulanmadı.** RedFlix12embed, ShowBox/FebBoxpubliclistsonrasılogin, CinemaCity/Webteizle/HDHub4u-search403, eskiDiziBoxbölümleri404,6Workeruçdosya ağ hatası. MoviesDrive güncelsearch.php çalışıyor ama MatrixkurtarmaHubCloudqueryHarryPotter2009döndürdü; yanlışfilm reddedildi. Hiçbirinden artış diye sonuç eklenmedi. Publicformgeçiciparametreleri/anahtarlar commit edilmedi. Yeni account/helper/pin yok. Aynı başarısız yolu dış durum değişmeden tekrar tekrar denemeyin; dosya GET yolunu önce doğrulayın, sonra genel katalog bağlayın. compatibility/download-research-171.json ve docs/INDIRME_ARASTIRMASI_171.md.
+
+Gerçek kod: ayrıHEAD kalktı, boundedGETboyut/format/piksel/auth koşulları sürer. NativeBitmemişmedia-probe3 lease hamfetch bitene kadar tutulur; subtitle4 ayrı, nativeGroupfetch’e gitmez. Bu fiziksel iPhone süre garantisi değildir. KaynakMP4adlı uzantısız aday doğrudan probe; MKV/HLS/HTML MP4 yapılmaz.156test/QuickJS;20upstream dosya drift yok. Yayın ve canlı kanıt iş bitiminde güncellenecek.
+
+
 ## 1.7.0 genel sağlayıcı çalışması — 26 Ekim 2026
 
 **1.7.0 yayın tamamlandı:** kod ab9f1391df6a5a2d4a12838d3ebe417f975ab6f6. Windows/Linux Test ve paket40370600453, Pages40370600251 başarılı;153 yerel test/QuickJS ve beş public varlık HTTP200+yerel SHA eşit. Aynı manifest adresi/kimlikler; compatibility/github-publication.json. Kapsam/fiziksel test hedefi tamamlanmadı.

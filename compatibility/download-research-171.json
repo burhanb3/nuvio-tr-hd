@@ -1,0 +1,143 @@
+{
+  "checkedAt": "2026-10-26T18:20:17.771Z",
+  "version": "1.7.1",
+  "purpose": "General free/accountless real MP4/MKV discovery; no per-title pins or new helper servers.",
+  "newVerifiedDownloadProviders": 0,
+  "newVideoPins": 0,
+  "newAccounts": 0,
+  "newHelperBackends": 0,
+  "observations": [
+    {
+      "source": "RedFlix",
+      "observed": "Public movie/TV endpoints returned embed player URLs, not direct downloadable media.",
+      "integrated": false
+    },
+    {
+      "source": "ShowBox/FebBox",
+      "observed": "Public catalog/share/file lists worked. Public original download returned code0 Please log in first; console qualities returned login_required.",
+      "integrated": false,
+      "accountCreated": false
+    },
+    {
+      "source": "MoviesDrive",
+      "observed": "Public search.php works; catalog advertises small releases. Legacy/recovery release URLs did not prove working matching files.",
+      "integrated": false
+    },
+    {
+      "source": "HubCloud recovery",
+      "observed": "Normal catalog-provided recovery form parameters used. Matrix1999/480p request returned Harry Potter2009/2160p; wrong identity rejected.",
+      "integrated": false,
+      "tokensCommitted": false
+    },
+    {
+      "source": "HDHub Worker terminals",
+      "observed": "Six sampled Dune/Matrix file endpoints failed bounded network/range probing; not counted as working.",
+      "integrated": "existing source retained; no new false successes"
+    },
+    {
+      "source": "Archive",
+      "observed": "Broader metadata search produced trailers, ZIP members, short clips or duration mismatch; evidence controls retained.",
+      "newPins": 0
+    },
+    {
+      "source": "DiziBoxIzle",
+      "observed": "Sampled older series categories existed; exact requested episodes absent/404.",
+      "integrated": false
+    },
+    {
+      "source": "Webteizle/CinemaCity/HDHub4u-search",
+      "observed": "Ordinary requests returned403/challenge; stopped without solving challenge or using alternative identity.",
+      "integrated": false
+    },
+    {
+      "source": "MovieBlast/other app APIs",
+      "observed": "Inspected client methods depend on embedded tokens/signing constants or extra extraction services; keys not copied, no integration.",
+      "integrated": false
+    }
+  ],
+  "implemented": [
+    "Range GET replaces redundant HEAD; existing auth/format/range/body checks retained.",
+    "Three physical underlying file-probe fetch leases, separate from four subtitle leases, retained until raw fetch settles.",
+    "Source-declared extensionless MP4 bypasses optional MKV naming bridge, subject to actual container verification."
+  ],
+  "font": {
+    "nativePluginFontSelection": false,
+    "existingVlcRouteInRelease": "0.6.4-beta",
+    "nativeVlcForwards": "first subtitle URL when supplied in playback request; preparation depends on native language/addon/local subtitle path",
+    "fontChoice": "VLC iOS settings",
+    "deviceTest": "not-run"
+  },
+  "evidenceFiles": [
+    "docs/INDIRME_ARASTIRMASI_171.md",
+    "docs/IPHONE_TURKCE_FONT.md",
+    "tests/download-stability.test.cjs",
+    "compatibility/upstream-171-check.json"
+  ],
+  "sources": [
+    "https://github.com/SA7ANI/cb-providers",
+    "https://github.com/falsisdev/anthology",
+    "https://github.com/NuvioPlugin/All-in-One-Nuvio",
+    "https://pixeldrain.com/api",
+    "https://docs.videolan.me/vlc-user/ios/3.X/en/basic/settings.html"
+  ],
+  "physicalDevice": "not-run",
+  "fullPlayback": "not-run",
+  "fullDownload": "not-run",
+  "offline": "not-run",
+  "subtitleAudioSync": "not-run",
+  "regressions": {
+    "metadata": "fixed canonical metadata + live bounded Node HTTP, not the Nuvio iPhone network runtime",
+    "cases": [
+      {
+        "key": "dune",
+        "onlineWithTr": true,
+        "distinctFiles": 2,
+        "smallWithTr": true,
+        "pixels": [
+          "1280x536",
+          "1146x480"
+        ],
+        "gaps": [],
+        "elapsedMs": 15817
+      },
+      {
+        "key": "fleabag-s1e1",
+        "onlineWithTr": true,
+        "distinctFiles": 2,
+        "smallWithTr": true,
+        "pixels": [
+          "848x354"
+        ],
+        "gaps": [
+          "multiple_verified_download_qualities_missing"
+        ],
+        "elapsedMs": 13566
+      },
+      {
+        "key": "shameless-s1e1",
+        "onlineWithTr": true,
+        "distinctFiles": 0,
+        "smallWithTr": false,
+        "pixels": [],
+        "gaps": [
+          "download_missing",
+          "small_download_with_tr_missing",
+          "multiple_verified_download_qualities_missing"
+        ],
+        "elapsedMs": 9438
+      }
+    ],
+    "anime": {
+      "case": "Attack on Titan S01E01",
+      "results": 9,
+      "qualities": [
+        "853×480 ✓",
+        "1280×720 ✓",
+        "1920×1080 ✓"
+      ],
+      "turkish": 9,
+      "elapsedMs": 11502
+    },
+    "comparison": "Not a controlled before/after latency experiment; timing is not an iPhone guarantee."
+  }
+}
