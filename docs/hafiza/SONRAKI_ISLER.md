@@ -2,7 +2,7 @@
 
 ## 1.6.1 öncelik
 
-1. Ana ID online+dosya gerilemesi ve Shameless grup öneki düzeltmesini yayınla;107 test/QuickJS ve upstream20 geçti. Depoyu yenileyince ana+anime iki kayıt.
+1. **Tamamlandı:** 1.6.1 e5824c9 yayımlandı; 107 test/QuickJS, Windows/Linux ve Pages başarılı. Manifest/sürümlü JS/legacy JS/sayfa HTTP200+yerel SHA eşit. Depoyu yenileyince ana+anime iki kayıt; kimlik/ayarlar korunur.
 2. iPhone’da Dune online satırları, Shameless ABD/Fleabag kullanıcının gerçek S/E’si kontrol edilmeli; kullanıcıya üç scraper açık mı ve S/E soruldu, yanıt bekleniyor.
 3. Küçük Dune indirmesi hâlâ çözülmedi. MoviesDrive/HubCloud küçük sayfalar TLS hatalı Worker/Pixel uçları verdi; metadata/büyük Range200 koşullarını gevşeterek ekleme. Büyük HDHub desteklenir.
 4. Sites köprüsü get_site yineNOT_FOUND; mevcut kimlik korunur, yeni Site ile erişim engeli aşılmaz, kullanıcıya aynı hesap sorusu tekrarlanmaz.

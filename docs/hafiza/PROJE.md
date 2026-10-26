@@ -1,6 +1,8 @@
 # Proje hafızası
 
-## 1.6.1 güncel durum — 26Ekim 2026
+## 1.6.1 güncel durum — 26 Ekim 2026
+
+**Yayın tamamlandı:** kod commit’i e5824c9005805b366c52770f086c967c85ecdee8. Test ve paket 40303952952 (Windows/Linux) ve Pages 40303952928 başarılı. Yerel 107/107; oturumsuz manifest, sürümlü iki sağlayıcı URL’si, eski online JS yolu ve sayfa HTTP 200 + yerel SHA eşit. Kanıt compatibility/github-publication.json. Scraper kimliği değişmeden kod URL’sine ?v=1.6.1 eklendi. Yeni küçük Dune indirmesi hâlâ doğrulanmadı; büyük dosya desteği korunur.
 
 Kullanıcı Dune18–71GB büyük dosyaların kalmasını, küçük indirmeler eklenmesini istedi; online sonuçların gittiğini ve Shameless/Fleabag boşluğunu bildirdi.1.6.0’da eski nuvio-tr-hd ID’sini files-only yapmak geçiş/filtre gerilemesiydi. **Eski ana ID bir daha yalnız dosya arar hale getirilmemeli.**1.6.1 createEntry(main) files+online birlikte,24 saniye mantıksal bütçe; Anime ayrı20 saniye. Manifestte ana+anime2kayıt, online kaldırıldı; eski providers/nuvio-tr-hd-online.js uyumluluk/tanı için üretilir. src/entry-files.cjs adı tarihseldir, artık main çağırır. Ayarlar eski ID’de korunur; tek ana liste per-stream streaming değildir.
 
@@ -10,7 +12,7 @@ Archive rows12/popularity/bariz fragman önfiltre; en küçük3+HD3; eksik metad
 
 MoviesDrive title araması Dune2021 kaydını bulur (IMDb alanı boş);550MB/900MB/1,3GB/1,9GB/3,8GB sayfaları ve HubCloud pointer’ları incelendi. İlk iki10Gbps zinciri rohitkiskk.workers.dev uçlarında ERR_SSL_PACKET_LENGTH_TOO_LONG; diğerleri aynı terminal aileleri, gerçek dosya probe yok. Sayfa iddiaları verified byte/piksel değildir. Archive Dune yanlış2004yılı ve fragman kayıtları reddedildi. MovieBox v1 boş, v2 invalid token; eklenmedi. Sites get_site yineNOT_FOUND, yeniden create/checkout düzenleme/hesap değiştirme sorusu yok.
 
-Canlı ana arama: Dune: 10 online/TR~6s, Fleabag S01E01: 10 online/TR~4s, Shameless (ABD) S01E01: 7 online/TR~5s. Metadata sabit kanonik referans; gerçek kaynak/subtitle sorguları; cihaz değil. Night of Living Dead küçük318/388MiB gerçekMP4+TR verdi; bu Dune küçük dosyası bulundu diye sunulamaz. Yerel107 test/QuickJS başarılı; authenticated upstream tekrar20dosya drift yok (ilk oturumsuz403rate-limit raporu değil başarılı yeni rapor saklandı). GitHub yayını henüz tamamlanmadı; sonuç sonradan güncellenecek.
+Canlı ana arama: Dune: 10 online/TR ~6s, Fleabag S01E01: 10 online/TR ~4s, Shameless (ABD) S01E01: 7 online/TR ~5s. Metadata sabit kanonik referans; gerçek kaynak/altyazı sorguları; fiziksel cihaz değil. Night of Living Dead 318/388 MiB gerçek MP4+TR verdi; bu Dune küçük dosyası bulundu diye sunulamaz. Yerel 107 test/QuickJS ve Windows/Linux CI başarılı; authenticated upstream tekrar 20 dosyada drift bulmadı (ilk oturumsuz 403 rate-limit raporu değil, başarılı yeni rapor saklandı). GitHub yayını/HTTP/SHA kontrolü tamamlandı. Son ek Fleabag kontrolünde gerçek HLS playlist süresi PlayIMDb 1566s, VixSrc 1612s ile 26 dakikalık referansa yakındı; bu tam oynatma/sahne senkronu testi değildir.
 
 ## 1.6.0 çalışma durumu — 26 Ekim 2026
 

@@ -41,7 +41,7 @@ Varsayılanlar: otomatik tarama ve Türkçe altyazı araması açık; çözünü
 
 **Altı sonuç Nuvio'nun sınırı değildir.** Bu eklentinin ayarlanabilir liste sınırıdır. Genel kaynaklara tarama başına 40 aday kotası ayrılır; HDHub ayrıca en çok 12 release’i aşamalı işler. Sonuç sayısını 20 seçmek yeni sağlayıcı eklemez. Mantıksal bütçeler ana arama 24, Anime 20 saniyedir; başlamış native ağ işlerinin bitişi ayrıca Nuvio’ya bağlıdır.
 
-**1.6.1’e geçiş:** GitHub Pages manifestini yeni depo olarak ekleyin ve eski Sites kopyasını kapatın. Nuvio Pluginler ekranında depoyu yenileyin/güncelleyin ve ana sağlayıcının sürümünün **1.6.1** olduğunu kontrol edin. Önceden kaydedilmiş HLS kapalı ayarı değişmez; Dune gibi çevrimiçi alternatifler için sağlayıcı ayarındaki **HLS çevrimiçi izleme alternatiflerini göster** seçeneğini açın. Yenileme yoksa aynı depoyu kaldırıp yeniden eklemek yerel sağlayıcı ayarlarını sıfırlayabilir.
+**1.6.1’e geçiş:** Mevcut GitHub deposunu Nuvio Pluginler ekranından yenileyin ve ana sağlayıcı sürümünün **1.6.1** olduğunu kontrol edin. Eski Sites kopyası varsa kapatın. Önceden kaydedilmiş HLS kapalı ayarı değişmez; online alternatifler için sağlayıcı ayarındaki **HLS çevrimiçi izleme alternatiflerini göster** seçeneğini açın. Depoyu kaldırmak gerekmez; kaldırıp yeniden eklemek kişisel ayarları sıfırlayabilir.
 
 Dune (2021) / Spider-Man denemesi, uzun bekleme düzeltmesi ve sonuçların sınırları: [sorun giderme](docs/SORUN_GIDERME.md).
 
