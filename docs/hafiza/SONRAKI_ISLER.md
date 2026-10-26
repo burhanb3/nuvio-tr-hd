@@ -2,7 +2,7 @@
 
 ## 1.6.3 ve aktif kapsam hedefi
 
-1. 1.6.3 gerçek küçük Dune/Spider-Verse/No Way Home ve geniş Archive/HDHub düzeltmeleri hazırlanıyor. Yerel128 test geçti. Son check, upstream, GitHub Windows/Linux ve Pages/public SHA tamamlanıp hafıza/yayın kanıtı güncellenmeli.
+1. **Tamamlandı:** 1.6.3 edc8a0527477b8208c8a4274691d44cb4f89e8c4 yayımlandı; Dune/Spider-Verse/No Way Home küçük dosyaları ve Fleabag S01E01 99 MiB MKV+TR eklendi. Yerel 128/128 ve QuickJS, Windows/Linux 40326657313, Pages 40326657180 başarılı. Beş public varlık HTTP 200 ve yerel SHA eşit; upstream 20 kilitli dosya değişmedi. Kapsam hedefi tamamlanmadı.
 2. Hedef hâlâ açık: Matrix, Inception ve Fleabag S02E01/Shameless/GoT/Breaking Bad vakalarında indirilebilir dosya sıfır; Fleabag S01E01 99 MiB MKV+TR ile eklendi. No Way Home ve Spider-Verse’de ikinci kaliteli seçenek eksik. 14/14 online+TR olması hedefi tamamlamaz. Kapsam JSON’u gerçek eksikleri tutuyor.
 3. Ses tercihi sorusuna yanıt gelirse uygula. Küçük Dune MKV Hintçe, No Way Home dosya adı Fransızca; özgün ses bilinmiyorsa varsayma. Şimdilik tüm seçenekler etiketli, mevcut boyut sırası korunuyor.
 4. PC’de HLS’yi tamamlanmış gerçek MP4’e hazırlama prototipini araştır/test et. Portable FFmpeg resmi zip+SHA ile LocalAppData/NuvioTrHdTools/media-prototype altında; .cache/media-tools163.json sonucunu kontrol et. Dışarıdan erişim veya kalıcı servis kurulmadı. Public servis öncesi PC açık kalması, alan/bant kullanımı ve erişim tasarımı somutlaştırılmalı; kaynaklar/anahtarlar commit edilmemeli.

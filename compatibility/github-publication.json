@@ -1,27 +1,27 @@
 {
-  "checkedAt": "2026-10-26T10:41:50.721Z",
-  "version": "1.6.2",
+  "checkedAt": "2026-10-26T12:59:31.292Z",
+  "version": "1.6.3",
   "origin": "https://burhanb3.github.io/nuvio-tr-hd",
   "authenticated": false,
   "assetRequestsAuthenticated": false,
   "ciMetadataAuthenticated": true,
   "repository": "https://github.com/burhanb3/nuvio-tr-hd",
-  "sourceCommit": "5b298cdeda6dfbcc10b55b053fdbe25022dce446",
+  "sourceCommit": "edc8a0527477b8208c8a4274691d44cb4f89e8c4",
   "branch": "codex/publish-nuvio-tr-hd",
   "actions": {
-    "tests": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40309193725",
+    "tests": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40326657313",
     "testsConclusion": "success",
     "jobs": [
       {
-        "name": "verify (ubuntu-latest)",
+        "name": "verify (windows-latest)",
         "conclusion": "success"
       },
       {
-        "name": "verify (windows-latest)",
+        "name": "verify (ubuntu-latest)",
         "conclusion": "success"
       }
     ],
-    "pages": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40309193727",
+    "pages": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40326657180",
     "pagesConclusion": "success"
   },
   "mode": "original scraper ID combines online + files; independent anime; versioned code URLs; legacy online file remains available but is not installed",
@@ -31,50 +31,58 @@
       "status": 200,
       "type": "application/json; charset=utf-8",
       "bytes": 1446,
-      "sha256": "d908ce7238f0d49f310e2f0335d6b6eca6c2e1e44dfaa5f42e3774ad45c0f447",
+      "sha256": "b683e79e36b62db0fbd9c4998a28343bdc746d1ea0ed53141e20c60ffbd76eed",
       "matchesLocal": true
     },
     {
-      "path": "/providers/nuvio-tr-hd.js?v=1.6.2",
+      "path": "/providers/nuvio-tr-hd.js?v=1.6.3",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 131331,
-      "sha256": "6a3817cd30320bed390ac6b39d23b7b2a0ecc9a8eca4b2fd8b7d8e5323b341d0",
+      "bytes": 143931,
+      "sha256": "f8adf7223068d2eeab187667e7e845dc8b73bb5a087fd3106b4c4f5cba01fde7",
       "matchesLocal": true
     },
     {
-      "path": "/providers/nuvio-tr-hd-anime.js?v=1.6.2",
+      "path": "/providers/nuvio-tr-hd-anime.js?v=1.6.3",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 131332,
-      "sha256": "40aa68ca210430d037062edb4717e7f6f70c3668842f5b1ae8dbcaad9122a792",
+      "bytes": 143932,
+      "sha256": "e68586721fdffb8866742bc52e13a6378f8bc73661679773ac623564a85fce0f",
       "matchesLocal": true
     },
     {
       "path": "/providers/nuvio-tr-hd-online.js",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 131334,
-      "sha256": "5c2eca47ca22d70a2ed02bb3bb15a98cf25bd6593ab757dbe91f4961b6ec9388",
+      "bytes": 143934,
+      "sha256": "94558daaf0607f43d838a0f896769ef99d1b791ee827906cdd7e1ab15a805321",
       "matchesLocal": true
     },
     {
       "path": "/",
       "status": 200,
       "type": "text/html; charset=utf-8",
-      "bytes": 6658,
-      "sha256": "efa6da01d5595a833b9ffd6c9ee6ea484bd577741920ab2ef7e8a700a1c5a3af",
+      "bytes": 6673,
+      "sha256": "41d353b699df9e7155db3088a36988f1c9681dd8a24d9fddecec8fd73f6fb322",
       "matchesLocal": true
     }
   ],
   "tests": {
-    "local": 114,
-    "quickjs": "passed; compiled settings show1.6.2; HLS optional IO and canonical release-year regression fixtures also passed",
+    "local": 128,
+    "quickjs": "passed; compiled settings show1.6.3; Archive content pin, forced hash, replica, audio and coverage regression fixtures also passed",
     "upstream": "0.6.4-beta; 20 locked files verified"
   },
-  "recoveryEvidence": "compatibility/recovery-162.json",
+  "recoveryEvidence": "compatibility/coverage-163.json",
+  "contentEvidence": "compatibility/content-163.json",
+  "sourceCoverage": {
+    "cases": 14,
+    "onlineWithTr": 14,
+    "smallDownloadWithTr": 8,
+    "allSourceCriteriaPassed": 5,
+    "allSourceCriteriaMet": false
+  },
   "iphoneEmptyResultsRootCause": "not confirmed; awaiting phone diagnostic after known source regressions fixed",
-  "smallDuneDownloadVerified": false,
+  "smallDuneDownloadVerified": true,
   "largeFileSupport": "retained; no size ceiling",
   "bridge": {
     "newVersionDeployed": false,
