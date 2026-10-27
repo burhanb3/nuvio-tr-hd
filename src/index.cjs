@@ -2,7 +2,7 @@
 const { createHttp } = require('./http.cjs');
 const { createScheduler } = require('./scheduler.cjs');
 const { loadHosted, registerDownloads, SERVICE_ORIGIN } = require('./hosted.cjs');
-const { resolveIdentity } = require('./matching.cjs');
+const { resolveIdentity,resolveTranslatedTitles } = require('./matching.cjs');
 const { loadCatalog } = require('./providers/catalog.cjs');
 const { loadAddon } = require('./providers/stremio.cjs');
 const { scanDirectory } = require('./providers/directory.cjs');
@@ -16,6 +16,7 @@ const { scanSonAnime } = require('./providers/sonanime.cjs');
 const { scanDiziYou } = require('./providers/diziyou.cjs');
 const { scanFilmModu } = require('./providers/filmmodu.cjs');
 const {scanHdFilmDelisi}=require('./providers/hdfilmdelisi.cjs');
+const {scanDiziBal}=require('./providers/dizibal.cjs');
 const { scanAniMom } = require('./providers/animom.cjs');
 const { scanSeiCode } = require('./providers/seicode.cjs');
 const { scanDiziBak } = require('./providers/dizibak.cjs');
@@ -128,7 +129,7 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs = 24000, r
         if (unique.size >= 40) { reject('candidate_limit'); return; }
         unique.set(key, candidate);
         if (/\.m3u8(?:$|[?#])/i.test(candidate.url) && settings.includeHls === false) { reject('hls_disabled'); return; }
-        const lightweightHls = ['PlayIMDb', 'VixSrc', 'DiziYou', 'DiziBak', 'FilmModu','HDFilmDelisi'].includes(candidate.source) && settings.detailedHlsMetadata !== true;
+        const lightweightHls = ['PlayIMDb', 'VixSrc', 'DiziYou', 'DiziBak', 'FilmModu','HDFilmDelisi','DiziBal'].includes(candidate.source) && settings.detailedHlsMetadata !== true;
         const video = await withProbeSlot(() => probe(http, candidate, settings.includeHls !== false, settings.autoSubtitles !== false,
           { detailedHls: !lightweightHls }));
         if (!video || http.expired()) { reject('video_unavailable'); return; }
@@ -249,10 +250,15 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs = 24000, r
               sourceJobs.push({ name: 'DiziBak', run: () => scanDiziBak(http, target) });
             if (onlineLane && settings.filmmoduEnabled !== false && target.type === 'movie' && !target.isAnime)
               sourceJobs.push({ name: 'FilmModu', run: () => scanFilmModu(http, target) });
-            if (onlineLane && settings.includeHls !== false && settings.hdfilmdelisiEnabled !== false && target.type === 'movie' && !target.isAnime)
+            if (['all','online','fastOnline'].includes(lane) && settings.includeHls !== false && settings.hdfilmdelisiEnabled !== false && target.type === 'movie' && !target.isAnime)
               sourceJobs.push({ name:'HDFilmDelisi',run:()=>scanHdFilmDelisi(http,target) });
+            if (['all','fastOnline'].includes(lane) && settings.includeHls !== false && settings.dizibalEnabled !== false)
+              sourceJobs.push({name:'DiziBal',run:()=>{
+                const sourceHttp=http.scope(7000);
+                return scanDiziBal(sourceHttp,target,{loadTitles:()=>resolveTranslatedTitles(sourceHttp,target,effectiveTmdbKey(settings,tmdbKey))});
+              }});
             if (filesLane && settings.hdhubEnabled !== false && !sourceFactories.some(s => s.name === '4KHDHub / HubCloud')) sourceJobs.push({ name: '4KHDHub / HubCloud', run: async () => {
-              return scanHdHub(http, target, { allowExtensionless: settings.useDownloadBridge !== false, onCandidates: candidates => acceptCandidates(candidates, true) });
+              return scanHdHub(http.scope(8000), target, { allowExtensionless: settings.useDownloadBridge !== false, onCandidates: candidates => acceptCandidates(candidates, true) });
             } });
             if (filesLane && settings.waploadedEnabled !== false && !target.isAnime) sourceJobs.push({ name: 'Waploaded', run: () => scanWaploaded(http, target) });
           }
@@ -261,16 +267,22 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs = 24000, r
           // The common admission/probe limit still bounds the whole search.
           const quota = 10;
           await mapLimit(sourceJobs, 4, async job => {
+            const sourceStarted = Date.now();
             let candidates;
             try { candidates = await job.run(); } catch { candidates = []; }
-            report.sources.push({ name: job.name, candidates: candidates.length });
-            emit({ stage: 'source', source: job.name, candidates: candidates.length });
+            const timing = { startedMs:sourceStarted-started, discoveryMs:Date.now()-sourceStarted };
+            report.sources.push({ name: job.name, candidates: candidates.length, ...timing });
+            emit({ stage: 'source', source: job.name, candidates: candidates.length, ...timing });
             if (!candidates.length || http.expired()) return;
             if (['4KHDHub / HubCloud','Internet Archive'].includes(job.name) && !sourceFactories.some(s => s.name === job.name)) return;
             // Warm the shared title lookup while media probes run. It is not
             // started for wholly empty searches, and never blocks other sources.
             if (lane !== 'extraAnime') void discoverSubtitles.prefetch();
-            await mapLimit(candidates.slice(0, quota), lane === 'extraAnime' ? 1 : 3, processCandidate);
+            // Discovery slots belong to catalogue work. Probing/subtitles have
+            // their own bounded queues; waiting here used to starve later
+            // providers behind an unrelated slow subtitle request.
+            pending.push(mapLimit(candidates.slice(0, quota), lane === 'extraAnime' ? 1 : 3,
+              candidate => processCandidate(candidate).catch(() => reject('candidate_error'))));
           });
           await Promise.all(pending);
           return formatResults(completed, renderSettings(), target);
@@ -325,6 +337,7 @@ function onSettings() {
     { type: 'toggle', key: 'vixsrcEnabled', label: 'VixSrc çevrimiçi alternatifleri', defaultValue: true },
     { type: 'toggle', key: 'hdhubEnabled', label: '4KHDHub / HubCloud doğrudan dosya araması', defaultValue: true, description: 'Ücretsiz public FSL dosyaları doğrulanır. Kaynak metadatası boyut/piksel doğrulaması sayılmaz.' },
     {type:'toggle',key:'hdfilmdelisiEnabled',label:'HDFilmDelisi Türkçe dublaj ve çoklu ses',defaultValue:true,description:'Public film kataloğu ve gerçek HLS listesi. Ses/altyazı dilleri yayıncıdan okunur; bu kaynak online izleme içindir.'},
+    {type:'toggle',key:'dizibalEnabled',label:'DiziBal film, dizi ve anime',defaultValue:true,description:'Türkçe dublaj ve altyazılı online alternatifler. Özgün veya TMDB çeviri adı, yıl ve tam bölüm denetlenir.'},
     { type: 'toggle', key: 'waploadedEnabled', label: 'Waploaded güncel film/dizi dosyaları', defaultValue: true, description: 'Kısmi kapsam: kaynağın son güncellenen listesi taranır; tüm arşivi kapsamaz. Gerçek dosya, yıl ve bölüm doğrulanır. Mevcut TR/EN araması uygulanır.' },
     { type: 'toggle', key: 'directoryEnabled', label: 'DahmerMovies dizin taraması (deneysel yerel yedek)', defaultValue: false, description: 'Dosya CDN’i sık 403/429 döndürdüğünden varsayılan kapalıdır.' },
     { type: 'toggle', key: 'archiveEnabled', label: 'Internet Archive film araması', defaultValue: true },
@@ -363,17 +376,17 @@ async function getStreams(tmdbId, mediaType, season, episode) {
   return createProvider({ settings, tmdbKey }).getStreams(tmdbId, mediaType, season, episode);
 }
 function createEntry(lane) {
-  const titles = { main: 'Film/dizi · online ve dosyalar', files: 'Dosyalar', online: 'Hızlı kaynaklar', anime: 'Anime', extraAnime:'Ek Anime' };
-  const only = { files: ['hdhubEnabled','directoryEnabled','archiveEnabled','waploadedEnabled','catalogUrls','addonUrls'], online: ['playImdbEnabled','vixsrcEnabled','diziyouEnabled','dizibakEnabled','filmmoduEnabled','hdfilmdelisiEnabled','hlsView'], anime: ['animecixEnabled','sonanimeEnabled'],extraAnime:['animomEnabled','seicodeEnabled'] };
-  only.main = [...only.files, ...only.online];
+  const titles = { main: 'Film/dizi · online ve dosyalar', files: 'Dosyalar', online: 'Hızlı kaynaklar', anime: 'Anime', extraAnime:'Ek Anime',fastOnline:'Hızlı İzle' };
+  const only = { files: ['hdhubEnabled','directoryEnabled','archiveEnabled','waploadedEnabled','catalogUrls','addonUrls'], online: ['playImdbEnabled','vixsrcEnabled','diziyouEnabled','dizibakEnabled','filmmoduEnabled','hdfilmdelisiEnabled','hlsView'], anime: ['animecixEnabled','sonanimeEnabled'],extraAnime:['animomEnabled','seicodeEnabled'],fastOnline:['hdfilmdelisiEnabled','dizibalEnabled','hlsView'] };
+  only.main = [...only.files, ...only.online.filter(key=>key!=='hdfilmdelisiEnabled')];
   const sourceFields = Object.values(only).flat();
   return {
     async getStreams(...args) {
       const settings = typeof globalThis.SCRAPER_SETTINGS === 'object' && globalThis.SCRAPER_SETTINGS || {};
       const tmdbKey = typeof globalThis.TMDB_API_KEY === 'string' ? globalThis.TMDB_API_KEY : '';
-      return createProvider({ settings, tmdbKey, lane, budgetMs: ['main','extraAnime'].includes(lane) ? 24000 : lane === 'online' ? 16000 : lane === 'anime' ? 20000 : 28000 }).getStreams(...args);
+      return createProvider({ settings, tmdbKey, lane, budgetMs: lane==='fastOnline'?8000:['main','extraAnime'].includes(lane) ? 24000 : lane === 'online' ? 16000 : lane === 'anime' ? 20000 : 28000 }).getStreams(...args);
     },
-    onSettings: () => [{ type: 'info', label: lane === 'main' ? 'Film/dizi araması online HLS ile gerçek MP4/MKV dosyalarını aynı listede sunar. Dosya araması boşsa online alternatifler korunur. Anime ayrı taramadır.' : lane==='extraAnime'?'Kısmi kapsama sahip ek anime dosyaları bağımsız taranır. Her bölümde sonuç garantisi yoktur; boş sonuç diğer sağlayıcıların sonuçlarını silmez. Aynı anda tek dosya kontrol edilir.':`Bu ayarlar yalnız ${titles[lane]} taramasına aittir. En fazla kaynak sınırı bu tarama içindir.` },
+    onSettings: () => [{ type: 'info', label: lane === 'main' ? 'Film/dizi araması online HLS ile gerçek MP4/MKV dosyalarını aynı listede sunar. Dosya araması boşsa online alternatifler korunur. Anime ayrı taramadır.' : lane==='fastOnline'?'Hızlı İzle, HDFilmDelisi ve DiziBal online kaynaklarını bağımsız arar. Ana dosya aramasının bitmesini beklemez. HLS kaynakları izleme içindir; dosya indirmesi sunmaz.':lane==='extraAnime'?'Kısmi kapsama sahip ek anime dosyaları bağımsız taranır. Her bölümde sonuç garantisi yoktur; boş sonuç diğer sağlayıcıların sonuçlarını silmez. Aynı anda tek dosya kontrol edilir.':`Bu ayarlar yalnız ${titles[lane]} taramasına aittir. En fazla kaynak sınırı bu tarama içindir.` },
       ...onSettings().filter(field => (!sourceFields.includes(field.key) || only[lane].includes(field.key)) && (lane!=='extraAnime'||!['includeHls','useDownloadBridge','allowHttp','detailedHlsMetadata'].includes(field.key)))
         .map(field=>lane==='extraAnime'&&field.key==='animomEnabled'?{...field,label:'AniMOM ek anime dosyaları',defaultValue:true,description:'Kısmi katalog: tam ad/yıl/bölüm ve gerçek MP4 kontrolü gerekir. Çalışmayan bölüm atlanır; diğer sonuçlar korunur.'}:
           lane==='extraAnime'&&field.type==='info'&&field.label.startsWith('Tanı ·')?{...field,label:field.label.split(' · ').slice(0,3).join(' · ')+' · Bağımsız Ek Anime'}:field)]

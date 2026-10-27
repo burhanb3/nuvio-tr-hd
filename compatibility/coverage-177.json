@@ -1,0 +1,630 @@
+{
+  "checkedAt": "2026-10-27T11:53:37.024Z",
+  "version": "1.7.7",
+  "metadata": "fixed canonical reference; does not test phone TMDB API credentials",
+  "transport": "Node limited1MiB, actual source and subtitle HTTP; native iPhone transport not tested",
+  "composite": true,
+  "observationRounds": [
+    {
+      "checkedAt": "2026-10-27T11:43:25.558Z",
+      "cases": [
+        "fleabag-s1e1",
+        "shameless-s1e1",
+        "death-note-s1e1"
+      ],
+      "topology": "independent DiziBal; movie change does not affect these TV cases"
+    },
+    {
+      "checkedAt": "2026-10-27T11:47:45.766Z",
+      "cases": [
+        "dune",
+        "matrix"
+      ],
+      "topology": "final HDFilmDelisi + DiziBal fast-online lane"
+    }
+  ],
+  "acceptance": {
+    "movieSmallFileBytes": 3221225472,
+    "episodeSmallFileBytes": 1073741824,
+    "minimumDistinctDownloadQualities": 2,
+    "requireTurkishSubtitle": true,
+    "physicalPlaybackAndOfflineTest": "not-run"
+  },
+  "cases": [
+    {
+      "key": "dune",
+      "tmdbId": 438631,
+      "title": "Dune",
+      "type": "movie",
+      "elapsedMs": 8490,
+      "onlineWithTr": true,
+      "downloadUrls": 2,
+      "estimatedDistinctFiles": 2,
+      "downloadQualities": [
+        "1146x480",
+        "1280x536"
+      ],
+      "smallWithTr": true,
+      "cleanSmallWithTr": true,
+      "sourceCoverageCriteriaMet": true,
+      "gaps": [],
+      "lanes": [
+        {
+          "lane": "main",
+          "elapsedMs": 8489,
+          "results": 12,
+          "reason": "ok",
+          "sources": [
+            {
+              "name": "PlayIMDb",
+              "candidates": 3,
+              "startedMs": 69,
+              "discoveryMs": 431
+            },
+            {
+              "name": "FilmModu",
+              "candidates": 0,
+              "startedMs": 75,
+              "discoveryMs": 719
+            },
+            {
+              "name": "VixSrc",
+              "candidates": 1,
+              "startedMs": 72,
+              "discoveryMs": 870
+            },
+            {
+              "name": "Internet Archive",
+              "candidates": 2,
+              "startedMs": 62,
+              "discoveryMs": 1002
+            },
+            {
+              "name": "Waploaded",
+              "candidates": 0,
+              "startedMs": 794,
+              "discoveryMs": 298
+            },
+            {
+              "name": "4KHDHub / HubCloud",
+              "candidates": 5,
+              "startedMs": 506,
+              "discoveryMs": 3341
+            }
+          ]
+        },
+        {
+          "lane": "fastOnline",
+          "elapsedMs": 2057,
+          "results": 1,
+          "reason": "ok",
+          "sources": [
+            {
+              "name": "DiziBal",
+              "candidates": 0,
+              "startedMs": 77,
+              "discoveryMs": 443
+            },
+            {
+              "name": "HDFilmDelisi",
+              "candidates": 1,
+              "startedMs": 75,
+              "discoveryMs": 879
+            }
+          ]
+        }
+      ],
+      "firstNonemptyLaneCompletionMs": 2057,
+      "files": [
+        {
+          "source": "Internet Archive",
+          "container": "mp4",
+          "bytes": 949160267,
+          "dimensions": {
+            "width": 1146,
+            "height": 480
+          },
+          "quality": "1146x480",
+          "audioLanguages": [],
+          "subtitleBestScore": 76,
+          "turkishSubtitle": true,
+          "externalTurkishTracks": 8,
+          "releaseYearBasis": "content-sample-pinned-file",
+          "knownForeignBurnedSubtitles": false,
+          "actualDurationSeconds": 9326.698,
+          "hashAvailable": true
+        },
+        {
+          "source": "Internet Archive",
+          "container": "mkv",
+          "bytes": 792903325,
+          "dimensions": {
+            "width": 1280,
+            "height": 536
+          },
+          "quality": "1280x536",
+          "audioLanguages": [
+            "hi"
+          ],
+          "subtitleBestScore": 76,
+          "turkishSubtitle": true,
+          "externalTurkishTracks": 8,
+          "releaseYearBasis": "content-sample-pinned-file",
+          "knownForeignBurnedSubtitles": false,
+          "actualDurationSeconds": 9326.659,
+          "hashAvailable": true
+        }
+      ]
+    },
+    {
+      "key": "matrix",
+      "tmdbId": 603,
+      "title": "The Matrix",
+      "type": "movie",
+      "elapsedMs": 6744,
+      "onlineWithTr": true,
+      "downloadUrls": 0,
+      "estimatedDistinctFiles": 0,
+      "downloadQualities": [],
+      "smallWithTr": false,
+      "cleanSmallWithTr": false,
+      "sourceCoverageCriteriaMet": false,
+      "gaps": [
+        "download_missing",
+        "small_download_with_tr_missing",
+        "multiple_verified_download_qualities_missing"
+      ],
+      "lanes": [
+        {
+          "lane": "main",
+          "elapsedMs": 6743,
+          "results": 18,
+          "reason": "ok",
+          "sources": [
+            {
+              "name": "PlayIMDb",
+              "candidates": 3,
+              "startedMs": 5,
+              "discoveryMs": 355
+            },
+            {
+              "name": "VixSrc",
+              "candidates": 1,
+              "startedMs": 7,
+              "discoveryMs": 731
+            },
+            {
+              "name": "Waploaded",
+              "candidates": 0,
+              "startedMs": 739,
+              "discoveryMs": 1
+            },
+            {
+              "name": "FilmModu",
+              "candidates": 8,
+              "startedMs": 8,
+              "discoveryMs": 1096
+            },
+            {
+              "name": "Internet Archive",
+              "candidates": 0,
+              "startedMs": 2,
+              "discoveryMs": 2623
+            },
+            {
+              "name": "4KHDHub / HubCloud",
+              "candidates": 6,
+              "startedMs": 364,
+              "discoveryMs": 4126
+            }
+          ]
+        },
+        {
+          "lane": "fastOnline",
+          "elapsedMs": 6288,
+          "results": 2,
+          "reason": "ok",
+          "sources": [
+            {
+              "name": "HDFilmDelisi",
+              "candidates": 1,
+              "startedMs": 9,
+              "discoveryMs": 707
+            },
+            {
+              "name": "DiziBal",
+              "candidates": 1,
+              "startedMs": 10,
+              "discoveryMs": 1132
+            }
+          ]
+        }
+      ],
+      "firstNonemptyLaneCompletionMs": 6288,
+      "files": []
+    },
+    {
+      "key": "fleabag-s1e1",
+      "tmdbId": 67070,
+      "title": "Fleabag",
+      "type": "tv",
+      "season": 1,
+      "episode": 1,
+      "elapsedMs": 4982,
+      "onlineWithTr": true,
+      "downloadUrls": 2,
+      "estimatedDistinctFiles": 2,
+      "downloadQualities": [
+        "848x354"
+      ],
+      "smallWithTr": true,
+      "cleanSmallWithTr": true,
+      "sourceCoverageCriteriaMet": false,
+      "gaps": [
+        "multiple_verified_download_qualities_missing"
+      ],
+      "lanes": [
+        {
+          "lane": "main",
+          "elapsedMs": 4981,
+          "results": 14,
+          "reason": "ok",
+          "sources": [
+            {
+              "name": "PlayIMDb",
+              "candidates": 3,
+              "startedMs": 8,
+              "discoveryMs": 340
+            },
+            {
+              "name": "DiziYou",
+              "candidates": 1,
+              "startedMs": 9,
+              "discoveryMs": 609
+            },
+            {
+              "name": "VixSrc",
+              "candidates": 1,
+              "startedMs": 8,
+              "discoveryMs": 841
+            },
+            {
+              "name": "Internet Archive",
+              "candidates": 2,
+              "startedMs": 4,
+              "discoveryMs": 1134
+            },
+            {
+              "name": "Waploaded",
+              "candidates": 0,
+              "startedMs": 850,
+              "discoveryMs": 386
+            },
+            {
+              "name": "DiziBak",
+              "candidates": 1,
+              "startedMs": 352,
+              "discoveryMs": 1595
+            },
+            {
+              "name": "4KHDHub / HubCloud",
+              "candidates": 0,
+              "startedMs": 618,
+              "discoveryMs": 3232
+            }
+          ]
+        },
+        {
+          "lane": "fastOnline",
+          "elapsedMs": 1385,
+          "results": 1,
+          "reason": "ok",
+          "sources": [
+            {
+              "name": "DiziBal",
+              "candidates": 1,
+              "startedMs": 9,
+              "discoveryMs": 987
+            }
+          ]
+        }
+      ],
+      "firstNonemptyLaneCompletionMs": 1385,
+      "files": [
+        {
+          "source": "Internet Archive",
+          "container": "mp4",
+          "bytes": 162737999,
+          "dimensions": {
+            "width": 848,
+            "height": 354
+          },
+          "quality": "848x354",
+          "audioLanguages": [],
+          "subtitleBestScore": 74,
+          "turkishSubtitle": true,
+          "externalTurkishTracks": 8,
+          "releaseYearBasis": "content-sample-pinned-file",
+          "knownForeignBurnedSubtitles": false,
+          "actualDurationSeconds": 1564.866,
+          "hashAvailable": true
+        },
+        {
+          "source": "Internet Archive",
+          "container": "mkv",
+          "bytes": 103770149,
+          "dimensions": {
+            "width": 848,
+            "height": 354
+          },
+          "quality": "848x354",
+          "audioLanguages": [],
+          "subtitleBestScore": 74,
+          "turkishSubtitle": true,
+          "externalTurkishTracks": 8,
+          "releaseYearBasis": "content-sample-pinned-file",
+          "knownForeignBurnedSubtitles": false,
+          "actualDurationSeconds": 1564.874,
+          "hashAvailable": true
+        }
+      ]
+    },
+    {
+      "key": "shameless-s1e1",
+      "tmdbId": 34307,
+      "title": "Shameless",
+      "type": "tv",
+      "season": 1,
+      "episode": 1,
+      "elapsedMs": 2766,
+      "onlineWithTr": true,
+      "downloadUrls": 0,
+      "estimatedDistinctFiles": 0,
+      "downloadQualities": [],
+      "smallWithTr": false,
+      "cleanSmallWithTr": false,
+      "sourceCoverageCriteriaMet": false,
+      "gaps": [
+        "download_missing",
+        "small_download_with_tr_missing",
+        "multiple_verified_download_qualities_missing"
+      ],
+      "lanes": [
+        {
+          "lane": "main",
+          "elapsedMs": 2766,
+          "results": 8,
+          "reason": "ok",
+          "sources": [
+            {
+              "name": "PlayIMDb",
+              "candidates": 3,
+              "startedMs": 4,
+              "discoveryMs": 347
+            },
+            {
+              "name": "VixSrc",
+              "candidates": 1,
+              "startedMs": 5,
+              "discoveryMs": 846
+            },
+            {
+              "name": "4KHDHub / HubCloud",
+              "candidates": 0,
+              "startedMs": 851,
+              "discoveryMs": 564
+            },
+            {
+              "name": "Waploaded",
+              "candidates": 0,
+              "startedMs": 1415,
+              "discoveryMs": 0
+            },
+            {
+              "name": "Internet Archive",
+              "candidates": 0,
+              "startedMs": 2,
+              "discoveryMs": 1600
+            },
+            {
+              "name": "DiziYou",
+              "candidates": 0,
+              "startedMs": 6,
+              "discoveryMs": 1705
+            },
+            {
+              "name": "DiziBak",
+              "candidates": 1,
+              "startedMs": 356,
+              "discoveryMs": 1510
+            }
+          ]
+        },
+        {
+          "lane": "fastOnline",
+          "elapsedMs": 1671,
+          "results": 1,
+          "reason": "ok",
+          "sources": [
+            {
+              "name": "DiziBal",
+              "candidates": 1,
+              "startedMs": 7,
+              "discoveryMs": 1019
+            }
+          ]
+        }
+      ],
+      "firstNonemptyLaneCompletionMs": 1671,
+      "files": []
+    },
+    {
+      "key": "death-note-s1e1",
+      "tmdbId": 13916,
+      "title": "DEATH NOTE",
+      "type": "tv",
+      "season": 1,
+      "episode": 1,
+      "elapsedMs": 3228,
+      "onlineWithTr": true,
+      "downloadUrls": 6,
+      "estimatedDistinctFiles": 4,
+      "downloadQualities": [
+        "852x480",
+        "1280x720"
+      ],
+      "smallWithTr": true,
+      "cleanSmallWithTr": true,
+      "sourceCoverageCriteriaMet": true,
+      "gaps": [],
+      "lanes": [
+        {
+          "lane": "main",
+          "elapsedMs": 2697,
+          "results": 6,
+          "reason": "ok",
+          "sources": [
+            {
+              "name": "PlayIMDb",
+              "candidates": 3,
+              "startedMs": 3,
+              "discoveryMs": 138
+            },
+            {
+              "name": "VixSrc",
+              "candidates": 0,
+              "startedMs": 3,
+              "discoveryMs": 164
+            },
+            {
+              "name": "4KHDHub / HubCloud",
+              "candidates": 0,
+              "startedMs": 3,
+              "discoveryMs": 519
+            },
+            {
+              "name": "Internet Archive",
+              "candidates": 0,
+              "startedMs": 2,
+              "discoveryMs": 2694
+            }
+          ]
+        },
+        {
+          "lane": "fastOnline",
+          "elapsedMs": 2256,
+          "results": 1,
+          "reason": "ok",
+          "sources": [
+            {
+              "name": "DiziBal",
+              "candidates": 1,
+              "startedMs": 4,
+              "discoveryMs": 898
+            }
+          ]
+        },
+        {
+          "lane": "anime",
+          "elapsedMs": 3228,
+          "results": 4,
+          "reason": "ok",
+          "sources": [
+            {
+              "name": "SonAnime",
+              "candidates": 2,
+              "startedMs": 5,
+              "discoveryMs": 600
+            },
+            {
+              "name": "Animecix",
+              "candidates": 4,
+              "startedMs": 4,
+              "discoveryMs": 854
+            }
+          ]
+        }
+      ],
+      "firstNonemptyLaneCompletionMs": 2256,
+      "files": [
+        {
+          "source": "SonAnime",
+          "container": "mp4",
+          "bytes": 108188435,
+          "dimensions": {
+            "width": 852,
+            "height": 480
+          },
+          "quality": "852x480",
+          "audioLanguages": [],
+          "subtitleBestScore": 69,
+          "turkishSubtitle": true,
+          "externalTurkishTracks": 5,
+          "releaseYearBasis": null,
+          "knownForeignBurnedSubtitles": false,
+          "actualDurationSeconds": 1390.656,
+          "hashAvailable": true
+        },
+        {
+          "source": "SonAnime",
+          "container": "mp4",
+          "bytes": 240288551,
+          "dimensions": {
+            "width": 1280,
+            "height": 720
+          },
+          "quality": "1280x720",
+          "audioLanguages": [],
+          "subtitleBestScore": 69,
+          "turkishSubtitle": true,
+          "externalTurkishTracks": 5,
+          "releaseYearBasis": null,
+          "knownForeignBurnedSubtitles": false,
+          "actualDurationSeconds": 1390.656,
+          "hashAvailable": true
+        },
+        {
+          "source": "Animecix",
+          "container": "mp4",
+          "bytes": 94687213,
+          "dimensions": {
+            "width": 852,
+            "height": 480
+          },
+          "quality": "852x480",
+          "audioLanguages": [],
+          "subtitleBestScore": 69,
+          "turkishSubtitle": true,
+          "externalTurkishTracks": 5,
+          "releaseYearBasis": null,
+          "knownForeignBurnedSubtitles": false,
+          "actualDurationSeconds": 1376.201,
+          "hashAvailable": true
+        },
+        {
+          "source": "Animecix",
+          "container": "mp4",
+          "bytes": 179688354,
+          "dimensions": {
+            "width": 1280,
+            "height": 720
+          },
+          "quality": "1280x720",
+          "audioLanguages": [],
+          "subtitleBestScore": 69,
+          "turkishSubtitle": true,
+          "externalTurkishTracks": 5,
+          "releaseYearBasis": null,
+          "knownForeignBurnedSubtitles": false,
+          "actualDurationSeconds": 1376.201,
+          "hashAvailable": true
+        }
+      ]
+    }
+  ],
+  "allSourceCriteriaMet": false,
+  "physicalDevice": "not-run",
+  "fullPlayback": "not-run",
+  "fullDownload": "not-run",
+  "offline": "not-run"
+}

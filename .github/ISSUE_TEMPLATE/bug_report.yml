@@ -1,0 +1,39 @@
+name: Hata bildirimi
+description: Kaynak arama, oynatma, indirme veya altyazı sorununu bildirin.
+title: "[Hata] "
+body:
+  - type: input
+    id: versions
+    attributes:
+      label: Sürümler
+      description: Nuvio ve Nuvio TR HD sürümleri.
+      placeholder: Nuvio 0.6.5-beta, Nuvio TR HD 1.7.7
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: Cihaz ve işletim sistemi
+      placeholder: iPhone, iOS sürümü
+    validations:
+      required: true
+  - type: input
+    id: title
+    attributes:
+      label: Yapım ve bölüm
+      description: Ad, yıl ve diziyse sezon/bölüm. Varsa TMDB kimliği.
+      placeholder: Fleabag (2016), S01E01
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Ne oldu?
+      description: Beklediğiniz sonucu ve tekrar etmek için gereken adımları yazın.
+    validations:
+      required: true
+  - type: textarea
+    id: diagnostics
+    attributes:
+      label: Ek bilgi
+      description: Kaynak adı, görünen hata veya temizlenmiş tanı özeti eklenebilir. API anahtarı, Cookie, Authorization, kişisel katalog veya imzalı video URL'si paylaşmayın.

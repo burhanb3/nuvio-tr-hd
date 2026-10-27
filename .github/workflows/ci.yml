@@ -20,7 +20,7 @@ jobs:
       - run: npm ci --ignore-scripts
       - run: npm run check
       - name: Üretilmiş sağlayıcı güncel mi
-        run: git diff --exit-code -- providers/nuvio-tr-hd.js manifest.json
+        run: git diff --exit-code -- providers/ manifest.json
       - uses: actions/upload-artifact@v7.0.2
         if: matrix.os == 'ubuntu-latest'
         with:

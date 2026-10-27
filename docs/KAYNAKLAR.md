@@ -1,6 +1,6 @@
 # Kişisel kaynak hazırlama
 
-Sürüm 1.1.0'da bu kaynaklar isteğe bağlı ektir. Adres girmeden çalışan yerleşik tarama için [otomatik sistem rehberini](OTOMATIK_KAYNAKLAR.md) okuyun.
+Kişisel kaynaklar yerleşik aramaya isteğe bağlı eklenir. Adres girmeden çalışan yerleşik tarama için [otomatik sistem rehberini](OTOMATIK_KAYNAKLAR.md) okuyun.
 
 ## JSON katalog
 
@@ -14,7 +14,7 @@ Kök nesne `version: 1` ve `items` listesi içerir. [Örnek dosyayı](../example
 | `year` | Filmin çıkış yılı veya dizinin ilk yayın yılı. |
 | `season`, `episode` | `tv` kayıtlarında zorunlu pozitif bölüm numaraları. Her bölüm ayrı kayıt. |
 | `streams` | Doğrudan dosya URL'leri. En çok ilk 16 akış incelenir. |
-| `subtitles` | Kayıt düzeyinde ortak Türkçe altyazılar. Akış düzeyinde de eklenebilir. |
+| `subtitles` | Kayıt düzeyinde ortak Türkçe/İngilizce altyazılar. Akış düzeyinde de eklenebilir. |
 
 URL'ler HTTPS olmalı; göreli URL'ler katalog adresine göre çözülür. HTTP yalnız kullanıcı ayarı açıkken kabul edilir. `headers` nesnesi her video veya altyazı için ayrı tanımlanır. Video başlıkları altyazı sunucusuna kendiliğinden aktarılmaz. `Authorization`, `Referer` ve gerekli kullanıcı başlıkları korunabilir; `Range`, `Host`, bağlantı ve gövde uzunluğu gibi başlıkları sağlayıcı yönetir.
 

@@ -16,13 +16,14 @@ for(const entry of titles){
  const reference=entry.tmdb,type=reference.original_name?'tv':'movie';let bytesRead=0;
  const transport=async(url,options={})=>{
   if(url.startsWith(`https://api.themoviedb.org/3/${type}/${reference.id}?`))return{ok:true,status:200,url,headers:{get:n=>n==='content-type'?'application/json':null},text:async()=>JSON.stringify(reference)};
+  if(url.startsWith(`https://api.themoviedb.org/3/${type}/${reference.id}/translations?`))return{ok:true,status:200,url,headers:{get:n=>n==='content-type'?'application/json':null},text:async()=>JSON.stringify({id:reference.id,translations:(entry.translations||[]).map(r=>({iso_639_1:r.language,data:{[type==='tv'?'name':'title']:r.title}}))})};
   const response=await fetch(url,{...options,signal:AbortSignal.any([options.signal,AbortSignal.timeout(10000)].filter(Boolean))});
   const reader=response.body?.getReader(),chunks=[];let size=0;
   if(reader)try{while(true){const{done,value}=await reader.read();if(done)break;if(size+value.length>1048576){await reader.cancel();break;}chunks.push(Buffer.from(value));size+=value.length;}}finally{reader.releaseLock();}
   bytesRead+=size;const body=Buffer.concat(chunks);
   return{ok:response.ok,status:response.status,url:response.url,headers:response.headers,text:async()=>body.toString('utf8'),arrayBuffer:async()=>Uint8Array.from(body).buffer};
  };
- const started=Date.now(),providers=[createProvider({lane:'main',tmdbKey:'fixed-reference',fetchImpl:transport})];
+ const started=Date.now(),providers=[createProvider({lane:'main',tmdbKey:'fixed-reference',fetchImpl:transport}),createProvider({lane:'fastOnline',budgetMs:8000,tmdbKey:'fixed-reference',fetchImpl:transport})];
  if(reference.original_language==='ja')providers.push(createProvider({lane:'anime',budgetMs:20000,tmdbKey:'fixed-reference',fetchImpl:transport}));
  await Promise.all(providers.map(p=>p.getStreams(reference.id,type,entry.season,entry.episode)));
  const result={key:entry.key,tmdbId:reference.id,title:reference.original_title||reference.original_name,type,

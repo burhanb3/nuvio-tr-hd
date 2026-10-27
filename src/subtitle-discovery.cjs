@@ -87,7 +87,7 @@ function createSubtitleDiscovery(http, target, settings) {
   const type = target.type === 'tv' ? 'series' : 'movie';
   const id = target.imdbId + (target.type === 'tv' ? `:${target.season}:${target.episode}` : '');
   function lookup(url) {
-    if (!cache.has(url)) cache.set(url, http.json(url, { timeoutMs: 9000 }));
+    if (!cache.has(url)) cache.set(url, http.json(url, { timeoutMs: 4500 }));
     return cache.get(url);
   }
   function normalize(data, base) {
@@ -116,8 +116,9 @@ function createSubtitleDiscovery(http, target, settings) {
     const filename = candidate.filename || decodeFilename(video.url);
     const extras = [`filename=${encodeURIComponent(filename)}`, `videoSize=${video.size || 0}`];
     if (video.videoHash) extras.push(`videoHash=${video.videoHash}`);
-    // Start title and hash requests together; one slow service must not add a
-    // second serial timeout to every candidate. URL/credentials stay private.
+    // Share title requests first. Do not fan out hash queries to a service
+    // whose catalogue request already failed; native iOS jobs cannot reliably
+    // be cancelled after the logical deadline.
     const languages=options.languages||['tr','en'];
     const relevant=base=>!(/stremio\.homes\/tr\//.test(base)&&!languages.includes('tr'))&&!(/stremio\.homes\/en\//.test(base)&&!languages.includes('en'))&&
       !(TURKISH_SUBTITLE_SERVICES.includes(base)&&!languages.includes('tr'));
@@ -131,10 +132,12 @@ function createSubtitleDiscovery(http, target, settings) {
       const hashUrl = `${hashBase}/subtitles/${type}/${encodeURIComponent(id)}/${extras.join('&')}.json`;
       // Avoid a burst of one hash query per mirror/quality. The shared title
       // lookup still covers every file; cached hash results remain reusable.
-      if (cache.has(hashUrl) || hashRequests[language] < 3) {
-        if (!cache.has(hashUrl)) hashRequests[language]++;
-        hashResults.push(lookup(hashUrl).then(data => normalize(data, hashBase)));
-      }
+      hashResults.push(lookup(`${hashBase}/subtitles/${type}/${encodeURIComponent(id)}.json`).then(async titleData=>{
+        if(!Array.isArray(titleData?.subtitles)||http.expired())return [];
+        if(!cache.has(hashUrl)&&hashRequests[language]>=3)return [];
+        if(!cache.has(hashUrl))hashRequests[language]++;
+        return normalize(await lookup(hashUrl),hashBase);
+      }));
     }}
     const groups = await Promise.all([...titleResults,...hashResults].map(async job=>{
       const rows=(await job).filter(s=>languages.includes(s.language));

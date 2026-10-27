@@ -1,5 +1,13 @@
 # Sonraki işler
 
+## 1.7.7 öncelik
+
+1. Aynı adrese 1.7.7 hazırlanıyor:222check/QuickJS, Nuvio0.6.5-beta/20drift0,4aktifID. CI/Pages/7publicdosya/SHA yayını tamamla; github-publication.json ve bu notları gerçekduruma güncelle.
+2. Film/dizi MP4/MKV kapsamı hâlâ öncelik. Yeni genelindirmesağlayıcısı0. Matrix/Shameless/GoT eksik; Spider-Verse bazı güncel denemelerdeArchive ağ/erişim nedeniyle0. Farklıkalite/özgünses veTR ile tekrar erişim hedefi açık. Tektek yeni video pinlerine dönme.
+3. Hızlıİzle defaultaçık4.ID; HDF+DiziBal burada, main'de yinelenmez. Telefonda4.grupetkinleşme/ilkcompletiongörünümü/fizikselağbeklemesisınanmadı. Source/QuickJSveNodeilkgrupsüresini iPhonegarantisi sayma.
+4. Streamflix publiccatalog/config açıldı ama dosyaCDN ağhatası, Firebase401/private. DB'yi zorlamadık, statikdevkatalogmirror yapılmadı; entegredeğil. FlixIndia forsale, FullHD403, MoviesMod reklam yönlendirme, UHDMovies/Nkiri/FzMovies ağ; Vidnest haricidecryptbağımlılığı/Franimeanti-scrape yolları eklenmedi. Goojara ana sayfa erişimi tekbaşınadosya kanıtı değil. Eski başarısızları yeni durum olmadan tekrarlama.
+5. Genelilksonuç hızını izle: kaynakkeşfi/probekuyruğu ayrıldı, subtitlehashgate var, HDHub8s keşiflimiti var. Metadata/Range gecikmeleri veNativeiptal nedeniyle bazıdosyaaramaları hâlâ15–24s olabilir. Fizikseloynatım/indirme/TR-ENoffline/senkron/fonttestleri yok. YeniPC/backend/hesap/sabitkeyekleme.
+
 ## 1.7.6 öncelik
 
 1. Tamamlandı: 1.7.6 aynı adreste yayımlandı; kodc785f7544cdc94de70f7c4c33db63bedf07814b2,210check/QuickJS ve20upstreamdrift0. Windows/Linux40423385497,Pages40423385471,altıpublicHTTP200/SHA başarılı; üçkimlik korunur. github-publication.json güncel.

@@ -1,10 +1,10 @@
 {
-  "checkedAt": "2026-10-26",
+  "checkedAt": "2026-10-27",
   "repository": "NuvioMedia/NuvioMobile",
-  "release": "0.6.4-beta",
-  "releaseCommit": "bcd62a2d6e77512597a8d693f46f035e5278cdb7",
+  "release": "0.6.5-beta",
+  "releaseCommit": "af58a32b05741963beec861255f5b18f7ede69cf",
   "defaultBranch": "cmp-rewrite",
-  "defaultHead": "56ae37081afaff820b6073da84e711320238de36",
+  "defaultHead": "61658f366f985fc7758f0942a14c1754c69aca68",
   "sourceFiles": {
     "composeApp/src/commonMain/kotlin/com/nuvio/app/features/streams/StreamsRepository.kt": "58fd52c0006c9766778400be22ae9216ab1d91fd",
     "composeApp/src/commonMain/kotlin/com/nuvio/app/features/plugins/PluginModels.kt": "2dfe5fdab84a0f044c162b9fdf26a6ab2dfbc041",

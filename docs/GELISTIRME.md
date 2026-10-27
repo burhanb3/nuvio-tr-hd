@@ -1,6 +1,6 @@
 # Geliştirme
 
-Önce [proje hafızasını](hafiza/PROJE.md) ve [kararları](hafiza/KARARLAR.md) okuyun.
+Tasarım gerekçeleri ve devam eden işler [proje notlarında](hafiza/PROJE.md) ve [karar kaydında](hafiza/KARARLAR.md) tutulur.
 
 ```text
 manifest.json                 Nuvio scrapers manifesti
@@ -11,6 +11,9 @@ src/providers/directory.cjs   Otomatik gerçek dosya dizin taraması
 src/providers/archive.cjs     Internet Archive araması ve fragman filtresi
 src/providers/playimdb.cjs    TMDB ID ile PlayIMDb sorgusu
 src/providers/vixsrc.cjs      VixSrc public oynatıcı/playlist okuma
+src/providers/dizibal.cjs     Film/dizi/anime ve public oynatıcı
+src/providers/hdfilmdelisi.cjs Dublaj ve çoklu ses HLS kaynağı
+src/entry-fast-online.cjs     Bağımsız Hızlı İzle girişi
 src/hosted.cjs                Telefonda ortak servis istemcisi ve kimlik denetimi
 hosting/worker.mjs            Sınırlı public tarama, kısa cache ve HLS master yolu
 scripts/build-host.mjs        Sites Worker ESM deterministik Windows derlemesi
@@ -42,7 +45,7 @@ Hata raporlarında token, Cookie, Authorization veya tam imzalı URL paylaşmay�
 
 ## Sonuç görünürlüğü ve hatalar
 
-Sağlayıcı bilinçli olarak hatalı adayları atlar. Boş liste, her zaman kod çökmesi anlamına gelmez: erişim yokluğu, TMDB isteği başarısızlığı, yanlış metadata, range desteği yokluğu veya desteklenmeyen altyazı biçimi olabilir. UI'ya yığın izi veya kişisel URL taşıyan hata metni döndürülmez. Üç eşzamanlı kaynak işi ve toplam üç video incelemesi, her videoda iki eşzamanlı altyazı kontrolü sınırı kullanılır. Kaynak işi adaylarını bulunca diğer kaynakları beklemeden doğrulamaya geçer. `createProvider().getReport()` son çağrının temizlenmiş tanı özetini verir.
+Sağlayıcı bilinçli olarak hatalı adayları atlar. Boş liste, her zaman kod çökmesi anlamına gelmez: erişim yokluğu, TMDB isteği başarısızlığı, yanlış metadata, range desteği yokluğu veya desteklenmeyen altyazı biçimi olabilir. UI'ya yığın izi veya kişisel URL taşıyan hata metni döndürülmez. Dört eşzamanlı kaynak keşfi ve ayrı kuyrukta üç video incelemesi kullanılır. Altyazı gövdeleri ortak dört native istekle, EN gövdeleri bunun içinde en fazla bir istekle sınırlıdır. Kaynak işi adaylarını bulunca diğer kaynakları beklemeden doğrulamaya geçer. `createProvider().getReport()` son çağrının temizlenmiş tanı özetini verir.
 
 Zamanlayıcı regresyonunun kaynağı ve canlı yeniden üretme komutları [sorun giderme rehberindedir](SORUN_GIDERME.md). QuickJS testinde Nuvio gibi iptal edilmeyen native timer işleri çağrı tamamlandıktan sonra ayrıca tüketilir; uzun toplam bütçe kadar bekleme oluşmamalıdır.
 

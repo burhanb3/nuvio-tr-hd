@@ -1,0 +1,792 @@
+{
+  "checkedAt": "2026-10-27T11:53:37.025Z",
+  "version": "1.7.7",
+  "tests": 222,
+  "method": "Fixed canonical TMDB title/year/episode and optional translation references; real source/HLS/subtitle/Range HTTP. No phone API credential or physical device test. URLs, payloads, temporary tickets and keys omitted.",
+  "architecture": {
+    "preservedScraperIds": [
+      "nuvio-tr-hd",
+      "nuvio-tr-hd-anime",
+      "nuvio-tr-hd-extra-anime"
+    ],
+    "newScraperId": "nuvio-tr-hd-fast-online",
+    "newScraperName": "Nuvio TR HD · Hızlı İzle",
+    "newScraperSources": [
+      "HDFilmDelisi",
+      "DiziBal"
+    ],
+    "newScraperDefaultEnabled": true,
+    "topLevelFastBudgetMs": 8000,
+    "hdfilmdelisiMovedFromMain": true,
+    "mainRetainsPlayImdbVixAndOtherLegacyOnlineSources": true,
+    "noDuplicateDiziBalOrHdfInMain": true,
+    "nativePerScraperCompletion": true,
+    "newPerRowStreamingAbi": false,
+    "newHelpers": 0,
+    "newAccounts": 0,
+    "newPerTitleVideoPins": 0
+  },
+  "source": {
+    "name": "DiziBal",
+    "newOnlineAdapter": true,
+    "newDownloadAdapter": false,
+    "identity": "exact canonical/translated title, year, media type, canonical page and exact season/episode; same TMDB ID binds translations",
+    "source": "public suggest/page/player JSON; access-code gate and unrelated origins rejected; scripts never executed",
+    "hlsNativeSafeMarker": "same probed endpoint with format=.m3u8; remains online-only",
+    "checkedAt": "2026-10-27T00:31:02.998Z",
+    "rows": [
+      {
+        "key": "fleabag-s1e1",
+        "translatedTitlesReference": [],
+        "elapsedMs": 1208,
+        "candidates": 1,
+        "videos": [
+          {
+            "source": "DiziBal",
+            "container": "hls",
+            "downloadable": false,
+            "resolutionOptions": [
+              {
+                "width": 1728,
+                "height": 720
+              }
+            ],
+            "audio": [],
+            "claimedAudio": [],
+            "subtitleLanguages": [],
+            "externalSubtitles": [
+              {
+                "language": "tr",
+                "name": "Türkçe · VTT · 01 · Alternatif altyazı"
+              },
+              {
+                "language": "en",
+                "name": "İngilizce · VTT · 01 · Alternatif altyazı"
+              }
+            ],
+            "card": {
+              "quality": "720p · 1728×720",
+              "size": "0,55 GB",
+              "language": "Ses: EN · TR/EN altyazı"
+            }
+          }
+        ],
+        "events": [
+          {
+            "stage": "http",
+            "host": "dizibal.org",
+            "status": 200,
+            "method": "GET"
+          },
+          {
+            "stage": "http",
+            "host": "dizibal.org",
+            "status": 200,
+            "method": "GET"
+          },
+          {
+            "stage": "http",
+            "host": "pilavyerplay.top",
+            "status": 200,
+            "method": "GET"
+          },
+          {
+            "stage": "http",
+            "host": "pilavyerplay.top",
+            "status": 200,
+            "method": "GET"
+          },
+          {
+            "stage": "http",
+            "host": "pilavyerplay.top",
+            "status": 200,
+            "method": "GET"
+          },
+          {
+            "stage": "subtitle_text",
+            "invalidUtf8": false,
+            "turkishCharacters": true,
+            "combiningCharacters": false,
+            "inlineFont": false,
+            "mojibake": false
+          },
+          {
+            "stage": "http",
+            "host": "pilavyerplay.top",
+            "status": 200,
+            "method": "GET"
+          },
+          {
+            "stage": "subtitle_text",
+            "invalidUtf8": false,
+            "turkishCharacters": false,
+            "combiningCharacters": false,
+            "inlineFont": false,
+            "mojibake": false
+          }
+        ]
+      },
+      {
+        "key": "shameless-s1e1",
+        "translatedTitlesReference": [],
+        "elapsedMs": 606,
+        "candidates": 1,
+        "videos": [
+          {
+            "source": "DiziBal",
+            "container": "hls",
+            "downloadable": false,
+            "resolutionOptions": [],
+            "audio": [],
+            "claimedAudio": [
+              "en"
+            ],
+            "subtitleLanguages": [],
+            "externalSubtitles": [
+              {
+                "language": "tr",
+                "name": "Türkçe · VTT · 01 · Alternatif altyazı"
+              }
+            ],
+            "card": {
+              "quality": "",
+              "size": "",
+              "language": "Ses: EN · TR altyazı"
+            }
+          }
+        ],
+        "events": [
+          {
+            "stage": "http",
+            "host": "dizibal.org",
+            "status": 200,
+            "method": "GET"
+          },
+          {
+            "stage": "http",
+            "host": "dizibal.org",
+            "status": 200,
+            "method": "GET"
+          },
+          {
+            "stage": "http",
+            "host": "pilavyerplay.top",
+            "status": 200,
+            "method": "GET"
+          },
+          {
+            "stage": "http",
+            "host": "pilavyerplay.top",
+            "status": 200,
+            "method": "GET"
+          },
+          {
+            "stage": "http",
+            "host": "pilavyerplay.top",
+            "status": 200,
+            "method": "GET"
+          },
+          {
+            "stage": "subtitle_text",
+            "invalidUtf8": false,
+            "turkishCharacters": true,
+            "combiningCharacters": false,
+            "inlineFont": false,
+            "mojibake": false
+          }
+        ]
+      },
+      {
+        "key": "matrix",
+        "translatedTitlesReference": [
+          "Matrix"
+        ],
+        "elapsedMs": 1120,
+        "candidates": 1,
+        "videos": [
+          {
+            "source": "DiziBal",
+            "container": "hls",
+            "downloadable": false,
+            "resolutionOptions": [
+              {
+                "width": 1728,
+                "height": 720
+              }
+            ],
+            "audio": [
+              "tr",
+              "en"
+            ],
+            "claimedAudio": [
+              "tr",
+              "en"
+            ],
+            "subtitleLanguages": [],
+            "externalSubtitles": [
+              {
+                "language": "tr",
+                "name": "Türkçe · VTT · 01 · Alternatif altyazı"
+              },
+              {
+                "language": "tr",
+                "name": "Türkçe · VTT · 02 · Alternatif altyazı"
+              }
+            ],
+            "card": {
+              "quality": "720p · 1728×720",
+              "size": "2,95 GB",
+              "language": "Ses: TR/EN · TR altyazı"
+            }
+          }
+        ],
+        "events": [
+          {
+            "stage": "http",
+            "host": "dizibal.org",
+            "status": 200,
+            "method": "GET"
+          },
+          {
+            "stage": "http",
+            "host": "dizibal.org",
+            "status": 200,
+            "method": "GET"
+          },
+          {
+            "stage": "http",
+            "host": "dizibal.org",
+            "status": 200,
+            "method": "GET"
+          },
+          {
+            "stage": "http",
+            "host": "play2.pilavyerplay.top",
+            "status": 200,
+            "method": "GET"
+          },
+          {
+            "stage": "http",
+            "host": "play2.pilavyerplay.top",
+            "status": 200,
+            "method": "GET"
+          },
+          {
+            "stage": "http",
+            "host": "play2.pilavyerplay.top",
+            "status": 200,
+            "method": "GET"
+          },
+          {
+            "stage": "subtitle_text",
+            "invalidUtf8": false,
+            "turkishCharacters": true,
+            "combiningCharacters": false,
+            "inlineFont": false,
+            "mojibake": false
+          },
+          {
+            "stage": "http",
+            "host": "play2.pilavyerplay.top",
+            "status": 200,
+            "method": "GET"
+          },
+          {
+            "stage": "subtitle_text",
+            "invalidUtf8": false,
+            "turkishCharacters": true,
+            "combiningCharacters": false,
+            "inlineFont": false,
+            "mojibake": false
+          }
+        ]
+      },
+      {
+        "key": "death-note-s1e1",
+        "translatedTitlesReference": [
+          "Ölüm Defteri"
+        ],
+        "elapsedMs": 734,
+        "candidates": 1,
+        "videos": [
+          {
+            "source": "DiziBal",
+            "container": "hls",
+            "downloadable": false,
+            "resolutionOptions": [],
+            "audio": [],
+            "claimedAudio": [
+              "ja"
+            ],
+            "subtitleLanguages": [],
+            "externalSubtitles": [
+              {
+                "language": "tr",
+                "name": "Türkçe · VTT · 01 · Alternatif altyazı"
+              }
+            ],
+            "card": {
+              "quality": "",
+              "size": "",
+              "language": "Ses: JA · TR altyazı"
+            }
+          }
+        ],
+        "events": [
+          {
+            "stage": "http",
+            "host": "dizibal.org",
+            "status": 200,
+            "method": "GET"
+          },
+          {
+            "stage": "http",
+            "host": "dizibal.org",
+            "status": 200,
+            "method": "GET"
+          },
+          {
+            "stage": "http",
+            "host": "dizibal.org",
+            "status": 200,
+            "method": "GET"
+          },
+          {
+            "stage": "http",
+            "host": "pilavyerplay.top",
+            "status": 200,
+            "method": "GET"
+          },
+          {
+            "stage": "http",
+            "host": "pilavyerplay.top",
+            "status": 200,
+            "method": "GET"
+          },
+          {
+            "stage": "http",
+            "host": "pilavyerplay.top",
+            "status": 200,
+            "method": "GET"
+          },
+          {
+            "stage": "subtitle_text",
+            "invalidUtf8": false,
+            "turkishCharacters": true,
+            "combiningCharacters": false,
+            "inlineFont": false,
+            "mojibake": false
+          }
+        ]
+      },
+      {
+        "key": "inception",
+        "translatedTitlesReference": [
+          "Başlangıç"
+        ],
+        "elapsedMs": 1006,
+        "candidates": 1,
+        "videos": [
+          {
+            "source": "DiziBal",
+            "container": "hls",
+            "downloadable": false,
+            "resolutionOptions": [
+              {
+                "width": 1728,
+                "height": 720
+              }
+            ],
+            "audio": [
+              "tr",
+              "en"
+            ],
+            "claimedAudio": [
+              "tr",
+              "en"
+            ],
+            "subtitleLanguages": [],
+            "externalSubtitles": [
+              {
+                "language": "tr",
+                "name": "Türkçe · VTT · 01 · Alternatif altyazı"
+              }
+            ],
+            "card": {
+              "quality": "720p · 1728×720",
+              "size": "2,86 GB",
+              "language": "Ses: TR/EN · TR altyazı"
+            }
+          }
+        ],
+        "events": [
+          {
+            "stage": "http",
+            "host": "dizibal.org",
+            "status": 200,
+            "method": "GET"
+          },
+          {
+            "stage": "http",
+            "host": "dizibal.org",
+            "status": 200,
+            "method": "GET"
+          },
+          {
+            "stage": "http",
+            "host": "dizibal.org",
+            "status": 200,
+            "method": "GET"
+          },
+          {
+            "stage": "http",
+            "host": "play2.pilavyerplay.top",
+            "status": 200,
+            "method": "GET"
+          },
+          {
+            "stage": "http",
+            "host": "play2.pilavyerplay.top",
+            "status": 200,
+            "method": "GET"
+          },
+          {
+            "stage": "http",
+            "host": "play2.pilavyerplay.top",
+            "status": 200,
+            "method": "GET"
+          },
+          {
+            "stage": "subtitle_text",
+            "invalidUtf8": false,
+            "turkishCharacters": true,
+            "combiningCharacters": false,
+            "inlineFont": false,
+            "mojibake": false
+          }
+        ]
+      }
+    ]
+  },
+  "performance": {
+    "discoveryNoLongerWaitsForProbesOrSubtitles": true,
+    "concurrentSourceDiscovery": 4,
+    "perInvocationMediaProbeLimit": 3,
+    "perInvocationSubtitleBodyLimit": 4,
+    "perInvocationEnglishBodyLimit": 1,
+    "subtitleCatalogueTimeoutMs": 4500,
+    "hashQueriesOnlyAfterHealthyCatalogue": true,
+    "healthyEmptySubtitleArrayStillAllowsHash": true,
+    "hdhubDiscoveryBudgetMs": 8000,
+    "logicalDeadlineDoesNotCancelNativeJobs": true,
+    "comparisons": [
+      {
+        "key": "dune",
+        "beforeElapsedMs": 13672,
+        "beforeDistinctFiles": 2,
+        "afterFirstNonemptyLaneMs": 2057,
+        "afterAllLanesMs": 8490,
+        "afterDistinctFiles": 2
+      },
+      {
+        "key": "fleabag-s1e1",
+        "beforeElapsedMs": 12261,
+        "beforeDistinctFiles": 2,
+        "afterFirstNonemptyLaneMs": 1385,
+        "afterAllLanesMs": 4982,
+        "afterDistinctFiles": 2
+      },
+      {
+        "key": "shameless-s1e1",
+        "beforeElapsedMs": 9468,
+        "beforeDistinctFiles": 0,
+        "afterFirstNonemptyLaneMs": 1671,
+        "afterAllLanesMs": 2766,
+        "afterDistinctFiles": 0
+      },
+      {
+        "key": "death-note-s1e1",
+        "beforeElapsedMs": 10534,
+        "beforeDistinctFiles": 4,
+        "afterFirstNonemptyLaneMs": 2256,
+        "afterAllLanesMs": 3228,
+        "afterDistinctFiles": 4
+      }
+    ],
+    "comparisonCaveat": "separate live rounds, not a controlled latency guarantee; first lane completion is source/Node evidence, not observed iPhone UI"
+  },
+  "quality": {
+    "lightweightMasterAdvertisedVariantsKept": 16,
+    "oldFirstFiveCutRemoved": true,
+    "noExtraChildRequestsForLightweightPath": true,
+    "fixtureHas360Through2160": true,
+    "newLive4kTitleVerified": false,
+    "noQualityUpscaling": true,
+    "externalAudioGroupNeverDroppedForAnIsolatedVideoChild": true
+  },
+  "research": [
+    {
+      "source": "FullHDFilmizlesene",
+      "result": "403",
+      "integrated": false
+    },
+    {
+      "source": "FlixIndia",
+      "result": "domain-for-sale page, no media",
+      "integrated": false
+    },
+    {
+      "source": "MoviesMod",
+      "result": "advertising redirect, no verified movie file",
+      "integrated": false
+    },
+    {
+      "source": "UHDMovies",
+      "result": "network fetch failure",
+      "integrated": false
+    },
+    {
+      "source": "Nkiri / FzMovies",
+      "result": "network fetch failures",
+      "integrated": false
+    },
+    {
+      "source": "Streamflix",
+      "result": "public catalogue/config responded; oversized catalogue ignores Range, public movie CDN network errors; Firebase REST 401, stopped",
+      "integrated": false
+    },
+    {
+      "source": "Goojara",
+      "result": "public home page alone, no verified terminal file",
+      "integrated": false
+    },
+    {
+      "source": "Vidnest",
+      "result": "external decryption service dependency not adopted",
+      "integrated": false
+    },
+    {
+      "source": "Franime",
+      "result": "complex mapping/static decoy path, no identity-valid new file verified",
+      "integrated": false
+    },
+    {
+      "source": "DiziFilm",
+      "result": "public catalogue/player responded, no terminal MP4/MKV verified; not integrated",
+      "integrated": false
+    },
+    {
+      "source": "BOAT",
+      "result": "torrent/magnet source; not a direct HTTP movie file provider",
+      "integrated": false
+    }
+  ],
+  "newGeneralFilmTvDownloadAdapters": 0,
+  "broadScanBeforeFinalLaneSplit": {
+    "checkedAt": "2026-10-27T07:15:06.682Z",
+    "version": "1.7.7",
+    "cases": [
+      {
+        "key": "no-way-home",
+        "elapsedMs": 14900,
+        "downloadUrls": 1,
+        "smallWithTr": true,
+        "downloadQualities": [
+          "720x304"
+        ],
+        "gaps": [
+          "multiple_verified_download_qualities_missing"
+        ]
+      },
+      {
+        "key": "spider-verse",
+        "elapsedMs": 23349,
+        "downloadUrls": 0,
+        "smallWithTr": false,
+        "downloadQualities": [],
+        "gaps": [
+          "download_missing",
+          "small_download_with_tr_missing",
+          "multiple_verified_download_qualities_missing"
+        ]
+      },
+      {
+        "key": "dune",
+        "elapsedMs": 24012,
+        "downloadUrls": 2,
+        "smallWithTr": true,
+        "downloadQualities": [
+          "1146x480",
+          "1280x536"
+        ],
+        "gaps": []
+      },
+      {
+        "key": "matrix",
+        "elapsedMs": 5984,
+        "downloadUrls": 0,
+        "smallWithTr": false,
+        "downloadQualities": [],
+        "gaps": [
+          "download_missing",
+          "small_download_with_tr_missing",
+          "multiple_verified_download_qualities_missing"
+        ]
+      },
+      {
+        "key": "inception",
+        "elapsedMs": 23287,
+        "downloadUrls": 2,
+        "smallWithTr": true,
+        "downloadQualities": [
+          "1280x536"
+        ],
+        "gaps": [
+          "multiple_verified_download_qualities_missing"
+        ]
+      },
+      {
+        "key": "interstellar",
+        "elapsedMs": 24021,
+        "downloadUrls": 5,
+        "smallWithTr": true,
+        "downloadQualities": [
+          "1920x1080",
+          "1152x480",
+          "853x480"
+        ],
+        "gaps": []
+      },
+      {
+        "key": "obsession",
+        "elapsedMs": 9070,
+        "downloadUrls": 7,
+        "smallWithTr": true,
+        "downloadQualities": [
+          "1002x480",
+          "1620x1080",
+          "1920x920",
+          "1280x720",
+          "853x480",
+          "3240x2160"
+        ],
+        "gaps": []
+      },
+      {
+        "key": "fleabag-s1e1",
+        "elapsedMs": 5126,
+        "downloadUrls": 2,
+        "smallWithTr": true,
+        "downloadQualities": [
+          "848x354"
+        ],
+        "gaps": [
+          "multiple_verified_download_qualities_missing"
+        ]
+      },
+      {
+        "key": "fleabag-s2e1",
+        "elapsedMs": 5171,
+        "downloadUrls": 2,
+        "smallWithTr": true,
+        "downloadQualities": [
+          "1280x720",
+          "853x480"
+        ],
+        "gaps": [
+          "only_known_foreign_burned_subtitle_small_downloads",
+          "multiple_verified_download_qualities_missing"
+        ]
+      },
+      {
+        "key": "shameless-s1e1",
+        "elapsedMs": 5153,
+        "downloadUrls": 0,
+        "smallWithTr": false,
+        "downloadQualities": [],
+        "gaps": [
+          "download_missing",
+          "small_download_with_tr_missing",
+          "multiple_verified_download_qualities_missing"
+        ]
+      },
+      {
+        "key": "got-s1e1",
+        "elapsedMs": 5003,
+        "downloadUrls": 0,
+        "smallWithTr": false,
+        "downloadQualities": [],
+        "gaps": [
+          "download_missing",
+          "small_download_with_tr_missing",
+          "multiple_verified_download_qualities_missing"
+        ]
+      },
+      {
+        "key": "breaking-bad-s1e1",
+        "elapsedMs": 5003,
+        "downloadUrls": 2,
+        "smallWithTr": true,
+        "downloadQualities": [
+          "1280x720",
+          "853x480"
+        ],
+        "gaps": []
+      },
+      {
+        "key": "death-note-s1e1",
+        "elapsedMs": 14392,
+        "downloadUrls": 4,
+        "smallWithTr": true,
+        "downloadQualities": [
+          "1280x720",
+          "852x480"
+        ],
+        "gaps": []
+      },
+      {
+        "key": "night-control",
+        "elapsedMs": 6516,
+        "downloadUrls": 0,
+        "smallWithTr": false,
+        "downloadQualities": [],
+        "gaps": [
+          "online_with_tr_missing",
+          "download_missing",
+          "small_download_with_tr_missing",
+          "multiple_verified_download_qualities_missing"
+        ]
+      }
+    ],
+    "sameContinuousRoundAsFinalCoverage": false,
+    "allSourceCriteriaMet": false
+  },
+  "repository": {
+    "readmeProductFocused": true,
+    "setupSettingsTroubleshootingRewritten": true,
+    "historyArchivedWithoutDeletingMemory": true,
+    "issueTemplates": true,
+    "contributionGuide": true,
+    "githubAboutHomepageTopicsVerified": true
+  },
+  "upstream": {
+    "release": "0.6.5-beta",
+    "head": "61658f366f985fc7758f0942a14c1754c69aca68",
+    "lockedFiles": 20,
+    "sourceDrift": [],
+    "releaseAudit": "compatibility/upstream-177-release-audit.json",
+    "lockUpdatedOnlyAfterReleaseTreeComparison": true
+  },
+  "limitations": {
+    "downloadGapsRemain": true,
+    "universalAllTitleAllQualityAvailability": false,
+    "physicalDevice": "not-run",
+    "kotlinBuild": "not-run",
+    "fullPlayback": "not-run",
+    "fullDownload": "not-run",
+    "offlineSubtitles": "not-run",
+    "audioSubtitleSceneSync": "not-run",
+    "subtitleFontFixed": false
+  },
+  "allSourceCriteriaMet": false
+}

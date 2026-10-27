@@ -6,8 +6,8 @@ const root = resolve(import.meta.dirname, '..');
 const manifest = JSON.parse(await readFile(resolve(root, 'manifest.json'), 'utf8'));
 const pkg = JSON.parse(await readFile(resolve(root, 'package.json'), 'utf8'));
 if (manifest.name !== 'Nuvio TR HD' || manifest.version !== pkg.version || !manifest.scrapers.length) throw new Error('Manifest sürümü/adı tutarsız');
-const entries = { 'providers/nuvio-tr-hd.js': 'src/entry-files.cjs', 'providers/nuvio-tr-hd-online.js': 'src/entry-online.cjs', 'providers/nuvio-tr-hd-anime.js': 'src/entry-anime.cjs', 'providers/nuvio-tr-hd-extra-anime.js':'src/entry-extra-anime.cjs' };
-if (manifest.scrapers.length !== 3 || new Set(manifest.scrapers.map(s=>s.id)).size!==3) throw new Error('Tarama sayısı/kimliği tutarsız');
+const entries = { 'providers/nuvio-tr-hd.js': 'src/entry-files.cjs', 'providers/nuvio-tr-hd-online.js': 'src/entry-online.cjs', 'providers/nuvio-tr-hd-anime.js': 'src/entry-anime.cjs', 'providers/nuvio-tr-hd-extra-anime.js':'src/entry-extra-anime.cjs','providers/nuvio-tr-hd-fast-online.js':'src/entry-fast-online.cjs' };
+if (manifest.scrapers.length !== 4 || new Set(manifest.scrapers.map(s=>s.id)).size!==4) throw new Error('Tarama sayısı/kimliği tutarsız');
 for (const scraper of manifest.scrapers) {
   const path = scraper.filename.split('?')[0];
   if (scraper.version !== pkg.version || !entries[path] || scraper.filename !== `${path}?v=${pkg.version}`) throw new Error('Sağlayıcı yolu/sürümü tutarsız');
@@ -29,4 +29,4 @@ for (const [filename, entry] of Object.entries(entries)) {
 await mkdir(resolve(root, 'dist/examples'), { recursive: true });
 await copyFile(resolve(root, 'examples/catalog.example.json'), resolve(root, 'dist/examples/catalog.example.json'));
 await copyFile(resolve(root, 'site/index.html'), resolve(root, 'dist/index.html'));
-console.log(`Nuvio TR HD ${pkg.version}: film/dizi + anime + bağımsız ek anime; eski online paket yolu korunuyor; dist/ hazır`);
+console.log(`Nuvio TR HD ${pkg.version}: film/dizi, anime, ek anime ve Hızlı İzle; dist/ hazır`);

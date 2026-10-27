@@ -1,46 +1,31 @@
-# Uzun bekleme, boş kaynak veya eksik bilgi
+# Sorun giderme
 
-**Güncel 1.6.1:** Ana Nuvio TR HD yeniden online HLS+MP4/MKV’yi birlikte sunar; ayrı Hızlı kaynaklar kaydı kaldırıldı, Anime bağımsızdır. Grup önekli Shameless bölümü düzeltildi. Archive küçük türevleri/süre doğrulaması genişledi; yeni küçük Dune dosyası doğrulanmadı. [Geçiş, kanıt ve sınırlar](ONLINE_VE_DIZI_DUZELTMELERI.md). Aşağıdaki1.6.0 üçlü tarama düzeni tarihseldir.
+## Hiç kaynak görünmüyor
 
-**Güncel 1.6.0:** üç bağımsız tarama, Animecix/Tau, MKV içi TR algılama ve karakter tanısı. [Yeni kurulum ve sınırlar](ANIME_HIZ_VE_ALTYAZI.md). Aşağıdaki 1.5/1.4 süre, kapsam ve test gözlemleri tarihseldir; üretim taramaları 16/28/20 saniye mantıksal bütçe kullanır.
+Depoyu yenileyin; Nuvio Full ve ilgili sağlayıcının etkin olduğunu kontrol edin. Yeni Hızlı İzle sağlayıcısını da açın. Dizilerde sezon/bölüm seçilmeli. Çözünürlük filtresini Tümü, Türkçe altyazı bulunamazsa seçeneğini Videoyu göster yapın. HLS kapalıysa online yayınlar görünmez.
 
-**Güncel sürüm 1.5.0:** dizilerde PlayIMDb yıl filtresi ve VixSrc TV rotası düzeltildi, HDHub tek bölüm dosyaları ve AltyazıDB eklendi. Kısa başlık, küçükten büyüğe varsayılan sıra, kalite/gruplama seçenekleri var. Sesi birlikte gelen HLS ayrı kalite satırlarıdır; ayrı sesli HLS için profil servisi Sites erişimi olmadığı için yayımlanamadı ve otomatik master korunur. Aşağıdaki 1.4.0 notları tarihsel bağlamdır. [Yeni araştırma ve sınırlar](KAYNAK_ARASTIRMASI.md).
+Aynı yapım farklı bir aramada farklı sonuç verebilir. Boş liste her zaman uygulama hatası değildir: sağlayıcı erişilemiyor, dosya kaldırılmış veya kimlik eşleşmesi reddedilmiş olabilir.
 
+## Yayınlar bulunuyor uzun sürüyor
 
-## Güncelleme
+Arama süresini en yavaş kaynak, dosya başlığı veya altyazı servisi etkileyebilir. 1.7.7 ile kaynak keşfi dosya/altyazı kontrollerini beklemeden devam eder; yanıt vermeyen altyazı kataloğuna ek hash istekleri açılmaz. HDHub bağlantı zincirinin kendi arama bütçesi vardır.
 
-1. Nuvio Pluginler bölümünde https://burhanb3.github.io/nuvio-tr-hd/manifest.json deposunu yenileyin; sağlayıcı 1.4.0 olmalı. Eski hayatimbitmiss Sites kopyasını kapatın.
-2. Çözünürlük Tümü, sonuç sınırı 20, HLS açık, MKV dosya köprüsü açık, altyazı eşleştirme Dengeli, Türkçe bulunamazsa Videoyu göster seçin. Nuvio'nun altyazı dili Türkçe olmalı.
-3. Filmi ve kaynak ekranını kapatıp yeniden arayın. Önceden kaydedilmiş ayarlar güncellemede korunabilir. Depoyu kaldırıp eklemek ayarları sıfırlayabilir.
+Nuvio iOS ağ çağrıları JavaScript zaman aşımıyla her zaman fiziksel olarak iptal edilemez. Bu yüzden 8 saniyelik bir kaynak bütçesi telefonun kesin 8 saniyede döneceği anlamına gelmez. Sürekli sorun çıkaran sağlayıcıyı ayarlardan kapatıp yeniden deneyebilirsiniz.
 
-## 1.4.0 neleri düzeltir?
+## İndirme düğmesi veya küçük dosya yok
 
-- Public imzalı GET dosyasında HEAD 403 nedeniyle yanlış eleme giderildi. Normal engelli dosyalarda erişim zorlanmaz.
-- Uzantısız gerçek R2 MKV, köprüyle .mkv adı alır. Köprü yoksa yanlış adla indirme vaat etmek yerine aday elenir.
-- HLS'de gerçek liste profili ve bitrate × süre tahmini görünür. Dosya/konteyner bilgisi okunamazsa dosya adı yalnız tahmin diye sunulur; eksik bilgi uydurulmaz.
-- Dengeli altyazı modunda aynı filme ait belirsiz alternatifler sunulur; bozuk bir altyazı geçerli diğerlerini düşürmez.
-- Bulut IP'sinde kaynak sayfaları 403 verdiğinden arama varsayılan telefonda yapılır. Ortak tarama açılması önerilmez. Dosya köprüsü yalnız bulunan public dosyaya erişir.
+Online HLS seçenekleri indirilebilir dosya değildir. Küçük MP4/MKV bulunması sağlayıcının o yapım için sunduğu dosyalara bağlıdır; büyük bir dosya eklenti tarafından küçültülmez. Desteklenen uzantısız MKV'ler için dosya köprüsü açık olmalıdır.
 
-## Sonucun anlamı
+Bir dosyanın başlığı ve Range yanıtı çalışsa da bağlantı sonradan sona erebilir. İndirmeyi başlatmadan önce kaynak ekranını yeniden açmak yeni bağlantı alınmasını sağlar.
 
-Online izlenebilir / İndirilebilir: gerçek MP4/MKV yapı ve erişim kontrolünden geçti. Tam film ve codec testi değildir. HLS / İndirilemez: yalnız online. TR bulunamadı: çalışan video var, doğrulanmış mevcut Türkçe SRT/VTT yok. Film düzeyi / senkron belirsiz: doğru film, sürüm zamanlaması kanıtlanmadı. Köprü 410: geçici kayıt/imza eskidi; yeniden kaynak arayın.
+## Türkçe dublaj veya altyazı yok
 
-Dune (2021) için son bilgisayar taramasında TR HLS, indirilebilir dosya yok. Spider-Man 1.4.0 son tam sorguda 10 sonuç verdi; 2,64 GiB MKV dahil dosyalara Türkçe VTT bağlandı. Önceki Türkçe çağrıları boş/zaman aşımı verebildi. Bunlar kalıcı kaynak sözü veya fiziksel iPhone testi değildir.
+Ses menüsünde yalnız kaynakta bulunan diller seçilebilir. Türkçe altyazı, Türkçe dublaj anlamına gelmez. TR altyazı yok yazıyorsa başka kaynak veya mevcut EN alternatifi denenebilir. Eklenti olmayan bir çeviri ya da seslendirme üretmez.
 
-## Bekleme sınırı
+## Altyazı kayık veya Türkçe harfler farklı görünüyor
 
-Ortak scheduler en çok 100 ms native uyku bırakır; Nuvio clearTimeout native sleep'i iptal etmez. Telefon JS mantıksal bütçesi 24 saniye. Başlamış native fetch/gövde okuması bu süreden uzun sürebilir; fiziksel iPhone süresi garanti edilmez. Tamamlanan videolar, altyazı takılırsa korunur.
+Önce daha güçlü eşleşen alternatif altyazıyı deneyin. Aynı filmde farklı kurgu ve fps senkronu etkileyebilir; otomatik sahne kaydırması yapılmaz. Bozuk UTF-8 dosyaları elenir, ancak iOS oynatıcı fontunun eksik glifleri eklentiyle değiştirilemez. [iPhone ve VLC seçenekleri](IPHONE_TURKCE_FONT.md).
 
-Hata ayıklama özeti ayarı kaynak/adet/HTTP durumlarını URL veya anahtar olmadan günlüğe yazar. identity_unavailable: metadata; video_unavailable: dosya/playlist; subtitle_no_match: uygun eşleşme yok; subtitle_unavailable: SRT/VTT gövdesi alınamadı; deadline: süre doldu. Tam uygulama günlükleri hassas URL içerebilir, public paylaşmayın.
+## Hata bildirimi
 
-```powershell
-npm run check
-npm run verify:upstream
-npm run test:live:bridge
-npm run test:live:pipeline -- --film=dune
-npm run test:live:pipeline -- --film=spider-man
-```
-
-Bu testler sınırlı video aralığı ve altyazı gövdesini okur; tam film indirmez. Sabit TMDB referansı kullanılan canlı test, canlı TMDB servisini doğrulamaz. iPhone'da tam indirme ve uçak modunda altyazı ayrıca sınanmalıdır.
-
-**1.4.0 son canlı kanıt:** public köprü kayıt → HEAD 200 / 2.830.708.974 byte → GET Range 206 / gerçek 1920×800 MKV; tekrar üç kayıt başarılı. Source discovery bilgisayardan, köprü üretimden sınandı. Tam Spider-Man sağlayıcı akışı yaklaşık 13,25 saniyede 10 alternatif ve Türkçe VTT verdi. Raporlar compatibility/download-bridge-live-140.json ve pipeline-spider-man-140.json. Bunlar iPhone/tam film indirme testi değildir.
+[Hata formunu](https://github.com/burhanb3/nuvio-tr-hd/issues/new/choose) kullanın. Nuvio/eklenti sürümü, cihaz, yapım/yıl, sezon/bölüm ve gördüğünüz davranış yeterlidir. İsteğe bağlı Hata ayıklama özeti kaynak/adet/HTTP durumlarını verir. Kişisel katalog adresi, Cookie, Authorization, API anahtarı veya imzalı video bağlantısı paylaşmayın.

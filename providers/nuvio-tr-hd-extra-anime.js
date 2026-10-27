@@ -274,12 +274,27 @@ var require_http = __commonJS({
         if (length > 0 && length !== body.length) return null;
         return { bytes: body, url: result.url, mime, total: total || length, etag: response.headers.get("etag") || null };
       }
+      function scope(milliseconds) {
+        const end = Date.now() + Math.max(1, milliseconds);
+        const finished = () => expired() || Date.now() >= end;
+        const options = (value) => ({ ...value, timeoutMs: Math.max(1, Math.min(end - Date.now(), value?.timeoutMs || timeoutMs)) });
+        return {
+          expired: finished,
+          note: emit,
+          failureFor: (url) => failures.get(url),
+          request: (url, value) => finished() ? Promise.resolve(null) : request(url, options(value)),
+          json: (url, value) => finished() ? Promise.resolve(null) : json(url, options(value)),
+          text: (url, value) => finished() ? Promise.resolve(null) : text(url, options(value)),
+          bytes: (url, headers, start, end2, value) => finished() ? Promise.resolve(null) : bytes(url, headers, start, end2, options(value))
+        };
+      }
       return {
         request,
         json,
         text,
         bytes,
         expired,
+        scope,
         note: emit,
         failureFor: (url) => failures.get(url),
         close: () => {
@@ -380,7 +395,13 @@ var require_matching = __commonJS({
       }
       return true;
     }
-    module2.exports = { resolveIdentity, matchesIdentity, matchesAddonMeta, matchesStreamFilename, matchesEpisode };
+    async function resolveTranslatedTitles(http, target, key) {
+      if (!key || http.expired()) return [];
+      const data = await http.json(`https://api.themoviedb.org/3/${target.type}/${target.tmdbId}/translations?api_key=${encodeURIComponent(key)}`, { timeoutMs: 3e3 });
+      if (data?.id !== target.tmdbId || !Array.isArray(data.translations)) return [];
+      return [...new Set(data.translations.filter((r) => ["tr", "en"].includes(r.iso_639_1)).map((r) => target.type === "movie" ? r.data?.title : r.data?.name).filter((v) => typeof v === "string" && v.trim()))].slice(0, 4);
+    }
+    module2.exports = { resolveIdentity, resolveTranslatedTitles, matchesIdentity, matchesAddonMeta, matchesStreamFilename, matchesEpisode };
   }
 });
 
@@ -1888,6 +1909,94 @@ var require_hdfilmdelisi = __commonJS({
   }
 });
 
+// src/providers/dizibal.cjs
+var require_dizibal = __commonJS({
+  "src/providers/dizibal.cjs"(exports2, module2) {
+    "use strict";
+    var { safeUrl, normalizeTitle } = require_util();
+    var { tagAttributes, canonicalNames, syntheticFilename } = require_page_data();
+    var { decodeEntities, filenameIdentity } = require_directory();
+    var { subtitleLanguage } = require_subtitles();
+    var { languageCode } = require_languages();
+    var ORIGIN = "https://dizibal.org";
+    function matchRow(row, target, names) {
+      const url = safeUrl(row?.url);
+      return url && new URL(url).origin === ORIGIN && (target.type === "movie" ? row.type === "movie" && /^\/movie\/[a-z0-9-]+$/.test(new URL(url).pathname) : row.type === "series" && /^\/(?:series|anime)\/[a-z0-9-]+$/.test(new URL(url).pathname)) && Number(String(row.meta || "").match(/\b(?:19|20)\d{2}\b/)?.[0]) === target.year && names.includes(normalizeTitle(row.title));
+    }
+    function pageMatches(html, url, row, target) {
+      const canonical = [...String(html).matchAll(/<link\b[^>]*>/gi)].map((m) => tagAttributes(m[0])).find((a) => a.rel === "canonical");
+      const heading = decodeEntities(String(html).match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i)?.[1] || "");
+      const expected = row.title + (target.type === "tv" ? ` ${target.season}. Sezon ${target.episode}. Bölüm` : "");
+      return safeUrl(canonical?.href) === url && normalizeTitle(heading.replace(/[—–]/g, " ")) === normalizeTitle(expected);
+    }
+    function playerAddress(html) {
+      if (/data-player-type=["']none["']/i.test(html)) return null;
+      const slug = String(html).match(/data-pv=["']([A-Za-z0-9_-]{8,160})["']/)?.[1];
+      const origin = String(html).match(/<script\b[^>]*src=["'](https:\/\/[^/"']+)\/(?:assets\/js\/core|e\/c)\.js(?:[?"'])/i)?.[1];
+      if (!slug || !origin || !/^(?:play\d{1,2}\.)?pilavyerplay\.top$/.test(new URL(origin).hostname)) return null;
+      return origin + "/assets/js/s.php?s=" + encodeURIComponent(slug);
+    }
+    function playerConfig(html, row, target, origin = "https://pilavyerplay.top") {
+      const literal = String(html).match(/window\.__PLAYER__\s*=\s*(\{[\s\S]*?\})\s*;?\s*<\/script>/)?.[1];
+      let config;
+      try {
+        config = JSON.parse(literal);
+      } catch {
+        return null;
+      }
+      const expected = row.title + (target.type === "tv" ? ` ${target.season}. Sezon ${target.episode}. Bölüm` : "");
+      if (config.accessCode || !(normalizeTitle(config.title) === normalizeTitle(expected) || target.type === "movie" && filenameIdentity(config.title, target))) return null;
+      const url = safeUrl(config.stream);
+      if (!url || new URL(url).origin !== origin || new URL(url).pathname !== "/api/stream.php") return null;
+      return { ...config, stream: url };
+    }
+    async function scanDiziBal(http, target, options = {}) {
+      let names = canonicalNames(target), queries = (target.searchTitles || [target.originalTitle]).slice(0, 2), row;
+      const visited = /* @__PURE__ */ new Set();
+      for (let round = 0; round < 2 && !row && !http.expired(); round++) {
+        for (const query of queries) {
+          if (visited.has(query) || http.expired()) continue;
+          visited.add(query);
+          const data = await http.json(ORIGIN + "/ara/oneri?q=" + encodeURIComponent(query));
+          row = (target.type === "movie" ? data?.movies : data?.series)?.find((r) => matchRow(r, target, names));
+          if (row) break;
+        }
+        if (!row && round === 0 && options.loadTitles) {
+          queries = await options.loadTitles();
+          names = [.../* @__PURE__ */ new Set([...names, ...queries.map(normalizeTitle)])];
+        }
+      }
+      if (!row) return [];
+      const url = row.url + (target.type === "tv" ? `/season/${target.season}/episode/${target.episode}` : "");
+      const page = await http.text(url);
+      if (!page || page.url !== url || !pageMatches(page.text, url, row, target)) return [];
+      const embed = playerAddress(page.text);
+      if (!embed) return [];
+      const player = await http.text(embed, { headers: { Referer: ORIGIN + "/" }, maxChars: 6e4 });
+      const origin = new URL(embed).origin, config = player && playerConfig(player.text, row, target, origin);
+      if (!config) return [];
+      const headers = { Referer: origin + "/", Origin: origin };
+      const subtitles = (Array.isArray(config.subs) ? config.subs : []).slice(0, 16).map((s) => {
+        const language = subtitleLanguage(s.lang), url2 = safeUrl(s.src, origin + "/");
+        return language && url2 ? { url: url2, language, headers, identity: target, _scope: "paired" } : null;
+      }).filter(Boolean);
+      const release = target.type === "movie" && filenameIdentity(config.title, target);
+      return [{
+        url: config.stream + (config.stream.includes("?") ? "&" : "?") + "format=.m3u8",
+        headers,
+        subtitles,
+        source: "DiziBal",
+        identity: target,
+        identityConfidence: 90,
+        filename: release ? config.title : syntheticFilename(target),
+        filenameSynthetic: !release,
+        claimedAudioLanguages: (Array.isArray(config.audios) ? config.audios : []).map((a) => languageCode(a.lang) || languageCode(a.label)).filter(Boolean)
+      }];
+    }
+    module2.exports = { scanDiziBal, matchRow, pageMatches, playerAddress, playerConfig };
+  }
+});
+
 // src/providers/animom.cjs
 var require_animom = __commonJS({
   "src/providers/animom.cjs"(exports2, module2) {
@@ -2512,7 +2621,7 @@ var require_hls = __commonJS({
       if (options.detailed === false) {
         const duration2 = master.duration || (!master.live && Number(candidate.identity?.runtimeMinutes) > 0 ? candidate.identity.runtimeMinutes * 60 : null);
         const durationSource2 = master.duration ? "playlist" : duration2 ? "tmdb" : null;
-        const renditions2 = master.variants.filter((v) => v.dimensions).slice(0, 5).map((variant) => {
+        const renditions2 = master.variants.filter((v) => v.dimensions).map((variant) => {
           const bitrate = variant.averageBandwidth || variant.bandwidth;
           const bytes = duration2 && bitrate ? Math.round(duration2 * bitrate / 8) : null;
           return {
@@ -2829,7 +2938,7 @@ var require_subtitle_discovery = __commonJS({
       const type = target.type === "tv" ? "series" : "movie";
       const id = target.imdbId + (target.type === "tv" ? `:${target.season}:${target.episode}` : "");
       function lookup(url) {
-        if (!cache.has(url)) cache.set(url, http.json(url, { timeoutMs: 9e3 }));
+        if (!cache.has(url)) cache.set(url, http.json(url, { timeoutMs: 4500 }));
         return cache.get(url);
       }
       function normalize(data, base) {
@@ -2870,10 +2979,12 @@ var require_subtitle_discovery = __commonJS({
           const hashBase = bases.find((base) => base.includes(`opensubtitles.stremio.homes/${language}/`));
           if (settings.hashLookups !== false && video.videoHash && hashBase && !http.expired()) {
             const hashUrl = `${hashBase}/subtitles/${type}/${encodeURIComponent(id)}/${extras.join("&")}.json`;
-            if (cache.has(hashUrl) || hashRequests[language] < 3) {
+            hashResults.push(lookup(`${hashBase}/subtitles/${type}/${encodeURIComponent(id)}.json`).then(async (titleData) => {
+              if (!Array.isArray(titleData?.subtitles) || http.expired()) return [];
+              if (!cache.has(hashUrl) && hashRequests[language] >= 3) return [];
               if (!cache.has(hashUrl)) hashRequests[language]++;
-              hashResults.push(lookup(hashUrl).then((data) => normalize(data, hashBase)));
-            }
+              return normalize(await lookup(hashUrl), hashBase);
+            }));
           }
         }
         const groups = await Promise.all([...titleResults, ...hashResults].map(async (job) => {
@@ -3055,7 +3166,7 @@ var require_ranking = __commonJS({
 var require_diagnostics = __commonJS({
   "src/diagnostics.cjs"(exports2, module2) {
     "use strict";
-    var VERSION = true ? "1.7.6" : "dev";
+    var VERSION = true ? "1.7.7" : "dev";
     function effectiveTmdbKey(settings, injectedKey) {
       return typeof settings.tmdbApiKey === "string" && settings.tmdbApiKey.trim() ? settings.tmdbApiKey.trim() : typeof injectedKey === "string" ? injectedKey.trim() : "";
     }
@@ -3071,6 +3182,7 @@ var require_diagnostics = __commonJS({
         archiveEnabled: settings.archiveEnabled !== false,
         waploadedEnabled: settings.waploadedEnabled !== false,
         hdfilmdelisiEnabled: settings.hdfilmdelisiEnabled !== false,
+        dizibalEnabled: settings.dizibalEnabled !== false,
         autoSubtitles: settings.autoSubtitles !== false,
         subtitleRequired: settings.subtitlePolicy === "require",
         detailedHlsMetadata: settings.detailedHlsMetadata === true,
@@ -3101,7 +3213,7 @@ var require_index = __commonJS({
     var { createHttp } = require_http();
     var { createScheduler } = require_scheduler();
     var { loadHosted, registerDownloads, SERVICE_ORIGIN } = require_hosted();
-    var { resolveIdentity } = require_matching();
+    var { resolveIdentity, resolveTranslatedTitles } = require_matching();
     var { loadCatalog } = require_catalog();
     var { loadAddon } = require_stremio();
     var { scanDirectory } = require_directory();
@@ -3115,6 +3227,7 @@ var require_index = __commonJS({
     var { scanDiziYou } = require_diziyou();
     var { scanFilmModu } = require_filmmodu();
     var { scanHdFilmDelisi } = require_hdfilmdelisi();
+    var { scanDiziBal } = require_dizibal();
     var { scanAniMom } = require_animom();
     var { scanSeiCode } = require_seicode();
     var { scanDiziBak } = require_dizibak();
@@ -3274,7 +3387,7 @@ var require_index = __commonJS({
               reject("hls_disabled");
               return;
             }
-            const lightweightHls = ["PlayIMDb", "VixSrc", "DiziYou", "DiziBak", "FilmModu", "HDFilmDelisi"].includes(candidate.source) && settings.detailedHlsMetadata !== true;
+            const lightweightHls = ["PlayIMDb", "VixSrc", "DiziYou", "DiziBak", "FilmModu", "HDFilmDelisi", "DiziBal"].includes(candidate.source) && settings.detailedHlsMetadata !== true;
             const video = await withProbeSlot(() => probe(
               http,
               candidate,
@@ -3435,28 +3548,39 @@ var require_index = __commonJS({
                   sourceJobs.push({ name: "DiziBak", run: () => scanDiziBak(http, target) });
                 if (onlineLane && settings.filmmoduEnabled !== false && target.type === "movie" && !target.isAnime)
                   sourceJobs.push({ name: "FilmModu", run: () => scanFilmModu(http, target) });
-                if (onlineLane && settings.includeHls !== false && settings.hdfilmdelisiEnabled !== false && target.type === "movie" && !target.isAnime)
+                if (["all", "online", "fastOnline"].includes(lane) && settings.includeHls !== false && settings.hdfilmdelisiEnabled !== false && target.type === "movie" && !target.isAnime)
                   sourceJobs.push({ name: "HDFilmDelisi", run: () => scanHdFilmDelisi(http, target) });
+                if (["all", "fastOnline"].includes(lane) && settings.includeHls !== false && settings.dizibalEnabled !== false)
+                  sourceJobs.push({ name: "DiziBal", run: () => {
+                    const sourceHttp = http.scope(7e3);
+                    return scanDiziBal(sourceHttp, target, { loadTitles: () => resolveTranslatedTitles(sourceHttp, target, effectiveTmdbKey(settings, tmdbKey)) });
+                  } });
                 if (filesLane && settings.hdhubEnabled !== false && !sourceFactories.some((s) => s.name === "4KHDHub / HubCloud")) sourceJobs.push({ name: "4KHDHub / HubCloud", run: async () => {
-                  return scanHdHub(http, target, { allowExtensionless: settings.useDownloadBridge !== false, onCandidates: (candidates) => acceptCandidates(candidates, true) });
+                  return scanHdHub(http.scope(8e3), target, { allowExtensionless: settings.useDownloadBridge !== false, onCandidates: (candidates) => acceptCandidates(candidates, true) });
                 } });
                 if (filesLane && settings.waploadedEnabled !== false && !target.isAnime) sourceJobs.push({ name: "Waploaded", run: () => scanWaploaded(http, target) });
               }
               for (const source of sourceFactories) sourceJobs.push({ name: source.name, run: () => source.run(http, target) });
               const quota = 10;
               await mapLimit(sourceJobs, 4, async (job) => {
+                const sourceStarted = Date.now();
                 let candidates;
                 try {
                   candidates = await job.run();
                 } catch {
                   candidates = [];
                 }
-                report.sources.push({ name: job.name, candidates: candidates.length });
-                emit({ stage: "source", source: job.name, candidates: candidates.length });
+                const timing = { startedMs: sourceStarted - started, discoveryMs: Date.now() - sourceStarted };
+                report.sources.push({ name: job.name, candidates: candidates.length, ...timing });
+                emit({ stage: "source", source: job.name, candidates: candidates.length, ...timing });
                 if (!candidates.length || http.expired()) return;
                 if (["4KHDHub / HubCloud", "Internet Archive"].includes(job.name) && !sourceFactories.some((s) => s.name === job.name)) return;
                 if (lane !== "extraAnime") void discoverSubtitles.prefetch();
-                await mapLimit(candidates.slice(0, quota), lane === "extraAnime" ? 1 : 3, processCandidate);
+                pending.push(mapLimit(
+                  candidates.slice(0, quota),
+                  lane === "extraAnime" ? 1 : 3,
+                  (candidate) => processCandidate(candidate).catch(() => reject("candidate_error"))
+                ));
               });
               await Promise.all(pending);
               return formatResults(completed, renderSettings(), target);
@@ -3536,6 +3660,7 @@ var require_index = __commonJS({
         { type: "toggle", key: "vixsrcEnabled", label: "VixSrc çevrimiçi alternatifleri", defaultValue: true },
         { type: "toggle", key: "hdhubEnabled", label: "4KHDHub / HubCloud doğrudan dosya araması", defaultValue: true, description: "Ücretsiz public FSL dosyaları doğrulanır. Kaynak metadatası boyut/piksel doğrulaması sayılmaz." },
         { type: "toggle", key: "hdfilmdelisiEnabled", label: "HDFilmDelisi Türkçe dublaj ve çoklu ses", defaultValue: true, description: "Public film kataloğu ve gerçek HLS listesi. Ses/altyazı dilleri yayıncıdan okunur; bu kaynak online izleme içindir." },
+        { type: "toggle", key: "dizibalEnabled", label: "DiziBal film, dizi ve anime", defaultValue: true, description: "Türkçe dublaj ve altyazılı online alternatifler. Özgün veya TMDB çeviri adı, yıl ve tam bölüm denetlenir." },
         { type: "toggle", key: "waploadedEnabled", label: "Waploaded güncel film/dizi dosyaları", defaultValue: true, description: "Kısmi kapsam: kaynağın son güncellenen listesi taranır; tüm arşivi kapsamaz. Gerçek dosya, yıl ve bölüm doğrulanır. Mevcut TR/EN araması uygulanır." },
         { type: "toggle", key: "directoryEnabled", label: "DahmerMovies dizin taraması (deneysel yerel yedek)", defaultValue: false, description: "Dosya CDN’i sık 403/429 döndürdüğünden varsayılan kapalıdır." },
         { type: "toggle", key: "archiveEnabled", label: "Internet Archive film araması", defaultValue: true },
@@ -3590,18 +3715,18 @@ var require_index = __commonJS({
       return createProvider({ settings, tmdbKey }).getStreams(tmdbId, mediaType, season, episode);
     }
     function createEntry(lane) {
-      const titles = { main: "Film/dizi · online ve dosyalar", files: "Dosyalar", online: "Hızlı kaynaklar", anime: "Anime", extraAnime: "Ek Anime" };
-      const only = { files: ["hdhubEnabled", "directoryEnabled", "archiveEnabled", "waploadedEnabled", "catalogUrls", "addonUrls"], online: ["playImdbEnabled", "vixsrcEnabled", "diziyouEnabled", "dizibakEnabled", "filmmoduEnabled", "hdfilmdelisiEnabled", "hlsView"], anime: ["animecixEnabled", "sonanimeEnabled"], extraAnime: ["animomEnabled", "seicodeEnabled"] };
-      only.main = [...only.files, ...only.online];
+      const titles = { main: "Film/dizi · online ve dosyalar", files: "Dosyalar", online: "Hızlı kaynaklar", anime: "Anime", extraAnime: "Ek Anime", fastOnline: "Hızlı İzle" };
+      const only = { files: ["hdhubEnabled", "directoryEnabled", "archiveEnabled", "waploadedEnabled", "catalogUrls", "addonUrls"], online: ["playImdbEnabled", "vixsrcEnabled", "diziyouEnabled", "dizibakEnabled", "filmmoduEnabled", "hdfilmdelisiEnabled", "hlsView"], anime: ["animecixEnabled", "sonanimeEnabled"], extraAnime: ["animomEnabled", "seicodeEnabled"], fastOnline: ["hdfilmdelisiEnabled", "dizibalEnabled", "hlsView"] };
+      only.main = [...only.files, ...only.online.filter((key) => key !== "hdfilmdelisiEnabled")];
       const sourceFields = Object.values(only).flat();
       return {
         async getStreams(...args) {
           const settings = typeof globalThis.SCRAPER_SETTINGS === "object" && globalThis.SCRAPER_SETTINGS || {};
           const tmdbKey = typeof globalThis.TMDB_API_KEY === "string" ? globalThis.TMDB_API_KEY : "";
-          return createProvider({ settings, tmdbKey, lane, budgetMs: ["main", "extraAnime"].includes(lane) ? 24e3 : lane === "online" ? 16e3 : lane === "anime" ? 2e4 : 28e3 }).getStreams(...args);
+          return createProvider({ settings, tmdbKey, lane, budgetMs: lane === "fastOnline" ? 8e3 : ["main", "extraAnime"].includes(lane) ? 24e3 : lane === "online" ? 16e3 : lane === "anime" ? 2e4 : 28e3 }).getStreams(...args);
         },
         onSettings: () => [
-          { type: "info", label: lane === "main" ? "Film/dizi araması online HLS ile gerçek MP4/MKV dosyalarını aynı listede sunar. Dosya araması boşsa online alternatifler korunur. Anime ayrı taramadır." : lane === "extraAnime" ? "Kısmi kapsama sahip ek anime dosyaları bağımsız taranır. Her bölümde sonuç garantisi yoktur; boş sonuç diğer sağlayıcıların sonuçlarını silmez. Aynı anda tek dosya kontrol edilir." : `Bu ayarlar yalnız ${titles[lane]} taramasına aittir. En fazla kaynak sınırı bu tarama içindir.` },
+          { type: "info", label: lane === "main" ? "Film/dizi araması online HLS ile gerçek MP4/MKV dosyalarını aynı listede sunar. Dosya araması boşsa online alternatifler korunur. Anime ayrı taramadır." : lane === "fastOnline" ? "Hızlı İzle, HDFilmDelisi ve DiziBal online kaynaklarını bağımsız arar. Ana dosya aramasının bitmesini beklemez. HLS kaynakları izleme içindir; dosya indirmesi sunmaz." : lane === "extraAnime" ? "Kısmi kapsama sahip ek anime dosyaları bağımsız taranır. Her bölümde sonuç garantisi yoktur; boş sonuç diğer sağlayıcıların sonuçlarını silmez. Aynı anda tek dosya kontrol edilir." : `Bu ayarlar yalnız ${titles[lane]} taramasına aittir. En fazla kaynak sınırı bu tarama içindir.` },
           ...onSettings().filter((field) => (!sourceFields.includes(field.key) || only[lane].includes(field.key)) && (lane !== "extraAnime" || !["includeHls", "useDownloadBridge", "allowHttp", "detailedHlsMetadata"].includes(field.key))).map((field) => lane === "extraAnime" && field.key === "animomEnabled" ? { ...field, label: "AniMOM ek anime dosyaları", defaultValue: true, description: "Kısmi katalog: tam ad/yıl/bölüm ve gerçek MP4 kontrolü gerekir. Çalışmayan bölüm atlanır; diğer sonuçlar korunur." } : lane === "extraAnime" && field.type === "info" && field.label.startsWith("Tanı ·") ? { ...field, label: field.label.split(" · ").slice(0, 3).join(" · ") + " · Bağımsız Ek Anime" } : field)
         ]
       };

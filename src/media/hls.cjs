@@ -110,7 +110,9 @@ async function inspectHls(http, text, url, candidate, options = {}) {
   if (options.detailed === false) {
     const duration = master.duration || (!master.live && Number(candidate.identity?.runtimeMinutes) > 0 ? candidate.identity.runtimeMinutes * 60 : null);
     const durationSource = master.duration ? 'playlist' : duration ? 'tmdb' : null;
-    const renditions = master.variants.filter(v => v.dimensions).slice(0,5).map(variant => {
+    // Reading advertised variants is local work. Keep the full bounded master
+    // here: the old first-five cut could hide 4K at the end of a low-to-high list.
+    const renditions = master.variants.filter(v => v.dimensions).map(variant => {
       const bitrate = variant.averageBandwidth || variant.bandwidth;
       const bytes = duration && bitrate ? Math.round(duration * bitrate / 8) : null;
       return { url: variant.url, dimensions: variant.dimensions, playlist: selectedMaster(master, variant),

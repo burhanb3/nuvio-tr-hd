@@ -1,0 +1,19 @@
+{
+  "checkedAt": "2026-10-27T11:44:10.846Z",
+  "repository": "https://github.com/burhanb3/nuvio-tr-hd",
+  "description": "Nuvio için film, dizi ve anime kaynakları. Online yayın, MP4/MKV indirme ve Türkçe/İngilizce altyazı eşleştirme.",
+  "homepage": "https://burhanb3.github.io/nuvio-tr-hd/",
+  "topics": [
+    "anime",
+    "hls",
+    "javascript",
+    "mkv",
+    "mp4",
+    "nuvio",
+    "nuvio-plugin",
+    "subtitles",
+    "turkish"
+  ],
+  "defaultBranch": "codex/publish-nuvio-tr-hd",
+  "verified": true
+}

@@ -1,5 +1,17 @@
 # Proje hafızası
 
+## 1.7.7 — kaynaklar, hız ve depo düzeni
+
+Yeni kullanıcı önceliği film/dizi/anime indirme ve düşükten4K'ya gerçek seçenekler, ses/dublaj kapsamı, hız ve profesyonel repo görünümü. Yeni genel MP4/MKV adaptörü bu tur doğrulanmadı; bunu HLS ile kapandı sayma. Eski kaynak/ayar kimlikleri3 korunur; dördüncü ID nuvio-tr-hd-fast-online, Hızlı İzle, movie/tv/HLS, varsayılan açık. HDFilmDelisi main'den bu gruba taşındı; yeni DiziBal da yalnız fastOnline/all'da. Main PlayIMDb/VixSrc/DiziYou/DiziBak/FilmModu ve dosyaları korur. HDF/DiziBal iki grupta yinelenmez. Native completion birleştirmesi kullanılır, yeni satır-callback yok. Yeni satırın telefonda etkinliği kontrol edilmeli; fiziksel cihaz yok.
+
+DiziBal public suggest -> exactname/year/type -> canonical page + exactheading/S/E -> public player JSON -> aynı gerçek HLS endpointinde format=.m3u8. Ana sayfa SEO mp4 vs kullanılmaz. Pilavyerplay root/playN kökeni sayfadan alınır; accessCode/yanlışplayerbaşlığı/dışhost reddedilir. Movie release başlığı exactoriginal+year ise ipucu olarak korunur; gerçek HLS pikseli üstündür. Katalog Türkçe adında yalnız aynıTMDBID translations tr/en. Fiziksel ses/senkron kanıtı değil. Sabitçeviri test referansları yalnız validation/; üretime yeni film/bölüm pini yok.
+
+DiziBal gerçek kaynak tekil: Fleabag1x1 TR/EN VTT, Shameless1x1 TR VTT, DeathNote1x1 TR VTT; Matrix/Inception HLS TR/EN ses ve TR VTT. Yaklaşık0,6–1,2s Node kaynak yolu; bazı HLS'de piksel yok. Bunlar online, yeni indirme değil. Üçeski grup/ID korundu; yeni backend/hesap/key0. Kaynak testleri sabitkanonikmetadata/çevirireferansı; gerçektelefonTMDBanahtarı sınanmadı.
+
+Hız: sourceJobs keşfi bitince pending probe/altyazı kuyruğuna bırakır, kaynak slotunu tutmaz. Physical media3/subbody4/EN1 perinvocation aynı. Title subtitle lookup9s->4,5s; hash yalnız katalog JSON subtitles array yanıtı verdiyse başlar (boş array sağlıklıdır). Hash/tek gövde cache korunur. http.scope, ortak failure/nativelease durumunu paylaşır; HDHub keşif8s/DiziBal7s, fastOnline top8s. Bu fiziksel iPhone iptali veya süre garantisi değildir. İlk5 HLS sınırı kalktı; master zaten16varyanta sınırlı, ekchildisteği yok. Ayrı sesli profile video-only URL döndürme.
+
+README ve kullanıcı belgeleri ürün odaklı yenilendi, geçmiş changelog/uyumluluk docs/arsiv'e alındı; hafıza korunur. GitHub About/homepage/topics güncellendi; issue/PR formları ve CONTRIBUTING eklendi. Branch aynıcodex/publish-nuvio-tr-hd. Nuvio0.6.5-beta yeni release bugün: releasecommitaf58a32b05741963beec861255f5b18f7ede69cf/tree20blob eski lock ile aynı; manueldenetim sonrası lockrelease/headmeta güncellendi. Tekrar verify başarılı; sourceDrift0,222check/QuickJS. Fizikselcihaz/tamoynatım/indirme/offline/senkronyok. Yayın 1.7.7 hazırlanıyor; CI/public dosya SHA kanıtını tamamla.
+
 ## 1.7.6 — 27 Ekim, kartlar ve TR dublaj
 
 Güncel kullanıcı talimatı eski zorunlu bilinmiyor/?/~ görünümünü geçersiz kılar: kartlarda en olası destekli tek değer; sıfır kanıtta alan boş, rastgele sayı yok. qualityChoice/probableSize, gerçek piksel/byte önceliği; dosya/kaynak/originalLanguage ve bitrate/codec/süre modelleri yalnız sunum ipucu, doğrulanmış piksel değil. Kırpılmış1920×800=1080p,1024×512=512p; p+tam piksel. Dil TR>EN>FR>ES>DE…HIson,5+N; ses ve altyazı ayrı. ÖlçülmüşHI-only üzerine EN ekleme.

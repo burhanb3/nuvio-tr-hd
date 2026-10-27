@@ -1,0 +1,28 @@
+name: Kaynak önerisi
+description: Film, dizi veya anime için bir sağlayıcı önerin.
+title: "[Kaynak] "
+body:
+  - type: input
+    id: source
+    attributes:
+      label: Sağlayıcı
+      description: Public ana sayfa veya açık kaynak depo adresi.
+    validations:
+      required: true
+  - type: dropdown
+    id: content
+    attributes:
+      label: İçerik türü
+      options:
+        - Film ve dizi
+        - Film
+        - Dizi
+        - Anime
+        - Altyazı
+  - type: textarea
+    id: details
+    attributes:
+      label: Sağladığı katkı
+      description: İndirme/online, çözünürlükler, ses/altyazı dilleri ve ücretsiz/hesapsız erişim durumu. Birkaç bölümde çalışması da değerlidir. İmzalı dosya bağlantısı veya anahtar eklemeyin.
+    validations:
+      required: true

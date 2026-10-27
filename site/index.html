@@ -10,7 +10,7 @@
   </style>
 </head>
 <body><main>
-  <div class="eyebrow">KİŞİSEL JAVASCRIPT SAĞLAYICISI · V1.7.6</div>
+  <div class="eyebrow">KİŞİSEL JAVASCRIPT SAĞLAYICISI · V1.7.7</div>
   <h1>Nuvio TR HD</h1>
   <p>Film, dizi veya anime seç. Online izleme seçeneklerini ve doğrulanmış MP4/MKV dosyalarını mevcut Türkçe altyazılarla birlikte gör.</p>
   <section class="panel" aria-label="Kurulum bağlantısı">
@@ -20,20 +20,24 @@
     <p id="status" class="status" role="status" aria-live="polite"></p>
   </section>
   <h2>Eski adresten geçiyorsan</h2>
-  <p>Yukarıdaki <strong>GitHub Pages manifestini</strong> yeni depo olarak ekle. Aynı adlı eski sağlayıcıyı kapat; iki kopya birlikte çalışırsa aynı kaynaklar tekrar listelenebilir. Sağlayıcı sürümü <strong>1.7.6</strong> olmalı.</p>
+  <p>Yukarıdaki <strong>GitHub Pages manifestini</strong> yeni depo olarak ekle. Aynı adlı eski sağlayıcıyı kapat; iki kopya birlikte çalışırsa aynı kaynaklar tekrar listelenebilir. Sağlayıcı sürümü <strong>1.7.7</strong> olmalı.</p>
   <ol>
-    <li>Plugin destekli <strong>Nuvio Full</strong> kullan ve depodaki <strong>Nuvio TR HD ve Anime</strong> taramalarını etkinleştir.</li>
+    <li>Plugin destekli <strong>Nuvio Full</strong> kullan ve depodaki <strong>Nuvio TR HD, Hızlı İzle, Anime ve Ek Anime</strong> taramalarını etkinleştir.</li>
     <li>Sağlayıcı ayarları: <strong>çözünürlük Tümü · en fazla 20 alternatif · HLS açık</strong>. Önceden kaydedilmiş 6/10 veya 720p tercihini gerekiyorsa değiştir.</li>
     <li><strong>MKV indirme adını koruyan dosya köprüsü açık</strong> olsun. Kaynak araması telefonda, uzantısız dosyanın doğrulaması köprüde yapılır.</li>
     <li>Nuvio'nun tercih edilen altyazı dilini <strong>Türkçe</strong> seç. Filmin kaynak ekranını kapatıp yeniden aç.</li>
   </ol>
   <h2>Hangi seçenek indirilebilir?</h2>
   <p><strong>Online izlenebilir · İndirilebilir</strong> etiketi gerçek MP4/MKV dosyalarında görünür. <strong>Online izlenebilir · İndirilemez</strong> etiketi HLS içindir. HLS, MP4/MKV dosyası olarak sunulmaz. Dosya adındaki kalite gerçek çözünürlük sayılmaz; okunabilen piksel boyutları ayrıca yazılır.</p>
-  <h2>1.7.6 ile değişenler</h2>
-  <p><strong>Daha sade kartlar:</strong> çözünürlükte p ve piksel birlikte, boyutta tek GB değeri, ses ve altyazıda TR/EN öncelikli dil kodları. Beşten fazla dil varsa +N gösterilir. Hiçbir dayanağı olmayan alan gizlenir.</p>
-  <div class="panel"><strong>Online · HDFilmDelisi</strong><p>1080p · 1920×804 · 2,11 GB<br>Ses: TR/EN · TR/EN altyazı</p><p>Yeni Türkçe dublaj yolu Dune, Matrix ve No Way Home için gerçek HLS listesinde TR/EN ses ve TR altyazı verdi. HLS online izlenir; MP4/MKV indirmesi değildir. GB, online aktarım için hesaplanan değerdir.</p></div>
-  <p><strong>İndirme araması:</strong> HDHub'da MB sürümleri doğru sıralanır; küçük dosyalarla birlikte yüksek kalite/büyük sürümler de aynı bütçede incelenir. Mevcut Dune ve Fleabag dosyaları korundu; Shameless gibi dizilerde indirme açığı sürüyor.</p>
-  <p class="note">Pluginler ekranından depoyu yenileyin. 210 test/QuickJS geçti; Nuvio 0.6.4-beta sözleşmesi kontrol edildi. Fiziksel iPhone, tam indirme, çevrimdışı izleme ve senkron testi yapılmadı. <a href="https://github.com/burhanb3/nuvio-tr-hd/blob/codex/publish-nuvio-tr-hd/docs/KARTLAR_VE_DUBLAJ_176.md">Kapsam ve doğrulama ayrıntıları</a></p>
+  <h2>İzleme ve indirme seçenekleri</h2>
+  <p>Farklı sağlayıcılardaki film, dizi ve anime kaynakları tek listede. Kalite, boyut, ses ve mevcut Türkçe/İngilizce altyazıları karşılaştır; boyuta veya kaliteye göre sırala.</p>
+  <div class="panel"><strong>1080p · 1920×800 · 1,80 GB</strong><p>Ses: TR/EN · TR/EN altyazı</p><p>İndirilebilir etiketi gerçek MP4/MKV dosyaları içindir. Online HLS kaynaklarında GB değeri aktarım hesabıdır; bu yayınlar dosya indirmesi olarak sunulmaz.</p></div>
+  <h2>Dört sağlayıcı, bağımsız arama</h2>
+  <p><strong>Nuvio TR HD</strong> film/dizi dosyalarını ve mevcut online kaynakları arar. <strong>Hızlı İzle</strong> HDFilmDelisi ve yeni DiziBal yayınlarını bağımsız sunar. <strong>Anime</strong> ve <strong>Ek Anime</strong> anime kaynaklarını tamamlar. Depoyu yeniledikten sonra Hızlı İzle satırının da açık olduğunu kontrol et.</p>
+  <h2>Türkçe ses ve altyazı</h2>
+  <p>Kaynakta varsa dublaj ve çoklu sesler TR/EN önceliğiyle görünür. Mevcut TR/EN SRT/VTT dosyaları hash, sürüm ve süreye göre eşleştirilir. Türkçe altyazı, Türkçe ses veya tam senkron garantisi değildir.</p>
+  <p class="note">Kapsam sağlayıcıya ve bölüme göre değişir; her yapımda indirme veya her kalite bulunamayabilir. 4K yalnız kaynakta varsa sunulur. Nuvio 0.6.5-beta sözleşmesi ve 222 test/QuickJS kontrol edildi. Fiziksel iPhone, tam indirme, offline altyazı ve senkron testi yapılmadı.</p>
+  <div class="actions"><a href="https://github.com/burhanb3/nuvio-tr-hd#readme">Kullanım rehberi</a><a href="https://github.com/burhanb3/nuvio-tr-hd/issues/new/choose">Hata bildir</a><a href="https://github.com/burhanb3/nuvio-tr-hd/blob/codex/publish-nuvio-tr-hd/CHANGELOG.md">Sürüm notları</a></div>
   <footer>Medya barındırılmaz. GitHub Pages yalnız kurulum sayfası, manifest ve sağlayıcı kodunu sunar. MIT lisansı.</footer>
 </main><script>
   const input=document.querySelector('#manifest');input.value=new URL('manifest.json',location.href).href;

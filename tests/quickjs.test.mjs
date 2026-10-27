@@ -12,6 +12,21 @@ const bundle = await readFile(new URL('../providers/nuvio-tr-hd.js', import.meta
 const onlineBundle = await readFile(new URL('../providers/nuvio-tr-hd-online.js', import.meta.url), 'utf8');
 const animeBundle = await readFile(new URL('../providers/nuvio-tr-hd-anime.js', import.meta.url), 'utf8');
 const extraAnimeBundle = await readFile(new URL('../providers/nuvio-tr-hd-extra-anime.js', import.meta.url), 'utf8');
+const fastOnlineBundle = await readFile(new URL('../providers/nuvio-tr-hd-fast-online.js', import.meta.url), 'utf8');
+
+test('QuickJS: DiziBal public player keeps dubbed audio and 4K online while respecting its source toggle',async()=>{
+ const root='https://dizibal.org',page=root+'/movie/the-matrix',player='https://play2.pilavyerplay.top';
+ const fixture=makeFixture({extra:{
+  [root+'/ara/oneri?q=The%20Matrix']:{json:{movies:[{type:'movie',title:'The Matrix',meta:'Film · 1999',url:page}]}},
+  [page]:{body:`<link rel="canonical" href="${page}"><h1>The Matrix</h1><div data-pv="publicFixture"></div><script src="${player}/assets/js/core.js"></script>`},
+  [player+'/assets/js/s.php?s=publicFixture']:{body:'<script>window.__PLAYER__ = '+JSON.stringify({title:'The Matrix 1999 2160p',stream:player+'/api/stream.php?s=fixture',audios:[{lang:'en'},{lang:'tr'}],subs:[]})+';</script>'},
+  [player+'/api/stream.php?s=fixture&format=.m3u8']:{body:'#EXTM3U\n#EXT-X-STREAM-INF:BANDWIDTH=16000000,RESOLUTION=3840x2160\n2160.m3u8\n'}
+ }});
+ const settings={autoSubtitles:false,useDownloadBridge:false,archiveEnabled:false,hdhubEnabled:false,playImdbEnabled:false,vixsrcEnabled:false,waploadedEnabled:false,filmmoduEnabled:false,hdfilmdelisiEnabled:false};
+ const streams=await runInQuickJs(fixture,{code:fastOnlineBundle,settings});assert.equal(streams.length,1);assert.equal(streams[0].quality,'2160p · 3840×2160');assert.match(streams[0].language,/Ses: TR\/EN/);assert.equal(streams[0].type,'hls');assert.match(streams[0].title,/İndirilemez/);
+ assert.deepEqual(await runInQuickJs(fixture,{code:fastOnlineBundle,settings:{...settings,dizibalEnabled:false}}),[]);
+ assert.deepEqual(await runInQuickJs(fixture,{settings}),[],'the main scraper must not duplicate DiziBal');
+});
 
 test('QuickJS: public Turkish dub source keeps TR/EN audio, real HLS and clean p/pixel cards',async()=>{
  const origin='https://hdfilmdelisi.one',embed='https://pl.vixolity.com/PublicExample',raw='https://ha.vixolity.com/vs/tt0133093';
@@ -23,9 +38,10 @@ test('QuickJS: public Turkish dub source keeps TR/EN audio, real HLS and clean p
   [raw+'?format=.m3u8']:{body:'#EXTM3U\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="a",LANGUAGE="tr",URI="tr.m3u8"\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="a",LANGUAGE="en",URI="en.m3u8"\n#EXT-X-STREAM-INF:BANDWIDTH=3000000,RESOLUTION=1920x804,AUDIO="a"\nvideo.m3u8\n'}
  }});
  const settings={autoSubtitles:false,archiveEnabled:false,hdhubEnabled:false,playImdbEnabled:false,vixsrcEnabled:false,filmmoduEnabled:false,waploadedEnabled:false,useDownloadBridge:false};
- const streams=await runInQuickJs(fixture,{settings});assert.equal(streams.length,1);assert.equal(streams[0].type,'hls');assert.equal(streams[0].quality,'1080p · 1920×804');assert.match(streams[0].language,/Ses: TR\/EN/);
+ const streams=await runInQuickJs(fixture,{code:fastOnlineBundle,settings});assert.equal(streams.length,1);assert.equal(streams[0].type,'hls');assert.equal(streams[0].quality,'1080p · 1920×804');assert.match(streams[0].language,/Ses: TR\/EN/);
  assert.doesNotMatch(streams[0].title,/bilinmiyor|tahmin|[?~]/);assert.match(streams[0].title,/İndirilemez/);
- assert.deepEqual(await runInQuickJs(fixture,{settings:{...settings,hdfilmdelisiEnabled:false}}),[]);
+ assert.deepEqual(await runInQuickJs(fixture,{code:fastOnlineBundle,settings:{...settings,hdfilmdelisiEnabled:false}}),[]);
+ assert.deepEqual(await runInQuickJs(fixture,{settings}),[],'HDFilmDelisi must not be duplicated in the main scraper');
 });
 
 test('QuickJS: güncel film dosyası public ticket ile bulunur; gerçek MKV ve ad uzantısı korunur',async()=>{

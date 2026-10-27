@@ -1,5 +1,14 @@
 # Tasarım kararları
 
+## 1.7.7 kaynak ve hız kararları
+
+- Yeni4.Hızlıİzle grubu eski3ID'yi silmez. HDFilmDelisi ve DiziBal fastOnline/all'da tek kez; main'in eskiPlayIMDb/Vix/diğeronline yolları korunur. Nativegrupcompletion kullanılabilir; per-rowstreaming ABI uydurma. Güncellemede Hızlıİzle etkinliği kontrol edilir.
+- Kaynak slotu dosya/altyazı beklemez; pending işler ortak3probe kuyruğunda. Kaynak bütçesi root/native kotayı sıfırlamaz; başarısız bir kaynağa ikinci bütçeyle aynı aramada sınırsız deneme yok.
+- Sağlıksız subtitle title isteği hash fan-out açmaz. Sağlıklı boşsubtitles array hash aramasına engel değil. Daha kısa metadata lookup ile body/hashkanıtı aynı şey değildir; senkron ölçüldü deme.
+- DiziBal kaynakları exactcanonicalname/year/type veS/E ile bağlı. Türkçe adlar yalnız aynıTMDBID translations'tan; benzer başlık veya ilk sonuca fallback yok. Public player JSON literal, accessCode/privateguard geçilmez; geçici URL/token commit edilmez.
+- HLS'nin master'daki bütün en fazla16varyantı hafif yolda tutulur. Mevcut4K'nın altıncı sırada kesilmesini düzeltmek, herfilm4K bulundu demek değildir. Yeni online/dublaj katkısı yeniindirilebilirdosya sayılmaz.
+- Repo dokümanlarında ürün kullanımı önde, eski araştırma kayıtları arşivde. Hafıza/kanıt dosyalarını silme; hiçbir yeni kaynak yokken kapsam tamamlandı iddiası yazma. 0.6.5-beta kilidi20blob releaseaudit sonrası güncellendi.
+
 ## 1.7.6 güncel görünüm ve kaynak kararı (öncelikli)
 
 - Kullanıcı bilinmiyor/?/tahmini göstermememizi istedi. Eski tüm alanlar zorunlu ve tahmin işaretli kararı artık geçerli değil. Kanıtlı en olası değer tek başına sunulur, hiçbir dayanak yoksa alan gizlenir. Kanıt seviyesi kod/raporda saklanır. İsimden gerçek piksel/byte doğrulaması üretme.

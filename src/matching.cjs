@@ -83,4 +83,11 @@ function matchesStreamFilename(stream, target) {
   }
   return true;
 }
-module.exports = { resolveIdentity, matchesIdentity, matchesAddonMeta, matchesStreamFilename, matchesEpisode };
+async function resolveTranslatedTitles(http,target,key) {
+  if(!key||http.expired())return [];
+  const data=await http.json(`https://api.themoviedb.org/3/${target.type}/${target.tmdbId}/translations?api_key=${encodeURIComponent(key)}`,{timeoutMs:3000});
+  if(data?.id!==target.tmdbId||!Array.isArray(data.translations))return [];
+  return [...new Set(data.translations.filter(r=>['tr','en'].includes(r.iso_639_1))
+    .map(r=>target.type==='movie'?r.data?.title:r.data?.name).filter(v=>typeof v==='string'&&v.trim()))].slice(0,4);
+}
+module.exports = { resolveIdentity, resolveTranslatedTitles, matchesIdentity, matchesAddonMeta, matchesStreamFilename, matchesEpisode };

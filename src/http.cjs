@@ -123,7 +123,20 @@ function createHttp({ fetchImpl, allowHttp = false, timeoutMs = 4500, deadline =
     return { bytes: body, url: result.url, mime, total: total || length, etag: response.headers.get('etag') || null };
   }
 
-  return { request, json, text, bytes, expired, note: emit, failureFor: url => failures.get(url),
+  function scope(milliseconds) {
+    const end=Date.now()+Math.max(1,milliseconds);
+    const finished=()=>expired()||Date.now()>=end;
+    const options=value=>({...value,timeoutMs:Math.max(1,Math.min(end-Date.now(),value?.timeoutMs||timeoutMs))});
+    // Share the actual network pools and failure state. A provider's budget
+    // prevents starting its next hop; it never releases an unfinished native
+    // request or changes the deadline for another provider.
+    return {expired:finished,note:emit,failureFor:url=>failures.get(url),
+      request:(url,value)=>finished()?Promise.resolve(null):request(url,options(value)),
+      json:(url,value)=>finished()?Promise.resolve(null):json(url,options(value)),
+      text:(url,value)=>finished()?Promise.resolve(null):text(url,options(value)),
+      bytes:(url,headers,start,end,value)=>finished()?Promise.resolve(null):bytes(url,headers,start,end,options(value))};
+  }
+  return { request, json, text, bytes, expired, scope, note: emit, failureFor: url => failures.get(url),
     close: () => {
       closed = true;
       for (const controller of controllers) controller.abort();

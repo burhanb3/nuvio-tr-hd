@@ -1,0 +1,131 @@
+{
+  "checkedAt": "2026-10-27",
+  "release": "0.6.5-beta",
+  "releaseCommit": "af58a32b05741963beec861255f5b18f7ede69cf",
+  "releaseTree": "b1e9aea36767f061a574430dabe45677ff4c66ef",
+  "files": [
+    {
+      "path": "composeApp/src/commonMain/kotlin/com/nuvio/app/features/streams/StreamsRepository.kt",
+      "expectedSha": "58fd52c0006c9766778400be22ae9216ab1d91fd",
+      "releaseSha": "58fd52c0006c9766778400be22ae9216ab1d91fd",
+      "identical": true
+    },
+    {
+      "path": "composeApp/src/commonMain/kotlin/com/nuvio/app/features/plugins/PluginModels.kt",
+      "expectedSha": "2dfe5fdab84a0f044c162b9fdf26a6ab2dfbc041",
+      "releaseSha": "2dfe5fdab84a0f044c162b9fdf26a6ab2dfbc041",
+      "identical": true
+    },
+    {
+      "path": "composeApp/src/fullCommonMain/kotlin/com/nuvio/app/features/plugins/PluginManifestParser.kt",
+      "expectedSha": "7981f311b92915245f92e74740ecc4bac41e67cc",
+      "releaseSha": "7981f311b92915245f92e74740ecc4bac41e67cc",
+      "identical": true
+    },
+    {
+      "path": "composeApp/src/fullCommonMain/kotlin/com/nuvio/app/features/plugins/PluginRepository.kt",
+      "expectedSha": "f9c7cefac6e4fe477da47adb95bb33e7a70964a8",
+      "releaseSha": "f9c7cefac6e4fe477da47adb95bb33e7a70964a8",
+      "identical": true
+    },
+    {
+      "path": "composeApp/src/fullCommonMain/kotlin/com/nuvio/app/features/plugins/runtime/PluginRuntime.kt",
+      "expectedSha": "04fc61ba488b3ba0a146fb5a83286e2c5cbb092d",
+      "releaseSha": "04fc61ba488b3ba0a146fb5a83286e2c5cbb092d",
+      "identical": true
+    },
+    {
+      "path": "composeApp/src/fullCommonMain/kotlin/com/nuvio/app/features/plugins/runtime/js/JsBindings.kt",
+      "expectedSha": "f19b11a939ded987ec0fd83ed959364414a0ab07",
+      "releaseSha": "f19b11a939ded987ec0fd83ed959364414a0ab07",
+      "identical": true
+    },
+    {
+      "path": "composeApp/src/fullCommonMain/kotlin/com/nuvio/app/features/plugins/runtime/network/FetchBridge.kt",
+      "expectedSha": "757ca33ab2fffda34384999f42bea748533d185d",
+      "releaseSha": "757ca33ab2fffda34384999f42bea748533d185d",
+      "identical": true
+    },
+    {
+      "path": "composeApp/src/commonMain/kotlin/com/nuvio/app/features/streams/StreamFetchSupport.kt",
+      "expectedSha": "5bfa30be3d7ce135aaa4846f0df11b732ad6cea7",
+      "releaseSha": "5bfa30be3d7ce135aaa4846f0df11b732ad6cea7",
+      "identical": true
+    },
+    {
+      "path": "composeApp/src/commonMain/kotlin/com/nuvio/app/features/downloads/DownloadsRepository.kt",
+      "expectedSha": "909e718364f693d5a5d612933f0c896c6b144340",
+      "releaseSha": "909e718364f693d5a5d612933f0c896c6b144340",
+      "identical": true
+    },
+    {
+      "path": "composeApp/src/commonMain/kotlin/com/nuvio/app/features/downloads/DownloadSubtitles.kt",
+      "expectedSha": "f804ee50379f088a5da0be9e52200da492e25da8",
+      "releaseSha": "f804ee50379f088a5da0be9e52200da492e25da8",
+      "identical": true
+    },
+    {
+      "path": "composeApp/src/commonMain/kotlin/com/nuvio/app/features/addons/AddonPlatform.kt",
+      "expectedSha": "c0e30fcebfc3a1b473fa852c42f5e2c029ad6b6b",
+      "releaseSha": "c0e30fcebfc3a1b473fa852c42f5e2c029ad6b6b",
+      "identical": true
+    },
+    {
+      "path": "composeApp/src/androidMain/kotlin/com/nuvio/app/features/addons/AddonPlatform.android.kt",
+      "expectedSha": "29d28f438d37d7ae6ab0f6a3a057496be16c3bfb",
+      "releaseSha": "29d28f438d37d7ae6ab0f6a3a057496be16c3bfb",
+      "identical": true
+    },
+    {
+      "path": "composeApp/src/iosMain/kotlin/com/nuvio/app/features/addons/AddonPlatform.ios.kt",
+      "expectedSha": "c556d5b8fd3c15d8dca9a88898ef4c0224206883",
+      "releaseSha": "c556d5b8fd3c15d8dca9a88898ef4c0224206883",
+      "identical": true
+    },
+    {
+      "path": "gradle/libs.versions.toml",
+      "expectedSha": "133b6209a498c8b75e9472b699c715e4892da271",
+      "releaseSha": "133b6209a498c8b75e9472b699c715e4892da271",
+      "identical": true
+    },
+    {
+      "path": "composeApp/src/androidFull/kotlin/com/nuvio/app/features/plugins/runtime/PluginRuntime.android.kt",
+      "expectedSha": "9bfd84dabb56dab61896bd1d73a0db0051154cde",
+      "releaseSha": "9bfd84dabb56dab61896bd1d73a0db0051154cde",
+      "identical": true
+    },
+    {
+      "path": "composeApp/src/iosFull/kotlin/com/nuvio/app/features/plugins/runtime/PluginRuntime.ios.kt",
+      "expectedSha": "2945271f78bbbe5ded14a72c5106554cee5666f5",
+      "releaseSha": "2945271f78bbbe5ded14a72c5106554cee5666f5",
+      "identical": true
+    },
+    {
+      "path": "composeApp/src/fullCommonMain/kotlin/com/nuvio/app/features/plugins/PluginSettingsDialog.kt",
+      "expectedSha": "a945815edd14df792319818dc2cbe8de740defdd",
+      "releaseSha": "a945815edd14df792319818dc2cbe8de740defdd",
+      "identical": true
+    },
+    {
+      "path": "composeApp/src/commonMain/kotlin/com/nuvio/app/features/player/PlayerScreenRuntimeTrackActions.kt",
+      "expectedSha": "f8e90c81a20cd0b82d3b7751d07c3cfe94bb619e",
+      "releaseSha": "f8e90c81a20cd0b82d3b7751d07c3cfe94bb619e",
+      "identical": true
+    },
+    {
+      "path": "composeApp/src/commonMain/kotlin/com/nuvio/app/features/player/PlayerSubtitleMatching.kt",
+      "expectedSha": "b98bf8396df5265c2599e806be3e03e5176e15d7",
+      "releaseSha": "b98bf8396df5265c2599e806be3e03e5176e15d7",
+      "identical": true
+    },
+    {
+      "path": "composeApp/src/commonMain/kotlin/com/nuvio/app/features/player/PlayerStartupSubtitles.kt",
+      "expectedSha": "42986ee37ae874a9b3a9202c28e4a5bd1efe92e6",
+      "releaseSha": "42986ee37ae874a9b3a9202c28e4a5bd1efe92e6",
+      "identical": true
+    }
+  ],
+  "sourceDrift": [],
+  "method": "GitHub release tag and complete Git tree inspected; all 20 watched blobs compared with existing lock before manually updating release metadata.",
+  "deviceTest": "not-run"
+}

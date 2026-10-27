@@ -1,8 +1,8 @@
 {
   "name": "nuvio-tr-hd",
-  "version": "1.7.6",
+  "version": "1.7.7",
   "private": true,
-  "description": "Nuvio KMP için kişisel MP4/MKV ve Türkçe altyazı sağlayıcısı",
+  "description": "Nuvio için film, dizi ve anime kaynakları; online yayın, MP4/MKV indirme ve TR/EN altyazı.",
   "license": "MIT",
   "engines": {
     "node": ">=22"
