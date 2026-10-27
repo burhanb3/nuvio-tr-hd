@@ -10,9 +10,11 @@ Birleşik 11 başlık/bölüm: Dune3, Spider-Verse2, Fleabag1x1/2x1 üçer, GoT1
 
 238 fixture/gerçek QuickJS testi geçti; Nuvio0.6.5-beta/20 kilitli dosyada drift0, lock değişmedi. compatibility/download-expansion-179.json, coverage-179.json, upstream-179-check.json. Coverage eski piksel-grup gate'i iki farklı kırpılmış480p'yi iki kalite sanabiliyor: rapor artık gerçek p sınıflarını ayrıca ayırır; tam kapsam tamamlandı denmez. externalTurkishTracks eski test yardımcı alanı aslında toplam harici TR+EN; kanıtta externalTrackCount diye düzeltildi. subtitleBestScore diller arası max; TR'ye özgü senkron puanı değildir.
 
+Kod commit'i sonrası iki film tekrar tarandı: Dune yeni Goojara dosyası aynı506588493byte ile tekrar geçti, toplam3dosya. Spider-Verse yeni aday probe'da geçmedi; yalnız eski Archive2016133619byte/1920×800 kaldı. Altı yeni örnek tarihsel başarıdır, her tekrarın sonucu veya kararlılık garantisi değildir. postCommitRepeat kanıtı iki JSON raporda bulunur.
+
 HTTP publicCookieRedirectOrigin yalnız açık anonim katalog oturumuna opt-in; manual redirect'te çerez düşer, Authorization her zaman reddedilir, seçenek fetch'e geçmez. iOS otomatik yönlendirmede fiziksel header aktarımı sınanmadı, JS garantisini native'ye yayma. Video sonucu yalnız Referer taşır. Fiziksel cihaz/tam oynatım/indirme/offline/senkron/font testi yok.
 
-Yayın 1.7.9 hazırlanıyor; CI ve public dosya SHA kanıtını tamamla.
+1.7.9 yayımlandı: kod 9cc51c8c95ad77579812f2818541ad512e92e6d9; Windows/Linux Test 40516316789, Pages 40516317132 başarılı; yedi public dosya HTTP200 ve yerel SHA eşit. github-publication.json güncel.
 
 ## 1.7.8 — indirme önceliği ve kısmi film arşivi
 

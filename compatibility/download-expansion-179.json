@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-10-27T13:54:18.525Z",
+  "checkedAt": "2026-10-27T14:00:38.267Z",
   "version": "1.7.9",
   "tests": 238,
   "method": "General source search and exact canonical title/year/film IMDb/TV parent-season-episode links, release filename checks, bounded real Range/container/byte/pixel/duration/hash probes and existing TR/EN subtitle matching. Fixed metadata references; not phone TMDB credentials or full playback.",
@@ -188,6 +188,330 @@
     }
   ],
   "coverageEvidence": "compatibility/coverage-179.json",
+  "postCommitRepeat": {
+    "checkedAt": "2026-10-27T13:59:11.964Z",
+    "version": "1.7.9",
+    "note": "Additional film round after the source commit. Earlier successful examples above remain historical observations, not the latest result in every repeat.",
+    "cases": [
+      {
+        "key": "spider-verse",
+        "tmdbId": 324857,
+        "title": "Spider-Man: Into the Spider-Verse",
+        "type": "movie",
+        "checkedAt": "2026-10-27T13:59:11.964Z",
+        "elapsedMs": 7145,
+        "bytesRead": 6553678,
+        "downloadFiles": 1,
+        "onlineWithTr": true,
+        "cleanOnlineWithTr": true,
+        "downloadPixelGroups": [
+          "1920x800"
+        ],
+        "downloadQualityGrades": [
+          "1080p"
+        ],
+        "cleanDownloadQualityGrades": [
+          "1080p"
+        ],
+        "smallWithTr": true,
+        "cleanSmallWithTr": true,
+        "smallLimitBytes": 3221225472,
+        "legacyPixelGroupGateMet": false,
+        "qualityGradeGateMet": false,
+        "legacyGaps": [
+          "multiple_verified_download_qualities_missing"
+        ],
+        "notes": [
+          "Legacy coverage gate compares pixel pairs, so two differently cropped 480p files can pass it. This is not proof of two quality grades or 4K coverage."
+        ],
+        "discovery": [
+          {
+            "lane": "main",
+            "elapsedMs": 7144,
+            "results": 17,
+            "reason": "ok",
+            "sources": [
+              {
+                "name": "PlayIMDb",
+                "candidates": 3,
+                "startedMs": 53,
+                "discoveryMs": 437
+              },
+              {
+                "name": "VixSrc",
+                "candidates": 1,
+                "startedMs": 55,
+                "discoveryMs": 846
+              },
+              {
+                "name": "Goojara",
+                "candidates": 1,
+                "startedMs": 52,
+                "discoveryMs": 1912
+              },
+              {
+                "name": "FilmModu",
+                "candidates": 6,
+                "startedMs": 498,
+                "discoveryMs": 1702
+              },
+              {
+                "name": "Waploaded",
+                "candidates": 0,
+                "startedMs": 1965,
+                "discoveryMs": 366
+              },
+              {
+                "name": "Internet Archive",
+                "candidates": 1,
+                "startedMs": 49,
+                "discoveryMs": 2532
+              },
+              {
+                "name": "RareFilmm",
+                "candidates": 0,
+                "startedMs": 2202,
+                "discoveryMs": 454
+              },
+              {
+                "name": "4KHDHub / HubCloud",
+                "candidates": 6,
+                "startedMs": 901,
+                "discoveryMs": 5182
+              }
+            ],
+            "rejected": {
+              "video_unavailable": 7
+            }
+          },
+          {
+            "lane": "fastOnline",
+            "elapsedMs": 4104,
+            "results": 1,
+            "reason": "ok",
+            "sources": [
+              {
+                "name": "DiziBal",
+                "candidates": 0,
+                "startedMs": 55,
+                "discoveryMs": 551
+              },
+              {
+                "name": "HDFilmDelisi",
+                "candidates": 1,
+                "startedMs": 54,
+                "discoveryMs": 1114
+              }
+            ],
+            "rejected": {}
+          }
+        ],
+        "files": [
+          {
+            "source": "Internet Archive",
+            "container": "mp4",
+            "bytes": 2016133619,
+            "filename": "Spider-Man Into the Spider-Verse (2018) [1080p] [BluRay] [YTS.MX].torrent",
+            "dimensions": {
+              "width": 1920,
+              "height": 800
+            },
+            "qualityGrade": "1080p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 8,
+            "bestSubtitleScoreAnyLanguage": 74,
+            "actualDurationSeconds": 7010.059,
+            "hashAvailable": true,
+            "audioLanguagesMeasured": [],
+            "burnedSubtitleLanguage": null,
+            "sourceHardSubtitleFlag": false,
+            "cleanForCoverage": true
+          }
+        ]
+      },
+      {
+        "key": "dune",
+        "tmdbId": 438631,
+        "title": "Dune",
+        "type": "movie",
+        "checkedAt": "2026-10-27T13:59:11.964Z",
+        "elapsedMs": 7145,
+        "bytesRead": 5710255,
+        "downloadFiles": 3,
+        "onlineWithTr": true,
+        "cleanOnlineWithTr": true,
+        "downloadPixelGroups": [
+          "1146x480",
+          "1280x536",
+          "852x362"
+        ],
+        "downloadQualityGrades": [
+          "480p",
+          "720p"
+        ],
+        "cleanDownloadQualityGrades": [
+          "480p",
+          "720p"
+        ],
+        "smallWithTr": true,
+        "cleanSmallWithTr": true,
+        "smallLimitBytes": 3221225472,
+        "legacyPixelGroupGateMet": true,
+        "qualityGradeGateMet": true,
+        "legacyGaps": [],
+        "notes": [
+          "Legacy coverage gate compares pixel pairs, so two differently cropped 480p files can pass it. This is not proof of two quality grades or 4K coverage."
+        ],
+        "discovery": [
+          {
+            "lane": "main",
+            "elapsedMs": 7145,
+            "results": 13,
+            "reason": "ok",
+            "sources": [
+              {
+                "name": "PlayIMDb",
+                "candidates": 3,
+                "startedMs": 6,
+                "discoveryMs": 384
+              },
+              {
+                "name": "VixSrc",
+                "candidates": 1,
+                "startedMs": 7,
+                "discoveryMs": 878
+              },
+              {
+                "name": "FilmModu",
+                "candidates": 0,
+                "startedMs": 395,
+                "discoveryMs": 752
+              },
+              {
+                "name": "Waploaded",
+                "candidates": 0,
+                "startedMs": 1147,
+                "discoveryMs": 1
+              },
+              {
+                "name": "RareFilmm",
+                "candidates": 0,
+                "startedMs": 1148,
+                "discoveryMs": 408
+              },
+              {
+                "name": "Goojara",
+                "candidates": 1,
+                "startedMs": 5,
+                "discoveryMs": 1792
+              },
+              {
+                "name": "Internet Archive",
+                "candidates": 2,
+                "startedMs": 2,
+                "discoveryMs": 1904
+              },
+              {
+                "name": "4KHDHub / HubCloud",
+                "candidates": 5,
+                "startedMs": 885,
+                "discoveryMs": 3318
+              }
+            ],
+            "rejected": {
+              "video_unavailable": 5
+            }
+          },
+          {
+            "lane": "fastOnline",
+            "elapsedMs": 4751,
+            "results": 1,
+            "reason": "ok",
+            "sources": [
+              {
+                "name": "DiziBal",
+                "candidates": 0,
+                "startedMs": 8,
+                "discoveryMs": 403
+              },
+              {
+                "name": "HDFilmDelisi",
+                "candidates": 1,
+                "startedMs": 8,
+                "discoveryMs": 884
+              }
+            ],
+            "rejected": {}
+          }
+        ],
+        "files": [
+          {
+            "source": "Internet Archive",
+            "container": "mp4",
+            "bytes": 949160267,
+            "filename": "Dune_2021_720p_BluRay_x265_HEVC_10bit_AAC_2_0_Hindi_PSA_ASAP.mkv",
+            "dimensions": {
+              "width": 1146,
+              "height": 480
+            },
+            "qualityGrade": "480p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 8,
+            "bestSubtitleScoreAnyLanguage": 76,
+            "actualDurationSeconds": 9326.698,
+            "hashAvailable": true,
+            "audioLanguagesMeasured": [],
+            "burnedSubtitleLanguage": null,
+            "sourceHardSubtitleFlag": false,
+            "cleanForCoverage": true
+          },
+          {
+            "source": "Internet Archive",
+            "container": "mkv",
+            "bytes": 792903325,
+            "filename": "Dune_2021_720p_BluRay_x265_HEVC_10bit_AAC_2_0_Hindi_PSA_ASAP.mkv",
+            "dimensions": {
+              "width": 1280,
+              "height": 536
+            },
+            "qualityGrade": "720p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 8,
+            "bestSubtitleScoreAnyLanguage": 76,
+            "actualDurationSeconds": 9326.659,
+            "hashAvailable": true,
+            "audioLanguagesMeasured": [
+              "hi"
+            ],
+            "burnedSubtitleLanguage": null,
+            "sourceHardSubtitleFlag": false,
+            "cleanForCoverage": true
+          },
+          {
+            "source": "Goojara",
+            "container": "mp4",
+            "bytes": 506588493,
+            "filename": "Dune.2021.1080p.HMAX.WEB-DL.DDP5.1.Atmos.x264-EVO.WT11.mp4",
+            "dimensions": {
+              "width": 852,
+              "height": 362
+            },
+            "qualityGrade": "480p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 8,
+            "bestSubtitleScoreAnyLanguage": 84,
+            "actualDurationSeconds": 9325.014,
+            "hashAvailable": true,
+            "audioLanguagesMeasured": [],
+            "burnedSubtitleLanguage": null,
+            "sourceHardSubtitleFlag": false,
+            "cleanForCoverage": true
+          }
+        ]
+      }
+    ],
+    "result": "Dune Goojara small file passed again; Spider-Verse Goojara candidate did not pass the media probe in this round, with one older Archive file retained."
+  },
   "repeat": [
     {
       "key": "fleabag-s1e1",
