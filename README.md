@@ -39,7 +39,7 @@ Piksel ve gerçek dosya boyutu varsa öncelikle bunlar kullanılır. Eksik bilgi
 
 | Alan | Sağlayıcılar |
 | --- | --- |
-| Film ve dizi dosyaları | Internet Archive, 4KHDHub/HubCloud, HDRezka, Goojara, Waploaded; eski filmlerde RareFilmm |
+| Film ve dizi dosyaları | Internet Archive, 4KHDHub/HubCloud, HDRezka, Goojara, Waploaded; filmlerde MoviesDrive/Pixeldrain ve RareFilmm |
 | Online film ve dizi | PlayIMDb, VixSrc, DiziYou, DiziBak, FilmModu, HDFilmDelisi, DiziBal, Purstream |
 | Anime dosyaları | Animecix, SonAnime, AniMOM, SeiCode/MP4Upload |
 | Harici altyazı | AltyazıDB, OpenSubtitles ve kaynakla eşlenmiş TR/EN dosyaları |
@@ -47,6 +47,8 @@ Piksel ve gerçek dosya boyutu varsa öncelikle bunlar kullanılır. Eksik bilgi
 Kapsam sağlayıcıya ve bölüme göre değişir. Her yapımın indirilebilir sürümü veya her çözünürlüğü bulunamayabilir. 4K yalnız kaynakta mevcutsa sunulur. Kaynak listesi bir erişilebilirlik garantisi değildir; bozuk bağlantılar elenir.
 
 **İndirilebilir** etiketi gerçek MP4/MKV dosyaları içindir. **Online** HLS kaynakları Nuvio'nun dosya indirme yoluna verilmez. Türkçe altyazı bulunması Türkçe ses bulunduğu anlamına gelmez; yakın sürüm eşleşmesi de tam senkron garantisi değildir.
+
+MoviesDrive'daki uzantısız MKV dosyaları Nuvio tarafından `.mp4` adıyla kaydedilebilir. Dahili MPV dosyanın gerçek formatını içerikten okur; dışarı aktarılan dosyada başka oynatıcı için `.mkv` olarak yeniden adlandırmak gerekebilir. Kaynak ayarından MoviesDrive kapatılabilir. Bu davranış Nuvio kaynak kodu ve bilgisayarda kısa MPV örneğiyle sınandı; fiziksel telefonda tam indirme/offline testi yapılmadı.
 
 ## Belgeler
 

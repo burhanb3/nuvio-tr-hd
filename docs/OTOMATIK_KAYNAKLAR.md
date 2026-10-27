@@ -8,6 +8,7 @@
 | 4KHDHub / HubCloud | Film/dizi | MP4/MKV; public dosya zinciri |
 | Goojara | Film/dizi | Küçük MP4 alternatifleri; bölüm ve gerçek dosya kontrolü |
 | HDRezka | Film/dizi | Ücretsiz MP4 kaliteleri; özgün ses, IMDb ve bölüm kontrolü |
+| MoviesDrive / Pixeldrain | Film ve anime filmleri | Ek MP4/MKV; gerçek boyut, piksel, süre ve ses kontrolü |
 | Waploaded | Film/dizi | MP4/MKV; son güncellenen kısmi katalog |
 | RareFilmm | Eski/az bulunan filmler | Küçük MP4 alternatifleri; bazı sürümlerde EN görüntüde |
 | PlayIMDb, VixSrc | Film/dizi | Online HLS |
@@ -36,6 +37,10 @@ RareFilmm bütün film kataloğunu kapsamaz. Genel aramada tam başlık/yıl, ma
 Goojara, ana sağlayıcıda film ve bölüm dosyaları arar. Tam başlık/yıl, filmlerde IMDb, dizilerde seçilen sezon listesi ve bölüm sayfası birlikte denetlenir. Dosya adındaki 720p/1080p etiketi ölçülen pikselin yerine geçmez. Kaynak bir dosyayı HCSubs gibi sabit altyazı işaretiyle sunuyorsa kartta Sabit altyazı yazılır; dili bilinmeden EN/TR diye etiketlenmez. Sunucuya ve bölüme göre erişim değişebilir; her yapım veya 4K garantisi değildir.
 
 HDRezka'da aynı IMDb, kanonik başlık ve yıl birlikte aranır. Farklı başlık gerekiyorsa yalnız aynı TMDB kaydının alternatif başlıkları kabul edilir. Dizilerde seçilen ses sürümünün kendi bölüm listesinde tam sezon ve bölüm bulunmalıdır. Hesap, kullanıcı çerezi veya yeni sunucu gerekmez. Ücretli işaretli kalite ve kısa örnek videolar atlanır; ücretsiz 4K bulunduğu varsayılmaz. Mevcut TR/EN altyazı araması dosya bazında devam eder.
+
+MoviesDrive'da tam film adı/yıl, varsa IMDb ve dosyanın kendi adı birlikte denetlenir. Yayımlanmış indirme bağlantısından Pixeldrain'in public dosya bilgisine gidilir; erişim kısıtlıysa sonuç atlanır. Gerçek byte boyutu, video pikseli, süre ve ses parçaları okunur. Sadece HI sesi bulunan dosyalar eklenmez; TR/EN veya yapımın Hintçe dışındaki özgün sesi aranır. Dört sürüm için küçük, 1080p ve yüksek kalite dengesi kullanılır; kaynak etiketleri doğrulanmış kalite sayılmaz.
+
+Uzantısız MKV'lerde Nuvio'nun `.mp4` kayıt adı gerçek formatı değiştirmez. Dahili MPV içerikten tanır; sonuçtaki tür MKV olarak korunur. Bu istisna yalnız boyutu/formatı ayrıca kontrol edilen kaynak adaylarına açıktır. Genel katalog format kontrolleri ve HLS indirme yasağı korunur. Telefon dışında açarken dosyayı `.mkv` olarak yeniden adlandırmak gerekebilir. Yeni sunucu veya hesap gerekmez.
 
 Hızlı İzle, HDFilmDelisi, DiziBal ve Purstream kaynaklarını bağımsız tarar; ana sağlayıcıda aynı işler tekrarlanmaz. Eski üç sağlayıcının kimlikleri korunur. Ana sağlayıcıdaki PlayIMDb/VixSrc ve diğer online yollar çalışmaya devam eder; HDFilmDelisi Hızlı İzle grubundadır.
 

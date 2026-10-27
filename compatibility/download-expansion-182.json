@@ -1,0 +1,558 @@
+{
+  "checkedAt": "2026-10-27T18:08:49.858Z",
+  "version": "1.8.2",
+  "baseline": "1.8.1",
+  "outcome": {
+    "newPartialMovieDownloadAdapters": 1,
+    "newPartialTvDownloadAdapters": 0,
+    "newFiles": 9,
+    "titleExamples": 6,
+    "new4kFiles": 1,
+    "newAnimeMovieFiles": 1,
+    "newAnimeSeriesFiles": 0,
+    "newTurkishDubFiles": 0,
+    "allNewFilesHaveTurkishSubtitleAlternatives": true,
+    "newBackend": 0,
+    "newAccount": 0,
+    "newFixedKey": 0,
+    "newPerTitleVideoPin": 0
+  },
+  "method": {
+    "source": "MoviesDrive / Pixeldrain",
+    "sourceSetting": "moviesdriveEnabled",
+    "sourceBudgetMs": 10000,
+    "mainBudgetMs": 24000,
+    "sourceResolvers": 2,
+    "videoNativeSlots": 3,
+    "subtitleNativeSlots": 4,
+    "englishSubtitleNativeSlots": 1,
+    "metadataMode": "fixed canonical validation metadata; real public catalogue, file metadata, Range, container, hash and subtitle HTTP. Phone TMDB credentials not tested.",
+    "identity": "exact canonical/search title and year on search/post/release; reject conflicting IMDb; actual host file name must equal wrapper release and match title/year; expected bytes/container plus real video pixels, duration within10% and measured EN/TR or non-Hindi original audio",
+    "limits": "movie and anime movie only; no TV season guessing. Four balanced release routes; no source quality label treated as measured. No captcha, view-count inflation, account, key, premium or rate-limit bypass; restricted info/403 is skipped."
+  },
+  "newFiles": [
+    {
+      "key": "no-way-home",
+      "tmdbId": 634649,
+      "source": "MoviesDrive / Pixeldrain",
+      "container": "mkv",
+      "bytes": 904073631,
+      "filename": "Spider-Man.No.Way.Home.2021.720p.10bit.IMAX.BCORE.WEB-DL.Hindi.English.ESubs.MoviesDrives.CV.mkv",
+      "sourceItemId": null,
+      "releaseYearBasis": null,
+      "mediaFilename": null,
+      "audioLanguages": [
+        "hi",
+        "en"
+      ],
+      "subtitleBestScore": 69,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 1280,
+        "height": 674
+      },
+      "quality": "1280x674",
+      "qualityGrade": "720p",
+      "turkishSubtitle": true,
+      "externalTrackCount": 7,
+      "externalTurkishTracks": 4,
+      "actualDurationSeconds": 8890.895,
+      "hashAvailable": true
+    },
+    {
+      "key": "spider-verse",
+      "tmdbId": 324857,
+      "source": "MoviesDrive / Pixeldrain",
+      "container": "mkv",
+      "bytes": 401835837,
+      "filename": "Spider-Man Into the Spider Verse 2018 BluRay 480p English+Hindi ESUB.moviesdrives.com.mkv",
+      "sourceItemId": null,
+      "releaseYearBasis": null,
+      "mediaFilename": null,
+      "audioLanguages": [
+        "hi",
+        "en"
+      ],
+      "subtitleBestScore": 69,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 720,
+        "height": 302
+      },
+      "quality": "720x302",
+      "qualityGrade": "302p",
+      "turkishSubtitle": true,
+      "externalTrackCount": 6,
+      "externalTurkishTracks": 4,
+      "actualDurationSeconds": 7010.639,
+      "hashAvailable": true
+    },
+    {
+      "key": "dune",
+      "tmdbId": 438631,
+      "source": "MoviesDrive / Pixeldrain",
+      "container": "mkv",
+      "bytes": 566912339,
+      "filename": "[[ moviesdrives.com ]] Dune.2021.480p.BluRay.Hindi-English.x264.ESub- moviesdrives.com.mkv",
+      "sourceItemId": null,
+      "releaseYearBasis": null,
+      "mediaFilename": null,
+      "audioLanguages": [
+        "hi",
+        "en"
+      ],
+      "subtitleBestScore": 69,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 856,
+        "height": 360
+      },
+      "quality": "856x360",
+      "qualityGrade": "480p",
+      "turkishSubtitle": true,
+      "externalTrackCount": 8,
+      "externalTurkishTracks": 4,
+      "actualDurationSeconds": 9325.172,
+      "hashAvailable": true
+    },
+    {
+      "key": "dune",
+      "tmdbId": 438631,
+      "source": "MoviesDrive / Pixeldrain",
+      "container": "mkv",
+      "bytes": 2071642223,
+      "filename": "[[ moviesdrives.com ]] Dune.2021.1080p.10bit.BluRay.Hindi-English.x265- moviesdrives.com.mkv",
+      "sourceItemId": null,
+      "releaseYearBasis": null,
+      "mediaFilename": null,
+      "audioLanguages": [
+        "hi",
+        "en"
+      ],
+      "subtitleBestScore": 74,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 1920,
+        "height": 804
+      },
+      "quality": "1920x804",
+      "qualityGrade": "1080p",
+      "turkishSubtitle": true,
+      "externalTrackCount": 8,
+      "externalTurkishTracks": 4,
+      "actualDurationSeconds": 9325.001,
+      "hashAvailable": true
+    },
+    {
+      "key": "dune",
+      "tmdbId": 438631,
+      "source": "MoviesDrive / Pixeldrain",
+      "container": "mkv",
+      "bytes": 948305346,
+      "filename": "[[ moviesdrives.com ]] Dune.2021.720p.10bit.BluRay.Hindi-English.x265-- moviesdrives.com.mkv",
+      "sourceItemId": null,
+      "releaseYearBasis": null,
+      "mediaFilename": null,
+      "audioLanguages": [
+        "hi",
+        "en"
+      ],
+      "subtitleBestScore": 69,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 1280,
+        "height": 536
+      },
+      "quality": "1280x536",
+      "qualityGrade": "720p",
+      "turkishSubtitle": true,
+      "externalTrackCount": 8,
+      "externalTurkishTracks": 4,
+      "actualDurationSeconds": 9325.135,
+      "hashAvailable": true
+    },
+    {
+      "key": "inception",
+      "tmdbId": 27205,
+      "source": "MoviesDrive / Pixeldrain",
+      "container": "mkv",
+      "bytes": 2495758260,
+      "filename": "[[ moviesdrives.com ]] Inception.2010.1080p.10Bit.BluRay.Hindi.5.1-English.5.1.HEVC.x265- moviesdrives.com.mkv",
+      "sourceItemId": null,
+      "releaseYearBasis": null,
+      "mediaFilename": null,
+      "audioLanguages": [
+        "hi",
+        "en"
+      ],
+      "subtitleBestScore": 69,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 1920,
+        "height": 800
+      },
+      "quality": "1920x800",
+      "qualityGrade": "1080p",
+      "turkishSubtitle": true,
+      "externalTrackCount": 8,
+      "externalTurkishTracks": 4,
+      "actualDurationSeconds": 8888.107,
+      "hashAvailable": true
+    },
+    {
+      "key": "inception",
+      "tmdbId": 27205,
+      "source": "MoviesDrive / Pixeldrain",
+      "container": "mkv",
+      "bytes": 7591975942,
+      "filename": "[[ moviesdrives.com ]] Inception.2010.4K-2160p.SDR.10Bit.BluRay.Hindi.DD5.1-English.5.1.HEVC.x265- moviesdrives.com.mkv",
+      "sourceItemId": null,
+      "releaseYearBasis": null,
+      "mediaFilename": null,
+      "audioLanguages": [
+        "hi",
+        "en"
+      ],
+      "subtitleBestScore": 69,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 3840,
+        "height": 1598
+      },
+      "quality": "3840x1598",
+      "qualityGrade": "2160p",
+      "turkishSubtitle": true,
+      "externalTrackCount": 8,
+      "externalTurkishTracks": 4,
+      "actualDurationSeconds": 8888.341,
+      "hashAvailable": true
+    },
+    {
+      "key": "interstellar",
+      "tmdbId": 157336,
+      "source": "MoviesDrive / Pixeldrain",
+      "container": "mkv",
+      "bytes": 738280833,
+      "filename": "[[ moviesdrives.com ]] Interstellar.2014.480p.BluRay.HIN-ENG.x264.ESub.- moviesdrives.com.mkv",
+      "sourceItemId": null,
+      "releaseYearBasis": null,
+      "mediaFilename": null,
+      "audioLanguages": [
+        "hi",
+        "en"
+      ],
+      "subtitleBestScore": 74,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 856,
+        "height": 480
+      },
+      "quality": "856x480",
+      "qualityGrade": "480p",
+      "turkishSubtitle": true,
+      "externalTrackCount": 8,
+      "externalTurkishTracks": 4,
+      "actualDurationSeconds": 10143.935,
+      "hashAvailable": true
+    },
+    {
+      "key": "your-name",
+      "tmdbId": 372058,
+      "source": "MoviesDrive / Pixeldrain",
+      "container": "mkv",
+      "bytes": 761393489,
+      "filename": "Your.Name.2016.720p.10Bit.BluRay.Hindi-English.HEVC.x265- moviesdrives.cv.mkv",
+      "sourceItemId": null,
+      "releaseYearBasis": null,
+      "mediaFilename": null,
+      "audioLanguages": [
+        "hi",
+        "en"
+      ],
+      "subtitleBestScore": 69,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 1280,
+        "height": 720
+      },
+      "quality": "1280x720",
+      "qualityGrade": "720p",
+      "turkishSubtitle": true,
+      "externalTrackCount": 6,
+      "externalTurkishTracks": 3,
+      "actualDurationSeconds": 6396.373,
+      "hashAvailable": true
+    }
+  ],
+  "nativeCompatibility": {
+    "previousDecisionRevised": "A .mp4 storage suffix does not imply that a real MKV cannot play. Keep generic mismatch rejection; verified source explicitly opts in with exact expected size/container. Actual returned type stays mkv.",
+    "sourceFiles": [
+      {
+        "path": "composeApp/src/commonMain/kotlin/com/nuvio/app/features/downloads/DownloadsRepository.kt",
+        "gitBlob": "909e718364f693d5a5d612933f0c896c6b144340"
+      },
+      {
+        "path": "composeApp/src/iosMain/kotlin/com/nuvio/app/features/downloads/DownloadsPlatformDownloader.ios.kt",
+        "gitBlob": "22a996a312625b2879fa68ea7c65a2a8325eac95"
+      },
+      {
+        "path": "iosApp/iosApp/Player/MPVPlayerBridge.swift",
+        "gitBlob": "7fce2594115ae51b1dca34fffb5849c8d27b32ff"
+      },
+      {
+        "path": "composeApp/src/androidMain/kotlin/com/nuvio/app/features/player/PlayerEngine.android.kt",
+        "gitBlob": "c090dbda09d5c6d1681bc394e9bce6a6c159b42c"
+      }
+    ],
+    "storage": "Nuvio current filename builder gives extensionless HTTP sources .mp4. iOS writes bytes directly; MPV loadfile detects content. External export/players can require renaming to .mkv.",
+    "desktopTests": [
+      {
+        "checkedAt": "2026-10-27T17:47:33.413Z",
+        "player": "official mpv CI v0.41.0-dev-g82667e3cb x86_64 Windows",
+        "archiveSha256": "7826703bb4fdbd6c496265215e50e62fd60a4dcb15e5795bfed41e6ec03c1f2c",
+        "sample": {
+          "bytes": 4194304,
+          "sha256": "6f323d779622833f4390d1000573d8c520b2d6e1e653b11b12e90fcc285bcc38",
+          "savedExtension": "mp4",
+          "actualContainer": "mkv",
+          "rangeStatus": 206
+        },
+        "args": [
+          "--no-config",
+          "--vo=null",
+          "--ao=null",
+          "--frames=1",
+          "--untimed",
+          "--term-playing-msg=FILE_FORMAT=${file-format} VIDEO=${video-params/w}x${video-params/h}",
+          ".cache/matroska-as-mp4-182.mp4"
+        ],
+        "exitCode": 0,
+        "output": "[mkv] mkv metadata beyond end of file - incomplete file?\r\n● Video  --vid=1              'moviesdrives.com' (hevc 1920x804 23.976 fps) [default]\r\n● Audio  --aid=1  --alang=hi  'moviesdrives.com' (ac3 6ch 48000 Hz) [default forced]\r\n○ Audio  --aid=2  --alang=en  'moviesdrives.com' (aac 6ch 48000 Hz)\r\n○ Subs   --sid=1  --slang=en  'moviesdrives.com' (subrip)\r\n○ Subs   --sid=2  --slang=en  'moviesdrives.com' (subrip)\r\n○ Subs   --sid=3  --slang=es  'moviesdrives.com' (subrip)\r\n○ Subs   --sid=4  --slang=es  'moviesdrives.com' (subrip)\r\nFile tags:\r\n Title: moviesdrives.com.mkv\r\nVO: [null] 1920x804 yuv420p10\r\nAO: [null] 48000Hz 5.1(side) 6ch floatp\r\nFILE_FORMAT=mkv VIDEO=1920x804\r\nExiting... (End of file)\r\n",
+        "phoneTest": "not-run",
+        "fullMovie": "not-run"
+      },
+      {
+        "checkedAt": "2026-10-27T18:00:47.901Z",
+        "player": "official mpv CI v0.41.0-dev-g82667e3cb x86_64 Windows",
+        "archiveSha256": "7826703bb4fdbd6c496265215e50e62fd60a4dcb15e5795bfed41e6ec03c1f2c",
+        "source": "MoviesDrive / Pixeldrain",
+        "actualBytes": 7591975942,
+        "actualDimensions": {
+          "width": 3840,
+          "height": 1598
+        },
+        "audioLanguages": [
+          "hi",
+          "en"
+        ],
+        "sample": {
+          "bytes": 4194304,
+          "sha256": "83421887fa2fbf6982fa746eea14f2ef92cd41ffe537c084502a856e0135b125",
+          "savedExtension": "mp4",
+          "actualContainer": "mkv",
+          "rangeStatus": 206
+        },
+        "args": [
+          "--no-config",
+          "--vo=null",
+          "--ao=null",
+          "--alang=en",
+          "--frames=1",
+          "--untimed",
+          "--term-playing-msg=FILE_FORMAT=${file-format} VIDEO=${video-params/w}x${video-params/h} AUDIO=${alang}",
+          ".cache/matroska-4k-as-mp4-182.mp4"
+        ],
+        "exitCode": 0,
+        "output": "[mkv] mkv metadata beyond end of file - incomplete file?\r\n● Video  --vid=1              'moviesdrives.com' (hevc 3840x1598 23.976 fps) [default forced]\r\n○ Image  --vid=2              'Logo-Attachment.png' (png)\r\n○ Audio  --aid=1  --alang=hi  'moviesdrives.com' (ac3 6ch 48000 Hz) [default forced]\r\n● Audio  --aid=2  --alang=en  'moviesdrives.com' (aac 6ch 48000 Hz)\r\n○ Subs   --sid=1  --slang=en  'moviesdrives.com' (subrip)\r\nFile tags:\r\n Title: moviesdrives.com \r\nAO: [null] 48000Hz 5.1 6ch floatp\r\nVO: [null] 3840x1598 yuv420p10\r\nFILE_FORMAT=mkv VIDEO=3840x1598 AUDIO=en\r\nAV: 00:00:00 / 02:28:08 (0%) A-V:  0.000\r\nExiting... (End of file)\r\n",
+        "phoneTest": "not-run",
+        "fullMovie": "not-run"
+      }
+    ],
+    "sampleNote": "Each is a 4MiB prefix, decoded for one frame to null outputs. The incomplete-file warning is expected for a prefix. Neither is a full movie, phone playback, full download, sync or offline subtitle test."
+  },
+  "regression": {
+    "firstPass": [
+      {
+        "key": "no-way-home",
+        "elapsedMs": 11876,
+        "files": 6,
+        "onlineWithTr": true,
+        "qualityGrades": [
+          "240p",
+          "720p",
+          "480p",
+          "304p",
+          "360p"
+        ],
+        "gaps": []
+      },
+      {
+        "key": "spider-verse",
+        "elapsedMs": 9558,
+        "files": 2,
+        "onlineWithTr": true,
+        "qualityGrades": [
+          "302p",
+          "1080p"
+        ],
+        "gaps": []
+      },
+      {
+        "key": "dune",
+        "elapsedMs": 10541,
+        "files": 9,
+        "onlineWithTr": true,
+        "qualityGrades": [
+          "720p",
+          "480p",
+          "240p",
+          "1080p",
+          "360p"
+        ],
+        "gaps": []
+      },
+      {
+        "key": "matrix",
+        "elapsedMs": 12831,
+        "files": 5,
+        "onlineWithTr": true,
+        "qualityGrades": [
+          "720p",
+          "480p",
+          "240p",
+          "360p"
+        ],
+        "gaps": []
+      },
+      {
+        "key": "inception",
+        "elapsedMs": 14432,
+        "files": 8,
+        "onlineWithTr": true,
+        "qualityGrades": [
+          "480p",
+          "720p",
+          "240p",
+          "1080p",
+          "2160p",
+          "360p"
+        ],
+        "gaps": []
+      },
+      {
+        "key": "interstellar",
+        "elapsedMs": 13769,
+        "files": 10,
+        "onlineWithTr": true,
+        "qualityGrades": [
+          "480p",
+          "720p",
+          "240p",
+          "360p",
+          "1080p"
+        ],
+        "gaps": []
+      },
+      {
+        "key": "fleabag-s1e1",
+        "elapsedMs": 16201,
+        "files": 2,
+        "onlineWithTr": true,
+        "qualityGrades": [
+          "480p"
+        ],
+        "gaps": [
+          "multiple_verified_download_qualities_missing"
+        ]
+      },
+      {
+        "key": "death-note-s1e1",
+        "elapsedMs": 9012,
+        "files": 0,
+        "onlineWithTr": false,
+        "qualityGrades": [],
+        "gaps": [
+          "online_with_tr_missing",
+          "download_missing",
+          "small_download_with_tr_missing",
+          "multiple_verified_download_qualities_missing"
+        ]
+      }
+    ],
+    "recovery": [
+      {
+        "key": "fleabag-s1e1",
+        "elapsedMs": 9707,
+        "files": 5,
+        "onlineWithTr": true,
+        "qualityGrades": [
+          "480p",
+          "720p",
+          "240p"
+        ],
+        "gaps": []
+      },
+      {
+        "key": "death-note-s1e1",
+        "elapsedMs": 6971,
+        "files": 4,
+        "onlineWithTr": true,
+        "qualityGrades": [
+          "720p",
+          "480p"
+        ],
+        "gaps": []
+      },
+      {
+        "key": "your-name",
+        "elapsedMs": 24007,
+        "files": 5,
+        "onlineWithTr": true,
+        "qualityGrades": [
+          "720p",
+          "480p",
+          "1080p"
+        ],
+        "gaps": []
+      }
+    ],
+    "note": "First pass Fleabag fell to2 files and Death Note0 with widespread origin timeouts. Recovery returned Fleabag5 and DeathNote4. YourName returned completed results at the24s deadline. Network-dependent counts/speed are not guaranteed; older code paths were not removed."
+  },
+  "remainingResearch": [
+    {
+      "source": "MoviesDrive TV",
+      "result": "Game of Thrones / Breaking Bad search records had no release year or IMDb; Shameless search results were unrelated. No ambiguous series/season was integrated."
+    },
+    {
+      "source": "MoviesDrive anime film",
+      "result": "Spirited Away0; Your Name720p/761393489byte/EN+HI succeeded with TR alternatives. This does not imply anime series or original JA audio coverage."
+    },
+    {
+      "source": "MoviesDrive high claims",
+      "result": "The Inception3840x1598 file passed real container and one-frame MPV checks. Dune advertised2160 page lacked a usable supported file route; no Dune4K claim."
+    }
+  ],
+  "checks": {
+    "fixtureQuickJs": 261,
+    "upstreamRelease": "0.6.5-beta",
+    "upstreamFiles": 23,
+    "sourceDrift": [],
+    "sourceContractVerified": true
+  },
+  "allRequestedCoverageMet": false,
+  "deviceTest": "not-run",
+  "fullPlayback": "not-run",
+  "fullDownload": "not-run",
+  "offline": "not-run",
+  "subtitleAudioSync": "not-run",
+  "font": "not-run"
+}

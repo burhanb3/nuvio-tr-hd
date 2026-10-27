@@ -13,6 +13,7 @@ src/providers/playimdb.cjs    TMDB ID ile PlayIMDb sorgusu
 src/providers/vixsrc.cjs      VixSrc public oynatıcı/playlist okuma
 src/providers/dizibal.cjs     Film/dizi/anime ve public oynatıcı
 src/providers/purstream.cjs   TMDB bağlı ek online film/dizi
+src/providers/moviesdrive.cjs Film/anime filmi için ek gerçek MP4/MKV
 src/providers/hdfilmdelisi.cjs Dublaj ve çoklu ses HLS kaynağı
 src/entry-fast-online.cjs     Bağımsız Hızlı İzle girişi
 src/hosted.cjs                Telefonda ortak servis istemcisi ve kimlik denetimi
@@ -41,6 +42,8 @@ Testlerdeki MP4/MKV örnekleri test sırasında üretilen küçük, yapısal kon
 `npm run verify:upstream` güncel resmî release ve `cmp-rewrite` kaynaklarını inceler. Bilinen Git blob SHA'ları veya kritik ABI parçaları değişirse başarısız olur; bu, otomatik uyumsuzluk hükmü değil yeniden inceleme gereğidir. Kilit dosyası kendiliğinden yenilenmez. Ağ/API erişimi yoksa sonuç doğrulanmış sayılmaz.
 
 Yeni adaptör eklerken kendi dosyasında `load...(http, url, target, allowHttp)` biçiminde adaylar döndürün. Kimlik doğrulaması ve URL/başlık temizleme zorunludur. Yanlış kimliğin elendiği, bir kaynak bozulduğunda diğerinin kaldığı ve yeni formata ait en az bir anlamlı test ekleyin. Kaliteyi kaynak etiketiyle doğrulanmış saymayın. Yalnız yeni davranışın gerektirdiği testleri çalıştırın; son paket için `npm run check` tamamlanmalıdır.
+
+Uzantısız MKV desteği genel bir format gevşetmesi değildir. Aday açıkça izin vermeli; beklenen MKV formatı ve byte boyutu gerçek Range yanıtıyla aynı olmalıdır. MoviesDrive ayrıca video pikseli, tam süre ve uygun gerçek ses gerektirir. Nuvio indirme adı `.mp4` olsa da sonuç türü `mkv` kalır. HLS/HTML, açıkça yanlış `.mp4` dosya yolu veya eksik metadata bu istisnadan geçmez. MPV örnek testi telefon/offline testi sayılmaz.
 
 Hata raporlarında token, Cookie, Authorization veya tam imzalı URL paylaşmayın. İsteğe bağlı `debug` ayarı yalnız kaynak/adet/HTTP durum özeti yazar; URL/anahtar yazmaz; Nuvio'nun yerel köprüsünün kendi günlükleme davranışı ayrıca geçerlidir. Kişisel kataloglar `.gitignore` içindeki `catalog.local.json` veya depo dışında tutulmalıdır.
 

@@ -30,6 +30,8 @@ Goojara film ve bölüm dosyaları da ana sağlayıcıda varsayılan açıktır.
 
 HDRezka, farklı boyutlarda ücretsiz MP4 seçenekleri için varsayılan açıktır. Özgün ses veya açıkça Türkçe olarak belirtilen sürümler seçilir; diğer dublajlar TR diye etiketlenmez. Kaynağın ücretli kalite seçenekleri eklenmez. Dosyadaki gerçek piksel, oynatıcının kalite etiketinden önce gelir.
 
+MoviesDrive ek film ve anime filmi indirmeleri varsayılan açıktır. Bu kaynak, gerçek ses ve dosya bilgisi doğrulanan seçenekleri sunar. Uzantısız MKV dosyaları Nuvio'da `.mp4` adıyla saklanabilir; dahili MPV bunları içerikten tanır. Dışarı aktarımda `.mkv` olarak yeniden adlandırmak gerekebilir. Bu kaynağı kapatmak diğer indirmeleri veya Hızlı İzle'yi kapatmaz.
+
 MKV dosya köprüsü, desteklediği public uzantısız dosyalara doğru indirme adı sağlar. Bütün hostları desteklemez. Yeni kaynak aramaları için ayrı bir sunucu veya hesap kurmanız gerekmez.
 
 JSON katalog, Stremio ve alternatif altyazı adresleri isteğe bağlıdır. Bunlar olmadan yerleşik arama çalışır. [Kişisel kaynak rehberi](KAYNAKLAR.md).

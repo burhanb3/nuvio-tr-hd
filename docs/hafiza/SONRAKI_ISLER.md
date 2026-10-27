@@ -1,5 +1,12 @@
 # Sonraki işler
 
+## 1.8.2 öncelik
+
+1. 1.8.2 MoviesDrive/Pixeldrain genel film/animefilmi adaptörü;6yapım9yeniMKV+TR, ilk yeni3840×1598/7.59GB4KInception. moviesdriveEnabledmain'de defaultaçık;Nuvio.mp4kayıtadına rağmenMPVactualMKVokur.261check/QuickJS,Nuvio0.6.5-beta23blobdrift0. Yayınkontrolü bekleniyor.
+2. YeniTRdublaj0/TV0/animeseri0. TViçinmetadata/yıl/sezonbölümkanıtlıgenelhostyollarıara;IMDb/yıleksikMoviesDriveTVpostuna zorlaeşlemeekleme. Yeni4Kyolları varsaaynıgerçekRange/ses/TRpipelineşartlarıylaekle. EN+HI'yiTRdublajgibisunma.
+3. İlkFlea2/Death0outage,recoveryFlea5/Death4;YourName24sdeadline5sonuçoldu. Hız/kararlılıktakibi açık.Native3/sub4/EN1değişmedi. FizikseltelefondaMoviesDriveMKVindirme/offlineTR-EN/ses/senkronve.mkvexportrenamehenüzyok;frameörneğindenbu testleri geçtiçıkarma.
+
+
 ## 1.8.1 öncelik
 
 1. Tamamlandı:1.8.1 aynımanifestte yayımlandı. Kod071bda9bba5b12dec1dab157d98a6fb3bd9d5932; Test40552547300,Pages40552547175 başarılı,7publicHTTP200/SHAeşit. Purstream online ekkaynak,254check/QuickJS,Nuvio0.6.5-beta20drift0. Beş film/bölümde720p+mevcutTR; yeniindirme/4K/TRdub/anime0.

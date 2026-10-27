@@ -14,6 +14,26 @@ const animeBundle = await readFile(new URL('../providers/nuvio-tr-hd-anime.js', 
 const extraAnimeBundle = await readFile(new URL('../providers/nuvio-tr-hd-extra-anime.js', import.meta.url), 'utf8');
 const fastOnlineBundle = await readFile(new URL('../providers/nuvio-tr-hd-fast-online.js', import.meta.url), 'utf8');
 
+test('QuickJS: uzantısız gerçek MKV/4K ve EN ses MPV yolunda korunur; kullanıcı kapatabilir',async()=>{
+ const origin='https://new4.moviesdrive.beer',archive='https://mdrive.lol/archive/123/',hub='https://hubcloud.ist/drive/fixture1',terminal='https://gamerxyt.com/hubcloud.php?id=fixture',pixel='https://pixeldrain.dev/u/Fixture1',file='https://pixeldrain.dev/api/file/Fixture1';
+ const name='[[ moviesdrives.com ]] The.Matrix.1999.2160p.English.mkv',duration=Buffer.alloc(8);duration.writeDoubleBE(7200000);
+ const audio=helpers.ebml('ae',Buffer.concat([helpers.ebml('83',[2]),helpers.ebml('22b59c',Buffer.from('eng'))]));
+ const video=helpers.ebml('ae',Buffer.concat([helpers.ebml('83',[1]),helpers.ebml('e0',Buffer.concat([helpers.ebml('b0',[15,0]),helpers.ebml('ba',[6,64])]))]));
+ const body=Buffer.concat([helpers.ebml('1a45dfa3',helpers.ebml('4282',Buffer.from('matroska'))),helpers.ebml('18538067',Buffer.concat([helpers.ebml('1549a966',helpers.ebml('4489',duration)),helpers.ebml('1654ae6b',Buffer.concat([video,audio]))])),Buffer.alloc(1000000)]);
+ const fixture=makeFixture({extra:{
+  [origin+'/search.php?q=The%20Matrix&page=1']:{json:{hits:[{document:{post_title:'The Matrix (1999) English',permalink:'/the-matrix-1999/',imdb_id:'tt0133093'}}]}},
+  [origin+'/the-matrix-1999/']:{body:'<article class="post-content"><h1>The Matrix (1999)</h1><h5>The Matrix (1999)&nbsp;English 2160p [1GB]</h5><h5><a href="'+archive+'">2160p [1GB]</a></h5></article>'},
+  [archive]:{body:'<title>The Matrix (1999) English</title><a href="'+hub+'">Download</a>'},
+  [hub]:{body:'<title>'+name+'</title><script>var url="'+terminal+'";</script>'},[terminal]:{body:'var pxl="'+pixel+'";'},
+  [file+'/info']:{json:{success:true,id:'Fixture1',name,size:body.length,mime_type:'video/matroska',can_download:true,availability:'',abuse_type:''}},[file]:{body,mime:'video/matroska'}
+ }});
+ const settings={autoSubtitles:false,useDownloadBridge:false,hdhubEnabled:false,archiveEnabled:false,goojaraEnabled:false,hdrezkaEnabled:false,waploadedEnabled:false,rarefilmmEnabled:false,playImdbEnabled:false,vixsrcEnabled:false,filmmoduEnabled:false};
+ const rows=await runInQuickJs(fixture,{settings,nativeTimers:true});assert.equal(rows.length,1);assert.equal(rows[0].url,file);assert.equal(rows[0].type,'mkv');assert.equal(rows[0].quality,'2160p · 3840×1600');assert.match(rows[0].name,/İndirilebilir · MoviesDrive/);assert.match(rows[0].language,/Ses: EN/);
+ assert.deepEqual(await runInQuickJs(fixture,{settings:{...settings,moviesdriveEnabled:false}}),[]);
+ assert.ok((await runInQuickJs({},{invokeSettings:true})).some(f=>f.key==='moviesdriveEnabled'));
+ assert.ok(!(await runInQuickJs({},{code:fastOnlineBundle,invokeSettings:true})).some(f=>f.key==='moviesdriveEnabled'));
+});
+
 test('QuickJS: Purstream aynı kimliği online sunar, source kalite etiketini kullanmaz ve ana aramaya iş eklemez',async()=>{
  const api='https://api.purstream.club/api/v1',file='https://free.finepulfe.xyz/movies/603-example/master.m3u8',success=items=>({type:'success',data:{items}});
  const fixture=makeFixture({extra:{

@@ -1,5 +1,20 @@
 # Proje hafızası
 
+## 1.8.2 — gerçek MKV ve ilk ek 4K dosya
+
+1.8.1 uzantısızMKV kararı düzeltildi: Native.mp4 kayıt adı gerçekMKV'nin MPV'de açılamayacağını göstermez. Nuvio iOS downloader raw fwrite, Swift ve AndroidMPV loadfile yolları manuel incelendi; üçblob release/currentHEAD aynı, lock20->23, release/head değişmedi. Official mpv CI Windows v0.41dev82667e3cb(archiveSHA7826703bb4fdbd6c496265215e50e62fd60a4dcb15e5795bfed41e6ec03c1f2c)4MiB1080/4Kprefix.mp4 adıyla1kare çözdü;actualformatmkv,4K3840×1598,ENtrackselected. Bu fizikseltelefon/tamfilm/indirme/offline/senkron kanıtı değildir. Genericmismatchgatekorundu. Aday optin+expectedContainer mKV+expectedSize exactRange total olmadan uzantısızMKV kabul edilmez; gerçekçıktıtürümkv,nativeStoredExtensionmp4 içeride. Açık.mp4 path MKV ve HLS/HTML/yanlışsizeformat reddi sürer.
+
+MoviesDrive genel film/animefilmi adaptörü main/files'da varsayılanaçık moviesdriveEnabled;4ID aynı. new4.moviesdrive.beer public search.php -> exacttitle/year post/release + IMDbçelişkired -> mdrive.lol/archive -> HubCloud filename -> gamerxyt publicliteral pxl -> Pixeldrain info id/name/size/MIME/can_download/availability -> gerçekRange/konteyner/piksel/süre/hash/ses. Cookie/account/fixedkey/challenge/eval/viewinflation/ratebypass/newbackend/per-titlepin0. .dev/.com/.net yalnızpublisherURL,403/availabilitysonrasındadomainçevirmeyok. Filmadı/year tam, dosya adıhubaaynı. Metadata + gerçekvideo ve90–110%süre zorunlu. ÖlçülmüşTR/ENveyayapımınHIhariciözgünsesiyoksaelenecek; HI-onlyreddedilir. searchTitles/resmiENbaşlık animefilmlerindekullanılabilir,Thearticlearamaipucuyalnız. KopyadosyalarURLiletek. Plan4release küçük/1080/yüksek/ikinci küçük;2resolver,source10s/main24s/video3/sub4/EN1aynı. Hızlıİzle işi/ABI/genericcatalog değiştirilmedi.
+
+Tam canlıpipeline6yapım9yeniMKV+TR: Dune3(566912339/856×360;948305346/1280×536;2071642223/1920×804),Inception2(2495758260/1920×800;7591975942/3840×1598),NoWayHome1(904073631/1280×674),SpiderVerse1(401835837/720×302),Interstellar1(738280833/856×480),YourName1(761393489/1280×720). HepsiactualHI+EN; YourNameözgünJAyok,ENdublajdır,TRdublajdiye sayma. Yeni4K1/TV0/TRdub0/animefilm1/animeseri0. TRalternatiflergerçekgövde; subtitleBestScore dillerarasımax,sahnesenkronölçülmedi. YeniYourNamekanonikvalidationfixture (TMDB372058/2016,imdbtt5311514) üretimvideo pini değildir.
+
+Birleşikilk8başlık:NoWay6,Spider2,Dune9,Matrix5,Inception8,Interstellar10,Flea2,Death0. Sonikidegenişorigin timeout; başarısızlıkkanıttakorundu. RecoveryFlea5/Death4/YourName5;YourName24sdeadlinecompletedsonuçlarlakorundu. YeniMDTV'yeişaçmadığındanFlea/DeathdüşüşünüMD'ninçözdüğüveyaürettiğidiyeiddiaetme. Nodemetadatasabit/HTTPgerçek,telefonhızıgarantisiyok. Oldfilepaths/onlinesilmedi; tutarsızcountsizlemeönemli.
+
+261fixture/QuickJS,Nuvio0.6.5-beta/23blob drift0. Kanıt download-expansion-182/coverage-182/upstream-182-check.json. Nativebytekotalarıgevşemedi,dependencyeklenmedi,mpvtestbinaryyalnız.cache'de. FizikseliPhone/Android/tamoynatım/indirme/offline/senkron/fontyok. TVGameofThrones/BreakingBadsearchmetadata yıl/IMDbeksik,Shamelessunrelated; entegredeğil. SpiritedAway0;Dune2160usablefile0. Aynıbaşarısızlarıyeniuçyololmadandöndürme.
+
+1.8.2 yayın doğrulaması bekleniyor.
+
+
 ## 1.8.1 — kaynak incelemesi ve online açıklar
 
 İndirme/4K/TR dublaj önceliği sürüyor. Bu tur yeni uygun indirme veya 4K/TRdub dosyası sıfır; bunu online katkıyla kapanmış sayma. MoviesDrive güncel .beer public search.php -> mdrive archive -> HubCloud -> Pixeldrain literal yolu Dune için gerçek 2071642223byte MKV/1920×804/9325.001s verdi; ölçülmüş HI+EN, embedded EN/ES. Ancak API uzantısız, Nuvio DownloadsRepository .mp4 kaydeder. Gerçek dosya adı path ve ID.mkv aliasları404; mevcut R2 köprüsü bu hostu desteklemez. Entegre edilmedi, yeni helper/backend/hesap eklenmedi. Kaynak 19/21GB 4K linkleri terminal sayfaya ulaştı ama Worker/Pixel SSL_PACKET_LENGTH_TOO_LONG; gerçek4K kanıtı yok.

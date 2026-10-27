@@ -1,5 +1,13 @@
 # Tasarım kararları
 
+## 1.8.2 — uzantı kararı ve indirme katkısı
+
+- Önceki uzantısızMKVzorunlureddi yalnızdoğrulanmışsourceoptin için kaldırıldı. Nuvio.mp4adıvegerçekMKVformatıayrıdır. Actualcontainer+expectedsize+kaynakadı+video+süre+sesdenetimindensonraMPVcontentdetectionkullanılır;çıktıtürümkvkalır. GenericJSON/Stremio yanlışformat/HLSgatesaynı. Dışarıaktarırken.mkvrenamegerekebilir; kaynakcheckboxdescriptiongerçeğisöyler.
+- WindowsMPVoneframe2prefix NuviofizikseliPhone/Androidindirme/offlinekanıtıdeğildir. Bu farkı belgelerde ve sonuçta belirt. Yeni23bloblockelleincelendi,head/releasezorlayenilenmedi.
+- MoviesDrivepartialfilm/animefilm,TVeşleşmesigibi sunma.9yeniMKV+TR/6yapım,4K1,TRdub0. EN+HI sesgerçektir;HIonlyatılır,TRsesuydurulmaz. MevcutTRmetadatapuanıgörselsenkrondeğil. Nativekotalarıbütçeleraynı,hesap/helper/backendyok.
+- İlkFlea2/Death0 ve recovery5/4 birlikte saklanır.24sYourNamehazırsonuçlaryanıtınıhızgarantisisayma. Birtekrar sayısı tümkatalogkararlılığıdeğildir. YeniMDmp4storagebilgisi kartıkirletmedenayarlar/rehberde açıklanır.
+
+
 ## 1.8.1 — kanıtlı katkıyı ayrı sayma
 
 - İndirilebilir4K/TRdub ana hedef açık. YeniHLS sağlayıcısı bu boşluğu kapatmış sayılmaz. Çalışan uzantısızMKV, mevcutnative.mp4 adıyla doğruindirme kabul edilmez; query/fragment eki çözüm değil. Yeni kullanıcı sunucusu/hesap ekleme.

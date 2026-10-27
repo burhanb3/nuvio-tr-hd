@@ -15,6 +15,9 @@
     "composeApp/src/fullCommonMain/kotlin/com/nuvio/app/features/plugins/runtime/network/FetchBridge.kt": "757ca33ab2fffda34384999f42bea748533d185d",
     "composeApp/src/commonMain/kotlin/com/nuvio/app/features/streams/StreamFetchSupport.kt": "5bfa30be3d7ce135aaa4846f0df11b732ad6cea7",
     "composeApp/src/commonMain/kotlin/com/nuvio/app/features/downloads/DownloadsRepository.kt": "909e718364f693d5a5d612933f0c896c6b144340",
+    "composeApp/src/iosMain/kotlin/com/nuvio/app/features/downloads/DownloadsPlatformDownloader.ios.kt": "22a996a312625b2879fa68ea7c65a2a8325eac95",
+    "iosApp/iosApp/Player/MPVPlayerBridge.swift": "7fce2594115ae51b1dca34fffb5849c8d27b32ff",
+    "composeApp/src/androidMain/kotlin/com/nuvio/app/features/player/PlayerEngine.android.kt": "c090dbda09d5c6d1681bc394e9bce6a6c159b42c",
     "composeApp/src/commonMain/kotlin/com/nuvio/app/features/downloads/DownloadSubtitles.kt": "f804ee50379f088a5da0be9e52200da492e25da8",
     "composeApp/src/commonMain/kotlin/com/nuvio/app/features/addons/AddonPlatform.kt": "c0e30fcebfc3a1b473fa852c42f5e2c029ad6b6b",
     "composeApp/src/androidMain/kotlin/com/nuvio/app/features/addons/AddonPlatform.android.kt": "29d28f438d37d7ae6ab0f6a3a057496be16c3bfb",
@@ -34,11 +37,13 @@
     "androidDevice": "not-run",
     "iosDevice": "not-run",
     "kotlinBuild": "not-run",
-    "subtitleAutoSelection": "verified source path with ISO language code tr; device not run"
+    "subtitleAutoSelection": "verified source path with ISO language code tr; device not run",
+    "extensionlessMatroska": "reviewed native raw download and MPV loadfile source; official desktop MPV detected and decoded a one-frame MKV sample saved as .mp4; phone offline test not run"
   },
   "knownNativeLimits": [
     "Fetch polyfill ignores AbortSignal; JS deadline does not cancel native requests.",
     "iOS raw HTTP reads whole response before truncation and ignores followRedirects.",
-    "Downloadability has no native plugin result field; HLS is excluded by default and extensionless HLS is never returned."
+    "Downloadability has no native plugin result field; HLS URLs require their actual .m3u8 marker and extensionless HLS is never returned.",
+    "Extensionless MKV downloads receive a .mp4 storage name. MPV detects their actual container; other players or exports may need renaming. Phone playback/offline not tested."
   ]
 }

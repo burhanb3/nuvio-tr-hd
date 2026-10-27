@@ -13,7 +13,9 @@ Resmî release ve geliştirme dalındaki ilgili dosyaların SHA'ları `compatibi
 
 ## Güncel kontrol
 
-1.8.1: 254 fixture/gerçek QuickJS testi. En son doğrulanan Nuvio sürümü **0.6.5-beta**; kilitli 20 dosyada drift yok. [Upstream raporu](../compatibility/upstream-181-check.json), [yeni kaynak ve indirme araştırması](../compatibility/download-research-181.json), [mevcut dosya kapsamı](../compatibility/coverage-181.json).
+1.8.2: 261 fixture/gerçek QuickJS testi. En son doğrulanan Nuvio sürümü **0.6.5-beta**; kilitli 23 dosyada drift yok. İndirme/MPV yolu için üç kaynak dosyası ayrıca incelenip kilitlendi; release/head değiştirilmedi. [Upstream raporu](../compatibility/upstream-182-check.json), [yeni indirme dosyaları](../compatibility/download-expansion-182.json), [kapsam ve başarısız taramalar](../compatibility/coverage-182.json).
+
+Uzantısız MKV için önceki eleme kararı gözden geçirildi: Nuvio iOS dosya gövdesini doğrudan yazar ve dosyayı MPV `loadfile` yoluna iletir. Nuvio'nun `.mp4` kayıt adı, dosyayı MP4'e dönüştürmez. Boyut/format ve gerçek video/ses denetimi geçen kaynaklar bu yola sınırlı olarak alınır. Resmî MPV masaüstü CI derlemesinde 1080p ve 4K MKV örnekleri `.mp4` adıyla tanındı ve bir kare çözüldü. Bu, fiziksel Nuvio/iPhone oynatma veya tam indirme kanıtı değildir.
 
 Üretilmiş JavaScript QuickJS WASM motorunda, Nuvio'nun API yüzeyine benzeyen köprüyle çalıştırılır. Bu test quickjs-kt JNI/Native köprüsünü veya fiziksel iPhone taşımasını çalıştırmaz. Fiziksel iPhone/Android, Kotlin derlemesi, tam film oynatma/indirme, offline altyazı ve sahne senkronu henüz sınanmadı.
 
@@ -23,4 +25,4 @@ Kaynak kontrolleri sabit kanonik metadata referanslarıyla gerçek public HTTP/R
 
 [Yayın doğrulaması](../compatibility/github-publication.json) · [Önceki uyumluluk kayıtları](arsiv/UYUMLULUK_GECMISI.md).
 
-1.8.1 yayın kodu `071bda9bba5b12dec1dab157d98a6fb3bd9d5932`: Windows/Linux [CI](https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40552547300) ve [Pages](https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40552547175) başarılı; yedi public varlık HTTP200 ve yerel SHA eşit.
+1.8.2 yayın doğrulaması bekleniyor.

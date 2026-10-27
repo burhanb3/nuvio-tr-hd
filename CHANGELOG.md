@@ -1,5 +1,14 @@
 # Sürüm notları
 
+## 1.8.2 — 27 Ekim 2026
+
+- MoviesDrive/Pixeldrain üzerinden ek film ve anime filmi indirmeleri. Tam başlık/yıl, varsa IMDb, dosya adı, gerçek boyut, piksel, süre ve ses birlikte denetlenir; yalnız HI sesli dosyalar atlanır.
+- Uzantısız MKV'ler için kontrollü MPV desteği. Nuvio `.mp4` adıyla kaydedebilir; gerçek format MKV olarak korunur. Önceki sürümde ad nedeniyle elenen bazı çalışan dosyalar artık değerlendirilebilir. Yeni sunucu veya hesap gerekmez.
+- Canlı aramada altı yapımda dokuz ek MKV ve mevcut TR altyazılar. Inception için 3840×1598/7,59 GB ve 1920×800/2,50 GB; Dune için 0,57/0,95/2,07 GB alternatifler. No Way Home, Spider-Verse, Interstellar ve Your Name için de ek dosyalar bulundu.
+- Kaynağın yüksek/düşük kalite seçenekleri aynı sınırlı bütçede aranır; aynı dosya iki kalite olarak sayılmaz. 4K ve 1080p MKV örnekleri `.mp4` adıyla masaüstü MPV'de bir kareyle sınandı.
+- 261 fixture/QuickJS testi; Nuvio 0.6.5-beta ve incelenen 23 dosyada drift yok. Bir taramada eski dizi/anime kaynaklarında zaman aşımı oldu; sonraki kontrolde Fleabag ve Death Note dosyaları tekrar bulundu.
+- Yeni Türkçe dublaj ve dizi bölümü dosyası bu tur doğrulanmadı. Fiziksel cihaz, tam indirme, offline altyazı ve sahne senkronu test edilmedi.
+
 ## 1.8.1 — 27 Ekim 2026
 
 - Hızlı İzle grubuna Purstream online film/dizi alternatifi. Tam TMDB kimliği, tür, yıl ve resmi başlık; dizide istenen sezon/bölüm ve video yolu birlikte denetlenir.

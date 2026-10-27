@@ -2,6 +2,7 @@
 const { inspectContainer, mp4TailInfo, mp4MetadataOffset, mp4MetadataInfo, ascii } = require('./containers.cjs');
 const { opensubtitlesHash } = require('./hash.cjs');
 const { inspectHls } = require('./hls.cjs');
+const { languageCode } = require('./languages.cjs');
 function sameFile(first, second) {
   return first && second && first.total === second.total && (first.url === second.url ||
     (first.etag && !first.etag.startsWith('W/') && first.etag === second.etag));
@@ -55,7 +56,14 @@ async function probeOne(http, candidate, includeHls = false, hashEnabled = false
   const expectedDuration = candidate.identity?.runtimeMinutes * 60;
   if (/mpegurl|dash\+xml/.test(sample.mime) || /\.m3u8(?:$|[?#])/i.test(sample.url)) return null;
   const outputUrl = candidate.downloadAlias && nativeExtension(candidate.downloadAlias)===info.container ? candidate.downloadAlias : sample.url;
-  if (nativeExtension(outputUrl)!==info.container) return null;
+  // Nuvio writes an extensionless URL with a .mp4 name, but its MPV player
+  // detects the real container. Only an explicit, verified source may opt in;
+  // keep the actual MKV type and never reinterpret HLS/HTML as a media file.
+  const containerSniffing = candidate.allowExtensionlessMkv === true && info.container === 'mkv' &&
+    nativeExtension(outputUrl)==='mp4' && !new URL(outputUrl).pathname.split('/').pop().includes('.') &&
+    candidate.expectedContainer==='mkv' && candidate.expectedSize===sample.total;
+  if (nativeExtension(outputUrl)!==info.container && !containerSniffing) return null;
+  if ((candidate.expectedSize && candidate.expectedSize!==sample.total) || (candidate.expectedContainer && candidate.expectedContainer!==info.container)) return null;
   // Do not save MP4 data as .mkv or Matroska data as .mp4 in Nuvio downloads.
   const sampleExtension=nativeExtension(sample.url);
   if (info.container === 'mp4' && sampleExtension==='mkv') return null;
@@ -90,6 +98,8 @@ async function probeOne(http, candidate, includeHls = false, hashEnabled = false
     }
   }
   if (candidate.requireDuration && !info.duration) return null;
+  if (candidate.requireVideoDimensions && !info.dimensions) return null;
+  if (Array.isArray(candidate.requireAudioAny) && !candidate.requireAudioAny.some(code=>(info.audioLanguages||[]).map(languageCode).includes(code))) return null;
   const durationTolerance = candidate.durationTolerance === 0.1 ? { low: 0.9, high: 1.1 } : { low: 0.7, high: 1.35 };
   if (info.duration && expectedDuration > 0 && (info.duration < expectedDuration * durationTolerance.low || info.duration > expectedDuration * durationTolerance.high)) return null;
   let videoHash = null;
@@ -101,7 +111,8 @@ async function probeOne(http, candidate, includeHls = false, hashEnabled = false
   if (pinned && (sample.total !== pinned.size || !videoHash || videoHash !== pinned.hash ||
     info.dimensions?.width !== pinned.width || info.dimensions?.height !== pinned.height ||
     !info.duration || Math.abs(info.duration - pinned.duration) > 0.5)) return null;
-  return { ...info, url: outputUrl, size: sample.total, videoHash, downloadable: true };
+  return { ...info, url: outputUrl, size: sample.total, videoHash, downloadable: true,
+    ...(containerSniffing ? {nativeStoredExtension:'mp4',containerSniffing:true} : {}) };
 }
 async function probe(http, candidate, includeHls = false, hashEnabled = false, options = {}) {
   const canUseReplicas = candidate.source === 'Internet Archive' && !Object.keys(candidate.headers || {}).some(k => /^(authorization|cookie)$/i.test(k));
