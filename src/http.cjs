@@ -30,7 +30,7 @@ function createHttp({ fetchImpl, allowHttp = false, timeoutMs = 4500, deadline =
     finally { clock.cancel(timer); }
   }
   async function request(rawUrl, options = {}) {
-    const { timeoutMs: localTimeout, nativeGroup, ...fetchOptions } = options;
+    const { timeoutMs: localTimeout, nativeGroup, publicCookieRedirectOrigin, ...fetchOptions } = options;
     let url = safeUrl(rawUrl, undefined, allowHttp);
     if (!url || expired()) return null;
     const denialKey=JSON.stringify([options.method||'GET',url,Object.entries(options.headers||{}).sort()]);
@@ -50,7 +50,12 @@ function createHttp({ fetchImpl, allowHttp = false, timeoutMs = 4500, deadline =
           const next = safeUrl(response.headers.get('location'), url, allowHttp);
           if (!next || redirects === 3) return null;
           // Avoid leaking Authorization/Cookie to a different redirect origin.
-          if (new URL(next).origin !== new URL(url).origin && options.headers && Object.keys(options.headers).some(k => /authorization|cookie/i.test(k))) return null;
+          if (new URL(next).origin !== new URL(url).origin && fetchOptions.headers && Object.keys(fetchOptions.headers).some(k => /authorization|cookie/i.test(k))) {
+            // Opt-in is only for fresh anonymous publisher sessions. Never
+            // forward their cookie to the explicitly allowed public player.
+            if (Object.keys(fetchOptions.headers).some(k=>/authorization/i.test(k)) || new URL(next).origin!==publicCookieRedirectOrigin) return null;
+            fetchOptions.headers=Object.fromEntries(Object.entries(fetchOptions.headers).filter(([key])=>!/cookie/i.test(key)));
+          }
           url = next;
           continue;
         }

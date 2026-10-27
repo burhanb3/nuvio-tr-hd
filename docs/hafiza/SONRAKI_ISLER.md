@@ -1,5 +1,13 @@
 # Sonraki işler
 
+## 1.7.9 öncelik
+
+1. Aynı adrese 1.7.9 hazırlanıyor:238 check/QuickJS, Nuvio0.6.5-beta/20 drift0, dört aktif ID. CI/Pages/yedi public dosya SHA kontrolünü tamamla; yayın kanıtını ve bu notları güncelle.
+2. Ana açık indirilebilir yüksek kalite/4K ve TR dublaj; yeni doğrulanmış katkı bu tur sıfır. Goojara altı küçük MP4+TR katkısı yaptı; çoğu gerçek480p, GoT720p HCSubs. Bu katkı yüksek kalite açığını kapatmaz. Anime yeni dosya katkısı yok; önceki DeathNote4 seçeneği korundu.
+3. Matrix/Shameless dosyaları hâlâ eksik. NoWayHome oyuncu yılı2022, Shameless üst yıl2010 çelişkisini doğru IMDb/kanonik yıl kanıtı olmadan aşma. Dune tekil timeout ve sonraki başarı mevcut; kaynak/CDN kararlılığını bütçe içinde izle, bütün filmlere tek tek pin yazma.
+4. DiziBoxIzle eksik episode/404, FullHDFilmizlesene.co kimliksiz iframe, Asya nohit, AnimePraX timeout, Vikingfile404; key isteyen SineWix/Anizium/1shows ve kullanıcı token isteyen GramCinema bu tur eklenmedi. Goated PoW çözülmedi. Yeni dış durum olmadan aynı başarısız yolları döndürme; HLS ağırlıklı M3U'yu yeni MP4 sayma.
+5. Fiziksel iPhone'da yeni dosya+TR/EN indirme/offline, tam oynatım, ses ve görsel senkron yok. Public anonim cookie auto-follow fiziksel davranışı sınanmadı. Font problemi çözüldü deme. Yeni PC/backend/hesap/sabit secret ve native kota gevşetmesi yok.
+
 ## 1.7.8 öncelik
 
 1. Tamamlandı:1.7.8 aynı adreste yayımlandı; kodfa935e2aca48cfb1c324a942971272c9c10e2b42,229check/QuickJS,Nuvio0.6.5-beta/20drift0,4aktifID. Windows/Linux40509886549,Pages40509886492,7publicHTTP200/SHA başarılı; github-publication.json güncel.

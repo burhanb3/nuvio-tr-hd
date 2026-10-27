@@ -13,12 +13,14 @@ Resmî release ve geliştirme dalındaki ilgili dosyaların SHA'ları `compatibi
 
 ## Güncel kontrol
 
-1.7.8: 229 fixture/gerçek QuickJS testi. En son doğrulanan Nuvio sürümü **0.6.5-beta**; kilitli 20 dosyada drift yok. [Upstream raporu](../compatibility/upstream-178-check.json) ve [indirme/kaynak kontrolü](../compatibility/download-expansion-178.json).
+1.7.9: 238 fixture/gerçek QuickJS testi. En son doğrulanan Nuvio sürümü **0.6.5-beta**; kilitli 20 dosyada drift yok. [Upstream raporu](../compatibility/upstream-179-check.json) ve [indirme/kaynak kontrolü](../compatibility/download-expansion-179.json).
 
 Üretilmiş JavaScript QuickJS WASM motorunda, Nuvio'nun API yüzeyine benzeyen köprüyle çalıştırılır. Bu test quickjs-kt JNI/Native köprüsünü veya fiziksel iPhone taşımasını çalıştırmaz. Fiziksel iPhone/Android, Kotlin derlemesi, tam film oynatma/indirme, offline altyazı ve sahne senkronu henüz sınanmadı.
+
+Goojara için anonim public katalog çerezi yalnız kaynak keşfinde kullanılır. JavaScript elle yönlendirme yolunda farklı kökene geçmeden silinir; iOS otomatik yönlendirmesinin fiziksel başlık aktarımı sınanmadı. Video sonuçları katalog oturumu taşımaz.
 
 Kaynak kontrolleri sabit kanonik metadata referanslarıyla gerçek public HTTP/Range ve altyazı yanıtlarını sınar; telefonun TMDB API anahtarı bu yöntemle sınanmaz. Tam katalog veya her kalitede dosya başarısı iddiası değildir.
 
 [Yayın doğrulaması](../compatibility/github-publication.json) · [Önceki uyumluluk kayıtları](arsiv/UYUMLULUK_GECMISI.md).
 
-1.7.8 yayın kodu `fa935e2aca48cfb1c324a942971272c9c10e2b42`: Windows/Linux [CI](https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40509886549) ve [Pages](https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40509886492) başarılı; yedi public varlık HTTP200 ve yerel SHA eşit.
+1.7.9 yayını hazırlanıyor; CI/Pages ve public dosya SHA kontrolü tamamlanınca yayın kanıtı yenilenecek.

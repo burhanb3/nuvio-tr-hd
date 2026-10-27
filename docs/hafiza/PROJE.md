@@ -1,5 +1,19 @@
 # Proje hafızası
 
+## 1.7.9 — küçük film ve bölüm dosyaları
+
+Yeni Goojara genel film/dizi adaptörü ana grupta varsayılan açık (goojaraEnabled). Public anonim oturum ve sayfanın kendi nonce'u ile normal arama yapılır; kullanıcı çerezi, hesap, kopya sabit key, challenge çözümü veya uzak script çalıştırma yok. Tam başlık/yıl; filmde IMDb; dizide üst kayıt, seçilmiş sezon ve tam bölüm, breadcrumb ve oynatıcı dosya adı birlikte kontrol edilir. Dosya başına gerçek Range/konteyner/byte/piksel/süre/hash ve mevcut TR/EN eşleştirmesi. Keşif payı 12s; ana bütçe 24s, native video3/altyazı4/EN1 değişmedi. Dört scraper kimliği korundu; yeni helper/backend/hesap/video pini yok. Geçici oturum ve imzalı adresler kalıcı tutulmaz.
+
+Altı yeni doğrulanmış MP4 örneği: Dune 506588493 byte/852×362; Spider-Verse 1178669652/850×356; Fleabag1x1 120769545/853×476; Fleabag2x1 94263471/850×356; GoT1x1 777811986/1280×720; BreakingBad1x1 361196120/853×480. Hepsinde hash ve mevcut TR altyazı var; gerçek piksele göre GoT720p, diğer beşi480p. Dosya adı 720p/1080p iddiası piksel kanıtını geçmez. GoT HCSubs işaretli: dili bilinmeyen sabit altyazı bildirimi, kartta Sabit altyazı; görsel doğrulama veya temiz altyazı kanıtı değil. Yeni TR dublaj ve 4K doğrulaması sıfır. AudioLanguages boş: EN fallback ölçülmüş ses demek değil.
+
+Birleşik 11 başlık/bölüm: Dune3, Spider-Verse2, Fleabag1x1/2x1 üçer, GoT1, BreakingBad3 dosya. Eski Archive seçenekleri yeni sağlayıcı başarısı sayılmaz. Fleabag1x1 ve GoT tekrar geçti; Dune önce tekil turda CDN timeout, sonra geçti. Matrix0 ve Shameless0 dosya açığı sürüyor; Inception2 eski dosya var, yeni CDN timeout. NoWayHome kaynak oyuncu yılı2022/kanonik2021; ShamelessUS üst kayıt2010/kanonik2011 reddedildi. Yılı veya IMDb bağını gevşetme. Eski online yollar korundu. Node süreleri sabit metadata ile yaklaşık3,4–9,9s; iPhone garantisi değil.
+
+238 fixture/gerçek QuickJS testi geçti; Nuvio0.6.5-beta/20 kilitli dosyada drift0, lock değişmedi. compatibility/download-expansion-179.json, coverage-179.json, upstream-179-check.json. Coverage eski piksel-grup gate'i iki farklı kırpılmış480p'yi iki kalite sanabiliyor: rapor artık gerçek p sınıflarını ayrıca ayırır; tam kapsam tamamlandı denmez. externalTurkishTracks eski test yardımcı alanı aslında toplam harici TR+EN; kanıtta externalTrackCount diye düzeltildi. subtitleBestScore diller arası max; TR'ye özgü senkron puanı değildir.
+
+HTTP publicCookieRedirectOrigin yalnız açık anonim katalog oturumuna opt-in; manual redirect'te çerez düşer, Authorization her zaman reddedilir, seçenek fetch'e geçmez. iOS otomatik yönlendirmede fiziksel header aktarımı sınanmadı, JS garantisini native'ye yayma. Video sonucu yalnız Referer taşır. Fiziksel cihaz/tam oynatım/indirme/offline/senkron/font testi yok.
+
+Yayın 1.7.9 hazırlanıyor; CI ve public dosya SHA kanıtını tamamla.
+
 ## 1.7.8 — indirme önceliği ve kısmi film arşivi
 
 Kullanıcı önceliği indirme/dublaj/altyazı/4K kapsamını büyütmek. Yeni RareFilmm genel film adaptörü main'de varsayılan açık, rarefilmmEnabled. TV/anime atlanır. Tam kanonik başlık/yıl; arama h2 ve primary article iframe; oynatıcının kendi ID/başlık/durum/süre kontrolü; gerçek Range/konteyner/boyut/piksel/hash. Public data-options JSON okunur; script/eval/login/challenge yok. Üç variant: yüksek/küçük/orta, kaynak keşfi8s, main24s/native3/sub4/EN1 değişmedi. Yeni scraper/helper/backend/hesap/videoPin0; dörtID aynı. MP4 uzantısız URL native varsayılan.mp4 ile uyumlu, imzalıadres aramalar arasında tutulmaz.

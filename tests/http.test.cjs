@@ -33,6 +33,15 @@ test('geçerli yönlendirme sonrası gerçek dosya URL’si döner', async () =>
   assert.equal((await http.bytes('https://media.test/start', {})).url, 'https://media.test/movie.mp4');
 });
 
+test('public oturum yönlendirmesi yalnız açık kökene gider, Cookie silinir ve Authorization istisnası yoktur',async()=>{
+ const calls=[],f={'https://catalog.test/start':{status:302,headers:{location:'https://player.test/watch'}},'https://player.test/watch':{body:'public page'}},http=createHttp({fetchImpl:fixtureFetch(f,calls)});
+ try{const r=await http.text('https://catalog.test/start',{headers:{Cookie:'publicSession=fixture'},publicCookieRedirectOrigin:'https://player.test'});
+  assert.equal(r.text,'public page');assert.deepEqual(calls[1].headers,{});assert.ok(calls.every(c=>!('publicCookieRedirectOrigin'in c)));
+  calls.length=0;assert.equal(await http.text('https://catalog.test/start',{headers:{Cookie:'publicSession=fixture'},publicCookieRedirectOrigin:'https://other.test'}),null);assert.equal(calls.length,1);
+  calls.length=0;assert.equal(await http.text('https://catalog.test/start',{headers:{Authorization:'Bearer private'},publicCookieRedirectOrigin:'https://player.test'}),null);assert.equal(calls.length,1);
+ }finally{http.close();}
+});
+
 test('yanıt başlığı hızlı gelse de takılan JSON ve dosya gövdeleri ayrı sınırda biter', async () => {
   const fetchImpl = async url => ({ ok: true, status: 200, url, headers: { get: () => null },
     text: () => new Promise(() => {}), arrayBuffer: () => new Promise(() => {}) });

@@ -77,7 +77,7 @@ function cardFields(video,candidate,subtitles) {
   return {
     quality: dimensions ? `${quality.label} · ${dimensions.width}×${dimensions.height}` : quality ? quality.label+(quality.automatic?' · Otomatik':'') : '',
     size: size.size || '',
-      language: [audio?.text?'Ses: '+audio.text:'',subtitleLabel(video,candidate,subtitles)].filter(Boolean).join(' · ') + (['es','en'].includes(candidate.burnedSubtitleLanguage)?' · '+candidate.burnedSubtitleLanguage.toUpperCase()+' görüntüde':'')
+      language: [audio?.text?'Ses: '+audio.text:'',subtitleLabel(video,candidate,subtitles)].filter(Boolean).join(' · ') + (['es','en'].includes(candidate.burnedSubtitleLanguage)?' · '+candidate.burnedSubtitleLanguage.toUpperCase()+' görüntüde':candidate.burnedSubtitleLanguage==='und'?' · Sabit altyazı':'')
   };
 }
 module.exports = { filenameQuality, describeQuality, describeSize, cardFields, subtitleLabel, qualityChoice, probableSize };

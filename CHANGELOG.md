@@ -1,5 +1,14 @@
 # Sürüm notları
 
+## 1.7.9 — 27 Ekim 2026
+
+- Goojara genel film/dizi dosya araması. Tam başlık/yıl, film IMDb kimliği, seçilen sezon ve bölüm, oynatıcı dosya adı ve gerçek video süresi denetlenir. Yeni sunucu veya hesap gerekmez.
+- Canlı taramada Dune, Into the Spider-Verse, Fleabag S01E01/S02E01, Game of Thrones S01E01 ve Breaking Bad S01E01 için ek MP4 ve mevcut Türkçe altyazılar. Dosyalar yaklaşık 94 MB–1,18 GB; kaynak değişkenliği sürüyor.
+- Dosya adındaki 720p/1080p yerine gerçek piksel gösterilir. HCSubs gibi sabit altyazı işareti gizlenmez; dili uydurulmaz.
+- Arama kaynağın public oturumuyla yapılır; kullanıcı hesabı veya çerezi istenmez. Katalog oturumu video bağlantısına eklenmez.
+- Nuvio **0.6.5-beta** kaynak sözleşmesi ve 238 fixture/QuickJS testi geçti.
+- Yeni indirilebilir 4K veya TR dublaj kaynağı bu sürümde doğrulanmadı. Matrix/Shameless indirme açığı, fiziksel cihazda tam indirme/offline ve senkron kontrolleri açık.
+
 ## 1.7.8 — 27 Ekim 2026
 
 - Eski ve az bulunan filmlerde küçük MP4 seçenekleri için RareFilmm araması. Tam başlık/yıl, makale ve oynatıcı kimliği/süre kontrolü; mevcut TR/EN altyazılarla aynı eşleştirme akışı.

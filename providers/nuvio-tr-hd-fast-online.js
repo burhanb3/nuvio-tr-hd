@@ -179,7 +179,7 @@ var require_http = __commonJS({
         }
       }
       async function request(rawUrl, options = {}) {
-        const { timeoutMs: localTimeout, nativeGroup, ...fetchOptions } = options;
+        const { timeoutMs: localTimeout, nativeGroup, publicCookieRedirectOrigin, ...fetchOptions } = options;
         let url = safeUrl(rawUrl, void 0, allowHttp);
         if (!url || expired()) return null;
         const denialKey = JSON.stringify([options.method || "GET", url, Object.entries(options.headers || {}).sort()]);
@@ -198,7 +198,10 @@ var require_http = __commonJS({
             if ([301, 302, 303, 307, 308].includes(response.status)) {
               const next = safeUrl(response.headers.get("location"), url, allowHttp);
               if (!next || redirects === 3) return null;
-              if (new URL(next).origin !== new URL(url).origin && options.headers && Object.keys(options.headers).some((k) => /authorization|cookie/i.test(k))) return null;
+              if (new URL(next).origin !== new URL(url).origin && fetchOptions.headers && Object.keys(fetchOptions.headers).some((k) => /authorization|cookie/i.test(k))) {
+                if (Object.keys(fetchOptions.headers).some((k) => /authorization/i.test(k)) || new URL(next).origin !== publicCookieRedirectOrigin) return null;
+                fetchOptions.headers = Object.fromEntries(Object.entries(fetchOptions.headers).filter(([key]) => !/cookie/i.test(key)));
+              }
               url = next;
               continue;
             }
@@ -1696,6 +1699,141 @@ var require_rarefilmm = __commonJS({
       }));
     }
     module2.exports = { scanRareFilmm, titleMatches, searchPages, articleData, playerData, mediaUrl };
+  }
+});
+
+// src/providers/goojara.cjs
+var require_goojara = __commonJS({
+  "src/providers/goojara.cjs"(exports2, module2) {
+    "use strict";
+    var { safeUrl } = require_util();
+    var { anchors, decodeEntities, filenameIdentity } = require_directory();
+    var { tagAttributes, sameName } = require_page_data();
+    var { matchesEpisode } = require_matching();
+    var ORIGIN = "https://ww1.goojara.to";
+    var WRAPPER = "https://www.wootly.ch";
+    var PLAYER = "https://web.wootly.ch";
+    function titleAndYear(value, target) {
+      const match = decodeEntities(value).match(/^(.+?)\s*\((\d{4})\)\s*$/);
+      return !!match && Number(match[2]) === target.year && sameName(match[1], target);
+    }
+    function searchRows(html, target) {
+      const kind = target.type === "movie" ? "m" : "t";
+      return anchors(String(html), 80).filter((a) => new RegExp("^/" + kind + "[A-Za-z0-9]{4,12}$").test(a.href) && titleAndYear(a.text, target)).slice(0, 2);
+    }
+    function parentMatches(html, target) {
+      const heading = String(html).match(/class=["']marl["']>\s*<h1\b[^>]*>([\s\S]{0,500}?)<\/h1>/i)?.[1];
+      if (!heading || !titleAndYear(heading, target)) return false;
+      const id = String(html).match(/\bdata-ubv=["'](tt\d+)(?:,\d+,\d+)?["']/)?.[1];
+      return target.type === "movie" ? !!target.imdbId && id === target.imdbId : !id || !target.imdbId || id === target.imdbId;
+    }
+    function seasonEpisode(html, target) {
+      for (const block of String(html).split('<div class="seho">').slice(1, 100)) {
+        const number = Number(block.match(/class=["']sea["']>\s*(\d+)/)?.[1]);
+        const season = Number(block.match(/\bSeason\s+(\d+)\b/i)?.[1]);
+        if (number !== target.episode || season !== target.season) continue;
+        return anchors(block.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i)?.[1] || "").find((a) => /^\/e[A-Za-z0-9]{4,12}$/.test(a.href))?.href || null;
+      }
+      return null;
+    }
+    function episodeMatches(html, parentPath, target) {
+      const heading = decodeEntities(String(html).match(/class=["']marl["']>\s*<h1\b[^>]*>([\s\S]{0,800}?)<\/h1>/i)?.[1] || "");
+      const match = heading.match(/^(.+?)\s+S(\d+),\s*E(\d+)\s*-/);
+      if (!match || !sameName(match[1], target) || Number(match[2]) !== target.season || Number(match[3]) !== target.episode) return false;
+      return anchors(String(html).match(/<div\b[^>]*id=["']wai["'][^>]*>([\s\S]*?)<\/div>/i)?.[1] || "").some((a) => {
+        const url = safeUrl(a.href, ORIGIN);
+        return url && new URL(url).origin === ORIGIN && new URL(url).pathname === parentPath && new URL(url).searchParams.get("s") === String(target.season);
+      });
+    }
+    function releaseMatches(name, target) {
+      return [target.originalTitle, ...target.searchTitles || []].some((title) => filenameIdentity(name, { ...target, originalTitle: title }, target.type === "movie")) && (target.type !== "tv" || matchesEpisode(name, target));
+    }
+    function publicPlayerData(html) {
+      const text = String(html), id = text.match(/\bvar\s+vd=["']([A-Za-z0-9_-]{1,100})["']/)?.[1], token = text.match(/\btk=["']([A-Za-z0-9_-]{1,200})["']/)?.[1];
+      return id && token ? { id, token } : null;
+    }
+    async function scanGoojara(http, target) {
+      if (!["movie", "tv"].includes(target.type)) return [];
+      let session = "", nonceCookie = "";
+      async function page(url2, body, referer = ORIGIN + "/watch-movies", toPlayer = false) {
+        const address = safeUrl(url2, ORIGIN);
+        if (!address || new URL(address).origin !== ORIGIN || http.expired()) return null;
+        const cookie = [session, nonceCookie].filter(Boolean).join("; ");
+        const r = await http.request(address, {
+          headers: {
+            Referer: referer,
+            ...cookie ? { Cookie: cookie } : {},
+            ...body ? { "Content-Type": "application/x-www-form-urlencoded", "X-Requested-With": "XMLHttpRequest" } : {}
+          },
+          ...body ? { method: "POST", body } : {},
+          ...toPlayer ? { publicCookieRedirectOrigin: WRAPPER } : {}
+        });
+        if (!r || ![ORIGIN, ...toPlayer ? [WRAPPER] : []].includes(new URL(r.url).origin)) return null;
+        const text = await r.response.text();
+        if (!text || text.length > 2e5 || text.endsWith("...[truncated]")) return null;
+        if (new URL(r.url).origin === ORIGIN) {
+          const value = (r.response.headers.get("set-cookie") || "").match(/(?:^|,\s*)((?:aGooz|aession|PHPSESSID)=[A-Za-z0-9_-]{1,160})(?:[;,]|$)/i)?.[1];
+          if (value) session = value;
+          const nonce = text.match(/_3chk\('([a-f0-9]{6,32})','([a-f0-9]{8,100})'\)/);
+          if (nonce) nonceCookie = nonce[1] + "=" + nonce[2];
+        }
+        return { text, url: r.url };
+      }
+      const home = await page("/watch-movies"), searchKey = home?.text.match(/"x=([a-f0-9]{6,64})&q="/)?.[1];
+      if (!searchKey || !session || !nonceCookie) return [];
+      let parent, parentPath;
+      for (const name of [.../* @__PURE__ */ new Set([target.originalTitle, ...target.searchTitles || []])].slice(0, 2)) {
+        const search = await page("/xmre.php", "x=" + encodeURIComponent(searchKey) + "&q=" + encodeURIComponent(name));
+        for (const row of search ? searchRows(search.text, target) : []) {
+          const detail2 = await page(row.href);
+          if (detail2 && parentMatches(detail2.text, target)) {
+            parent = detail2;
+            parentPath = row.href;
+            break;
+          }
+          if (http.expired()) break;
+        }
+        if (parent || http.expired()) break;
+      }
+      if (!parent || http.expired()) return [];
+      let detail = parent;
+      if (target.type === "tv") {
+        const showId = parent.text.match(/\bid=["']seon["']\s+data-id=["'](\d{1,12})["']/)?.[1];
+        if (!showId || !new RegExp(`data-season=["']` + target.season + `["']`).test(parent.text)) return [];
+        const list = await page("/xmre.php", "s=" + target.season + "&t=" + showId, parent.url), path = list && seasonEpisode(list.text, target);
+        detail = path && await page(path);
+        if (!detail || !episodeMatches(detail.text, parentPath, target)) return [];
+      }
+      const link = anchors(detail.text, 500).find((a) => /^Wootly(?:\s|$)/i.test(a.text) && a.href.startsWith(ORIGIN + "/go.php?url="));
+      if (!link) return [];
+      const wrapper = await page(link.href, void 0, detail.url, true);
+      const filename = wrapper && decodeEntities(wrapper.text.match(/<title\b[^>]*>([\s\S]{0,600}?)<\/title>/i)?.[1] || "");
+      if (!filename || !releaseMatches(filename, target)) return [];
+      const iframe = wrapper.text.match(/<iframe\b[^>]*>/i), embed = iframe && safeUrl(tagAttributes(iframe[0]).src);
+      if (!embed || new URL(embed).origin !== PLAYER || !/^\/e\/[A-Za-z0-9_/-]+$/.test(new URL(embed).pathname)) return [];
+      let player = await http.text(embed, { headers: { Referer: wrapper.url } });
+      if (!player || /cf-turnstile|g-recaptcha|h-captcha/.test(player.text)) return [];
+      if (/<form\b[^>]*id=["']jgb["'][^>]*>\s*<input\b[^>]*name=["']qdfx["'][^>]*value=["']1["']/.test(player.text))
+        player = await http.text(embed, { method: "POST", headers: { Referer: embed, "Content-Type": "application/x-www-form-urlencoded" }, body: "qdfx=1" });
+      const data = player && publicPlayerData(player.text);
+      if (!data || http.expired()) return [];
+      const grab = await http.text(PLAYER + "/grabm?t=" + encodeURIComponent(data.token) + "&id=" + encodeURIComponent(data.id), { headers: { Referer: embed } });
+      const url = grab && safeUrl(grab.text.trim());
+      if (!url || new URL(url).origin !== PLAYER || new URL(url).pathname !== "/source") return [];
+      return [{
+        url,
+        source: "Goojara",
+        headers: { Referer: PLAYER + "/" },
+        identity: target,
+        identityConfidence: target.type === "movie" ? 100 : 90,
+        filename,
+        requireDuration: true,
+        durationTolerance: 0.1,
+        subtitles: [],
+        .../\b(?:hcsubs?|hardsub(?:bed|s)?|hardcodedsubs?)\b/i.test(filename) ? { burnedSubtitleLanguage: "und", burnedSubtitleBasis: "release-name" } : {}
+      }];
+    }
+    module2.exports = { scanGoojara, titleAndYear, searchRows, parentMatches, seasonEpisode, episodeMatches, releaseMatches, publicPlayerData };
   }
 });
 
@@ -3207,7 +3345,7 @@ var require_presentation = __commonJS({
       return {
         quality: dimensions ? `${quality.label} · ${dimensions.width}×${dimensions.height}` : quality ? quality.label + (quality.automatic ? " · Otomatik" : "") : "",
         size: size.size || "",
-        language: [audio?.text ? "Ses: " + audio.text : "", subtitleLabel(video, candidate, subtitles)].filter(Boolean).join(" · ") + (["es", "en"].includes(candidate.burnedSubtitleLanguage) ? " · " + candidate.burnedSubtitleLanguage.toUpperCase() + " görüntüde" : "")
+        language: [audio?.text ? "Ses: " + audio.text : "", subtitleLabel(video, candidate, subtitles)].filter(Boolean).join(" · ") + (["es", "en"].includes(candidate.burnedSubtitleLanguage) ? " · " + candidate.burnedSubtitleLanguage.toUpperCase() + " görüntüde" : candidate.burnedSubtitleLanguage === "und" ? " · Sabit altyazı" : "")
       };
     }
     module2.exports = { filenameQuality, describeQuality, describeSize, cardFields, subtitleLabel, qualityChoice, probableSize };
@@ -3288,7 +3426,7 @@ var require_ranking = __commonJS({
 var require_diagnostics = __commonJS({
   "src/diagnostics.cjs"(exports2, module2) {
     "use strict";
-    var VERSION = true ? "1.7.8" : "dev";
+    var VERSION = true ? "1.7.9" : "dev";
     function effectiveTmdbKey(settings, injectedKey) {
       return typeof settings.tmdbApiKey === "string" && settings.tmdbApiKey.trim() ? settings.tmdbApiKey.trim() : typeof injectedKey === "string" ? injectedKey.trim() : "";
     }
@@ -3304,6 +3442,7 @@ var require_diagnostics = __commonJS({
         archiveEnabled: settings.archiveEnabled !== false,
         waploadedEnabled: settings.waploadedEnabled !== false,
         rarefilmmEnabled: settings.rarefilmmEnabled !== false,
+        goojaraEnabled: settings.goojaraEnabled !== false,
         hdfilmdelisiEnabled: settings.hdfilmdelisiEnabled !== false,
         dizibalEnabled: settings.dizibalEnabled !== false,
         autoSubtitles: settings.autoSubtitles !== false,
@@ -3346,6 +3485,7 @@ var require_index = __commonJS({
     var { scanHdHub } = require_hdhub();
     var { scanWaploaded } = require_waploaded();
     var { scanRareFilmm } = require_rarefilmm();
+    var { scanGoojara } = require_goojara();
     var { scanAnimecix } = require_animecix();
     var { scanSonAnime } = require_sonanime();
     var { scanDiziYou } = require_diziyou();
@@ -3408,7 +3548,7 @@ var require_index = __commonJS({
       return rankStreams(expanded, maximum, ordering).map(({ candidate, video, subtitles }, index) => {
         const kind = video.downloadable ? `${video.container.toUpperCase()} · Online izlenebilir · İndirilebilir` : "HLS · Online izlenebilir · İndirilemez";
         const fields = cardFields(video, candidate, subtitles);
-        const burnedForeign = candidate.burnedSubtitleLanguage === "es" ? "İspanyolca altyazı görüntüye işlenmiş" : candidate.burnedSubtitleLanguage === "en" ? "İngilizce altyazı görüntüye işlenmiş" : "";
+        const burnedForeign = candidate.burnedSubtitleLanguage === "es" ? "İspanyolca altyazı görüntüye işlenmiş" : candidate.burnedSubtitleLanguage === "en" ? "İngilizce altyazı görüntüye işlenmiş" : candidate.burnedSubtitleLanguage === "und" ? "Sabit altyazılı olarak etiketlenmiş" : "";
         const description = [fields.quality, fields.size, fields.language].filter(Boolean).join(" · ");
         const detailedTitle = [`${target.originalTitle} (${target.year})`, kind, description, burnedForeign].filter(Boolean).join(" · ");
         const title = settings.compactLabels === false ? detailedTitle : description + (burnedForeign ? " · " + burnedForeign : "") + (video.container === "hls" ? " · Online izlenebilir · İndirilemez" : "");
@@ -3657,6 +3797,7 @@ var require_index = __commonJS({
               if (settings.autoDiscover !== false && hosted === null) {
                 if (filesLane && settings.directoryEnabled === true) sourceJobs.push({ name: "DahmerMovies", run: () => scanDirectory(http, target, settings) });
                 if (filesLane && settings.archiveEnabled !== false) sourceJobs.push({ name: "Internet Archive", run: () => scanArchive(http, target, { onCandidates: acceptArchive }) });
+                if (filesLane && settings.goojaraEnabled !== false) sourceJobs.push({ name: "Goojara", run: () => scanGoojara(http.scope(12e3), target) });
                 if (onlineLane && settings.playImdbEnabled !== false) sourceJobs.push({ name: "PlayIMDb", run: () => scanPlayImdb(http, target) });
                 if (onlineLane && settings.vixsrcEnabled !== false && settings.includeHls !== false && !sourceFactories.some((s) => s.name === "VixSrc"))
                   sourceJobs.push({ name: "VixSrc", run: () => scanVixDirect(http, target) });
@@ -3786,6 +3927,7 @@ var require_index = __commonJS({
         { type: "toggle", key: "vixsrcEnabled", label: "VixSrc çevrimiçi alternatifleri", defaultValue: true },
         { type: "toggle", key: "hdhubEnabled", label: "4KHDHub / HubCloud doğrudan dosya araması", defaultValue: true, description: "Ücretsiz public FSL dosyaları doğrulanır. Kaynak metadatası boyut/piksel doğrulaması sayılmaz." },
         { type: "toggle", key: "rarefilmmEnabled", label: "RareFilmm ek film arşivi", defaultValue: true, description: "Eski ve az bulunan filmlerde küçük MP4 seçenekleri. Bazılarında İngilizce altyazı görüntüye işlenmiştir; 4K veya TR dublaj garantisi yoktur." },
+        { type: "toggle", key: "goojaraEnabled", label: "Goojara film ve bölüm dosyaları", defaultValue: true, description: "Küçük MP4 alternatifleri; tam başlık/yıl/film IMDb ve bölüm kontrolü. Eksik veya yanlış yıl eşleşmeleri atlanır. Mevcut TR/EN altyazı araması uygulanır." },
         { type: "toggle", key: "hdfilmdelisiEnabled", label: "HDFilmDelisi Türkçe dublaj ve çoklu ses", defaultValue: true, description: "Public film kataloğu ve gerçek HLS listesi. Ses/altyazı dilleri yayıncıdan okunur; bu kaynak online izleme içindir." },
         { type: "toggle", key: "dizibalEnabled", label: "DiziBal film, dizi ve anime", defaultValue: true, description: "Türkçe dublaj ve altyazılı online alternatifler. Özgün veya TMDB çeviri adı, yıl ve tam bölüm denetlenir." },
         { type: "toggle", key: "waploadedEnabled", label: "Waploaded güncel film/dizi dosyaları", defaultValue: true, description: "Kısmi kapsam: kaynağın son güncellenen listesi taranır; tüm arşivi kapsamaz. Gerçek dosya, yıl ve bölüm doğrulanır. Mevcut TR/EN araması uygulanır." },
@@ -3844,7 +3986,7 @@ var require_index = __commonJS({
     }
     function createEntry(lane) {
       const titles = { main: "Film/dizi · online ve dosyalar", files: "Dosyalar", online: "Hızlı kaynaklar", anime: "Anime", extraAnime: "Ek Anime", fastOnline: "Hızlı İzle" };
-      const only = { files: ["hdhubEnabled", "directoryEnabled", "archiveEnabled", "waploadedEnabled", "rarefilmmEnabled", "catalogUrls", "addonUrls"], online: ["playImdbEnabled", "vixsrcEnabled", "diziyouEnabled", "dizibakEnabled", "filmmoduEnabled", "hdfilmdelisiEnabled", "hlsView"], anime: ["animecixEnabled", "sonanimeEnabled"], extraAnime: ["animomEnabled", "seicodeEnabled"], fastOnline: ["hdfilmdelisiEnabled", "dizibalEnabled", "hlsView"] };
+      const only = { files: ["hdhubEnabled", "directoryEnabled", "archiveEnabled", "waploadedEnabled", "rarefilmmEnabled", "goojaraEnabled", "catalogUrls", "addonUrls"], online: ["playImdbEnabled", "vixsrcEnabled", "diziyouEnabled", "dizibakEnabled", "filmmoduEnabled", "hdfilmdelisiEnabled", "hlsView"], anime: ["animecixEnabled", "sonanimeEnabled"], extraAnime: ["animomEnabled", "seicodeEnabled"], fastOnline: ["hdfilmdelisiEnabled", "dizibalEnabled", "hlsView"] };
       only.main = [...only.files, ...only.online.filter((key) => key !== "hdfilmdelisiEnabled")];
       const sourceFields = Object.values(only).flat();
       return {

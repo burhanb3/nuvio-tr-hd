@@ -1,5 +1,14 @@
 # Tasarım kararları
 
+## 1.7.9 — Goojara ve gerçek kalite
+
+- Kısmi ama çalışan film/dizi dosya sağlayıcısı ana aramaya eklenebilir. Altı örnek tüm katalog başarısı değildir; yeni 4K/TR dub yokken var deme. Eski büyük/yüksek dosya ve online yolları koru.
+- Goojara normal anonim oturum/nonce/arama/oynatıcı akışı kullanır. Remote script/eval, kullanıcı cookie/key, challenge çözümü ve kalıcı signed URL yok. Yalnız tam film IMDb veya bağlı TV sezon/bölüm zinciri kabul edilir. NoWayHome2022 ve Shameless2010 çelişkileri gevşetilmez.
+- PublicCookieRedirectOrigin genel yetki izni değildir: yalnız belirtilen public player'a manual redirect öncesi anonim Cookie silinir; Authorization reddi devam eder. Native auto-follow header davranışı fiziksel test edilmedi. Video headers yalnız Referer; public oturum export edilmez.
+- Gerçek piksel isimdeki kaliteyi geçer. HCSubs kaynak bildirimi görünür tutulur; dili bilinmiyorsa Sabit altyazı, EN/TR diye uydurulmaz. unknown hard-sub dosyası temiz eşleşme sayılmaz, ancak seçenekten otomatik silinmez.
+- Coverage piksel çiftleri gerçek p sınıfı değildir; iki480p kırpma iki kalite vaadini karşılamaz. TR altyazı varlığı, diller arası max score ve görsel senkron ayrı kanıtlardır. Boş audioLanguages üzerine doğrulanmış EN veya TR dub yazılmaz.
+- Keşif12s/main24s/native3/sub4/EN1 korunur. Node bounded transport ve QuickJS testleri iPhone native iptal/süre/tam indirme/offline kanıtı değildir.
+
 ## 1.7.8 — 27 Ekim 2026
 
 - İndirme önceliği sıralama ve liste sınırından önce uygulanır; downloadFirst varsayılan açık, kapatılabilir. Büyük gerçek dosya küçük HLS satırlarından dolayı kaybolmaz. Online yollar silinmez; uygulamanın global provider sırasını pluginler arası kontrol ettiğimizi söyleme.

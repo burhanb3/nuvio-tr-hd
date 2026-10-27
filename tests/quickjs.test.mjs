@@ -14,6 +14,24 @@ const animeBundle = await readFile(new URL('../providers/nuvio-tr-hd-anime.js', 
 const extraAnimeBundle = await readFile(new URL('../providers/nuvio-tr-hd-extra-anime.js', import.meta.url), 'utf8');
 const fastOnlineBundle = await readFile(new URL('../providers/nuvio-tr-hd-fast-online.js', import.meta.url), 'utf8');
 
+test('QuickJS: Goojara anonymous session, public player form and real MP4 stay native compatible',async()=>{
+ const root='https://ww1.goojara.to',wrapper='https://www.wootly.ch/?v=fixture',embed='https://web.wootly.ch/e/publicFixture',source='https://web.wootly.ch/source?id=fixture',file='https://cdn.test/movie.mp4';
+ const mvhd=Buffer.alloc(20);mvhd.writeUInt32BE(1000,12);mvhd.writeUInt32BE(8160000,16);
+ const body=Buffer.concat([helpers.box('ftyp',Buffer.from('isom\0\0\0\0isommp42','binary')),helpers.box('moov',helpers.box('mvhd',mvhd),helpers.moov(1280,720).subarray(8)),helpers.box('mdat',Buffer.alloc(32))]);
+ const fixture=makeFixture({extra:{
+  [root+'/watch-movies']:{body:`_3chk('12345678','abcdef12345678');var x="x=abcdef0123&q=";`,headers:{'set-cookie':'aGooz=publicSessionFixture; Path=/; HttpOnly'}},
+  [root+'/xmre.php']:{body:'<li><a href="/mAbcd1"><strong>The Matrix</strong> (1999)</a></li>'},
+  [root+'/mAbcd1']:{body:'<div class="marl"><h1>The Matrix (1999)</h1></div><a data-ubv="tt0133093,0,0">IMDb</a><a href="'+root+'/go.php?url=publicFixture">Wootly HD</a>'},
+  [root+'/go.php?url=publicFixture']:{status:302,headers:{location:wrapper}},
+  [wrapper]:{body:'<title>The.Matrix.1999.720p.WEB-DL.mp4</title><iframe src="'+embed+'"></iframe>'},
+  [embed]:{body:'<form id="jgb" action="" method="post"><input type="hidden" name="qdfx" value="1"></form>var vd="fixtureVideo",dd="player",tk="fixtureTicket";'},
+  ['https://web.wootly.ch/grabm?t=fixtureTicket&id=fixtureVideo']:{body:source},[source]:{status:302,headers:{location:file}},[file]:{body,mime:'video/mp4'}
+ }});
+ const settings={autoSubtitles:false,includeHls:false,archiveEnabled:false,hdhubEnabled:false,waploadedEnabled:false,rarefilmmEnabled:false,playImdbEnabled:false,vixsrcEnabled:false,filmmoduEnabled:false,useDownloadBridge:false};
+ const calls=[],streams=await runInQuickJs(fixture,{settings,fetchCalls:calls});assert.equal(streams.length,1,JSON.stringify(calls));assert.equal(streams[0].url,file);assert.equal(streams[0].type,'mp4');assert.equal(streams[0].quality,'720p · 1280×720');assert.match(streams[0].name,/İndirilebilir · Goojara/);
+ assert.deepEqual(await runInQuickJs(fixture,{settings:{...settings,goojaraEnabled:false}}),[]);
+});
+
 test('QuickJS: ek film arşivi public metadata ile gerçek MP4/altyazı ve 4K pikseli korur',async()=>{
  const page='https://rarefilmm.com/2020/11/the-matrix-1999/',embed='https://ok.ru/videoembed/12345678',url='https://ok1-2.vkuser.net/?fixture=video';
  const mvhd=Buffer.alloc(20);mvhd.writeUInt32BE(1000,12);mvhd.writeUInt32BE(5400000,16);

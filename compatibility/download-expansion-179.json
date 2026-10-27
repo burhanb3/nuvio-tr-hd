@@ -1,0 +1,342 @@
+{
+  "checkedAt": "2026-10-27T13:54:18.525Z",
+  "version": "1.7.9",
+  "tests": 238,
+  "method": "General source search and exact canonical title/year/film IMDb/TV parent-season-episode links, release filename checks, bounded real Range/container/byte/pixel/duration/hash probes and existing TR/EN subtitle matching. Fixed metadata references; not phone TMDB credentials or full playback.",
+  "newPartialFilmTvDownloadAdapters": 1,
+  "newUniversalFilmTvDownloadAdapters": 0,
+  "newVerifiedLive4kSources": 0,
+  "newVerifiedTurkishDubSources": 0,
+  "newPerTitleVideoPins": 0,
+  "newAccounts": 0,
+  "newHelperBackends": 0,
+  "newScraperEntries": 0,
+  "source": {
+    "name": "Goojara",
+    "origin": "https://ww1.goojara.to",
+    "wrapperOrigin": "https://www.wootly.ch",
+    "playerOrigin": "https://web.wootly.ch",
+    "defaultEnabled": true,
+    "setting": "goojaraEnabled",
+    "lane": "main/files",
+    "discoveryBudgetMs": 12000,
+    "mainBudgetMsUnchanged": 24000,
+    "videoProbeConcurrencyUnchanged": 3,
+    "subtitleBodyConcurrencyUnchanged": 4,
+    "englishBodyConcurrencyUnchanged": 1,
+    "maxSearchTitles": 2,
+    "maxMatchingRowsPerTitle": 2,
+    "selectedFilesPerInvocation": 1,
+    "publicAnonymousSessionOnly": true,
+    "perPageNonceFromOwnResponse": true,
+    "sessionAndSignedVideoUrlsPersisted": false,
+    "remoteScriptsExecuted": false,
+    "captchaSolved": false,
+    "userCookiesRead": false,
+    "authorizationOrPrivateKeysUsed": false,
+    "videoResultHeaders": [
+      "Referer"
+    ],
+    "downloadTransport": "actual progressive MP4; source redirect resolves to its own media CDN; no HLS relabelling"
+  },
+  "newFiles": [
+    {
+      "key": "spider-verse",
+      "tmdbId": 324857,
+      "title": "Spider-Man: Into the Spider-Verse",
+      "source": "Goojara",
+      "container": "mp4",
+      "bytes": 1178669652,
+      "filename": "Spider-Man.Into.the.Spider-Verse.2018.720p.BluRay.x264-SPARKS.WT11.mp4",
+      "dimensions": {
+        "width": 850,
+        "height": 356
+      },
+      "qualityGrade": "480p",
+      "turkishSubtitle": true,
+      "externalTrackCount": 5,
+      "bestSubtitleScoreAnyLanguage": 76,
+      "actualDurationSeconds": 7010.037,
+      "hashAvailable": true,
+      "audioLanguagesMeasured": [],
+      "burnedSubtitleLanguage": null,
+      "sourceHardSubtitleFlag": false,
+      "cleanForCoverage": true
+    },
+    {
+      "key": "dune",
+      "tmdbId": 438631,
+      "title": "Dune",
+      "source": "Goojara",
+      "container": "mp4",
+      "bytes": 506588493,
+      "filename": "Dune.2021.1080p.HMAX.WEB-DL.DDP5.1.Atmos.x264-EVO.WT11.mp4",
+      "dimensions": {
+        "width": 852,
+        "height": 362
+      },
+      "qualityGrade": "480p",
+      "turkishSubtitle": true,
+      "externalTrackCount": 8,
+      "bestSubtitleScoreAnyLanguage": 84,
+      "actualDurationSeconds": 9325.014,
+      "hashAvailable": true,
+      "audioLanguagesMeasured": [],
+      "burnedSubtitleLanguage": null,
+      "sourceHardSubtitleFlag": false,
+      "cleanForCoverage": true
+    },
+    {
+      "key": "fleabag-s1e1",
+      "tmdbId": 67070,
+      "title": "Fleabag",
+      "season": 1,
+      "episode": 1,
+      "source": "Goojara",
+      "container": "mp4",
+      "bytes": 120769545,
+      "filename": "Fleabag.S01E01.720p.WEB.DL.x264-ITSat.WT2.mp4",
+      "dimensions": {
+        "width": 853,
+        "height": 476
+      },
+      "qualityGrade": "480p",
+      "turkishSubtitle": true,
+      "externalTrackCount": 8,
+      "bestSubtitleScoreAnyLanguage": 74,
+      "actualDurationSeconds": 1564.885,
+      "hashAvailable": true,
+      "audioLanguagesMeasured": [],
+      "burnedSubtitleLanguage": null,
+      "sourceHardSubtitleFlag": false,
+      "cleanForCoverage": true
+    },
+    {
+      "key": "got-s1e1",
+      "tmdbId": 1399,
+      "title": "Game of Thrones",
+      "season": 1,
+      "episode": 1,
+      "source": "Goojara",
+      "container": "mp4",
+      "bytes": 777811986,
+      "filename": "Game.Of.Thrones.S01E01.BRRip.720p.XVID.AC3.HCSubs-KaOs.WT11.mp4",
+      "dimensions": {
+        "width": 1280,
+        "height": 720
+      },
+      "qualityGrade": "720p",
+      "turkishSubtitle": true,
+      "externalTrackCount": 8,
+      "bestSubtitleScoreAnyLanguage": 78,
+      "actualDurationSeconds": 3697.156,
+      "hashAvailable": true,
+      "audioLanguagesMeasured": [],
+      "burnedSubtitleLanguage": "und",
+      "sourceHardSubtitleFlag": true,
+      "cleanForCoverage": false
+    },
+    {
+      "key": "fleabag-s2e1",
+      "tmdbId": 67070,
+      "title": "Fleabag",
+      "season": 2,
+      "episode": 1,
+      "source": "Goojara",
+      "container": "mp4",
+      "bytes": 94263471,
+      "filename": "fleabag.s02e01.720p.hdtv.x264-creed.WT2.mp4",
+      "dimensions": {
+        "width": 850,
+        "height": 356
+      },
+      "qualityGrade": "480p",
+      "turkishSubtitle": true,
+      "externalTrackCount": 8,
+      "bestSubtitleScoreAnyLanguage": 80,
+      "actualDurationSeconds": 1498.806,
+      "hashAvailable": true,
+      "audioLanguagesMeasured": [],
+      "burnedSubtitleLanguage": null,
+      "sourceHardSubtitleFlag": false,
+      "cleanForCoverage": true
+    },
+    {
+      "key": "breaking-bad-s1e1",
+      "tmdbId": 1396,
+      "title": "Breaking Bad",
+      "season": 1,
+      "episode": 1,
+      "source": "Goojara",
+      "container": "mp4",
+      "bytes": 361196120,
+      "filename": "Breaking.Bad.S01E01.Pilot.1080p.WEB.DL.DD5.1.H.264.WT11.mp4",
+      "dimensions": {
+        "width": 853,
+        "height": 480
+      },
+      "qualityGrade": "480p",
+      "turkishSubtitle": true,
+      "externalTrackCount": 6,
+      "bestSubtitleScoreAnyLanguage": 69,
+      "actualDurationSeconds": 3479.862,
+      "hashAvailable": true,
+      "audioLanguagesMeasured": [],
+      "burnedSubtitleLanguage": null,
+      "sourceHardSubtitleFlag": false,
+      "cleanForCoverage": true
+    }
+  ],
+  "coverageEvidence": "compatibility/coverage-179.json",
+  "repeat": [
+    {
+      "key": "fleabag-s1e1",
+      "elapsedMs": 5523,
+      "files": [
+        {
+          "bytes": 120769545,
+          "dimensions": {
+            "width": 853,
+            "height": 476
+          },
+          "actualDurationSeconds": 1564.885,
+          "hashAvailable": true,
+          "turkishSubtitle": true
+        }
+      ],
+      "note": "Repeat predates HCSubs presentation flag; Game of Thrones classification uses the final hard-subtitle round in coverage-179.json. Hash availability is observed, not repeat hash equality."
+    },
+    {
+      "key": "got-s1e1",
+      "elapsedMs": 5833,
+      "files": [
+        {
+          "bytes": 777811986,
+          "dimensions": {
+            "width": 1280,
+            "height": 720
+          },
+          "actualDurationSeconds": 3697.156,
+          "hashAvailable": true,
+          "turkishSubtitle": true
+        }
+      ],
+      "note": "Repeat predates HCSubs presentation flag; Game of Thrones classification uses the final hard-subtitle round in coverage-179.json. Hash availability is observed, not repeat hash equality."
+    }
+  ],
+  "isolated": [
+    {
+      "key": "dune",
+      "elapsedMs": 6371,
+      "candidates": 1,
+      "verifiedFiles": 0,
+      "result": "CDN timeout or network failure"
+    },
+    {
+      "key": "fleabag-s1e1",
+      "elapsedMs": 5003,
+      "candidates": 1,
+      "verifiedFiles": 1,
+      "result": "bounded real media passed"
+    },
+    {
+      "key": "matrix",
+      "elapsedMs": 5871,
+      "candidates": 1,
+      "verifiedFiles": 0,
+      "result": "CDN timeout or network failure"
+    },
+    {
+      "key": "no-way-home",
+      "elapsedMs": 1056,
+      "candidates": 0,
+      "verifiedFiles": 0,
+      "result": "identity/filename rejected"
+    },
+    {
+      "key": "spider-verse",
+      "elapsedMs": 4875,
+      "candidates": 1,
+      "verifiedFiles": 1,
+      "result": "bounded real media passed"
+    }
+  ],
+  "security": {
+    "defaultCrossOriginCredentialRedirectDenied": true,
+    "explicitPublicCookieRedirectOrigin": "https://www.wootly.ch",
+    "manualRedirectDropsAnonymousCookie": true,
+    "authorizationNeverOptedIn": true,
+    "customOptionNotForwardedToFetch": true,
+    "nativeAutomaticRedirectHeaderForwarding": "not physically tested; iOS auto-follow is outside the JavaScript manual-redirect stripping guarantee",
+    "videoProbeHasNoSessionCookie": true
+  },
+  "research": [
+    {
+      "source": "DiziBoxIzle",
+      "result": "Fleabag detail 200 but no episodes; Shameless 404 and another title empty. No ready file, not integrated."
+    },
+    {
+      "source": "FullHDFilmizlesene.co",
+      "result": "Public pages respond but search empty or generic unbound iframe; no identity-bound file, not integrated."
+    },
+    {
+      "source": "AsyaAnimeleri / AnimePraX",
+      "result": "Death Note search has no exact hit / public search timeout. No new anime adapter."
+    },
+    {
+      "source": "SineWix / Anizium / 1shows / GramCinema",
+      "result": "Inspected paths require copied fixed keys, user token or unavailable API. No keys copied or credentials used; not integrated."
+    },
+    {
+      "source": "Goated",
+      "result": "Proof-of-work gate and HLS route; no puzzle solved or new download adapter."
+    },
+    {
+      "source": "Community M3U sample",
+      "result": "Small public sample mainly repeats existing Vix HLS. Not counted as new progressive media; no credential-bearing playlist imported."
+    },
+    {
+      "source": "Vikingfile indexed references",
+      "result": "Two public file IDs returned 404/FileNotFound and advertising. No ready downloadable file."
+    },
+    {
+      "source": "No Way Home / Goojara",
+      "result": "Parent title/year/IMDb match, but player filename says 2022 against canonical 2021; rejected. Existing Archive file remains."
+    },
+    {
+      "source": "Shameless US / Goojara",
+      "result": "Search parent says US 2010 against canonical 2011; rejected, no wrong-year fallback."
+    },
+    {
+      "source": "Matrix / Inception / Goojara",
+      "result": "Candidates found but current CDN probes time out. Not counted as verified new files. Node network failure is not proof of all phone networks failing."
+    }
+  ],
+  "references": [
+    "https://github.com/oe-mirrors/e2iplayer/blob/b6b721d67b0c33aeee01eef0cd2f75a8fa3ea747/IPTVPlayer/hosts/hostgoojara.py",
+    "https://github.com/falsisdev/anthology"
+  ],
+  "upstream": {
+    "latestRelease": "0.6.5-beta",
+    "head": "61658f366f985fc7758f0942a14c1754c69aca68",
+    "sourceDrift": [],
+    "failedAssertions": [],
+    "sourceContractVerified": true
+  },
+  "limits": [
+    "Six new title/episode MP4 examples are partial catalogue coverage, not all movies, series or anime.",
+    "Filename 720p/1080p claims did not match real pixels in several files; measured 480p/720p is used.",
+    "TR subtitle bodies and matching scores do not prove visual synchronization or automatic offset correction. Best subtitle scores are across languages, not guaranteed TR-only.",
+    "No container audio language was measured for these six MP4s. Canonical EN fallback is not proof of English audio or Turkish dubbing.",
+    "Game of Thrones filename declares HCSubs; fixed subtitle language is unknown, and it is not clean-subtitle coverage.",
+    "Dune timed out in one isolated round before passing in the combined round; catalogue/CDN stability is not guaranteed.",
+    "Existing high/large files and online HLS paths remain; no new verified 4K or Turkish dubbed downloadable source this turn.",
+    "Source/QuickJS tests and Node timings are not physical iPhone cancellation, duration, download or offline guarantees."
+  ],
+  "allSourceCriteriaMet": false,
+  "physicalDevice": "not-run",
+  "fullPlayback": "not-run",
+  "fullDownload": "not-run",
+  "offline": "not-run",
+  "subtitleAudioSync": "not-run"
+}

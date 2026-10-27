@@ -1,0 +1,1715 @@
+{
+  "checkedAt": "2026-10-27T13:54:18.525Z",
+  "version": "1.7.9",
+  "observedAt": {
+    "base": "2026-10-27T13:37:48.431Z",
+    "repeat": "2026-10-27T13:40:17.879Z",
+    "hardSubtitleLabelFinal": "2026-10-27T13:45:55.610Z"
+  },
+  "metadata": "fixed canonical reference; does not test phone TMDB API credentials",
+  "transport": "Node limited1MiB, actual source and subtitle HTTP; native iPhone transport not tested",
+  "acceptance": {
+    "smallMovieBytes": 3221225472,
+    "smallEpisodeBytes": 1073741824,
+    "minimumCleanDownloadQualityGrades": 2,
+    "requireTurkishSubtitle": true,
+    "note": "Quality grades use real measured pixels with the same cropped-image classifier as cards; the original pixel-pair gate is retained only as legacy evidence."
+  },
+  "cases": [
+    {
+      "key": "no-way-home",
+      "tmdbId": 634649,
+      "title": "Spider-Man: No Way Home",
+      "type": "movie",
+      "checkedAt": "2026-10-27T13:37:48.431Z",
+      "elapsedMs": 9873,
+      "bytesRead": 6684348,
+      "downloadFiles": 1,
+      "onlineWithTr": true,
+      "cleanOnlineWithTr": true,
+      "downloadPixelGroups": [
+        "720x304"
+      ],
+      "downloadQualityGrades": [
+        "304p"
+      ],
+      "cleanDownloadQualityGrades": [
+        "304p"
+      ],
+      "smallWithTr": true,
+      "cleanSmallWithTr": true,
+      "smallLimitBytes": 3221225472,
+      "legacyPixelGroupGateMet": false,
+      "qualityGradeGateMet": false,
+      "legacyGaps": [
+        "multiple_verified_download_qualities_missing"
+      ],
+      "notes": [
+        "Legacy coverage gate compares pixel pairs, so two differently cropped 480p files can pass it. This is not proof of two quality grades or 4K coverage."
+      ],
+      "discovery": [
+        {
+          "lane": "main",
+          "elapsedMs": 9872,
+          "results": 17,
+          "reason": "ok",
+          "sources": [
+            {
+              "name": "PlayIMDb",
+              "candidates": 3,
+              "startedMs": 60,
+              "discoveryMs": 1487
+            },
+            {
+              "name": "VixSrc",
+              "candidates": 1,
+              "startedMs": 62,
+              "discoveryMs": 1952
+            },
+            {
+              "name": "Goojara",
+              "candidates": 0,
+              "startedMs": 58,
+              "discoveryMs": 2264
+            },
+            {
+              "name": "Waploaded",
+              "candidates": 0,
+              "startedMs": 2322,
+              "discoveryMs": 402
+            },
+            {
+              "name": "FilmModu",
+              "candidates": 6,
+              "startedMs": 1556,
+              "discoveryMs": 1205
+            },
+            {
+              "name": "RareFilmm",
+              "candidates": 0,
+              "startedMs": 2724,
+              "discoveryMs": 896
+            },
+            {
+              "name": "Internet Archive",
+              "candidates": 1,
+              "startedMs": 55,
+              "discoveryMs": 4435
+            },
+            {
+              "name": "4KHDHub / HubCloud",
+              "candidates": 9,
+              "startedMs": 2016,
+              "discoveryMs": 7694
+            }
+          ],
+          "rejected": {
+            "video_unavailable": 9
+          }
+        },
+        {
+          "lane": "fastOnline",
+          "elapsedMs": 6876,
+          "results": 1,
+          "reason": "ok",
+          "sources": [
+            {
+              "name": "DiziBal",
+              "candidates": 0,
+              "startedMs": 62,
+              "discoveryMs": 1684
+            },
+            {
+              "name": "HDFilmDelisi",
+              "candidates": 1,
+              "startedMs": 60,
+              "discoveryMs": 2265
+            }
+          ],
+          "rejected": {}
+        }
+      ],
+      "files": [
+        {
+          "source": "Internet Archive",
+          "container": "mp4",
+          "bytes": 881009469,
+          "filename": "Spider-Man.No.Way.Home.2021.FRENCH.BDRip.XviD.Wawacity.blue.avi",
+          "dimensions": {
+            "width": 720,
+            "height": 304
+          },
+          "qualityGrade": "304p",
+          "turkishSubtitle": true,
+          "externalTrackCount": 6,
+          "bestSubtitleScoreAnyLanguage": 69,
+          "actualDurationSeconds": 8889.931,
+          "hashAvailable": true,
+          "audioLanguagesMeasured": [],
+          "burnedSubtitleLanguage": null,
+          "sourceHardSubtitleFlag": false,
+          "cleanForCoverage": true
+        }
+      ]
+    },
+    {
+      "key": "spider-verse",
+      "tmdbId": 324857,
+      "title": "Spider-Man: Into the Spider-Verse",
+      "type": "movie",
+      "checkedAt": "2026-10-27T13:37:48.431Z",
+      "elapsedMs": 8057,
+      "bytesRead": 5737880,
+      "downloadFiles": 2,
+      "onlineWithTr": true,
+      "cleanOnlineWithTr": true,
+      "downloadPixelGroups": [
+        "1920x800",
+        "850x356"
+      ],
+      "downloadQualityGrades": [
+        "1080p",
+        "480p"
+      ],
+      "cleanDownloadQualityGrades": [
+        "1080p",
+        "480p"
+      ],
+      "smallWithTr": true,
+      "cleanSmallWithTr": true,
+      "smallLimitBytes": 3221225472,
+      "legacyPixelGroupGateMet": true,
+      "qualityGradeGateMet": true,
+      "legacyGaps": [],
+      "notes": [
+        "Legacy coverage gate compares pixel pairs, so two differently cropped 480p files can pass it. This is not proof of two quality grades or 4K coverage."
+      ],
+      "discovery": [
+        {
+          "lane": "main",
+          "elapsedMs": 8057,
+          "results": 18,
+          "reason": "ok",
+          "sources": [
+            {
+              "name": "PlayIMDb",
+              "candidates": 3,
+              "startedMs": 6,
+              "discoveryMs": 385
+            },
+            {
+              "name": "VixSrc",
+              "candidates": 1,
+              "startedMs": 7,
+              "discoveryMs": 742
+            },
+            {
+              "name": "FilmModu",
+              "candidates": 6,
+              "startedMs": 395,
+              "discoveryMs": 1087
+            },
+            {
+              "name": "Waploaded",
+              "candidates": 0,
+              "startedMs": 1486,
+              "discoveryMs": 1
+            },
+            {
+              "name": "Goojara",
+              "candidates": 1,
+              "startedMs": 5,
+              "discoveryMs": 1527
+            },
+            {
+              "name": "Internet Archive",
+              "candidates": 1,
+              "startedMs": 2,
+              "discoveryMs": 2295
+            },
+            {
+              "name": "RareFilmm",
+              "candidates": 0,
+              "startedMs": 1487,
+              "discoveryMs": 823
+            },
+            {
+              "name": "4KHDHub / HubCloud",
+              "candidates": 6,
+              "startedMs": 750,
+              "discoveryMs": 4434
+            }
+          ],
+          "rejected": {
+            "video_unavailable": 6
+          }
+        },
+        {
+          "lane": "fastOnline",
+          "elapsedMs": 5559,
+          "results": 1,
+          "reason": "ok",
+          "sources": [
+            {
+              "name": "DiziBal",
+              "candidates": 0,
+              "startedMs": 9,
+              "discoveryMs": 465
+            },
+            {
+              "name": "HDFilmDelisi",
+              "candidates": 1,
+              "startedMs": 8,
+              "discoveryMs": 997
+            }
+          ],
+          "rejected": {}
+        }
+      ],
+      "files": [
+        {
+          "source": "Internet Archive",
+          "container": "mp4",
+          "bytes": 2016133619,
+          "filename": "Spider-Man Into the Spider-Verse (2018) [1080p] [BluRay] [YTS.MX].torrent",
+          "dimensions": {
+            "width": 1920,
+            "height": 800
+          },
+          "qualityGrade": "1080p",
+          "turkishSubtitle": true,
+          "externalTrackCount": 5,
+          "bestSubtitleScoreAnyLanguage": 74,
+          "actualDurationSeconds": 7010.059,
+          "hashAvailable": true,
+          "audioLanguagesMeasured": [],
+          "burnedSubtitleLanguage": null,
+          "sourceHardSubtitleFlag": false,
+          "cleanForCoverage": true
+        },
+        {
+          "source": "Goojara",
+          "container": "mp4",
+          "bytes": 1178669652,
+          "filename": "Spider-Man.Into.the.Spider-Verse.2018.720p.BluRay.x264-SPARKS.WT11.mp4",
+          "dimensions": {
+            "width": 850,
+            "height": 356
+          },
+          "qualityGrade": "480p",
+          "turkishSubtitle": true,
+          "externalTrackCount": 5,
+          "bestSubtitleScoreAnyLanguage": 76,
+          "actualDurationSeconds": 7010.037,
+          "hashAvailable": true,
+          "audioLanguagesMeasured": [],
+          "burnedSubtitleLanguage": null,
+          "sourceHardSubtitleFlag": false,
+          "cleanForCoverage": true
+        }
+      ]
+    },
+    {
+      "key": "dune",
+      "tmdbId": 438631,
+      "title": "Dune",
+      "type": "movie",
+      "checkedAt": "2026-10-27T13:37:48.431Z",
+      "elapsedMs": 5548,
+      "bytesRead": 4130001,
+      "downloadFiles": 3,
+      "onlineWithTr": true,
+      "cleanOnlineWithTr": true,
+      "downloadPixelGroups": [
+        "1146x480",
+        "1280x536",
+        "852x362"
+      ],
+      "downloadQualityGrades": [
+        "480p",
+        "720p"
+      ],
+      "cleanDownloadQualityGrades": [
+        "480p",
+        "720p"
+      ],
+      "smallWithTr": true,
+      "cleanSmallWithTr": true,
+      "smallLimitBytes": 3221225472,
+      "legacyPixelGroupGateMet": true,
+      "qualityGradeGateMet": true,
+      "legacyGaps": [],
+      "notes": [
+        "Legacy coverage gate compares pixel pairs, so two differently cropped 480p files can pass it. This is not proof of two quality grades or 4K coverage."
+      ],
+      "discovery": [
+        {
+          "lane": "main",
+          "elapsedMs": 5098,
+          "results": 13,
+          "reason": "ok",
+          "sources": [
+            {
+              "name": "PlayIMDb",
+              "candidates": 3,
+              "startedMs": 7,
+              "discoveryMs": 369
+            },
+            {
+              "name": "VixSrc",
+              "candidates": 1,
+              "startedMs": 9,
+              "discoveryMs": 989
+            },
+            {
+              "name": "Internet Archive",
+              "candidates": 2,
+              "startedMs": 2,
+              "discoveryMs": 1204
+            },
+            {
+              "name": "Waploaded",
+              "candidates": 0,
+              "startedMs": 1206,
+              "discoveryMs": 0
+            },
+            {
+              "name": "FilmModu",
+              "candidates": 0,
+              "startedMs": 381,
+              "discoveryMs": 1032
+            },
+            {
+              "name": "RareFilmm",
+              "candidates": 0,
+              "startedMs": 1206,
+              "discoveryMs": 305
+            },
+            {
+              "name": "Goojara",
+              "candidates": 1,
+              "startedMs": 6,
+              "discoveryMs": 1761
+            },
+            {
+              "name": "4KHDHub / HubCloud",
+              "candidates": 5,
+              "startedMs": 999,
+              "discoveryMs": 3833
+            }
+          ],
+          "rejected": {
+            "video_unavailable": 5
+          }
+        },
+        {
+          "lane": "fastOnline",
+          "elapsedMs": 5546,
+          "results": 1,
+          "reason": "ok",
+          "sources": [
+            {
+              "name": "DiziBal",
+              "candidates": 0,
+              "startedMs": 10,
+              "discoveryMs": 393
+            },
+            {
+              "name": "HDFilmDelisi",
+              "candidates": 1,
+              "startedMs": 9,
+              "discoveryMs": 993
+            }
+          ],
+          "rejected": {}
+        }
+      ],
+      "files": [
+        {
+          "source": "Internet Archive",
+          "container": "mp4",
+          "bytes": 949160267,
+          "filename": "Dune_2021_720p_BluRay_x265_HEVC_10bit_AAC_2_0_Hindi_PSA_ASAP.mkv",
+          "dimensions": {
+            "width": 1146,
+            "height": 480
+          },
+          "qualityGrade": "480p",
+          "turkishSubtitle": true,
+          "externalTrackCount": 8,
+          "bestSubtitleScoreAnyLanguage": 69,
+          "actualDurationSeconds": 9326.698,
+          "hashAvailable": true,
+          "audioLanguagesMeasured": [],
+          "burnedSubtitleLanguage": null,
+          "sourceHardSubtitleFlag": false,
+          "cleanForCoverage": true
+        },
+        {
+          "source": "Internet Archive",
+          "container": "mkv",
+          "bytes": 792903325,
+          "filename": "Dune_2021_720p_BluRay_x265_HEVC_10bit_AAC_2_0_Hindi_PSA_ASAP.mkv",
+          "dimensions": {
+            "width": 1280,
+            "height": 536
+          },
+          "qualityGrade": "720p",
+          "turkishSubtitle": true,
+          "externalTrackCount": 8,
+          "bestSubtitleScoreAnyLanguage": 69,
+          "actualDurationSeconds": 9326.659,
+          "hashAvailable": true,
+          "audioLanguagesMeasured": [
+            "hi"
+          ],
+          "burnedSubtitleLanguage": null,
+          "sourceHardSubtitleFlag": false,
+          "cleanForCoverage": true
+        },
+        {
+          "source": "Goojara",
+          "container": "mp4",
+          "bytes": 506588493,
+          "filename": "Dune.2021.1080p.HMAX.WEB-DL.DDP5.1.Atmos.x264-EVO.WT11.mp4",
+          "dimensions": {
+            "width": 852,
+            "height": 362
+          },
+          "qualityGrade": "480p",
+          "turkishSubtitle": true,
+          "externalTrackCount": 8,
+          "bestSubtitleScoreAnyLanguage": 84,
+          "actualDurationSeconds": 9325.014,
+          "hashAvailable": true,
+          "audioLanguagesMeasured": [],
+          "burnedSubtitleLanguage": null,
+          "sourceHardSubtitleFlag": false,
+          "cleanForCoverage": true
+        }
+      ]
+    },
+    {
+      "key": "matrix",
+      "tmdbId": 603,
+      "title": "The Matrix",
+      "type": "movie",
+      "checkedAt": "2026-10-27T13:37:48.431Z",
+      "elapsedMs": 5883,
+      "bytesRead": 5317008,
+      "downloadFiles": 0,
+      "onlineWithTr": true,
+      "cleanOnlineWithTr": true,
+      "downloadPixelGroups": [],
+      "downloadQualityGrades": [],
+      "cleanDownloadQualityGrades": [],
+      "smallWithTr": false,
+      "cleanSmallWithTr": false,
+      "smallLimitBytes": 3221225472,
+      "legacyPixelGroupGateMet": false,
+      "qualityGradeGateMet": false,
+      "legacyGaps": [
+        "download_missing",
+        "small_download_with_tr_missing",
+        "multiple_verified_download_qualities_missing"
+      ],
+      "notes": [
+        "Legacy coverage gate compares pixel pairs, so two differently cropped 480p files can pass it. This is not proof of two quality grades or 4K coverage."
+      ],
+      "discovery": [
+        {
+          "lane": "main",
+          "elapsedMs": 5883,
+          "results": 18,
+          "reason": "ok",
+          "sources": [
+            {
+              "name": "PlayIMDb",
+              "candidates": 3,
+              "startedMs": 6,
+              "discoveryMs": 397
+            },
+            {
+              "name": "VixSrc",
+              "candidates": 1,
+              "startedMs": 7,
+              "discoveryMs": 743
+            },
+            {
+              "name": "Goojara",
+              "candidates": 1,
+              "startedMs": 6,
+              "discoveryMs": 1365
+            },
+            {
+              "name": "Waploaded",
+              "candidates": 0,
+              "startedMs": 1372,
+              "discoveryMs": 0
+            },
+            {
+              "name": "FilmModu",
+              "candidates": 8,
+              "startedMs": 406,
+              "discoveryMs": 1205
+            },
+            {
+              "name": "RareFilmm",
+              "candidates": 0,
+              "startedMs": 1372,
+              "discoveryMs": 286
+            },
+            {
+              "name": "Internet Archive",
+              "candidates": 0,
+              "startedMs": 3,
+              "discoveryMs": 3910
+            },
+            {
+              "name": "4KHDHub / HubCloud",
+              "candidates": 6,
+              "startedMs": 751,
+              "discoveryMs": 3714
+            }
+          ],
+          "rejected": {
+            "video_unavailable": 7
+          }
+        },
+        {
+          "lane": "fastOnline",
+          "elapsedMs": 5580,
+          "results": 2,
+          "reason": "ok",
+          "sources": [
+            {
+              "name": "HDFilmDelisi",
+              "candidates": 1,
+              "startedMs": 7,
+              "discoveryMs": 1031
+            },
+            {
+              "name": "DiziBal",
+              "candidates": 1,
+              "startedMs": 8,
+              "discoveryMs": 1208
+            }
+          ],
+          "rejected": {}
+        }
+      ],
+      "files": []
+    },
+    {
+      "key": "inception",
+      "tmdbId": 27205,
+      "title": "Inception",
+      "type": "movie",
+      "checkedAt": "2026-10-27T13:37:48.431Z",
+      "elapsedMs": 6107,
+      "bytesRead": 8478799,
+      "downloadFiles": 2,
+      "onlineWithTr": true,
+      "cleanOnlineWithTr": true,
+      "downloadPixelGroups": [
+        "1280x536"
+      ],
+      "downloadQualityGrades": [
+        "720p"
+      ],
+      "cleanDownloadQualityGrades": [
+        "720p"
+      ],
+      "smallWithTr": true,
+      "cleanSmallWithTr": true,
+      "smallLimitBytes": 3221225472,
+      "legacyPixelGroupGateMet": false,
+      "qualityGradeGateMet": false,
+      "legacyGaps": [
+        "multiple_verified_download_qualities_missing"
+      ],
+      "notes": [
+        "Legacy coverage gate compares pixel pairs, so two differently cropped 480p files can pass it. This is not proof of two quality grades or 4K coverage."
+      ],
+      "discovery": [
+        {
+          "lane": "main",
+          "elapsedMs": 6106,
+          "results": 20,
+          "reason": "ok",
+          "sources": [
+            {
+              "name": "PlayIMDb",
+              "candidates": 3,
+              "startedMs": 7,
+              "discoveryMs": 342
+            },
+            {
+              "name": "VixSrc",
+              "candidates": 1,
+              "startedMs": 8,
+              "discoveryMs": 744
+            },
+            {
+              "name": "FilmModu",
+              "candidates": 8,
+              "startedMs": 350,
+              "discoveryMs": 815
+            },
+            {
+              "name": "Waploaded",
+              "candidates": 0,
+              "startedMs": 1166,
+              "discoveryMs": 1
+            },
+            {
+              "name": "Goojara",
+              "candidates": 1,
+              "startedMs": 6,
+              "discoveryMs": 1472
+            },
+            {
+              "name": "RareFilmm",
+              "candidates": 0,
+              "startedMs": 1167,
+              "discoveryMs": 313
+            },
+            {
+              "name": "Internet Archive",
+              "candidates": 2,
+              "startedMs": 2,
+              "discoveryMs": 2566
+            },
+            {
+              "name": "4KHDHub / HubCloud",
+              "candidates": 7,
+              "startedMs": 752,
+              "discoveryMs": 4295
+            }
+          ],
+          "rejected": {
+            "video_unavailable": 8,
+            "subtitle_unavailable": 2
+          }
+        },
+        {
+          "lane": "fastOnline",
+          "elapsedMs": 5521,
+          "results": 2,
+          "reason": "ok",
+          "sources": [
+            {
+              "name": "HDFilmDelisi",
+              "candidates": 1,
+              "startedMs": 8,
+              "discoveryMs": 970
+            },
+            {
+              "name": "DiziBal",
+              "candidates": 1,
+              "startedMs": 9,
+              "discoveryMs": 1400
+            }
+          ],
+          "rejected": {}
+        }
+      ],
+      "files": [
+        {
+          "source": "Internet Archive",
+          "container": "mp4",
+          "bytes": 869895874,
+          "filename": "A.Origem.[2010].baixarfilmesretro.blogspot.com (1).mp4",
+          "dimensions": {
+            "width": 1280,
+            "height": 536
+          },
+          "qualityGrade": "720p",
+          "turkishSubtitle": true,
+          "externalTrackCount": 8,
+          "bestSubtitleScoreAnyLanguage": 69,
+          "actualDurationSeconds": 8888.088,
+          "hashAvailable": true,
+          "audioLanguagesMeasured": [],
+          "burnedSubtitleLanguage": null,
+          "sourceHardSubtitleFlag": false,
+          "cleanForCoverage": true
+        },
+        {
+          "source": "Internet Archive",
+          "container": "mp4",
+          "bytes": 902428472,
+          "filename": "A.Origem.[2010].baixarfilmesretro.blogspot.com (1).mp4",
+          "dimensions": {
+            "width": 1280,
+            "height": 536
+          },
+          "qualityGrade": "720p",
+          "turkishSubtitle": true,
+          "externalTrackCount": 8,
+          "bestSubtitleScoreAnyLanguage": 69,
+          "actualDurationSeconds": 8888.086666666666,
+          "hashAvailable": true,
+          "audioLanguagesMeasured": [],
+          "burnedSubtitleLanguage": null,
+          "sourceHardSubtitleFlag": false,
+          "cleanForCoverage": true
+        }
+      ]
+    },
+    {
+      "key": "fleabag-s1e1",
+      "tmdbId": 67070,
+      "title": "Fleabag",
+      "type": "tv",
+      "season": 1,
+      "episode": 1,
+      "checkedAt": "2026-10-27T13:40:17.879Z",
+      "elapsedMs": 5523,
+      "bytesRead": 2173733,
+      "downloadFiles": 3,
+      "onlineWithTr": true,
+      "cleanOnlineWithTr": true,
+      "downloadPixelGroups": [
+        "848x354",
+        "853x476"
+      ],
+      "downloadQualityGrades": [
+        "480p"
+      ],
+      "cleanDownloadQualityGrades": [
+        "480p"
+      ],
+      "smallWithTr": true,
+      "cleanSmallWithTr": true,
+      "smallLimitBytes": 1073741824,
+      "legacyPixelGroupGateMet": true,
+      "qualityGradeGateMet": false,
+      "legacyGaps": [],
+      "notes": [
+        "Legacy coverage gate compares pixel pairs, so two differently cropped 480p files can pass it. This is not proof of two quality grades or 4K coverage."
+      ],
+      "discovery": [
+        {
+          "lane": "main",
+          "elapsedMs": 5521,
+          "results": 15,
+          "reason": "ok",
+          "sources": [
+            {
+              "name": "PlayIMDb",
+              "candidates": 3,
+              "startedMs": 63,
+              "discoveryMs": 379
+            },
+            {
+              "name": "Internet Archive",
+              "candidates": 2,
+              "startedMs": 55,
+              "discoveryMs": 799
+            },
+            {
+              "name": "VixSrc",
+              "candidates": 1,
+              "startedMs": 64,
+              "discoveryMs": 912
+            },
+            {
+              "name": "DiziYou",
+              "candidates": 1,
+              "startedMs": 450,
+              "discoveryMs": 531
+            },
+            {
+              "name": "Waploaded",
+              "candidates": 0,
+              "startedMs": 982,
+              "discoveryMs": 338
+            },
+            {
+              "name": "DiziBak",
+              "candidates": 1,
+              "startedMs": 854,
+              "discoveryMs": 946
+            },
+            {
+              "name": "Goojara",
+              "candidates": 1,
+              "startedMs": 60,
+              "discoveryMs": 1894
+            },
+            {
+              "name": "4KHDHub / HubCloud",
+              "candidates": 0,
+              "startedMs": 977,
+              "discoveryMs": 2471
+            }
+          ],
+          "rejected": {}
+        },
+        {
+          "lane": "fastOnline",
+          "elapsedMs": 2435,
+          "results": 1,
+          "reason": "ok",
+          "sources": [
+            {
+              "name": "DiziBal",
+              "candidates": 1,
+              "startedMs": 63,
+              "discoveryMs": 1979
+            }
+          ],
+          "rejected": {}
+        }
+      ],
+      "files": [
+        {
+          "source": "Internet Archive",
+          "container": "mp4",
+          "bytes": 162737999,
+          "filename": "Fleabag.S01E01.480p.WEB-DL.Tehmovies.biz.mkv",
+          "dimensions": {
+            "width": 848,
+            "height": 354
+          },
+          "qualityGrade": "480p",
+          "turkishSubtitle": true,
+          "externalTrackCount": 8,
+          "bestSubtitleScoreAnyLanguage": 74,
+          "actualDurationSeconds": 1564.866,
+          "hashAvailable": true,
+          "audioLanguagesMeasured": [],
+          "burnedSubtitleLanguage": null,
+          "sourceHardSubtitleFlag": false,
+          "cleanForCoverage": true
+        },
+        {
+          "source": "Internet Archive",
+          "container": "mkv",
+          "bytes": 103770149,
+          "filename": "Fleabag.S01E01.480p.WEB-DL.Tehmovies.biz.mkv",
+          "dimensions": {
+            "width": 848,
+            "height": 354
+          },
+          "qualityGrade": "480p",
+          "turkishSubtitle": true,
+          "externalTrackCount": 8,
+          "bestSubtitleScoreAnyLanguage": 74,
+          "actualDurationSeconds": 1564.874,
+          "hashAvailable": true,
+          "audioLanguagesMeasured": [],
+          "burnedSubtitleLanguage": null,
+          "sourceHardSubtitleFlag": false,
+          "cleanForCoverage": true
+        },
+        {
+          "source": "Goojara",
+          "container": "mp4",
+          "bytes": 120769545,
+          "filename": "Fleabag.S01E01.720p.WEB.DL.x264-ITSat.WT2.mp4",
+          "dimensions": {
+            "width": 853,
+            "height": 476
+          },
+          "qualityGrade": "480p",
+          "turkishSubtitle": true,
+          "externalTrackCount": 8,
+          "bestSubtitleScoreAnyLanguage": 74,
+          "actualDurationSeconds": 1564.885,
+          "hashAvailable": true,
+          "audioLanguagesMeasured": [],
+          "burnedSubtitleLanguage": null,
+          "sourceHardSubtitleFlag": false,
+          "cleanForCoverage": true
+        }
+      ]
+    },
+    {
+      "key": "shameless-s1e1",
+      "tmdbId": 34307,
+      "title": "Shameless",
+      "type": "tv",
+      "season": 1,
+      "episode": 1,
+      "checkedAt": "2026-10-27T13:37:48.431Z",
+      "elapsedMs": 4982,
+      "bytesRead": 1979786,
+      "downloadFiles": 0,
+      "onlineWithTr": true,
+      "cleanOnlineWithTr": true,
+      "downloadPixelGroups": [],
+      "downloadQualityGrades": [],
+      "cleanDownloadQualityGrades": [],
+      "smallWithTr": false,
+      "cleanSmallWithTr": false,
+      "smallLimitBytes": 1073741824,
+      "legacyPixelGroupGateMet": false,
+      "qualityGradeGateMet": false,
+      "legacyGaps": [
+        "download_missing",
+        "small_download_with_tr_missing",
+        "multiple_verified_download_qualities_missing"
+      ],
+      "notes": [
+        "Legacy coverage gate compares pixel pairs, so two differently cropped 480p files can pass it. This is not proof of two quality grades or 4K coverage."
+      ],
+      "discovery": [
+        {
+          "lane": "main",
+          "elapsedMs": 4982,
+          "results": 8,
+          "reason": "ok",
+          "sources": [
+            {
+              "name": "PlayIMDb",
+              "candidates": 3,
+              "startedMs": 4,
+              "discoveryMs": 371
+            },
+            {
+              "name": "Goojara",
+              "candidates": 0,
+              "startedMs": 4,
+              "discoveryMs": 470
+            },
+            {
+              "name": "VixSrc",
+              "candidates": 1,
+              "startedMs": 5,
+              "discoveryMs": 929
+            },
+            {
+              "name": "Internet Archive",
+              "candidates": 0,
+              "startedMs": 2,
+              "discoveryMs": 1072
+            },
+            {
+              "name": "Waploaded",
+              "candidates": 0,
+              "startedMs": 1074,
+              "discoveryMs": 1
+            },
+            {
+              "name": "4KHDHub / HubCloud",
+              "candidates": 0,
+              "startedMs": 934,
+              "discoveryMs": 500
+            },
+            {
+              "name": "DiziBak",
+              "candidates": 1,
+              "startedMs": 474,
+              "discoveryMs": 1058
+            },
+            {
+              "name": "DiziYou",
+              "candidates": 0,
+              "startedMs": 378,
+              "discoveryMs": 1812
+            }
+          ],
+          "rejected": {}
+        },
+        {
+          "lane": "fastOnline",
+          "elapsedMs": 1449,
+          "results": 1,
+          "reason": "ok",
+          "sources": [
+            {
+              "name": "DiziBal",
+              "candidates": 1,
+              "startedMs": 5,
+              "discoveryMs": 974
+            }
+          ],
+          "rejected": {}
+        }
+      ],
+      "files": []
+    },
+    {
+      "key": "got-s1e1",
+      "tmdbId": 1399,
+      "title": "Game of Thrones",
+      "type": "tv",
+      "season": 1,
+      "episode": 1,
+      "checkedAt": "2026-10-27T13:45:55.610Z",
+      "elapsedMs": 5223,
+      "bytesRead": 2561206,
+      "downloadFiles": 1,
+      "onlineWithTr": true,
+      "cleanOnlineWithTr": true,
+      "downloadPixelGroups": [
+        "1280x720"
+      ],
+      "downloadQualityGrades": [
+        "720p"
+      ],
+      "cleanDownloadQualityGrades": [],
+      "smallWithTr": true,
+      "cleanSmallWithTr": false,
+      "smallLimitBytes": 1073741824,
+      "legacyPixelGroupGateMet": false,
+      "qualityGradeGateMet": false,
+      "legacyGaps": [
+        "only_known_foreign_burned_subtitle_small_downloads",
+        "multiple_verified_download_qualities_missing"
+      ],
+      "notes": [
+        "Legacy coverage gate compares pixel pairs, so two differently cropped 480p files can pass it. This is not proof of two quality grades or 4K coverage.",
+        "HCSubs filename declaration is labelled, but its language and actual burned frames were not visually verified. Unknown hard subtitles are conservatively excluded from clean coverage."
+      ],
+      "discovery": [
+        {
+          "lane": "main",
+          "elapsedMs": 5221,
+          "results": 8,
+          "reason": "ok",
+          "sources": [
+            {
+              "name": "PlayIMDb",
+              "candidates": 3,
+              "startedMs": 77,
+              "discoveryMs": 437
+            },
+            {
+              "name": "Internet Archive",
+              "candidates": 0,
+              "startedMs": 72,
+              "discoveryMs": 1176
+            },
+            {
+              "name": "VixSrc",
+              "candidates": 1,
+              "startedMs": 78,
+              "discoveryMs": 1208
+            },
+            {
+              "name": "DiziBak",
+              "candidates": 0,
+              "startedMs": 1248,
+              "discoveryMs": 356
+            },
+            {
+              "name": "Waploaded",
+              "candidates": 0,
+              "startedMs": 1604,
+              "discoveryMs": 329
+            },
+            {
+              "name": "Goojara",
+              "candidates": 1,
+              "startedMs": 75,
+              "discoveryMs": 2152
+            },
+            {
+              "name": "DiziYou",
+              "candidates": 0,
+              "startedMs": 525,
+              "discoveryMs": 1944
+            },
+            {
+              "name": "4KHDHub / HubCloud",
+              "candidates": 5,
+              "startedMs": 1289,
+              "discoveryMs": 3342
+            }
+          ],
+          "rejected": {
+            "video_unavailable": 5
+          }
+        },
+        {
+          "lane": "fastOnline",
+          "elapsedMs": 1180,
+          "results": 0,
+          "reason": "no_eligible_sources",
+          "sources": [
+            {
+              "name": "DiziBal",
+              "candidates": 0,
+              "startedMs": 76,
+              "discoveryMs": 1102
+            }
+          ],
+          "rejected": {}
+        }
+      ],
+      "files": [
+        {
+          "source": "Goojara",
+          "container": "mp4",
+          "bytes": 777811986,
+          "filename": "Game.Of.Thrones.S01E01.BRRip.720p.XVID.AC3.HCSubs-KaOs.WT11.mp4",
+          "dimensions": {
+            "width": 1280,
+            "height": 720
+          },
+          "qualityGrade": "720p",
+          "turkishSubtitle": true,
+          "externalTrackCount": 8,
+          "bestSubtitleScoreAnyLanguage": 78,
+          "actualDurationSeconds": 3697.156,
+          "hashAvailable": true,
+          "audioLanguagesMeasured": [],
+          "burnedSubtitleLanguage": "und",
+          "sourceHardSubtitleFlag": true,
+          "cleanForCoverage": false
+        }
+      ]
+    },
+    {
+      "key": "death-note-s1e1",
+      "tmdbId": 13916,
+      "title": "DEATH NOTE",
+      "type": "tv",
+      "season": 1,
+      "episode": 1,
+      "checkedAt": "2026-10-27T13:37:48.431Z",
+      "elapsedMs": 6285,
+      "bytesRead": 2615241,
+      "downloadFiles": 4,
+      "onlineWithTr": true,
+      "cleanOnlineWithTr": true,
+      "downloadPixelGroups": [
+        "1280x720",
+        "852x480"
+      ],
+      "downloadQualityGrades": [
+        "720p",
+        "480p"
+      ],
+      "cleanDownloadQualityGrades": [
+        "720p",
+        "480p"
+      ],
+      "smallWithTr": true,
+      "cleanSmallWithTr": true,
+      "smallLimitBytes": 1073741824,
+      "legacyPixelGroupGateMet": true,
+      "qualityGradeGateMet": true,
+      "legacyGaps": [],
+      "notes": [
+        "Legacy coverage gate compares pixel pairs, so two differently cropped 480p files can pass it. This is not proof of two quality grades or 4K coverage."
+      ],
+      "discovery": [
+        {
+          "lane": "main",
+          "elapsedMs": 5034,
+          "results": 6,
+          "reason": "ok",
+          "sources": [
+            {
+              "name": "VixSrc",
+              "candidates": 0,
+              "startedMs": 6,
+              "discoveryMs": 305
+            },
+            {
+              "name": "PlayIMDb",
+              "candidates": 3,
+              "startedMs": 5,
+              "discoveryMs": 404
+            },
+            {
+              "name": "Goojara",
+              "candidates": 0,
+              "startedMs": 4,
+              "discoveryMs": 661
+            },
+            {
+              "name": "4KHDHub / HubCloud",
+              "candidates": 0,
+              "startedMs": 311,
+              "discoveryMs": 665
+            },
+            {
+              "name": "Internet Archive",
+              "candidates": 0,
+              "startedMs": 2,
+              "discoveryMs": 2128
+            }
+          ],
+          "rejected": {
+            "video_unavailable": 1
+          }
+        },
+        {
+          "lane": "fastOnline",
+          "elapsedMs": 6285,
+          "results": 1,
+          "reason": "ok",
+          "sources": [
+            {
+              "name": "DiziBal",
+              "candidates": 1,
+              "startedMs": 7,
+              "discoveryMs": 1735
+            }
+          ],
+          "rejected": {}
+        },
+        {
+          "lane": "anime",
+          "elapsedMs": 6225,
+          "results": 4,
+          "reason": "ok",
+          "sources": [
+            {
+              "name": "Animecix",
+              "candidates": 4,
+              "startedMs": 8,
+              "discoveryMs": 808
+            },
+            {
+              "name": "SonAnime",
+              "candidates": 2,
+              "startedMs": 9,
+              "discoveryMs": 858
+            }
+          ],
+          "rejected": {}
+        }
+      ],
+      "files": [
+        {
+          "source": "Animecix",
+          "container": "mp4",
+          "bytes": 240288551,
+          "filename": "DEATH NOTE.2006.S01E01.720p.mp4",
+          "dimensions": {
+            "width": 1280,
+            "height": 720
+          },
+          "qualityGrade": "720p",
+          "turkishSubtitle": true,
+          "externalTrackCount": 4,
+          "bestSubtitleScoreAnyLanguage": 69,
+          "actualDurationSeconds": 1390.656,
+          "hashAvailable": true,
+          "audioLanguagesMeasured": [],
+          "burnedSubtitleLanguage": null,
+          "sourceHardSubtitleFlag": false,
+          "cleanForCoverage": true
+        },
+        {
+          "source": "Animecix",
+          "container": "mp4",
+          "bytes": 94687213,
+          "filename": "DEATH NOTE.2006.S01E01.480p.mp4",
+          "dimensions": {
+            "width": 852,
+            "height": 480
+          },
+          "qualityGrade": "480p",
+          "turkishSubtitle": true,
+          "externalTrackCount": 4,
+          "bestSubtitleScoreAnyLanguage": 69,
+          "actualDurationSeconds": 1376.201,
+          "hashAvailable": true,
+          "audioLanguagesMeasured": [],
+          "burnedSubtitleLanguage": null,
+          "sourceHardSubtitleFlag": false,
+          "cleanForCoverage": true
+        },
+        {
+          "source": "Animecix",
+          "container": "mp4",
+          "bytes": 108188435,
+          "filename": "DEATH NOTE.2006.S01E01.480p.mp4",
+          "dimensions": {
+            "width": 852,
+            "height": 480
+          },
+          "qualityGrade": "480p",
+          "turkishSubtitle": true,
+          "externalTrackCount": 4,
+          "bestSubtitleScoreAnyLanguage": 69,
+          "actualDurationSeconds": 1390.656,
+          "hashAvailable": true,
+          "audioLanguagesMeasured": [],
+          "burnedSubtitleLanguage": null,
+          "sourceHardSubtitleFlag": false,
+          "cleanForCoverage": true
+        },
+        {
+          "source": "Animecix",
+          "container": "mp4",
+          "bytes": 179688354,
+          "filename": "DEATH NOTE.2006.S01E01.720p.mp4",
+          "dimensions": {
+            "width": 1280,
+            "height": 720
+          },
+          "qualityGrade": "720p",
+          "turkishSubtitle": true,
+          "externalTrackCount": 4,
+          "bestSubtitleScoreAnyLanguage": 69,
+          "actualDurationSeconds": 1376.201,
+          "hashAvailable": true,
+          "audioLanguagesMeasured": [],
+          "burnedSubtitleLanguage": null,
+          "sourceHardSubtitleFlag": false,
+          "cleanForCoverage": true
+        }
+      ]
+    },
+    {
+      "key": "fleabag-s2e1",
+      "tmdbId": 67070,
+      "title": "Fleabag",
+      "type": "tv",
+      "season": 2,
+      "episode": 1,
+      "checkedAt": "2026-10-27T13:40:17.879Z",
+      "elapsedMs": 8922,
+      "bytesRead": 2387202,
+      "downloadFiles": 3,
+      "onlineWithTr": true,
+      "cleanOnlineWithTr": true,
+      "downloadPixelGroups": [
+        "1280x720",
+        "853x480",
+        "850x356"
+      ],
+      "downloadQualityGrades": [
+        "720p",
+        "480p"
+      ],
+      "cleanDownloadQualityGrades": [
+        "480p"
+      ],
+      "smallWithTr": true,
+      "cleanSmallWithTr": true,
+      "smallLimitBytes": 1073741824,
+      "legacyPixelGroupGateMet": false,
+      "qualityGradeGateMet": false,
+      "legacyGaps": [
+        "multiple_verified_download_qualities_missing"
+      ],
+      "notes": [
+        "Legacy coverage gate compares pixel pairs, so two differently cropped 480p files can pass it. This is not proof of two quality grades or 4K coverage."
+      ],
+      "discovery": [
+        {
+          "lane": "main",
+          "elapsedMs": 8922,
+          "results": 15,
+          "reason": "ok",
+          "sources": [
+            {
+              "name": "PlayIMDb",
+              "candidates": 3,
+              "startedMs": 8,
+              "discoveryMs": 359
+            },
+            {
+              "name": "VixSrc",
+              "candidates": 1,
+              "startedMs": 9,
+              "discoveryMs": 1001
+            },
+            {
+              "name": "Internet Archive",
+              "candidates": 2,
+              "startedMs": 1,
+              "discoveryMs": 1032
+            },
+            {
+              "name": "DiziYou",
+              "candidates": 1,
+              "startedMs": 372,
+              "discoveryMs": 813
+            },
+            {
+              "name": "Waploaded",
+              "candidates": 0,
+              "startedMs": 1187,
+              "discoveryMs": 0
+            },
+            {
+              "name": "Goojara",
+              "candidates": 1,
+              "startedMs": 7,
+              "discoveryMs": 1619
+            },
+            {
+              "name": "DiziBak",
+              "candidates": 1,
+              "startedMs": 1011,
+              "discoveryMs": 1380
+            },
+            {
+              "name": "4KHDHub / HubCloud",
+              "candidates": 0,
+              "startedMs": 1033,
+              "discoveryMs": 3422
+            }
+          ],
+          "rejected": {}
+        },
+        {
+          "lane": "fastOnline",
+          "elapsedMs": 1463,
+          "results": 1,
+          "reason": "ok",
+          "sources": [
+            {
+              "name": "DiziBal",
+              "candidates": 1,
+              "startedMs": 10,
+              "discoveryMs": 1062
+            }
+          ],
+          "rejected": {}
+        }
+      ],
+      "files": [
+        {
+          "source": "Internet Archive",
+          "container": "mkv",
+          "bytes": 633782892,
+          "filename": "FL34B4G SUB T02XE01.mkv",
+          "dimensions": {
+            "width": 1280,
+            "height": 720
+          },
+          "qualityGrade": "720p",
+          "turkishSubtitle": true,
+          "externalTrackCount": 8,
+          "bestSubtitleScoreAnyLanguage": 69,
+          "actualDurationSeconds": 1531.389,
+          "hashAvailable": true,
+          "audioLanguagesMeasured": [],
+          "burnedSubtitleLanguage": "es",
+          "sourceHardSubtitleFlag": false,
+          "cleanForCoverage": false
+        },
+        {
+          "source": "Internet Archive",
+          "container": "mp4",
+          "bytes": 154176179,
+          "filename": "FL34B4G SUB T02XE01.mkv",
+          "dimensions": {
+            "width": 853,
+            "height": 480
+          },
+          "qualityGrade": "480p",
+          "turkishSubtitle": true,
+          "externalTrackCount": 8,
+          "bestSubtitleScoreAnyLanguage": 69,
+          "actualDurationSeconds": 1531.455,
+          "hashAvailable": true,
+          "audioLanguagesMeasured": [],
+          "burnedSubtitleLanguage": "es",
+          "sourceHardSubtitleFlag": false,
+          "cleanForCoverage": false
+        },
+        {
+          "source": "Goojara",
+          "container": "mp4",
+          "bytes": 94263471,
+          "filename": "fleabag.s02e01.720p.hdtv.x264-creed.WT2.mp4",
+          "dimensions": {
+            "width": 850,
+            "height": 356
+          },
+          "qualityGrade": "480p",
+          "turkishSubtitle": true,
+          "externalTrackCount": 8,
+          "bestSubtitleScoreAnyLanguage": 80,
+          "actualDurationSeconds": 1498.806,
+          "hashAvailable": true,
+          "audioLanguagesMeasured": [],
+          "burnedSubtitleLanguage": null,
+          "sourceHardSubtitleFlag": false,
+          "cleanForCoverage": true
+        }
+      ]
+    },
+    {
+      "key": "breaking-bad-s1e1",
+      "tmdbId": 1396,
+      "title": "Breaking Bad",
+      "type": "tv",
+      "season": 1,
+      "episode": 1,
+      "checkedAt": "2026-10-27T13:40:17.879Z",
+      "elapsedMs": 3420,
+      "bytesRead": 2795308,
+      "downloadFiles": 3,
+      "onlineWithTr": true,
+      "cleanOnlineWithTr": true,
+      "downloadPixelGroups": [
+        "1280x720",
+        "853x480"
+      ],
+      "downloadQualityGrades": [
+        "720p",
+        "480p"
+      ],
+      "cleanDownloadQualityGrades": [
+        "720p",
+        "480p"
+      ],
+      "smallWithTr": true,
+      "cleanSmallWithTr": true,
+      "smallLimitBytes": 1073741824,
+      "legacyPixelGroupGateMet": true,
+      "qualityGradeGateMet": true,
+      "legacyGaps": [],
+      "notes": [
+        "Legacy coverage gate compares pixel pairs, so two differently cropped 480p files can pass it. This is not proof of two quality grades or 4K coverage."
+      ],
+      "discovery": [
+        {
+          "lane": "main",
+          "elapsedMs": 3420,
+          "results": 12,
+          "reason": "ok",
+          "sources": [
+            {
+              "name": "PlayIMDb",
+              "candidates": 3,
+              "startedMs": 6,
+              "discoveryMs": 351
+            },
+            {
+              "name": "VixSrc",
+              "candidates": 1,
+              "startedMs": 7,
+              "discoveryMs": 760
+            },
+            {
+              "name": "DiziYou",
+              "candidates": 2,
+              "startedMs": 361,
+              "discoveryMs": 937
+            },
+            {
+              "name": "DiziBak",
+              "candidates": 0,
+              "startedMs": 767,
+              "discoveryMs": 690
+            },
+            {
+              "name": "Waploaded",
+              "candidates": 0,
+              "startedMs": 1457,
+              "discoveryMs": 1
+            },
+            {
+              "name": "Internet Archive",
+              "candidates": 2,
+              "startedMs": 2,
+              "discoveryMs": 1468
+            },
+            {
+              "name": "Goojara",
+              "candidates": 1,
+              "startedMs": 5,
+              "discoveryMs": 1829
+            },
+            {
+              "name": "4KHDHub / HubCloud",
+              "candidates": 0,
+              "startedMs": 1299,
+              "discoveryMs": 675
+            }
+          ],
+          "rejected": {}
+        },
+        {
+          "lane": "fastOnline",
+          "elapsedMs": 1413,
+          "results": 1,
+          "reason": "ok",
+          "sources": [
+            {
+              "name": "DiziBal",
+              "candidates": 1,
+              "startedMs": 6,
+              "discoveryMs": 1017
+            }
+          ],
+          "rejected": {}
+        }
+      ],
+      "files": [
+        {
+          "source": "Internet Archive",
+          "container": "mkv",
+          "bytes": 487194215,
+          "filename": "Breaking Bad s01e01 720p.BRrip.Sujaidr.mkv",
+          "dimensions": {
+            "width": 1280,
+            "height": 720
+          },
+          "qualityGrade": "720p",
+          "turkishSubtitle": true,
+          "externalTrackCount": 6,
+          "bestSubtitleScoreAnyLanguage": 76,
+          "actualDurationSeconds": 3486.44175,
+          "hashAvailable": true,
+          "audioLanguagesMeasured": [
+            "eng"
+          ],
+          "burnedSubtitleLanguage": null,
+          "sourceHardSubtitleFlag": false,
+          "cleanForCoverage": true
+        },
+        {
+          "source": "Goojara",
+          "container": "mp4",
+          "bytes": 361196120,
+          "filename": "Breaking.Bad.S01E01.Pilot.1080p.WEB.DL.DD5.1.H.264.WT11.mp4",
+          "dimensions": {
+            "width": 853,
+            "height": 480
+          },
+          "qualityGrade": "480p",
+          "turkishSubtitle": true,
+          "externalTrackCount": 6,
+          "bestSubtitleScoreAnyLanguage": 69,
+          "actualDurationSeconds": 3479.862,
+          "hashAvailable": true,
+          "audioLanguagesMeasured": [],
+          "burnedSubtitleLanguage": null,
+          "sourceHardSubtitleFlag": false,
+          "cleanForCoverage": true
+        },
+        {
+          "source": "Internet Archive",
+          "container": "mp4",
+          "bytes": 344478919,
+          "filename": "Breaking Bad s01e01 720p.BRrip.Sujaidr.mkv",
+          "dimensions": {
+            "width": 853,
+            "height": 480
+          },
+          "qualityGrade": "480p",
+          "turkishSubtitle": true,
+          "externalTrackCount": 6,
+          "bestSubtitleScoreAnyLanguage": 76,
+          "actualDurationSeconds": 3486.592,
+          "hashAvailable": true,
+          "audioLanguagesMeasured": [],
+          "burnedSubtitleLanguage": null,
+          "sourceHardSubtitleFlag": false,
+          "cleanForCoverage": true
+        }
+      ]
+    }
+  ],
+  "allSourceCriteriaMet": false,
+  "physicalDevice": "not-run",
+  "fullPlayback": "not-run",
+  "fullDownload": "not-run",
+  "offline": "not-run",
+  "subtitleAudioSync": "not-run"
+}
