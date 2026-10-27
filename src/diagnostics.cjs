@@ -16,6 +16,7 @@ function configuration(settings = {}, injectedKey) {
     hdrezkaEnabled: settings.hdrezkaEnabled !== false,
     hdfilmdelisiEnabled:settings.hdfilmdelisiEnabled!==false,
     dizibalEnabled:settings.dizibalEnabled!==false,
+    purstreamEnabled:settings.purstreamEnabled!==false,
     autoSubtitles: settings.autoSubtitles !== false, subtitleRequired: settings.subtitlePolicy === 'require',
     detailedHlsMetadata: settings.detailedHlsMetadata === true,
     minimumQuality: [0,480,720,1080].includes(Number(settings.minimumQuality || 0)) ? Number(settings.minimumQuality || 0) : 0,

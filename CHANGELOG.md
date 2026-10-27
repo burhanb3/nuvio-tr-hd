@@ -1,5 +1,13 @@
 # Sürüm notları
 
+## 1.8.1 — 27 Ekim 2026
+
+- Hızlı İzle grubuna Purstream online film/dizi alternatifi. Tam TMDB kimliği, tür, yıl ve resmi başlık; dizide istenen sezon/bölüm ve video yolu birlikte denetlenir.
+- Kaynağın kalite etiketi yerine HLS içindeki gerçek çözünürlük ve dil izleri kullanılır. Mevcut TR/EN altyazı araması aynı akışla devam eder; HLS indirilebilir gösterilmez.
+- Yeni kaynak ana dosya aramasına iş eklemez. Kaynak keşfi 5,5 saniye, Hızlı İzle toplamı 8 saniye mantıksal bütçeyle sınırlıdır; iPhone için fiziksel süre garantisi değildir.
+- Canlı kontrolde No Way Home, Matrix, Fleabag S01E01/S02E01 ve Shameless S01E01 için beş ek 720p online seçenek ve mevcut TR altyazılar. Sesler EN/FR; altyazı bulunması tam senkron kanıtı değildir.
+- 254 fixture/QuickJS testi ve Nuvio 0.6.5-beta sözleşme kontrolü geçti. Bu tur yeni indirilebilir 4K veya Türkçe dublaj dosyası eklenmedi. Çalışan bir 1080p MKV, Nuvio'nun uzantısız dosya adı sınırı nedeniyle entegrasyona alınmadı. Fiziksel cihaz, tam indirme ve senkron testi yapılmadı.
+
 ## 1.8.0 — 27 Ekim 2026
 
 - Film ve dizi indirmeleri için HDRezka araması. Aynı IMDb, başlık/yıl ve tam bölüm denetlenir; ücretsiz özgün sesli MP4 seçenekleri mevcut TR/EN altyazılarla eşleştirilir.

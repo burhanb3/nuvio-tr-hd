@@ -12,6 +12,7 @@ src/providers/archive.cjs     Internet Archive araması ve fragman filtresi
 src/providers/playimdb.cjs    TMDB ID ile PlayIMDb sorgusu
 src/providers/vixsrc.cjs      VixSrc public oynatıcı/playlist okuma
 src/providers/dizibal.cjs     Film/dizi/anime ve public oynatıcı
+src/providers/purstream.cjs   TMDB bağlı ek online film/dizi
 src/providers/hdfilmdelisi.cjs Dublaj ve çoklu ses HLS kaynağı
 src/entry-fast-online.cjs     Bağımsız Hızlı İzle girişi
 src/hosted.cjs                Telefonda ortak servis istemcisi ve kimlik denetimi

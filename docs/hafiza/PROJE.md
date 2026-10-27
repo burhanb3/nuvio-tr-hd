@@ -1,5 +1,20 @@
 # Proje hafızası
 
+## 1.8.1 — kaynak incelemesi ve online açıklar
+
+İndirme/4K/TR dublaj önceliği sürüyor. Bu tur yeni uygun indirme veya 4K/TRdub dosyası sıfır; bunu online katkıyla kapanmış sayma. MoviesDrive güncel .beer public search.php -> mdrive archive -> HubCloud -> Pixeldrain literal yolu Dune için gerçek 2071642223byte MKV/1920×804/9325.001s verdi; ölçülmüş HI+EN, embedded EN/ES. Ancak API uzantısız, Nuvio DownloadsRepository .mp4 kaydeder. Gerçek dosya adı path ve ID.mkv aliasları404; mevcut R2 köprüsü bu hostu desteklemez. Entegre edilmedi, yeni helper/backend/hesap eklenmedi. Kaynak 19/21GB 4K linkleri terminal sayfaya ulaştı ama Worker/Pixel SSL_PACKET_LENGTH_TOO_LONG; gerçek4K kanıtı yok.
+
+Purstream yeni genel online adaptörü yalnız fastOnline/all/legacy online'da varsayılan açık (purstreamEnabled). Main dosya aramasına iş/ayar eklenmez, dörtID aynı. Public search -> max3 aynı tür/yıl adayı -> tam sheet internalID/TMDBID/tür/yıl/published/kanonik veya aynıTMDBTR-EN-FRçeviri başlığı -> TV kendi episode endpoint S/E + tam TMDB/S/E media yolu. İlksonuç/fuzzy/titlepin yok. Yalnız free.finepulfe.xyz mevcut movie/tv master HLS yolları, kaynak claimed1080/1440p atılır. HLS online/indirilemez, master EN/FR ses korunur. Kaynak5.5s/fast8s mantıksal, main24s/native3/sub4/EN1 değişmedi; fizikseliPhonegarantisi değil. resolveTranslatedTitles isteğe bağlı FR; eski TR/EN varsayılanı aynı.
+
+Tam canlı adaptör+probe+altyazı turunda NoWayHome,Matrix,Fleabag1x1/2x1,Shameless1x1 beş yeni720pHLS+TR; EN/FRses. MevcutTR/EN harici alternatifler çoğunlukla35puan aynıfilm/bölüm; senkron ölçümü yok. Tur1 kaynakformatfixture eksikleri düzeltildi: search SQL datetime, series sheet başlangıç-bitiş yıl aralığı. Son tur1.75–4.59s Node sabitkanonikmetadata+TR/ENçeviri fixture; fizikselTMDBçeviri/APIanahtarı kanıtı değil. İlk NoWay8sdeadline/1sonuç da araştırma notudur. Dune/Avatar publicID ile player720 doğrulandı ama DuneFRkatalogadı üretimTMDBaliası bu tur kanıtlanmadı; beş adaptebaşarısına dahil değil. DeathNoteaynıID sheet var ama /animes/...premium... yolu mevcut serbestpathallowlist dışında; eklenmedi, yeniAnime0.
+
+Birleşikregresyon Dune7/Matrix5/Fleabag1x1 6/DeathNote4 eski dosya; onlineTRvar. 4başlık için yerel kapsam eşiği geçti; düşükten4Kya tümhedefler tamamlandı demek değil.254fixture/QuickJS, Nuvio0.6.5-beta/20blob drift0, lock değişmedi. Kanıt download-research-181/coverage-181/upstream-181-check.json. Fizikselcihaz/tamoynatım/indirme/offline/senkron/fontyok.
+
+Diğer yeni araştırma: SineMerkez doğru /arama?ara=&s=1 publicJSON; film/IMDbposter bulundu, Epikembed referer ile/yok timeout. CineFreakENOTFOUND, Fib403challenge, PersianTLS, SineWix/Anizium doğrulanmışguestyok. SeiCodeOKru3nullmetadata, SendVid3timeout; SonAnime yeni4Ksesalanıyok. Archive4exactimdb0, TRgenişaramalar ilgisiz/VCD; FilmModuDune1984 doğruelendi, diğerleriHLS. Dışdurum değişmeden aynı başarısız originleri tekrarlama. Eski indirme/online yollar korunur.
+
+1.8.1 yayın doğrulaması bekleniyor.
+
+
 ## 1.8.0 — film/dizi indirme kaliteleri
 
 Yeni HDRezka genel adaptörü ana grupta varsayılan açık (hdrezkaEnabled). Public arama -> en fazla iki tür/yıl aday sayfası -> aynı IMDb (sayfanın kendi base64/percent kodlu IMDb bağlantısı), kanonik başlık ve yıl -> yalnız özgün ses veya açık Türkçe çeviri -> çevirinin kendi tam S/E listesi -> ücretsiz literal MP4 URL'leri. Hesap, Cookie, sabit key, challenge/PoW, remote script/eval yok. HTML MIME'lı JSON yalnız kendi kesin AJAX endpointinde bounded JSON.parse ile okunur. Premium etiket/kayıt, camrip/reklam/director sürümü ve kısa teaser reddedilir; gizli çeviri ID zorlanmaz.

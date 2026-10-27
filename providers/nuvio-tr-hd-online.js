@@ -398,11 +398,12 @@ var require_matching = __commonJS({
       }
       return true;
     }
-    async function resolveTranslatedTitles(http, target, key) {
+    async function resolveTranslatedTitles(http, target, key, languages = ["tr", "en"]) {
       if (!key || http.expired()) return [];
       const data = await http.json(`https://api.themoviedb.org/3/${target.type}/${target.tmdbId}/translations?api_key=${encodeURIComponent(key)}`, { timeoutMs: 3e3 });
       if (data?.id !== target.tmdbId || !Array.isArray(data.translations)) return [];
-      return [...new Set(data.translations.filter((r) => ["tr", "en"].includes(r.iso_639_1)).map((r) => target.type === "movie" ? r.data?.title : r.data?.name).filter((v) => typeof v === "string" && v.trim()))].slice(0, 4);
+      const selected = languages.filter((l) => ["tr", "en", "fr"].includes(l));
+      return [...new Set(data.translations.filter((r) => selected.includes(r.iso_639_1)).map((r) => target.type === "movie" ? r.data?.title : r.data?.name).filter((v) => typeof v === "string" && v.trim()))].slice(0, 4);
     }
     async function resolveAlternativeTitles(http, target, key) {
       if (!key || http.expired()) return [];
@@ -2394,6 +2395,78 @@ var require_dizibal = __commonJS({
   }
 });
 
+// src/providers/purstream.cjs
+var require_purstream = __commonJS({
+  "src/providers/purstream.cjs"(exports2, module2) {
+    "use strict";
+    var { safeUrl, normalizeTitle } = require_util();
+    var { canonicalNames, syntheticFilename } = require_page_data();
+    var API = "https://api.purstream.club/api/v1";
+    function releaseYear(value, series = false) {
+      const text = String(value), range = series && text.match(/^(\d{4})\s+-\s+(\d{4})$/);
+      if (range) return Number(range[2]) >= Number(range[1]) ? Number(range[1]) : null;
+      return /^\d{4}(?:-\d{2}-\d{2}(?:[ T]\d{2}:\d{2}:\d{2}(?:\.\d{1,3})?Z?)?)?$/.test(text) ? Number(text.slice(0, 4)) : null;
+    }
+    function searchRows(data, target) {
+      const rows = data?.type === "success" && data.data?.items?.movies?.items;
+      return Array.isArray(rows) ? rows.filter((r) => Number.isSafeInteger(r?.id) && r.id > 0 && r.type === target.type && releaseYear(r.release_date) === target.year).slice(0, 3) : [];
+    }
+    function sheetIdentity(data, id, target) {
+      const row = data?.type === "success" && data.data?.items;
+      return row && row.id === id && Number(row.tmdbId) === target.tmdbId && row.type === target.type && row.published === true && releaseYear(row.releaseDate, target.type === "tv") === target.year && typeof row.title === "string" && row.title.length <= 200 ? row : null;
+    }
+    function mediaUrl(value, target) {
+      const url = safeUrl(value);
+      if (!url) return null;
+      const u = new URL(url), id = String(target.tmdbId), number = (n) => String(n).padStart(2, "0");
+      const path = target.type === "movie" ? "^/movies/" + id + "-[a-z0-9]{1,30}/master\\.m3u8$" : "^/tv/" + id + "-[a-z0-9]{1,30}/S" + number(target.season) + "/E" + number(target.episode) + "/master\\.m3u8$";
+      return u.origin === "https://free.finepulfe.xyz" && !u.search && !u.hash && new RegExp(path).test(u.pathname) ? url : null;
+    }
+    async function scanPurstream(http, target, options = {}) {
+      if (!["movie", "tv"].includes(target.type)) return [];
+      const names = canonicalNames(target), queries = [target.originalTitle, ...target.searchTitles || []];
+      if (/^the\s+/i.test(target.originalTitle)) queries.splice(1, 0, target.originalTitle.replace(/^the\s+/i, ""));
+      const visited = /* @__PURE__ */ new Set();
+      let loaded = false;
+      for (const query of [...new Set(queries)].slice(0, 2)) {
+        if (http.expired()) break;
+        const search = await http.json(API + "/search-bar/search/" + encodeURIComponent(query));
+        for (const row of searchRows(search, target)) {
+          if (visited.has(row.id) || http.expired()) continue;
+          visited.add(row.id);
+          const data = await http.json(API + "/media/" + row.id + "/sheet"), sheet = sheetIdentity(data, row.id, target);
+          if (!sheet) continue;
+          if (!names.includes(normalizeTitle(sheet.title)) && !loaded && options.loadTitles) {
+            loaded = true;
+            names.push(...(await options.loadTitles()).map(normalizeTitle));
+          }
+          if (!names.includes(normalizeTitle(sheet.title))) continue;
+          let links = sheet.urls;
+          if (target.type === "tv") {
+            const episode = await http.json(API + "/stream/" + row.id + "/episode?season=" + target.season + "&episode=" + target.episode), items = episode?.data?.items;
+            if (episode?.type !== "success" || Number(items?.season) !== target.season || Number(items?.episode) !== target.episode || !Array.isArray(items.sources)) return [];
+            links = items.sources.filter((s) => s?.format === "m3u8").map((s) => ({ url: s.stream_url }));
+          }
+          if (!Array.isArray(links)) return [];
+          const urls = [...new Set(links.slice(0, 12).map((l) => mediaUrl(l?.url, target)).filter(Boolean))].slice(0, 3);
+          return urls.map((url) => ({
+            url,
+            source: "Purstream",
+            headers: { Referer: "https://purstream.club/" },
+            identity: target,
+            identityConfidence: 100,
+            filename: syntheticFilename(target),
+            filenameSynthetic: true,
+            subtitles: []
+          }));
+        }
+      }
+      return [];
+    }
+    module2.exports = { scanPurstream, searchRows, sheetIdentity, mediaUrl };
+  }
+});
+
 // src/providers/animom.cjs
 var require_animom = __commonJS({
   "src/providers/animom.cjs"(exports2, module2) {
@@ -3569,7 +3642,7 @@ var require_ranking = __commonJS({
 var require_diagnostics = __commonJS({
   "src/diagnostics.cjs"(exports2, module2) {
     "use strict";
-    var VERSION = true ? "1.8.0" : "dev";
+    var VERSION = true ? "1.8.1" : "dev";
     function effectiveTmdbKey(settings, injectedKey) {
       return typeof settings.tmdbApiKey === "string" && settings.tmdbApiKey.trim() ? settings.tmdbApiKey.trim() : typeof injectedKey === "string" ? injectedKey.trim() : "";
     }
@@ -3589,6 +3662,7 @@ var require_diagnostics = __commonJS({
         hdrezkaEnabled: settings.hdrezkaEnabled !== false,
         hdfilmdelisiEnabled: settings.hdfilmdelisiEnabled !== false,
         dizibalEnabled: settings.dizibalEnabled !== false,
+        purstreamEnabled: settings.purstreamEnabled !== false,
         autoSubtitles: settings.autoSubtitles !== false,
         subtitleRequired: settings.subtitlePolicy === "require",
         detailedHlsMetadata: settings.detailedHlsMetadata === true,
@@ -3637,6 +3711,7 @@ var require_index = __commonJS({
     var { scanFilmModu } = require_filmmodu();
     var { scanHdFilmDelisi } = require_hdfilmdelisi();
     var { scanDiziBal } = require_dizibal();
+    var { scanPurstream } = require_purstream();
     var { scanAniMom } = require_animom();
     var { scanSeiCode } = require_seicode();
     var { scanDiziBak } = require_dizibak();
@@ -3796,7 +3871,7 @@ var require_index = __commonJS({
               reject("hls_disabled");
               return;
             }
-            const lightweightHls = ["PlayIMDb", "VixSrc", "DiziYou", "DiziBak", "FilmModu", "HDFilmDelisi", "DiziBal"].includes(candidate.source) && settings.detailedHlsMetadata !== true;
+            const lightweightHls = ["PlayIMDb", "VixSrc", "DiziYou", "DiziBak", "FilmModu", "HDFilmDelisi", "DiziBal", "Purstream"].includes(candidate.source) && settings.detailedHlsMetadata !== true;
             const video = await withProbeSlot(() => probe(
               http,
               candidate,
@@ -3969,6 +4044,11 @@ var require_index = __commonJS({
                     const sourceHttp = http.scope(7e3);
                     return scanDiziBal(sourceHttp, target, { loadTitles: () => resolveTranslatedTitles(sourceHttp, target, effectiveTmdbKey(settings, tmdbKey)) });
                   } });
+                if (["all", "online", "fastOnline"].includes(lane) && settings.includeHls !== false && settings.purstreamEnabled !== false)
+                  sourceJobs.push({ name: "Purstream", run: () => {
+                    const sourceHttp = http.scope(5500);
+                    return scanPurstream(sourceHttp, target, { loadTitles: () => resolveTranslatedTitles(sourceHttp, target, effectiveTmdbKey(settings, tmdbKey), ["fr", "en", "tr"]) });
+                  } });
                 if (filesLane && settings.hdhubEnabled !== false && !sourceFactories.some((s) => s.name === "4KHDHub / HubCloud")) sourceJobs.push({ name: "4KHDHub / HubCloud", run: async () => {
                   return scanHdHub(http.scope(8e3), target, { allowExtensionless: settings.useDownloadBridge !== false, onCandidates: (candidates) => acceptCandidates(candidates, true) });
                 } });
@@ -4089,6 +4169,7 @@ var require_index = __commonJS({
         { type: "toggle", key: "diziyouEnabled", label: "DiziYou dizi ve eşlenmiş TR altyazılar", defaultValue: true },
         { type: "toggle", key: "dizibakEnabled", label: "DiziBak dizi alternatifi", defaultValue: true, description: "Küçük public metadata yanıtları kullanılır. İlk bölüm tarihi ve dizi kategorisi uyuşmazsa sonuç eklenmez." },
         { type: "toggle", key: "filmmoduEnabled", label: "FilmModu online film ve kaynak ses seçenekleri", defaultValue: true },
+        { type: "toggle", key: "purstreamEnabled", label: "Purstream ek online film ve dizi seçenekleri", defaultValue: true },
         { type: "info", label: "Ses kodları: EN İngilizce, TR Türkçe, JA Japonca, HI Hintçe. EN/ES görüntüde, görüntüye işlenmiş altyazıdır; ses dili değildir." },
         { type: "toggle", key: "autoSubtitles", label: "TR ve EN altyazıları otomatik ara", defaultValue: true },
         { type: "toggle", key: "animomEnabled", label: "Deneysel AniMOM anime dosyaları", defaultValue: false, description: "Varsayılan kapalı: tekil MP4/TR doğrulandı, birleşik arama ve bazı bölümlerde CDN kararsız. Tam ad/yıl/bölüm gerekir; düz bölüm numarası başka sezona taşınmaz." },
@@ -4136,8 +4217,8 @@ var require_index = __commonJS({
     }
     function createEntry(lane) {
       const titles = { main: "Film/dizi · online ve dosyalar", files: "Dosyalar", online: "Hızlı kaynaklar", anime: "Anime", extraAnime: "Ek Anime", fastOnline: "Hızlı İzle" };
-      const only = { files: ["hdhubEnabled", "directoryEnabled", "archiveEnabled", "waploadedEnabled", "rarefilmmEnabled", "goojaraEnabled", "hdrezkaEnabled", "catalogUrls", "addonUrls"], online: ["playImdbEnabled", "vixsrcEnabled", "diziyouEnabled", "dizibakEnabled", "filmmoduEnabled", "hdfilmdelisiEnabled", "hlsView"], anime: ["animecixEnabled", "sonanimeEnabled"], extraAnime: ["animomEnabled", "seicodeEnabled"], fastOnline: ["hdfilmdelisiEnabled", "dizibalEnabled", "hlsView"] };
-      only.main = [...only.files, ...only.online.filter((key) => key !== "hdfilmdelisiEnabled")];
+      const only = { files: ["hdhubEnabled", "directoryEnabled", "archiveEnabled", "waploadedEnabled", "rarefilmmEnabled", "goojaraEnabled", "hdrezkaEnabled", "catalogUrls", "addonUrls"], online: ["playImdbEnabled", "vixsrcEnabled", "diziyouEnabled", "dizibakEnabled", "filmmoduEnabled", "hdfilmdelisiEnabled", "purstreamEnabled", "hlsView"], anime: ["animecixEnabled", "sonanimeEnabled"], extraAnime: ["animomEnabled", "seicodeEnabled"], fastOnline: ["hdfilmdelisiEnabled", "dizibalEnabled", "purstreamEnabled", "hlsView"] };
+      only.main = [...only.files, ...only.online.filter((key) => !["hdfilmdelisiEnabled", "purstreamEnabled"].includes(key))];
       const sourceFields = Object.values(only).flat();
       return {
         async getStreams(...args) {
@@ -4146,7 +4227,7 @@ var require_index = __commonJS({
           return createProvider({ settings, tmdbKey, lane, budgetMs: lane === "fastOnline" ? 8e3 : ["main", "extraAnime"].includes(lane) ? 24e3 : lane === "online" ? 16e3 : lane === "anime" ? 2e4 : 28e3 }).getStreams(...args);
         },
         onSettings: () => [
-          { type: "info", label: lane === "main" ? "Film/dizi araması online HLS ile gerçek MP4/MKV dosyalarını aynı listede sunar. Dosya araması boşsa online alternatifler korunur. Anime ayrı taramadır." : lane === "fastOnline" ? "Hızlı İzle, HDFilmDelisi ve DiziBal online kaynaklarını bağımsız arar. Ana dosya aramasının bitmesini beklemez. HLS kaynakları izleme içindir; dosya indirmesi sunmaz." : lane === "extraAnime" ? "Kısmi kapsama sahip ek anime dosyaları bağımsız taranır. Her bölümde sonuç garantisi yoktur; boş sonuç diğer sağlayıcıların sonuçlarını silmez. Aynı anda tek dosya kontrol edilir." : `Bu ayarlar yalnız ${titles[lane]} taramasına aittir. En fazla kaynak sınırı bu tarama içindir.` },
+          { type: "info", label: lane === "main" ? "Film/dizi araması online HLS ile gerçek MP4/MKV dosyalarını aynı listede sunar. Dosya araması boşsa online alternatifler korunur. Anime ayrı taramadır." : lane === "fastOnline" ? "Hızlı İzle, HDFilmDelisi, DiziBal ve Purstream online kaynaklarını bağımsız arar. Ana dosya aramasının bitmesini beklemez. HLS kaynakları izleme içindir; dosya indirmesi sunmaz." : lane === "extraAnime" ? "Kısmi kapsama sahip ek anime dosyaları bağımsız taranır. Her bölümde sonuç garantisi yoktur; boş sonuç diğer sağlayıcıların sonuçlarını silmez. Aynı anda tek dosya kontrol edilir." : `Bu ayarlar yalnız ${titles[lane]} taramasına aittir. En fazla kaynak sınırı bu tarama içindir.` },
           ...onSettings().filter((field) => (!sourceFields.includes(field.key) || only[lane].includes(field.key)) && (lane !== "extraAnime" || !["includeHls", "useDownloadBridge", "allowHttp", "detailedHlsMetadata"].includes(field.key))).map((field) => lane === "extraAnime" && field.key === "animomEnabled" ? { ...field, label: "AniMOM ek anime dosyaları", defaultValue: true, description: "Kısmi katalog: tam ad/yıl/bölüm ve gerçek MP4 kontrolü gerekir. Çalışmayan bölüm atlanır; diğer sonuçlar korunur." } : lane === "extraAnime" && field.type === "info" && field.label.startsWith("Tanı ·") ? { ...field, label: field.label.split(" · ").slice(0, 3).join(" · ") + " · Bağımsız Ek Anime" } : field)
         ]
       };

@@ -1,0 +1,881 @@
+{
+  "checkedAt": "2026-10-27T17:35:30.164Z",
+  "version": "1.8.1",
+  "baseline": "1.8.0",
+  "priority": "downloadable movie/TV/anime, Turkish dub and subtitle, real 4K",
+  "outcome": {
+    "newOnlineAdapters": 1,
+    "newDownloadAdapters": 0,
+    "verifiedNewOnlineTitleEpisodes": 5,
+    "newDownloadableFiles": 0,
+    "newLive4kSources": 0,
+    "newTurkishDubSources": 0,
+    "newAnimeSources": 0
+  },
+  "implementation": {
+    "adapter": "Purstream",
+    "setting": "purstreamEnabled",
+    "lane": "fastOnline",
+    "sourceBudgetMs": 5500,
+    "laneBudgetMs": 8000,
+    "mainFileDiscoveryUnchanged": true,
+    "newHelperBackend": false,
+    "newAccount": false,
+    "newFixedKey": false,
+    "newPerTitlePin": false,
+    "checks": [
+      "exact sheet TMDB ID, internal ID, type, release year, published flag, canonical or same-TMDB translated title",
+      "TV episode response season/episode plus exact TMDB/S/E in the published free media path",
+      "HLS only, no invented MP4 variant or source-claimed quality",
+      "existing common TR/EN subtitle pipeline; no audio merging or sync guarantee"
+    ],
+    "primaryReferences": [
+      "https://api.purstream.club/api/v1",
+      "https://github.com/zoro6969/plugins_nuvio/blob/main/providers/purstream.js"
+    ],
+    "metadataMode": "fixed canonical validation metadata and existing TR/EN translations; live public source/HLS/subtitle HTTP. Phone TMDB translations request not exercised."
+  },
+  "liveCases": [
+    {
+      "key": "no-way-home",
+      "tmdbId": 634649,
+      "type": "movie",
+      "elapsedMs": 4586,
+      "bytesRead": 1536711,
+      "results": 1,
+      "diagnostics": {
+        "tmdbId": "634649",
+        "lane": "fastOnline",
+        "configuration": {
+          "version": "dev",
+          "tmdbKeyPresent": true,
+          "autoDiscover": true,
+          "includeHls": true,
+          "playImdbEnabled": true,
+          "vixsrcEnabled": true,
+          "hdhubEnabled": true,
+          "archiveEnabled": true,
+          "waploadedEnabled": true,
+          "rarefilmmEnabled": true,
+          "goojaraEnabled": true,
+          "hdrezkaEnabled": true,
+          "hdfilmdelisiEnabled": false,
+          "dizibalEnabled": false,
+          "purstreamEnabled": true,
+          "autoSubtitles": true,
+          "subtitleRequired": false,
+          "detailedHlsMetadata": false,
+          "minimumQuality": 0,
+          "maxResults": 20
+        },
+        "identity": {
+          "reason": "ok",
+          "year": 2021,
+          "type": "movie"
+        },
+        "sources": [
+          {
+            "name": "Purstream",
+            "candidates": 1,
+            "startedMs": 3,
+            "discoveryMs": 782
+          }
+        ],
+        "rejected": {},
+        "http": {
+          "api.themoviedb.org:200": 1,
+          "api.purstream.club:200": 2,
+          "opensubtitles-v3.strem.io:200": 1,
+          "altyazidb.online:200": 5,
+          "free.finepulfe.xyz:200": 1,
+          "subs5.strem.io:200": 2,
+          "opensubtitles.stremio.homes:200": 6
+        },
+        "subtitleText": {
+          "inlineFont": 2,
+          "turkishCharacters": 4
+        },
+        "results": 1,
+        "reason": "ok",
+        "elapsedMs": 4586
+      },
+      "pairs": [
+        {
+          "source": "Purstream",
+          "host": "free.finepulfe.xyz",
+          "downloadable": false,
+          "container": "hls",
+          "dimensions": null,
+          "resolutionOptions": [
+            {
+              "width": 1280,
+              "height": 720
+            }
+          ],
+          "audioLanguages": [
+            "fr",
+            "en"
+          ],
+          "subtitleLanguages": [
+            "fr"
+          ],
+          "subtitles": [
+            {
+              "language": "tr",
+              "score": 35
+            },
+            {
+              "language": "tr",
+              "score": 35
+            },
+            {
+              "language": "tr",
+              "score": 35
+            },
+            {
+              "language": "tr",
+              "score": 35
+            },
+            {
+              "language": "en",
+              "score": 35
+            },
+            {
+              "language": "en",
+              "score": 35
+            },
+            {
+              "language": "en",
+              "score": 35
+            },
+            {
+              "language": "en",
+              "score": 35
+            }
+          ]
+        }
+      ],
+      "cards": [
+        {
+          "name": "01 · Online · Purstream",
+          "quality": "720p · 1280×720",
+          "language": "Ses: EN/FR · TR/EN/FR altyazı"
+        }
+      ]
+    },
+    {
+      "key": "matrix",
+      "tmdbId": 603,
+      "type": "movie",
+      "elapsedMs": 2859,
+      "bytesRead": 791482,
+      "results": 1,
+      "diagnostics": {
+        "tmdbId": "603",
+        "lane": "fastOnline",
+        "configuration": {
+          "version": "dev",
+          "tmdbKeyPresent": true,
+          "autoDiscover": true,
+          "includeHls": true,
+          "playImdbEnabled": true,
+          "vixsrcEnabled": true,
+          "hdhubEnabled": true,
+          "archiveEnabled": true,
+          "waploadedEnabled": true,
+          "rarefilmmEnabled": true,
+          "goojaraEnabled": true,
+          "hdrezkaEnabled": true,
+          "hdfilmdelisiEnabled": false,
+          "dizibalEnabled": false,
+          "purstreamEnabled": true,
+          "autoSubtitles": true,
+          "subtitleRequired": false,
+          "detailedHlsMetadata": false,
+          "minimumQuality": 0,
+          "maxResults": 20
+        },
+        "identity": {
+          "reason": "ok",
+          "year": 1999,
+          "type": "movie"
+        },
+        "sources": [
+          {
+            "name": "Purstream",
+            "candidates": 1,
+            "startedMs": 1,
+            "discoveryMs": 593
+          }
+        ],
+        "rejected": {},
+        "http": {
+          "api.themoviedb.org:200": 2,
+          "api.purstream.club:200": 3,
+          "altyazidb.online:200": 5,
+          "opensubtitles-v3.strem.io:200": 1,
+          "opensubtitles.stremio.homes:200": 6,
+          "free.finepulfe.xyz:200": 1
+        },
+        "subtitleText": {
+          "turkishCharacters": 4
+        },
+        "results": 1,
+        "reason": "ok",
+        "elapsedMs": 2859
+      },
+      "pairs": [
+        {
+          "source": "Purstream",
+          "host": "free.finepulfe.xyz",
+          "downloadable": false,
+          "container": "hls",
+          "dimensions": null,
+          "resolutionOptions": [
+            {
+              "width": 1280,
+              "height": 720
+            }
+          ],
+          "audioLanguages": [
+            "fr",
+            "en"
+          ],
+          "subtitleLanguages": [
+            "fr"
+          ],
+          "subtitles": [
+            {
+              "language": "tr",
+              "score": 35
+            },
+            {
+              "language": "tr",
+              "score": 35
+            },
+            {
+              "language": "tr",
+              "score": 35
+            },
+            {
+              "language": "tr",
+              "score": 35
+            },
+            {
+              "language": "en",
+              "score": 35
+            },
+            {
+              "language": "en",
+              "score": 35
+            },
+            {
+              "language": "en",
+              "score": 35
+            },
+            {
+              "language": "en",
+              "score": 35
+            }
+          ]
+        }
+      ],
+      "cards": [
+        {
+          "name": "01 · Online · Purstream",
+          "quality": "720p · 1280×720",
+          "language": "Ses: EN/FR · TR/EN/FR altyazı"
+        }
+      ]
+    },
+    {
+      "key": "fleabag-s1e1",
+      "tmdbId": 67070,
+      "type": "tv",
+      "season": 1,
+      "episode": 1,
+      "elapsedMs": 2140,
+      "bytesRead": 299517,
+      "results": 1,
+      "diagnostics": {
+        "tmdbId": "67070",
+        "lane": "fastOnline",
+        "configuration": {
+          "version": "dev",
+          "tmdbKeyPresent": true,
+          "autoDiscover": true,
+          "includeHls": true,
+          "playImdbEnabled": true,
+          "vixsrcEnabled": true,
+          "hdhubEnabled": true,
+          "archiveEnabled": true,
+          "waploadedEnabled": true,
+          "rarefilmmEnabled": true,
+          "goojaraEnabled": true,
+          "hdrezkaEnabled": true,
+          "hdfilmdelisiEnabled": false,
+          "dizibalEnabled": false,
+          "purstreamEnabled": true,
+          "autoSubtitles": true,
+          "subtitleRequired": false,
+          "detailedHlsMetadata": false,
+          "minimumQuality": 0,
+          "maxResults": 20
+        },
+        "identity": {
+          "reason": "ok",
+          "year": 2016,
+          "type": "tv"
+        },
+        "sources": [
+          {
+            "name": "Purstream",
+            "candidates": 1,
+            "startedMs": 1,
+            "discoveryMs": 599
+          }
+        ],
+        "rejected": {},
+        "http": {
+          "api.themoviedb.org:200": 1,
+          "api.purstream.club:200": 3,
+          "altyazidb.online:200": 1,
+          "free.finepulfe.xyz:200": 1,
+          "opensubtitles-v3.strem.io:200": 1,
+          "subs5.strem.io:200": 9,
+          "opensubtitles.stremio.homes:200": 2
+        },
+        "subtitleText": {
+          "turkishCharacters": 4
+        },
+        "results": 1,
+        "reason": "ok",
+        "elapsedMs": 2140
+      },
+      "pairs": [
+        {
+          "source": "Purstream",
+          "host": "free.finepulfe.xyz",
+          "downloadable": false,
+          "container": "hls",
+          "dimensions": null,
+          "resolutionOptions": [
+            {
+              "width": 1280,
+              "height": 720
+            }
+          ],
+          "audioLanguages": [
+            "fr",
+            "en"
+          ],
+          "subtitleLanguages": [
+            "fr"
+          ],
+          "subtitles": [
+            {
+              "language": "tr",
+              "score": 35
+            },
+            {
+              "language": "tr",
+              "score": 35
+            },
+            {
+              "language": "tr",
+              "score": 35
+            },
+            {
+              "language": "tr",
+              "score": 35
+            },
+            {
+              "language": "en",
+              "score": 35
+            },
+            {
+              "language": "en",
+              "score": 35
+            },
+            {
+              "language": "en",
+              "score": 35
+            },
+            {
+              "language": "en",
+              "score": 35
+            }
+          ]
+        }
+      ],
+      "cards": [
+        {
+          "name": "01 · Online · Purstream",
+          "quality": "720p · 1280×720",
+          "language": "Ses: EN/FR · TR/EN/FR altyazı"
+        }
+      ]
+    },
+    {
+      "key": "shameless-s1e1",
+      "tmdbId": 34307,
+      "type": "tv",
+      "season": 1,
+      "episode": 1,
+      "elapsedMs": 2694,
+      "bytesRead": 804094,
+      "results": 1,
+      "diagnostics": {
+        "tmdbId": "34307",
+        "lane": "fastOnline",
+        "configuration": {
+          "version": "dev",
+          "tmdbKeyPresent": true,
+          "autoDiscover": true,
+          "includeHls": true,
+          "playImdbEnabled": true,
+          "vixsrcEnabled": true,
+          "hdhubEnabled": true,
+          "archiveEnabled": true,
+          "waploadedEnabled": true,
+          "rarefilmmEnabled": true,
+          "goojaraEnabled": true,
+          "hdrezkaEnabled": true,
+          "hdfilmdelisiEnabled": false,
+          "dizibalEnabled": false,
+          "purstreamEnabled": true,
+          "autoSubtitles": true,
+          "subtitleRequired": false,
+          "detailedHlsMetadata": false,
+          "minimumQuality": 0,
+          "maxResults": 20
+        },
+        "identity": {
+          "reason": "ok",
+          "year": 2011,
+          "type": "tv"
+        },
+        "sources": [
+          {
+            "name": "Purstream",
+            "candidates": 1,
+            "startedMs": 1,
+            "discoveryMs": 610
+          }
+        ],
+        "rejected": {},
+        "http": {
+          "api.themoviedb.org:200": 1,
+          "api.purstream.club:200": 3,
+          "free.finepulfe.xyz:200": 1,
+          "altyazidb.online:200": 3,
+          "opensubtitles-v3.strem.io:200": 1,
+          "subs5.strem.io:200": 9,
+          "opensubtitles.stremio.homes:200": 3
+        },
+        "subtitleText": {
+          "turkishCharacters": 6,
+          "inlineFont": 2
+        },
+        "results": 1,
+        "reason": "ok",
+        "elapsedMs": 2694
+      },
+      "pairs": [
+        {
+          "source": "Purstream",
+          "host": "free.finepulfe.xyz",
+          "downloadable": false,
+          "container": "hls",
+          "dimensions": null,
+          "resolutionOptions": [
+            {
+              "width": 1280,
+              "height": 720
+            }
+          ],
+          "audioLanguages": [
+            "fr",
+            "en"
+          ],
+          "subtitleLanguages": [
+            "en",
+            "fr"
+          ],
+          "subtitles": [
+            {
+              "language": "tr",
+              "score": 35
+            },
+            {
+              "language": "tr",
+              "score": 35
+            },
+            {
+              "language": "tr",
+              "score": 35
+            },
+            {
+              "language": "tr",
+              "score": 35
+            },
+            {
+              "language": "en",
+              "score": 35
+            },
+            {
+              "language": "en",
+              "score": 35
+            },
+            {
+              "language": "en",
+              "score": 35
+            },
+            {
+              "language": "en",
+              "score": 35
+            }
+          ]
+        }
+      ],
+      "cards": [
+        {
+          "name": "01 · Online · Purstream",
+          "quality": "720p · 1280×720",
+          "language": "Ses: EN/FR · TR/EN/FR altyazı"
+        }
+      ]
+    },
+    {
+      "key": "death-note-s1e1",
+      "tmdbId": 13916,
+      "type": "tv",
+      "season": 1,
+      "episode": 1,
+      "elapsedMs": 577,
+      "bytesRead": 7658,
+      "results": 0,
+      "diagnostics": {
+        "tmdbId": "13916",
+        "lane": "fastOnline",
+        "configuration": {
+          "version": "dev",
+          "tmdbKeyPresent": true,
+          "autoDiscover": true,
+          "includeHls": true,
+          "playImdbEnabled": true,
+          "vixsrcEnabled": true,
+          "hdhubEnabled": true,
+          "archiveEnabled": true,
+          "waploadedEnabled": true,
+          "rarefilmmEnabled": true,
+          "goojaraEnabled": true,
+          "hdrezkaEnabled": true,
+          "hdfilmdelisiEnabled": false,
+          "dizibalEnabled": false,
+          "purstreamEnabled": true,
+          "autoSubtitles": true,
+          "subtitleRequired": false,
+          "detailedHlsMetadata": false,
+          "minimumQuality": 0,
+          "maxResults": 20
+        },
+        "identity": {
+          "reason": "ok",
+          "year": 2006,
+          "type": "tv"
+        },
+        "sources": [
+          {
+            "name": "Purstream",
+            "candidates": 0,
+            "startedMs": 1,
+            "discoveryMs": 576
+          }
+        ],
+        "rejected": {},
+        "http": {
+          "api.themoviedb.org:200": 1,
+          "api.purstream.club:200": 3
+        },
+        "subtitleText": {},
+        "results": 0,
+        "reason": "no_eligible_sources",
+        "elapsedMs": 577
+      },
+      "pairs": [],
+      "cards": []
+    },
+    {
+      "key": "fleabag-s2e1",
+      "tmdbId": 67070,
+      "type": "tv",
+      "season": 2,
+      "episode": 1,
+      "elapsedMs": 1750,
+      "bytesRead": 397777,
+      "results": 1,
+      "diagnostics": {
+        "tmdbId": "67070",
+        "lane": "fastOnline",
+        "configuration": {
+          "version": "dev",
+          "tmdbKeyPresent": true,
+          "autoDiscover": true,
+          "includeHls": true,
+          "playImdbEnabled": true,
+          "vixsrcEnabled": true,
+          "hdhubEnabled": true,
+          "archiveEnabled": true,
+          "waploadedEnabled": true,
+          "rarefilmmEnabled": true,
+          "goojaraEnabled": true,
+          "hdrezkaEnabled": true,
+          "hdfilmdelisiEnabled": false,
+          "dizibalEnabled": false,
+          "purstreamEnabled": true,
+          "autoSubtitles": true,
+          "subtitleRequired": false,
+          "detailedHlsMetadata": false,
+          "minimumQuality": 0,
+          "maxResults": 20
+        },
+        "identity": {
+          "reason": "ok",
+          "year": 2016,
+          "type": "tv"
+        },
+        "sources": [
+          {
+            "name": "Purstream",
+            "candidates": 1,
+            "startedMs": 1,
+            "discoveryMs": 611
+          }
+        ],
+        "rejected": {},
+        "http": {
+          "api.themoviedb.org:200": 1,
+          "api.purstream.club:200": 3,
+          "altyazidb.online:200": 1,
+          "free.finepulfe.xyz:200": 1,
+          "opensubtitles-v3.strem.io:200": 1,
+          "subs5.strem.io:200": 9,
+          "opensubtitles.stremio.homes:200": 2
+        },
+        "subtitleText": {
+          "turkishCharacters": 4,
+          "inlineFont": 1
+        },
+        "results": 1,
+        "reason": "ok",
+        "elapsedMs": 1750
+      },
+      "pairs": [
+        {
+          "source": "Purstream",
+          "host": "free.finepulfe.xyz",
+          "downloadable": false,
+          "container": "hls",
+          "dimensions": null,
+          "resolutionOptions": [
+            {
+              "width": 1280,
+              "height": 720
+            }
+          ],
+          "audioLanguages": [
+            "fr",
+            "en"
+          ],
+          "subtitleLanguages": [
+            "en",
+            "fr"
+          ],
+          "subtitles": [
+            {
+              "language": "tr",
+              "score": 35
+            },
+            {
+              "language": "tr",
+              "score": 35
+            },
+            {
+              "language": "tr",
+              "score": 35
+            },
+            {
+              "language": "tr",
+              "score": 35
+            },
+            {
+              "language": "en",
+              "score": 35
+            },
+            {
+              "language": "en",
+              "score": 35
+            },
+            {
+              "language": "en",
+              "score": 35
+            },
+            {
+              "language": "en",
+              "score": 35
+            }
+          ]
+        }
+      ],
+      "cards": [
+        {
+          "name": "01 · Online · Purstream",
+          "quality": "720p · 1280×720",
+          "language": "Ses: EN/FR · TR/EN/FR altyazı"
+        }
+      ]
+    },
+    {
+      "key": "night-control",
+      "tmdbId": 10331,
+      "type": "movie",
+      "elapsedMs": 192,
+      "bytesRead": 174,
+      "results": 0,
+      "diagnostics": {
+        "tmdbId": "10331",
+        "lane": "fastOnline",
+        "configuration": {
+          "version": "dev",
+          "tmdbKeyPresent": true,
+          "autoDiscover": true,
+          "includeHls": true,
+          "playImdbEnabled": true,
+          "vixsrcEnabled": true,
+          "hdhubEnabled": true,
+          "archiveEnabled": true,
+          "waploadedEnabled": true,
+          "rarefilmmEnabled": true,
+          "goojaraEnabled": true,
+          "hdrezkaEnabled": true,
+          "hdfilmdelisiEnabled": false,
+          "dizibalEnabled": false,
+          "purstreamEnabled": true,
+          "autoSubtitles": true,
+          "subtitleRequired": false,
+          "detailedHlsMetadata": false,
+          "minimumQuality": 0,
+          "maxResults": 20
+        },
+        "identity": {
+          "reason": "ok",
+          "year": 1968,
+          "type": "movie"
+        },
+        "sources": [
+          {
+            "name": "Purstream",
+            "candidates": 0,
+            "startedMs": 0,
+            "discoveryMs": 192
+          }
+        ],
+        "rejected": {},
+        "http": {
+          "api.themoviedb.org:200": 1,
+          "api.purstream.club:200": 1
+        },
+        "subtitleText": {},
+        "results": 0,
+        "reason": "no_eligible_sources",
+        "elapsedMs": 192
+      },
+      "pairs": [],
+      "cards": []
+    }
+  ],
+  "additionalResearch": [
+    {
+      "source": "MoviesDrive / HubCloud / Pixeldrain",
+      "result": "real 1080p MKV found, not integrated",
+      "actualRange": {
+        "status": 206,
+        "bytes": 131072,
+        "total": 2071642223,
+        "container": "mkv",
+        "dimensions": {
+          "width": 1920,
+          "height": 804
+        },
+        "duration": 9325.001,
+        "audioLanguages": [
+          "hi",
+          "en"
+        ],
+        "embeddedSubtitleLanguages": [
+          "en",
+          "es"
+        ]
+      },
+      "exclusion": "Public API URL is extensionless. Current Nuvio native download filename becomes .mp4; exact filename-path aliases returned 404. Existing naming bridge does not support this host. No application change or new backend added.",
+      "higherClaims": "21GB and 19GB 4K catalogue links reached public terminal pages but workers/pixel routing failed ERR_SSL_PACKET_LENGTH_TOO_LONG; 4K not verified",
+      "apiReference": "https://pixeldrain.com/api"
+    },
+    {
+      "source": "SineMerkez",
+      "result": "public search and movie identity reached, EpikPlayer embeds timed out with and without public Referer; no real file"
+    },
+    {
+      "source": "CineFreak",
+      "result": "current community reference origin ENOTFOUND; not integrated"
+    },
+    {
+      "source": "FibWatch",
+      "result": "403 challenge; not integrated"
+    },
+    {
+      "source": "PersianStremio",
+      "result": "TLS error; no file and no disabled TLS validation"
+    },
+    {
+      "source": "SineWix / Anizium",
+      "result": "no verified public guest player without account/fixed key; no integration"
+    },
+    {
+      "source": "SeiCode alternative mirrors",
+      "result": "OKru samples had null movie metadata; three SendVid requests timed out; existing MP4Upload path preserved"
+    },
+    {
+      "source": "SonAnime",
+      "result": "fresh detail had existing 360/480/720/1080 fields, no new 2160 or audio field"
+    },
+    {
+      "source": "Internet Archive",
+      "result": "exact imdb_id lookup yielded no additional rows for Dune/Matrix/Inception/Shameless; broad TR queries mostly unrelated/split VCD; no pin or matching relaxation"
+    },
+    {
+      "source": "FilmModu",
+      "result": "Matrix/Inception/NoWayHome were HLS only; Dune search pointed to 1984 movie, correctly excluded for target 2021"
+    },
+    {
+      "source": "Purstream anime",
+      "result": "Death Note same-ID sheet exists but returned /animes/ path containing premium slug outside current supported free media routes; excluded, no new anime contribution"
+    }
+  ],
+  "tests": {
+    "fixtureAndQuickJs": 254,
+    "upstreamRelease": "0.6.5-beta",
+    "upstreamSourceContract": true,
+    "sourceDrift": []
+  },
+  "limitations": {
+    "device": "not-run",
+    "fullPlayback": "not-run",
+    "fullDownload": "not-run",
+    "offline": "not-run",
+    "subtitleAudioSync": "not-run",
+    "iosFont": "not-run",
+    "allRequestedCoverageMet": false
+  }
+}

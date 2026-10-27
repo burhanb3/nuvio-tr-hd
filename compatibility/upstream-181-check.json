@@ -1,0 +1,16 @@
+{
+  "checkedAt": "2026-10-27T17:33:11.701Z",
+  "expectedRelease": "0.6.5-beta",
+  "latestRelease": "0.6.5-beta",
+  "releasePublishedAt": "2026-10-27T02:04:03Z",
+  "expectedHead": "61658f366f985fc7758f0942a14c1754c69aca68",
+  "latestHead": "61658f366f985fc7758f0942a14c1754c69aca68",
+  "sourceDrift": [],
+  "failedAssertions": [],
+  "sourceContractVerified": true,
+  "latestReleaseMatches": true,
+  "deviceTests": {
+    "android": "not-run",
+    "ios": "not-run"
+  }
+}

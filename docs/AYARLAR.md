@@ -22,7 +22,7 @@ HLS kalite seçeneği, ses ve altyazısı korunabiliyorsa ayrı satır olur. Ayr
 
 ## Sağlayıcılar
 
-Ana sağlayıcıda film/dizi dosya ve online kaynakları ayrı kapatabilirsiniz. Hızlı İzle, HDFilmDelisi ve DiziBal için ayrı ayarlara sahiptir. Anime ve Ek Anime kendi ayarlarını kullanır. Kısmi kataloglar yalnız bazı yapım veya bölümlerde sonuç verir; diğer kaynaklarla birlikte açık tutulabilir.
+Ana sağlayıcıda film/dizi dosya ve online kaynakları ayrı kapatabilirsiniz. Hızlı İzle, HDFilmDelisi, DiziBal ve Purstream için ayrı ayarlara sahiptir. Anime ve Ek Anime kendi ayarlarını kullanır. Kısmi kataloglar yalnız bazı yapım veya bölümlerde sonuç verir; diğer kaynaklarla birlikte açık tutulabilir.
 
 RareFilmm, eski ve az bulunan filmler için ana sağlayıcıda varsayılan açıktır. Bazı dosyalardaki İngilizce yazı görüntüye işlenmiştir; EN görüntüde etiketi bunun içindir. Türkçe altyazı eşleşmesi veya Türkçe ses garantisi değildir.
 

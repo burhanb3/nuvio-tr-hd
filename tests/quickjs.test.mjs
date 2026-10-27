@@ -14,6 +14,21 @@ const animeBundle = await readFile(new URL('../providers/nuvio-tr-hd-anime.js', 
 const extraAnimeBundle = await readFile(new URL('../providers/nuvio-tr-hd-extra-anime.js', import.meta.url), 'utf8');
 const fastOnlineBundle = await readFile(new URL('../providers/nuvio-tr-hd-fast-online.js', import.meta.url), 'utf8');
 
+test('QuickJS: Purstream aynı kimliği online sunar, source kalite etiketini kullanmaz ve ana aramaya iş eklemez',async()=>{
+ const api='https://api.purstream.club/api/v1',file='https://free.finepulfe.xyz/movies/603-example/master.m3u8',success=items=>({type:'success',data:{items}});
+ const fixture=makeFixture({extra:{
+  [api+'/search-bar/search/The%20Matrix']:{json:success({movies:{items:[{id:11,title:'The Matrix',type:'movie',release_date:'1999'}]}})},
+  [api+'/media/11/sheet']:{json:success({id:11,tmdbId:603,type:'movie',published:true,releaseDate:'1999',title:'The Matrix',urls:[{url:file,name:'2160p MULTI'}]})},
+  [file]:{body:'#EXTM3U\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="a",NAME="English",LANGUAGE="en",URI="en.m3u8"\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="a",NAME="French",LANGUAGE="fr",URI="fr.m3u8"\n#EXT-X-STREAM-INF:BANDWIDTH=1800000,RESOLUTION=1280x720,AUDIO="a"\n720.m3u8\n'}
+ }});
+ const settings={autoSubtitles:false,useDownloadBridge:false,hdfilmdelisiEnabled:false,dizibalEnabled:false,archiveEnabled:false,hdhubEnabled:false,goojaraEnabled:false,hdrezkaEnabled:false,waploadedEnabled:false,rarefilmmEnabled:false,playImdbEnabled:false,vixsrcEnabled:false,filmmoduEnabled:false};
+ const streams=await runInQuickJs(fixture,{code:fastOnlineBundle,settings});assert.equal(streams.length,1);assert.equal(streams[0].type,'hls');assert.equal(streams[0].url,file);assert.equal(streams[0].quality,'720p · 1280×720');assert.match(streams[0].title,/İndirilemez/);assert.match(streams[0].language,/Ses: EN\/FR/);
+ assert.deepEqual(await runInQuickJs(fixture,{code:fastOnlineBundle,settings:{...settings,purstreamEnabled:false}}),[]);
+ const calls=[];assert.deepEqual(await runInQuickJs(fixture,{settings,fetchCalls:calls}),[]);assert.ok(!calls.some(c=>c.includes('api.purstream.club')));
+ assert.ok((await runInQuickJs({},{code:fastOnlineBundle,invokeSettings:true})).some(f=>f.key==='purstreamEnabled'));
+ assert.ok(!(await runInQuickJs({},{invokeSettings:true})).some(f=>f.key==='purstreamEnabled'));
+});
+
 test('QuickJS: HDRezka public HTML-JSON yanıtı gerçek MP4 verir, ücretli kaliteyi ve yanlış IMDb başlığını atlar',async()=>{
  const root='https://rezka.ag',page=root+'/films/fiction/100-the-matrix-1999.html',file='https://stream.voidboost.one/full.mp4';
  const mvhd=Buffer.alloc(20);mvhd.writeUInt32BE(1000,12);mvhd.writeUInt32BE(8160000,16);

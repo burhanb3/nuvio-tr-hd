@@ -1,5 +1,12 @@
 # Sonraki işler
 
+## 1.8.1 öncelik
+
+1. 1.8.1 Purstream online ekkaynak,254check/QuickJS,Nuvio0.6.5-beta20drift0. Beş film/bölümde720p+mevcutTR; yeniindirme/4K/TRdub/anime0. Yayınkontrolü bekleniyor.
+2. İndirme/4K/TRdub öncelik: yeni hazırdosya + nativeuygunad + doğrukimlik/yıl/S/E ->geneladaptör. DunePixel2.07GB1080MKV gerçek ama uzantısıznativead sorunu; desteklenmeyenR2köprüsüne zorlaekleme, yeniPC/backend/accountkurma. Yeni durum olmadan4KWorkerTLS/Pixel,Epiktimeout,CineFreakDNS,SeiCodeaynaları döngüsüne girme.
+3. DuneFRaliası ve Purstreamanimepremiumpath bu turadaptebaşarı değil. MevcutTR35 alternatifler senkron ölçümü değil. FizikseliPhoneoynatım/indirme/offline/senkron/fontyok. Birleşik Dune7,Matrix5,Flea6,Death4 dosya sayısı tarihseltur; tekrar garantisi değil.
+
+
 ## 1.8.0 öncelik
 
 1. Tamamlandı:1.8.0 aynı adreste yayımlandı; kod 7ea52b8609fa1e236147bff1d359753b37be1be2, 248 check/QuickJS, Nuvio0.6.5-beta/20 drift0, dört aktif ID. Windows/Linux 40522695904, Pages 40522696038, yedi public dosya HTTP200/SHA başarılı; github-publication.json güncel.

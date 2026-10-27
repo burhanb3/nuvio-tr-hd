@@ -1,5 +1,12 @@
 # Tasarım kararları
 
+## 1.8.1 — kanıtlı katkıyı ayrı sayma
+
+- İndirilebilir4K/TRdub ana hedef açık. YeniHLS sağlayıcısı bu boşluğu kapatmış sayılmaz. Çalışan uzantısızMKV, mevcutnative.mp4 adıyla doğruindirme kabul edilmez; query/fragment eki çözüm değil. Yeni kullanıcı sunucusu/hesap ekleme.
+- Purstreamde publicfreeCDN yolunu tamTMDB ve bölümle sınırla; premium/başkahost/formatdönüştürme yok. Series sheet karma bölüm URL'leri kullanılmaz; own episode response + URL S/E gerekir. Kaynak1440p gerçek720p çıktığında720p kalır. TR35 senkronbaşarısı değildir.
+- Main kaynak bütçesi ve dörtID korunur; ekonline işi yalnızHızlıİzle/legacyonline/all. Kaynak5.5s ve toplam8s mantıksal; nativeiptal/telefonhızı garantisi verme. TR/EN çeviri varsayılanı aynı, FR yalnızkaynak isteğinde. Yeniadapter4K/TRdub/anime garantisi diye tanıtılmaz.
+
+
 ## 1.8.0 — özgün sesli ücretsiz dosyalar
 
 - HDRezka genel film/dizi araması main/files'a açık. Kimlik aynıIMDb + tamkanonikad/yıl; farklı ad yalnız aynıTMDBID alternative_titles yanıtından. Kaynaksearch ilksonucu veya altbaşlık benzerliği yeterli değildir. Dunealias testfixture'ı telefonTMDBAPI kanıtı değil.

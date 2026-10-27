@@ -14,6 +14,7 @@
 | DiziYou, DiziBak | Dizi | Genellikle online HLS |
 | FilmModu, HDFilmDelisi | Film | Dublaj/altyazılı online alternatifler |
 | DiziBal | Film/dizi/anime | Dublaj/altyazılı online HLS |
+| Purstream | Film/dizi | Ek online HLS; oynatma listesindeki sesler ve harici TR/EN altyazılar |
 | Animecix, SonAnime | Anime | Gerçek dosya seçenekleri |
 | AniMOM, SeiCode / MP4Upload | Anime bölümleri | Ek, kısmi MP4 kaynakları |
 
@@ -36,7 +37,9 @@ Goojara, ana sağlayıcıda film ve bölüm dosyaları arar. Tam başlık/yıl, 
 
 HDRezka'da aynı IMDb, kanonik başlık ve yıl birlikte aranır. Farklı başlık gerekiyorsa yalnız aynı TMDB kaydının alternatif başlıkları kabul edilir. Dizilerde seçilen ses sürümünün kendi bölüm listesinde tam sezon ve bölüm bulunmalıdır. Hesap, kullanıcı çerezi veya yeni sunucu gerekmez. Ücretli işaretli kalite ve kısa örnek videolar atlanır; ücretsiz 4K bulunduğu varsayılmaz. Mevcut TR/EN altyazı araması dosya bazında devam eder.
 
-Hızlı İzle, HDFilmDelisi ve yeni DiziBal kaynaklarını bağımsız tarar; ana sağlayıcıda aynı işler tekrarlanmaz. Eski üç sağlayıcının kimlikleri korunur. Ana sağlayıcıdaki PlayIMDb/VixSrc ve diğer online yollar çalışmaya devam eder; HDFilmDelisi yeni Hızlı İzle grubuna taşınmıştır.
+Hızlı İzle, HDFilmDelisi, DiziBal ve Purstream kaynaklarını bağımsız tarar; ana sağlayıcıda aynı işler tekrarlanmaz. Eski üç sağlayıcının kimlikleri korunur. Ana sağlayıcıdaki PlayIMDb/VixSrc ve diğer online yollar çalışmaya devam eder; HDFilmDelisi Hızlı İzle grubundadır.
+
+Purstream aynı TMDB kimliği, tür, yıl ve resmi başlıkla eşleşir. Fransızca katalog adı gerekiyorsa aynı TMDB kaydının çevirileri kullanılır. Dizinin genel sayfasındaki karışık bölüm bağlantıları yerine istenen sezon/bölüm yanıtı ve video yolu birlikte kontrol edilir. Kaynağın 1080p/1440p etiketi kullanılmaz; gerçek HLS çözünürlüğü ve dil izleri esas alınır. Bu kaynak online alternatif sağlar; yeni indirme, Türkçe dublaj veya 4K garantisi değildir.
 
 Nuvio her scraper tamamlandığında sonuçlarını birleştirir. Eklenti içinde hazır adayların korunması, Nuvio'ya satır satır canlı sonuç callback'i eklendiği anlamına gelmez.
 
