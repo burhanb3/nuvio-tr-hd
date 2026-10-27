@@ -23,4 +23,4 @@ Kaynak kontrolleri sabit kanonik metadata referanslarıyla gerçek public HTTP/R
 
 [Yayın doğrulaması](../compatibility/github-publication.json) · [Önceki uyumluluk kayıtları](arsiv/UYUMLULUK_GECMISI.md).
 
-1.8.1 yayın doğrulaması güncelleme tamamlandığında bu kayda eklenir.
+1.8.1 yayın kodu `071bda9bba5b12dec1dab157d98a6fb3bd9d5932`: Windows/Linux [CI](https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40552547300) ve [Pages](https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40552547175) başarılı; yedi public varlık HTTP200 ve yerel SHA eşit.

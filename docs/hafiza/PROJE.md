@@ -12,7 +12,7 @@ Birleşikregresyon Dune7/Matrix5/Fleabag1x1 6/DeathNote4 eski dosya; onlineTRvar
 
 Diğer yeni araştırma: SineMerkez doğru /arama?ara=&s=1 publicJSON; film/IMDbposter bulundu, Epikembed referer ile/yok timeout. CineFreakENOTFOUND, Fib403challenge, PersianTLS, SineWix/Anizium doğrulanmışguestyok. SeiCodeOKru3nullmetadata, SendVid3timeout; SonAnime yeni4Ksesalanıyok. Archive4exactimdb0, TRgenişaramalar ilgisiz/VCD; FilmModuDune1984 doğruelendi, diğerleriHLS. Dışdurum değişmeden aynı başarısız originleri tekrarlama. Eski indirme/online yollar korunur.
 
-1.8.1 yayın doğrulaması bekleniyor.
+1.8.1 yayımlandı: kod 071bda9bba5b12dec1dab157d98a6fb3bd9d5932; Windows/Linux Test40552547300 ve Pages40552547175 başarılı; yedi public varlıkHTTP200/yerelSHAeşit. github-publication.json güncel, dörtID aynı.
 
 
 ## 1.8.0 — film/dizi indirme kaliteleri
