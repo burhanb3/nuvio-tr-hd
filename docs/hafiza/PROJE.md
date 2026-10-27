@@ -10,7 +10,7 @@ Canlı12 yeni dosya/4film; altıMKV ölçülmüş TR+EN, altıMP4sesdiliölçül
 
 İlk Crow4/Eye0/Hotel6; sorgu düzeltmesi sonrası Crow10/Eye2/Hotel0. Hotel başarısız tekrarı saklanır. Bridge6 içindeki iki eski kayıt aynıvideo olabilir; yalnız4yeni sayıldı. İlk regresyon Dune7/Inception6/Flea4/Death4/YourName5. Flea24sdeadline hazır4sonucu korudu. Son kodla Dune/Inception tekrar kanıtı coverage-183 içinde; Inception mevcut4K korundu. Yeni4K0/TV0/anime0; hedefler tamamlandı deme.
 
-269 fixture/QuickJS geçti; upstream0.6.5-beta/23blob drift0, lock değişmedi. Fiziksel cihaz/tamoynatım/tamindirme/offline/senkron/font yok. Kaynak araştırma ve başarısız yollar download-expansion-183 içinde. HDFilmCehennemi sabitdeşifreanahtarı kopyalanmadı, HDHub4u challenge çözülmedi, MoviesDriveTV çelişen2023yılı zorlanmadı. Yayın bu not yazılırken bekliyor; tamamlandığında kanıt ekle.
+269 fixture/QuickJS geçti; upstream0.6.5-beta/23blob drift0, lock değişmedi. Fiziksel cihaz/tamoynatım/tamindirme/offline/senkron/font yok. Kaynak araştırma ve başarısız yollar download-expansion-183 içinde. HDFilmCehennemi sabitdeşifreanahtarı kopyalanmadı, HDHub4u challenge çözülmedi, MoviesDriveTV çelişen2023yılı zorlanmadı. 1.8.3 yayımlandı: kod 7bb885fe547f2c14e82292c0df499b3a0e82e4c3; Windows/Linux Test40567450137 ve Pages40567450138 başarılı. Yedi public varlık HTTP200 ve yerel SHA eşit; github-publication.json güncel.
 
 ## 1.8.2 — gerçek MKV ve ek 4K dosya
 
