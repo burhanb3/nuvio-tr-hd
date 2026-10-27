@@ -2,7 +2,7 @@
 
 ## 1.8.6 öncelik
 
-1. Hazır: Archive eksik yıl/identifier araması ve MoviesDrive ilk sezon bölümleri;5yeni dosya/1TRdublaj/3TV.297test,23upstream drift0. CI/Pages/yediHTTP200/SHA yayın kontrolünü tamamla.
+1. Hazır: Archive eksik yıl/identifier araması ve MoviesDrive ilk sezon bölümleri;5yeni dosya/1TRdublaj/3TV.297test,23upstream drift0. Yayımlandı: 2aa334fff0b90f9ef59a73de278ce5e010c84f07; Test40604773258/Pages40604773251 başarılı, yedi public HTTP200/SHA eşit.
 2. Sonraki sezon ve küçük TV/4K/TRdublaj kapsamı açık. MoviesDrive sonraki sezonu destekliyor diye sunma. Yeni TRdublaj için gerçek ses izi gerekir; Fury küçükMP4 sesini asıl MKV'den kopyalama. Yeni anime/4K bu tur0.
 3. TV ara tekrarda yeni dosyalar0, son tur S1E1 bir/S1E2 iki bulundu. HubCloud/gamerxyt/Pixel timeoutları saklandı. Ek kotayla veya farklı hostla kısıt aşma; kimliği gevşetme. Eski Inception/YourName/Flea4K ve HotelTRdub korundu.
 4. Fiziksel iPhone/tamindirme/offline/senkron/font açık. Baştan joker Archive sorgularını yeniden ekleme; AND/OR gruplaması canlı sorgu anlamını değiştirir. UHDMovies public sayfada indirme yok, MoviesMod medya kanıtı yok; yeni veri olmadan aynı yolları döndürme.

@@ -12,7 +12,7 @@ Son canlı pipeline: Stranger Things S1E1 yeni1032593814byte/1920×960/2911.562s
 
 Bu tur toplam5yeni dosya (4MKV/1MP4),1ölçülmüş TRdublaj,3TVdosyası,0yeni4K/anime. Hotel7/Dune8/Inception9/Flea10/Death4/YourName9 regresyon; Inception,YourName,Flea4K ve eskiTRdub korundu. Yeni backend/hesap/key/pin/scraperID yok. UHDMovies public film sayfasında gerçek indirme yolu yok; MoviesMod sadece arama kanıtı; Flea/Severance0 ve Shameless alakasız sonuçlar zorlanmadı. Pianist etiketli arşivde aslında Atlas/Hypnotic dosyaları vardı, kabul edilmedi.
 
-297check/QuickJS; upstream0.6.5-beta/23blob drift0, lock değişmedi. Fiziksel cihaz, tam indirme/oynatma/offline/senkron/font test edilmedi. Yayın bekliyor; CI/Pages/yedi SHA kanıtı sonra eklenecek.
+297check/QuickJS; upstream0.6.5-beta/23blob drift0, lock değişmedi. Fiziksel cihaz, tam indirme/oynatma/offline/senkron/font test edilmedi. Yayımlandı: kaynak 2aa334fff0b90f9ef59a73de278ce5e010c84f07; Windows/Linux testleri ve Pages başarılı. Yedi public dosya HTTP 200 döndü, SHA/byte yerel paketle aynı. Test https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40604773258; Pages https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40604773251. Kanıt compatibility/github-publication.json içinde.
 
 
 ## 1.8.5 — kanonik alternatif adla anime indirmeleri
