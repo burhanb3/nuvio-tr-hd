@@ -8,6 +8,8 @@
 - HDHub MB/MiB/GB/GiB sıralaması düzeltildi; aynı 12 sürümlük bütçede küçük/yüksek kalite/büyük adaylar birlikte incelenir. Yeni dosya boyut üst sınırı yok.
 - 210 test/gerçek QuickJS; Nuvio 0.6.4-beta üzerinde 20 kilitli dosyada drift yok. Dune/Fleabag dosyaları korundu; Shameless S1E1 indirme0. Fiziksel cihaz/tam indirme/offline/senkron testi yok. [Ayrıntılar](docs/KARTLAR_VE_DUBLAJ_176.md).
 
+- Aynı GitHub Pages adresinde yayımlandı; Windows/Linux CI ve altı public varlık HTTP200/yerelSHA kontrolü başarılı. Üç mevcut scraper kimliği korunur.
+
 ## 1.7.5 — 2026-10-27
 
 - Yeni Waploaded film/dizi dosya adaptörü, ana sağlayıcıda varsayılan açık. Kapsam son güncellenen public listeyle sınırlı; tüm arşiv taranmış veya her yapım desteklenmiş sayılmaz.

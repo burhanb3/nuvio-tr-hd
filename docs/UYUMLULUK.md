@@ -8,6 +8,8 @@
 
 [Upstream kanıtı](../compatibility/upstream-176-check.json), [kart/dublaj kaynak kanıtı](../compatibility/cards-and-dub-176.json), [regresyon](../compatibility/coverage-176.json), [sınırlar](KARTLAR_VE_DUBLAJ_176.md). Fiziksel iPhone/Android, Kotlin derlemesi, tam oynatma/indirme/offline/senkron yapılmadı.
 
+1.7.6 yayın kodu `c785f7544cdc94de70f7c4c33db63bedf07814b2`: Windows/Linux [CI](https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40423385497) ve [Pages](https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40423385471) başarılı; altı public varlık HTTP200/yerelSHA eşit. [Yayın kanıtı](../compatibility/github-publication.json).
+
 ## 1.7.5 — film/dizi dosyaları
 
 27 Ekim 2026: Nuvio `0.6.4-beta`, güncel `cmp-rewrite` HEAD `168aeaf3477edd42129f63252a7746d56de81d93`. Kilitli 20 kaynak dosyada drift yok; kilit değiştirilmedi. Yeni manifest girdisi veya ABI alanı eklenmedi. Waploaded ana sağlayıcıda çalışır; mevcut üç scraper kimliği korunur.

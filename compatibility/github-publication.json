@@ -1,15 +1,15 @@
 {
-  "checkedAt": "2026-10-26T23:28:20.769Z",
-  "version": "1.7.5",
+  "checkedAt": "2026-10-26T23:59:48.228Z",
+  "version": "1.7.6",
   "origin": "https://burhanb3.github.io/nuvio-tr-hd",
   "authenticated": false,
   "assetRequestsAuthenticated": false,
   "ciMetadataAuthenticated": true,
   "repository": "https://github.com/burhanb3/nuvio-tr-hd",
-  "sourceCommit": "327a3765269ef2d1b8059bf6d43696bc76470630",
+  "sourceCommit": "c785f7544cdc94de70f7c4c33db63bedf07814b2",
   "branch": "codex/publish-nuvio-tr-hd",
   "actions": {
-    "tests": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40419829204",
+    "tests": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40423385497",
     "testsConclusion": "success",
     "jobs": [
       {
@@ -21,7 +21,7 @@
         "conclusion": "success"
       }
     ],
-    "pages": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40419829111",
+    "pages": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40423385471",
     "pagesConclusion": "success"
   },
   "checks": [
@@ -30,80 +30,88 @@
       "status": 200,
       "type": "application/json; charset=utf-8",
       "bytes": 2056,
-      "sha256": "3364623e4b5dcebea6b0f3d56241c367d7d78c70c668bec25b0f2b8d84019557",
+      "sha256": "c14d9e9f354a0d597da66cf778e42ce57ca337c7fbc9f32d638a715f7ff3dd9a",
       "matchesLocal": true
     },
     {
-      "path": "/providers/nuvio-tr-hd.js?v=1.7.5",
+      "path": "/providers/nuvio-tr-hd.js?v=1.7.6",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 207696,
-      "sha256": "c07f2ab70e3de70fbc62049098eb2a8db37aef84ed1127c1ccb9e3c9242de71f",
+      "bytes": 217888,
+      "sha256": "69078f30e5cb7e6fcd3ff49f9a60fb02f2012220d0f83eae19b75c3aa44ff683",
       "matchesLocal": true
     },
     {
-      "path": "/providers/nuvio-tr-hd-anime.js?v=1.7.5",
+      "path": "/providers/nuvio-tr-hd-anime.js?v=1.7.6",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 207697,
-      "sha256": "d25aa55e39843a28299b573aef2e6341a6cc2121b3f979da102262d47da1b5fd",
+      "bytes": 217889,
+      "sha256": "e1057ec03c1673c8d37d6649b372dd717cb2ea6b19a3069711374fb7bad54155",
       "matchesLocal": true
     },
     {
-      "path": "/providers/nuvio-tr-hd-extra-anime.js?v=1.7.5",
+      "path": "/providers/nuvio-tr-hd-extra-anime.js?v=1.7.6",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 207708,
-      "sha256": "4507c6bfc68a442ffbfe669f07156ca0a54c17f2886b11458d8fda3ddd805a81",
+      "bytes": 217900,
+      "sha256": "2e0dc04fe3d4a0322809977c637d462cbbec2694f68da2f7564741840760beea",
       "matchesLocal": true
     },
     {
       "path": "/providers/nuvio-tr-hd-online.js",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 207699,
-      "sha256": "847693c2b09a9351dbb97957e22f94c421e4c2bf8def30aef2de89f63de7cf6c",
+      "bytes": 217891,
+      "sha256": "04491b84b032b6a48a33e4db03cf75c6c2f10308d26b41a3f6642457ff3e2341",
       "matchesLocal": true
     },
     {
       "path": "/",
       "status": 200,
       "type": "text/html; charset=utf-8",
-      "bytes": 5593,
-      "sha256": "358b8d02252526cf2e3efee639f01581ecd1552fe03fff0a56a36aafe8d126e7",
+      "bytes": 5696,
+      "sha256": "dc5627baeee915adc394d92da8ab05d43c3f64665e62763c3897d2a0c6ff83e4",
       "matchesLocal": true
     }
   ],
   "tests": {
-    "local": 199,
+    "local": 210,
     "compiledQuickJs": true
   },
-  "upstreamEvidence": "compatibility/upstream-175-check.json",
-  "sourceEvidence": "compatibility/download-research-175.json",
-  "regressionEvidence": "compatibility/coverage-175.json",
+  "upstreamEvidence": "compatibility/upstream-176-check.json",
+  "sourceEvidence": "compatibility/cards-and-dub-176.json",
+  "regressionEvidence": "compatibility/coverage-176.json",
   "manifestIds": [
     "nuvio-tr-hd",
     "nuvio-tr-hd-anime",
     "nuvio-tr-hd-extra-anime"
   ],
-  "newPartialFilmTvDownloadAdapters": 1,
+  "newPartialFilmTvDownloadAdapters": 0,
+  "newOnlineFilmDubAdapters": 1,
   "newUniversalFilmTvDownloadAdapters": 0,
   "newScraperEntries": 0,
   "newHelperBackends": 0,
   "newAccounts": 0,
   "newPerTitleVideoPins": 0,
   "features": {
-    "source": "Waploaded",
-    "lane": "main",
-    "setting": "waploadedEnabled",
+    "cleanCardFields": true,
+    "realPixelsIncludeP": true,
+    "languagePriority": "TR/EN/FR/ES/DE then other languages; HI last",
+    "maximumVisibleLanguages": 5,
+    "remainingLanguageCount": true,
+    "byteCountsPrioritized": true,
+    "noEvidenceFieldsOmitted": true,
+    "hlsSizeUsesModel": true,
+    "trDubSource": "HDFilmDelisi",
+    "setting": "hdfilmdelisiEnabled",
     "defaultEnabled": true,
-    "coverage": "recent 50 movie/50 TV index entries only",
-    "maximumDetailMatches": 2,
-    "nativeSafeBinaryDecode": true,
-    "rangeProbeOnNamedFileUrl": true,
-    "requiresDownloadBridge": false,
-    "existingOnlineSourcesPreserved": true,
-    "mainFileProbeQuota": 3
+    "trDubSourceHlsOnly": true,
+    "hlsNotDownloadable": true,
+    "hdhubMbMibOrderFixed": true,
+    "smallHighLargeReleasePlan": true,
+    "maximumReleaseInspections": 12,
+    "mainFileProbeQuota": 3,
+    "existingOnlineAndDownloadSourcesPreserved": true
   },
   "allSourceCriteriaMet": false,
   "deviceTest": "not-run",

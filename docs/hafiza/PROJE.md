@@ -8,7 +8,7 @@ Yeni HDFilmDelisi genel film adaptörü ana sağlayıcıda varsayılan açık hd
 
 HDHub MB/MiB/GB/GiB iç sıra düzeltildi; aynı12release bütçesinde küçük/yüksek/büyük interleave, en yüksek dosya adına göre probe sırası yalnız ipucu. Nativekota/scheduler/boyut üst sınırı değişmedi. Birleşikson: Dune2dosya+TR/2piksel10,5s; Fleabag2dosya+TR/tekpiksel6,2s; Shameless0indirme8,6s. Yeni genel MP4/MKV sağlayıcısı0; eskiArchive dosyalarını yeni başarı sayma. HDFilmCehennemi/FilmMakinesi403, DiziPal2140ağhatası, Vidmodyağhatası,Sinema yönlendirme/kanıtyok,PuhuTVsabitkeyyolukullanılmadı. Aynı bozuk yolları tekrarlama.
 
-210check/QuickJS; Nuvio0.6.4-beta/güncelaf58a32b05741963beec861255f5b18f7ede69cf,20lockeddrift0,kilitdeğişmedi. ÜçID aynı. Fizikselcihaz/tamoynatım/indirme/offline/senkronyok. compatibility/cards-and-dub-176,coverage-176,upstream-176-check ve docs/KARTLAR_VE_DUBLAJ_176.md. Yayın 1.7.6 hazırlanıyor; CI/public SHA tamamlanmadan yayımlandı deme.
+210check/QuickJS; Nuvio0.6.4-beta/güncelaf58a32b05741963beec861255f5b18f7ede69cf,20lockeddrift0,kilitdeğişmedi. ÜçID aynı. Fizikselcihaz/tamoynatım/indirme/offline/senkronyok. compatibility/cards-and-dub-176,coverage-176,upstream-176-check ve docs/KARTLAR_VE_DUBLAJ_176.md. 1.7.6 aynı adreste yayımlandı: kodc785f7544cdc94de70f7c4c33db63bedf07814b2; Windows/Linux Test40423385497, Pages40423385471 başarılı; altıpublicHTTP200/yerelSHAeşit. compatibility/github-publication.json güncel.
 
 ## 1.7.5 — 27 Ekim, film/dizi indirme odağı
 

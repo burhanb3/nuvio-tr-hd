@@ -6,7 +6,8 @@ Mevcut depoyu Pluginler ekranında yenileyip **1.7.6** sürümünü kontrol edin
 
 Örnek kart:
 
-**Online · HDFilmDelisi**  
+**Online · HDFilmDelisi**
+
 1080p · 1920×804 · 2,11 GB · Ses: TR/EN · TR/EN/ST altyazı
 
 Bu örnekte piksel ve dil izleri gerçek HLS listesinden okunmuştur. GB, online aktarım için hesaplanan tek değerdir; indirilebilir dosyanın ölçülmüş boyutu değildir. ST kodu da yayıncının listesindeki etikettir; altyazı gövdesinin Sesotho dilinde olduğu ayrıca sınanmadı.
