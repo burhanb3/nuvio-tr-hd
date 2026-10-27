@@ -1,0 +1,1015 @@
+{
+  "checkedAt": "2026-10-27T23:49:01.414Z",
+  "version": "1.8.6",
+  "baselineVersion": "1.8.5",
+  "outcome": {
+    "newFiles": 5,
+    "newMkvFiles": 4,
+    "newMp4Files": 1,
+    "newMovieFiles": 2,
+    "newTvFiles": 3,
+    "newTurkishDubFiles": 1,
+    "new4kFiles": 0,
+    "newAnimeFiles": 0,
+    "titleExamples": 2,
+    "episodeExamples": 2,
+    "allNewFilesHaveTurkishSubtitleAlternatives": true,
+    "newBackend": 0,
+    "newAccount": 0,
+    "newFixedKey": 0,
+    "newPerTitleVideoPin": 0,
+    "newScraperIds": 0
+  },
+  "method": {
+    "archive": "Existing HD query also uses full canonical name/year identifier prefixes (dot/dash separators), without leading wildcards. Missing-year fallback needs exact canonical/language-only title, matching identifier and each filename year, measured duration90–110%, no contradictory metadata ID/year. Same2search/12metadata limit; no extra translations or video pins.",
+    "moviesdrive": "First season only, with canonical first-air year in search/page heading and identical IMDb in search doc plus article links. Series title, season and episode heading, exact filename S/E, public file metadata, container/bytes/pixels/duration/audio all bind. ZIP and next episodes rejected. At most4 routes/2resolvers/10s; TV1080/high/720 before small. Subsequent seasons without first-year binding are not enabled.",
+    "native": "Main24s/video3/sub4/EN1 unchanged. A new MoviesDrive job is eligible for IMDb-bound first-season targets; no extra scraper ID or backend. Logical budget is not physical iPhone cancellation or per-row ABI.",
+    "audio": "Fury MKV actual tur+eng. Three TV MKVs actual hi+en, not Turkish dub. Small Fury MP4 audio unmeasured; filename/original cannot prove its audio.",
+    "subtitles": "Every new file has4 external TR alternatives and a hash. Existing ID/release/hash/duration matching is not a scene-sync measurement."
+  },
+  "newFiles": [
+    {
+      "key": "fury",
+      "source": "Internet Archive",
+      "container": "mkv",
+      "bytes": 2226751288,
+      "filename": "Fury.2014.m1080p.BluRay.x264.DUAL.TR.ENG.mkv",
+      "sourceItemId": "Fury.2014.m1080p.BluRay.x264.DUAL.TR.ENG",
+      "releaseYearBasis": "exact-identifier-and-filename",
+      "mediaFilename": "Fury.2014.m1080p.BluRay.x264.DUAL.TR.ENG.mkv",
+      "audioLanguages": [
+        "tur",
+        "eng"
+      ],
+      "subtitleBestScore": 74,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 1920,
+        "height": 808
+      },
+      "quality": "1920x808",
+      "qualityGrade": "1080p",
+      "turkishSubtitle": true,
+      "embeddedSubtitleLanguages": [],
+      "externalTrackCount": 6,
+      "externalTurkishTracks": 4,
+      "actualDurationSeconds": 8078.212,
+      "hashAvailable": true
+    },
+    {
+      "key": "fury",
+      "source": "Internet Archive",
+      "container": "mp4",
+      "bytes": 838098828,
+      "filename": "Fury.2014.m1080p.BluRay.x264.DUAL.TR.ENG.mkv",
+      "sourceItemId": "Fury.2014.m1080p.BluRay.x264.DUAL.TR.ENG",
+      "releaseYearBasis": "exact-identifier-and-filename",
+      "mediaFilename": "Fury.2014.m1080p.BluRay.x264.DUAL.TR.ENG.mp4",
+      "audioLanguages": [],
+      "subtitleBestScore": 74,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 1141,
+        "height": 480
+      },
+      "quality": "1141x480",
+      "qualityGrade": "480p",
+      "turkishSubtitle": true,
+      "embeddedSubtitleLanguages": [],
+      "externalTrackCount": 6,
+      "externalTurkishTracks": 4,
+      "actualDurationSeconds": 8078.136,
+      "hashAvailable": true
+    },
+    {
+      "key": "stranger-things-s1e2",
+      "source": "MoviesDrive / Pixeldrain",
+      "container": "mkv",
+      "bytes": 468517988,
+      "filename": "Stranger.Things.S01E02.720p.Hindi.Eng.moviesdrives.com.mkv",
+      "sourceItemId": null,
+      "releaseYearBasis": null,
+      "mediaFilename": null,
+      "audioLanguages": [
+        "hi",
+        "en"
+      ],
+      "subtitleBestScore": 67,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 1280,
+        "height": 640
+      },
+      "quality": "1280x640",
+      "qualityGrade": "720p",
+      "turkishSubtitle": true,
+      "embeddedSubtitleLanguages": [
+        "en"
+      ],
+      "externalTrackCount": 8,
+      "externalTurkishTracks": 4,
+      "actualDurationSeconds": 3322.978,
+      "hashAvailable": true
+    },
+    {
+      "key": "stranger-things-s1e2",
+      "source": "MoviesDrive / Pixeldrain",
+      "container": "mkv",
+      "bytes": 905088292,
+      "filename": "Stranger.Things.S01E02.1080p.Hindi.Eng.moviesdrives.com.mkv",
+      "sourceItemId": null,
+      "releaseYearBasis": null,
+      "mediaFilename": null,
+      "audioLanguages": [
+        "hi",
+        "en"
+      ],
+      "subtitleBestScore": 67,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 1920,
+        "height": 960
+      },
+      "quality": "1920x960",
+      "qualityGrade": "1080p",
+      "turkishSubtitle": true,
+      "embeddedSubtitleLanguages": [
+        "en"
+      ],
+      "externalTrackCount": 8,
+      "externalTurkishTracks": 4,
+      "actualDurationSeconds": 3323.978,
+      "hashAvailable": true
+    },
+    {
+      "key": "stranger-things-s1e1",
+      "source": "MoviesDrive / Pixeldrain",
+      "container": "mkv",
+      "bytes": 1032593814,
+      "filename": "Stranger.Things.S01E01.1080p.Hindi.Eng.moviesdrives.com.mkv",
+      "sourceItemId": null,
+      "releaseYearBasis": null,
+      "mediaFilename": null,
+      "audioLanguages": [
+        "hi",
+        "en"
+      ],
+      "subtitleBestScore": 67,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 1920,
+        "height": 960
+      },
+      "quality": "1920x960",
+      "qualityGrade": "1080p",
+      "turkishSubtitle": true,
+      "embeddedSubtitleLanguages": [
+        "en"
+      ],
+      "externalTrackCount": 8,
+      "externalTurkishTracks": 4,
+      "actualDurationSeconds": 2911.562,
+      "hashAvailable": true
+    }
+  ],
+  "baseline": {
+    "fullPipeline": {
+      "checkedAt": "2026-10-27T23:45:22.528Z",
+      "version": "1.8.6",
+      "metadata": "fixed canonical reference; does not test phone TMDB API credentials",
+      "acceptance": {
+        "movieSmallFileBytes": 3221225472,
+        "episodeSmallFileBytes": 1073741824,
+        "minimumDistinctDownloadQualities": 2,
+        "requireTurkishSubtitle": true,
+        "physicalPlaybackAndOfflineTest": "not-run"
+      },
+      "transport": "Node limited1MiB, actual source and subtitle HTTP; native iPhone transport not tested",
+      "physicalDevice": "not-run",
+      "fullPlayback": "not-run",
+      "fullDownload": "not-run",
+      "cases": [
+        {
+          "key": "fury",
+          "tmdbId": 228150,
+          "title": "Fury",
+          "type": "movie",
+          "control": false,
+          "elapsedMs": 10921,
+          "bytesRead": 5599965,
+          "diagnostics": [
+            {
+              "tmdbId": "228150",
+              "lane": "main",
+              "configuration": {
+                "version": "dev",
+                "tmdbKeyPresent": true,
+                "autoDiscover": true,
+                "includeHls": true,
+                "playImdbEnabled": true,
+                "vixsrcEnabled": true,
+                "hdhubEnabled": true,
+                "archiveEnabled": true,
+                "waploadedEnabled": true,
+                "rarefilmmEnabled": true,
+                "goojaraEnabled": true,
+                "hdrezkaEnabled": true,
+                "hdfilmdelisiEnabled": true,
+                "dizibalEnabled": true,
+                "purstreamEnabled": true,
+                "moviesdriveEnabled": true,
+                "autoSubtitles": true,
+                "subtitleRequired": false,
+                "detailedHlsMetadata": false,
+                "minimumQuality": 0,
+                "maxResults": 20
+              },
+              "identity": {
+                "reason": "ok",
+                "year": 2014,
+                "type": "movie"
+              },
+              "sources": [
+                {
+                  "name": "HDRezka",
+                  "candidates": 4,
+                  "startedMs": 76,
+                  "discoveryMs": 1183
+                },
+                {
+                  "name": "PlayIMDb",
+                  "candidates": 3,
+                  "startedMs": 1263,
+                  "discoveryMs": 504
+                },
+                {
+                  "name": "Goojara",
+                  "candidates": 1,
+                  "startedMs": 72,
+                  "discoveryMs": 1804
+                },
+                {
+                  "name": "FilmModu",
+                  "candidates": 0,
+                  "startedMs": 1876,
+                  "discoveryMs": 412
+                },
+                {
+                  "name": "VixSrc",
+                  "candidates": 1,
+                  "startedMs": 1767,
+                  "discoveryMs": 718
+                },
+                {
+                  "name": "MoviesDrive / Pixeldrain",
+                  "candidates": 3,
+                  "startedMs": 79,
+                  "discoveryMs": 2712
+                },
+                {
+                  "name": "Waploaded",
+                  "candidates": 0,
+                  "startedMs": 2485,
+                  "discoveryMs": 343
+                },
+                {
+                  "name": "RareFilmm",
+                  "candidates": 0,
+                  "startedMs": 2791,
+                  "discoveryMs": 518
+                },
+                {
+                  "name": "Internet Archive",
+                  "candidates": 0,
+                  "startedMs": 66,
+                  "discoveryMs": 3660
+                },
+                {
+                  "name": "4KHDHub / HubCloud",
+                  "candidates": 7,
+                  "startedMs": 2288,
+                  "discoveryMs": 2962
+                }
+              ],
+              "rejected": {
+                "video_unavailable": 6
+              },
+              "http": {
+                "api.themoviedb.org:200": 2,
+                "nuvio-tr-hd-download-bridge.kamilbsr03.chatgpt.site:200": 1,
+                "ww1.goojara.to:200": 3,
+                "new4.moviesdrive.beer:200": 2,
+                "rezka.ag:200": 3,
+                "ww1.goojara.to:302": 1,
+                "archive.org:200": 14,
+                "www.wootly.ch:200": 1,
+                "opensubtitles-v3.strem.io:200": 1,
+                "mdrive.lol:200": 3,
+                "altyazidb.online:200": 7,
+                "hubcloud.ist:200": 10,
+                "web.wootly.ch:200": 3,
+                "streamdata.vaplayer.ru:200": 1,
+                "gamerxyt.com:200": 10,
+                "stream.voidboost.one:302": 4,
+                "vixsrc.to:200": 3,
+                "pixeldrain.dev:200": 4,
+                "www.filmmodu.one:200": 1,
+                "films.waploaded.com:200": 1,
+                "4khdhub.one:200": 2,
+                "milanium.stream.voidboost.one:206": 2,
+                "olympus.stream.voidboost.one:206": 2,
+                "rarefilmm.com:200": 1,
+                "greenmotors.club:302": 7,
+                "atomic.stream.voidboost.one:206": 2,
+                "greenmotors.cc:200": 7,
+                "highincomecreators.site:200": 3,
+                "subs5.strem.io:200": 3,
+                "web.wootly.ch:302": 1,
+                "static.voidboost.com:200": 1,
+                "pixeldrain.dev:206": 8,
+                "orix.nebula.to:206": 2,
+                "purple-fire-deb1.maxifi91007948.workers.dev:timeout_or_network": 1,
+                "small-scene-4d61.dofico54787696.workers.dev:timeout_or_network": 1,
+                "download.amazonfilexcdn.workers.dev:timeout_or_network": 1,
+                "long-mountain-bb68.xibala6906.workers.dev:timeout_or_network": 1,
+                "jolly-lake-4fd7.soxoso52512929.workers.dev:timeout_or_network": 1,
+                "billowing-bird-8d61.johed730772237.workers.dev:timeout_or_network": 1,
+                "opensubtitles.stremio.homes:200": 4,
+                "opensubtitles.stremio.homes:429": 7,
+                "opensubtitles.stremio.homes:timeout_or_network": 15,
+                "beryllium.stream.voidboost.one:206": 2
+              },
+              "subtitleText": {
+                "turkishCharacters": 7
+              },
+              "results": 19,
+              "reason": "ok",
+              "elapsedMs": 10920
+            },
+            {
+              "tmdbId": "228150",
+              "lane": "fastOnline",
+              "configuration": {
+                "version": "dev",
+                "tmdbKeyPresent": true,
+                "autoDiscover": true,
+                "includeHls": true,
+                "playImdbEnabled": true,
+                "vixsrcEnabled": true,
+                "hdhubEnabled": true,
+                "archiveEnabled": true,
+                "waploadedEnabled": true,
+                "rarefilmmEnabled": true,
+                "goojaraEnabled": true,
+                "hdrezkaEnabled": true,
+                "hdfilmdelisiEnabled": true,
+                "dizibalEnabled": true,
+                "purstreamEnabled": true,
+                "moviesdriveEnabled": true,
+                "autoSubtitles": true,
+                "subtitleRequired": false,
+                "detailedHlsMetadata": false,
+                "minimumQuality": 0,
+                "maxResults": 20
+              },
+              "identity": {
+                "reason": "ok",
+                "year": 2014,
+                "type": "movie"
+              },
+              "sources": [
+                {
+                  "name": "DiziBal",
+                  "candidates": 0,
+                  "startedMs": 79,
+                  "discoveryMs": 458
+                },
+                {
+                  "name": "Purstream",
+                  "candidates": 1,
+                  "startedMs": 83,
+                  "discoveryMs": 663
+                },
+                {
+                  "name": "HDFilmDelisi",
+                  "candidates": 1,
+                  "startedMs": 78,
+                  "discoveryMs": 881
+                }
+              ],
+              "rejected": {},
+              "http": {
+                "api.themoviedb.org:200": 2,
+                "hdfilmdelisi.one:200": 2,
+                "dizibal.org:200": 1,
+                "api.purstream.club:200": 2,
+                "pl.vixolity.com:200": 1,
+                "opensubtitles-v3.strem.io:200": 1,
+                "free.finepulfe.xyz:200": 1,
+                "ha.vixolity.com:200": 1,
+                "subs5.strem.io:200": 3,
+                "altyazidb.online:200": 5,
+                "opensubtitles.stremio.homes:200": 3
+              },
+              "subtitleText": {
+                "turkishCharacters": 5
+              },
+              "results": 2,
+              "reason": "deadline",
+              "elapsedMs": 8016
+            }
+          ],
+          "onlineWithTr": true,
+          "downloadUrls": 9,
+          "estimatedDistinctFiles": 9,
+          "downloadQualities": [
+            "425x178",
+            "855x358",
+            "1280x536",
+            "1920x802",
+            "864x360",
+            "1920x804",
+            "850x356",
+            "640x268"
+          ],
+          "cleanOnlineWithTr": true,
+          "cleanDownloadQualities": [
+            "425x178",
+            "855x358",
+            "1280x536",
+            "1920x802",
+            "864x360",
+            "1920x804",
+            "850x356",
+            "640x268"
+          ],
+          "downloadQualityGrades": [
+            "240p",
+            "480p",
+            "720p",
+            "1080p",
+            "360p"
+          ],
+          "cleanDownloadQualityGrades": [
+            "240p",
+            "480p",
+            "720p",
+            "1080p",
+            "360p"
+          ],
+          "cleanSmallWithTr": true,
+          "smallWithTr": true,
+          "smallLimitBytes": 3221225472,
+          "sourceCoverageCriteriaMet": true,
+          "gaps": [],
+          "files": [
+            {
+              "source": "HDRezka",
+              "container": "mp4",
+              "bytes": 352679327,
+              "filename": "Fury.2014",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [],
+              "subtitleBestScore": 90,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 425,
+                "height": 178
+              },
+              "quality": "425x178",
+              "qualityGrade": "240p",
+              "turkishSubtitle": true,
+              "embeddedSubtitleLanguages": [],
+              "externalTrackCount": 5,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 8078.07,
+              "hashAvailable": true
+            },
+            {
+              "source": "HDRezka",
+              "container": "mp4",
+              "bytes": 1099751499,
+              "filename": "Fury.2014",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [],
+              "subtitleBestScore": 90,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 855,
+                "height": 358
+              },
+              "quality": "855x358",
+              "qualityGrade": "480p",
+              "turkishSubtitle": true,
+              "embeddedSubtitleLanguages": [],
+              "externalTrackCount": 5,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 8078.07,
+              "hashAvailable": true
+            },
+            {
+              "source": "HDRezka",
+              "container": "mp4",
+              "bytes": 2657863793,
+              "filename": "Fury.2014",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [],
+              "subtitleBestScore": 90,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 1280,
+                "height": 536
+              },
+              "quality": "1280x536",
+              "qualityGrade": "720p",
+              "turkishSubtitle": true,
+              "embeddedSubtitleLanguages": [],
+              "externalTrackCount": 5,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 8078.07,
+              "hashAvailable": true
+            },
+            {
+              "source": "MoviesDrive / Pixeldrain",
+              "container": "mkv",
+              "bytes": 3634122069,
+              "filename": "Fury.2014.1080p.10bit.BluRay.HIN-ENG.x265.MSub-MoviesDrives.CV.mkv",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [
+                "hi",
+                "en"
+              ],
+              "subtitleBestScore": 74,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 1920,
+                "height": 802
+              },
+              "quality": "1920x802",
+              "qualityGrade": "1080p",
+              "turkishSubtitle": true,
+              "embeddedSubtitleLanguages": [
+                "en"
+              ],
+              "externalTrackCount": 6,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 8078.08,
+              "hashAvailable": true
+            },
+            {
+              "source": "MoviesDrive / Pixeldrain",
+              "container": "mkv",
+              "bytes": 627266755,
+              "filename": "Fury.2014.480p.BluRay.HIN-ENG.x264.MSub-MoviesDrives.CV.mkv",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [
+                "hi",
+                "en"
+              ],
+              "subtitleBestScore": 69,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 864,
+                "height": 360
+              },
+              "quality": "864x360",
+              "qualityGrade": "480p",
+              "turkishSubtitle": true,
+              "embeddedSubtitleLanguages": [
+                "en"
+              ],
+              "externalTrackCount": 6,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 8078.111,
+              "hashAvailable": true
+            },
+            {
+              "source": "MoviesDrive / Pixeldrain",
+              "container": "mkv",
+              "bytes": 1058617800,
+              "filename": "Fury.2014.720p.10bit.BluRay.HIN-ENG.x265.MSub-MoviesDrives.CV.mkv",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [
+                "hi",
+                "en"
+              ],
+              "subtitleBestScore": 69,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 1280,
+                "height": 536
+              },
+              "quality": "1280x536",
+              "qualityGrade": "720p",
+              "turkishSubtitle": true,
+              "embeddedSubtitleLanguages": [
+                "en"
+              ],
+              "externalTrackCount": 6,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 8078.089,
+              "hashAvailable": true
+            },
+            {
+              "source": "4KHDHub / Pixeldrain",
+              "container": "mkv",
+              "bytes": 5553415852,
+              "filename": "Fury 2014 1080p BluRay 10bit HEVC [Hindi DDP 2.0 + English DDP 7.1] x265 Tigole-LUMiX 4kHDHub.com.mkv",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [
+                "hi",
+                "en"
+              ],
+              "subtitleBestScore": 74,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 1920,
+                "height": 804
+              },
+              "quality": "1920x804",
+              "qualityGrade": "1080p",
+              "turkishSubtitle": true,
+              "embeddedSubtitleLanguages": [
+                "en"
+              ],
+              "externalTrackCount": 6,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 8078.08,
+              "hashAvailable": true
+            },
+            {
+              "source": "Goojara",
+              "container": "mp4",
+              "bytes": 638671583,
+              "filename": "Fury.2014.720p.BluRay.x264-SPARKS.WT11.mp4",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [],
+              "subtitleBestScore": 69,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 850,
+                "height": 356
+              },
+              "quality": "850x356",
+              "qualityGrade": "480p",
+              "turkishSubtitle": true,
+              "embeddedSubtitleLanguages": [],
+              "externalTrackCount": 6,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 8078.102,
+              "hashAvailable": true
+            },
+            {
+              "source": "HDRezka",
+              "container": "mp4",
+              "bytes": 602237168,
+              "filename": "Fury.2014",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [],
+              "subtitleBestScore": 90,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 640,
+                "height": 268
+              },
+              "quality": "640x268",
+              "qualityGrade": "360p",
+              "turkishSubtitle": true,
+              "embeddedSubtitleLanguages": [],
+              "externalTrackCount": 5,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 8078.07,
+              "hashAvailable": true
+            }
+          ]
+        }
+      ],
+      "finishedAt": "2026-10-27T23:45:33.454Z",
+      "allSourceCriteriaMet": true
+    },
+    "sourceOnlyFury": [
+      {
+        "title": "Fury",
+        "newQuery": "https://archive.org/advancedsearch.php?q=mediatype%3Amovies%20AND%20title%3A%22Fury%22%20AND%20(((year%3A2014%20OR%20title%3A2014)%20AND%20(title%3A(1080p%20OR%20720p%20OR%202160p%20OR%20remastered)%20OR%20description%3A1080p))%20OR%20(identifier%3Afury.2014*%20OR%20identifier%3Afury-2014*))%20AND%20NOT%20title%3A(sample%20OR%20trailer%20OR%20featurette%20OR%20review%20OR%20podcast%20OR%20commercial%20OR%20teaser)&fl[]=identifier&fl[]=title&fl[]=year&rows=12&sort[]=downloads%20desc&output=json",
+        "trace": [
+          {
+            "status": 200,
+            "total": 38,
+            "ids": [
+              "turner_video_391542",
+              "6e6c6f6164732f496d6167654d",
+              "turner_video_391537",
+              "CubanFury2014Rmk42tvkaraoke5mn",
+              "turner_video_391541",
+              "turner_video_391536",
+              "turner_video_391538",
+              "fury-2014-dvd-dublaji",
+              "turner_video_391540",
+              "turner_video_6067",
+              "turner_video_391539",
+              "youtube-cubnuoZEsX0"
+            ]
+          },
+          {
+            "status": 200,
+            "total": 4,
+            "ids": [
+              "Fury.2014.m1080p.BluRay.x264.DUAL.TR.ENG",
+              "fury-2014-dvd-dublaji",
+              "20260808_20260808_1904",
+              "20260808_20260808_1856"
+            ]
+          },
+          {
+            "status": 200,
+            "total": 2,
+            "ids": [
+              "20260808_20260808_1904",
+              "20260808_20260808_1856"
+            ]
+          },
+          {
+            "status": 200,
+            "total": 38,
+            "ids": [
+              "turner_video_391542",
+              "6e6c6f6164732f496d6167654d",
+              "turner_video_391537",
+              "CubanFury2014Rmk42tvkaraoke5mn",
+              "turner_video_391541",
+              "turner_video_391536",
+              "turner_video_391538",
+              "fury-2014-dvd-dublaji",
+              "turner_video_391540",
+              "turner_video_6067",
+              "turner_video_391539",
+              "youtube-cubnuoZEsX0"
+            ]
+          }
+        ],
+        "current": [
+          {
+            "id": "Fury.2014.m1080p.BluRay.x264.DUAL.TR.ENG",
+            "file": "Fury.2014.m1080p.BluRay.x264.DUAL.TR.ENG.mp4",
+            "yearBasis": "exact-identifier-and-filename"
+          },
+          {
+            "id": "Fury.2014.m1080p.BluRay.x264.DUAL.TR.ENG",
+            "file": "Fury.2014.m1080p.BluRay.x264.DUAL.TR.ENG.mkv",
+            "yearBasis": "exact-identifier-and-filename"
+          }
+        ],
+        "baseline": []
+      }
+    ],
+    "note": "Old1.8.5 Archive/MoviesDrive/index code loaded from committed HEAD. Full Fury baseline9 files, new first pass11/repeat10; only two explicitly newly eligible Archive files counted. Research rows with unknown canonical IDs are not source proof."
+  },
+  "repeatedNetworkFailures": {
+    "firstTvFiles": [
+      {
+        "key": "stranger-things-s1e2",
+        "files": 3,
+        "moviesdrive": 2
+      },
+      {
+        "key": "stranger-things-s1e1",
+        "files": 0,
+        "moviesdrive": 0
+      }
+    ],
+    "repeatTvFiles": [
+      {
+        "key": "stranger-things-s1e2",
+        "files": 1,
+        "moviesdrive": 0
+      },
+      {
+        "key": "stranger-things-s1e1",
+        "files": 0,
+        "moviesdrive": 0
+      }
+    ],
+    "finalTvFiles": [
+      {
+        "key": "stranger-things-s1e2",
+        "files": 3,
+        "moviesdrive": 2
+      },
+      {
+        "key": "stranger-things-s1e1",
+        "files": 1,
+        "moviesdrive": 1
+      }
+    ],
+    "note": "HubCloud/gamerxyt/Pixeldrain timed out in intermediate full-pipeline repeats. Failed passes retained, no whole-catalogue or stable-phone claim."
+  },
+  "regression": {
+    "evidence": "compatibility/coverage-186.json",
+    "counts": [
+      {
+        "key": "hotel-rwanda",
+        "files": 7,
+        "ms": 13051
+      },
+      {
+        "key": "dune",
+        "files": 8,
+        "ms": 10281
+      },
+      {
+        "key": "inception",
+        "files": 9,
+        "ms": 10022
+      },
+      {
+        "key": "fleabag-s1e1",
+        "files": 10,
+        "ms": 13024
+      },
+      {
+        "key": "death-note-s1e1",
+        "files": 4,
+        "ms": 12972
+      },
+      {
+        "key": "your-name",
+        "files": 9,
+        "ms": 12800
+      }
+    ],
+    "existingInception4kPreserved": true,
+    "existingYourName4kPreserved": true,
+    "existingFleabag4kPreserved": true,
+    "oldTurkishDubPreserved": true
+  },
+  "research": [
+    {
+      "source": "UHDMovies",
+      "result": "Current public domain/search/film page accessible, but chosen Dune page exposed no published driveleech/driveseed/HubCloud links. No playable new4K file or integration."
+    },
+    {
+      "source": "MoviesMod",
+      "result": "Current IMDb search reachable. No media file verified; not integrated or counted."
+    },
+    {
+      "source": "MoviesDrive catalogue",
+      "result": "Fleabag and Severance queries returned no rows, Shameless returned unrelated films; not force-matched. Stranger Things first-season canonical year and IMDb allowed the partial new path."
+    },
+    {
+      "source": "TR Archive catalogue",
+      "result": "287 format-filtered records inventoried. Fury year was absent from title/metadata but exact in identifier/file. A Pianist-labelled item actually contained unrelated Atlas/Hypnotic videos and was not admitted. Mixed collections and unbound episode numbering not forced."
+    },
+    {
+      "source": "Identifier leading wildcard experiment",
+      "result": "Five research queries timed out. Leading wildcard omitted from production; full-title/year prefix queries respondedHTTP200 under existing timeout. Mixed AND/OR branches explicitly grouped after live comparison showed different query semantics."
+    }
+  ],
+  "metadataReferences": [
+    {
+      "url": "https://www.themoviedb.org/movie/228150?language=en-US",
+      "status": 200,
+      "metadata": {
+        "@context": "https://schema.org",
+        "@type": "Movie",
+        "dateCreated": "2013-10-16T08:46:57Z",
+        "dateModified": "2026-08-08T21:28:15Z",
+        "description": "April, 1945. As the Allies make their final push in the European Theater, a battle-hardened army sergeant commands a Sherman tank with a five-man crew on a deadly mission behind enemy lines.",
+        "isFamilyFriendly": true,
+        "name": "Fury",
+        "url": "https://www.themoviedb.org/movie/228150-fury",
+        "aggregateRating": {
+          "@type": "aggregateRating",
+          "bestRating": 10,
+          "ratingValue": 7.547,
+          "ratingCount": 13373,
+          "worstRating": 0,
+          "reviewCount": 6
+        },
+        "countryOfOrigin": [
+          {
+            "@type": "Country",
+            "name": "United States"
+          }
+        ],
+        "duration": "PT2H15M",
+        "genre": [
+          "War",
+          "Drama",
+          "Action"
+        ],
+        "image": "https://image.tmdb.org/t/p/w500/pfte7wdMobMF4CVHuOxyu6oqeeA.jpg",
+        "releasedEvent": [
+          {
+            "@type": "PublicationEvent",
+            "startDate": "2014-10-15"
+          }
+        ]
+      },
+      "originalTitle": [
+        "    <title>Fury (2014) &#8212; The Movie Database (TMDB)</title>"
+      ]
+    },
+    [
+      {
+        "key": "series",
+        "url": "https://www.themoviedb.org/tv/66732?language=en-US",
+        "status": 200,
+        "data": {
+          "@context": "https://schema.org",
+          "@type": "TVSeries",
+          "dateCreated": "2016-06-09T16:35:46Z",
+          "dateModified": "2026-10-10T12:56:24Z",
+          "description": "When a young boy vanishes, a small town uncovers a mystery involving secret experiments, terrifying supernatural forces, and one strange little girl.",
+          "isFamilyFriendly": true,
+          "name": "Stranger Things",
+          "numberOfEpisodes": 42,
+          "url": "https://www.themoviedb.org/tv/66732-stranger-things",
+          "aggregateRating": {
+            "@type": "aggregateRating",
+            "bestRating": 10,
+            "ratingValue": 8.5,
+            "ratingCount": 22045,
+            "worstRating": 0,
+            "reviewCount": 13
+          },
+          "countryOfOrigin": [
+            {
+              "@type": "Country",
+              "name": "United States"
+            }
+          ],
+          "endDate": "2025-12-31T00:00:00Z",
+          "genre": [
+            "Action & Adventure",
+            "Mystery",
+            "Sci-Fi & Fantasy"
+          ],
+          "image": "https://image.tmdb.org/t/p/w500/uOOtwVbSr4QDjAGIifLDwpb2Pdl.jpg",
+          "startDate": "2016-07-15T00:00:00Z"
+        },
+        "title": "Stranger Things (TV Series 2016) &#8212; The Movie Database (TMDB)"
+      },
+      {
+        "key": "episode1",
+        "url": "https://www.themoviedb.org/tv/66732/season/1/episode/1?language=en-US",
+        "status": 200,
+        "data": null,
+        "title": "Stranger Things: Season 1 (2016) &#8212; The Movie Database (TMDB)"
+      },
+      {
+        "key": "episode2",
+        "url": "https://www.themoviedb.org/tv/66732/season/1/episode/2?language=en-US",
+        "status": 200,
+        "data": null,
+        "title": "Stranger Things: Season 1 (2016) &#8212; The Movie Database (TMDB)"
+      }
+    ]
+  ],
+  "tests": {
+    "local": 297,
+    "compiledQuickJs": true,
+    "upstreamRelease": "0.6.5-beta",
+    "trackedFiles": 23,
+    "drift": 0,
+    "lockChanged": false
+  },
+  "allSourceCriteriaMet": false,
+  "physicalDevice": "not-run",
+  "fullPlayback": "not-run",
+  "fullDownload": "not-run",
+  "offline": "not-run",
+  "sceneSync": "not-run",
+  "font": "not-run"
+}

@@ -1,5 +1,20 @@
 # Proje hafızası
 
+## 1.8.6 — eksik yıl ve kısmi bölüm yolu
+
+Archive HD sorgusuna aynı kanonik ad/yılın nokta veya tireyle kurulan identifier önekleri eklendi. Baştan joker yok; deneyde beş geniş joker sorgusu timeout oldu, üretime alınmadı. AND dalı OR'dan önce açık gruplanmalıdır: Archive canlı sorgusu gruplama olmadan farklı sonuç verdi. İki sorgu/12 metadata kotası aynı. Eksik yıl kabulü için metadata başlığı tam ad veya sınırlı dil etiketi olmalı; identifier ve her dosya aynı kanonik ad/yılı taşımalı; gerçek süre %90–110 zorunlu. Çelişen metadata IMDb/TMDB/yıl, farklı dosya ve tarih reddedilir. TV Archive davranışı değişmedi.
+
+Fury eski Archive0 -> yeni2 aday; eski kaynak koduyla tam pipeline9, yeni ilk11/tekrar10 dosya. Yalnız yeni Archive MKV2226751288byte/1920×808/8078.212s/TR+EN ve MP4838098828byte/1141×480/8078.136s sayılır. MP4 ses ölçülmedi; orijinalden TR türetilmez. İkisinde hash ve dört harici TR var. Kanonik TMDB135min, IMDb134min; gerçek süre toleransı geçer.
+
+MoviesDrive artık IMDb'si bulunan ilk sezonlarda çalışır. Search doc ve h1 kanonik ad/ilk yıl/sezon, docIMDb ve articleIMDb eşit olmalı; arşiv sayfasının ad/sezonu, EpNN başlığı ve HubCloud/Pixel dosyasının tam S/E'si tekrar denetlenir. Sonraki sezonlar desteklenmez; onların yayın yılı seri yılı yerine kullanılamaz. ZIP/çoklu/yanlış bölüm, farklı dosya/başlık ve kısıtlı dosya elenir. Dört route/iki resolver/10s korunur; TVde1080/high/720 sonra küçük denenir. Main24s/video3/sub4/EN1 aynı; ilk sezon için bir kaynak işi artık uygun olduğundan iş yükü aynı değildir, fiziksel süre garantisi verme.
+
+Son canlı pipeline: Stranger Things S1E1 yeni1032593814byte/1920×960/2911.562s; S1E2 yeni468517988byte/1280×640/3322.978s ve905088292byte/1920×960/3323.978s. Hepsinde HI+EN, EN gömülü ve dört harici TR. Önceki ara tur S1E1 boş, S1E2 iki yeni; sonraki tur ikisi de yeni dosya bulamadı (HubCloud/gamerxyt/Pixel timeout), son sıra düzeltmeli tur1/2 yeni dosya verdi. Başarısız turlar saklanır; kararlılık/tümkatalog hedefi tamamlanmadı.
+
+Bu tur toplam5yeni dosya (4MKV/1MP4),1ölçülmüş TRdublaj,3TVdosyası,0yeni4K/anime. Hotel7/Dune8/Inception9/Flea10/Death4/YourName9 regresyon; Inception,YourName,Flea4K ve eskiTRdub korundu. Yeni backend/hesap/key/pin/scraperID yok. UHDMovies public film sayfasında gerçek indirme yolu yok; MoviesMod sadece arama kanıtı; Flea/Severance0 ve Shameless alakasız sonuçlar zorlanmadı. Pianist etiketli arşivde aslında Atlas/Hypnotic dosyaları vardı, kabul edilmedi.
+
+297check/QuickJS; upstream0.6.5-beta/23blob drift0, lock değişmedi. Fiziksel cihaz, tam indirme/oynatma/offline/senkron/font test edilmedi. Yayın bekliyor; CI/Pages/yedi SHA kanıtı sonra eklenecek.
+
+
 ## 1.8.5 — kanonik alternatif adla anime indirmeleri
 
 Archive eşleştirmede bildiği alternatif TMDB adını arama sorgusunda kullanmıyordu. Yeni kod özgün adı ve aynı kayıttaki en fazla bir farklı gösterim adını mevcut iki sorguda birlikte arar. Tekrarlanan adlar kaldırılır; dizi araması özgün adında kalır. Alternatif ad aramasında gerçek süre, kanonik sürenin %90–110 aralığında olmalıdır. Açık yıl, IMDb veya TMDB çelişkileri reddedilir. İki sorgu/12 metadata sınırı ve ana aramada 24 saniye, video/altyazı/EN altyazı için 3/4/1 native iş kotası değişmedi.

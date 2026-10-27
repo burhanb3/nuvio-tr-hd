@@ -10,6 +10,71 @@
   },
   "titles": [
     {
+      "key": "stranger-things-s1e2",
+      "season": 1,
+      "episode": 2,
+      "tmdb": {
+        "id": 66732,
+        "name": "Stranger Things",
+        "original_name": "Stranger Things",
+        "first_air_date": "2016-07-15",
+        "original_language": "en",
+        "external_ids": {
+          "imdb_id": "tt4574334"
+        },
+        "poster_path": "/uOOtwVbSr4QDjAGIifLDwpb2Pdl.jpg",
+        "episode_run_time": [
+          55
+        ]
+      },
+      "referenceSources": [
+        "https://www.themoviedb.org/tv/66732?language=en-US",
+        "https://www.themoviedb.org/tv/66732/season/1?language=en-US"
+      ],
+      "referenceMetadataNote": "Canonical TMDB series title/year/poster and episode runtime48/55min checked on public pages. Source poster is not substituted for canonical poster. Fixed metadata does not test phone API credentials."
+    },
+    {
+      "key": "stranger-things-s1e1",
+      "season": 1,
+      "episode": 1,
+      "tmdb": {
+        "id": 66732,
+        "name": "Stranger Things",
+        "original_name": "Stranger Things",
+        "first_air_date": "2016-07-15",
+        "original_language": "en",
+        "external_ids": {
+          "imdb_id": "tt4574334"
+        },
+        "poster_path": "/uOOtwVbSr4QDjAGIifLDwpb2Pdl.jpg",
+        "episode_run_time": [
+          48
+        ]
+      },
+      "referenceSources": [
+        "https://www.themoviedb.org/tv/66732?language=en-US",
+        "https://www.themoviedb.org/tv/66732/season/1?language=en-US"
+      ],
+      "referenceMetadataNote": "Canonical TMDB series title/year/poster and episode runtime48/55min checked on public pages. Source poster is not substituted for canonical poster. Fixed metadata does not test phone API credentials."
+    },
+    {
+      "key": "fury",
+      "tmdb": {
+        "id": 228150,
+        "title": "Fury",
+        "original_title": "Fury",
+        "release_date": "2014-10-15",
+        "imdb_id": "tt2713180",
+        "runtime": 135,
+        "original_language": "en"
+      },
+      "referenceSources": [
+        "https://www.themoviedb.org/movie/228150?language=en-US",
+        "https://www.imdb.com/title/tt2713180/"
+      ],
+      "referenceMetadataNote": "Canonical public TMDB title/year/runtime135min; IMDb page binds tt2713180 and lists134min. Actual feature must pass runtime tolerance. Not phone API credential verification."
+    },
+    {
       "key": "totoro",
       "tmdb": {
         "id": 8392,

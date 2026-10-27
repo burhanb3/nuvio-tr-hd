@@ -1,5 +1,13 @@
 # Tasarım kararları
 
+## 1.8.6 — dosya yılı ve ilk sezon bağı
+
+- Yıl alanı olmayan kaydı upload yılıyla eşleştirme. Aynı kanonik ad/yıl identifier öneğinde ve her dosyada bulunmalı, başlık yalnız tam ad veya sınırlı dil etiketi olmalı ve gerçek süre %90–110 geçmelidir. Baştan joker sorgu yok; AND/OR dalları açık gruplanır. Mevcut kimlik çelişkisi korumaları devam eder.
+- MoviesDrive TV desteği yalnız kanonik ilk yılını veren ilk sezon sayfalarında, search ve article'da aynı IMDb ile açılır. Daha sonraki sezon yılı seri yılı değildir. Seri, sezon, tek bölüm başlığı ve dosyadaki tam S/E gerekir; paket veya benzer adlı yapım kabul edilmez.
+- Ek dosyalar eski canlı baseline'a göre sayılır: Fury2, iki StrangerThings bölümünde3. MP4'ün sesi MKV'den devralınmaz. TVdosyaları EN+HI'dir; TRaltyazı TRdublaj değildir. Yeni4K0/anime0.
+- Kaynak timeout tekrarları ve recovery birlikte tutulur. Yeni TV işi eklenirken toplam bütçe/native kota artırılmaz; fiziksel iPhone iptal veya stabilite garantisi verilmez. Fixture/QuickJS ve gerçek dosya başlığı, tam cihaz/oynatma/indirme/senkron testi değildir.
+
+
 ## 1.8.5 — aynı kayıttaki adlar ve ses ailesi
 
 - Archive aramasında aynı TMDB film kaydının en fazla iki kanonik adı kullanılır. Romanizasyon, benzer başlık veya yeni video pini eklenmez. Dizi eşleştirmesi değişmez; alternatif ad aramasında gerçek süre %90–110 aralığında olmalıdır.

@@ -14,6 +14,34 @@ const animeBundle = await readFile(new URL('../providers/nuvio-tr-hd-anime.js', 
 const extraAnimeBundle = await readFile(new URL('../providers/nuvio-tr-hd-extra-anime.js', import.meta.url), 'utf8');
 const fastOnlineBundle = await readFile(new URL('../providers/nuvio-tr-hd-fast-online.js', import.meta.url), 'utf8');
 
+test('QuickJS: ana dosya sağlayıcısı MoviesDrive ilk sezonunun tam bölümünü bulur, IMDb çelişkisini reddeder',async()=>{
+ const origin='https://new4.moviesdrive.beer',archive='https://mdrive.lol/archive/123/',hub='https://hubcloud.ist/drive/Example2',terminal='https://gamerxyt.com/hubcloud.php?id=example',file='https://pixeldrain.dev/api/file/Example2',name='Example.Series.S01E02.1080p.mkv';
+ const e=helpers.ebml,duration=Buffer.alloc(8);duration.writeDoubleBE(1800000);const body=Buffer.concat([e('1a45dfa3',e('4282',Buffer.from('matroska'))),e('18538067',Buffer.concat([e('1549a966',e('4489',duration)),e('1654ae6b',Buffer.concat([e('ae',Buffer.concat([e('83',[1]),e('e0',Buffer.concat([e('b0',[7,128]),e('ba',[4,56])]))])),e('ae',Buffer.concat([e('83',[2]),e('22b59c',Buffer.from('eng'))]))]))])),Buffer.alloc(1000000)]);
+ const fixture={
+ 'https://api.themoviedb.org/3/tv/123456?api_key=test&append_to_response=external_ids':{json:{id:123456,original_name:'Example Series',name:'Example Series',first_air_date:'2020-01-01',external_ids:{imdb_id:'tt1234567'},episode_run_time:[30]}},
+ [origin+'/search.php?q=Example%20Series&page=1']:{json:{hits:[{document:{post_title:'Example Series (Season 1) 2020',imdb_id:'tt1234567',permalink:'/example-series/'}}]}},
+ [origin+'/example-series/']:{body:'<article class="post-content"><h1>Example Series (Season 1) 2020</h1><a href="https://www.imdb.com/title/tt1234567/">IMDb</a><h5>Example Series (Season 1) 1080p [500MB/E]</h5><h5><a href="'+archive+'">1080p Single Episode</a></h5></article>'},
+ [archive]:{body:'<title>Example Series (Season 1) 1080p</title><h5>Ep02&ndash;1080p [500MB]</h5><h5><a href="'+hub+'">HubCloud</a></h5>'},[hub]:{body:'<title>'+name+'</title><script>var url="'+terminal+'";</script>'},[terminal]:{body:'<script>var pxl="https://pixeldrain.dev/u/Example2";</script>'},
+ [file+'/info']:{json:{success:true,id:'Example2',name,size:body.length,mime_type:'video/matroska',can_download:true}},[file]:{body,mime:'video/matroska'}};
+ const settings={autoSubtitles:false,useDownloadBridge:false,archiveEnabled:false,hdhubEnabled:false,goojaraEnabled:false,hdrezkaEnabled:false,waploadedEnabled:false,rarefilmmEnabled:false,playImdbEnabled:false,vixsrcEnabled:false};
+ const rows=await runInQuickJs(fixture,{args:['123456','tv',1,2],settings,nativeTimers:true});assert.equal(rows.length,1);assert.equal(rows[0].quality,'1080p · 1920×1080');assert.match(rows[0].language,/Ses: EN/);
+ fixture[origin+'/example-series/'].body=fixture[origin+'/example-series/'].body.replace('tt1234567','tt9999999');assert.deepEqual(await runInQuickJs(fixture,{args:['123456','tv',1,2],settings,nativeTimers:true}),[]);
+});
+
+test('QuickJS: yıl alanı olmayan dublaj kaydı tam kimlik/dosya yılı ve gerçek ses/süreyle bulunur',async()=>{
+ const{archiveQuery}=require('../src/providers/archive.cjs'),wanted={...helpers.target,runtimeMinutes:120},id='the.matrix.1999.1080p.tr.eng',name='The.Matrix.1999.1080p.TR.ENG.mkv',url='https://archive.org/download/'+id+'/'+name;
+ const e=helpers.ebml,duration=Buffer.alloc(8);duration.writeDoubleBE(7200000);
+ const body=Buffer.concat([e('1a45dfa3',e('4282',Buffer.from('matroska'))),e('18538067',Buffer.concat([e('1549a966',e('4489',duration)),e('1654ae6b',Buffer.concat([
+ e('ae',Buffer.concat([e('83',[1]),e('e0',Buffer.concat([e('b0',[7,128]),e('ba',[4,56])]))])),e('ae',Buffer.concat([e('83',[2]),e('22b59c',Buffer.from('tur'))]))]))]))]);
+ const fixture=makeFixture({extra:{
+ ['https://api.themoviedb.org/3/movie/603?api_key=test&append_to_response=external_ids,release_dates']:{json:{...helpers.tmdb,runtime:120}},
+ [archiveQuery(wanted,true)]:{json:{response:{docs:[{identifier:id,title:'The Matrix Türkçe Dublaj'}]}}},[archiveQuery(wanted)]:{json:{response:{docs:[]}}},
+ ['https://archive.org/metadata/'+id]:{json:{metadata:{title:'The Matrix Türkçe Dublaj'},files:[{name,length:7200}]}},[url]:{body,mime:'video/matroska'}}});
+ const calls=[],settings={autoSubtitles:false,useDownloadBridge:false,hdhubEnabled:false,moviesdriveEnabled:false,goojaraEnabled:false,hdrezkaEnabled:false,waploadedEnabled:false,rarefilmmEnabled:false,playImdbEnabled:false,vixsrcEnabled:false};
+ const rows=await runInQuickJs(fixture,{settings,nativeTimers:true,fetchCalls:calls});assert.equal(rows.length,1);assert.equal(rows[0].quality,'1080p · 1920×1080');assert.match(rows[0].language,/Ses: TR/);assert.equal(calls.filter(u=>u.includes('advancedsearch.php')).length,2);
+ fixture['https://archive.org/metadata/'+id].json.metadata.year=2000;assert.deepEqual(await runInQuickJs(fixture,{settings,nativeTimers:true}),[]);
+});
+
 test('QuickJS: Japonca özgün/aynı TMDB İngilizce adından anime4K bulunur; varsayılanMKV EN okunur, yalnızHI elenir',async()=>{
  const {archiveQuery}=require('../src/providers/archive.cjs'),jp='例の映画',meta={...helpers.tmdb,original_title:jp,title:'The Matrix',runtime:120},wanted={...helpers.target,originalTitle:jp,searchTitles:['The Matrix',jp],runtimeMinutes:120};
  const name='The.Matrix.1999.2160p.mkv',url='https://archive.org/download/alias-example/'+name,e=helpers.ebml,duration=Buffer.alloc(8);duration.writeDoubleBE(7200000);

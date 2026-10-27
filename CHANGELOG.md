@@ -1,5 +1,13 @@
 # Sürüm notları
 
+## 1.8.6 — 28 Ekim 2026
+
+- Archive, yıl alanı eksik kayıtları tam kanonik ad/yıl içeren arşiv kimliğinden de arar. Kayıt kimliği, gerçek dosya adı ve süre birlikte eşleşir; yanlış yıl, film ve koleksiyon kabul edilmez. Sorgu sayısı artırılmadı.
+- Fury için 2,23 GB/1920×808 MKV'de TR/EN ses ve 838 MB/1141×480 küçük MP4 bulundu. Küçük dosyanın ses dili ayrıca doğrulanmadı. Her ikisinde mevcut Türkçe altyazı alternatifleri var.
+- MoviesDrive'ın uygun ilk sezon sayfalarına bölüm desteği: arama ve sayfada aynı IMDb, kanonik ad/ilk yıl, sezon ve tam bölüm kontrol edilir. Stranger Things S1E1 için 1,03 GB 1080p; S1E2 için 469 MB 720p ve 905 MB 1080p MKV doğrulandı. Üçü de EN sesli ve harici TR altyazı seçenekli; Türkçe dublaj sayılmaz.
+- 297 fixture/QuickJS testi ve Nuvio 0.6.5-beta/23 dosya kontrolü geçti. Önceki 4K ve dublaj örnekleri korundu; bu tur yeni 4K veya anime dosyası doğrulanmadı. Bazı dizi tekrarları kaynak sunucularında zaman aşımı verdi. Fiziksel telefon, tam indirme/oynatma ve senkron testi yapılmadı.
+
+
 ## 1.8.5 — 28 Ekim 2026
 
 - Archive aramasında aynı TMDB kaydının özgün ve gösterim başlıkları birlikte kullanılır. Japonca özgün adla İngilizce kaynak adı arasındaki arama açığı giderildi; sorgu sayısı artırılmadı.

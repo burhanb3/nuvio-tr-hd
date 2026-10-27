@@ -46,7 +46,8 @@ function titleBinding(value,target,names){
   const release=suffix&&new RegExp(`^(?:${target.year}|1080p|720p|2160p|remastered|restored)\\b`).test(suffix)&&
     !/\b(trailer|commercial|review|opening|teaser|documentary)\b/.test(suffix);
   const titleYear=!!name&&(full===name+' '+target.year||full.startsWith(name+' '+target.year+' '));
-  return {actual,name,suffix,release,titleYear,exact:!!name&&actual===name,localized:!!name&&name!==normalizeTitle(target.originalTitle)};
+  const languageRelease=!!name&&/^(?:turkce dublaj|turkish dubbed|dual audio|tr eng dual|dual tr eng)$/.test(suffix);
+  return {actual,name,suffix,release,titleYear,languageRelease,exact:!!name&&actual===name,localized:!!name&&name!==normalizeTitle(target.originalTitle)};
 }
 
 function archiveSearchNames(target){
@@ -65,11 +66,16 @@ function archiveQuery(target, preferHd = false, titleYear = target.type === 'mov
   const exclusions = ['sample','trailer','featurette','review','podcast','commercial','teaser']
     .filter(word => !titles.some(t=>normalizeTitle(t).split(' ').includes(word)));
   const titleSearch=titles.length>1?'('+titles.map(t=>`title:"${t}"`).join(' OR ')+')':`title:"${title}"`;
+  // Prefix wildcards stay bounded by the full canonical name/year. Leading
+  // wildcards cause slow catalogue scans and are deliberately not used.
+  const identifierPrefixes=target.type==='movie'?titles.map(normalizeTitle).filter(t=>/^[a-z0-9 ]+$/.test(t))
+    .flatMap(t=>['.','-'].map(separator=>'identifier:'+t.replace(/ /g,separator)+separator+target.year+'*')):[];
+  const hd='(title:(1080p OR 720p OR 2160p OR remastered) OR description:1080p)';
   const binding = target.type === 'tv' && preferHd && /^tt\d+$/.test(target.imdbId || '') ? `(title:"${title}" AND imdb_id:${target.imdbId})` :
-    titleSearch+' AND ' + (titleYear ? `(year:${target.year} OR title:${target.year})` : `year:${target.year}`);
+    titleSearch+' AND ' + (preferHd&&target.type==='movie'?`(((year:${target.year} OR title:${target.year}) AND ${hd})${identifierPrefixes.length?' OR ('+identifierPrefixes.join(' OR ')+')':''})`:
+      titleYear ? `(year:${target.year} OR title:${target.year})` : `year:${target.year}`);
   const q = `mediatype:movies AND ${binding}` +
-    (titleYear && exclusions.length ? ` AND NOT title:(${exclusions.join(' OR ')})` : '') +
-    (preferHd && target.type === 'movie' ? ' AND (title:(1080p OR 720p OR 2160p OR remastered) OR description:1080p)' : '');
+    (titleYear && exclusions.length ? ` AND NOT title:(${exclusions.join(' OR ')})` : '');
   return `https://archive.org/advancedsearch.php?q=${encodeURIComponent(q)}&fl[]=identifier&fl[]=title&fl[]=year&rows=12&sort[]=downloads%20desc&output=json`;
 }
 async function scanArchive(http, target, options = {}) {
@@ -93,6 +99,7 @@ async function scanArchive(http, target, options = {}) {
     const title = normalizeTitle(String(doc.title));
     if (names.some(name=>title===name+' '+target.year||title.startsWith(name+' '+target.year+' '))) return 3;
     if (names.some(name=>title===name||new RegExp(`^(?:1080p|720p|2160p|remastered|restored)\\b`).test(title.startsWith(name+' ')?title.slice(name.length+1):''))) return 2;
+    if(target.type==='movie'&&titleBinding(doc.title,target,names).languageRelease)return 1;
     if (target.type === 'tv' && title.startsWith(expected+' ') && /^(?:season|sezon|s\d|complete|all seasons)\b/.test(title.slice(expected.length+1))) return 1;
     if(bilingualHint(doc.title,target))return 1; // Lookup hint; metadata and exact file identity must still bind.
     return 0;
@@ -129,13 +136,20 @@ async function scanArchive(http, target, options = {}) {
       binding=titleBinding(rawTitle,target,[...await localizedNames(),...fileNames].sort((a,b)=>b.length-a.length));
     const fileIdentityNames=[...new Set([...names,...fileNames])];
     const actualTitle=binding.actual,expectedTitle=normalizeTitle(target.originalTitle),releaseSuffix=binding.suffix;
+    // A missing release-year field is not an upload-year match. This fallback
+    // needs an exact canonical name/year in BOTH identifier and each filename,
+    // a plain canonical/language-only heading and an actual feature duration.
+    const identifierYearBound=target.type==='movie'&&!explicitYear&&datedYear!==target.year&&
+      (binding.exact||binding.languageRelease)&&target.runtimeMinutes>0&&
+      fileIdentityNames.some(name=>filenameIdentity(doc.identifier+'.mkv',{...target,originalTitle:name}))&&
+      !(normalizeTitle(doc.identifier).match(/\b(?:19|20)\d{2}\b/g)||[]).some(year=>Number(year)!==target.year);
     const yearFromTitle = !explicitYear && datedYear !== target.year && binding.titleYear;
     const seriesImdbBound = target.type === 'tv' && target.imdbId && String(meta.imdb_id || '').trim() === target.imdbId;
     const seriesTitle = target.type === 'tv' && (actualTitle === expectedTitle || actualTitle.startsWith(expectedTitle+' ') && /^(?:season|sezon|s\d|complete|all seasons)\b/.test(releaseSuffix));
     if (!pinnedItem && yearFromTitle && !(target.runtimeMinutes > 0)) return [];
-    if (!pinnedItem && yearFromTitle && datedYear > 0 && datedYear < target.year) return [];
-    if (!pinnedItem && ((!binding.exact && !binding.release && !binding.titleYear && !seriesTitle) ||
-      (!explicitYear && datedYear !== target.year && !yearFromTitle && !seriesImdbBound))) return [];
+    if (!pinnedItem && (yearFromTitle||identifierYearBound) && datedYear > 0 && datedYear < target.year) return [];
+    if (!pinnedItem && ((!binding.exact && !binding.release && !binding.titleYear && !seriesTitle && !identifierYearBound) ||
+      (!explicitYear && datedYear !== target.year && !yearFromTitle && !seriesImdbBound && !identifierYearBound))) return [];
     const files = data.files.filter(f => typeof f.name === 'string' && f.private !== 'true');
     const directory = typeof data.dir === 'string' && /^\/\d+\/items\/[\w.-]+$/.test(data.dir) && data.dir.endsWith('/items/' + doc.identifier) ? data.dir : null;
     // These are Archive's generated replica fields, not uploader-provided
@@ -163,7 +177,8 @@ async function scanArchive(http, target, options = {}) {
       // Missing release-year metadata is filled only by both the exact item
       // title/year AND an exact filename/year. An upload date is not a release
       // year. The real container duration is required again during probing.
-      if (!pinnedItem && (yearFromTitle||binding.localized) && !fileIdentityNames.some(name=>filenameIdentity(f.name.split('/').pop(),{...target,originalTitle:name}))) return false;
+      if (!pinnedItem && (yearFromTitle||binding.localized||identifierYearBound) && !fileIdentityNames.some(name=>filenameIdentity(f.name.split('/').pop(),{...target,originalTitle:name}))) return false;
+      if(identifierYearBound&&(normalizeTitle(f.name).match(/\b(?:19|20)\d{2}\b/g)||[]).some(year=>Number(year)!==target.year))return false;
       // Archive item titles alone also match trailers. A feature must have a
       // plausible full length, not just the same title/year and a video header.
       const duration = Number(f.length);
@@ -180,9 +195,9 @@ async function scanArchive(http, target, options = {}) {
         getOnly: true,rejectHindiOnly:true,mediaFamily:doc.identifier+'|'+(typeof f.original==='string'&&files.some(parent=>parent.name===f.original)?f.original:f.name),
         ...(pinnedItem ? { expectedFile: verifiedMetadataFile(verifiedRecord,f) } : {}),
         ...(pinnedItem && verifiedRecord.burnedSubtitleLanguage ? { burnedSubtitleLanguage: verifiedRecord.burnedSubtitleLanguage } : {}),
-        sourceItemId: doc.identifier, mediaFilename: f.name, releaseYearBasis: pinnedItem ? 'content-sample-pinned-file' : yearFromTitle ? 'exact-title-and-filename' : 'metadata',
-        ...(yearFromTitle||binding.localized||aliasLookup ? { durationTolerance: 0.1 } : {}),
-        requireDuration: pinnedItem || yearFromTitle || binding.localized || aliasLookup || target.runtimeMinutes > 0 && !(Number(f.length) > 0),
+        sourceItemId: doc.identifier, mediaFilename: f.name, releaseYearBasis: pinnedItem ? 'content-sample-pinned-file' : yearFromTitle ? 'exact-title-and-filename' : identifierYearBound?'exact-identifier-and-filename':'metadata',
+        ...(yearFromTitle||binding.localized||aliasLookup||identifierYearBound ? { durationTolerance: 0.1 } : {}),
+        requireDuration: pinnedItem || yearFromTitle || binding.localized || aliasLookup || identifierYearBound || target.runtimeMinutes > 0 && !(Number(f.length) > 0),
         source: 'Internet Archive', identity: target, identityConfidence: meta.tmdb_id ? 100 : 90 }));
     if (candidates.length && options.onCandidates && !http.expired()) await options.onCandidates(candidates);
     return candidates;

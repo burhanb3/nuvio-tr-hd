@@ -932,7 +932,8 @@ var require_archive = __commonJS({
       const name = names.find((n) => actual === n || actual.startsWith(n + " ")), suffix = name && actual.startsWith(name + " ") ? actual.slice(name.length + 1) : "";
       const release = suffix && new RegExp(`^(?:${target.year}|1080p|720p|2160p|remastered|restored)\\b`).test(suffix) && !/\b(trailer|commercial|review|opening|teaser|documentary)\b/.test(suffix);
       const titleYear = !!name && (full === name + " " + target.year || full.startsWith(name + " " + target.year + " "));
-      return { actual, name, suffix, release, titleYear, exact: !!name && actual === name, localized: !!name && name !== normalizeTitle(target.originalTitle) };
+      const languageRelease = !!name && /^(?:turkce dublaj|turkish dubbed|dual audio|tr eng dual|dual tr eng)$/.test(suffix);
+      return { actual, name, suffix, release, titleYear, languageRelease, exact: !!name && actual === name, localized: !!name && name !== normalizeTitle(target.originalTitle) };
     }
     function archiveSearchNames(target) {
       const out = [], seen = /* @__PURE__ */ new Set();
@@ -951,8 +952,10 @@ var require_archive = __commonJS({
       const titles = archiveSearchNames(target), title = titles[0];
       const exclusions = ["sample", "trailer", "featurette", "review", "podcast", "commercial", "teaser"].filter((word) => !titles.some((t) => normalizeTitle(t).split(" ").includes(word)));
       const titleSearch = titles.length > 1 ? "(" + titles.map((t) => `title:"${t}"`).join(" OR ") + ")" : `title:"${title}"`;
-      const binding = target.type === "tv" && preferHd && /^tt\d+$/.test(target.imdbId || "") ? `(title:"${title}" AND imdb_id:${target.imdbId})` : titleSearch + " AND " + (titleYear ? `(year:${target.year} OR title:${target.year})` : `year:${target.year}`);
-      const q = `mediatype:movies AND ${binding}` + (titleYear && exclusions.length ? ` AND NOT title:(${exclusions.join(" OR ")})` : "") + (preferHd && target.type === "movie" ? " AND (title:(1080p OR 720p OR 2160p OR remastered) OR description:1080p)" : "");
+      const identifierPrefixes = target.type === "movie" ? titles.map(normalizeTitle).filter((t) => /^[a-z0-9 ]+$/.test(t)).flatMap((t) => [".", "-"].map((separator) => "identifier:" + t.replace(/ /g, separator) + separator + target.year + "*")) : [];
+      const hd = "(title:(1080p OR 720p OR 2160p OR remastered) OR description:1080p)";
+      const binding = target.type === "tv" && preferHd && /^tt\d+$/.test(target.imdbId || "") ? `(title:"${title}" AND imdb_id:${target.imdbId})` : titleSearch + " AND " + (preferHd && target.type === "movie" ? `(((year:${target.year} OR title:${target.year}) AND ${hd})${identifierPrefixes.length ? " OR (" + identifierPrefixes.join(" OR ") + ")" : ""})` : titleYear ? `(year:${target.year} OR title:${target.year})` : `year:${target.year}`);
+      const q = `mediatype:movies AND ${binding}` + (titleYear && exclusions.length ? ` AND NOT title:(${exclusions.join(" OR ")})` : "");
       return `https://archive.org/advancedsearch.php?q=${encodeURIComponent(q)}&fl[]=identifier&fl[]=title&fl[]=year&rows=12&sort[]=downloads%20desc&output=json`;
     }
     async function scanArchive(http, target, options = {}) {
@@ -974,6 +977,7 @@ var require_archive = __commonJS({
         const title = normalizeTitle(String(doc.title));
         if (names.some((name) => title === name + " " + target.year || title.startsWith(name + " " + target.year + " "))) return 3;
         if (names.some((name) => title === name || new RegExp(`^(?:1080p|720p|2160p|remastered|restored)\\b`).test(title.startsWith(name + " ") ? title.slice(name.length + 1) : ""))) return 2;
+        if (target.type === "movie" && titleBinding(doc.title, target, names).languageRelease) return 1;
         if (target.type === "tv" && title.startsWith(expected + " ") && /^(?:season|sezon|s\d|complete|all seasons)\b/.test(title.slice(expected.length + 1))) return 1;
         if (bilingualHint(doc.title, target)) return 1;
         return 0;
@@ -1007,12 +1011,13 @@ var require_archive = __commonJS({
           binding = titleBinding(rawTitle, target, [...await localizedNames(), ...fileNames].sort((a, b) => b.length - a.length));
         const fileIdentityNames = [.../* @__PURE__ */ new Set([...names, ...fileNames])];
         const actualTitle = binding.actual, expectedTitle = normalizeTitle(target.originalTitle), releaseSuffix = binding.suffix;
+        const identifierYearBound = target.type === "movie" && !explicitYear && datedYear !== target.year && (binding.exact || binding.languageRelease) && target.runtimeMinutes > 0 && fileIdentityNames.some((name) => filenameIdentity(doc.identifier + ".mkv", { ...target, originalTitle: name })) && !(normalizeTitle(doc.identifier).match(/\b(?:19|20)\d{2}\b/g) || []).some((year) => Number(year) !== target.year);
         const yearFromTitle = !explicitYear && datedYear !== target.year && binding.titleYear;
         const seriesImdbBound = target.type === "tv" && target.imdbId && String(meta.imdb_id || "").trim() === target.imdbId;
         const seriesTitle = target.type === "tv" && (actualTitle === expectedTitle || actualTitle.startsWith(expectedTitle + " ") && /^(?:season|sezon|s\d|complete|all seasons)\b/.test(releaseSuffix));
         if (!pinnedItem && yearFromTitle && !(target.runtimeMinutes > 0)) return [];
-        if (!pinnedItem && yearFromTitle && datedYear > 0 && datedYear < target.year) return [];
-        if (!pinnedItem && (!binding.exact && !binding.release && !binding.titleYear && !seriesTitle || !explicitYear && datedYear !== target.year && !yearFromTitle && !seriesImdbBound)) return [];
+        if (!pinnedItem && (yearFromTitle || identifierYearBound) && datedYear > 0 && datedYear < target.year) return [];
+        if (!pinnedItem && (!binding.exact && !binding.release && !binding.titleYear && !seriesTitle && !identifierYearBound || !explicitYear && datedYear !== target.year && !yearFromTitle && !seriesImdbBound && !identifierYearBound)) return [];
         const files = data.files.filter((f) => typeof f.name === "string" && f.private !== "true");
         const directory = typeof data.dir === "string" && /^\/\d+\/items\/[\w.-]+$/.test(data.dir) && data.dir.endsWith("/items/" + doc.identifier) ? data.dir : null;
         const servers = [.../* @__PURE__ */ new Set([data.d1, ...Array.isArray(data.workable_servers) ? data.workable_servers : [], data.d2])].filter((host) => typeof host === "string" && /^[a-z]{2}\d{4,8}\.(?:us|eu|ca)\.archive\.org$/.test(host)).slice(0, 2);
@@ -1031,7 +1036,8 @@ var require_archive = __commonJS({
           const extraName = normalizeTitle(f.name).replace(expectedTitle, "");
           if (!/\.(mp4|mkv)$/i.test(f.name) || /\b(sample|trailer|commercial|teaser)\b/.test(extraName)) return false;
           if (!pinnedItem && target.type === "tv" && (!matchesEpisode(f.name, target) || !normalizeTitle(f.name.split("/").pop()).startsWith(expectedTitle + " ") || !seriesImdbBound && !filenameIdentity(f.name.split("/").pop(), target))) return false;
-          if (!pinnedItem && (yearFromTitle || binding.localized) && !fileIdentityNames.some((name) => filenameIdentity(f.name.split("/").pop(), { ...target, originalTitle: name }))) return false;
+          if (!pinnedItem && (yearFromTitle || binding.localized || identifierYearBound) && !fileIdentityNames.some((name) => filenameIdentity(f.name.split("/").pop(), { ...target, originalTitle: name }))) return false;
+          if (identifierYearBound && (normalizeTitle(f.name).match(/\b(?:19|20)\d{2}\b/g) || []).some((year) => Number(year) !== target.year)) return false;
           const duration = Number(f.length);
           if (target.runtimeMinutes && duration > 0 && (duration < target.runtimeMinutes * 60 * 0.7 || duration > target.runtimeMinutes * 60 * 1.35)) return false;
           return true;
@@ -1052,9 +1058,9 @@ var require_archive = __commonJS({
           ...pinnedItem && verifiedRecord.burnedSubtitleLanguage ? { burnedSubtitleLanguage: verifiedRecord.burnedSubtitleLanguage } : {},
           sourceItemId: doc.identifier,
           mediaFilename: f.name,
-          releaseYearBasis: pinnedItem ? "content-sample-pinned-file" : yearFromTitle ? "exact-title-and-filename" : "metadata",
-          ...yearFromTitle || binding.localized || aliasLookup ? { durationTolerance: 0.1 } : {},
-          requireDuration: pinnedItem || yearFromTitle || binding.localized || aliasLookup || target.runtimeMinutes > 0 && !(Number(f.length) > 0),
+          releaseYearBasis: pinnedItem ? "content-sample-pinned-file" : yearFromTitle ? "exact-title-and-filename" : identifierYearBound ? "exact-identifier-and-filename" : "metadata",
+          ...yearFromTitle || binding.localized || aliasLookup || identifierYearBound ? { durationTolerance: 0.1 } : {},
+          requireDuration: pinnedItem || yearFromTitle || binding.localized || aliasLookup || identifierYearBound || target.runtimeMinutes > 0 && !(Number(f.length) > 0),
           source: "Internet Archive",
           identity: target,
           identityConfidence: meta.tmdb_id ? 100 : 90
@@ -2107,6 +2113,7 @@ var require_moviesdrive = __commonJS({
     var { safeUrl, normalizeTitle, mapLimit } = require_util();
     var { anchors, decodeEntities, filenameIdentity } = require_directory();
     var { canonicalNames } = require_page_data();
+    var { matchesEpisode } = require_matching();
     var { pixelPage, publicFile } = require_pixeldrain();
     var ORIGIN = "https://new4.moviesdrive.beer";
     var ARCHIVE = "https://mdrive.lol";
@@ -2120,26 +2127,32 @@ var require_moviesdrive = __commonJS({
     function cleanFilename(value) {
       return decodeEntities(value).replace(/^(?:\[\[?\s*(?:www\.)?moviesdrives?\.[a-z]+\s*\]\]?\s*[-._ ]*)+/i, "").trim();
     }
+    function seriesTitleMatches(value, target, requireYear = true) {
+      if (target.type !== "tv" || target.season !== 1) return false;
+      const m = text(value).match(/^(?:Download\s+)?(.+?)\s*\(Season\s+(\d{1,2})\)\s*(?:(\d{4})\b)?/i);
+      return !!m && Number(m[2]) === target.season && canonicalNames(target).includes(normalizeTitle(m[1])) && (!m[3] || Number(m[3]) === target.year) && (!requireYear || Number(m[3]) === target.year);
+    }
     function fileMatches(value, target) {
       const name = cleanFilename(value);
-      return /\.(mkv|mp4)$/i.test(name) && canonicalNames(target).some((title) => filenameIdentity(name, { ...target, originalTitle: title })) && !/\b(sample|trailer|hdcam|camrip|hdtc|hdts|telesync)\b/i.test(normalizeTitle(name).slice(normalizeTitle(target.originalTitle).length));
+      return /\.(mkv|mp4)$/i.test(name) && canonicalNames(target).some((title) => filenameIdentity(name, { ...target, originalTitle: title }, target.type !== "tv")) && (target.type !== "tv" || canonicalNames(target).some((title) => normalizeTitle(name).startsWith(title + " ") && /^(?:(?:19|20)\d{2} )?(?:s\d{1,3} ?e\d{1,3}|\d{1,2}x\d{1,3})\b/.test(normalizeTitle(name).slice(title.length + 1)))) && (target.type !== "tv" || matchesEpisode(name, target) && !(normalizeTitle(name).match(/\b(?:19|20)\d{2}\b/g) || []).some((y) => Number(y) !== target.year)) && !/\b(sample|trailer|hdcam|camrip|hdtc|hdts|telesync)\b/i.test(normalizeTitle(name).slice(normalizeTitle(target.originalTitle).length));
     }
     function searchPages(data, target) {
       if (!Array.isArray(data?.hits)) return [];
-      return data.hits.slice(0, 30).map((h) => h?.document).filter((d) => d && titleMatches(d.post_title, target) && (!d.imdb_id || d.imdb_id === target.imdbId) && typeof d.permalink === "string" && /^\/[a-z0-9-]+\/$/.test(d.permalink)).slice(0, 2);
+      return data.hits.slice(0, 30).map((h) => h?.document).filter((d) => d && (target.type === "tv" ? seriesTitleMatches(d.post_title, target) && !!target.imdbId && d.imdb_id === target.imdbId : titleMatches(d.post_title, target) && (!d.imdb_id || d.imdb_id === target.imdbId)) && typeof d.permalink === "string" && /^\/[a-z0-9-]+\/$/.test(d.permalink)).slice(0, 2);
     }
     function releaseEntries(html, target) {
       const heading = String(html).match(/<h1\b[^>]*>([\s\S]{0,2500}?)<\/h1>/i)?.[1];
-      if (!heading || !titleMatches(heading, target)) return [];
+      if (!heading || !(target.type === "tv" ? seriesTitleMatches(heading, target) : titleMatches(heading, target))) return [];
       const article = String(html).match(/<article\b[^>]*class=["'][^"']*\bpost-content\b[^"']*["'][^>]*>([\s\S]{0,400000}?)<\/article>/i)?.[1];
       if (!article) return [];
       const ids = anchors(article, 1e3).map((a) => a.href.match(/^https?:\/\/(?:www\.)?imdb\.com\/title\/(tt\d+)(?:$|[/?#])/i)?.[1]).filter(Boolean);
       if (target.imdbId && ids.some((id) => id !== target.imdbId)) return [];
+      if (target.type === "tv" && (!target.imdbId || !ids.includes(target.imdbId))) return [];
       let release = null;
       const rows = [];
       for (const m of article.matchAll(/<h[45]\b[^>]*>([\s\S]{0,5000}?)<\/h[45]>/gi)) {
         const label = text(m[1]);
-        if (titleMatches(label, target)) {
+        if (target.type === "tv" ? seriesTitleMatches(label, target, false) : titleMatches(label, target)) {
           release = label;
           continue;
         }
@@ -2152,12 +2165,17 @@ var require_moviesdrive = __commonJS({
           continue;
         }
         if (!release) continue;
-        const url = safeUrl(link.href), size = label.match(/\[\s*([\d.,]+)\s*(GB|MB)\s*\]/i), quality = Number(release.match(/\b(2160|1440|1080|720|480|360)p\b/i)?.[1]) || 0;
+        if (target.type === "tv" && !/\bSingle Episode\b/i.test(link.text)) {
+          release = null;
+          continue;
+        }
+        const url = safeUrl(link.href), size = (target.type === "tv" ? release : label).match(/\[\s*([\d.,]+)\s*(GB|MB)(?:\/E)?\s*\]/i), quality = Number(release.match(/\b(2160|1440|1080|720|480|360)p\b/i)?.[1]) || 0;
         if (!rows.some((r) => r.url === url)) rows.push({ url, quality, size: size ? Number(size[1].replace(",", ".")) * (size[2].toUpperCase() === "GB" ? 1e9 : 1e6) : Infinity });
         release = null;
       }
       const small = rows.slice().sort((a, b) => a.size - b.size), high = rows.slice().sort((a, b) => b.quality - a.quality || a.size - b.size), full = rows.filter((r) => r.quality === 1080).sort((a, b) => a.size - b.size);
-      return [...new Map([small[0], full[0], high[0], small[1]].filter(Boolean).map((r) => [r.url, r])).values()].slice(0, 4);
+      const plan = target.type === "tv" ? [full[0], high[0], small.find((r) => r.quality === 720), small[0]] : [small[0], full[0], high[0], small[1]];
+      return [...new Map(plan.filter(Boolean).map((r) => [r.url, r])).values()].slice(0, 4);
     }
     function pixelFile(data, page, hubName, target) {
       const file = publicFile(data, page, hubName, target, { source: "MoviesDrive / Pixeldrain", matchesName: fileMatches, normalizeName: (value) => normalizeTitle(cleanFilename(value)) });
@@ -2165,8 +2183,10 @@ var require_moviesdrive = __commonJS({
     }
     async function resolveRelease(http, entry, target) {
       const page = await http.text(entry.url);
-      if (!page || page.url !== entry.url || !titleMatches(page.text.match(/<title\b[^>]*>([\s\S]{0,1500}?)<\/title>/i)?.[1] || "", target)) return null;
-      const hub = anchors(page.text, 400).map((a) => safeUrl(a.href)).find((url) => url && /^https:\/\/hubcloud\.[a-z.]+\/drive\/[A-Za-z0-9_-]+$/.test(url));
+      if (!page || page.url !== entry.url) return null;
+      const title = page.text.match(/<title\b[^>]*>([\s\S]{0,1500}?)<\/title>/i)?.[1] || "";
+      if (!(target.type === "tv" ? seriesTitleMatches(title, target, false) : titleMatches(title, target))) return null;
+      const hub = target.type === "tv" ? episodeHub(page.text, target) : anchors(page.text, 400).map((a) => safeUrl(a.href)).find(isHub);
       if (!hub) return null;
       const wrapper = await http.text(hub), name = wrapper?.text.match(/<title\b[^>]*>([\s\S]{0,1500}?)<\/title>/i)?.[1];
       if (!name || !fileMatches(name, target)) return null;
@@ -2177,8 +2197,25 @@ var require_moviesdrive = __commonJS({
       const data = await http.json(new URL(pixel).origin + "/api/file/" + new URL(pixel).pathname.split("/").pop() + "/info");
       return pixelFile(data, pixel, name, target);
     }
+    function isHub(url) {
+      return !!url && /^https:\/\/hubcloud\.[a-z.]+\/drive\/[A-Za-z0-9_-]+$/.test(url);
+    }
+    function episodeHub(html, target) {
+      let wanted = false;
+      for (const m of String(html).matchAll(/<h5\b[^>]*>([\s\S]{0,6000}?)<\/h5>/gi)) {
+        const label = text(m[1]), episode = label.match(/^Ep0*([1-9]\d{0,2})\s*(?:&ndash;|&mdash;|[-–—])\s*(?:480|720|1080|2160)p\b/i);
+        if (episode) {
+          wanted = Number(episode[1]) === target.episode;
+          continue;
+        }
+        const links = anchors(m[1]).map((a) => safeUrl(a.href)).filter(isHub);
+        if (wanted && links.length) return links[0];
+        if (!links.length) wanted = false;
+      }
+      return null;
+    }
     async function scanMoviesDrive(http, target, options = {}) {
-      if (target.type !== "movie") return [];
+      if (target.type !== "movie" && (target.type !== "tv" || target.season !== 1 || !target.imdbId)) return [];
       const queries = [target.originalTitle, ...target.searchTitles || []];
       if (/^the\s+/i.test(target.originalTitle)) queries.splice(1, 0, target.originalTitle.replace(/^the\s+/i, ""));
       for (const query of [...new Set(queries)].slice(0, 2)) {
@@ -2205,7 +2242,7 @@ var require_moviesdrive = __commonJS({
       }
       return [];
     }
-    module2.exports = { scanMoviesDrive, titleMatches, cleanFilename, fileMatches, searchPages, releaseEntries, pixelPage, pixelFile };
+    module2.exports = { scanMoviesDrive, titleMatches, seriesTitleMatches, cleanFilename, fileMatches, searchPages, releaseEntries, episodeHub, pixelPage, pixelFile };
   }
 });
 
@@ -3897,7 +3934,7 @@ var require_ranking = __commonJS({
 var require_diagnostics = __commonJS({
   "src/diagnostics.cjs"(exports2, module2) {
     "use strict";
-    var VERSION = true ? "1.8.5" : "dev";
+    var VERSION = true ? "1.8.6" : "dev";
     function effectiveTmdbKey(settings, injectedKey) {
       return typeof settings.tmdbApiKey === "string" && settings.tmdbApiKey.trim() ? settings.tmdbApiKey.trim() : typeof injectedKey === "string" ? injectedKey.trim() : "";
     }
@@ -4288,7 +4325,7 @@ var require_index = __commonJS({
                   const sourceHttp = http.scope(1e4);
                   return scanHdRezka(sourceHttp, target, { loadTitles: () => resolveAlternativeTitles(sourceHttp, target, effectiveTmdbKey(settings, tmdbKey)) });
                 } });
-                if (filesLane && settings.moviesdriveEnabled !== false && target.type === "movie")
+                if (filesLane && settings.moviesdriveEnabled !== false && (target.type === "movie" || target.type === "tv" && target.season === 1 && target.imdbId))
                   sourceJobs.push({ name: "MoviesDrive / Pixeldrain", run: () => scanMoviesDrive(http.scope(1e4), target, { onCandidates: acceptCandidates }) });
                 if (onlineLane && settings.playImdbEnabled !== false) sourceJobs.push({ name: "PlayIMDb", run: () => scanPlayImdb(http, target) });
                 if (onlineLane && settings.vixsrcEnabled !== false && settings.includeHls !== false && !sourceFactories.some((s) => s.name === "VixSrc"))
@@ -4438,7 +4475,7 @@ var require_index = __commonJS({
         { type: "toggle", key: "dizibakEnabled", label: "DiziBak dizi alternatifi", defaultValue: true, description: "Küçük public metadata yanıtları kullanılır. İlk bölüm tarihi ve dizi kategorisi uyuşmazsa sonuç eklenmez." },
         { type: "toggle", key: "filmmoduEnabled", label: "FilmModu online film ve kaynak ses seçenekleri", defaultValue: true },
         { type: "toggle", key: "purstreamEnabled", label: "Purstream ek online film ve dizi seçenekleri", defaultValue: true },
-        { type: "toggle", key: "moviesdriveEnabled", label: "MoviesDrive ek film ve anime filmi indirmeleri", defaultValue: true, description: "Gerçek dosya, boyut, görüntü ve ses kontrolü yapılır. Uzantısız MKV dosyaları Nuvio’da .mp4 adıyla kaydedilebilir; dahili MPV gerçek formatı içerikten okur. Harici oynatıcıda .mkv olarak yeniden adlandırmak gerekebilir." },
+        { type: "toggle", key: "moviesdriveEnabled", label: "MoviesDrive ek film ve bölüm indirmeleri", defaultValue: true, description: "Film/anime filmi ve uygun ilk sezon sayfalarında bölüm dosyaları aranır; ad, yıl, IMDb, bölüm ve gerçek medya kontrol edilir. Uzantısız MKV dosyaları Nuvio’da .mp4 adıyla kaydedilebilir; dahili MPV gerçek formatı içerikten okur. Harici oynatıcıda .mkv olarak yeniden adlandırmak gerekebilir." },
         { type: "info", label: "Ses kodları: EN İngilizce, TR Türkçe, JA Japonca, HI Hintçe. EN/ES görüntüde, görüntüye işlenmiş altyazıdır; ses dili değildir." },
         { type: "toggle", key: "autoSubtitles", label: "TR ve EN altyazıları otomatik ara", defaultValue: true },
         { type: "toggle", key: "animomEnabled", label: "Deneysel AniMOM anime dosyaları", defaultValue: false, description: "Varsayılan kapalı: tekil MP4/TR doğrulandı, birleşik arama ve bazı bölümlerde CDN kararsız. Tam ad/yıl/bölüm gerekir; düz bölüm numarası başka sezona taşınmaz." },

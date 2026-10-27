@@ -54,8 +54,8 @@ test('MoviesDrive: yanlış release başlığı, ilgisiz/dış link ve hesap/cha
  assert.deepEqual(releaseEntries(page.replace(archive,'https://other.test/archive/123/'),target),[]);
  f[file+'/info']={status:403};const calls=[],http=createHttp({fetchImpl:fixtureFetch(f,calls)});try{assert.deepEqual(await scanMoviesDrive(http,target),[]);assert.ok(!calls.some(c=>c.url===file));}finally{http.close();}
 });
-test('MoviesDrive: film adaptörü dizi bölümüne yeni istek açmaz',async()=>{
- const calls=[],http=createHttp({fetchImpl:fixtureFetch(fixture(),calls)});try{assert.deepEqual(await scanMoviesDrive(http,{...target,type:'tv',season:1,episode:1}),[]);assert.equal(calls.length,0);}finally{http.close();}
+test('MoviesDrive: desteklenmeyen sonraki sezon veya IMDb olmayan dizi yeni istek açmaz',async()=>{
+ const calls=[],http=createHttp({fetchImpl:fixtureFetch(fixture(),calls)});try{assert.deepEqual(await scanMoviesDrive(http,{...target,type:'tv',season:2,episode:1}),[]);assert.deepEqual(await scanMoviesDrive(http,{...target,type:'tv',season:1,episode:1,imdbId:null}),[]);assert.equal(calls.length,0);}finally{http.close();}
 });
 test('Uzantısız MKV izni genel format kontrolünü gevşetmez; açık .mp4, eksik boyut ve HLS hâlâ elenir',async()=>{
  for(const [url,extra,body]of[[file,{expectedContainer:'mkv'},media()],[file+'.mp4',{expectedContainer:'mkv',expectedSize:media().length},media()],[file,{expectedContainer:'mkv',expectedSize:100},'#EXTM3U\n#EXT-X-TARGETDURATION:10\n#EXTINF:10,\na.ts\n']]){

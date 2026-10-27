@@ -8,7 +8,7 @@
 | 4KHDHub / HubCloud | Film/dizi | FSL/Pixeldrain MP4/MKV; uygun kayıtlarda 1080p/4K |
 | Goojara | Film/dizi | Küçük MP4 alternatifleri; bölüm ve gerçek dosya kontrolü |
 | HDRezka | Film/dizi | Ücretsiz MP4 kaliteleri; özgün ses, IMDb ve bölüm kontrolü |
-| MoviesDrive / Pixeldrain | Film ve anime filmleri | Ek MP4/MKV; gerçek boyut, piksel, süre ve ses kontrolü |
+| MoviesDrive / Pixeldrain | Film, anime filmi ve uygun ilk sezon bölümleri | Ek MP4/MKV; gerçek boyut, piksel, süre ve ses kontrolü |
 | Waploaded | Film/dizi | MP4/MKV; son güncellenen kısmi katalog |
 | RareFilmm | Eski/az bulunan filmler | Küçük MP4 alternatifleri; bazı sürümlerde EN görüntüde |
 | PlayIMDb, VixSrc | Film/dizi | Online HLS |
@@ -34,7 +34,7 @@ Liste çalışan bütün katalog garantisi değildir. Kaynağın bir bölümde �
 
 4KHDHub, terminal sayfasında yayımlanan FSL ve Pixeldrain bağlantılarını ayrı değerlendirir. Filmde TMDB kimliği/ad/yıl; dizide kanonik ad/yıl/poster ve tam sezon/bölüm kontrol edilir. Dosya sunucusunun adı, boyutu ve formatı gerçek medya verisiyle karşılaştırılır; uygun ses ve süre aranır. Kaynakta gömülü TR/EN varsa dosyayla birlikte gelir; mevcut harici altyazı alternatifleri de sunulur. Yeni Pixeldrain yolu için adlandırma servisi veya hesap gerekmez. Eski ayna yavaşsa yeni dosyanın kontrolü onu beklemez; toplam arama bütçesi aynı kalır.
 
-Internet Archive, aynı TMDB film kaydındaki özgün ve gösterim adlarını birlikte arar. Bu, Japonca özgün adı olan bir filmin İngilizce başlıkla yayımlanan dosyalarını da bulmasını sağlar. Türkçe ve özgün adı birlikte içeren film sürümlerini de arar. Ayrı yıl alanı yoksa kayıt başlığı ve dosya adında aynı özgün ad/yıl aranır; gerçek video süresi ayrıca denetlenir. Yerel adın farklı olması yanlış kimlik/yıl kabulüne yol açmaz. Küçük MP4 türevleri ve HD MKV asılları birlikte değerlendirilir; gerçek ses izleri okunamadığında dosya adındaki dil, doğrulanmış dublaj kanıtı sayılmaz. Bu yol genel film aramasını geliştirir; dizi kuralları değişmez. Yalnız Hintçe ses dosyadan doğrulanırsa o kaynak ve açıkça ondan türetilmiş, sesi okunamayan sürümler listelenmez. Türevde başka dil gerçekten ölçülmüşse korunur.
+Internet Archive, aynı TMDB film kaydındaki özgün ve gösterim adlarını birlikte arar. Yıl alanı olmayan kayıtlarda tam ad/yıl içeren arşiv kimliği de aranır; aynı ad/yılın dosyada bulunması ve gerçek sürenin uyuşması gerekir. Bu, Japonca özgün adı olan bir filmin İngilizce başlıkla yayımlanan dosyalarını da bulmasını sağlar. Türkçe ve özgün adı birlikte içeren film sürümlerini de arar. Ayrı yıl alanı yoksa kayıt başlığı ve dosya adında aynı özgün ad/yıl aranır; gerçek video süresi ayrıca denetlenir. Yerel adın farklı olması yanlış kimlik/yıl kabulüne yol açmaz. Küçük MP4 türevleri ve HD MKV asılları birlikte değerlendirilir; gerçek ses izleri okunamadığında dosya adındaki dil, doğrulanmış dublaj kanıtı sayılmaz. Bu yol genel film aramasını geliştirir; dizi kuralları değişmez. Yalnız Hintçe ses dosyadan doğrulanırsa o kaynak ve açıkça ondan türetilmiş, sesi okunamayan sürümler listelenmez. Türevde başka dil gerçekten ölçülmüşse korunur.
 
 RareFilmm bütün film kataloğunu kapsamaz. Genel aramada tam başlık/yıl, makale içindeki oynatıcı, oynatıcının kendi film kimliği/başlığı ve süre denetlenir. Kalite başına gerçek MP4 boyutu ve pikseli okunur. EN görüntüde etiketi, silinemeyen İngilizce altyazı bulunduğunu belirtir; mevcut harici TR/EN dosyaları ayrıca sunulur. Yeni bir sunucu veya hesap gerekmez.
 
@@ -51,6 +51,8 @@ Hızlı İzle, HDFilmDelisi, DiziBal ve Purstream kaynaklarını bağımsız tar
 Purstream aynı TMDB kimliği, tür, yıl ve resmi başlıkla eşleşir. Fransızca katalog adı gerekiyorsa aynı TMDB kaydının çevirileri kullanılır. Dizinin genel sayfasındaki karışık bölüm bağlantıları yerine istenen sezon/bölüm yanıtı ve video yolu birlikte kontrol edilir. Kaynağın 1080p/1440p etiketi kullanılmaz; gerçek HLS çözünürlüğü ve dil izleri esas alınır. Bu kaynak online alternatif sağlar; yeni indirme, Türkçe dublaj veya 4K garantisi değildir.
 
 Nuvio her scraper tamamlandığında sonuçlarını birleştirir. Eklenti içinde hazır adayların korunması, Nuvio'ya satır satır canlı sonuç callback'i eklendiği anlamına gelmez.
+
+MoviesDrive dizi desteği şimdilik ilk sezonla sınırlıdır. Arama ve sayfada aynı IMDb, kanonik seri adı ve ilk yayın yılı; arşivde istenen bölüm ve dosyada tam sezon/bölüm birlikte denetlenir. Sonraki sezon yılı ilk yayın yılı yerine kullanılmaz. ZIP paketleri sunulmaz. Kaynakta yalnız İngilizce/Hintçe varsa Türkçe dublaj etiketi verilmez; mevcut harici Türkçe altyazılar ayrıca eşleştirilir.
 
 ## Kapsam ve sınırlar
 
