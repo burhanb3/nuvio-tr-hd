@@ -1,75 +1,17 @@
 {
-  "checkedAt": "2026-10-27T17:39:36.200Z",
-  "version": "1.8.1",
+  "checkedAt": "2026-10-27T18:15:48.742Z",
+  "version": "1.8.2",
   "origin": "https://burhanb3.github.io/nuvio-tr-hd",
   "authenticated": false,
   "assetRequestsAuthenticated": false,
   "ciMetadataAuthenticated": true,
   "repository": "https://github.com/burhanb3/nuvio-tr-hd",
-  "sourceCommit": "071bda9bba5b12dec1dab157d98a6fb3bd9d5932",
+  "sourceCommit": "be767570da27096bc1bddd0c11d699b68e16dbf1",
   "branch": "codex/publish-nuvio-tr-hd",
   "actions": {
-    "tests": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40552547300",
+    "tests": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40557879614",
     "testsConclusion": "success",
     "jobs": [
-      {
-        "name": "verify (windows-latest)",
-        "status": "completed",
-        "conclusion": "success",
-        "requiredStepsPassed": true,
-        "steps": [
-          {
-            "name": "Set up job",
-            "status": "completed",
-            "conclusion": "success"
-          },
-          {
-            "name": "Run actions/checkout@v7.0.1",
-            "status": "completed",
-            "conclusion": "success"
-          },
-          {
-            "name": "Run actions/setup-node@v7.1.0",
-            "status": "completed",
-            "conclusion": "success"
-          },
-          {
-            "name": "Run npm ci --ignore-scripts",
-            "status": "completed",
-            "conclusion": "success"
-          },
-          {
-            "name": "Run npm run check",
-            "status": "completed",
-            "conclusion": "success"
-          },
-          {
-            "name": "Üretilmiş sağlayıcı güncel mi",
-            "status": "completed",
-            "conclusion": "success"
-          },
-          {
-            "name": "Run actions/upload-artifact@v7.0.2",
-            "status": "completed",
-            "conclusion": "skipped"
-          },
-          {
-            "name": "Post Run actions/setup-node@v7.1.0",
-            "status": "completed",
-            "conclusion": "success"
-          },
-          {
-            "name": "Post Run actions/checkout@v7.0.1",
-            "status": "completed",
-            "conclusion": "success"
-          },
-          {
-            "name": "Complete job",
-            "status": "completed",
-            "conclusion": "success"
-          }
-        ]
-      },
       {
         "name": "verify (ubuntu-latest)",
         "status": "completed",
@@ -127,9 +69,67 @@
             "conclusion": "success"
           }
         ]
+      },
+      {
+        "name": "verify (windows-latest)",
+        "status": "completed",
+        "conclusion": "success",
+        "requiredStepsPassed": true,
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@v7.0.1",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/setup-node@v7.1.0",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm ci --ignore-scripts",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm run check",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Üretilmiş sağlayıcı güncel mi",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/upload-artifact@v7.0.2",
+            "status": "completed",
+            "conclusion": "skipped"
+          },
+          {
+            "name": "Post Run actions/setup-node@v7.1.0",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/checkout@v7.0.1",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success"
+          }
+        ]
       }
     ],
-    "pages": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40552547175",
+    "pages": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40557879693",
     "pagesConclusion": "success"
   },
   "checks": [
@@ -138,47 +138,47 @@
       "status": 200,
       "type": "application/json; charset=utf-8",
       "bytes": 2630,
-      "sha256": "ff43dcbe06849865aa540fdb46d8a2a97cae631051d3d1dcf1d8833119d310ff",
+      "sha256": "4606d265fe93b249e56886b686fc86cf5412d3657cb37ce7ec3c19c2e6713822",
       "matchesLocal": true
     },
     {
-      "path": "/providers/nuvio-tr-hd.js?v=1.8.1",
+      "path": "/providers/nuvio-tr-hd.js?v=1.8.2",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 259963,
-      "sha256": "f72ea2e9af484a417d1cbe4557adab0bd7175d4b8bc75eb50749ef4a2d7037fe",
+      "bytes": 269710,
+      "sha256": "8a3f14b1bac788a5fe6b584d10ca1e44107b00851064ccd2f8343ffa69d5f686",
       "matchesLocal": true
     },
     {
-      "path": "/providers/nuvio-tr-hd-anime.js?v=1.8.1",
+      "path": "/providers/nuvio-tr-hd-anime.js?v=1.8.2",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 259964,
-      "sha256": "5da978354fa43e0470824c6753e52e73e971363f1dc709c947fc8beef9dfca6b",
+      "bytes": 269711,
+      "sha256": "aef6b1953664188f55dd80caf95df854cfea319549ac2b3c16485718ac204d64",
       "matchesLocal": true
     },
     {
-      "path": "/providers/nuvio-tr-hd-extra-anime.js?v=1.8.1",
+      "path": "/providers/nuvio-tr-hd-extra-anime.js?v=1.8.2",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 259975,
-      "sha256": "702eb97fcc67f852798a223d98cd262b240d15864e39a2c05c64c9c934fc57ed",
+      "bytes": 269722,
+      "sha256": "5b9fed0b1754c5e76e1b225869481004c183fc1143e4b0bc28e3a881c7a35195",
       "matchesLocal": true
     },
     {
-      "path": "/providers/nuvio-tr-hd-fast-online.js?v=1.8.1",
+      "path": "/providers/nuvio-tr-hd-fast-online.js?v=1.8.2",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 259975,
-      "sha256": "9fd23e97c07605a77769b1660668d268d13708c59649aaa2ab8dd4b1b503664a",
+      "bytes": 269722,
+      "sha256": "d74d249e10f87a620c6764f223a64ed4f7378c4ddebf84d3d020a9f98ae3306f",
       "matchesLocal": true
     },
     {
       "path": "/providers/nuvio-tr-hd-online.js",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 259966,
-      "sha256": "475e45d92dc7f1ce719a59522c914c2a628ae5fc5713a81dcf994a1b1972b71d",
+      "bytes": 269713,
+      "sha256": "3e2d49353728158b171b1449e7a763823abe0ded721bafd21be544bdba0b4007",
       "matchesLocal": true
     },
     {
@@ -186,45 +186,52 @@
       "status": 200,
       "type": "text/html; charset=utf-8",
       "bytes": 6253,
-      "sha256": "052f3c684f2e88cc4fd3c86072c45952ded2fbd0f5cffcd71ba0f55007d7afd8",
+      "sha256": "897d590d9ae58be869fa7de78a17d3aca0b22b2bd67be2c604e6b06b552a37b8",
       "matchesLocal": true
     }
   ],
   "tests": {
-    "local": 254,
+    "local": 261,
     "compiledQuickJs": true
   },
-  "upstreamEvidence": "compatibility/upstream-181-check.json",
-  "sourceEvidence": "compatibility/download-research-181.json",
-  "regressionEvidence": "compatibility/coverage-181.json",
+  "upstreamEvidence": "compatibility/upstream-182-check.json",
+  "sourceEvidence": "compatibility/download-expansion-182.json",
+  "regressionEvidence": "compatibility/coverage-182.json",
   "manifestIds": [
     "nuvio-tr-hd",
     "nuvio-tr-hd-anime",
     "nuvio-tr-hd-extra-anime",
     "nuvio-tr-hd-fast-online"
   ],
-  "newPartialFilmTvDownloadAdapters": 0,
-  "newOnlineFilmTvAdapters": 1,
-  "newOnlineFilmDubAdapters": 0,
+  "newPartialMovieDownloadAdapters": 1,
+  "newPartialTvDownloadAdapters": 0,
   "newUniversalFilmTvDownloadAdapters": 0,
   "newScraperEntries": 0,
   "newHelperBackends": 0,
   "newAccounts": 0,
+  "newFixedKeys": 0,
   "newPerTitleVideoPins": 0,
   "features": {
-    "newOnlineAdapter": "Purstream",
-    "sourceSetting": "purstreamEnabled",
-    "verifiedNewOnlineTitleEpisodes": 5,
-    "allFiveHaveExistingTurkishSubtitles": true,
-    "verifiedNewDownloadableFiles": 0,
-    "measuredHlsPixelsOverrideSourceLabels": true,
-    "mainFileJobsUnchanged": true,
-    "sourceBudgetMs": 5500,
-    "fastOnlineBudgetMs": 8000,
+    "newMovieAdapter": "MoviesDrive / Pixeldrain",
+    "sourceSetting": "moviesdriveEnabled",
+    "verifiedNewMkvFiles": 9,
+    "verifiedTitleExamples": 6,
+    "allNewFilesHaveExistingTurkishSubtitles": true,
+    "new4kFiles": 1,
+    "newAnimeMovieFiles": 1,
+    "newAnimeSeriesFiles": 0,
+    "newTurkishDubFiles": 0,
+    "nativeExtensionlessMkvOptIn": true,
+    "actualReturnedContainerStaysMkv": true,
+    "desktopMpvOneFrameSamples": 2,
+    "upstreamFilesReviewed": 23,
+    "sourceBudgetMs": 10000,
+    "mainBudgetMs": 24000,
+    "videoNativeSlots": 3,
+    "subtitleNativeSlots": 4,
+    "englishSubtitleNativeSlots": 1,
     "allFourScraperIdsPreserved": true,
-    "newLive4kSources": 0,
-    "newTurkishDubSources": 0,
-    "newAnimeSources": 0,
+    "failedNetworkPassAndRecoveryPreserved": true,
     "noNativePhysicalCancellationClaim": true
   },
   "allSourceCriteriaMet": false,

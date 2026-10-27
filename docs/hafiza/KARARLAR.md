@@ -2,11 +2,11 @@
 
 ## 1.8.2 — uzantı kararı ve indirme katkısı
 
-- Önceki uzantısızMKVzorunlureddi yalnızdoğrulanmışsourceoptin için kaldırıldı. Nuvio.mp4adıvegerçekMKVformatıayrıdır. Actualcontainer+expectedsize+kaynakadı+video+süre+sesdenetimindensonraMPVcontentdetectionkullanılır;çıktıtürümkvkalır. GenericJSON/Stremio yanlışformat/HLSgatesaynı. Dışarıaktarırken.mkvrenamegerekebilir; kaynakcheckboxdescriptiongerçeğisöyler.
-- WindowsMPVoneframe2prefix NuviofizikseliPhone/Androidindirme/offlinekanıtıdeğildir. Bu farkı belgelerde ve sonuçta belirt. Yeni23bloblockelleincelendi,head/releasezorlayenilenmedi.
-- MoviesDrivepartialfilm/animefilm,TVeşleşmesigibi sunma.9yeniMKV+TR/6yapım,4K1,TRdub0. EN+HI sesgerçektir;HIonlyatılır,TRsesuydurulmaz. MevcutTRmetadatapuanıgörselsenkrondeğil. Nativekotalarıbütçeleraynı,hesap/helper/backendyok.
-- İlkFlea2/Death0 ve recovery5/4 birlikte saklanır.24sYourNamehazırsonuçlaryanıtınıhızgarantisisayma. Birtekrar sayısı tümkatalogkararlılığıdeğildir. YeniMDmp4storagebilgisi kartıkirletmedenayarlar/rehberde açıklanır.
-
+- Önceki zorunlu uzantısız MKV reddi yalnız doğrulanmış kaynak adayları için kaldırıldı. Gerçek MKV formatı ve Nuvio'nun .mp4 kayıt adı ayrı bilgilerdir. Boyut, format, ad, video, süre ve ses denetimi sonrası MPV içerik tanıma yolu kullanılabilir. Çıktı türü mkv kalır; genel JSON/Stremio ve HLS kontrolleri gevşetilmez.
+- Masaüstü MPV'deki iki kısa örnek, fiziksel Nuvio indirme/offline kanıtı değildir. Bu ayrım belgede ve kullanıcı sonucunda belirtilir. Yeni native kaynak dosyaları elle incelenmiştir; release/head zorla güncellenmemiştir.
+- MoviesDrive kısmi film/anime filmi kaynağıdır. Dokuz yeni MKV+TR ve bir 4K dosya bulundu; yeni TR dublaj veya dizi bölümü yok. EN+HI ses gerçektir; HI-only atlanır, TR ses uydurulmaz. Mevcut altyazı puanı görsel senkron ölçümü değildir.
+- Native kotaları/bütçeler korunur; hesap/helper/backend kurulmaz. Native kayıt adı ve dışarı aktarımda yeniden adlandırma ihtiyacı kartı kalabalıklaştırmadan kaynak ayarında ve rehberde açıklanır.
+- Fleabag2/DeathNote0 başarısız turu ve recovery5/4 birlikte saklanır. Your Name'in 24 saniyede korunan sonuçları hız garantisi sayılmaz. Tekrar sayıları tüm katalog kararlılığı değildir.
 
 ## 1.8.1 — kanıtlı katkıyı ayrı sayma
 

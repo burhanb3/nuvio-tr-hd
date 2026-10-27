@@ -2,10 +2,9 @@
 
 ## 1.8.2 öncelik
 
-1. 1.8.2 MoviesDrive/Pixeldrain genel film/animefilmi adaptörü;6yapım9yeniMKV+TR, ilk yeni3840×1598/7.59GB4KInception. moviesdriveEnabledmain'de defaultaçık;Nuvio.mp4kayıtadına rağmenMPVactualMKVokur.261check/QuickJS,Nuvio0.6.5-beta23blobdrift0. Yayınkontrolü bekleniyor.
-2. YeniTRdublaj0/TV0/animeseri0. TViçinmetadata/yıl/sezonbölümkanıtlıgenelhostyollarıara;IMDb/yıleksikMoviesDriveTVpostuna zorlaeşlemeekleme. Yeni4Kyolları varsaaynıgerçekRange/ses/TRpipelineşartlarıylaekle. EN+HI'yiTRdublajgibisunma.
-3. İlkFlea2/Death0outage,recoveryFlea5/Death4;YourName24sdeadline5sonuçoldu. Hız/kararlılıktakibi açık.Native3/sub4/EN1değişmedi. FizikseltelefondaMoviesDriveMKVindirme/offlineTR-EN/ses/senkronve.mkvexportrenamehenüzyok;frameörneğindenbu testleri geçtiçıkarma.
-
+1. Tamamlandı: 1.8.2 aynı manifestte yayımlandı. Kod be767570da27096bc1bddd0c11d699b68e16dbf1; Test40557879614 ve Pages40557879693 başarılı, yedi public dosya HTTP200/SHA eşit. MoviesDrive main'de varsayılan açık. Altı yapımda dokuz yeni MKV+TR; Inception 3840×1598/7,59 GB. 261 check/QuickJS ve Nuvio0.6.5-beta/23 blob drift0.
+2. İndirme, TR dublaj ve bölüm kapsamı öncelik. Bu tur yeni TR dublaj0/TV0/anime bölümü0. Genel TV yollarında kimlik/yıl/sezon/bölüm kanıtı aranmalı; MoviesDrive'ın eksik metadata kayıtları zorla eşlenmemeli. Yeni 4K dosyalar aynı Range/ses/TR kontrolünden geçmeli; EN+HI, TR dublaj sayılmamalı.
+3. Fleabag2/DeathNote0 zaman aşımı sonrası recovery5/4 geldi. Your Name 24 saniyede beş hazır sonuç döndürdü. Hız/kararlılık takibi açık; video3/sub4/EN1 değişmedi. Fiziksel telefonda MKV indirme, offline TR/EN, ses, senkron ve dışa aktarımda yeniden adlandırma henüz sınanmadı. Masaüstü örneğinden bu testleri geçti sonucu çıkarılmamalı.
 
 ## 1.8.1 öncelik
 
