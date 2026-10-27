@@ -1,0 +1,721 @@
+{
+  "checkedAt": "2026-10-27T13:09:40.042Z",
+  "version": "1.7.8",
+  "tests": 229,
+  "method": "General adapter uses source search, exact canonical movie title/year, own article player, exact player movie ID/title and duration, bounded actual Range/container/size/pixel/hash checks and existing TR/EN subtitle scoring. Fixed metadata references; no phone credentials or physical device run.",
+  "newPartialMovieDownloadAdapters": 1,
+  "newUniversalFilmTvDownloadAdapters": 0,
+  "newVerifiedLive4kSources": 0,
+  "newVerifiedTurkishDubSources": 0,
+  "newPerTitleVideoPins": 0,
+  "newAccounts": 0,
+  "newHelperBackends": 0,
+  "source": {
+    "name": "RareFilmm",
+    "origin": "https://rarefilmm.com",
+    "player": "https://ok.ru",
+    "defaultEnabled": true,
+    "setting": "rarefilmmEnabled",
+    "lane": "main",
+    "catalogue": "partial old/rare movie catalogue, not TV or anime",
+    "discoveryBudgetMs": 8000,
+    "maxSearchTitles": 2,
+    "maxArticleMatches": 2,
+    "maxSelectedVariants": 3,
+    "videoProbeConcurrencyUnchanged": 3,
+    "highestSmallestMiddleSelected": true,
+    "signedUrlsFreshPerSearch": true,
+    "readsPublicPlayerAttributeOnly": true,
+    "remoteScriptsExecuted": false,
+    "downloadTransport": "actual progressive MP4, may have extensionless URL; native default mp4 filename matches actual container",
+    "unknownAudioUsesSourceOrCanonicalHints": true,
+    "burnedEnglishSubtitlesPreservedAndLabelled": true,
+    "live4kVerified": false
+  },
+  "isolated": {
+    "checkedAt": "2026-10-27T13:08:04.004Z",
+    "metadata": "fixed title/year/TMDB/IMDb references; synthetic Jan 1 fixture preserves only known year, not a claimed release day; live source, bounded Range and subtitle bodies. Not a phone TMDB API test.",
+    "physicalDevice": "not-run",
+    "fullPlayback": "not-run",
+    "fullDownload": "not-run",
+    "offline": "not-run",
+    "rows": [
+      {
+        "key": "hush",
+        "tmdbId": 339369,
+        "originalTitle": "Hush-a-Bye Baby",
+        "year": 1990,
+        "imdbId": "tt0102080",
+        "elapsedMs": 4528,
+        "report": {
+          "tmdbId": "339369",
+          "lane": "main",
+          "configuration": {
+            "version": "dev",
+            "tmdbKeyPresent": true,
+            "autoDiscover": true,
+            "includeHls": true,
+            "playImdbEnabled": false,
+            "vixsrcEnabled": false,
+            "hdhubEnabled": false,
+            "archiveEnabled": false,
+            "waploadedEnabled": false,
+            "rarefilmmEnabled": true,
+            "hdfilmdelisiEnabled": false,
+            "dizibalEnabled": false,
+            "autoSubtitles": true,
+            "subtitleRequired": false,
+            "detailedHlsMetadata": false,
+            "minimumQuality": 0,
+            "maxResults": 20
+          },
+          "identity": {
+            "reason": "ok",
+            "year": 1990,
+            "type": "movie"
+          },
+          "sources": [
+            {
+              "name": "RareFilmm",
+              "candidates": 3,
+              "startedMs": 2,
+              "discoveryMs": 2287
+            }
+          ],
+          "rejected": {},
+          "http": {
+            "api.themoviedb.org:200": 1,
+            "rarefilmm.com:200": 2,
+            "ok.ru:200": 1,
+            "opensubtitles-v3.strem.io:200": 1,
+            "altyazidb.online:200": 1,
+            "ok6-29.vkuser.net:206": 6,
+            "ok6-29.vkuser.net:200": 1,
+            "opensubtitles.stremio.homes:200": 5
+          },
+          "subtitleText": {},
+          "results": 3,
+          "reason": "ok",
+          "elapsedMs": 4527
+        },
+        "files": [
+          {
+            "source": "RareFilmm",
+            "container": "mp4",
+            "downloadable": true,
+            "bytes": 334799252,
+            "dimensions": {
+              "width": 852,
+              "height": 460
+            },
+            "duration": 4870.077,
+            "hash": "ec1e861863277065",
+            "audioLanguages": [],
+            "burnedSubtitleLanguage": "en",
+            "subtitles": [
+              {
+                "language": "en",
+                "score": 90
+              }
+            ],
+            "card": {
+              "quality": "480p · 852×460",
+              "size": "0,33 GB",
+              "language": "Ses: EN/GA · EN altyazı · TR altyazı yok · EN görüntüde"
+            }
+          },
+          {
+            "source": "RareFilmm",
+            "container": "mp4",
+            "downloadable": true,
+            "bytes": 150702891,
+            "dimensions": {
+              "width": 426,
+              "height": 230
+            },
+            "duration": 4870.077,
+            "hash": "b97c7ab74ec6fd68",
+            "audioLanguages": [],
+            "burnedSubtitleLanguage": "en",
+            "subtitles": [
+              {
+                "language": "en",
+                "score": 90
+              }
+            ],
+            "card": {
+              "quality": "240p · 426×230",
+              "size": "0,15 GB",
+              "language": "Ses: EN/GA · EN altyazı · TR altyazı yok · EN görüntüde"
+            }
+          },
+          {
+            "source": "RareFilmm",
+            "container": "mp4",
+            "downloadable": true,
+            "bytes": 218850924,
+            "dimensions": {
+              "width": 640,
+              "height": 346
+            },
+            "duration": 4870.077,
+            "hash": "0f4f630c0ba250fd",
+            "audioLanguages": [],
+            "burnedSubtitleLanguage": "en",
+            "subtitles": [
+              {
+                "language": "en",
+                "score": 90
+              }
+            ],
+            "card": {
+              "quality": "360p · 640×346",
+              "size": "0,22 GB",
+              "language": "Ses: EN/GA · EN altyazı · TR altyazı yok · EN görüntüde"
+            }
+          }
+        ]
+      },
+      {
+        "key": "gunes",
+        "tmdbId": 47215,
+        "originalTitle": "Güneşe Yolculuk",
+        "year": 1999,
+        "imdbId": "tt0188653",
+        "elapsedMs": 6971,
+        "report": {
+          "tmdbId": "47215",
+          "lane": "main",
+          "configuration": {
+            "version": "dev",
+            "tmdbKeyPresent": true,
+            "autoDiscover": true,
+            "includeHls": true,
+            "playImdbEnabled": false,
+            "vixsrcEnabled": false,
+            "hdhubEnabled": false,
+            "archiveEnabled": false,
+            "waploadedEnabled": false,
+            "rarefilmmEnabled": true,
+            "hdfilmdelisiEnabled": false,
+            "dizibalEnabled": false,
+            "autoSubtitles": true,
+            "subtitleRequired": false,
+            "detailedHlsMetadata": false,
+            "minimumQuality": 0,
+            "maxResults": 20
+          },
+          "identity": {
+            "reason": "ok",
+            "year": 1999,
+            "type": "movie"
+          },
+          "sources": [
+            {
+              "name": "RareFilmm",
+              "candidates": 3,
+              "startedMs": 1,
+              "discoveryMs": 627
+            }
+          ],
+          "rejected": {},
+          "http": {
+            "api.themoviedb.org:200": 1,
+            "rarefilmm.com:200": 2,
+            "ok.ru:200": 1,
+            "opensubtitles-v3.strem.io:200": 1,
+            "altyazidb.online:200": 5,
+            "opensubtitles.stremio.homes:200": 8,
+            "vd423.okcdn.ru:206": 6,
+            "subs5.strem.io:200": 2,
+            "opensubtitles.stremio.homes:429": 2
+          },
+          "subtitleText": {
+            "turkishCharacters": 6
+          },
+          "results": 3,
+          "reason": "ok",
+          "elapsedMs": 6970
+        },
+        "files": [
+          {
+            "source": "RareFilmm",
+            "container": "mp4",
+            "downloadable": true,
+            "bytes": 512901128,
+            "dimensions": {
+              "width": 812,
+              "height": 480
+            },
+            "duration": 6343.824,
+            "hash": "6e3595379e2eb6e6",
+            "audioLanguages": [],
+            "burnedSubtitleLanguage": "en",
+            "subtitles": [
+              {
+                "language": "tr",
+                "score": 35
+              },
+              {
+                "language": "tr",
+                "score": 35
+              },
+              {
+                "language": "tr",
+                "score": 35
+              },
+              {
+                "language": "en",
+                "score": 65
+              },
+              {
+                "language": "en",
+                "score": 65
+              }
+            ],
+            "card": {
+              "quality": "480p · 812×480",
+              "size": "0,51 GB",
+              "language": "Ses: TR/NL/KU · TR/EN altyazı · EN görüntüde"
+            }
+          },
+          {
+            "source": "RareFilmm",
+            "container": "mp4",
+            "downloadable": true,
+            "bytes": 975107840,
+            "dimensions": {
+              "width": 1218,
+              "height": 720
+            },
+            "duration": 6343.824,
+            "hash": "fa607aff4264f018",
+            "audioLanguages": [],
+            "burnedSubtitleLanguage": "en",
+            "subtitles": [
+              {
+                "language": "tr",
+                "score": 35
+              },
+              {
+                "language": "tr",
+                "score": 35
+              },
+              {
+                "language": "tr",
+                "score": 35
+              },
+              {
+                "language": "en",
+                "score": 65
+              },
+              {
+                "language": "en",
+                "score": 65
+              }
+            ],
+            "card": {
+              "quality": "720p · 1218×720",
+              "size": "0,98 GB",
+              "language": "Ses: TR/NL/KU · TR/EN altyazı · EN görüntüde"
+            }
+          },
+          {
+            "source": "RareFilmm",
+            "container": "mp4",
+            "downloadable": true,
+            "bytes": 238514374,
+            "dimensions": {
+              "width": 406,
+              "height": 240
+            },
+            "duration": 6343.824,
+            "hash": "461320185481bd8b",
+            "audioLanguages": [],
+            "burnedSubtitleLanguage": "en",
+            "subtitles": [
+              {
+                "language": "tr",
+                "score": 35
+              },
+              {
+                "language": "tr",
+                "score": 35
+              },
+              {
+                "language": "tr",
+                "score": 35
+              },
+              {
+                "language": "en",
+                "score": 65
+              },
+              {
+                "language": "en",
+                "score": 65
+              }
+            ],
+            "card": {
+              "quality": "240p · 406×240",
+              "size": "0,24 GB",
+              "language": "Ses: TR/NL/KU · TR/EN altyazı · EN görüntüde"
+            }
+          }
+        ]
+      },
+      {
+        "key": "yol",
+        "tmdbId": 52556,
+        "originalTitle": "Yol",
+        "year": 1982,
+        "imdbId": "tt0084934",
+        "elapsedMs": 3760,
+        "report": {
+          "tmdbId": "52556",
+          "lane": "main",
+          "configuration": {
+            "version": "dev",
+            "tmdbKeyPresent": true,
+            "autoDiscover": true,
+            "includeHls": true,
+            "playImdbEnabled": false,
+            "vixsrcEnabled": false,
+            "hdhubEnabled": false,
+            "archiveEnabled": false,
+            "waploadedEnabled": false,
+            "rarefilmmEnabled": true,
+            "hdfilmdelisiEnabled": false,
+            "dizibalEnabled": false,
+            "autoSubtitles": true,
+            "subtitleRequired": false,
+            "detailedHlsMetadata": false,
+            "minimumQuality": 0,
+            "maxResults": 20
+          },
+          "identity": {
+            "reason": "ok",
+            "year": 1982,
+            "type": "movie"
+          },
+          "sources": [
+            {
+              "name": "RareFilmm",
+              "candidates": 3,
+              "startedMs": 2,
+              "discoveryMs": 933
+            }
+          ],
+          "rejected": {},
+          "http": {
+            "api.themoviedb.org:200": 1,
+            "rarefilmm.com:200": 2,
+            "ok.ru:200": 1,
+            "opensubtitles-v3.strem.io:200": 1,
+            "altyazidb.online:200": 5,
+            "vd423.okcdn.ru:206": 6,
+            "subs5.strem.io:200": 4,
+            "opensubtitles.stremio.homes:200": 7,
+            "opensubtitles.stremio.homes:429": 2
+          },
+          "subtitleText": {
+            "turkishCharacters": 8
+          },
+          "results": 3,
+          "reason": "ok",
+          "elapsedMs": 3760
+        },
+        "files": [
+          {
+            "source": "RareFilmm",
+            "container": "mp4",
+            "downloadable": true,
+            "bytes": 530819264,
+            "dimensions": {
+              "width": 480,
+              "height": 360
+            },
+            "duration": 6546.606,
+            "hash": "30bef1f0777bdff0",
+            "audioLanguages": [],
+            "burnedSubtitleLanguage": null,
+            "subtitles": [
+              {
+                "language": "tr",
+                "score": 66
+              },
+              {
+                "language": "tr",
+                "score": 66
+              }
+            ],
+            "card": {
+              "quality": "360p · 480×360",
+              "size": "0,53 GB",
+              "language": "Ses: TR · TR altyazı"
+            }
+          },
+          {
+            "source": "RareFilmm",
+            "container": "mp4",
+            "downloadable": true,
+            "bytes": 256668430,
+            "dimensions": {
+              "width": 320,
+              "height": 240
+            },
+            "duration": 6546.606,
+            "hash": "711377b9902122ce",
+            "audioLanguages": [],
+            "burnedSubtitleLanguage": null,
+            "subtitles": [
+              {
+                "language": "tr",
+                "score": 66
+              },
+              {
+                "language": "tr",
+                "score": 66
+              }
+            ],
+            "card": {
+              "quality": "240p · 320×240",
+              "size": "0,26 GB",
+              "language": "Ses: TR · TR altyazı"
+            }
+          },
+          {
+            "source": "RareFilmm",
+            "container": "mp4",
+            "downloadable": true,
+            "bytes": 958648903,
+            "dimensions": {
+              "width": 640,
+              "height": 480
+            },
+            "duration": 6546.606,
+            "hash": "3ab65b6728b8a94d",
+            "audioLanguages": [],
+            "burnedSubtitleLanguage": null,
+            "subtitles": [
+              {
+                "language": "tr",
+                "score": 66
+              },
+              {
+                "language": "tr",
+                "score": 66
+              }
+            ],
+            "card": {
+              "quality": "480p · 640×480",
+              "size": "0,96 GB",
+              "language": "Ses: TR · TR altyazı"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "repeat": [
+    {
+      "key": "hush",
+      "files": 3,
+      "elapsedMs": 2643,
+      "subtitlesDisabledForRepeat": true,
+      "sameSizesPixelsDuration": true,
+      "hashCompared": false
+    },
+    {
+      "key": "gunes",
+      "files": 3,
+      "elapsedMs": 3625,
+      "subtitlesDisabledForRepeat": true,
+      "sameSizesPixelsDuration": true,
+      "hashCompared": false
+    },
+    {
+      "key": "yol",
+      "files": 3,
+      "elapsedMs": 1529,
+      "subtitlesDisabledForRepeat": true,
+      "sameSizesPixelsDuration": true,
+      "hashCompared": false
+    }
+  ],
+  "regression": {
+    "checkedAt": "2026-10-27T13:04:18.795Z",
+    "metadata": "fixed canonical reference; does not test phone TMDB API credentials",
+    "transport": "Node limited1MiB, actual source and subtitle HTTP; native iPhone transport not tested",
+    "cases": [
+      {
+        "key": "dune",
+        "elapsedMs": 5963,
+        "downloadFiles": 2,
+        "onlineWithTr": true,
+        "qualities": [
+          "1146x480",
+          "1280x536"
+        ],
+        "gaps": []
+      },
+      {
+        "key": "matrix",
+        "elapsedMs": 5180,
+        "downloadFiles": 0,
+        "onlineWithTr": true,
+        "qualities": [],
+        "gaps": [
+          "download_missing",
+          "small_download_with_tr_missing",
+          "multiple_verified_download_qualities_missing"
+        ]
+      },
+      {
+        "key": "fleabag-s1e1",
+        "elapsedMs": 3675,
+        "downloadFiles": 2,
+        "onlineWithTr": true,
+        "qualities": [
+          "848x354"
+        ],
+        "gaps": [
+          "multiple_verified_download_qualities_missing"
+        ]
+      },
+      {
+        "key": "shameless-s1e1",
+        "elapsedMs": 3389,
+        "downloadFiles": 0,
+        "onlineWithTr": true,
+        "qualities": [],
+        "gaps": [
+          "download_missing",
+          "small_download_with_tr_missing",
+          "multiple_verified_download_qualities_missing"
+        ]
+      },
+      {
+        "key": "death-note-s1e1",
+        "elapsedMs": 3543,
+        "downloadFiles": 4,
+        "onlineWithTr": true,
+        "qualities": [
+          "1280x720",
+          "852x480"
+        ],
+        "gaps": []
+      }
+    ],
+    "allSourceCriteriaMet": false
+  },
+  "ranking": {
+    "downloadFirstDefault": true,
+    "setting": "downloadFirst",
+    "appliedBeforeResultLimit": true,
+    "keepsLargeDownloadsAheadOfSmallHls": true,
+    "sortAndGroupWithinType": true,
+    "canDisable": true,
+    "hlsAlwaysOnlineOnly": true
+  },
+  "nativeNaming": {
+    "queryAndFragmentRemovedBeforeExtension": true,
+    "wrongExtensionRejected": true,
+    "extensionlessRealMp4Retained": true,
+    "querySuffixDoesNotRenameMatroska": true,
+    "referenceRepository": "NuvioMedia/NuvioMobile",
+    "referencePath": "composeApp/src/commonMain/kotlin/com/nuvio/app/features/downloads/DownloadsRepository.kt",
+    "referenceBlob": "909e718364f693d5a5d612933f0c896c6b144340"
+  },
+  "research": [
+    {
+      "source": "MoviesMod",
+      "catalogueOrigin": "https://moviesmod.meme",
+      "stateChanged": "fresh community domain; older .chat no longer evidence for current host",
+      "result": "exact Matrix IMDb/catalogue -> public SID forms -> DriveSeed -> instant raw 502134877-byte Matroska at Google host; bounded 128KiB Node sample 864x352/8177.92s/hin, but Range ignored (HTTP200), no .mkv path; not integrated to avoid native whole-file probe and wrong saved extension",
+      "publicKeysCopied": false,
+      "captchaSolved": false,
+      "integrated": false
+    },
+    {
+      "source": "UHDMovies",
+      "catalogueOrigin": "https://uhdmovies.beauty",
+      "result": "Dune public 2160p release -> DriveSeed 22.62GB page; normal Generate link returned Unknown error, no ready downloadable file",
+      "integrated": false
+    },
+    {
+      "source": "Matrix Resume mirrors",
+      "result": "one cached Worker TLS/network failure; another generated link only shows Uploading File, not ready media; not counted",
+      "integrated": false
+    },
+    {
+      "source": "4KHDHub",
+      "result": "12 bounded releases inspected, six terminal pages and five Worker candidates; all five current Node probes network failure, not universal phone failure proof",
+      "adapterAlreadyPresent": true,
+      "newWorkingFiles": 0
+    },
+    {
+      "source": "FullHDFilmizlesene",
+      "result": "403 current origin; no challenge bypass",
+      "integrated": false
+    },
+    {
+      "source": "SezonlukDizi / JetFilmizle / Nkiri",
+      "result": "current inspected URLs network failure",
+      "integrated": false
+    },
+    {
+      "source": "CTGMovies",
+      "result": "public site and documented API routes time out; adapter not added",
+      "integrated": false
+    },
+    {
+      "source": "Animecix / Sibnet",
+      "result": "proper exact Death Note episode contains additional Sibnet embeds, public player 403; no added adapter",
+      "integrated": false
+    },
+    {
+      "source": "SeiCode",
+      "result": "Your Name and Attack on Titan search empty; Death Note search only unrelated title; exact ID guards retained, no fake fallback",
+      "adapterAlreadyPresent": true,
+      "newWorkingFiles": 0
+    },
+    {
+      "source": "Waploaded",
+      "result": "central search pages still no correct movie/series links; recent sitemap adapter retained, no claim of full archive coverage",
+      "adapterAlreadyPresent": true
+    },
+    {
+      "source": "RareFilmm / Murder in Reverse",
+      "result": "catalogue and player respond; initial bounded file checks timed out; not counted among nine healthy file variants",
+      "newWorkingFiles": 0
+    }
+  ],
+  "references": [
+    "https://github.com/manitux-app/nuvio-plugins/blob/main/domains.json",
+    "https://github.com/phisher98/TVVVV/blob/main/domains.json",
+    "https://github.com/fmustafayaman/turkish-nuvio/blob/main/src/fullhdfilm/extractors.js",
+    "https://rarefilmm.com/2020/11/hush-a-bye-baby-1990/",
+    "https://rarefilmm.com/2026/09/gunese-yolculuk-1999/",
+    "https://rarefilmm.com/2020/08/yol-1982/"
+  ],
+  "upstream": {
+    "latestRelease": "0.6.5-beta",
+    "head": "61658f366f985fc7758f0942a14c1754c69aca68",
+    "sourceDrift": [],
+    "failedAssertions": [],
+    "sourceContractVerified": true
+  },
+  "limits": [
+    "Movie download catalogue grows partially; Matrix/Shameless download gaps persist.",
+    "Turkish original audio in two samples is not new Turkish dubbing coverage.",
+    "Gunes TR35 is film-level, Yol TR66 duration-level; synchronization not verified.",
+    "Hush has paired EN only; no TR found.",
+    "Source-declared EN hard subtitles remain in image.",
+    "9 byte/pixel/hash-verified variants do not prove full playback/download or broad catalogue reliability."
+  ],
+  "physicalDevice": "not-run",
+  "fullPlayback": "not-run",
+  "fullDownload": "not-run",
+  "offline": "not-run",
+  "subtitleAudioSync": "not-run"
+}

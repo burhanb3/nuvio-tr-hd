@@ -6,6 +6,12 @@ function sameFile(first, second) {
   return first && second && first.total === second.total && (first.url === second.url ||
     (first.etag && !first.etag.startsWith('W/') && first.etag === second.etag));
 }
+function nativeExtension(url) {
+  // DownloadsRepository strips query/fragment before taking the final suffix.
+  // A query ending in .mkv cannot fix an otherwise extensionless Matroska URL.
+  const suffix=String(url||'').split(/[?#]/)[0].split('.').pop().toLowerCase().trim();
+  return /^[a-z0-9]{2,5}$/.test(suffix)?suffix:'mp4';
+}
 
 async function probeOne(http, candidate, includeHls = false, hashEnabled = false, options = {}) {
   const path = candidate.url.split(/[?#]/)[0].toLowerCase();
@@ -48,12 +54,12 @@ async function probeOne(http, candidate, includeHls = false, hashEnabled = false
   if (!info) return null;
   const expectedDuration = candidate.identity?.runtimeMinutes * 60;
   if (/mpegurl|dash\+xml/.test(sample.mime) || /\.m3u8(?:$|[?#])/i.test(sample.url)) return null;
-  const aliasMatches = info.container === 'mkv' ? /\.mkv(?:$|[?#])/i : /\.mp4(?:$|[?#])/i;
-  const outputUrl = aliasMatches.test(candidate.downloadAlias || '') ? candidate.downloadAlias : sample.url;
-  if (info.container === 'mkv' && !/\.mkv(?:$|[?#])/i.test(outputUrl)) return null;
+  const outputUrl = candidate.downloadAlias && nativeExtension(candidate.downloadAlias)===info.container ? candidate.downloadAlias : sample.url;
+  if (nativeExtension(outputUrl)!==info.container) return null;
   // Do not save MP4 data as .mkv or Matroska data as .mp4 in Nuvio downloads.
-  if (info.container === 'mp4' && /\.mkv(?:$|[?#])/i.test(sample.url)) return null;
-  if (info.container === 'mkv' && /\.mp4(?:$|[?#])/i.test(sample.url)) return null;
+  const sampleExtension=nativeExtension(sample.url);
+  if (info.container === 'mp4' && sampleExtension==='mkv') return null;
+  if (info.container === 'mkv' && /\.mp4$/i.test(sample.url.split(/[?#]/)[0])) return null;
   let tailSample = null;
   let optionalMetadataFailed = false;
   if (info.container === 'mp4' && (!info.dimensions || candidate.requireDuration && !info.duration) && !http.expired()) {

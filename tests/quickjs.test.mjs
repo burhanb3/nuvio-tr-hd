@@ -14,6 +14,25 @@ const animeBundle = await readFile(new URL('../providers/nuvio-tr-hd-anime.js', 
 const extraAnimeBundle = await readFile(new URL('../providers/nuvio-tr-hd-extra-anime.js', import.meta.url), 'utf8');
 const fastOnlineBundle = await readFile(new URL('../providers/nuvio-tr-hd-fast-online.js', import.meta.url), 'utf8');
 
+test('QuickJS: ek film arşivi public metadata ile gerçek MP4/altyazı ve 4K pikseli korur',async()=>{
+ const page='https://rarefilmm.com/2020/11/the-matrix-1999/',embed='https://ok.ru/videoembed/12345678',url='https://ok1-2.vkuser.net/?fixture=video';
+ const mvhd=Buffer.alloc(20);mvhd.writeUInt32BE(1000,12);mvhd.writeUInt32BE(5400000,16);
+ const body=Buffer.concat([helpers.box('ftyp',Buffer.from('isom\0\0\0\0isommp42','binary')),helpers.box('moov',helpers.box('mvhd',mvhd),helpers.moov(3840,2160).subarray(8)),helpers.box('mdat',Buffer.alloc(32))]);
+ const metadata={provider:'UPLOADED_ODKL',ownerMovieId:'12345678',movie:{id:'12345678',title:'The Matrix (1999)',duration:'5400',status:'OK',subtitleTracks:[{url:'https://media.test/tr.srt',language:'tr'},{url:'https://ok1-2.vkuser.net/?fixture=sub',language:'tr'}]},videos:[{name:'ultra',url}]};
+ const encoded=JSON.stringify({flashvars:{metadata}}).replace(/&/g,'&amp;').replace(/"/g,'&quot;');
+ const fixture=makeFixture({extra:{
+  ['https://rarefilmm.com/?s=The%20Matrix']:{body:`<h2><a href="${page}">The Matrix (1999)</a></h2>`},
+  [page]:{body:`<h1>The Matrix (1999)</h1><article><iframe src="${embed}"></iframe><p>Subtitles: English (hard)</p></article>`},
+  [embed]:{body:`<div data-movie-id="12345678" data-options="${encoded}"></div>`},[url]:{body,mime:'video/mp4'},
+  ['https://ok1-2.vkuser.net/?fixture=sub']:{body:helpers.srt,mime:'text/plain'}
+ }});
+ const settings={autoSubtitles:false,archiveEnabled:false,hdhubEnabled:false,playImdbEnabled:false,vixsrcEnabled:false,waploadedEnabled:false,filmmoduEnabled:false,useDownloadBridge:false};
+ const calls=[],streams=await runInQuickJs(fixture,{settings,fetchCalls:calls});assert.equal(streams.length,1,JSON.stringify(calls));
+ assert.equal(streams[0].url,url);assert.equal(streams[0].type,'mp4');assert.equal(streams[0].quality,'2160p · 3840×2160');assert.match(streams[0].name,/İndirilebilir · RareFilmm/);
+ assert.equal(streams[0].subtitles.length,1);assert.equal(streams[0].subtitles[0].language,'tr');assert.match(streams[0].language,/EN görüntüde/);
+ assert.deepEqual(await runInQuickJs(fixture,{settings:{...settings,rarefilmmEnabled:false}}),[]);
+});
+
 test('QuickJS: DiziBal public player keeps dubbed audio and 4K online while respecting its source toggle',async()=>{
  const root='https://dizibal.org',page=root+'/movie/the-matrix',player='https://play2.pilavyerplay.top';
  const fixture=makeFixture({extra:{

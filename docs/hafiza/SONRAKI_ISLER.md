@@ -1,5 +1,13 @@
 # Sonraki işler
 
+## 1.7.8 öncelik
+
+1. Aynı adrese 1.7.8 hazırlanıyor:229check/QuickJS,Nuvio0.6.5-beta/20drift0,4aktifID. CI/Pages/7publicdosya/SHA yayını tamamla; github-publication.json ve bu notları gerçekduruma güncelle.
+2. Ana açık: genel film/dizi gerçek indirme, indirilebilir4K/TRdub ve eksik anime. Matrix/Shameless0dosya devam; Dune2/Fleabag2/DeathNote4 önceki sayı korundu. RareFilmm9kısmiMP4 bu açıkların kapandığı anlamına gelmez.
+3. RareFilmm tekrarında3+3+3boyut/piksel/süre aynı. HushENonly, GüneşTR35+ENhard, YolTR66. FizikseliPhone tamMP4+TRindirme/offline/senkron yok. TRözgünses yeniTRdub diye sayılmaz.
+4. Yeni durumu araştırmadan MoviesModGoogleRange200/uzantısızMKV,MatrixUploadinprogress, UHD4KUnknownerror,5HDHubWorkerTLSağhatası,FullHD403,Sezon/Jet/Nkiri/CTGağhatası,Sibnet403 tekrarlarında dönüp durma. Aynı ağda Node hatası telefonun kesin başarısızlığı değildir; cihazbaşarısı da varsayma.
+5. İlerleme yeni hazırdosya/Range kanıtından geneladapöre; yalnızmanifest/ad/claimed4K ile kaynakekleme. YeniPC/backend/account/secret/per-title pin yok. Nativekotayı veyaaltyazıkorumalarını gevşeterek sayışişirme.
+
 ## 1.7.7 öncelik
 
 1. Tamamlandı:1.7.7 aynı adreste yayımlandı; kodfe0eed0d323268f186a3f17e85612de2e1bc18f4,222check/QuickJS,Nuvio0.6.5-beta/20drift0,4aktifID. Windows/Linux40499840365,Pages40499840426,7publicHTTP200/SHA başarılı; github-publication.json güncel.

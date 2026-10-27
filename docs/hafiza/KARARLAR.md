@@ -1,5 +1,13 @@
 # Tasarım kararları
 
+## 1.7.8 — 27 Ekim 2026
+
+- İndirme önceliği sıralama ve liste sınırından önce uygulanır; downloadFirst varsayılan açık, kapatılabilir. Büyük gerçek dosya küçük HLS satırlarından dolayı kaybolmaz. Online yollar silinmez; uygulamanın global provider sırasını pluginler arası kontrol ettiğimizi söyleme.
+- RareFilmm kısmi eski film kataloğu ana grupta açık. Dokuz gerçek küçükMP4 üçfilm/ikiayrıdosyaturunda; bunu tümkatalog/4K/TRdub başarısı sayma. Video adları üretimepinlenmedi. Kaynak ses iddiası gerçek konteyner verisinden daha üstün değil; özgünTRses yeni dublaj değildir.
+- Public OKVideo data-options kendi movieID/title/year/duration bağıyla okunur. Yalnız kaynak CDN URL'leri, gerçekRange ve MP4. Oynatıcı kalitelabeli her varyanta piksel diye yayılmaz. 3varyant/bütçe, headers kaynağa uygun; script/key/captcha/account0.
+- ENhard yalnız açık yayıncı bildirimiyle EN görüntüde; pairedEN ile farkı korunur. MevcutTR/EN eşleştirme puanları aynen kalır; Güneş35 film düzeyi, Yol66 süre düzeyi, otomatik kaydırma/senkron garantisi yok.
+- Native dosya uzantısı query/hash çıkarıldıktan sonra belirlenir. MP4PHP vequeryMKV yanlışadını doğru dosya diye kabul etme. Query HLS marker güvenliği farklıdır, korunur. Google200RangeignoredMKV ve Uploading sayfası yeni dosyaya sayılmaz; native bütünfilmi probeya indirme riskini alma.
+
 ## 1.7.7 kaynak ve hız kararları
 
 - Yeni4.Hızlıİzle grubu eski3ID'yi silmez. HDFilmDelisi ve DiziBal fastOnline/all'da tek kez; main'in eskiPlayIMDb/Vix/diğeronline yolları korunur. Nativegrupcompletion kullanılabilir; per-rowstreaming ABI uydurma. Güncellemede Hızlıİzle etkinliği kontrol edilir.

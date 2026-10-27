@@ -11,6 +11,7 @@ function configuration(settings = {}, injectedKey) {
     playImdbEnabled: settings.playImdbEnabled !== false, vixsrcEnabled: settings.vixsrcEnabled !== false,
     hdhubEnabled: settings.hdhubEnabled !== false, archiveEnabled: settings.archiveEnabled !== false,
     waploadedEnabled: settings.waploadedEnabled !== false,
+    rarefilmmEnabled: settings.rarefilmmEnabled !== false,
     hdfilmdelisiEnabled:settings.hdfilmdelisiEnabled!==false,
     dizibalEnabled:settings.dizibalEnabled!==false,
     autoSubtitles: settings.autoSubtitles !== false, subtitleRequired: settings.subtitlePolicy === 'require',

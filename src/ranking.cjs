@@ -50,6 +50,8 @@ function groupValue(entry, group) {
 function rankStreams(entries, maximum = 6, settings = {}) {
   const mode = settings.sortOrder || 'recommended', group = settings.groupResults || 'none';
   return entries.slice().sort((a, b) => {
+    if (settings.downloadFirst === true && !!a.video.downloadable !== !!b.video.downloadable)
+      return a.video.downloadable ? -1 : 1;
     const grouped = groupValue(a, group).localeCompare(groupValue(b, group));
     if (grouped) return grouped;
     const x = mode.startsWith('size_') ? sizeValue(a) : qualityValue(a);

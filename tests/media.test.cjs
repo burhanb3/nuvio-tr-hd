@@ -59,6 +59,15 @@ test('uzantısız veya MP4 uzantılı MKV indirme adı hatasına karşı elenir'
     assert.equal(await probe(http, { url, headers: {} }), null);
   }
 });
+
+test('Nuvio indirme adı query içindeki uzantıdan alınmaz; PHP/yanlış uzantı dosya diye sunulmaz',async()=>{
+  for(const [path,body] of [['a?filename=film.mkv',mkv()],['get.php?file=film.mp4',mp4()],['film.mkv?filename=film.mp4',mp4()]]){
+    const url='https://media.test/'+path,http=createHttp({fetchImpl:fixtureFetch({[url]:{body}})});
+    try{assert.equal(await probe(http,{url,headers:{}}),null);}finally{http.close();}
+  }
+  const url='https://media.test/?token=fixture',http=createHttp({fetchImpl:fixtureFetch({[url]:{body:mp4()}})});
+  try{assert.equal((await probe(http,{url,headers:{}})).container,'mp4');}finally{http.close();}
+});
 test('bozuk ve rastgele konteyner girdileri çökmez', () => {
   let seed = 7;
   for (let n = 0; n < 400; n++) {

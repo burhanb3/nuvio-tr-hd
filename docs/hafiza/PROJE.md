@@ -1,5 +1,17 @@
 # Proje hafızası
 
+## 1.7.8 — indirme önceliği ve kısmi film arşivi
+
+Kullanıcı önceliği indirme/dublaj/altyazı/4K kapsamını büyütmek. Yeni RareFilmm genel film adaptörü main'de varsayılan açık, rarefilmmEnabled. TV/anime atlanır. Tam kanonik başlık/yıl; arama h2 ve primary article iframe; oynatıcının kendi ID/başlık/durum/süre kontrolü; gerçek Range/konteyner/boyut/piksel/hash. Public data-options JSON okunur; script/eval/login/challenge yok. Üç variant: yüksek/küçük/orta, kaynak keşfi8s, main24s/native3/sub4/EN1 değişmedi. Yeni scraper/helper/backend/hesap/videoPin0; dörtID aynı. MP4 uzantısız URL native varsayılan.mp4 ile uyumlu, imzalıadres aramalar arasında tutulmaz.
+
+Son canlı tur: Hush-a-Bye Baby3dosya150702891–334799252byte/240-360-480p/ENpaired90/TRyok/ENhard; GüneşeYolculuk3dosya238514374–975107840byte/240-480-720p/TR35filmlevel+EN65/ENhard; Yol3dosya256668430–958648903byte/240-360-480p/TR66duration. 9gerçekMP4/hash, tekrar9aynıbyte/piksel/süre (repeat autoSubtitlesfalse, hash tekrar karşılaştırılmadı). Güneş/Yol TR özgün ses; yeni TR dublaj diye sunma. Güneş kaynaktan TR/KU/NL, HushEN/GA. EN görüntüde etiketi yalnız açık hard bildirimi; Yol player ENG SUBS tekbaşına hardkanıtı sayılmadı. Kayıtlı testmetadata ID/IMDb bağlı sabit referans; günler sentetik1Ocak yalnız bilinenyılı taşır, gerçekTMDBAPIgünkanıtı değil. Türksenkron fiziksel doğrulanmadı.
+
+Yeni downloadFirst varsayılanaçık: indirme/online ayrımı maxResults uygulanmadan önce; boyut/kalite/grup her tür içinde. false eski karışık sıra. KüçükHLS büyükdosyayı ilk20dışınaitemez. Native dosyaadı sorgu/hashöncesiuzantı; query .mkv yanlış kaydetmeyi gizlemez; gerçekuzantısızMP4korunur. Nuvio0.6.5-beta20kilit drift0; kilit değişmedi.229check/QuickJS.
+
+Regresyon5başlık: Dune2/Fleabag2/DeathNote4dosya; Matrix/Shameless0dosya+onlineTR. Node3,4–6s sabitmetadatayla, iPhonegarantisi değil. Yeni canlı4K0/TRdub0; genel film/dizi/anime indirme hedefi açık. MoviesMod yeni.meme publicnormalformlar Matrixgerçek502MBMKVyeulaştı amaRange200/tümgövde+uzantısız/HIonly; nativeyeeklenmedi. UHD.beauty Dune4K22,62GBGenerateUnknownerror; MatrixResumeUploadinprogress hazırdosyadeğil. HDHub5workerNodeağhatası; fullhd403,sezon/jet/nkiri/CTGağhatası,Sibnet403. Aynı düğümleri yeni durum yokken tekrarlama. Kanıt compatibility/download-expansion-178.json,coverage-178.json,upstream-178-check.json. Fizikselcihaz/tamoynatım/indirme/offline/senkronyok.
+
+Yayın 1.7.8 hazırlanıyor; CI/public dosya SHA kanıtını tamamla.
+
 ## 1.7.7 — kaynaklar, hız ve depo düzeni
 
 Yeni kullanıcı önceliği film/dizi/anime indirme ve düşükten4K'ya gerçek seçenekler, ses/dublaj kapsamı, hız ve profesyonel repo görünümü. Yeni genel MP4/MKV adaptörü bu tur doğrulanmadı; bunu HLS ile kapandı sayma. Eski kaynak/ayar kimlikleri3 korunur; dördüncü ID nuvio-tr-hd-fast-online, Hızlı İzle, movie/tv/HLS, varsayılan açık. HDFilmDelisi main'den bu gruba taşındı; yeni DiziBal da yalnız fastOnline/all'da. Main PlayIMDb/VixSrc/DiziYou/DiziBak/FilmModu ve dosyaları korur. HDF/DiziBal iki grupta yinelenmez. Native completion birleştirmesi kullanılır, yeni satır-callback yok. Yeni satırın telefonda etkinliği kontrol edilmeli; fiziksel cihaz yok.

@@ -10,8 +10,16 @@ test('Görüntüye işlenmiş yabancı altyazı etiketlenir; önerilende temiz o
  const burned=pair('burned',1000,720),online=pair('online',2000,720,'hls');burned.candidate.burnedSubtitleLanguage='es';
  for(const p of[burned,online])p.subtitles=[{url:'https://subs.test/tr.srt',language:'tr',name:'Türkçe',_score:90}];
  const bySize=formatResults([burned,online],{},target);assert.match(bySize[0].language,/ES görüntüde/);assert.match(bySize[0].title,/İspanyolca altyazı görüntüye işlenmiş/);
- const recommended=formatResults([burned,online],{sortOrder:'recommended'},target);assert.match(recommended[0].name,/Online/);
+ const recommended=formatResults([burned,online],{sortOrder:'recommended',downloadFirst:false},target);assert.match(recommended[0].name,/Online/);
  assert.equal(recommended[1].subtitles[0].language,'tr');
+});
+
+test('indirme önceliği küçük HLS satırları arasında büyük/4K dosyanın liste sınırından düşmesini önler',()=>{
+ const download=pair('4k',20000000000,2160),online=Array.from({length:6},(_,i)=>pair('online'+i,100000000+i,720,'hls'));
+ const list=formatResults([...online,download],{maxResults:6,sortOrder:'size_asc'},target);
+ assert.equal(list.length,6);assert.equal(list[0].url,download.video.url);assert.equal(list[0].type,'mp4');assert.ok(list.slice(1).every(s=>s.type==='hls'));
+ const mixed=formatResults([...online,download],{maxResults:6,sortOrder:'size_asc',downloadFirst:false},target);
+ assert.ok(mixed.every(s=>s.type==='hls'));assert.equal(onSettings().find(s=>s.key==='downloadFirst').defaultValue,true);
 });
 test('kısa kartlar native alanlara bölünür; varsayılan küçükten büyüğe, bilinmeyen sonda',()=>{
  const entries=[pair('big',5000,1080),pair('small',1000,720),pair('unknown',null,2160)];
