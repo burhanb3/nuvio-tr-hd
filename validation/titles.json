@@ -10,6 +10,48 @@
   },
   "titles": [
     {
+      "key": "totoro",
+      "tmdb": {
+        "id": 8392,
+        "title": "My Neighbor Totoro",
+        "original_title": "となりのトトロ",
+        "release_date": "1988-04-16",
+        "imdb_id": "tt0096283",
+        "runtime": 86,
+        "original_language": "ja",
+        "genres": [
+          {
+            "id": 16
+          }
+        ]
+      },
+      "referenceSources": [
+        "https://www.themoviedb.org/movie/8392?language=en-US"
+      ],
+      "referenceMetadataNote": "Canonical Japanese original and English display title/year/runtime checked on public TMDB page; fixed fixture does not test phone API credentials."
+    },
+    {
+      "key": "spirited-away",
+      "tmdb": {
+        "id": 129,
+        "title": "Spirited Away",
+        "original_title": "千と千尋の神隠し",
+        "release_date": "2001-07-20",
+        "imdb_id": "tt0245429",
+        "runtime": 125,
+        "original_language": "ja",
+        "genres": [
+          {
+            "id": 16
+          }
+        ]
+      },
+      "referenceSources": [
+        "https://www.themoviedb.org/movie/129?language=en-US"
+      ],
+      "referenceMetadataNote": "Canonical Japanese original and English display title/year/runtime checked on public TMDB page; fixed fixture does not test phone API credentials."
+    },
+    {
       "key": "fleabag-s1e2",
       "season": 1,
       "episode": 2,

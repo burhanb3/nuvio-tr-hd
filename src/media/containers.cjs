@@ -144,6 +144,13 @@ function ebmlNumber(bytes, element) {
   for (let at = element.data; at < element.end; at++) value = value * 256 + bytes[at];
   return value;
 }
+function mkvTrackLanguage(bytes,entry,children){
+  // Matroska Language defaults to eng only when absent. BCP47 overrides it;
+  // an explicit unknown/empty value or a truncated track is not a default.
+  const field=children.find(x=>x.id===0x22b59d)||children.find(x=>x.id===0x22b59c);
+  if(field)return field.complete?ascii(bytes,field.data,field.end-field.data):null;
+  return entry.complete?'eng':null;
+}
 function mkvInfo(bytes) {
   const top = elements(bytes, 0, bytes.length);
   if (top[0]?.id !== 0x1a45dfa3 || !top[0].complete) return null;
@@ -172,13 +179,12 @@ function mkvInfo(bytes) {
     if (tracks) for (const entry of elements(bytes, tracks.data, tracks.end).filter(x => x.id === 0xae)) {
       const children = elements(bytes, entry.data, entry.end);
       if (ebmlNumber(bytes, children.find(x => x.id === 0x83)) === 2) {
-        const field = children.find(x => x.id === 0x22b59d && x.complete) || children.find(x => x.id === 0x22b59c && x.complete);
-        const language = field && ascii(bytes, field.data, field.end - field.data);
+        const language = mkvTrackLanguage(bytes,entry,children);
         if (/^[a-z]{2,3}(?:-[a-z0-9]+)*$/i.test(language || '') && !/^(und|mis|zxx)$/i.test(language)) audioLanguages.add(language.toLowerCase());
       }
       if (ebmlNumber(bytes, children.find(x => x.id === 0x83)) === 17) {
         const field = id => { const item = children.find(x => x.id === id && x.complete); return item ? ascii(bytes, item.data, item.end - item.data) : ''; };
-        const language = field(0x22b59d) || field(0x22b59c);
+        const language = mkvTrackLanguage(bytes,entry,children);
         const codec = field(0x86);
         const code=languageCode(language);
         if (code && /^S_(TEXT\/(UTF8|WEBVTT|ASS|SSA)|VOBSUB|HDMV\/PGS)$/.test(codec))

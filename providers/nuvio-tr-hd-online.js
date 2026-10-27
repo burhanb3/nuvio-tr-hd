@@ -934,16 +934,31 @@ var require_archive = __commonJS({
       const titleYear = !!name && (full === name + " " + target.year || full.startsWith(name + " " + target.year + " "));
       return { actual, name, suffix, release, titleYear, exact: !!name && actual === name, localized: !!name && name !== normalizeTitle(target.originalTitle) };
     }
+    function archiveSearchNames(target) {
+      const out = [], seen = /* @__PURE__ */ new Set();
+      for (const value of [target.originalTitle, ...target.type === "movie" ? target.searchTitles || [] : []]) {
+        if (typeof value !== "string" || !value.trim()) continue;
+        const title = value.replace(/["\\]/g, " ").trim(), key = normalizeTitle(title);
+        if (key && !seen.has(key)) {
+          seen.add(key);
+          out.push(title);
+        }
+        if (out.length === 2) break;
+      }
+      return out;
+    }
     function archiveQuery(target, preferHd = false, titleYear = target.type === "movie" || !preferHd) {
-      const title = target.originalTitle.replace(/["\\]/g, " ");
-      const exclusions = ["sample", "trailer", "featurette", "review", "podcast", "commercial", "teaser"].filter((word) => !normalizeTitle(title).split(" ").includes(word));
-      const binding = target.type === "tv" && preferHd && /^tt\d+$/.test(target.imdbId || "") ? `(title:"${title}" AND imdb_id:${target.imdbId})` : `title:"${title}" AND ` + (titleYear ? `(year:${target.year} OR title:${target.year})` : `year:${target.year}`);
+      const titles = archiveSearchNames(target), title = titles[0];
+      const exclusions = ["sample", "trailer", "featurette", "review", "podcast", "commercial", "teaser"].filter((word) => !titles.some((t) => normalizeTitle(t).split(" ").includes(word)));
+      const titleSearch = titles.length > 1 ? "(" + titles.map((t) => `title:"${t}"`).join(" OR ") + ")" : `title:"${title}"`;
+      const binding = target.type === "tv" && preferHd && /^tt\d+$/.test(target.imdbId || "") ? `(title:"${title}" AND imdb_id:${target.imdbId})` : titleSearch + " AND " + (titleYear ? `(year:${target.year} OR title:${target.year})` : `year:${target.year}`);
       const q = `mediatype:movies AND ${binding}` + (titleYear && exclusions.length ? ` AND NOT title:(${exclusions.join(" OR ")})` : "") + (preferHd && target.type === "movie" ? " AND (title:(1080p OR 720p OR 2160p OR remastered) OR description:1080p)" : "");
       return `https://archive.org/advancedsearch.php?q=${encodeURIComponent(q)}&fl[]=identifier&fl[]=title&fl[]=year&rows=12&sort[]=downloads%20desc&output=json`;
     }
     async function scanArchive(http, target, options = {}) {
       const verifiedRecords = verifiedArchiveRecords(target);
       const expected = normalizeTitle(target.originalTitle);
+      const aliasLookup = archiveSearchNames(target).some((name) => normalizeTitle(name) !== expected);
       let names = archiveNames(target), titleJob;
       async function localizedNames() {
         if (!titleJob) titleJob = Promise.resolve().then(() => options.loadTitles ? options.loadTitles() : []).catch(() => []);
@@ -957,13 +972,13 @@ var require_archive = __commonJS({
       const priority = (doc) => {
         if (!doc.title) return 1;
         const title = normalizeTitle(String(doc.title));
-        if (title === expected + " " + target.year || title.startsWith(expected + " " + target.year + " ")) return 3;
-        if (title === expected || new RegExp(`^(?:1080p|720p|2160p|remastered|restored)\\b`).test(title.startsWith(expected + " ") ? title.slice(expected.length + 1) : "")) return 2;
+        if (names.some((name) => title === name + " " + target.year || title.startsWith(name + " " + target.year + " "))) return 3;
+        if (names.some((name) => title === name || new RegExp(`^(?:1080p|720p|2160p|remastered|restored)\\b`).test(title.startsWith(name + " ") ? title.slice(name.length + 1) : ""))) return 2;
         if (target.type === "tv" && title.startsWith(expected + " ") && /^(?:season|sezon|s\d|complete|all seasons)\b/.test(title.slice(expected.length + 1))) return 1;
         if (bilingualHint(doc.title, target)) return 1;
         return 0;
       };
-      const docs = [...new Map(results.flatMap((r) => Array.isArray(r?.response?.docs) ? r.response.docs : []).map((d) => [d.identifier, d])).values()].filter((d) => !verifiedRecords.some((r) => r.item === d.identifier)).filter((d) => priority(d) > 0 && !/\b(sample|trailer|featurette|review|podcast|commercial|teaser)\b/.test(normalizeTitle(d.title || "").replace(expected, ""))).sort((a, b) => priority(b) - priority(a));
+      const docs = [...new Map(results.flatMap((r) => Array.isArray(r?.response?.docs) ? r.response.docs : []).map((d) => [d.identifier, d])).values()].filter((d) => !verifiedRecords.some((r) => r.item === d.identifier)).filter((d) => priority(d) > 0 && !/\b(sample|trailer|featurette|review|podcast|commercial|teaser)\b/.test(names.reduce((text, name) => text.replace(name, ""), normalizeTitle(d.title || "")))).sort((a, b) => priority(b) - priority(a));
       const groups = await mapLimit(docs.slice(0, Math.max(0, (options.onCandidates ? 12 : 8) - verifiedRecords.length)), 2, loadDoc);
       const pinned = await pinnedWork;
       return [...pinned, ...groups].flat().filter((x) => x.url);
@@ -1031,13 +1046,15 @@ var require_archive = __commonJS({
           subtitleBase: "https://archive.org/",
           alternateUrls: urlsFor(f.name).slice(1),
           getOnly: true,
+          rejectHindiOnly: true,
+          mediaFamily: doc.identifier + "|" + (typeof f.original === "string" && files.some((parent) => parent.name === f.original) ? f.original : f.name),
           ...pinnedItem ? { expectedFile: verifiedMetadataFile(verifiedRecord, f) } : {},
           ...pinnedItem && verifiedRecord.burnedSubtitleLanguage ? { burnedSubtitleLanguage: verifiedRecord.burnedSubtitleLanguage } : {},
           sourceItemId: doc.identifier,
           mediaFilename: f.name,
           releaseYearBasis: pinnedItem ? "content-sample-pinned-file" : yearFromTitle ? "exact-title-and-filename" : "metadata",
-          ...yearFromTitle || binding.localized ? { durationTolerance: 0.1 } : {},
-          requireDuration: pinnedItem || yearFromTitle || binding.localized || target.runtimeMinutes > 0 && !(Number(f.length) > 0),
+          ...yearFromTitle || binding.localized || aliasLookup ? { durationTolerance: 0.1 } : {},
+          requireDuration: pinnedItem || yearFromTitle || binding.localized || aliasLookup || target.runtimeMinutes > 0 && !(Number(f.length) > 0),
           source: "Internet Archive",
           identity: target,
           identityConfidence: meta.tmdb_id ? 100 : 90
@@ -1046,7 +1063,7 @@ var require_archive = __commonJS({
         return candidates;
       }
     }
-    module2.exports = { scanArchive, archiveQuery, archiveNames, bilingualHint, titleBinding, bilingualFileNames };
+    module2.exports = { scanArchive, archiveQuery, archiveSearchNames, archiveNames, bilingualHint, titleBinding, bilingualFileNames };
   }
 });
 
@@ -3047,6 +3064,11 @@ var require_containers = __commonJS({
       for (let at = element.data; at < element.end; at++) value = value * 256 + bytes[at];
       return value;
     }
+    function mkvTrackLanguage(bytes, entry, children) {
+      const field = children.find((x) => x.id === 2274717) || children.find((x) => x.id === 2274716);
+      if (field) return field.complete ? ascii(bytes, field.data, field.end - field.data) : null;
+      return entry.complete ? "eng" : null;
+    }
     function mkvInfo(bytes) {
       const top = elements(bytes, 0, bytes.length);
       if (top[0]?.id !== 440786851 || !top[0].complete) return null;
@@ -3075,8 +3097,7 @@ var require_containers = __commonJS({
         if (tracks) for (const entry of elements(bytes, tracks.data, tracks.end).filter((x) => x.id === 174)) {
           const children = elements(bytes, entry.data, entry.end);
           if (ebmlNumber(bytes, children.find((x) => x.id === 131)) === 2) {
-            const field = children.find((x) => x.id === 2274717 && x.complete) || children.find((x) => x.id === 2274716 && x.complete);
-            const language = field && ascii(bytes, field.data, field.end - field.data);
+            const language = mkvTrackLanguage(bytes, entry, children);
             if (/^[a-z]{2,3}(?:-[a-z0-9]+)*$/i.test(language || "") && !/^(und|mis|zxx)$/i.test(language)) audioLanguages.add(language.toLowerCase());
           }
           if (ebmlNumber(bytes, children.find((x) => x.id === 131)) === 17) {
@@ -3084,7 +3105,7 @@ var require_containers = __commonJS({
               const item = children.find((x) => x.id === id && x.complete);
               return item ? ascii(bytes, item.data, item.end - item.data) : "";
             };
-            const language = field(2274717) || field(2274716);
+            const language = mkvTrackLanguage(bytes, entry, children);
             const codec = field(134);
             const code = languageCode(language);
             if (code && /^S_(TEXT\/(UTF8|WEBVTT|ASS|SSA)|VOBSUB|HDMV\/PGS)$/.test(codec))
@@ -3509,6 +3530,11 @@ var require_probe = __commonJS({
       if (candidate.requireDuration && !info.duration) return null;
       if (candidate.requireVideoDimensions && !info.dimensions) return null;
       if (Array.isArray(candidate.requireAudioAny) && !candidate.requireAudioAny.some((code) => (info.audioLanguages || []).map(languageCode).includes(code))) return null;
+      const audioLanguages = (info.audioLanguages || []).map(languageCode).filter(Boolean);
+      if (candidate.rejectHindiOnly === true && audioLanguages.length && audioLanguages.every((code) => code === "hi")) {
+        options.onUnwantedAudio?.();
+        return null;
+      }
       const durationTolerance = candidate.durationTolerance === 0.1 ? { low: 0.9, high: 1.1 } : { low: 0.7, high: 1.35 };
       if (info.duration && expectedDuration > 0 && (info.duration < expectedDuration * durationTolerance.low || info.duration > expectedDuration * durationTolerance.high)) return null;
       let videoHash = null;
@@ -3528,6 +3554,11 @@ var require_probe = __commonJS({
       };
     }
     async function probe(http, candidate, includeHls = false, hashEnabled = false, options = {}) {
+      let unwantedAudio = false;
+      const attemptOptions = { ...options, onUnwantedAudio: () => {
+        unwantedAudio = true;
+        options.onUnwantedAudio?.();
+      } };
       const canUseReplicas = candidate.source === "Internet Archive" && !Object.keys(candidate.headers || {}).some((k) => /^(authorization|cookie)$/i.test(k));
       const replicas = canUseReplicas && Array.isArray(candidate.alternateUrls) ? candidate.alternateUrls.filter((url) => {
         try {
@@ -3540,8 +3571,9 @@ var require_probe = __commonJS({
       const attempts = candidate.source === "AniMOM" ? [candidate.url, candidate.url] : [.../* @__PURE__ */ new Set([candidate.url, ...replicas])];
       for (const [index, url] of attempts.entries()) {
         if (http.expired()) return null;
-        const video = await probeOne(http, { ...candidate, url }, includeHls, hashEnabled, options);
+        const video = await probeOne(http, { ...candidate, url }, includeHls, hashEnabled, attemptOptions);
         if (video) return video;
+        if (unwantedAudio) return null;
         if ([401, 403, 429].includes(http.failureFor?.(url)?.status)) return null;
         if (candidate.source === "AniMOM" && index === 0 && http.failureFor?.(url)?.reason !== "timeout_or_network") return null;
       }
@@ -3865,7 +3897,7 @@ var require_ranking = __commonJS({
 var require_diagnostics = __commonJS({
   "src/diagnostics.cjs"(exports2, module2) {
     "use strict";
-    var VERSION = true ? "1.8.4" : "dev";
+    var VERSION = true ? "1.8.5" : "dev";
     function effectiveTmdbKey(settings, injectedKey) {
       return typeof settings.tmdbApiKey === "string" && settings.tmdbApiKey.trim() ? settings.tmdbApiKey.trim() : typeof injectedKey === "string" ? injectedKey.trim() : "";
     }
@@ -3941,6 +3973,7 @@ var require_index = __commonJS({
     var { scanSeiCode } = require_seicode();
     var { scanDiziBak } = require_dizibak();
     var { probe } = require_probe();
+    var { languageCodes } = require_languages();
     var { loadSubtitles, subtitleLanguage, subtitleKey, selectSubtitles, embeddedSubtitleLanguages } = require_subtitles();
     var { createSubtitleDiscovery, scoreSubtitle } = require_subtitle_discovery();
     var { safeUrl, mapLimit, qualityLabel } = require_util();
@@ -4065,6 +4098,8 @@ var require_index = __commonJS({
           };
           const http = createHttp({ fetchImpl, allowHttp, timeoutMs: requestTimeoutMs, deadline: started + budgetMs, scheduler, onEvent: emit });
           const completed = [];
+          const rejectedAudioFamilies = /* @__PURE__ */ new Set();
+          const availablePairs = () => completed.filter((pair) => !pair.candidate.mediaFamily || !rejectedAudioFamilies.has(pair.candidate.mediaFamily) || languageCodes(pair.video.audioLanguages).some((code) => code !== "hi"));
           const unique = /* @__PURE__ */ new Map(), waiting = [];
           let active = 0;
           let timer, target, discoverSubtitles;
@@ -4102,7 +4137,10 @@ var require_index = __commonJS({
               candidate,
               settings.includeHls !== false,
               settings.autoSubtitles !== false,
-              { detailedHls: !lightweightHls }
+              { detailedHls: !lightweightHls, onUnwantedAudio: () => {
+                reject("hindi_only_audio");
+                if (typeof candidate.mediaFamily === "string") rejectedAudioFamilies.add(candidate.mediaFamily);
+              } }
             ));
             if (!video || http.expired()) {
               reject("video_unavailable");
@@ -4309,17 +4347,17 @@ var require_index = __commonJS({
                 ));
               });
               await Promise.all(pending);
-              return formatResults(completed, renderSettings(), target);
+              return formatResults(availablePairs(), renderSettings(), target);
             } catch {
               report.reason = "internal_error";
-              return target ? formatResults(completed, renderSettings(), target) : [];
+              return target ? formatResults(availablePairs(), renderSettings(), target) : [];
             }
           };
           try {
             const results = await Promise.race([run(), new Promise((resolve) => {
               timer = scheduler.schedule(() => {
                 report.reason = "deadline";
-                resolve(target ? formatResults(completed, renderSettings(), target) : []);
+                resolve(target ? formatResults(availablePairs(), renderSettings(), target) : []);
               }, budgetMs);
             })]);
             report.results = results.length;
@@ -4331,7 +4369,7 @@ var require_index = __commonJS({
             scheduler.close();
             report.elapsedMs = Date.now() - started;
             lastReport = JSON.parse(JSON.stringify(report));
-            lastPairs = completed.slice();
+            lastPairs = availablePairs();
             writeDiagnostic(lastReport, settings.debug === true || !report.results);
           }
         }

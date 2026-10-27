@@ -1,0 +1,1018 @@
+{
+  "checkedAt": "2026-10-27T23:15:48.449Z",
+  "version": "1.8.5",
+  "baseline": [
+    {
+      "key": "spirited-away",
+      "method": "Unmodified1.8.4 Archive discovery, actual original-title public queries and metadata. No full video probe in this baseline comparison.",
+      "searches": [
+        {
+          "status": 200,
+          "total": 0,
+          "error": null,
+          "ids": []
+        },
+        {
+          "status": 200,
+          "total": 4,
+          "error": null,
+          "ids": [
+            "a-viagem-de-chihiro-2001-blu-ray-1080p",
+            "spirited-away-2001-1080p",
+            "spirited-away-2001-japanese",
+            "xxfox_1768577613"
+          ]
+        }
+      ],
+      "candidates": [
+        {
+          "id": "a-viagem-de-chihiro-2001-blu-ray-1080p",
+          "file": "A Viagem de Chihiro (2001) BluRay 1080p Dual Áudio (By-KleysonLima).mp4"
+        },
+        {
+          "id": "a-viagem-de-chihiro-2001-blu-ray-1080p",
+          "file": "A Viagem de Chihiro (2001) BluRay 1080p Dual Áudio (By-KleysonLima).mkv"
+        },
+        {
+          "id": "spirited-away-2001-1080p",
+          "file": "Spirited Away (2001) [1080p x265].mp4"
+        },
+        {
+          "id": "spirited-away-2001-1080p",
+          "file": "Spirited Away (2001) [1080p x264].mp4"
+        },
+        {
+          "id": "spirited-away-2001-1080p",
+          "file": "MKV/Spirited Away (2001) [1080p x265].mkv"
+        },
+        {
+          "id": "spirited-away-2001-1080p",
+          "file": "MKV/Spirited Away (2001) [1080p x264].mkv"
+        }
+      ]
+    },
+    {
+      "key": "totoro",
+      "method": "Unmodified1.8.4 Archive discovery, actual original-title public queries and metadata. No full video probe in this baseline comparison.",
+      "searches": [
+        {
+          "status": 200,
+          "total": 2,
+          "error": null,
+          "ids": [
+            "meu-amigo-totoro_202307",
+            "xxfox_1768573840"
+          ]
+        },
+        {
+          "status": 200,
+          "total": 0,
+          "error": null,
+          "ids": []
+        }
+      ],
+      "candidates": [
+        {
+          "id": "meu-amigo-totoro_202307",
+          "file": "Meu Amigo Totoro.mp4"
+        },
+        {
+          "id": "meu-amigo-totoro_202307",
+          "file": "Meu Amigo Totoro.mkv"
+        }
+      ]
+    },
+    {
+      "key": "your-name",
+      "method": "Unmodified1.8.4 Archive discovery, actual original-title public queries and metadata. No full video probe in this baseline comparison.",
+      "searches": [
+        {
+          "status": 200,
+          "total": 2,
+          "error": null,
+          "ids": [
+            "sparkle_201703",
+            "your-name-2"
+          ]
+        },
+        {
+          "status": 200,
+          "total": 0,
+          "error": null,
+          "ids": []
+        }
+      ],
+      "candidates": []
+    }
+  ],
+  "outcome": {
+    "improvedExistingAdapters": [
+      "Internet Archive"
+    ],
+    "newFiles": 12,
+    "titleExamples": 3,
+    "newAnimeMovieFiles": 12,
+    "new4kFiles": 1,
+    "new1080pMkvFiles": 3,
+    "newMp4Files": 8,
+    "newOriginalAndEnglishAudioVerifiedFiles": 4,
+    "retainedArchiveFiles": 8,
+    "newTurkishDubFiles": 0,
+    "newTvFiles": 0,
+    "newAnimeEpisodeFiles": 0,
+    "allNewFilesHaveTurkishSubtitleAlternatives": true,
+    "newBackend": 0,
+    "newAccount": 0,
+    "newFixedKey": 0,
+    "newPerTitleVideoPin": 0,
+    "newScraperIds": 0
+  },
+  "method": {
+    "search": "At most2 unique names from the SAME canonical TMDB movie record (original/display), in the existing2 Archive searches. TV remains original-title only. No invented romanization, title similarity or per-title pin.",
+    "matching": "Search and priority recognize these canonical movie names; metadata IMDb/TMDB/year conflicts still reject. Alias lookup requires actual duration within90–110%. Same-file identity/container/Range/dimensions/hash checks unchanged.",
+    "audio": "Complete Matroska TrackEntry with absent Language uses format default eng. Explicit unknown/empty/truncated languages do not become English. BCP47 overrides legacy Language. Archive actually Hindi-only originals reject; their explicitly linked unknown-audio derived family is omitted from results. A derivative with independently measured non-Hindi audio is preserved. Unknown audio elsewhere is not blanket-rejected.",
+    "native": "Existing main24s,video3/sub4/EN1 and2 Archive queries/12 metadata quota retained. No new backend, account, key or scraper. No per-row ABI or native cancellation claim.",
+    "subtitles": "Existing TR/EN alternatives by identity/release/hash/duration; presence and score are not measured scene sync. 8 new MP4 audio languages are unmeasured;4 new MKVs have measured Japanese+English. No Turkish dub inferred from subtitle language."
+  },
+  "newFiles": [
+    {
+      "key": "totoro",
+      "tmdbId": 8392,
+      "source": "Internet Archive",
+      "container": "mp4",
+      "bytes": 1124188977,
+      "filename": "my_neighbor_totoro_1988.mp4",
+      "sourceItemId": "my_neighbor_totoro_1988_202404",
+      "releaseYearBasis": "exact-title-and-filename",
+      "mediaFilename": "my_neighbor_totoro_1988.ia.mp4",
+      "audioLanguages": [],
+      "subtitleBestScore": 69,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 1920,
+        "height": 1038
+      },
+      "quality": "1920x1038",
+      "qualityGrade": "1080p",
+      "turkishSubtitle": true,
+      "embeddedSubtitleLanguages": [],
+      "externalTrackCount": 6,
+      "externalTurkishTracks": 3,
+      "actualDurationSeconds": 5185.25,
+      "hashAvailable": true
+    },
+    {
+      "key": "totoro",
+      "tmdbId": 8392,
+      "source": "Internet Archive",
+      "container": "mp4",
+      "bytes": 523362254,
+      "filename": "My Neighbor Totoro [1988].mp4",
+      "sourceItemId": "my-neighbor-totoro-1988",
+      "releaseYearBasis": "metadata",
+      "mediaFilename": "My Neighbor Totoro [1988].mp4",
+      "audioLanguages": [],
+      "subtitleBestScore": 69,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 853,
+        "height": 480
+      },
+      "quality": "853x480",
+      "qualityGrade": "480p",
+      "turkishSubtitle": true,
+      "embeddedSubtitleLanguages": [],
+      "externalTrackCount": 6,
+      "externalTurkishTracks": 3,
+      "actualDurationSeconds": 5185.155,
+      "hashAvailable": true
+    },
+    {
+      "key": "totoro",
+      "tmdbId": 8392,
+      "source": "Internet Archive",
+      "container": "mkv",
+      "bytes": 909620494,
+      "filename": "My.Neighbor.Totoro.1988.1080p.BDRip.Dual.Audio.10bits.x265-Rapta.mkv",
+      "sourceItemId": "my.-neighbor.-totoro.-1988.1080p.-bdrip.-dual.-audio.-10bits.x-265-rapta",
+      "releaseYearBasis": "metadata",
+      "mediaFilename": "My.Neighbor.Totoro.1988.1080p.BDRip.Dual.Audio.10bits.x265-Rapta.mkv",
+      "audioLanguages": [
+        "jpn",
+        "eng"
+      ],
+      "subtitleBestScore": 69,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 1920,
+        "height": 1038
+      },
+      "quality": "1920x1038",
+      "qualityGrade": "1080p",
+      "turkishSubtitle": true,
+      "embeddedSubtitleLanguages": [],
+      "externalTrackCount": 6,
+      "externalTurkishTracks": 3,
+      "actualDurationSeconds": 5185.206,
+      "hashAvailable": true
+    },
+    {
+      "key": "totoro",
+      "tmdbId": 8392,
+      "source": "Internet Archive",
+      "container": "mp4",
+      "bytes": 532448465,
+      "filename": "My.Neighbor.Totoro.1988.1080p.BDRip.Dual.Audio.10bits.x265-Rapta.mkv",
+      "sourceItemId": "my.-neighbor.-totoro.-1988.1080p.-bdrip.-dual.-audio.-10bits.x-265-rapta",
+      "releaseYearBasis": "metadata",
+      "mediaFilename": "My.Neighbor.Totoro.1988.1080p.BDRip.Dual.Audio.10bits.x265-Rapta.mp4",
+      "audioLanguages": [],
+      "subtitleBestScore": 69,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 888,
+        "height": 480
+      },
+      "quality": "888x480",
+      "qualityGrade": "480p",
+      "turkishSubtitle": true,
+      "embeddedSubtitleLanguages": [],
+      "externalTrackCount": 6,
+      "externalTurkishTracks": 3,
+      "actualDurationSeconds": 5185.216,
+      "hashAvailable": true
+    },
+    {
+      "key": "spirited-away",
+      "tmdbId": 129,
+      "source": "Internet Archive",
+      "container": "mp4",
+      "bytes": 1376616903,
+      "filename": "Spirited away 2001 1080p Dual 2 mp4.mp4",
+      "sourceItemId": "spirited-away-2001-1080p-dual-2-mp-4_202609",
+      "releaseYearBasis": "exact-title-and-filename",
+      "mediaFilename": "Spirited away 2001 1080p Dual 2 mp4.mp4",
+      "audioLanguages": [],
+      "subtitleBestScore": 69,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 886,
+        "height": 480
+      },
+      "quality": "886x480",
+      "qualityGrade": "480p",
+      "turkishSubtitle": true,
+      "embeddedSubtitleLanguages": [],
+      "externalTrackCount": 3,
+      "externalTurkishTracks": 3,
+      "actualDurationSeconds": 7472.609,
+      "hashAvailable": true
+    },
+    {
+      "key": "spirited-away",
+      "tmdbId": 129,
+      "source": "Internet Archive",
+      "container": "mp4",
+      "bytes": 750743874,
+      "filename": "Spirited Away (2001) English.avi",
+      "sourceItemId": "spirited-away-2001-english",
+      "releaseYearBasis": "metadata",
+      "mediaFilename": "Spirited Away (2001) English.mp4",
+      "audioLanguages": [],
+      "subtitleBestScore": 69,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 512,
+        "height": 272
+      },
+      "quality": "512x272",
+      "qualityGrade": "272p",
+      "turkishSubtitle": true,
+      "embeddedSubtitleLanguages": [],
+      "externalTrackCount": 3,
+      "externalTurkishTracks": 3,
+      "actualDurationSeconds": 7476.523,
+      "hashAvailable": true
+    },
+    {
+      "key": "spirited-away",
+      "tmdbId": 129,
+      "source": "Internet Archive",
+      "container": "mkv",
+      "bytes": 1600623769,
+      "filename": "Spirited Away (2001) [1080p x265 HEVC 10bit BluRay Dual Audio AAC 5.1].mkv",
+      "sourceItemId": "spirited-away-2001_202604",
+      "releaseYearBasis": "exact-title-and-filename",
+      "mediaFilename": "Spirited Away (2001) [1080p x265 HEVC 10bit BluRay Dual Audio AAC 5.1].mkv",
+      "audioLanguages": [
+        "en",
+        "ja"
+      ],
+      "subtitleBestScore": 69,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 1920,
+        "height": 1080
+      },
+      "quality": "1920x1080",
+      "qualityGrade": "1080p",
+      "turkishSubtitle": true,
+      "embeddedSubtitleLanguages": [
+        "en"
+      ],
+      "externalTrackCount": 3,
+      "externalTurkishTracks": 3,
+      "actualDurationSeconds": 7516.636,
+      "hashAvailable": true
+    },
+    {
+      "key": "spirited-away",
+      "tmdbId": 129,
+      "source": "Internet Archive",
+      "container": "mp4",
+      "bytes": 751870761,
+      "filename": "Spirited Away (2001) [1080p x265 HEVC 10bit BluRay Dual Audio AAC 5.1].mkv",
+      "sourceItemId": "spirited-away-2001_202604",
+      "releaseYearBasis": "exact-title-and-filename",
+      "mediaFilename": "Spirited Away (2001) [1080p x265 HEVC 10bit BluRay Dual Audio AAC 5.1].mp4",
+      "audioLanguages": [],
+      "subtitleBestScore": 69,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 853,
+        "height": 480
+      },
+      "quality": "853x480",
+      "qualityGrade": "480p",
+      "turkishSubtitle": true,
+      "embeddedSubtitleLanguages": [],
+      "externalTrackCount": 3,
+      "externalTurkishTracks": 3,
+      "actualDurationSeconds": 7516.639,
+      "hashAvailable": true
+    },
+    {
+      "key": "your-name",
+      "tmdbId": 372058,
+      "source": "Internet Archive",
+      "container": "mkv",
+      "bytes": 3014668629,
+      "filename": "Your Name (2016) [2160p].mkv",
+      "sourceItemId": "your-name-2016-2160p",
+      "releaseYearBasis": "exact-title-and-filename",
+      "mediaFilename": "Your Name (2016) [2160p].mkv",
+      "audioLanguages": [
+        "ja",
+        "en"
+      ],
+      "subtitleBestScore": 69,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 3840,
+        "height": 2160
+      },
+      "quality": "3840x2160",
+      "qualityGrade": "2160p",
+      "turkishSubtitle": true,
+      "embeddedSubtitleLanguages": [
+        "en"
+      ],
+      "externalTrackCount": 7,
+      "externalTurkishTracks": 4,
+      "actualDurationSeconds": 6395.648,
+      "hashAvailable": true
+    },
+    {
+      "key": "your-name",
+      "tmdbId": 372058,
+      "source": "Internet Archive",
+      "container": "mp4",
+      "bytes": 638122690,
+      "filename": "Your Name (2016) [2160p].mkv",
+      "sourceItemId": "your-name-2016-2160p",
+      "releaseYearBasis": "exact-title-and-filename",
+      "mediaFilename": "Your Name (2016) [2160p].mp4",
+      "audioLanguages": [],
+      "subtitleBestScore": 69,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 853,
+        "height": 480
+      },
+      "quality": "853x480",
+      "qualityGrade": "480p",
+      "turkishSubtitle": true,
+      "embeddedSubtitleLanguages": [],
+      "externalTrackCount": 7,
+      "externalTurkishTracks": 4,
+      "actualDurationSeconds": 6395.664,
+      "hashAvailable": true
+    },
+    {
+      "key": "your-name",
+      "tmdbId": 372058,
+      "source": "Internet Archive",
+      "container": "mkv",
+      "bytes": 1452168170,
+      "filename": "Your Name [2016] [1080p] [Dual] @Anime_Gallery.mkv",
+      "sourceItemId": "your-name-2016-1080p-dual-anime-gallery",
+      "releaseYearBasis": "metadata",
+      "mediaFilename": "Your Name [2016] [1080p] [Dual] @Anime_Gallery.mkv",
+      "audioLanguages": [
+        "jpn",
+        "eng"
+      ],
+      "subtitleBestScore": 69,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 1920,
+        "height": 1080
+      },
+      "quality": "1920x1080",
+      "qualityGrade": "1080p",
+      "turkishSubtitle": true,
+      "embeddedSubtitleLanguages": [
+        "en"
+      ],
+      "externalTrackCount": 7,
+      "externalTurkishTracks": 4,
+      "actualDurationSeconds": 6395.657,
+      "hashAvailable": true
+    },
+    {
+      "key": "your-name",
+      "tmdbId": 372058,
+      "source": "Internet Archive",
+      "container": "mp4",
+      "bytes": 632149466,
+      "filename": "Your Name [2016] [1080p] [Dual] @Anime_Gallery.mkv",
+      "sourceItemId": "your-name-2016-1080p-dual-anime-gallery",
+      "releaseYearBasis": "metadata",
+      "mediaFilename": "Your Name [2016] [1080p] [Dual] @Anime_Gallery.mp4",
+      "audioLanguages": [],
+      "subtitleBestScore": 69,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 853,
+        "height": 480
+      },
+      "quality": "853x480",
+      "qualityGrade": "480p",
+      "turkishSubtitle": true,
+      "embeddedSubtitleLanguages": [],
+      "externalTrackCount": 7,
+      "externalTurkishTracks": 4,
+      "actualDurationSeconds": 6395.691,
+      "hashAvailable": true
+    }
+  ],
+  "retainedFiles": [
+    {
+      "key": "totoro",
+      "tmdbId": 8392,
+      "source": "Internet Archive",
+      "container": "mp4",
+      "bytes": 507375103,
+      "filename": "Meu Amigo Totoro.mkv",
+      "sourceItemId": "meu-amigo-totoro_202307",
+      "releaseYearBasis": "metadata",
+      "mediaFilename": "Meu Amigo Totoro.mp4",
+      "audioLanguages": [],
+      "subtitleBestScore": 69,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 888,
+        "height": 480
+      },
+      "quality": "888x480",
+      "qualityGrade": "480p",
+      "turkishSubtitle": true,
+      "embeddedSubtitleLanguages": [],
+      "externalTrackCount": 6,
+      "externalTurkishTracks": 3,
+      "actualDurationSeconds": 5185.155,
+      "hashAvailable": true
+    },
+    {
+      "key": "totoro",
+      "tmdbId": 8392,
+      "source": "Internet Archive",
+      "container": "mkv",
+      "bytes": 1534819728,
+      "filename": "Meu Amigo Totoro.mkv",
+      "sourceItemId": "meu-amigo-totoro_202307",
+      "releaseYearBasis": "metadata",
+      "mediaFilename": "Meu Amigo Totoro.mkv",
+      "audioLanguages": [
+        "por",
+        "jpn"
+      ],
+      "subtitleBestScore": 69,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 1920,
+        "height": 1038
+      },
+      "quality": "1920x1038",
+      "qualityGrade": "1080p",
+      "turkishSubtitle": true,
+      "embeddedSubtitleLanguages": [],
+      "externalTrackCount": 6,
+      "externalTurkishTracks": 3,
+      "actualDurationSeconds": 5185.184,
+      "hashAvailable": true
+    },
+    {
+      "key": "spirited-away",
+      "tmdbId": 129,
+      "source": "Internet Archive",
+      "container": "mp4",
+      "bytes": 750095349,
+      "filename": "Spirited Away (2001) [1080p x265].mkv",
+      "sourceItemId": "spirited-away-2001-1080p",
+      "releaseYearBasis": "exact-title-and-filename",
+      "mediaFilename": "Spirited Away (2001) [1080p x265].mp4",
+      "audioLanguages": [],
+      "subtitleBestScore": 69,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 886,
+        "height": 480
+      },
+      "quality": "886x480",
+      "qualityGrade": "480p",
+      "turkishSubtitle": true,
+      "embeddedSubtitleLanguages": [],
+      "externalTrackCount": 3,
+      "externalTurkishTracks": 3,
+      "actualDurationSeconds": 7472.374,
+      "hashAvailable": true
+    },
+    {
+      "key": "spirited-away",
+      "tmdbId": 129,
+      "source": "Internet Archive",
+      "container": "mkv",
+      "bytes": 2397985051,
+      "filename": "Spirited Away (2001) [1080p x265].mkv",
+      "sourceItemId": "spirited-away-2001-1080p",
+      "releaseYearBasis": "exact-title-and-filename",
+      "mediaFilename": "MKV/Spirited Away (2001) [1080p x265].mkv",
+      "audioLanguages": [
+        "jpn",
+        "eng"
+      ],
+      "subtitleBestScore": 69,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 1920,
+        "height": 1040
+      },
+      "quality": "1920x1040",
+      "qualityGrade": "1080p",
+      "turkishSubtitle": true,
+      "embeddedSubtitleLanguages": [
+        "en"
+      ],
+      "externalTrackCount": 3,
+      "externalTurkishTracks": 3,
+      "actualDurationSeconds": 7472.331,
+      "hashAvailable": true
+    },
+    {
+      "key": "spirited-away",
+      "tmdbId": 129,
+      "source": "Internet Archive",
+      "container": "mkv",
+      "bytes": 10588677698,
+      "filename": "Spirited Away (2001) [1080p x264].mkv",
+      "sourceItemId": "spirited-away-2001-1080p",
+      "releaseYearBasis": "exact-title-and-filename",
+      "mediaFilename": "MKV/Spirited Away (2001) [1080p x264].mkv",
+      "audioLanguages": [
+        "ja",
+        "en"
+      ],
+      "subtitleBestScore": 69,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 1920,
+        "height": 1040
+      },
+      "quality": "1920x1040",
+      "qualityGrade": "1080p",
+      "turkishSubtitle": true,
+      "embeddedSubtitleLanguages": [
+        "en"
+      ],
+      "externalTrackCount": 3,
+      "externalTurkishTracks": 3,
+      "actualDurationSeconds": 7472.288,
+      "hashAvailable": true
+    },
+    {
+      "key": "spirited-away",
+      "tmdbId": 129,
+      "source": "Internet Archive",
+      "container": "mp4",
+      "bytes": 760459409,
+      "filename": "Spirited Away (2001) [1080p x264].mkv",
+      "sourceItemId": "spirited-away-2001-1080p",
+      "releaseYearBasis": "exact-title-and-filename",
+      "mediaFilename": "Spirited Away (2001) [1080p x264].mp4",
+      "audioLanguages": [],
+      "subtitleBestScore": 69,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 886,
+        "height": 480
+      },
+      "quality": "886x480",
+      "qualityGrade": "480p",
+      "turkishSubtitle": true,
+      "embeddedSubtitleLanguages": [],
+      "externalTrackCount": 3,
+      "externalTurkishTracks": 3,
+      "actualDurationSeconds": 7472.331,
+      "hashAvailable": true
+    },
+    {
+      "key": "spirited-away",
+      "tmdbId": 129,
+      "source": "Internet Archive",
+      "container": "mp4",
+      "bytes": 752243907,
+      "filename": "A Viagem de Chihiro (2001) BluRay 1080p Dual Áudio (By-KleysonLima).mkv",
+      "sourceItemId": "a-viagem-de-chihiro-2001-blu-ray-1080p",
+      "releaseYearBasis": "metadata",
+      "mediaFilename": "A Viagem de Chihiro (2001) BluRay 1080p Dual Áudio (By-KleysonLima).mp4",
+      "audioLanguages": [],
+      "subtitleBestScore": 69,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 886,
+        "height": 480
+      },
+      "quality": "886x480",
+      "qualityGrade": "480p",
+      "turkishSubtitle": true,
+      "embeddedSubtitleLanguages": [],
+      "externalTrackCount": 3,
+      "externalTurkishTracks": 3,
+      "actualDurationSeconds": 7473.515,
+      "hashAvailable": true
+    },
+    {
+      "key": "spirited-away",
+      "tmdbId": 129,
+      "source": "Internet Archive",
+      "container": "mkv",
+      "bytes": 2441830780,
+      "filename": "A Viagem de Chihiro (2001) BluRay 1080p Dual Áudio (By-KleysonLima).mkv",
+      "sourceItemId": "a-viagem-de-chihiro-2001-blu-ray-1080p",
+      "releaseYearBasis": "metadata",
+      "mediaFilename": "A Viagem de Chihiro (2001) BluRay 1080p Dual Áudio (By-KleysonLima).mkv",
+      "audioLanguages": [
+        "por",
+        "jpn"
+      ],
+      "subtitleBestScore": 69,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 1920,
+        "height": 1040
+      },
+      "quality": "1920x1040",
+      "qualityGrade": "1080p",
+      "turkishSubtitle": true,
+      "embeddedSubtitleLanguages": [],
+      "externalTrackCount": 3,
+      "externalTurkishTracks": 3,
+      "actualDurationSeconds": 7473.472,
+      "hashAvailable": true
+    }
+  ],
+  "duplicateCollapse": {
+    "before": 21,
+    "after": 20,
+    "method": "same item/original filename/bytes/pixels/duration; conservative even if hashes differ"
+  },
+  "metadataReferences": [
+    {
+      "id": 129,
+      "status": 200,
+      "title": "Spirited Away (2001) &#8212; The Movie Database (TMDB)",
+      "metadata": {
+        "@context": "https://schema.org",
+        "@type": "Movie",
+        "dateCreated": "2010-04-16T16:09:48Z",
+        "dateModified": "2026-10-22T10:25:36Z",
+        "description": "A young girl, Chihiro, becomes trapped in a strange new world of spirits. When her parents undergo a mysterious transformation, she must call upon the courage she never knew she had to free her family.",
+        "isFamilyFriendly": true,
+        "name": "Spirited Away",
+        "url": "https://www.themoviedb.org/movie/129",
+        "aggregateRating": {
+          "@type": "aggregateRating",
+          "bestRating": 10,
+          "ratingValue": 8.536,
+          "ratingCount": 19129,
+          "worstRating": 0,
+          "reviewCount": 2
+        },
+        "countryOfOrigin": [
+          {
+            "@type": "Country",
+            "name": "Japan"
+          }
+        ],
+        "duration": "PT2H5M",
+        "genre": [
+          "Animation",
+          "Family",
+          "Fantasy"
+        ],
+        "image": "https://image.tmdb.org/t/p/w500/39wmItIWsg5sZMyRUHLkWBcuVCM.jpg",
+        "releasedEvent": [
+          {
+            "@type": "PublicationEvent",
+            "startDate": "2001-07-20"
+          }
+        ]
+      },
+      "originalLines": [
+        "    <p class=\"wrap\"><strong>Original Title</strong> 千と千尋の神隠し</p>"
+      ]
+    },
+    {
+      "id": 8392,
+      "status": 200,
+      "title": "My Neighbor Totoro (1988) &#8212; The Movie Database (TMDB)",
+      "metadata": {
+        "@context": "https://schema.org",
+        "@type": "Movie",
+        "dateCreated": "2010-04-16T18:00:47Z",
+        "dateModified": "2026-10-17T04:35:14Z",
+        "description": "Two sisters move to the country with their father in order to be closer to their hospitalized mother, and discover the surrounding trees are inhabited by Totoros, magical spirits of the forest. When the youngest runs away from home, the older sister seeks help from the spirits to find her.",
+        "isFamilyFriendly": true,
+        "name": "My Neighbor Totoro",
+        "url": "https://www.themoviedb.org/movie/8392",
+        "aggregateRating": {
+          "@type": "aggregateRating",
+          "bestRating": 10,
+          "ratingValue": 8.07,
+          "ratingCount": 9196,
+          "worstRating": 0,
+          "reviewCount": 5
+        },
+        "countryOfOrigin": [
+          {
+            "@type": "Country",
+            "name": "Japan"
+          }
+        ],
+        "duration": "PT1H26M",
+        "genre": [
+          "Fantasy",
+          "Animation",
+          "Family"
+        ],
+        "image": "https://image.tmdb.org/t/p/w500/rtGDOeG9LzoerkDGZF9dnVeLppL.jpg",
+        "releasedEvent": [
+          {
+            "@type": "PublicationEvent",
+            "startDate": "1988-04-16"
+          }
+        ]
+      },
+      "originalLines": [
+        "    <p class=\"wrap\"><strong>Original Title</strong> となりのトトロ</p>"
+      ]
+    }
+  ],
+  "languageSpecification": {
+    "url": "https://www.matroska.org/technical/elements.html",
+    "elements": [
+      "Language (0x22B59C), default eng",
+      "LanguageBCP47 (0x22B59D), precedence over legacy Language"
+    ]
+  },
+  "desktopLanguageMetadata": [
+    {
+      "key": "your-hindi",
+      "id": "your.-name.-2016.-1.8-gb.-1080p.-dual.-audio.-hin-eng.-vegamovies.-nl",
+      "filename": "Your.Name.(2016).1.8GB.1080p.Dual.Audio.(Hin-Eng).Vegamovies.NL.mkv",
+      "bytes": 1948736391,
+      "rangeStatus": 206,
+      "sampleBytes": 131072,
+      "parser": {
+        "container": "mkv",
+        "dimensions": {
+          "width": 1920,
+          "height": 1080
+        },
+        "audioLanguages": [
+          "hin"
+        ],
+        "subtitleTracks": [
+          {
+            "language": "en",
+            "codec": "S_TEXT/ASS"
+          }
+        ],
+        "embeddedEnglish": true,
+        "duration": 6400.2
+      },
+      "mpv": {
+        "exitCode": 0,
+        "output": "[mkv] mkv metadata beyond end of file - incomplete file?\r\n● Video  --vid=1               (h264 1920x1080 23.976 fps) [default]\r\n● Audio  --aid=1  --alang=hin  'Hindi - [Dubbed by AnimeTm Dubbers]' (mp3 2ch 48000 Hz) [default]\r\n● Subs   --sid=1  --slang=eng  'Hinglish (Subtitles/Signs)' (ass) [default]\r\nExiting... (End of file)\r\n"
+      }
+    },
+    {
+      "key": "spirited-dual",
+      "id": "spirited-away-2001-1080p",
+      "filename": "MKV/Spirited Away (2001) [1080p x265].mkv",
+      "bytes": 2397985051,
+      "rangeStatus": 206,
+      "sampleBytes": 131072,
+      "parser": {
+        "container": "mkv",
+        "dimensions": {
+          "width": 1920,
+          "height": 1040
+        },
+        "audioLanguages": [
+          "jpn",
+          "eng"
+        ],
+        "subtitleTracks": [
+          {
+            "language": "en",
+            "codec": "S_VOBSUB"
+          },
+          {
+            "language": "en",
+            "codec": "S_TEXT/UTF8"
+          },
+          {
+            "language": "fr",
+            "codec": "S_VOBSUB"
+          },
+          {
+            "language": "de",
+            "codec": "S_VOBSUB"
+          },
+          {
+            "language": "ja",
+            "codec": "S_VOBSUB"
+          },
+          {
+            "language": "zh",
+            "codec": "S_VOBSUB"
+          },
+          {
+            "language": "zh",
+            "codec": "S_VOBSUB"
+          },
+          {
+            "language": "ko",
+            "codec": "S_VOBSUB"
+          }
+        ],
+        "embeddedEnglish": true,
+        "duration": 7472.331
+      },
+      "mpv": {
+        "exitCode": 0,
+        "output": "[mkv] mkv metadata beyond end of file - incomplete file?\r\n● Video  --vid=1               (hevc 1920x1040 23.976 fps) [default]\r\n● Audio  --aid=1  --alang=jpn  (aac 8ch 48000 Hz) [default]\r\n○ Audio  --aid=2  --alang=eng  (aac 6ch 48000 Hz)\r\n● Subs   --sid=1  --slang=eng  'English (VobSub)' (dvd_subtitle) [default]\r\n○ Subs   --sid=2  --slang=eng  'English (SubRip)' (subrip)\r\n○ Subs   --sid=3  --slang=fre  'French (VobSub)' (dvd_subtitle)\r\n○ Subs   --sid=4  --slang=ger  'German (VobSub)' (dvd_subtitle)\r\n○ Subs   --sid=5  --slang=jpn  'Japanese (VobSub)' (dvd_subtitle)\r\n○ Subs   --sid=6  --slang=chi  'Chinese Classical (VobSub)' (dvd_subtitle)\r\n○ Subs   --sid=7  --slang=chi  'Chinese Traditional (VobSub)' (dvd_subtitle)\r\n○ Subs   --sid=8  --slang=kor  'Korean (VobSub)' (dvd_subtitle)\r\nExiting... (End of file)\r\n"
+      }
+    },
+    {
+      "key": "your-japanese",
+      "id": "your-name-2016-1080p-dual-anime-gallery",
+      "filename": "Your Name [2016] [1080p] [Dual] @Anime_Gallery.mkv",
+      "bytes": 1452168170,
+      "rangeStatus": 206,
+      "sampleBytes": 131072,
+      "parser": {
+        "container": "mkv",
+        "dimensions": {
+          "width": 1920,
+          "height": 1080
+        },
+        "audioLanguages": [
+          "jpn",
+          "eng"
+        ],
+        "subtitleTracks": [
+          {
+            "language": "en",
+            "codec": "S_TEXT/ASS"
+          }
+        ],
+        "embeddedEnglish": true,
+        "duration": 6395.657
+      },
+      "mpv": {
+        "exitCode": 0,
+        "output": "[mkv] Unexpected end of file - partial or corrupt file?\r\n[mkv] Next subelement content goes past end of containing element, will be truncated\r\n[mkv] Subelement content goes past end of containing element\r\n[mkv] Error parsing element Attachments\r\n[mkv] Malformed attachment\r\n[mkv] Unexpected end of file (no clusters found)\r\n[mkv] mkv metadata beyond end of file - incomplete file?\r\n● Video  --vid=1               (hevc 1920x1080 23.976 fps) [default]\r\n○ Audio  --aid=1  --alang=jpn  'Japanese 5.1 24bit' (aac 6ch 48000 Hz)\r\n● Audio  --aid=2  --alang=eng  'English OPUS 2Ch' (opus 2ch 48000 Hz) [default]\r\n● Subs   --sid=1  --slang=eng  (ass) [forced]\r\nFile tags:\r\n Title: [AnimeKaizoku] Your Name. (720p BD x265 10bit Dual Audio) [dedsec]\r\nExiting... (End of file)\r\n"
+      }
+    }
+  ],
+  "desktop4kSample": {
+    "checkedAt": "2026-10-27T23:12:32.900Z",
+    "player": "official mpv CI v0.41.0-dev-g82667e3cb Windows, previously validated binary",
+    "source": "Internet Archive",
+    "title": "Your Name (2016)",
+    "actualBytes": 3014668629,
+    "sample": {
+      "bytes": 1048576,
+      "sha256": "9f5ec11830ef11624117a148f30e67c2de36e3a4ce08f68eb75753377079ec79",
+      "rangeStatus": 206
+    },
+    "args": [
+      "--no-config",
+      "--vo=null",
+      "--ao=null",
+      "--alang=ja",
+      "--slang=en",
+      "--frames=1",
+      "--untimed",
+      "--term-playing-msg=FORMAT=${file-format} VIDEO=${video-params/w}x${video-params/h} AUDIO_LANG=${current-tracks/audio/lang}",
+      ".cache/your-name-4k185.mkv"
+    ],
+    "exitCode": 2,
+    "output": "[mkv] Unexpected end of file - partial or corrupt file?\r\n[mkv] Next subelement content goes past end of containing element, will be truncated\r\n[mkv] Subelement content goes past end of containing element\r\n[mkv] Error parsing element Attachments\r\n[mkv] Malformed attachment\r\n[mkv] Unexpected end of file (no clusters found)\r\n[mkv] mkv metadata beyond end of file - incomplete file?\r\n● Video  --vid=1  --vlang=ja  '[Judas] x265 10b' (hevc 3840x2160 23.976 fps) [default]\r\n● Audio  --aid=1  --alang=ja  '[Judas] Japanese Surround (E-AC-3 448Kbps)' (eac3 6ch 48000 Hz) [default]\r\n○ Audio  --aid=2  --alang=ja  '[Judas] Japanese Stereo (Opus 256Kbps)' (opus 2ch 48000 Hz)\r\n○ Audio  --aid=3  --alang=en  '[Judas] English Surround (E-AC-3 448Kbps)' (eac3 6ch 48000 Hz)\r\n○ Audio  --aid=4  --alang=en  '[Judas] English Stereo (Opus 256Kbps)' (opus 2ch 48000 Hz)\r\n● Subs   --sid=1  --slang=en  '[Visiccitude] English' (ass) [default]\r\n○ Subs   --sid=2  --slang=en  '[bonkai77] English (Signs)' (ass) [forced]\r\n○ Subs   --sid=3  --slang=en  '[MTBB/bonkai77] English' (ass)\r\nFile tags:\r\n Title: Your Name (2016) [2160p]\r\nFORMAT=mkv VIDEO=3840x2160 AUDIO_LANG=ja\r\nExiting... (Errors when loading file)\r\n",
+    "frameDecoded": false,
+    "physicalDevice": "not-run",
+    "fullPlayback": "not-run",
+    "fullDownload": "not-run",
+    "sceneSync": "not-run"
+  },
+  "desktopSampleLimit": "128KiB language samples and1MiB4K sample are deliberately truncated. MPV recognized streams/languages;1MiB4K did not include a Cluster and frame decode failed. Not a full-source corruption conclusion or playback success. No further manual full-film/scene checks.",
+  "regression": {
+    "evidence": "compatibility/coverage-185.json",
+    "oldInception4kPreserved": true,
+    "oldTurkishDubPreserved": true,
+    "fleabagRecoveryFiles": 9,
+    "deathNoteRecoveryFiles": 4,
+    "sourceBudgetsIncreased": false
+  },
+  "research": [
+    {
+      "source": "Anizium",
+      "result": "Current community implementation still requires a fixed token and generated Cf-Control security header. Not copied, used or integrated."
+    },
+    {
+      "source": "Archive dubbed movies",
+      "result": "Broad knownTR/EN catalogue reviewed. Existing bilingual movie routes kept; no newly eligible Turkish dub was verified in this change."
+    },
+    {
+      "source": "Princess Mononoke",
+      "result": "Public multilingual fan collection includes unrelated extras and filenames lacking year/canonical identity. Not force-matched or counted."
+    },
+    {
+      "source": "Totoro4K upscale item",
+      "result": "Metadata contained no MP4/MKV file; not counted as4K."
+    },
+    {
+      "source": "Larva Island Movie",
+      "result": "Public metadata includes a bilingual-labelled MKV and derivative; not counted as new adaptation or verifiedTRaudio without actual track proof."
+    }
+  ],
+  "tests": {
+    "local": 288,
+    "compiledQuickJs": true,
+    "upstreamRelease": "0.6.5-beta",
+    "upstreamTrackedFiles": 23,
+    "sourceDrift": 0,
+    "upstreamHeadAdvanced": true,
+    "lockChanged": false
+  },
+  "allSourceCriteriaMet": false,
+  "physicalDevice": "not-run",
+  "fullPlayback": "not-run",
+  "fullDownload": "not-run",
+  "offline": "not-run",
+  "sceneSync": "not-run",
+  "font": "not-run"
+}

@@ -1,5 +1,25 @@
 # Proje hafızası
 
+## 1.8.5 — kanonik alternatif adla anime indirmeleri
+
+Archive eşleştirmede bildiği alternatif TMDB adını arama sorgusunda kullanmıyordu. Yeni kod özgün adı ve aynı kayıttaki en fazla bir farklı gösterim adını mevcut iki sorguda birlikte arar. Tekrarlanan adlar kaldırılır; dizi araması özgün adında kalır. Alternatif ad aramasında gerçek süre, kanonik sürenin %90–110 aralığında olmalıdır. Açık yıl, IMDb veya TMDB çelişkileri reddedilir. İki sorgu/12 metadata sınırı ve ana aramada 24 saniye, video/altyazı/EN altyazı için 3/4/1 native iş kotası değişmedi.
+
+Üç anime filminde 12 yeni dosya doğrulandı; önceki sürümün bulduğu sekiz Archive dosyası ayrıca korundu. İlk tanısız baseline denemesi sıfır döndü; yeni katkı bunun üzerinden hesaplanmadı. HTTP 200 dönen tekrarda eski kod Spirited Away için altı, Totoro için iki, Your Name için sıfır aday buldu. Aynı item, özgün dosya adı, boyut, piksel ve süreye sahip bir .ia.mp4 kopyası ek dosya sayılmadı.
+
+Yeni dosyaların dördü Japonca/İngilizce sesli MKV: Your Name 4K (3,014 GB) ve 1080p (1,452 GB), Totoro 1080p (0,910 GB), Spirited Away 1080p (1,601 GB). Diğer sekiz MP4'ün ses dili ölçülmedi. On iki dosyada da mevcut TR altyazı alternatifleri var; bu, sahne senkronu kanıtı değildir. Bu tur yeni Türkçe dublaj, dizi veya anime bölümü doğrulanmadı. Yeni sağlayıcı kimliği, video pini, hesap, anahtar veya sunucu eklenmedi.
+
+Matroska Language alanı eksikse kullanılan eng varsayılanı ve BCP47 önceliği, resmi format belgesi ve masaüstü MPV metadata karşılaştırmasıyla düzeltildi. Varsayılan yalnız tam TrackEntry içinde alan yoksa geçerlidir; açık und/boş/bozuk veya kesilmiş alan İngilizce sayılmaz. Your Name 1080p'deki EN ses ve EN ASS izi artık okunur. Ses dilinin metadata bilgisi konuşmanın dinlendiği anlamına gelmez.
+
+Dosya adında Hin-Eng yazan başka bir Your Name kaynağı gerçekte yalnız Hintçe ses taşıyordu; MPV metadata da bunu doğruladı. Archive için rejectHindiOnly bu dosyayı eler ve aynı dosyayı başka aynada tekrar kontrol etmez. mediaFamily yalnız aynı item içindeki mevcut original dosya bağına dayanır. Yalnız Hintçe olduğu doğrulanan asıl dosyadan türetilmiş, sesi okunamayan MP4 de sonuçlardan çıkarılır; bağımsız ölçülen EN/JA gibi başka sesi varsa korunur. Dune'daki eski Hintçe asıl/türev çifti bilerek kaldırıldı; geçerli EN/TR seçenekler korunur.
+
+Regresyonun ilk turunda Hotel 7, Dune 9, Inception 8; Fleabag ve Death Note sıfır sonuç verdi. Son ikisinde birbirinden bağımsız kaynaklar ağ zaman aşımına uğramıştı; tekrarda 9 ve 4 dosya bulundu. Son aile filtresiyle Dune 8, Your Name 9 sonuç verdi. Başarısız turlar da coverage-185 içinde tutulur. Bunlar fiziksel iPhone süre veya katalog kararlılığı garantisi değildir. Bazı canlı raporlar sürüm etiketi yükseltilmeden önce toplandı; içlerindeki 1.8.4/dev etiketi bu nedenle korunur.
+
+128 KiB başlık örneklerinde MPV ses izlerini doğruladı. Your Name 4K'nın 1 MiB örneği büyük Attachments bölümü yüzünden Cluster'a ulaşmadı; tek kare çözme denemesi başarısız (exit 2). Bu durum tam dosyanın bozuk olduğunu veya oynatıldığını göstermez. Fiziksel cihaz, tam indirme/oynatma, offline altyazı, sahne senkronu ve font testi yapılmadı.
+
+288 test/QuickJS kontrolü geçti. Nuvio 0.6.5-beta aynı; geliştirme dalı 86e0d5bb45f20d541d17f92146d60746420db71d'ye ilerledi, ancak izlenen 23 dosyada değişiklik yok. Kilit güncellenmedi. Anizium sabit token/Cf-Control yöntemi kullanılmadı; kimliksiz Mononoke dosyaları zorla eşleştirilmedi; Totoro 4K item'ında video yoktu. Yeni uygun Türkçe dublaj adaptasyonu doğrulanmadı.
+
+Yayın bekliyor;CI/Pages/yediSHAkanıtısonraeklenecek.
+
 ## 1.8.4 — bölüm indirmeleri ve gerçek 4K
 
 HDHub terminalindeki literal pxl/PixelServer bağlantıları eski kodda yok sayılıyordu. Yeni ortak pixeldrain.cjs, mevcut MoviesDrive doğrulamasını paylaşır; MoviesDrive film-only davranışı ve dört sürüm kuralı değişmedi. Yeni HDHub Pixel yolu filmde aynıTMDB/özgünad/yıl; TVde aynıad/yıl/kanonikposter + tamS/E; release/HubCloud/info adının normalize eşitliği gerektirir. Yıl içermeyenTVdosyası ancak seri sayfası bağı kurulduktan sonra kabul edilir. Yanlış yıl/pack/sample/HI-only elenir. InfoID/name/size/MIME/can_download ve unrestricted alanları, gerçekRange/byte/container/piksel/süre/%90–110/uygunölçülmüşses birlikte kontrol edilir. Public dosya adı veya ID üretimepinlenmedi.

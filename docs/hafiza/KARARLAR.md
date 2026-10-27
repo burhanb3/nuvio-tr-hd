@@ -1,5 +1,13 @@
 # Tasarım kararları
 
+## 1.8.5 — aynı kayıttaki adlar ve ses ailesi
+
+- Archive aramasında aynı TMDB film kaydının en fazla iki kanonik adı kullanılır. Romanizasyon, benzer başlık veya yeni video pini eklenmez. Dizi eşleştirmesi değişmez; alternatif ad aramasında gerçek süre %90–110 aralığında olmalıdır.
+- Yeni katkı, önceki sürümün başarılı baseline'ına göre sayılır: sekiz eski dosya korundu, 12 dosya yeni. İlk boş ağ turu katkıyı büyütmek için kullanılmaz; .ia kopyaları ayrı seçenek sayılmaz. Sekiz MP4'ün okunamayan ses bilgisi, dört MKV'deki JA/EN kanıtından ayrıdır. TR altyazı, Türkçe dublaj değildir.
+- Matroska eng varsayılanı yalnız Language alanı eksik ve track tam olduğunda uygulanır. Açık bilinmeyen/boş/kesilmiş alan varsayılmaz; BCP47 önceliklidir. Format varsayılanı, konuşmanın dinlendiği anlamına gelmez.
+- Yalnız Hintçe aslı doğrulanan Archive türevinin sesi okunamıyorsa aynı item'daki açık original bağıyla elenir. Kendi ölçümünde başka dil bulunan türev korunur. Bu filtre genel bilinmeyen sesli kaynakları elemez; ek native iş veya sunucu gerektirmez.
+- Dune'daki Hintçe ailenin kaldırılması bilinçli filtrelemedir. Fleabag/Death Note'un boş ağ turu ve 9/4 sonuçlu tekrarı birlikte saklanır. Eksik 1 MiB örnekteki Cluster/Attachments uyarıları tam dosya bozukluğu veya oynatma başarısı diye sunulmaz. Fiziksel cihaz, offline altyazı, senkron ve font testi yok.
+
 ## 1.8.4 — yayımlanmış ek dosya sunucusu
 
 - HDHub Pixel'i aynı genel film/bölüm taramasında değerlendir; literal yayımlanmış URL ve aynıfiletuple gerekli. BaşkaTVposteri/yıl/S/E veya dosyaadı için korumaları gevşetme. Yeniayar/scraper/hesap/backend/per-titlepin yok.

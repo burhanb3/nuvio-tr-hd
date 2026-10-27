@@ -26,6 +26,7 @@ const { scanAniMom } = require('./providers/animom.cjs');
 const { scanSeiCode } = require('./providers/seicode.cjs');
 const { scanDiziBak } = require('./providers/dizibak.cjs');
 const { probe } = require('./media/probe.cjs');
+const {languageCodes}=require('./media/languages.cjs');
 const { loadSubtitles, subtitleLanguage, subtitleKey, selectSubtitles, embeddedSubtitleLanguages } = require('./subtitles.cjs');
 const { createSubtitleDiscovery, scoreSubtitle } = require('./subtitle-discovery.cjs');
 const { safeUrl, mapLimit, qualityLabel } = require('./util.cjs');
@@ -116,6 +117,8 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs = 24000, r
       const reject = reason => { report.rejected[reason] = (report.rejected[reason] || 0) + 1; };
       const http = createHttp({ fetchImpl, allowHttp, timeoutMs: requestTimeoutMs, deadline: started + budgetMs, scheduler, onEvent: emit });
       const completed = [];
+      const rejectedAudioFamilies=new Set();
+      const availablePairs=()=>completed.filter(pair=>!pair.candidate.mediaFamily||!rejectedAudioFamilies.has(pair.candidate.mediaFamily)||languageCodes(pair.video.audioLanguages).some(code=>code!=='hi'));
       const unique = new Map(), waiting = [];
       let active = 0;
       let timer, target, discoverSubtitles;
@@ -136,7 +139,7 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs = 24000, r
         if (/\.m3u8(?:$|[?#])/i.test(candidate.url) && settings.includeHls === false) { reject('hls_disabled'); return; }
         const lightweightHls = ['PlayIMDb', 'VixSrc', 'DiziYou', 'DiziBak', 'FilmModu','HDFilmDelisi','DiziBal','Purstream'].includes(candidate.source) && settings.detailedHlsMetadata !== true;
         const video = await withProbeSlot(() => probe(http, candidate, settings.includeHls !== false, settings.autoSubtitles !== false,
-          { detailedHls: !lightweightHls }));
+          { detailedHls: !lightweightHls,onUnwantedAudio:()=>{reject('hindi_only_audio');if(typeof candidate.mediaFamily==='string')rejectedAudioFamilies.add(candidate.mediaFamily);} }));
         if (!video || http.expired()) { reject('video_unavailable'); return; }
         const minimum = Number(settings.minimumQuality ?? 0);
         if (video.dimensions && parseInt(qualityLabel(video.dimensions)) < minimum) { reject('quality'); return; }
@@ -305,12 +308,12 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs = 24000, r
               candidate => processCandidate(candidate).catch(() => reject('candidate_error'))));
           });
           await Promise.all(pending);
-          return formatResults(completed, renderSettings(), target);
-        } catch { report.reason = 'internal_error'; return target ? formatResults(completed, renderSettings(), target) : []; }
+          return formatResults(availablePairs(), renderSettings(), target);
+        } catch { report.reason = 'internal_error'; return target ? formatResults(availablePairs(), renderSettings(), target) : []; }
       };
       try {
         const results = await Promise.race([run(), new Promise(resolve => {
-          timer = scheduler.schedule(() => { report.reason = 'deadline'; resolve(target ? formatResults(completed, renderSettings(), target) : []); }, budgetMs);
+          timer = scheduler.schedule(() => { report.reason = 'deadline'; resolve(target ? formatResults(availablePairs(), renderSettings(), target) : []); }, budgetMs);
         })]);
         report.results = results.length;
         // Request and search timers can expire in the same scheduler tick.
@@ -322,7 +325,7 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs = 24000, r
         http.close(); scheduler.cancel(timer); scheduler.close();
         report.elapsedMs = Date.now() - started;
         lastReport = JSON.parse(JSON.stringify(report));
-        lastPairs = completed.slice();
+        lastPairs = availablePairs();
         writeDiagnostic(lastReport, settings.debug === true || !report.results);
       }
     }

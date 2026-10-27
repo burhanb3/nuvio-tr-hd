@@ -49,12 +49,24 @@ function titleBinding(value,target,names){
   return {actual,name,suffix,release,titleYear,exact:!!name&&actual===name,localized:!!name&&name!==normalizeTitle(target.originalTitle)};
 }
 
+function archiveSearchNames(target){
+  // Both values come from the same canonical TMDB record, not source labels.
+  // Keep TV on its original series title and keep the same two search jobs.
+  const out=[],seen=new Set();
+  for(const value of[target.originalTitle,...(target.type==='movie'?(target.searchTitles||[]):[])]){
+    if(typeof value!=='string'||!value.trim())continue;
+    const title=value.replace(/["\\]/g,' ').trim(),key=normalizeTitle(title);
+    if(key&&!seen.has(key)){seen.add(key);out.push(title);}if(out.length===2)break;
+  }
+  return out;
+}
 function archiveQuery(target, preferHd = false, titleYear = target.type === 'movie' || !preferHd) {
-  const title = target.originalTitle.replace(/["\\]/g, ' ');
+  const titles=archiveSearchNames(target),title=titles[0];
   const exclusions = ['sample','trailer','featurette','review','podcast','commercial','teaser']
-    .filter(word => !normalizeTitle(title).split(' ').includes(word));
+    .filter(word => !titles.some(t=>normalizeTitle(t).split(' ').includes(word)));
+  const titleSearch=titles.length>1?'('+titles.map(t=>`title:"${t}"`).join(' OR ')+')':`title:"${title}"`;
   const binding = target.type === 'tv' && preferHd && /^tt\d+$/.test(target.imdbId || '') ? `(title:"${title}" AND imdb_id:${target.imdbId})` :
-    `title:"${title}" AND ` + (titleYear ? `(year:${target.year} OR title:${target.year})` : `year:${target.year}`);
+    titleSearch+' AND ' + (titleYear ? `(year:${target.year} OR title:${target.year})` : `year:${target.year}`);
   const q = `mediatype:movies AND ${binding}` +
     (titleYear && exclusions.length ? ` AND NOT title:(${exclusions.join(' OR ')})` : '') +
     (preferHd && target.type === 'movie' ? ' AND (title:(1080p OR 720p OR 2160p OR remastered) OR description:1080p)' : '');
@@ -65,6 +77,7 @@ async function scanArchive(http, target, options = {}) {
   // title/year or explicit IMDb binding. Content pins remain narrow repairs.
   const verifiedRecords = verifiedArchiveRecords(target);
   const expected = normalizeTitle(target.originalTitle);
+  const aliasLookup=archiveSearchNames(target).some(name=>normalizeTitle(name)!==expected);
   let names=archiveNames(target),titleJob;
   async function localizedNames(){
     if(!titleJob)titleJob=Promise.resolve().then(()=>options.loadTitles?options.loadTitles():[]).catch(()=>[]);
@@ -78,15 +91,15 @@ async function scanArchive(http, target, options = {}) {
   const priority = doc => {
     if (!doc.title) return 1; // Older/custom search fixtures may omit this field.
     const title = normalizeTitle(String(doc.title));
-    if (title === expected + ' ' + target.year || title.startsWith(expected + ' ' + target.year + ' ')) return 3;
-    if (title === expected || new RegExp(`^(?:1080p|720p|2160p|remastered|restored)\\b`).test(title.startsWith(expected + ' ') ? title.slice(expected.length + 1) : '')) return 2;
+    if (names.some(name=>title===name+' '+target.year||title.startsWith(name+' '+target.year+' '))) return 3;
+    if (names.some(name=>title===name||new RegExp(`^(?:1080p|720p|2160p|remastered|restored)\\b`).test(title.startsWith(name+' ')?title.slice(name.length+1):''))) return 2;
     if (target.type === 'tv' && title.startsWith(expected+' ') && /^(?:season|sezon|s\d|complete|all seasons)\b/.test(title.slice(expected.length+1))) return 1;
     if(bilingualHint(doc.title,target))return 1; // Lookup hint; metadata and exact file identity must still bind.
     return 0;
   };
   const docs = [...new Map(results.flatMap(r => Array.isArray(r?.response?.docs) ? r.response.docs : []).map(d => [d.identifier, d])).values()]
     .filter(d=>!verifiedRecords.some(r=>r.item===d.identifier))
-    .filter(d => priority(d) > 0 && !/\b(sample|trailer|featurette|review|podcast|commercial|teaser)\b/.test(normalizeTitle(d.title || '').replace(expected, '')))
+    .filter(d => priority(d) > 0 && !/\b(sample|trailer|featurette|review|podcast|commercial|teaser)\b/.test(names.reduce((text,name)=>text.replace(name,''),normalizeTitle(d.title||''))))
     .sort((a,b) => priority(b) - priority(a));
   const groups = await mapLimit(docs.slice(0, Math.max(0,(options.onCandidates ? 12 : 8)-verifiedRecords.length)),2,loadDoc);
   const pinned = await pinnedWork;
@@ -164,15 +177,15 @@ async function scanArchive(http, target, options = {}) {
     const candidates = [...new Map([...small,...hd].map(f => [f.name,f])).values()]
       .map(f => ({ url: urlFor(f.name), filename: String(f.original || f.name).split('/').pop(), headers: {}, subtitles, subtitleBase: 'https://archive.org/',
         alternateUrls: urlsFor(f.name).slice(1),
-        getOnly: true,
+        getOnly: true,rejectHindiOnly:true,mediaFamily:doc.identifier+'|'+(typeof f.original==='string'&&files.some(parent=>parent.name===f.original)?f.original:f.name),
         ...(pinnedItem ? { expectedFile: verifiedMetadataFile(verifiedRecord,f) } : {}),
         ...(pinnedItem && verifiedRecord.burnedSubtitleLanguage ? { burnedSubtitleLanguage: verifiedRecord.burnedSubtitleLanguage } : {}),
         sourceItemId: doc.identifier, mediaFilename: f.name, releaseYearBasis: pinnedItem ? 'content-sample-pinned-file' : yearFromTitle ? 'exact-title-and-filename' : 'metadata',
-        ...(yearFromTitle||binding.localized ? { durationTolerance: 0.1 } : {}),
-        requireDuration: pinnedItem || yearFromTitle || binding.localized || target.runtimeMinutes > 0 && !(Number(f.length) > 0),
+        ...(yearFromTitle||binding.localized||aliasLookup ? { durationTolerance: 0.1 } : {}),
+        requireDuration: pinnedItem || yearFromTitle || binding.localized || aliasLookup || target.runtimeMinutes > 0 && !(Number(f.length) > 0),
         source: 'Internet Archive', identity: target, identityConfidence: meta.tmdb_id ? 100 : 90 }));
     if (candidates.length && options.onCandidates && !http.expired()) await options.onCandidates(candidates);
     return candidates;
   }
 }
-module.exports = { scanArchive, archiveQuery,archiveNames,bilingualHint,titleBinding,bilingualFileNames };
+module.exports = { scanArchive, archiveQuery,archiveSearchNames,archiveNames,bilingualHint,titleBinding,bilingualFileNames };

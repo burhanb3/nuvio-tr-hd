@@ -1,5 +1,12 @@
 # Sonraki işler
 
+## 1.8.5 öncelik
+
+1. Hazır: Archive kanonik ad sorgusu; 12 ek anime filmi dosyası, bir yeni 4K; sekiz eski dosya korundu. Dört MKV'de JA/EN ölçüldü; sekiz MP4'ün sesi ölçülmedi. 288 test/QuickJS ve 23 upstream dosyası kontrolü geçti. CI/Pages/yediHTTP200/SHA yayın kontrolünü tamamla.
+2. Türkçe dublaj, film/dizi/anime bölümü ve 4K kapsamını büyütmeye devam et. Bu tur yeni dublaj veya bölüm yok. Mevcut başarılı kaynaklar yeni uygun kaynak aramayı bırakma gerekçesi değildir. Geçerli baseline sekiz dosyadır; ilk boş tur üzerinden katkı hesaplama. Yeni video pini, hesap, sabit anahtar veya sunucu ekleme.
+3. Fleabag/Death Note önce ağ nedeniyle boş, tekrarda 9/4 dosya verdi. Dune son turda 24 saniyelik mantıksal sınırda sekiz hazır sonuç korudu. Native kotayı artırma veya iPhone zaman garantisi verme. Hintçe asıl/türev filtresinde kendi ölçümü EN/JA olan çocuğun korunmasını izle.
+4. Your Name 4K'nın 1 MiB örneği Cluster'a ulaşmadığı için kare çözülmedi; bu tam dosyanın bozuk olduğu anlamına gelmez. Film başına manuel senkron kontrolüne sapma. Fiziksel iPhone, tam indirme/oynatma, offline altyazı, senkron ve font hâlâ açık. Anizium token/Cf-Control, kimliksiz Mononoke koleksiyonu ve videosuz Totoro 4K yollarını yeni bilgi olmadan tekrarlama.
+
 ## 1.8.4 öncelik
 
 1. Hazır: HDHubPixel film/bölüm yolu;15yeniMKV,6yeni4K,11gömülüTR. 276fixture/QuickJS;0.6.5-beta/23drift0. Yayımlandı: kod 9172166ee08173ef444fe4b636a6934053dd2485, Test 40578064383, Pages 40578064386 başarılı; yedi public HTTP200/SHA eşit.

@@ -100,6 +100,8 @@ async function probeOne(http, candidate, includeHls = false, hashEnabled = false
   if (candidate.requireDuration && !info.duration) return null;
   if (candidate.requireVideoDimensions && !info.dimensions) return null;
   if (Array.isArray(candidate.requireAudioAny) && !candidate.requireAudioAny.some(code=>(info.audioLanguages||[]).map(languageCode).includes(code))) return null;
+  const audioLanguages=(info.audioLanguages||[]).map(languageCode).filter(Boolean);
+  if(candidate.rejectHindiOnly===true&&audioLanguages.length&&audioLanguages.every(code=>code==='hi')){options.onUnwantedAudio?.();return null;}
   const durationTolerance = candidate.durationTolerance === 0.1 ? { low: 0.9, high: 1.1 } : { low: 0.7, high: 1.35 };
   if (info.duration && expectedDuration > 0 && (info.duration < expectedDuration * durationTolerance.low || info.duration > expectedDuration * durationTolerance.high)) return null;
   let videoHash = null;
@@ -115,6 +117,8 @@ async function probeOne(http, candidate, includeHls = false, hashEnabled = false
     ...(containerSniffing ? {nativeStoredExtension:'mp4',containerSniffing:true} : {}) };
 }
 async function probe(http, candidate, includeHls = false, hashEnabled = false, options = {}) {
+  let unwantedAudio=false;
+  const attemptOptions={...options,onUnwantedAudio:()=>{unwantedAudio=true;options.onUnwantedAudio?.();}};
   const canUseReplicas = candidate.source === 'Internet Archive' && !Object.keys(candidate.headers || {}).some(k => /^(authorization|cookie)$/i.test(k));
   const replicas = canUseReplicas && Array.isArray(candidate.alternateUrls) ? candidate.alternateUrls.filter(url => {
     try { const u=new URL(url),original=new URL(candidate.url);return u.protocol==='https:' && /^[a-z]{2}\d{4,8}\.(?:us|eu|ca)\.archive\.org$/.test(u.hostname) && u.pathname===original.pathname && u.search===original.search; } catch { return false; }
@@ -122,8 +126,9 @@ async function probe(http, candidate, includeHls = false, hashEnabled = false, o
   const attempts = candidate.source === 'AniMOM' ? [candidate.url,candidate.url] : [...new Set([candidate.url,...replicas])];
   for (const [index,url] of attempts.entries()) {
     if (http.expired()) return null;
-    const video = await probeOne(http, { ...candidate, url }, includeHls, hashEnabled, options);
+    const video = await probeOne(http, { ...candidate, url }, includeHls, hashEnabled, attemptOptions);
     if (video) return video;
+    if(unwantedAudio)return null;
     if ([401,403,429].includes(http.failureFor?.(url)?.status)) return null;
     // The official YourUpload redirect rotates CDN nodes. Refresh it once only
     // after a network failure, within the same deadline and physical quota.

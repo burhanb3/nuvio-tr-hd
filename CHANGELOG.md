@@ -1,5 +1,14 @@
 # Sürüm notları
 
+## 1.8.5 — 28 Ekim 2026
+
+- Archive aramasında aynı TMDB kaydının özgün ve gösterim başlıkları birlikte kullanılır. Japonca özgün adla İngilizce kaynak adı arasındaki arama açığı giderildi; sorgu sayısı artırılmadı.
+- Önceki sürümle karşılaştırılan üç anime filminde 12 ek MP4/MKV ve mevcut Türkçe altyazı alternatifleri; sekiz eski Archive dosyası da korundu. Your Name için 3,01 GB/3840×2160 ve 1,45 GB/1920×1080, Totoro için 0,91 GB/1920×1038, Spirited Away için 1,60 GB/1920×1080 MKV bulundu. Bu dört MKV'de Japonca ve İngilizce ses var.
+- Sekiz ek MP4 farklı küçük/orta boyut seçenekleri sağlar; bunların ses dili ayrıca doğrulanmış sayılmaz. Dosya adındaki 1080p, gerçek 480p'nin yerine geçmez.
+- Matroska'nın eksik Language alanındaki İngilizce varsayılanı ve BCP47 önceliği doğru okunur. Açık bilinmeyen veya kesilmiş dil bilgisi İngilizceye çevrilmez.
+- Yalnız Hintçe ses taşıdığı dosyadan doğrulanan Archive kaynakları ve açıkça onlardan türetilmiş, sesi okunamayan dosyalar listeden çıkarılır. Gerçek EN/JA gibi başka sesi ölçülen türevler korunur.
+- 288 fixture/QuickJS testi; Nuvio 0.6.5-beta ve 23 ilgili kaynak dosyası kontrolü geçti. Yeni Türkçe dublaj veya anime bölümü doğrulanmadı. Fiziksel cihaz, tam indirme/oynatma ve sahne senkronu test edilmedi.
+
 ## 1.8.4 — 27 Ekim 2026
 
 - 4KHDHub'ın yayımladığı Pixeldrain bağlantıları film ve tam dizi bölümleri için aramaya alındı. Önceki FSL yolları korunur; yeni dosyalar için adlandırma servisi veya hesap gerekmez.

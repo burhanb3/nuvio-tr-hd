@@ -14,6 +14,21 @@ const animeBundle = await readFile(new URL('../providers/nuvio-tr-hd-anime.js', 
 const extraAnimeBundle = await readFile(new URL('../providers/nuvio-tr-hd-extra-anime.js', import.meta.url), 'utf8');
 const fastOnlineBundle = await readFile(new URL('../providers/nuvio-tr-hd-fast-online.js', import.meta.url), 'utf8');
 
+test('QuickJS: Japonca özgün/aynı TMDB İngilizce adından anime4K bulunur; varsayılanMKV EN okunur, yalnızHI elenir',async()=>{
+ const {archiveQuery}=require('../src/providers/archive.cjs'),jp='例の映画',meta={...helpers.tmdb,original_title:jp,title:'The Matrix',runtime:120},wanted={...helpers.target,originalTitle:jp,searchTitles:['The Matrix',jp],runtimeMinutes:120};
+ const name='The.Matrix.1999.2160p.mkv',url='https://archive.org/download/alias-example/'+name,e=helpers.ebml,duration=Buffer.alloc(8);duration.writeDoubleBE(7200000);
+ const video=e('ae',Buffer.concat([e('83',[1]),e('e0',Buffer.concat([e('b0',[15,0]),e('ba',[8,112])]))]));
+ const body=language=>Buffer.concat([e('1a45dfa3',e('4282',Buffer.from('matroska'))),e('18538067',Buffer.concat([e('1549a966',e('4489',duration)),e('1654ae6b',Buffer.concat([video,e('ae',Buffer.concat([e('83',[2]),...(language?[e('22b59c',Buffer.from(language))]:[]),e('86',Buffer.from('A_AAC'))]))]))]))]);
+ const fixture=makeFixture({extra:{
+ ['https://api.themoviedb.org/3/movie/603?api_key=test&append_to_response=external_ids,release_dates']:{json:meta},
+ [archiveQuery(wanted,true)]:{json:{response:{docs:[{identifier:'alias-example',title:'The Matrix (1999) 2160p'}]}}},[archiveQuery(wanted)]:{json:{response:{docs:[]}}},
+ ['https://archive.org/metadata/alias-example']:{json:{metadata:{title:'The Matrix (1999) 2160p'},files:[{name,length:7200}]}},[url]:{body:body(),mime:'video/matroska'}
+ }});
+ const settings={autoSubtitles:false,useDownloadBridge:false,hdhubEnabled:false,moviesdriveEnabled:false,goojaraEnabled:false,hdrezkaEnabled:false,waploadedEnabled:false,rarefilmmEnabled:false,playImdbEnabled:false,vixsrcEnabled:false,filmmoduEnabled:false},calls=[];
+ const rows=await runInQuickJs(fixture,{settings,nativeTimers:true,fetchCalls:calls});assert.equal(rows.length,1);assert.equal(rows[0].quality,'2160p · 3840×2160');assert.match(rows[0].language,/Ses: EN/);assert.equal(calls.filter(u=>u.includes('advancedsearch.php')).length,2);assert.ok(!calls.some(u=>u.includes('/translations?')));
+ fixture[url].body=body('hin');assert.deepEqual(await runInQuickJs(fixture,{settings,nativeTimers:true}),[]);
+});
+
 test('QuickJS: HDHub Pixel bölümünde gerçek 4K/EN ve gömülü TR korunur; ad servisine ihtiyaç duyulmaz',async()=>{
  const name='Example.Series.S01E02.2160p.WEB-DL.mkv',pixel='https://pixeldrain.dev/u/Fixture1',file='https://pixeldrain.dev/api/file/Fixture1',hub='https://hubcloud.ist/drive/example',terminal='https://gamerxyt.com/hubcloud.php?id=example';
  const enc=s=>Buffer.from(s).toString('base64'),packed=enc(JSON.stringify({o:enc(hub)})).replace(/[A-Za-z]/g,c=>String.fromCharCode(c.charCodeAt(0)+(c.toLowerCase()<='m'?13:-13)));

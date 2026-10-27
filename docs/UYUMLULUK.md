@@ -13,11 +13,13 @@ Resmî release ve geliştirme dalındaki ilgili dosyaların SHA'ları `compatibi
 
 ## Güncel kontrol
 
-1.8.4: 276 fixture/gerçek QuickJS testi. En son doğrulanan Nuvio sürümü **0.6.5-beta**; kilitli 23 dosyada drift yok, kilit değiştirilmedi. [Upstream raporu](../compatibility/upstream-184-check.json), [yeni indirme dosyaları](../compatibility/download-expansion-184.json), [kapsam ve tekrarlar](../compatibility/coverage-184.json).
+1.8.5: 288 fixture/gerçek QuickJS testi. En son doğrulanan Nuvio sürümü **0.6.5-beta**; geliştirme dalı ilerlese de kilitli 23 dosyada drift yok. Kilit değiştirilmedi. [Upstream raporu](../compatibility/upstream-185-check.json), [yeni indirme dosyaları](../compatibility/download-expansion-185.json), [kapsam, baseline ve tekrarlar](../compatibility/coverage-185.json).
 
 Uzantısız MKV için önceki eleme kararı gözden geçirildi: Nuvio iOS dosya gövdesini doğrudan yazar ve dosyayı MPV `loadfile` yoluna iletir. Nuvio'nun `.mp4` kayıt adı, dosyayı MP4'e dönüştürmez. Boyut/format ve gerçek video/ses denetimi geçen kaynaklar bu yola sınırlı olarak alınır. Resmî MPV masaüstü CI derlemesinde 1080p ve 4K MKV örnekleri `.mp4` adıyla tanındı ve bir kare çözüldü. Bu, fiziksel Nuvio/iPhone oynatma veya tam indirme kanıtı değildir.
 
 1.8.4'te bir Fleabag 4K dosyasının ilk 1 MiB'ı masaüstü MPV'de bir kareyle sınandı; MP4 kayıt adı altında gerçek MKV/3840×1600 tanındı, EN-US ses ve TR-TR metin altyazı izi seçildi. Önceki 4 MiB örnek isteği zaman aşımına uğradı. Bu kısa, kesilmiş örnek tam dosya veya fiziksel Nuvio/altyazı senkronu testi değildir.
+
+1.8.5, [Matroska dil kurallarını](https://www.matroska.org/technical/elements.html) uygular: eksik Language alanının eng varsayılanı ve BCP47 önceliği; açık bilinmeyen/boş veya kesik alanlar İngilizce sayılmaz. Masaüstü MPV küçük başlık örneklerinde ses izlerini tanıdı. Your Name 4K örneğinin ilk 1 MiB'ı Cluster'a ulaşmadığı için bir kare çözülemedi; bu, tam dosyanın bozuk olduğunu veya tam oynatımın sınandığını göstermez.
 
 Üretilmiş JavaScript QuickJS WASM motorunda, Nuvio'nun API yüzeyine benzeyen köprüyle çalıştırılır. Bu test quickjs-kt JNI/Native köprüsünü veya fiziksel iPhone taşımasını çalıştırmaz. Fiziksel iPhone/Android, Kotlin derlemesi, tam film oynatma/indirme, offline altyazı ve sahne senkronu henüz sınanmadı.
 
@@ -27,4 +29,4 @@ Kaynak kontrolleri sabit kanonik metadata referanslarıyla gerçek public HTTP/R
 
 [Yayın doğrulaması](../compatibility/github-publication.json) · [Önceki uyumluluk kayıtları](arsiv/UYUMLULUK_GECMISI.md).
 
-1.8.4 yayın kodu `9172166ee08173ef444fe4b636a6934053dd2485`: Windows/Linux [CI](https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40578064383) ve [Pages](https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40578064386) başarılı; yedi public varlık HTTP200 ve yerel SHA eşit.
+1.8.5 yayın kontrolü bekleniyor. Başarıdan sonra CI/Pages ve public SHA kanıtı eklenecek.
