@@ -1,5 +1,11 @@
 # Sonraki işler
 
+## 1.8.3 öncelik
+
+1. Kod ve kanıtlar hazır: Archive iki dilli genel eşleştirme + yıl alanı olmayan HD araması;269check/QuickJS,0.6.5-beta/23blob drift0. download-expansion-183 ve coverage-183 içinde12yeni dosya/4film,6ölçülmüş TR+EN MKV. YayınCI/Pages/yedi publicSHA kontrolünü tamamlayıp bu satırı güncelle.
+2. İndirme/4K/TRdub/TV/anime kapsamı açık. Yeni4K/TV/anime0. Altı küçükMP4'ün sesdili ölçülmedi, TRdub iddia etme. Hotel6->0tekrarboşluğu ve Flea24sdeadline izlenmeli; kotayı artırarak veya yanlışyıl/sesle kapatma.
+3. HDFilmCehennemi encryptedplayer sabitsecret, HDHub4u Cloudflare, yeniHDHub gpdl TLS ve MoviesDriveTV2023yanlışyıl yollarını yeni durum olmadan döndürme. DiziGom aynıDiziBalHLS ailesi, yeniindirmesayma. FizikseliPhoneMKV/TR-ENoffline/ses/senkron/font testleri hâlâ yok.
+
 ## 1.8.2 öncelik
 
 1. Tamamlandı: 1.8.2 aynı manifestte yayımlandı. Kod be767570da27096bc1bddd0c11d699b68e16dbf1; Test40557879614 ve Pages40557879693 başarılı, yedi public dosya HTTP200/SHA eşit. MoviesDrive main'de varsayılan açık. Altı yapımda dokuz yeni MKV+TR; Inception 3840×1598/7,59 GB. 261 check/QuickJS ve Nuvio0.6.5-beta/23 blob drift0.

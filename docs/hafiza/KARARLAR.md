@@ -1,5 +1,12 @@
 # Tasarım kararları
 
+## 1.8.3 — kaynak kapsamı için genel ad/yıl bağı
+
+- Türkçe/özgün iki adın bir arada bulunduğu sürümleri kaçırma. Resmi TMDB adları veya açık iki parçalı dosya grameri gerekir; serbest öneki resmi alias diye kaydetme. Aynı özgün ad/yıl ve gerçek %90–110 süre zorunlu. Çelişen metadata kimliği/yılı gevşetilmez; üretim başlık/video pini eklenmez.
+- HD sorgusunda year alanı eksikliğini başlıktaki yıl tamamlayabilir; sonrasında dosya adında ve gerçek sürede tekrar doğrulanır. Mevcut2sorgu/12satır ve nativekotaları korunur; TVdeğişmez. Çeviri yalnız gerektiğinde tek ortak istek.
+- Yeni12dosyadan6MKV'de TR/EN ölçüldü; küçük6MP4'te dosyaadı dil iddiası gerçekTRdub sayılmaz. Yeni4K0; mevcut4K regresyon başarısı yeni4K katkısı değildir. Altyazı varlığı görsel senkron kanıtı değil.
+- Hotel6sonuçtan0'a dönüş saklanır; yalnız iyi turu yayımlama. Node ve QuickJS, fiziksel Nuvio/indirme/offline/font kanıtı değildir. Challenge/sabitsecret/privatekey ile yeni kaynak sayısını artırma.
+
 ## 1.8.2 — uzantı kararı ve indirme katkısı
 
 - Önceki zorunlu uzantısız MKV reddi yalnız doğrulanmış kaynak adayları için kaldırıldı. Gerçek MKV formatı ve Nuvio'nun .mp4 kayıt adı ayrı bilgilerdir. Boyut, format, ad, video, süre ve ses denetimi sonrası MPV içerik tanıma yolu kullanılabilir. Çıktı türü mkv kalır; genel JSON/Stremio ve HLS kontrolleri gevşetilmez.

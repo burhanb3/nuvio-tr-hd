@@ -1,15 +1,15 @@
 {
   "name": "Nuvio TR HD",
-  "version": "1.8.2",
+  "version": "1.8.3",
   "description": "Film, dizi ve anime için online yayınlar, indirilebilir dosyalar ve Türkçe/İngilizce altyazılar.",
   "author": "Nuvio TR HD",
   "scrapers": [
     {
       "id": "nuvio-tr-hd",
       "name": "Nuvio TR HD",
-      "version": "1.8.2",
+      "version": "1.8.3",
       "description": "Film ve diziler için online yayın, MP4/MKV indirme ve Türkçe/İngilizce altyazı seçenekleri.",
-      "filename": "providers/nuvio-tr-hd.js?v=1.8.2",
+      "filename": "providers/nuvio-tr-hd.js?v=1.8.3",
       "supportedTypes": [
         "movie",
         "tv"
@@ -33,9 +33,9 @@
     {
       "id": "nuvio-tr-hd-anime",
       "name": "Nuvio TR HD · Anime",
-      "version": "1.8.2",
+      "version": "1.8.3",
       "description": "Anime filmleri ve bölümleri için farklı kalitelerde kaynaklar ve Türkçe/İngilizce altyazılar.",
-      "filename": "providers/nuvio-tr-hd-anime.js?v=1.8.2",
+      "filename": "providers/nuvio-tr-hd-anime.js?v=1.8.3",
       "supportedTypes": [
         "movie",
         "tv"
@@ -59,9 +59,9 @@
     {
       "id": "nuvio-tr-hd-extra-anime",
       "name": "Nuvio TR HD · Ek Anime",
-      "version": "1.8.2",
+      "version": "1.8.3",
       "description": "Anime bölümleri için ek MP4 kaynakları. Mevcut Anime sağlayıcısıyla birlikte kullanılabilir.",
-      "filename": "providers/nuvio-tr-hd-extra-anime.js?v=1.8.2",
+      "filename": "providers/nuvio-tr-hd-extra-anime.js?v=1.8.3",
       "supportedTypes": [
         "tv"
       ],
@@ -82,9 +82,9 @@
     {
       "id": "nuvio-tr-hd-fast-online",
       "name": "Nuvio TR HD · Hızlı İzle",
-      "version": "1.8.2",
+      "version": "1.8.3",
       "description": "Film, dizi ve anime için bağımsız online arama. Ana dosya araması sürerken izleme alternatifleri sunar.",
-      "filename": "providers/nuvio-tr-hd-fast-online.js?v=1.8.2",
+      "filename": "providers/nuvio-tr-hd-fast-online.js?v=1.8.3",
       "supportedTypes": [
         "movie",
         "tv"

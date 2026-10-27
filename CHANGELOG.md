@@ -1,5 +1,13 @@
 # Sürüm notları
 
+## 1.8.3 — 27 Ekim 2026
+
+- Archive aramasında Türkçe ve özgün adı birlikte taşıyan film sürümleri için daha iyi eşleştirme. Ayrı yıl alanı eksik olan HD kayıtlar, başlık/dosya yılı ve gerçek süreyle doğrulanır; yanlış kimlik ve yıl kabul edilmez.
+- Canlı kontrolde dört filmde 12 ek MP4/MKV ve mevcut Türkçe altyazı alternatifleri. Altı MKV'de TR/EN ses izleri okundu. The Crow, The Eye ve Hotel Rwanda için yaklaşık 1,72–2,12 GB 1080p; The Bridge at Remagen için 720p/1080p büyük dosyalar bulundu.
+- Yaklaşık 0,58–0,72 GB boyutunda altı küçük MP4 de bulundu. Bu dosyalarda ses dili ölçülemedi; doğrulanmış Türkçe dublaj sayısına dahil değiller. Dosya adındaki 1080p yerine gerçek 480p gösterilir.
+- Önceki Inception 4K dosyası ve film/dizi/anime yolları korundu. Yeni sağlayıcı, sunucu, hesap veya kaynak başına video sabitlemesi eklenmedi; arama ve native iş kotaları artırılmadı.
+- 269 fixture/QuickJS testi ve Nuvio 0.6.5-beta kaynak kontrolü geçti. Bazı tekrarlar ağ nedeniyle boş döndü. Bu tur yeni 4K veya bölüm dosyası doğrulanmadı; fiziksel cihaz, tam indirme ve altyazı senkronu test edilmedi.
+
 ## 1.8.2 — 27 Ekim 2026
 
 - MoviesDrive/Pixeldrain üzerinden ek film ve anime filmi indirmeleri. Tam başlık/yıl, varsa IMDb, dosya adı, gerçek boyut, piksel, süre ve ses birlikte denetlenir; yalnız HI sesli dosyalar atlanır.

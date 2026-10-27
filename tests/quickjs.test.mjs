@@ -14,6 +14,23 @@ const animeBundle = await readFile(new URL('../providers/nuvio-tr-hd-anime.js', 
 const extraAnimeBundle = await readFile(new URL('../providers/nuvio-tr-hd-extra-anime.js', import.meta.url), 'utf8');
 const fastOnlineBundle = await readFile(new URL('../providers/nuvio-tr-hd-fast-online.js', import.meta.url), 'utf8');
 
+test('QuickJS: iki adlı Archive kaydı özgün dosya/yıl/süreyle gerçek 4K ve TR/EN ses verir',async()=>{
+ const {archiveQuery}=require('../src/providers/archive.cjs'),meta={...helpers.tmdb,runtime:120},target={...helpers.target,runtimeMinutes:120};
+ const filename='Yerel Başlık - The Matrix (1999) 1080p.mkv',url='https://archive.org/download/bilingual-example/'+encodeURIComponent(filename),heading='Yerel Başlık The Matrix (1999) 1080p';
+ const duration=Buffer.alloc(8);duration.writeDoubleBE(7200000);
+ const audio=language=>helpers.ebml('ae',Buffer.concat([helpers.ebml('83',[2]),helpers.ebml('22b59c',Buffer.from(language))]));
+ const video=helpers.ebml('ae',Buffer.concat([helpers.ebml('83',[1]),helpers.ebml('e0',Buffer.concat([helpers.ebml('b0',[15,0]),helpers.ebml('ba',[6,64])]))]));
+ const body=Buffer.concat([helpers.ebml('1a45dfa3',helpers.ebml('4282',Buffer.from('matroska'))),helpers.ebml('18538067',Buffer.concat([helpers.ebml('1549a966',helpers.ebml('4489',duration)),helpers.ebml('1654ae6b',Buffer.concat([video,audio('tur'),audio('eng')]))]))]);
+ const fixture=makeFixture({extra:{
+  ['https://api.themoviedb.org/3/movie/603?api_key=test&append_to_response=external_ids,release_dates']:{json:meta},
+  [archiveQuery(target,true)]:{json:{response:{docs:[]}}},[archiveQuery(target)]:{json:{response:{docs:[{identifier:'bilingual-example',title:heading}]}}},
+  ['https://archive.org/metadata/bilingual-example']:{json:{metadata:{title:heading},files:[{name:filename,length:7200}]}},[url]:{body,mime:'video/matroska'}
+ }});
+ const settings={autoSubtitles:false,useDownloadBridge:false,hdhubEnabled:false,moviesdriveEnabled:false,goojaraEnabled:false,hdrezkaEnabled:false,waploadedEnabled:false,rarefilmmEnabled:false,playImdbEnabled:false,vixsrcEnabled:false,filmmoduEnabled:false};
+ const streams=await runInQuickJs(fixture,{settings});assert.equal(streams.length,1);assert.equal(streams[0].type,'mkv');assert.equal(streams[0].quality,'2160p · 3840×1600');assert.match(streams[0].language,/Ses: TR\/EN/);
+ fixture['https://archive.org/metadata/bilingual-example'].json.metadata.tmdb_id=604;assert.deepEqual(await runInQuickJs(fixture,{settings}),[]);
+});
+
 test('QuickJS: uzantısız gerçek MKV/4K ve EN ses MPV yolunda korunur; kullanıcı kapatabilir',async()=>{
  const origin='https://new4.moviesdrive.beer',archive='https://mdrive.lol/archive/123/',hub='https://hubcloud.ist/drive/fixture1',terminal='https://gamerxyt.com/hubcloud.php?id=fixture',pixel='https://pixeldrain.dev/u/Fixture1',file='https://pixeldrain.dev/api/file/Fixture1';
  const name='[[ moviesdrives.com ]] The.Matrix.1999.2160p.English.mkv',duration=Buffer.alloc(8);duration.writeDoubleBE(7200000);

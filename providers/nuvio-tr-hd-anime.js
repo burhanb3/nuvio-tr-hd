@@ -898,7 +898,43 @@ var require_archive = __commonJS({
     var { verifiedArchiveRecords, verifiedMetadataFile } = require_archive_verified();
     var { matchesEpisode } = require_matching();
     var { subtitleLanguage } = require_subtitles();
-    function archiveQuery(target, preferHd = false, titleYear = !preferHd) {
+    function archiveNames(target, titles = []) {
+      const original = normalizeTitle(target.originalTitle), names = [...new Set([target.originalTitle, ...target.searchTitles || [], ...titles].map(normalizeTitle).filter(Boolean))].slice(0, 8);
+      if (target.type !== "movie") return [original];
+      return [.../* @__PURE__ */ new Set([...names, ...names.filter((n) => n !== original).flatMap((n) => [n + " " + original, original + " " + n])])].sort((a, b) => b.length - a.length);
+    }
+    function bilingualHint(value, target) {
+      if (target.type !== "movie") return false;
+      const title = " " + normalizeTitle(value) + " ", original = " " + normalizeTitle(target.originalTitle) + " ", at = title.indexOf(original);
+      if (at < 0 || at > 200) return false;
+      const tail = title.slice(at + original.length), yearAt = tail.indexOf(" " + target.year + " ");
+      return at > 0 && tail.startsWith(target.year + " ") || at === 0 && yearAt > 0 && yearAt < 121;
+    }
+    function bilingualFileNames(files, target) {
+      if (target.type !== "movie") return [];
+      const original = normalizeTitle(target.originalTitle), out = [];
+      for (const file of files.slice(0, 200)) {
+        if (typeof file?.name !== "string" || file.private === "true" || !/\.(mkv|mp4)$/i.test(file.name)) continue;
+        const parts = file.name.split("/").pop().split(/\s+[-–—]\s+/);
+        if (parts.length !== 2) continue;
+        const originalFirst = normalizeTitle(parts[0]) === original;
+        const localized = originalFirst ? parts[1].match(/^(.{1,120}?)\s*\(\s*(\d{4})\s*\)/) : null;
+        const prefix = originalFirst ? localized?.[1] : parts[0];
+        if (!prefix || prefix.length > 120 || /[\r\n\x00-\x1f]/.test(prefix) || /\b(?:19|20)\d{2}\b|\b(?:collection|anthology|trailer|review|documentary|sample|workprints?|fanedit|fan edit|recap|commentary|interview)\b/.test(normalizeTitle(prefix)) || (originalFirst ? Number(localized[2]) !== target.year : !filenameIdentity(parts[1], target))) continue;
+        const name = originalFirst ? original + " " + normalizeTitle(prefix) : normalizeTitle(prefix) + " " + original;
+        if (!out.includes(name)) out.push(name);
+        if (out.length === 4) break;
+      }
+      return out;
+    }
+    function titleBinding(value, target, names) {
+      const full = normalizeTitle(value), actual = normalizeTitle(String(value).replace(/\s*\(\s*\d{4}\s*\)\s*$/, ""));
+      const name = names.find((n) => actual === n || actual.startsWith(n + " ")), suffix = name && actual.startsWith(name + " ") ? actual.slice(name.length + 1) : "";
+      const release = suffix && new RegExp(`^(?:${target.year}|1080p|720p|2160p|remastered|restored)\\b`).test(suffix) && !/\b(trailer|commercial|review|opening|teaser|documentary)\b/.test(suffix);
+      const titleYear = !!name && (full === name + " " + target.year || full.startsWith(name + " " + target.year + " "));
+      return { actual, name, suffix, release, titleYear, exact: !!name && actual === name, localized: !!name && name !== normalizeTitle(target.originalTitle) };
+    }
+    function archiveQuery(target, preferHd = false, titleYear = target.type === "movie" || !preferHd) {
       const title = target.originalTitle.replace(/["\\]/g, " ");
       const exclusions = ["sample", "trailer", "featurette", "review", "podcast", "commercial", "teaser"].filter((word) => !normalizeTitle(title).split(" ").includes(word));
       const binding = target.type === "tv" && preferHd && /^tt\d+$/.test(target.imdbId || "") ? `(title:"${title}" AND imdb_id:${target.imdbId})` : `title:"${title}" AND ` + (titleYear ? `(year:${target.year} OR title:${target.year})` : `year:${target.year}`);
@@ -908,6 +944,13 @@ var require_archive = __commonJS({
     async function scanArchive(http, target, options = {}) {
       const verifiedRecords = verifiedArchiveRecords(target);
       const expected = normalizeTitle(target.originalTitle);
+      let names = archiveNames(target), titleJob;
+      async function localizedNames() {
+        if (!titleJob) titleJob = Promise.resolve().then(() => options.loadTitles ? options.loadTitles() : []).catch(() => []);
+        const titles = await titleJob;
+        names = archiveNames(target, Array.isArray(titles) ? titles : []);
+        return names;
+      }
       const searches = Promise.all([http.json(archiveQuery(target, true), { timeoutMs: 6500 }), http.json(archiveQuery(target), { timeoutMs: 6500 })]);
       const pinnedWork = mapLimit(verifiedRecords.map((r) => ({ identifier: r.item })), 2, loadDoc);
       const results = await searches;
@@ -917,6 +960,7 @@ var require_archive = __commonJS({
         if (title === expected + " " + target.year || title.startsWith(expected + " " + target.year + " ")) return 3;
         if (title === expected || new RegExp(`^(?:1080p|720p|2160p|remastered|restored)\\b`).test(title.startsWith(expected + " ") ? title.slice(expected.length + 1) : "")) return 2;
         if (target.type === "tv" && title.startsWith(expected + " ") && /^(?:season|sezon|s\d|complete|all seasons)\b/.test(title.slice(expected.length + 1))) return 1;
+        if (bilingualHint(doc.title, target)) return 1;
         return 0;
       };
       const docs = [...new Map(results.flatMap((r) => Array.isArray(r?.response?.docs) ? r.response.docs : []).map((d) => [d.identifier, d])).values()].filter((d) => !verifiedRecords.some((r) => r.item === d.identifier)).filter((d) => priority(d) > 0 && !/\b(sample|trailer|featurette|review|podcast|commercial|teaser)\b/.test(normalizeTitle(d.title || "").replace(expected, ""))).sort((a, b) => priority(b) - priority(a));
@@ -933,26 +977,27 @@ var require_archive = __commonJS({
         const pinnedItem = pinnedFiles.length > 0;
         if (verifiedRecord && !pinnedItem) return [];
         const rawTitle = String(meta.original_title || meta.title || "");
-        const title = rawTitle.replace(/\s*\(\d{4}\)\s*$/, "");
         const explicitYear = Number(String(meta.year || "").slice(0, 4));
         const datedYear = Number(String(meta.date || "").slice(0, 4));
-        const actualTitle = normalizeTitle(title), expectedTitle = normalizeTitle(target.originalTitle);
-        const releaseSuffix = actualTitle.startsWith(expectedTitle + " ") ? actualTitle.slice(expectedTitle.length + 1) : "";
-        const releaseTitle = releaseSuffix && new RegExp(`^(?:${target.year}|1080p|720p|2160p|remastered|restored)\\b`).test(releaseSuffix) && !/\b(trailer|commercial|review|opening|teaser|documentary)\b/.test(releaseSuffix);
-        const fullTitle = normalizeTitle(rawTitle);
-        const titleYearBound = fullTitle === expectedTitle + " " + target.year || fullTitle.startsWith(expectedTitle + " " + target.year + " ");
-        const yearFromTitle = !explicitYear && datedYear !== target.year && titleYearBound;
-        const seriesImdbBound = target.type === "tv" && target.imdbId && String(meta.imdb_id || "").trim() === target.imdbId;
-        const seriesTitle = target.type === "tv" && (actualTitle === expectedTitle || actualTitle.startsWith(expectedTitle + " ") && /^(?:season|sezon|s\d|complete|all seasons)\b/.test(releaseSuffix));
-        if (!pinnedItem && yearFromTitle && !(target.runtimeMinutes > 0)) return [];
-        if (!pinnedItem && yearFromTitle && datedYear > 0 && datedYear < target.year) return [];
         if (explicitYear && explicitYear !== target.year) return [];
-        if (!pinnedItem && (actualTitle !== expectedTitle && !releaseTitle && !titleYearBound && !seriesTitle || !explicitYear && datedYear !== target.year && !yearFromTitle && !seriesImdbBound)) return [];
         if (meta.tmdb_id != null && Number(meta.tmdb_id) !== target.tmdbId) return [];
         if (meta.imdb_id && target.imdbId) {
           const ids = String(meta.imdb_id).match(/tt\d+/g) || [];
           if (!ids.length || ids.some((id) => id !== target.imdbId)) return [];
         }
+        const fileNames = bilingualHint(rawTitle, target) ? bilingualFileNames(data.files, target) : [];
+        const localNames = [.../* @__PURE__ */ new Set([...names, ...fileNames])].sort((a, b) => b.length - a.length);
+        let binding = titleBinding(rawTitle, target, localNames);
+        if (!pinnedItem && !binding.exact && !binding.release && !binding.titleYear && bilingualHint(rawTitle, target) && options.loadTitles)
+          binding = titleBinding(rawTitle, target, [...await localizedNames(), ...fileNames].sort((a, b) => b.length - a.length));
+        const fileIdentityNames = [.../* @__PURE__ */ new Set([...names, ...fileNames])];
+        const actualTitle = binding.actual, expectedTitle = normalizeTitle(target.originalTitle), releaseSuffix = binding.suffix;
+        const yearFromTitle = !explicitYear && datedYear !== target.year && binding.titleYear;
+        const seriesImdbBound = target.type === "tv" && target.imdbId && String(meta.imdb_id || "").trim() === target.imdbId;
+        const seriesTitle = target.type === "tv" && (actualTitle === expectedTitle || actualTitle.startsWith(expectedTitle + " ") && /^(?:season|sezon|s\d|complete|all seasons)\b/.test(releaseSuffix));
+        if (!pinnedItem && yearFromTitle && !(target.runtimeMinutes > 0)) return [];
+        if (!pinnedItem && yearFromTitle && datedYear > 0 && datedYear < target.year) return [];
+        if (!pinnedItem && (!binding.exact && !binding.release && !binding.titleYear && !seriesTitle || !explicitYear && datedYear !== target.year && !yearFromTitle && !seriesImdbBound)) return [];
         const files = data.files.filter((f) => typeof f.name === "string" && f.private !== "true");
         const directory = typeof data.dir === "string" && /^\/\d+\/items\/[\w.-]+$/.test(data.dir) && data.dir.endsWith("/items/" + doc.identifier) ? data.dir : null;
         const servers = [.../* @__PURE__ */ new Set([data.d1, ...Array.isArray(data.workable_servers) ? data.workable_servers : [], data.d2])].filter((host) => typeof host === "string" && /^[a-z]{2}\d{4,8}\.(?:us|eu|ca)\.archive\.org$/.test(host)).slice(0, 2);
@@ -971,7 +1016,7 @@ var require_archive = __commonJS({
           const extraName = normalizeTitle(f.name).replace(expectedTitle, "");
           if (!/\.(mp4|mkv)$/i.test(f.name) || /\b(sample|trailer|commercial|teaser)\b/.test(extraName)) return false;
           if (!pinnedItem && target.type === "tv" && (!matchesEpisode(f.name, target) || !normalizeTitle(f.name.split("/").pop()).startsWith(expectedTitle + " ") || !seriesImdbBound && !filenameIdentity(f.name.split("/").pop(), target))) return false;
-          if (!pinnedItem && yearFromTitle && !filenameIdentity(f.name.split("/").pop(), target)) return false;
+          if (!pinnedItem && (yearFromTitle || binding.localized) && !fileIdentityNames.some((name) => filenameIdentity(f.name.split("/").pop(), { ...target, originalTitle: name }))) return false;
           const duration = Number(f.length);
           if (target.runtimeMinutes && duration > 0 && (duration < target.runtimeMinutes * 60 * 0.7 || duration > target.runtimeMinutes * 60 * 1.35)) return false;
           return true;
@@ -991,8 +1036,8 @@ var require_archive = __commonJS({
           sourceItemId: doc.identifier,
           mediaFilename: f.name,
           releaseYearBasis: pinnedItem ? "content-sample-pinned-file" : yearFromTitle ? "exact-title-and-filename" : "metadata",
-          ...yearFromTitle ? { durationTolerance: 0.1 } : {},
-          requireDuration: pinnedItem || yearFromTitle || target.runtimeMinutes > 0 && !(Number(f.length) > 0),
+          ...yearFromTitle || binding.localized ? { durationTolerance: 0.1 } : {},
+          requireDuration: pinnedItem || yearFromTitle || binding.localized || target.runtimeMinutes > 0 && !(Number(f.length) > 0),
           source: "Internet Archive",
           identity: target,
           identityConfidence: meta.tmdb_id ? 100 : 90
@@ -1001,7 +1046,7 @@ var require_archive = __commonJS({
         return candidates;
       }
     }
-    module2.exports = { scanArchive, archiveQuery };
+    module2.exports = { scanArchive, archiveQuery, archiveNames, bilingualHint, titleBinding, bilingualFileNames };
   }
 });
 
@@ -3784,7 +3829,7 @@ var require_ranking = __commonJS({
 var require_diagnostics = __commonJS({
   "src/diagnostics.cjs"(exports2, module2) {
     "use strict";
-    var VERSION = true ? "1.8.2" : "dev";
+    var VERSION = true ? "1.8.3" : "dev";
     function effectiveTmdbKey(settings, injectedKey) {
       return typeof settings.tmdbApiKey === "string" && settings.tmdbApiKey.trim() ? settings.tmdbApiKey.trim() : typeof injectedKey === "string" ? injectedKey.trim() : "";
     }
@@ -4160,7 +4205,10 @@ var require_index = __commonJS({
               ] : [];
               if (settings.autoDiscover !== false && hosted === null) {
                 if (filesLane && settings.directoryEnabled === true) sourceJobs.push({ name: "DahmerMovies", run: () => scanDirectory(http, target, settings) });
-                if (filesLane && settings.archiveEnabled !== false) sourceJobs.push({ name: "Internet Archive", run: () => scanArchive(http, target, { onCandidates: acceptArchive }) });
+                if (filesLane && settings.archiveEnabled !== false) sourceJobs.push({ name: "Internet Archive", run: () => scanArchive(http, target, {
+                  onCandidates: acceptArchive,
+                  loadTitles: () => resolveTranslatedTitles(http, target, effectiveTmdbKey(settings, tmdbKey))
+                }) });
                 if (filesLane && settings.goojaraEnabled !== false) sourceJobs.push({ name: "Goojara", run: () => scanGoojara(http.scope(12e3), target) });
                 if (filesLane && settings.hdrezkaEnabled !== false) sourceJobs.push({ name: "HDRezka", run: () => {
                   const sourceHttp = http.scope(1e4);

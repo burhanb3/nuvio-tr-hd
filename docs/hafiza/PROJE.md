@@ -1,5 +1,17 @@
 # Proje hafızası
 
+## 1.8.3 — iki dilli indirme ve ölçülmüş TR dublaj
+
+Archive genel eşleştirmesi geliştirildi; yeni adaptör veya üretim video pini yok. Resmi aynıTMDB TR/EN adlarıyla iki sıralı birleşim kabul edilebilir. Alternatif olarak yalnız açık "yerel - Original (year)" / "Original - yerel (year)" dosya biçiminden birleşik başlık etiketi çıkarılır; yerel etiket resmi çeviri sayılmaz. Ecel Köprüsü bu yapıyla kabul edilir; TMDB TR adı Remagen Köprüsü olarak korunur. Özgün ad/yıl hem gerçek dosya adında hem aynı birleşik kayıt başlığında gerekir. Çelişen metadata yıl/IMDb/TMDB önce reddedilir. Gerçek süre %90–110 zorunlu; fan edit/workprint/koleksiyon etiketleri engellenir. TV eşleştirmesi gevşetilmedi.
+
+HD film sorgusu yalnız year alanına bağlıydı; yıl başlıkta da aranır. İki sorgu,12satır/kaynak ve main24s/video3/sub4/EN1 aynı. Resmi çeviri yalnız gerekirse tembel tek ortak promise; normal kayıt yeni TMDB işi açmaz. Aynı yakalanmış public metadata replay:1.8.2 aday0,1.8.3 Bridge4/Crow4/Eye2/Hotel2. Bu replay gerçek video testi değildir; ayrı canlı pipeline gerçek dosya/altyazı okudu.
+
+Canlı12 yeni dosya/4film; altıMKV ölçülmüş TR+EN, altıMP4sesdiliölçülmedi. KüçükMP4 yaklaşık0.58–0.72GB/gerçek480p. Crow1.94/2.09GB1920×1036,Eye1.72GB1920×816,Hotel2.12GB1920×816;Bridge6.23GB1280×544/10.60GB1920×816. Hepsindehash+mevcutTRalternatifleri var; subtitleBestScore dillerarasımax, TRsenkronpuanı değil. Üretimvideopini yok; validation4kanonikreferans eklendi.
+
+İlk Crow4/Eye0/Hotel6; sorgu düzeltmesi sonrası Crow10/Eye2/Hotel0. Hotel başarısız tekrarı saklanır. Bridge6 içindeki iki eski kayıt aynıvideo olabilir; yalnız4yeni sayıldı. İlk regresyon Dune7/Inception6/Flea4/Death4/YourName5. Flea24sdeadline hazır4sonucu korudu. Son kodla Dune/Inception tekrar kanıtı coverage-183 içinde; Inception mevcut4K korundu. Yeni4K0/TV0/anime0; hedefler tamamlandı deme.
+
+269 fixture/QuickJS geçti; upstream0.6.5-beta/23blob drift0, lock değişmedi. Fiziksel cihaz/tamoynatım/tamindirme/offline/senkron/font yok. Kaynak araştırma ve başarısız yollar download-expansion-183 içinde. HDFilmCehennemi sabitdeşifreanahtarı kopyalanmadı, HDHub4u challenge çözülmedi, MoviesDriveTV çelişen2023yılı zorlanmadı. Yayın bu not yazılırken bekliyor; tamamlandığında kanıt ekle.
+
 ## 1.8.2 — gerçek MKV ve ek 4K dosya
 
 Uzantısız MKV kararı yeniden incelendi. Nuvio'nun dosyaya .mp4 adı vermesi, gerçek MKV'nin MPV'de açılamayacağını göstermiyor. iOS indirme kodu byte'ları doğrudan yazıyor; iOS/Android MPV yolları dosyayı loadfile ile açıyor. Bu üç kaynak elle incelenip kilitlendi: 23 blob doğrulandı, release/head değiştirilmedi. Resmî MPV Windows CI derlemesinde 1080p ve 4K dosyaların 4 MiB başlangıcı .mp4 adıyla tanındı ve bir kare çözüldü; 4K örneğinde EN ses seçildi. Bunlar telefon, tam film, tam indirme veya offline altyazı testleri değildir.

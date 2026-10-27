@@ -13,7 +13,7 @@ Resmî release ve geliştirme dalındaki ilgili dosyaların SHA'ları `compatibi
 
 ## Güncel kontrol
 
-1.8.2: 261 fixture/gerçek QuickJS testi. En son doğrulanan Nuvio sürümü **0.6.5-beta**; kilitli 23 dosyada drift yok. İndirme/MPV yolu için üç kaynak dosyası ayrıca incelenip kilitlendi; release/head değiştirilmedi. [Upstream raporu](../compatibility/upstream-182-check.json), [yeni indirme dosyaları](../compatibility/download-expansion-182.json), [kapsam ve başarısız taramalar](../compatibility/coverage-182.json).
+1.8.3: 269 fixture/gerçek QuickJS testi. En son doğrulanan Nuvio sürümü **0.6.5-beta**; kilitli 23 dosyada drift yok, kilit değiştirilmedi. [Upstream raporu](../compatibility/upstream-183-check.json), [yeni indirme dosyaları](../compatibility/download-expansion-183.json), [kapsam ve başarısız taramalar](../compatibility/coverage-183.json).
 
 Uzantısız MKV için önceki eleme kararı gözden geçirildi: Nuvio iOS dosya gövdesini doğrudan yazar ve dosyayı MPV `loadfile` yoluna iletir. Nuvio'nun `.mp4` kayıt adı, dosyayı MP4'e dönüştürmez. Boyut/format ve gerçek video/ses denetimi geçen kaynaklar bu yola sınırlı olarak alınır. Resmî MPV masaüstü CI derlemesinde 1080p ve 4K MKV örnekleri `.mp4` adıyla tanındı ve bir kare çözüldü. Bu, fiziksel Nuvio/iPhone oynatma veya tam indirme kanıtı değildir.
 
@@ -25,4 +25,4 @@ Kaynak kontrolleri sabit kanonik metadata referanslarıyla gerçek public HTTP/R
 
 [Yayın doğrulaması](../compatibility/github-publication.json) · [Önceki uyumluluk kayıtları](arsiv/UYUMLULUK_GECMISI.md).
 
-1.8.2 yayın kodu `be767570da27096bc1bddd0c11d699b68e16dbf1`: Windows/Linux [CI](https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40557879614) ve [Pages](https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40557879693) başarılı; yedi public varlık HTTP200 ve yerel SHA eşit.
+1.8.3 yayın kontrolü bekleniyor; başarıdan sonra kod, CI/Pages ve public SHA kanıtı eklenecek.

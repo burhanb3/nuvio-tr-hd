@@ -10,6 +10,38 @@
   },
   "titles": [
     {
+      "key": "crow-1994",
+      "tmdb": { "id": 9495, "original_title": "The Crow", "release_date": "1994-05-11", "imdb_id": "tt0109506", "runtime": 102, "original_language": "en" },
+      "referenceSources": ["https://www.themoviedb.org/movie/9495-the-crow"]
+    },
+    {
+      "key": "eye-2008",
+      "tmdb": { "id": 9030, "original_title": "The Eye", "release_date": "2008-04-24", "imdb_id": "tt0406759", "runtime": 98, "original_language": "en" },
+      "referenceSources": ["https://www.themoviedb.org/movie/9030-the-eye"],
+      "referenceMetadataNote": "Public TMDB page displayed date; source matching uses the year, not this fixture's day."
+    },
+    {
+      "key": "hotel-rwanda",
+      "tmdb": { "id": 205, "original_title": "Hotel Rwanda", "release_date": "2004-12-22", "imdb_id": "tt0395169", "runtime": 121, "original_language": "en" },
+      "referenceSources": ["https://www.themoviedb.org/movie/205-hotel-rwanda"]
+    },
+    {
+      "key": "bridge-remagen",
+      "tmdb": {
+        "id": 15873,
+        "original_title": "The Bridge at Remagen",
+        "release_date": "1969-06-26",
+        "imdb_id": "tt0064110",
+        "runtime": 117,
+        "original_language": "en"
+      },
+      "translations": [{ "language": "tr", "title": "Remagen Köprüsü" }],
+      "referenceSources": [
+        "https://www.themoviedb.org/movie/15873-the-bridge-at-remagen",
+        "https://www.themoviedb.org/movie/15873-the-bridge-at-remagen/translations"
+      ]
+    },
+    {
       "key": "no-way-home",
       "tmdb": {
         "id": 634649,

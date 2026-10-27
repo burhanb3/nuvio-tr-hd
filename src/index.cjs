@@ -239,7 +239,8 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs = 24000, r
             ...addons.map(url => ({ name: 'Stremio', run: () => loadAddon(http, url, target, allowHttp) }))] : [];
           if (settings.autoDiscover !== false && hosted === null) {
             if (filesLane && settings.directoryEnabled === true) sourceJobs.push({ name: 'DahmerMovies', run: () => scanDirectory(http, target, settings) });
-            if (filesLane && settings.archiveEnabled !== false) sourceJobs.push({ name: 'Internet Archive', run: () => scanArchive(http, target, { onCandidates: acceptArchive }) });
+            if (filesLane && settings.archiveEnabled !== false) sourceJobs.push({ name: 'Internet Archive', run: () => scanArchive(http, target, { onCandidates: acceptArchive,
+              loadTitles:()=>resolveTranslatedTitles(http,target,effectiveTmdbKey(settings,tmdbKey)) }) });
             if (filesLane && settings.goojaraEnabled !== false) sourceJobs.push({name:'Goojara',run:()=>scanGoojara(http.scope(12000),target)});
             if (filesLane && settings.hdrezkaEnabled !== false) sourceJobs.push({name:'HDRezka',run:()=>{
               const sourceHttp=http.scope(10000);

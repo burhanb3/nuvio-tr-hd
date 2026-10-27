@@ -1,0 +1,5493 @@
+{
+  "version": "1.8.3",
+  "bridge": {
+    "checkedAt": "2026-10-27T19:03:23.693Z",
+    "version": "1.8.3",
+    "metadata": "fixed canonical reference; does not test phone TMDB API credentials",
+    "acceptance": {
+      "movieSmallFileBytes": 3221225472,
+      "episodeSmallFileBytes": 1073741824,
+      "minimumDistinctDownloadQualities": 2,
+      "requireTurkishSubtitle": true,
+      "physicalPlaybackAndOfflineTest": "not-run"
+    },
+    "transport": "Node limited1MiB, actual source and subtitle HTTP; native iPhone transport not tested",
+    "physicalDevice": "not-run",
+    "fullPlayback": "not-run",
+    "fullDownload": "not-run",
+    "cases": [
+      {
+        "key": "bridge-remagen",
+        "tmdbId": 15873,
+        "title": "The Bridge at Remagen",
+        "type": "movie",
+        "control": false,
+        "elapsedMs": 24019,
+        "bytesRead": 3971408,
+        "diagnostics": [
+          {
+            "tmdbId": "15873",
+            "lane": "main",
+            "configuration": {
+              "version": "dev",
+              "tmdbKeyPresent": true,
+              "autoDiscover": true,
+              "includeHls": true,
+              "playImdbEnabled": true,
+              "vixsrcEnabled": true,
+              "hdhubEnabled": true,
+              "archiveEnabled": true,
+              "waploadedEnabled": true,
+              "rarefilmmEnabled": true,
+              "goojaraEnabled": true,
+              "hdrezkaEnabled": true,
+              "hdfilmdelisiEnabled": true,
+              "dizibalEnabled": true,
+              "purstreamEnabled": true,
+              "moviesdriveEnabled": true,
+              "autoSubtitles": true,
+              "subtitleRequired": false,
+              "detailedHlsMetadata": false,
+              "minimumQuality": 0,
+              "maxResults": 20
+            },
+            "identity": {
+              "reason": "ok",
+              "year": 1969,
+              "type": "movie"
+            },
+            "sources": [
+              {
+                "name": "MoviesDrive / Pixeldrain",
+                "candidates": 0,
+                "startedMs": 71,
+                "discoveryMs": 1174
+              },
+              {
+                "name": "HDRezka",
+                "candidates": 0,
+                "startedMs": 69,
+                "discoveryMs": 1489
+              },
+              {
+                "name": "PlayIMDb",
+                "candidates": 3,
+                "startedMs": 1245,
+                "discoveryMs": 514
+              },
+              {
+                "name": "VixSrc",
+                "candidates": 1,
+                "startedMs": 1558,
+                "discoveryMs": 918
+              },
+              {
+                "name": "Goojara",
+                "candidates": 1,
+                "startedMs": 67,
+                "discoveryMs": 2611
+              },
+              {
+                "name": "FilmModu",
+                "candidates": 6,
+                "startedMs": 1766,
+                "discoveryMs": 1345
+              },
+              {
+                "name": "Waploaded",
+                "candidates": 0,
+                "startedMs": 2679,
+                "discoveryMs": 611
+              },
+              {
+                "name": "4KHDHub / HubCloud",
+                "candidates": 0,
+                "startedMs": 2477,
+                "discoveryMs": 1146
+              },
+              {
+                "name": "Internet Archive",
+                "candidates": 8,
+                "startedMs": 64,
+                "discoveryMs": 5007
+              },
+              {
+                "name": "RareFilmm",
+                "candidates": 0,
+                "startedMs": 3112,
+                "discoveryMs": 2160
+              }
+            ],
+            "rejected": {
+              "video_unavailable": 3
+            },
+            "http": {
+              "api.themoviedb.org:200": 1,
+              "ww1.goojara.to:200": 3,
+              "archive.org:200": 7,
+              "rezka.ag:200": 2,
+              "new4.moviesdrive.beer:200": 2,
+              "ww1.goojara.to:302": 1,
+              "nuvio-tr-hd-download-bridge.kamilbsr03.chatgpt.site:timeout_or_network": 1,
+              "streamdata.vaplayer.ru:200": 1,
+              "www.wootly.ch:200": 1,
+              "vixsrc.to:200": 3,
+              "opensubtitles-v3.strem.io:200": 1,
+              "digitalgrowthblueprint.site:200": 3,
+              "www.filmmodu.one:301": 1,
+              "web.wootly.ch:200": 3,
+              "altyazidb.online:200": 4,
+              "www.filmmodu.one:200": 4,
+              "subs5.strem.io:200": 9,
+              "films.waploaded.com:200": 1,
+              "web.wootly.ch:302": 1,
+              "4khdhub.one:200": 1,
+              "altyazidb.online:502": 6,
+              "rarefilmm.com:200": 1,
+              "opensubtitles.stremio.homes:200": 3,
+              "opensubtitles.stremio.homes:timeout_or_network": 4,
+              "imgsapi.pro:200": 6,
+              "ia601901.us.archive.org:206": 1,
+              "web.wootly.ch:timeout_or_network": 1,
+              "dn800302.us.archive.org:206": 8,
+              "ia601901.us.archive.org:timeout_or_network": 1,
+              "ia601009.us.archive.org:timeout_or_network": 1,
+              "ia801009.us.archive.org:206": 2,
+              "opensubtitles.stremio.homes:429": 1,
+              "dn800307.us.archive.org:timeout_or_network": 2,
+              "dn800307.us.archive.org:206": 1
+            },
+            "subtitleText": {
+              "turkishCharacters": 10
+            },
+            "results": 20,
+            "reason": "deadline",
+            "elapsedMs": 24018
+          },
+          {
+            "tmdbId": "15873",
+            "lane": "fastOnline",
+            "configuration": {
+              "version": "dev",
+              "tmdbKeyPresent": true,
+              "autoDiscover": true,
+              "includeHls": true,
+              "playImdbEnabled": true,
+              "vixsrcEnabled": true,
+              "hdhubEnabled": true,
+              "archiveEnabled": true,
+              "waploadedEnabled": true,
+              "rarefilmmEnabled": true,
+              "goojaraEnabled": true,
+              "hdrezkaEnabled": true,
+              "hdfilmdelisiEnabled": true,
+              "dizibalEnabled": true,
+              "purstreamEnabled": true,
+              "moviesdriveEnabled": true,
+              "autoSubtitles": true,
+              "subtitleRequired": false,
+              "detailedHlsMetadata": false,
+              "minimumQuality": 0,
+              "maxResults": 20
+            },
+            "identity": {
+              "reason": "ok",
+              "year": 1969,
+              "type": "movie"
+            },
+            "sources": [
+              {
+                "name": "HDFilmDelisi",
+                "candidates": 0,
+                "startedMs": 72,
+                "discoveryMs": 863
+              },
+              {
+                "name": "Purstream",
+                "candidates": 0,
+                "startedMs": 78,
+                "discoveryMs": 1276
+              },
+              {
+                "name": "DiziBal",
+                "candidates": 0,
+                "startedMs": 74,
+                "discoveryMs": 1507
+              }
+            ],
+            "rejected": {},
+            "http": {
+              "api.themoviedb.org:200": 2,
+              "hdfilmdelisi.one:200": 1,
+              "api.purstream.club:200": 2,
+              "dizibal.org:200": 2
+            },
+            "subtitleText": {},
+            "results": 0,
+            "reason": "no_eligible_sources",
+            "elapsedMs": 1582
+          }
+        ],
+        "onlineWithTr": true,
+        "downloadUrls": 6,
+        "estimatedDistinctFiles": 6,
+        "downloadQualities": [
+          "1920x816",
+          "1129x480",
+          "1280x544"
+        ],
+        "cleanOnlineWithTr": true,
+        "cleanDownloadQualities": [
+          "1920x816",
+          "1129x480",
+          "1280x544"
+        ],
+        "downloadQualityGrades": [
+          "1080p",
+          "480p",
+          "720p"
+        ],
+        "cleanDownloadQualityGrades": [
+          "1080p",
+          "480p",
+          "720p"
+        ],
+        "cleanSmallWithTr": true,
+        "smallWithTr": true,
+        "smallLimitBytes": 3221225472,
+        "sourceCoverageCriteriaMet": true,
+        "gaps": [],
+        "files": [
+          {
+            "source": "Internet Archive",
+            "container": "mp4",
+            "bytes": 2084601697,
+            "filename": "The Bridge At Remagen - 1969.mp4",
+            "sourceItemId": "the-bridge-at-remagen-1969_202511",
+            "releaseYearBasis": "metadata",
+            "mediaFilename": "The Bridge At Remagen (1969)/mp4/The Bridge At Remagen - 1969.mp4",
+            "audioLanguages": [],
+            "subtitleBestScore": 69,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 1920,
+              "height": 816
+            },
+            "quality": "1920x816",
+            "qualityGrade": "1080p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 8,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 6994.005,
+            "hashAvailable": false
+          },
+          {
+            "source": "Internet Archive",
+            "container": "mp4",
+            "bytes": 676428753,
+            "filename": "Ecel Köprüsü - The Bridge at Remagen (1969) 1080p BluRay [TR-EN] DD5.1 x264 Türkçe Dublaj Film İndir.mkv",
+            "sourceItemId": "ecel-koprusu-the-bridge-at-remagen-1969-1080p-blu-ray-tr-en-dd-5.1-x-264-turkce-dublaj-film-indir",
+            "releaseYearBasis": "exact-title-and-filename",
+            "mediaFilename": "Ecel Köprüsü - The Bridge at Remagen (1969) 1080p BluRay [TR-EN] DD5.1 x264 Türkçe Dublaj Film İndir.mp4",
+            "audioLanguages": [],
+            "subtitleBestScore": 76,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 1129,
+              "height": 480
+            },
+            "quality": "1129x480",
+            "qualityGrade": "480p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 8,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 6993.995,
+            "hashAvailable": true
+          },
+          {
+            "source": "Internet Archive",
+            "container": "mp4",
+            "bytes": 2084601697,
+            "filename": "The Bridge At Remagen.mp4",
+            "sourceItemId": "the-bridge-at-remagen",
+            "releaseYearBasis": "metadata",
+            "mediaFilename": "The Bridge At Remagen.mp4",
+            "audioLanguages": [],
+            "subtitleBestScore": 69,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 1920,
+              "height": 816
+            },
+            "quality": "1920x816",
+            "qualityGrade": "1080p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 8,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 6994.005,
+            "hashAvailable": true
+          },
+          {
+            "source": "Internet Archive",
+            "container": "mp4",
+            "bytes": 676761552,
+            "filename": "Ecel Köprüsü - The Bridge at Remagen (1969) 720p BluRay [TR-EN] DD5.1 x264 Türkçe Dublaj Film İndir.mkv",
+            "sourceItemId": "ecel-koprusu-the-bridge-at-remagen-1969-1080p-blu-ray-tr-en-dd-5.1-x-264-turkce-dublaj-film-indir",
+            "releaseYearBasis": "exact-title-and-filename",
+            "mediaFilename": "Ecel Köprüsü - The Bridge at Remagen (1969) 720p BluRay [TR-EN] DD5.1 x264 Türkçe Dublaj Film İndir.mp4",
+            "audioLanguages": [],
+            "subtitleBestScore": 76,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 1129,
+              "height": 480
+            },
+            "quality": "1129x480",
+            "qualityGrade": "480p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 8,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 6993.995,
+            "hashAvailable": true
+          },
+          {
+            "source": "Internet Archive",
+            "container": "mkv",
+            "bytes": 6226492941,
+            "filename": "Ecel Köprüsü - The Bridge at Remagen (1969) 720p BluRay [TR-EN] DD5.1 x264 Türkçe Dublaj Film İndir.mkv",
+            "sourceItemId": "ecel-koprusu-the-bridge-at-remagen-1969-1080p-blu-ray-tr-en-dd-5.1-x-264-turkce-dublaj-film-indir",
+            "releaseYearBasis": "exact-title-and-filename",
+            "mediaFilename": "Ecel Köprüsü - The Bridge at Remagen (1969) 720p BluRay [TR-EN] DD5.1 x264 Türkçe Dublaj Film İndir.mkv",
+            "audioLanguages": [
+              "tr",
+              "en"
+            ],
+            "subtitleBestScore": 76,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 1280,
+              "height": 544
+            },
+            "quality": "1280x544",
+            "qualityGrade": "720p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 8,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 6993.987,
+            "hashAvailable": true
+          },
+          {
+            "source": "Internet Archive",
+            "container": "mkv",
+            "bytes": 10597998602,
+            "filename": "Ecel Köprüsü - The Bridge at Remagen (1969) 1080p BluRay [TR-EN] DD5.1 x264 Türkçe Dublaj Film İndir.mkv",
+            "sourceItemId": "ecel-koprusu-the-bridge-at-remagen-1969-1080p-blu-ray-tr-en-dd-5.1-x-264-turkce-dublaj-film-indir",
+            "releaseYearBasis": "exact-title-and-filename",
+            "mediaFilename": "Ecel Köprüsü - The Bridge at Remagen (1969) 1080p BluRay [TR-EN] DD5.1 x264 Türkçe Dublaj Film İndir.mkv",
+            "audioLanguages": [
+              "tr",
+              "en"
+            ],
+            "subtitleBestScore": 76,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 1920,
+              "height": 816
+            },
+            "quality": "1920x816",
+            "qualityGrade": "1080p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 8,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 6993.987,
+            "hashAvailable": true
+          }
+        ]
+      }
+    ],
+    "finishedAt": "2026-10-27T19:03:47.718Z",
+    "allSourceCriteriaMet": true
+  },
+  "firstDubPass": {
+    "checkedAt": "2026-10-27T19:06:33.988Z",
+    "version": "1.8.3",
+    "metadata": "fixed canonical reference; does not test phone TMDB API credentials",
+    "acceptance": {
+      "movieSmallFileBytes": 3221225472,
+      "episodeSmallFileBytes": 1073741824,
+      "minimumDistinctDownloadQualities": 2,
+      "requireTurkishSubtitle": true,
+      "physicalPlaybackAndOfflineTest": "not-run"
+    },
+    "transport": "Node limited1MiB, actual source and subtitle HTTP; native iPhone transport not tested",
+    "physicalDevice": "not-run",
+    "fullPlayback": "not-run",
+    "fullDownload": "not-run",
+    "cases": [
+      {
+        "key": "crow-1994",
+        "tmdbId": 9495,
+        "title": "The Crow",
+        "type": "movie",
+        "control": false,
+        "elapsedMs": 19965,
+        "bytesRead": 4779740,
+        "diagnostics": [
+          {
+            "tmdbId": "9495",
+            "lane": "main",
+            "configuration": {
+              "version": "dev",
+              "tmdbKeyPresent": true,
+              "autoDiscover": true,
+              "includeHls": true,
+              "playImdbEnabled": true,
+              "vixsrcEnabled": true,
+              "hdhubEnabled": true,
+              "archiveEnabled": true,
+              "waploadedEnabled": true,
+              "rarefilmmEnabled": true,
+              "goojaraEnabled": true,
+              "hdrezkaEnabled": true,
+              "hdfilmdelisiEnabled": true,
+              "dizibalEnabled": true,
+              "purstreamEnabled": true,
+              "moviesdriveEnabled": true,
+              "autoSubtitles": true,
+              "subtitleRequired": false,
+              "detailedHlsMetadata": false,
+              "minimumQuality": 0,
+              "maxResults": 20
+            },
+            "identity": {
+              "reason": "ok",
+              "year": 1994,
+              "type": "movie"
+            },
+            "sources": [
+              {
+                "name": "MoviesDrive / Pixeldrain",
+                "candidates": 0,
+                "startedMs": 62,
+                "discoveryMs": 1574
+              },
+              {
+                "name": "Goojara",
+                "candidates": 1,
+                "startedMs": 56,
+                "discoveryMs": 1869
+              },
+              {
+                "name": "PlayIMDb",
+                "candidates": 3,
+                "startedMs": 1636,
+                "discoveryMs": 399
+              },
+              {
+                "name": "HDRezka",
+                "candidates": 4,
+                "startedMs": 58,
+                "discoveryMs": 2744
+              },
+              {
+                "name": "VixSrc",
+                "candidates": 1,
+                "startedMs": 1928,
+                "discoveryMs": 1021
+              },
+              {
+                "name": "Waploaded",
+                "candidates": 0,
+                "startedMs": 2949,
+                "discoveryMs": 856
+              },
+              {
+                "name": "FilmModu",
+                "candidates": 5,
+                "startedMs": 2038,
+                "discoveryMs": 2345
+              },
+              {
+                "name": "RareFilmm",
+                "candidates": 0,
+                "startedMs": 3805,
+                "discoveryMs": 1098
+              },
+              {
+                "name": "4KHDHub / HubCloud",
+                "candidates": 0,
+                "startedMs": 2803,
+                "discoveryMs": 2500
+              },
+              {
+                "name": "Internet Archive",
+                "candidates": 1,
+                "startedMs": 53,
+                "discoveryMs": 11087
+              }
+            ],
+            "rejected": {
+              "video_unavailable": 3
+            },
+            "http": {
+              "api.themoviedb.org:200": 2,
+              "ww1.goojara.to:200": 3,
+              "new4.moviesdrive.beer:200": 4,
+              "ww1.goojara.to:302": 1,
+              "www.wootly.ch:200": 1,
+              "nuvio-tr-hd-download-bridge.kamilbsr03.chatgpt.site:timeout_or_network": 1,
+              "rezka.ag:200": 3,
+              "web.wootly.ch:200": 3,
+              "opensubtitles-v3.strem.io:200": 1,
+              "streamdata.vaplayer.ru:200": 1,
+              "archive.org:200": 12,
+              "web.wootly.ch:302": 1,
+              "vixsrc.to:200": 3,
+              "startupmomentumengine.site:200": 2,
+              "www.filmmodu.one:200": 5,
+              "subs5.strem.io:200": 2,
+              "startupmomentumengine.site:404": 1,
+              "films.waploaded.com:200": 1,
+              "altyazidb.online:200": 8,
+              "stream.voidboost.one:302": 4,
+              "rarefilmm.com:200": 1,
+              "4khdhub.one:200": 1,
+              "aurum.stream.voidboost.one:206": 2,
+              "opensubtitles.stremio.homes:timeout_or_network": 2,
+              "web.wootly.ch:timeout_or_network": 1,
+              "stream.voidboost.one:timeout_or_network": 1,
+              "imgsapi.pro:200": 5,
+              "static.voidboost.com:200": 1,
+              "celestia.stream.voidboost.one:206": 2,
+              "altyazidb.online:502": 1,
+              "beryllium.stream.voidboost.one:206": 2,
+              "ia600107.us.archive.org:timeout_or_network": 1,
+              "ia800107.us.archive.org:206": 1,
+              "ia800107.us.archive.org:timeout_or_network": 1
+            },
+            "subtitleText": {
+              "turkishCharacters": 8
+            },
+            "results": 16,
+            "reason": "ok",
+            "elapsedMs": 19963
+          },
+          {
+            "tmdbId": "9495",
+            "lane": "fastOnline",
+            "configuration": {
+              "version": "dev",
+              "tmdbKeyPresent": true,
+              "autoDiscover": true,
+              "includeHls": true,
+              "playImdbEnabled": true,
+              "vixsrcEnabled": true,
+              "hdhubEnabled": true,
+              "archiveEnabled": true,
+              "waploadedEnabled": true,
+              "rarefilmmEnabled": true,
+              "goojaraEnabled": true,
+              "hdrezkaEnabled": true,
+              "hdfilmdelisiEnabled": true,
+              "dizibalEnabled": true,
+              "purstreamEnabled": true,
+              "moviesdriveEnabled": true,
+              "autoSubtitles": true,
+              "subtitleRequired": false,
+              "detailedHlsMetadata": false,
+              "minimumQuality": 0,
+              "maxResults": 20
+            },
+            "identity": {
+              "reason": "ok",
+              "year": 1994,
+              "type": "movie"
+            },
+            "sources": [
+              {
+                "name": "DiziBal",
+                "candidates": 0,
+                "startedMs": 62,
+                "discoveryMs": 465
+              },
+              {
+                "name": "Purstream",
+                "candidates": 1,
+                "startedMs": 63,
+                "discoveryMs": 685
+              },
+              {
+                "name": "HDFilmDelisi",
+                "candidates": 1,
+                "startedMs": 61,
+                "discoveryMs": 1892
+              }
+            ],
+            "rejected": {},
+            "http": {
+              "api.themoviedb.org:200": 2,
+              "hdfilmdelisi.one:200": 2,
+              "api.purstream.club:200": 2,
+              "dizibal.org:200": 1,
+              "free.finepulfe.xyz:200": 1,
+              "altyazidb.online:200": 5,
+              "opensubtitles-v3.strem.io:200": 1,
+              "pl.vixolity.com:200": 1,
+              "subs5.strem.io:200": 2,
+              "ha.vixolity.com:200": 1,
+              "opensubtitles.stremio.homes:timeout_or_network": 2
+            },
+            "subtitleText": {
+              "turkishCharacters": 4
+            },
+            "results": 2,
+            "reason": "ok",
+            "elapsedMs": 5735
+          }
+        ],
+        "onlineWithTr": true,
+        "downloadUrls": 4,
+        "estimatedDistinctFiles": 4,
+        "downloadQualities": [
+          "1282x700",
+          "853x466",
+          "641x350",
+          "640x360"
+        ],
+        "cleanOnlineWithTr": true,
+        "cleanDownloadQualities": [
+          "1282x700",
+          "853x466",
+          "641x350",
+          "640x360"
+        ],
+        "downloadQualityGrades": [
+          "720p",
+          "480p",
+          "360p"
+        ],
+        "cleanDownloadQualityGrades": [
+          "720p",
+          "480p",
+          "360p"
+        ],
+        "cleanSmallWithTr": true,
+        "smallWithTr": true,
+        "smallLimitBytes": 3221225472,
+        "sourceCoverageCriteriaMet": true,
+        "gaps": [],
+        "files": [
+          {
+            "source": "HDRezka",
+            "container": "mp4",
+            "bytes": 2005922510,
+            "filename": "The Crow.1994",
+            "sourceItemId": null,
+            "releaseYearBasis": null,
+            "mediaFilename": null,
+            "audioLanguages": [],
+            "subtitleBestScore": 90,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 1282,
+              "height": 700
+            },
+            "quality": "1282x700",
+            "qualityGrade": "720p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 5,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 6112.868,
+            "hashAvailable": true
+          },
+          {
+            "source": "HDRezka",
+            "container": "mp4",
+            "bytes": 825182803,
+            "filename": "The Crow.1994",
+            "sourceItemId": null,
+            "releaseYearBasis": null,
+            "mediaFilename": null,
+            "audioLanguages": [],
+            "subtitleBestScore": 90,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 853,
+              "height": 466
+            },
+            "quality": "853x466",
+            "qualityGrade": "480p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 5,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 6112.868,
+            "hashAvailable": true
+          },
+          {
+            "source": "HDRezka",
+            "container": "mp4",
+            "bytes": 455566765,
+            "filename": "The Crow.1994",
+            "sourceItemId": null,
+            "releaseYearBasis": null,
+            "mediaFilename": null,
+            "audioLanguages": [],
+            "subtitleBestScore": 90,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 641,
+              "height": 350
+            },
+            "quality": "641x350",
+            "qualityGrade": "360p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 5,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 6112.868,
+            "hashAvailable": true
+          },
+          {
+            "source": "Internet Archive",
+            "container": "mp4",
+            "bytes": 325826563,
+            "filename": "The Crow 1994 - Frame İnterpolatiıon 60 FPS 1080p BluRay Türkçe Dublaj.mp4",
+            "sourceItemId": "the-crow-1994-frame-interpolatiion-60-fps-1080p-blu-ray-turkce-dublaj",
+            "releaseYearBasis": "exact-title-and-filename",
+            "mediaFilename": "The Crow 1994 - Frame İnterpolatiıon 60 FPS 1080p BluRay Türkçe Dublaj.mp4",
+            "audioLanguages": [],
+            "subtitleBestScore": 69,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 640,
+              "height": 360
+            },
+            "quality": "640x360",
+            "qualityGrade": "360p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 6,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 6124.146875,
+            "hashAvailable": false
+          }
+        ]
+      },
+      {
+        "key": "eye-2008",
+        "tmdbId": 9030,
+        "title": "The Eye",
+        "type": "movie",
+        "control": false,
+        "elapsedMs": 7876,
+        "bytesRead": 1328794,
+        "diagnostics": [
+          {
+            "tmdbId": "9030",
+            "lane": "main",
+            "configuration": {
+              "version": "dev",
+              "tmdbKeyPresent": true,
+              "autoDiscover": true,
+              "includeHls": true,
+              "playImdbEnabled": true,
+              "vixsrcEnabled": true,
+              "hdhubEnabled": true,
+              "archiveEnabled": true,
+              "waploadedEnabled": true,
+              "rarefilmmEnabled": true,
+              "goojaraEnabled": true,
+              "hdrezkaEnabled": true,
+              "hdfilmdelisiEnabled": true,
+              "dizibalEnabled": true,
+              "purstreamEnabled": true,
+              "moviesdriveEnabled": true,
+              "autoSubtitles": true,
+              "subtitleRequired": false,
+              "detailedHlsMetadata": false,
+              "minimumQuality": 0,
+              "maxResults": 20
+            },
+            "identity": {
+              "reason": "ok",
+              "year": 2008,
+              "type": "movie"
+            },
+            "sources": [
+              {
+                "name": "HDRezka",
+                "candidates": 0,
+                "startedMs": 6,
+                "discoveryMs": 1512
+              },
+              {
+                "name": "PlayIMDb",
+                "candidates": 3,
+                "startedMs": 1518,
+                "discoveryMs": 405
+              },
+              {
+                "name": "MoviesDrive / Pixeldrain",
+                "candidates": 0,
+                "startedMs": 7,
+                "discoveryMs": 1963
+              },
+              {
+                "name": "FilmModu",
+                "candidates": 0,
+                "startedMs": 1970,
+                "discoveryMs": 998
+              },
+              {
+                "name": "Goojara",
+                "candidates": 1,
+                "startedMs": 5,
+                "discoveryMs": 3568
+              },
+              {
+                "name": "Waploaded",
+                "candidates": 0,
+                "startedMs": 3575,
+                "discoveryMs": 1
+              },
+              {
+                "name": "VixSrc",
+                "candidates": 1,
+                "startedMs": 1928,
+                "discoveryMs": 1650
+              },
+              {
+                "name": "4KHDHub / HubCloud",
+                "candidates": 0,
+                "startedMs": 2968,
+                "discoveryMs": 814
+              },
+              {
+                "name": "RareFilmm",
+                "candidates": 0,
+                "startedMs": 3576,
+                "discoveryMs": 759
+              },
+              {
+                "name": "Internet Archive",
+                "candidates": 0,
+                "startedMs": 2,
+                "discoveryMs": 6232
+              }
+            ],
+            "rejected": {
+              "video_unavailable": 2
+            },
+            "http": {
+              "api.themoviedb.org:200": 2,
+              "rezka.ag:200": 2,
+              "archive.org:200": 8,
+              "new4.moviesdrive.beer:200": 4,
+              "ww1.goojara.to:200": 3,
+              "nuvio-tr-hd-download-bridge.kamilbsr03.chatgpt.site:timeout_or_network": 1,
+              "streamdata.vaplayer.ru:200": 1,
+              "opensubtitles-v3.strem.io:200": 1,
+              "vixsrc.to:200": 3,
+              "smartincomeplaybook.site:200": 2,
+              "ww1.goojara.to:302": 1,
+              "altyazidb.online:200": 7,
+              "www.filmmodu.one:200": 3,
+              "subs5.strem.io:200": 6,
+              "www.wootly.ch:200": 1,
+              "smartincomeplaybook.site:404": 1,
+              "web.wootly.ch:200": 3,
+              "web.wootly.ch:302": 1,
+              "4khdhub.one:200": 1,
+              "rarefilmm.com:200": 1,
+              "opensubtitles.stremio.homes:timeout_or_network": 2,
+              "web.wootly.ch:timeout_or_network": 1
+            },
+            "subtitleText": {
+              "turkishCharacters": 8
+            },
+            "results": 7,
+            "reason": "ok",
+            "elapsedMs": 7876
+          },
+          {
+            "tmdbId": "9030",
+            "lane": "fastOnline",
+            "configuration": {
+              "version": "dev",
+              "tmdbKeyPresent": true,
+              "autoDiscover": true,
+              "includeHls": true,
+              "playImdbEnabled": true,
+              "vixsrcEnabled": true,
+              "hdhubEnabled": true,
+              "archiveEnabled": true,
+              "waploadedEnabled": true,
+              "rarefilmmEnabled": true,
+              "goojaraEnabled": true,
+              "hdrezkaEnabled": true,
+              "hdfilmdelisiEnabled": true,
+              "dizibalEnabled": true,
+              "purstreamEnabled": true,
+              "moviesdriveEnabled": true,
+              "autoSubtitles": true,
+              "subtitleRequired": false,
+              "detailedHlsMetadata": false,
+              "minimumQuality": 0,
+              "maxResults": 20
+            },
+            "identity": {
+              "reason": "ok",
+              "year": 2008,
+              "type": "movie"
+            },
+            "sources": [
+              {
+                "name": "HDFilmDelisi",
+                "candidates": 0,
+                "startedMs": 7,
+                "discoveryMs": 484
+              },
+              {
+                "name": "DiziBal",
+                "candidates": 0,
+                "startedMs": 8,
+                "discoveryMs": 688
+              },
+              {
+                "name": "Purstream",
+                "candidates": 0,
+                "startedMs": 9,
+                "discoveryMs": 1097
+              }
+            ],
+            "rejected": {},
+            "http": {
+              "api.themoviedb.org:200": 2,
+              "api.purstream.club:200": 2,
+              "hdfilmdelisi.one:200": 1,
+              "dizibal.org:200": 1
+            },
+            "subtitleText": {},
+            "results": 0,
+            "reason": "no_eligible_sources",
+            "elapsedMs": 1106
+          }
+        ],
+        "onlineWithTr": true,
+        "downloadUrls": 0,
+        "estimatedDistinctFiles": 0,
+        "downloadQualities": [],
+        "cleanOnlineWithTr": true,
+        "cleanDownloadQualities": [],
+        "downloadQualityGrades": [],
+        "cleanDownloadQualityGrades": [],
+        "cleanSmallWithTr": false,
+        "smallWithTr": false,
+        "smallLimitBytes": 3221225472,
+        "sourceCoverageCriteriaMet": false,
+        "gaps": [
+          "download_missing",
+          "small_download_with_tr_missing",
+          "multiple_verified_download_qualities_missing"
+        ],
+        "files": []
+      },
+      {
+        "key": "hotel-rwanda",
+        "tmdbId": 205,
+        "title": "Hotel Rwanda",
+        "type": "movie",
+        "control": false,
+        "elapsedMs": 18966,
+        "bytesRead": 5719580,
+        "diagnostics": [
+          {
+            "tmdbId": "205",
+            "lane": "main",
+            "configuration": {
+              "version": "dev",
+              "tmdbKeyPresent": true,
+              "autoDiscover": true,
+              "includeHls": true,
+              "playImdbEnabled": true,
+              "vixsrcEnabled": true,
+              "hdhubEnabled": true,
+              "archiveEnabled": true,
+              "waploadedEnabled": true,
+              "rarefilmmEnabled": true,
+              "goojaraEnabled": true,
+              "hdrezkaEnabled": true,
+              "hdfilmdelisiEnabled": true,
+              "dizibalEnabled": true,
+              "purstreamEnabled": true,
+              "moviesdriveEnabled": true,
+              "autoSubtitles": true,
+              "subtitleRequired": false,
+              "detailedHlsMetadata": false,
+              "minimumQuality": 0,
+              "maxResults": 20
+            },
+            "identity": {
+              "reason": "ok",
+              "year": 2004,
+              "type": "movie"
+            },
+            "sources": [
+              {
+                "name": "MoviesDrive / Pixeldrain",
+                "candidates": 0,
+                "startedMs": 6,
+                "discoveryMs": 904
+              },
+              {
+                "name": "PlayIMDb",
+                "candidates": 0,
+                "startedMs": 910,
+                "discoveryMs": 420
+              },
+              {
+                "name": "HDRezka",
+                "candidates": 4,
+                "startedMs": 5,
+                "discoveryMs": 1624
+              },
+              {
+                "name": "Goojara",
+                "candidates": 1,
+                "startedMs": 4,
+                "discoveryMs": 1834
+              },
+              {
+                "name": "Internet Archive",
+                "candidates": 2,
+                "startedMs": 2,
+                "discoveryMs": 1971
+              },
+              {
+                "name": "Waploaded",
+                "candidates": 0,
+                "startedMs": 1973,
+                "discoveryMs": 0
+              },
+              {
+                "name": "VixSrc",
+                "candidates": 1,
+                "startedMs": 1330,
+                "discoveryMs": 813
+              },
+              {
+                "name": "4KHDHub / HubCloud",
+                "candidates": 0,
+                "startedMs": 1838,
+                "discoveryMs": 610
+              },
+              {
+                "name": "FilmModu",
+                "candidates": 6,
+                "startedMs": 1633,
+                "discoveryMs": 1020
+              },
+              {
+                "name": "RareFilmm",
+                "candidates": 0,
+                "startedMs": 1973,
+                "discoveryMs": 888
+              }
+            ],
+            "rejected": {
+              "video_unavailable": 1
+            },
+            "http": {
+              "api.themoviedb.org:200": 1,
+              "ww1.goojara.to:200": 3,
+              "archive.org:200": 5,
+              "ww1.goojara.to:302": 1,
+              "new4.moviesdrive.beer:200": 1,
+              "rezka.ag:200": 3,
+              "www.wootly.ch:200": 1,
+              "nuvio-tr-hd-download-bridge.kamilbsr03.chatgpt.site:200": 1,
+              "streamdata.vaplayer.ru:200": 1,
+              "web.wootly.ch:200": 3,
+              "vixsrc.to:200": 3,
+              "www.filmmodu.one:301": 1,
+              "opensubtitles-v3.strem.io:200": 1,
+              "altyazidb.online:200": 9,
+              "4khdhub.one:200": 1,
+              "www.filmmodu.one:200": 4,
+              "stream.voidboost.one:302": 4,
+              "rarefilmm.com:200": 1,
+              "consul.stream.voidboost.one:206": 2,
+              "ozzy.stream.voidboost.one:206": 2,
+              "proton.stream.voidboost.one:206": 2,
+              "web.wootly.ch:302": 1,
+              "static.voidboost.com:200": 1,
+              "opensubtitles.stremio.homes:timeout_or_network": 2,
+              "turin2.nebula.to:206": 2,
+              "ia601603.us.archive.org:206": 4,
+              "imgsapi.pro:200": 6,
+              "subs5.strem.io:200": 3,
+              "altyazidb.online:502": 2,
+              "stream.voidboost.one:timeout_or_network": 1
+            },
+            "subtitleText": {
+              "turkishCharacters": 10
+            },
+            "results": 13,
+            "reason": "ok",
+            "elapsedMs": 18966
+          },
+          {
+            "tmdbId": "205",
+            "lane": "fastOnline",
+            "configuration": {
+              "version": "dev",
+              "tmdbKeyPresent": true,
+              "autoDiscover": true,
+              "includeHls": true,
+              "playImdbEnabled": true,
+              "vixsrcEnabled": true,
+              "hdhubEnabled": true,
+              "archiveEnabled": true,
+              "waploadedEnabled": true,
+              "rarefilmmEnabled": true,
+              "goojaraEnabled": true,
+              "hdrezkaEnabled": true,
+              "hdfilmdelisiEnabled": true,
+              "dizibalEnabled": true,
+              "purstreamEnabled": true,
+              "moviesdriveEnabled": true,
+              "autoSubtitles": true,
+              "subtitleRequired": false,
+              "detailedHlsMetadata": false,
+              "minimumQuality": 0,
+              "maxResults": 20
+            },
+            "identity": {
+              "reason": "ok",
+              "year": 2004,
+              "type": "movie"
+            },
+            "sources": [
+              {
+                "name": "DiziBal",
+                "candidates": 0,
+                "startedMs": 8,
+                "discoveryMs": 493
+              },
+              {
+                "name": "Purstream",
+                "candidates": 0,
+                "startedMs": 9,
+                "discoveryMs": 492
+              },
+              {
+                "name": "HDFilmDelisi",
+                "candidates": 1,
+                "startedMs": 7,
+                "discoveryMs": 1522
+              }
+            ],
+            "rejected": {},
+            "http": {
+              "api.themoviedb.org:200": 2,
+              "dizibal.org:200": 1,
+              "api.purstream.club:200": 1,
+              "hdfilmdelisi.one:200": 2,
+              "pl.vixolity.com:200": 1,
+              "ha.vixolity.com:200": 1,
+              "opensubtitles-v3.strem.io:200": 1,
+              "altyazidb.online:200": 5,
+              "subs5.strem.io:200": 6,
+              "opensubtitles.stremio.homes:timeout_or_network": 2
+            },
+            "subtitleText": {
+              "turkishCharacters": 8
+            },
+            "results": 1,
+            "reason": "ok",
+            "elapsedMs": 6349
+          }
+        ],
+        "onlineWithTr": true,
+        "downloadUrls": 6,
+        "estimatedDistinctFiles": 6,
+        "downloadQualities": [
+          "852x362",
+          "428x182",
+          "1280x544",
+          "853x480",
+          "1920x816",
+          "1129x480"
+        ],
+        "cleanOnlineWithTr": true,
+        "cleanDownloadQualities": [
+          "852x362",
+          "428x182",
+          "1280x544",
+          "853x480",
+          "1920x816",
+          "1129x480"
+        ],
+        "downloadQualityGrades": [
+          "480p",
+          "240p",
+          "720p",
+          "1080p"
+        ],
+        "cleanDownloadQualityGrades": [
+          "480p",
+          "240p",
+          "720p",
+          "1080p"
+        ],
+        "cleanSmallWithTr": true,
+        "smallWithTr": true,
+        "smallLimitBytes": 3221225472,
+        "sourceCoverageCriteriaMet": true,
+        "gaps": [],
+        "files": [
+          {
+            "source": "HDRezka",
+            "container": "mp4",
+            "bytes": 977803820,
+            "filename": "Hotel Rwanda.2004",
+            "sourceItemId": null,
+            "releaseYearBasis": null,
+            "mediaFilename": null,
+            "audioLanguages": [],
+            "subtitleBestScore": 90,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 852,
+              "height": 362
+            },
+            "quality": "852x362",
+            "qualityGrade": "480p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 5,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 7311.263,
+            "hashAvailable": true
+          },
+          {
+            "source": "HDRezka",
+            "container": "mp4",
+            "bytes": 314468607,
+            "filename": "Hotel Rwanda.2004",
+            "sourceItemId": null,
+            "releaseYearBasis": null,
+            "mediaFilename": null,
+            "audioLanguages": [],
+            "subtitleBestScore": 90,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 428,
+              "height": 182
+            },
+            "quality": "428x182",
+            "qualityGrade": "240p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 5,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 7311.263,
+            "hashAvailable": true
+          },
+          {
+            "source": "HDRezka",
+            "container": "mp4",
+            "bytes": 2404062137,
+            "filename": "Hotel Rwanda.2004",
+            "sourceItemId": null,
+            "releaseYearBasis": null,
+            "mediaFilename": null,
+            "audioLanguages": [],
+            "subtitleBestScore": 90,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 1280,
+              "height": 544
+            },
+            "quality": "1280x544",
+            "qualityGrade": "720p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 5,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 7311.263,
+            "hashAvailable": true
+          },
+          {
+            "source": "Goojara",
+            "container": "mp4",
+            "bytes": 763181181,
+            "filename": "Hotel.Rwanda.2004.720p.BluRay.x264-x0r.WT11.mp4",
+            "sourceItemId": null,
+            "releaseYearBasis": null,
+            "mediaFilename": null,
+            "audioLanguages": [],
+            "subtitleBestScore": 74,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 853,
+              "height": 480
+            },
+            "quality": "853x480",
+            "qualityGrade": "480p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 4,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 7311.19,
+            "hashAvailable": true
+          },
+          {
+            "source": "Internet Archive",
+            "container": "mkv",
+            "bytes": 2121243298,
+            "filename": "Hotel Rwanda - Ruanda Oteli (2004) 1080p.BluRay.x265.tr-en.mkv",
+            "sourceItemId": "hotel-rwanda-ruanda-oteli-2004-1080p.-blu-ray.x-265.tr-en",
+            "releaseYearBasis": "exact-title-and-filename",
+            "mediaFilename": "Hotel Rwanda - Ruanda Oteli (2004) 1080p.BluRay.x265.tr-en.mkv",
+            "audioLanguages": [
+              "tr",
+              "en"
+            ],
+            "subtitleBestScore": 65,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 1920,
+              "height": 816
+            },
+            "quality": "1920x816",
+            "qualityGrade": "1080p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 4,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 7311.21,
+            "hashAvailable": true
+          },
+          {
+            "source": "Internet Archive",
+            "container": "mp4",
+            "bytes": 717374464,
+            "filename": "Hotel Rwanda - Ruanda Oteli (2004) 1080p.BluRay.x265.tr-en.mkv",
+            "sourceItemId": "hotel-rwanda-ruanda-oteli-2004-1080p.-blu-ray.x-265.tr-en",
+            "releaseYearBasis": "exact-title-and-filename",
+            "mediaFilename": "Hotel Rwanda - Ruanda Oteli (2004) 1080p.BluRay.x265.tr-en.mp4",
+            "audioLanguages": [],
+            "subtitleBestScore": 65,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 1129,
+              "height": 480
+            },
+            "quality": "1129x480",
+            "qualityGrade": "480p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 4,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 7311.21,
+            "hashAvailable": true
+          }
+        ]
+      }
+    ],
+    "finishedAt": "2026-10-27T19:07:20.806Z",
+    "allSourceCriteriaMet": false
+  },
+  "dubRecovery": {
+    "checkedAt": "2026-10-27T19:11:06.708Z",
+    "version": "1.8.3",
+    "metadata": "fixed canonical reference; does not test phone TMDB API credentials",
+    "acceptance": {
+      "movieSmallFileBytes": 3221225472,
+      "episodeSmallFileBytes": 1073741824,
+      "minimumDistinctDownloadQualities": 2,
+      "requireTurkishSubtitle": true,
+      "physicalPlaybackAndOfflineTest": "not-run"
+    },
+    "transport": "Node limited1MiB, actual source and subtitle HTTP; native iPhone transport not tested",
+    "physicalDevice": "not-run",
+    "fullPlayback": "not-run",
+    "fullDownload": "not-run",
+    "cases": [
+      {
+        "key": "crow-1994",
+        "tmdbId": 9495,
+        "title": "The Crow",
+        "type": "movie",
+        "control": false,
+        "elapsedMs": 16605,
+        "bytesRead": 6569334,
+        "diagnostics": [
+          {
+            "tmdbId": "9495",
+            "lane": "main",
+            "configuration": {
+              "version": "dev",
+              "tmdbKeyPresent": true,
+              "autoDiscover": true,
+              "includeHls": true,
+              "playImdbEnabled": true,
+              "vixsrcEnabled": true,
+              "hdhubEnabled": true,
+              "archiveEnabled": true,
+              "waploadedEnabled": true,
+              "rarefilmmEnabled": true,
+              "goojaraEnabled": true,
+              "hdrezkaEnabled": true,
+              "hdfilmdelisiEnabled": true,
+              "dizibalEnabled": true,
+              "purstreamEnabled": true,
+              "moviesdriveEnabled": true,
+              "autoSubtitles": true,
+              "subtitleRequired": false,
+              "detailedHlsMetadata": false,
+              "minimumQuality": 0,
+              "maxResults": 20
+            },
+            "identity": {
+              "reason": "ok",
+              "year": 1994,
+              "type": "movie"
+            },
+            "sources": [
+              {
+                "name": "HDRezka",
+                "candidates": 4,
+                "startedMs": 75,
+                "discoveryMs": 1118
+              },
+              {
+                "name": "MoviesDrive / Pixeldrain",
+                "candidates": 0,
+                "startedMs": 79,
+                "discoveryMs": 1232
+              },
+              {
+                "name": "PlayIMDb",
+                "candidates": 3,
+                "startedMs": 1200,
+                "discoveryMs": 394
+              },
+              {
+                "name": "Goojara",
+                "candidates": 1,
+                "startedMs": 72,
+                "discoveryMs": 1828
+              },
+              {
+                "name": "VixSrc",
+                "candidates": 1,
+                "startedMs": 1311,
+                "discoveryMs": 803
+              },
+              {
+                "name": "Waploaded",
+                "candidates": 0,
+                "startedMs": 2114,
+                "discoveryMs": 328
+              },
+              {
+                "name": "4KHDHub / HubCloud",
+                "candidates": 0,
+                "startedMs": 1900,
+                "discoveryMs": 617
+              },
+              {
+                "name": "FilmModu",
+                "candidates": 5,
+                "startedMs": 1595,
+                "discoveryMs": 1128
+              },
+              {
+                "name": "RareFilmm",
+                "candidates": 0,
+                "startedMs": 2442,
+                "discoveryMs": 419
+              },
+              {
+                "name": "Internet Archive",
+                "candidates": 7,
+                "startedMs": 67,
+                "discoveryMs": 5733
+              }
+            ],
+            "rejected": {
+              "video_unavailable": 3
+            },
+            "http": {
+              "api.themoviedb.org:200": 2,
+              "ww1.goojara.to:200": 3,
+              "new4.moviesdrive.beer:200": 4,
+              "rezka.ag:200": 3,
+              "archive.org:200": 14,
+              "ww1.goojara.to:302": 1,
+              "opensubtitles-v3.strem.io:200": 1,
+              "www.wootly.ch:200": 1,
+              "nuvio-tr-hd-download-bridge.kamilbsr03.chatgpt.site:timeout_or_network": 1,
+              "altyazidb.online:200": 8,
+              "streamdata.vaplayer.ru:200": 1,
+              "vixsrc.to:200": 3,
+              "web.wootly.ch:200": 3,
+              "www.filmmodu.one:200": 5,
+              "films.waploaded.com:200": 1,
+              "4khdhub.one:200": 1,
+              "rarefilmm.com:200": 1,
+              "stream.voidboost.one:302": 4,
+              "opensubtitles.stremio.homes:200": 4,
+              "elysium.stream.voidboost.one:206": 2,
+              "celestia.stream.voidboost.one:206": 2,
+              "stream.voidboost.one:timeout_or_network": 1,
+              "startupmomentumengine.site:200": 2,
+              "web.wootly.ch:302": 1,
+              "static.voidboost.com:200": 1,
+              "startupmomentumengine.site:404": 1,
+              "imgsapi.pro:200": 5,
+              "subs5.strem.io:200": 2,
+              "ia600104.us.archive.org:206": 5,
+              "opensubtitles.stremio.homes:429": 1,
+              "opensubtitles.stremio.homes:timeout_or_network": 18,
+              "altyazidb.online:502": 1,
+              "web.wootly.ch:timeout_or_network": 1,
+              "ia600107.us.archive.org:206": 2,
+              "ia600702.us.archive.org:206": 4,
+              "ia601808.us.archive.org:206": 4,
+              "beryllium.stream.voidboost.one:206": 2
+            },
+            "subtitleText": {
+              "turkishCharacters": 8
+            },
+            "results": 20,
+            "reason": "ok",
+            "elapsedMs": 16604
+          },
+          {
+            "tmdbId": "9495",
+            "lane": "fastOnline",
+            "configuration": {
+              "version": "dev",
+              "tmdbKeyPresent": true,
+              "autoDiscover": true,
+              "includeHls": true,
+              "playImdbEnabled": true,
+              "vixsrcEnabled": true,
+              "hdhubEnabled": true,
+              "archiveEnabled": true,
+              "waploadedEnabled": true,
+              "rarefilmmEnabled": true,
+              "goojaraEnabled": true,
+              "hdrezkaEnabled": true,
+              "hdfilmdelisiEnabled": true,
+              "dizibalEnabled": true,
+              "purstreamEnabled": true,
+              "moviesdriveEnabled": true,
+              "autoSubtitles": true,
+              "subtitleRequired": false,
+              "detailedHlsMetadata": false,
+              "minimumQuality": 0,
+              "maxResults": 20
+            },
+            "identity": {
+              "reason": "ok",
+              "year": 1994,
+              "type": "movie"
+            },
+            "sources": [
+              {
+                "name": "DiziBal",
+                "candidates": 0,
+                "startedMs": 81,
+                "discoveryMs": 415
+              },
+              {
+                "name": "Purstream",
+                "candidates": 1,
+                "startedMs": 82,
+                "discoveryMs": 587
+              },
+              {
+                "name": "HDFilmDelisi",
+                "candidates": 1,
+                "startedMs": 79,
+                "discoveryMs": 1009
+              }
+            ],
+            "rejected": {},
+            "http": {
+              "api.themoviedb.org:200": 2,
+              "hdfilmdelisi.one:200": 2,
+              "api.purstream.club:200": 2,
+              "dizibal.org:200": 1,
+              "opensubtitles-v3.strem.io:200": 1,
+              "free.finepulfe.xyz:200": 1,
+              "altyazidb.online:200": 5,
+              "pl.vixolity.com:200": 1,
+              "subs5.strem.io:200": 2,
+              "ha.vixolity.com:200": 1,
+              "opensubtitles.stremio.homes:200": 2
+            },
+            "subtitleText": {
+              "turkishCharacters": 4
+            },
+            "results": 2,
+            "reason": "deadline",
+            "elapsedMs": 8022
+          }
+        ],
+        "onlineWithTr": true,
+        "downloadUrls": 10,
+        "estimatedDistinctFiles": 10,
+        "downloadQualities": [
+          "425x232",
+          "853x466",
+          "1920x1040",
+          "640x360",
+          "1920x1036",
+          "890x480",
+          "641x350"
+        ],
+        "cleanOnlineWithTr": true,
+        "cleanDownloadQualities": [
+          "425x232",
+          "853x466",
+          "1920x1040",
+          "640x360",
+          "1920x1036",
+          "890x480",
+          "641x350"
+        ],
+        "downloadQualityGrades": [
+          "240p",
+          "480p",
+          "1080p",
+          "360p"
+        ],
+        "cleanDownloadQualityGrades": [
+          "240p",
+          "480p",
+          "1080p",
+          "360p"
+        ],
+        "cleanSmallWithTr": true,
+        "smallWithTr": true,
+        "smallLimitBytes": 3221225472,
+        "sourceCoverageCriteriaMet": true,
+        "gaps": [],
+        "files": [
+          {
+            "source": "HDRezka",
+            "container": "mp4",
+            "bytes": 267330713,
+            "filename": "The Crow.1994",
+            "sourceItemId": null,
+            "releaseYearBasis": null,
+            "mediaFilename": null,
+            "audioLanguages": [],
+            "subtitleBestScore": 90,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 425,
+              "height": 232
+            },
+            "quality": "425x232",
+            "qualityGrade": "240p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 5,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 6112.868,
+            "hashAvailable": true
+          },
+          {
+            "source": "HDRezka",
+            "container": "mp4",
+            "bytes": 825182803,
+            "filename": "The Crow.1994",
+            "sourceItemId": null,
+            "releaseYearBasis": null,
+            "mediaFilename": null,
+            "audioLanguages": [],
+            "subtitleBestScore": 90,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 853,
+              "height": 466
+            },
+            "quality": "853x466",
+            "qualityGrade": "480p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 5,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 6112.868,
+            "hashAvailable": true
+          },
+          {
+            "source": "Internet Archive",
+            "container": "mp4",
+            "bytes": 3614113337,
+            "filename": "The.Crow.1994.REMASTERED.1080p.BluRay.1400MB.DD5.1.x264-GalaxyRG.mp4",
+            "sourceItemId": "the.-crow.-1994.-remastered.-1080p.-blu-ray.-1400-mb.-dd-5.1.x-264-galaxy-rg_202610",
+            "releaseYearBasis": "exact-title-and-filename",
+            "mediaFilename": "The.Crow.1994.REMASTERED.1080p.BluRay.1400MB.DD5.1.x264-GalaxyRG.ia.mp4",
+            "audioLanguages": [],
+            "subtitleBestScore": 76,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 1920,
+              "height": 1040
+            },
+            "quality": "1920x1040",
+            "qualityGrade": "1080p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 7,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 6113.002,
+            "hashAvailable": true
+          },
+          {
+            "source": "Internet Archive",
+            "container": "mp4",
+            "bytes": 3614113337,
+            "filename": "The.Crow.1994.REMASTERED.1080p.BluRay.1400MB.DD5.1.x264-GalaxyRG.mp4",
+            "sourceItemId": "the.-crow.-1994.-remastered.-1080p.-blu-ray.-1400-mb.-dd-5.1.x-264-galaxy-rg_202610",
+            "releaseYearBasis": "exact-title-and-filename",
+            "mediaFilename": "The.Crow.1994.REMASTERED.1080p.BluRay.1400MB.DD5.1.x264-GalaxyRG.mp4",
+            "audioLanguages": [],
+            "subtitleBestScore": 76,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 1920,
+              "height": 1040
+            },
+            "quality": "1920x1040",
+            "qualityGrade": "1080p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 7,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 6113.002,
+            "hashAvailable": true
+          },
+          {
+            "source": "Internet Archive",
+            "container": "mp4",
+            "bytes": 325826563,
+            "filename": "The Crow 1994 - Frame İnterpolatiıon 60 FPS 1080p BluRay Türkçe Dublaj.mp4",
+            "sourceItemId": "the-crow-1994-frame-interpolatiion-60-fps-1080p-blu-ray-turkce-dublaj",
+            "releaseYearBasis": "exact-title-and-filename",
+            "mediaFilename": "The Crow 1994 - Frame İnterpolatiıon 60 FPS 1080p BluRay Türkçe Dublaj.mp4",
+            "audioLanguages": [],
+            "subtitleBestScore": 69,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 640,
+              "height": 360
+            },
+            "quality": "640x360",
+            "qualityGrade": "360p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 6,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 6124.146875,
+            "hashAvailable": true
+          },
+          {
+            "source": "Internet Archive",
+            "container": "mkv",
+            "bytes": 1940410735,
+            "filename": "The Crow - Ölümsüz Aşk (1994) Remastered.1080p.BluRay.x265.tr-en.mkv",
+            "sourceItemId": "the-crow-olumsuz-ask-1994-remastered.-1080p.-blu-ray.x-265.tr-en",
+            "releaseYearBasis": "exact-title-and-filename",
+            "mediaFilename": "The Crow - Ölümsüz Aşk (1994) Remastered.1080p.BluRay.x265.tr-en.mkv",
+            "audioLanguages": [
+              "tr",
+              "en"
+            ],
+            "subtitleBestScore": 74,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 1920,
+              "height": 1036
+            },
+            "quality": "1920x1036",
+            "qualityGrade": "1080p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 7,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 6109.781,
+            "hashAvailable": true
+          },
+          {
+            "source": "Internet Archive",
+            "container": "mp4",
+            "bytes": 606986271,
+            "filename": "The Crow - Ölümsüz Aşk (1994) Remastered.1080p.BluRay.x265.tr-en.mkv",
+            "sourceItemId": "the-crow-olumsuz-ask-1994-remastered.-1080p.-blu-ray.x-265.tr-en",
+            "releaseYearBasis": "exact-title-and-filename",
+            "mediaFilename": "The Crow - Ölümsüz Aşk (1994) Remastered.1080p.BluRay.x265.tr-en.mp4",
+            "audioLanguages": [],
+            "subtitleBestScore": 74,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 890,
+              "height": 480
+            },
+            "quality": "890x480",
+            "qualityGrade": "480p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 7,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 6109.8,
+            "hashAvailable": true
+          },
+          {
+            "source": "Internet Archive",
+            "container": "mp4",
+            "bytes": 606987927,
+            "filename": "The Crow - Ölümsüz Aşk (1994) Remastered.1080p.BluRay.x265.dvd-tr-en.mkv",
+            "sourceItemId": "the-crow-olumsuz-ask-1994-remastered.-1080p.-blu-ray.x-265.dvd-tr-en",
+            "releaseYearBasis": "exact-title-and-filename",
+            "mediaFilename": "The Crow - Ölümsüz Aşk (1994) Remastered.1080p.BluRay.x265.dvd-tr-en.mp4",
+            "audioLanguages": [],
+            "subtitleBestScore": 74,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 890,
+              "height": 480
+            },
+            "quality": "890x480",
+            "qualityGrade": "480p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 7,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 6109.8,
+            "hashAvailable": true
+          },
+          {
+            "source": "Internet Archive",
+            "container": "mkv",
+            "bytes": 2087076256,
+            "filename": "The Crow - Ölümsüz Aşk (1994) Remastered.1080p.BluRay.x265.dvd-tr-en.mkv",
+            "sourceItemId": "the-crow-olumsuz-ask-1994-remastered.-1080p.-blu-ray.x-265.dvd-tr-en",
+            "releaseYearBasis": "exact-title-and-filename",
+            "mediaFilename": "The Crow - Ölümsüz Aşk (1994) Remastered.1080p.BluRay.x265.dvd-tr-en.mkv",
+            "audioLanguages": [
+              "tr",
+              "en"
+            ],
+            "subtitleBestScore": 74,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 1920,
+              "height": 1036
+            },
+            "quality": "1920x1036",
+            "qualityGrade": "1080p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 7,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 6109.781,
+            "hashAvailable": true
+          },
+          {
+            "source": "HDRezka",
+            "container": "mp4",
+            "bytes": 455566765,
+            "filename": "The Crow.1994",
+            "sourceItemId": null,
+            "releaseYearBasis": null,
+            "mediaFilename": null,
+            "audioLanguages": [],
+            "subtitleBestScore": 90,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 641,
+              "height": 350
+            },
+            "quality": "641x350",
+            "qualityGrade": "360p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 5,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 6112.868,
+            "hashAvailable": true
+          }
+        ]
+      },
+      {
+        "key": "eye-2008",
+        "tmdbId": 9030,
+        "title": "The Eye",
+        "type": "movie",
+        "control": false,
+        "elapsedMs": 8956,
+        "bytesRead": 2071704,
+        "diagnostics": [
+          {
+            "tmdbId": "9030",
+            "lane": "main",
+            "configuration": {
+              "version": "dev",
+              "tmdbKeyPresent": true,
+              "autoDiscover": true,
+              "includeHls": true,
+              "playImdbEnabled": true,
+              "vixsrcEnabled": true,
+              "hdhubEnabled": true,
+              "archiveEnabled": true,
+              "waploadedEnabled": true,
+              "rarefilmmEnabled": true,
+              "goojaraEnabled": true,
+              "hdrezkaEnabled": true,
+              "hdfilmdelisiEnabled": true,
+              "dizibalEnabled": true,
+              "purstreamEnabled": true,
+              "moviesdriveEnabled": true,
+              "autoSubtitles": true,
+              "subtitleRequired": false,
+              "detailedHlsMetadata": false,
+              "minimumQuality": 0,
+              "maxResults": 20
+            },
+            "identity": {
+              "reason": "ok",
+              "year": 2008,
+              "type": "movie"
+            },
+            "sources": [
+              {
+                "name": "HDRezka",
+                "candidates": 0,
+                "startedMs": 4,
+                "discoveryMs": 961
+              },
+              {
+                "name": "PlayIMDb",
+                "candidates": 3,
+                "startedMs": 965,
+                "discoveryMs": 405
+              },
+              {
+                "name": "MoviesDrive / Pixeldrain",
+                "candidates": 0,
+                "startedMs": 5,
+                "discoveryMs": 1474
+              },
+              {
+                "name": "Goojara",
+                "candidates": 1,
+                "startedMs": 3,
+                "discoveryMs": 1676
+              },
+              {
+                "name": "Internet Archive",
+                "candidates": 2,
+                "startedMs": 2,
+                "discoveryMs": 2190
+              },
+              {
+                "name": "Waploaded",
+                "candidates": 0,
+                "startedMs": 2192,
+                "discoveryMs": 2
+              },
+              {
+                "name": "VixSrc",
+                "candidates": 1,
+                "startedMs": 1375,
+                "discoveryMs": 831
+              },
+              {
+                "name": "4KHDHub / HubCloud",
+                "candidates": 0,
+                "startedMs": 1679,
+                "discoveryMs": 562
+              },
+              {
+                "name": "FilmModu",
+                "candidates": 0,
+                "startedMs": 1479,
+                "discoveryMs": 929
+              },
+              {
+                "name": "RareFilmm",
+                "candidates": 0,
+                "startedMs": 2194,
+                "discoveryMs": 409
+              }
+            ],
+            "rejected": {
+              "video_unavailable": 2
+            },
+            "http": {
+              "api.themoviedb.org:200": 2,
+              "nuvio-tr-hd-download-bridge.kamilbsr03.chatgpt.site:200": 1,
+              "ww1.goojara.to:200": 3,
+              "new4.moviesdrive.beer:200": 4,
+              "rezka.ag:200": 2,
+              "archive.org:200": 9,
+              "ww1.goojara.to:302": 1,
+              "www.wootly.ch:200": 1,
+              "streamdata.vaplayer.ru:200": 1,
+              "web.wootly.ch:200": 3,
+              "opensubtitles-v3.strem.io:200": 1,
+              "altyazidb.online:200": 13,
+              "vixsrc.to:200": 3,
+              "smartincomeplaybook.site:200": 2,
+              "web.wootly.ch:302": 1,
+              "subs5.strem.io:200": 7,
+              "www.filmmodu.one:200": 3,
+              "smartincomeplaybook.site:404": 1,
+              "web.wootly.ch:timeout_or_network": 1,
+              "4khdhub.one:200": 1,
+              "rarefilmm.com:200": 1,
+              "opensubtitles.stremio.homes:200": 4,
+              "ia600801.us.archive.org:206": 4,
+              "opensubtitles.stremio.homes:429": 2,
+              "opensubtitles.stremio.homes:timeout_or_network": 1
+            },
+            "subtitleText": {
+              "turkishCharacters": 13
+            },
+            "results": 9,
+            "reason": "ok",
+            "elapsedMs": 8956
+          },
+          {
+            "tmdbId": "9030",
+            "lane": "fastOnline",
+            "configuration": {
+              "version": "dev",
+              "tmdbKeyPresent": true,
+              "autoDiscover": true,
+              "includeHls": true,
+              "playImdbEnabled": true,
+              "vixsrcEnabled": true,
+              "hdhubEnabled": true,
+              "archiveEnabled": true,
+              "waploadedEnabled": true,
+              "rarefilmmEnabled": true,
+              "goojaraEnabled": true,
+              "hdrezkaEnabled": true,
+              "hdfilmdelisiEnabled": true,
+              "dizibalEnabled": true,
+              "purstreamEnabled": true,
+              "moviesdriveEnabled": true,
+              "autoSubtitles": true,
+              "subtitleRequired": false,
+              "detailedHlsMetadata": false,
+              "minimumQuality": 0,
+              "maxResults": 20
+            },
+            "identity": {
+              "reason": "ok",
+              "year": 2008,
+              "type": "movie"
+            },
+            "sources": [
+              {
+                "name": "HDFilmDelisi",
+                "candidates": 0,
+                "startedMs": 4,
+                "discoveryMs": 447
+              },
+              {
+                "name": "DiziBal",
+                "candidates": 0,
+                "startedMs": 5,
+                "discoveryMs": 549
+              },
+              {
+                "name": "Purstream",
+                "candidates": 0,
+                "startedMs": 5,
+                "discoveryMs": 601
+              }
+            ],
+            "rejected": {},
+            "http": {
+              "api.themoviedb.org:200": 2,
+              "api.purstream.club:200": 2,
+              "hdfilmdelisi.one:200": 1,
+              "dizibal.org:200": 1
+            },
+            "subtitleText": {},
+            "results": 0,
+            "reason": "no_eligible_sources",
+            "elapsedMs": 607
+          }
+        ],
+        "onlineWithTr": true,
+        "downloadUrls": 2,
+        "estimatedDistinctFiles": 2,
+        "downloadQualities": [
+          "1920x816",
+          "1129x480"
+        ],
+        "cleanOnlineWithTr": true,
+        "cleanDownloadQualities": [
+          "1920x816",
+          "1129x480"
+        ],
+        "downloadQualityGrades": [
+          "1080p",
+          "480p"
+        ],
+        "cleanDownloadQualityGrades": [
+          "1080p",
+          "480p"
+        ],
+        "cleanSmallWithTr": true,
+        "smallWithTr": true,
+        "smallLimitBytes": 3221225472,
+        "sourceCoverageCriteriaMet": true,
+        "gaps": [],
+        "files": [
+          {
+            "source": "Internet Archive",
+            "container": "mkv",
+            "bytes": 1718119794,
+            "filename": "The Eye - Göz (2008) 1080p.BluRay.x265.tr-en.mkv",
+            "sourceItemId": "the-eye-goz-2008-1080p.-blu-ray.x-265.tr-en",
+            "releaseYearBasis": "exact-title-and-filename",
+            "mediaFilename": "The Eye - Göz (2008) 1080p.BluRay.x265.tr-en.mkv",
+            "audioLanguages": [
+              "tr",
+              "en"
+            ],
+            "subtitleBestScore": 74,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 1920,
+              "height": 816
+            },
+            "quality": "1920x816",
+            "qualityGrade": "1080p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 8,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 5798.632,
+            "hashAvailable": true
+          },
+          {
+            "source": "Internet Archive",
+            "container": "mp4",
+            "bytes": 582999488,
+            "filename": "The Eye - Göz (2008) 1080p.BluRay.x265.tr-en.mkv",
+            "sourceItemId": "the-eye-goz-2008-1080p.-blu-ray.x-265.tr-en",
+            "releaseYearBasis": "exact-title-and-filename",
+            "mediaFilename": "The Eye - Göz (2008) 1080p.BluRay.x265.tr-en.mp4",
+            "audioLanguages": [],
+            "subtitleBestScore": 74,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 1129,
+              "height": 480
+            },
+            "quality": "1129x480",
+            "qualityGrade": "480p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 8,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 5793.833,
+            "hashAvailable": true
+          }
+        ]
+      },
+      {
+        "key": "hotel-rwanda",
+        "tmdbId": 205,
+        "title": "Hotel Rwanda",
+        "type": "movie",
+        "control": false,
+        "elapsedMs": 24013,
+        "bytesRead": 1470979,
+        "diagnostics": [
+          {
+            "tmdbId": "205",
+            "lane": "main",
+            "configuration": {
+              "version": "dev",
+              "tmdbKeyPresent": true,
+              "autoDiscover": true,
+              "includeHls": true,
+              "playImdbEnabled": true,
+              "vixsrcEnabled": true,
+              "hdhubEnabled": true,
+              "archiveEnabled": true,
+              "waploadedEnabled": true,
+              "rarefilmmEnabled": true,
+              "goojaraEnabled": true,
+              "hdrezkaEnabled": true,
+              "hdfilmdelisiEnabled": true,
+              "dizibalEnabled": true,
+              "purstreamEnabled": true,
+              "moviesdriveEnabled": true,
+              "autoSubtitles": true,
+              "subtitleRequired": false,
+              "detailedHlsMetadata": false,
+              "minimumQuality": 0,
+              "maxResults": 20
+            },
+            "identity": {
+              "reason": "ok",
+              "year": 2004,
+              "type": "movie"
+            },
+            "sources": [
+              {
+                "name": "MoviesDrive / Pixeldrain",
+                "candidates": 0,
+                "startedMs": 6,
+                "discoveryMs": 430
+              },
+              {
+                "name": "PlayIMDb",
+                "candidates": 0,
+                "startedMs": 436,
+                "discoveryMs": 489
+              },
+              {
+                "name": "HDRezka",
+                "candidates": 4,
+                "startedMs": 5,
+                "discoveryMs": 1729
+              },
+              {
+                "name": "VixSrc",
+                "candidates": 1,
+                "startedMs": 925,
+                "discoveryMs": 944
+              },
+              {
+                "name": "Goojara",
+                "candidates": 1,
+                "startedMs": 4,
+                "discoveryMs": 1866
+              },
+              {
+                "name": "Waploaded",
+                "candidates": 0,
+                "startedMs": 1870,
+                "discoveryMs": 1
+              },
+              {
+                "name": "Internet Archive",
+                "candidates": 2,
+                "startedMs": 2,
+                "discoveryMs": 1973
+              },
+              {
+                "name": "FilmModu",
+                "candidates": 0,
+                "startedMs": 1739,
+                "discoveryMs": 4501
+              },
+              {
+                "name": "RareFilmm",
+                "candidates": 0,
+                "startedMs": 1871,
+                "discoveryMs": 4508
+              },
+              {
+                "name": "4KHDHub / HubCloud",
+                "candidates": 0,
+                "startedMs": 1869,
+                "discoveryMs": 4510
+              }
+            ],
+            "rejected": {
+              "video_unavailable": 7
+            },
+            "http": {
+              "api.themoviedb.org:200": 1,
+              "nuvio-tr-hd-download-bridge.kamilbsr03.chatgpt.site:200": 1,
+              "ww1.goojara.to:200": 3,
+              "new4.moviesdrive.beer:200": 1,
+              "rezka.ag:200": 3,
+              "archive.org:200": 5,
+              "streamdata.vaplayer.ru:200": 1,
+              "ww1.goojara.to:302": 1,
+              "www.wootly.ch:200": 1,
+              "vixsrc.to:200": 3,
+              "web.wootly.ch:200": 3,
+              "altyazidb.online:200": 3,
+              "opensubtitles-v3.strem.io:200": 1,
+              "stream.voidboost.one:302": 3,
+              "opensubtitles.stremio.homes:200": 1,
+              "stream.voidboost.one:timeout_or_network": 4,
+              "www.filmmodu.one:timeout_or_network": 1,
+              "4khdhub.one:timeout_or_network": 1,
+              "rarefilmm.com:timeout_or_network": 1,
+              "opensubtitles.stremio.homes:timeout_or_network": 1,
+              "web.wootly.ch:timeout_or_network": 1,
+              "ia601603.us.archive.org:timeout_or_network": 2,
+              "ia801603.us.archive.org:timeout_or_network": 2,
+              "altyazidb.online:timeout_or_network": 2,
+              "subs5.strem.io:timeout_or_network": 1,
+              "subs5.strem.io:200": 2
+            },
+            "subtitleText": {
+              "turkishCharacters": 2
+            },
+            "results": 1,
+            "reason": "deadline",
+            "elapsedMs": 24013
+          },
+          {
+            "tmdbId": "205",
+            "lane": "fastOnline",
+            "configuration": {
+              "version": "dev",
+              "tmdbKeyPresent": true,
+              "autoDiscover": true,
+              "includeHls": true,
+              "playImdbEnabled": true,
+              "vixsrcEnabled": true,
+              "hdhubEnabled": true,
+              "archiveEnabled": true,
+              "waploadedEnabled": true,
+              "rarefilmmEnabled": true,
+              "goojaraEnabled": true,
+              "hdrezkaEnabled": true,
+              "hdfilmdelisiEnabled": true,
+              "dizibalEnabled": true,
+              "purstreamEnabled": true,
+              "moviesdriveEnabled": true,
+              "autoSubtitles": true,
+              "subtitleRequired": false,
+              "detailedHlsMetadata": false,
+              "minimumQuality": 0,
+              "maxResults": 20
+            },
+            "identity": {
+              "reason": "ok",
+              "year": 2004,
+              "type": "movie"
+            },
+            "sources": [
+              {
+                "name": "Purstream",
+                "candidates": 0,
+                "startedMs": 8,
+                "discoveryMs": 393
+              },
+              {
+                "name": "DiziBal",
+                "candidates": 0,
+                "startedMs": 7,
+                "discoveryMs": 503
+              },
+              {
+                "name": "HDFilmDelisi",
+                "candidates": 1,
+                "startedMs": 7,
+                "discoveryMs": 1737
+              }
+            ],
+            "rejected": {
+              "video_unavailable": 1
+            },
+            "http": {
+              "api.themoviedb.org:200": 2,
+              "api.purstream.club:200": 1,
+              "hdfilmdelisi.one:200": 2,
+              "dizibal.org:200": 1,
+              "pl.vixolity.com:200": 1,
+              "altyazidb.online:200": 1,
+              "opensubtitles.stremio.homes:timeout_or_network": 1,
+              "opensubtitles-v3.strem.io:timeout_or_network": 1,
+              "ha.vixolity.com:timeout_or_network": 1
+            },
+            "subtitleText": {},
+            "results": 0,
+            "reason": "no_eligible_sources",
+            "elapsedMs": 6254
+          }
+        ],
+        "onlineWithTr": true,
+        "downloadUrls": 0,
+        "estimatedDistinctFiles": 0,
+        "downloadQualities": [],
+        "cleanOnlineWithTr": true,
+        "cleanDownloadQualities": [],
+        "downloadQualityGrades": [],
+        "cleanDownloadQualityGrades": [],
+        "cleanSmallWithTr": false,
+        "smallWithTr": false,
+        "smallLimitBytes": 3221225472,
+        "sourceCoverageCriteriaMet": false,
+        "gaps": [
+          "download_missing",
+          "small_download_with_tr_missing",
+          "multiple_verified_download_qualities_missing"
+        ],
+        "files": []
+      }
+    ],
+    "finishedAt": "2026-10-27T19:11:56.298Z",
+    "allSourceCriteriaMet": false
+  },
+  "regressionBeforeHdQueryChange": {
+    "checkedAt": "2026-10-27T19:09:44.387Z",
+    "version": "1.8.3",
+    "metadata": "fixed canonical reference; does not test phone TMDB API credentials",
+    "acceptance": {
+      "movieSmallFileBytes": 3221225472,
+      "episodeSmallFileBytes": 1073741824,
+      "minimumDistinctDownloadQualities": 2,
+      "requireTurkishSubtitle": true,
+      "physicalPlaybackAndOfflineTest": "not-run"
+    },
+    "transport": "Node limited1MiB, actual source and subtitle HTTP; native iPhone transport not tested",
+    "physicalDevice": "not-run",
+    "fullPlayback": "not-run",
+    "fullDownload": "not-run",
+    "cases": [
+      {
+        "key": "dune",
+        "tmdbId": 438631,
+        "title": "Dune",
+        "type": "movie",
+        "control": false,
+        "elapsedMs": 16907,
+        "bytesRead": 6696537,
+        "diagnostics": [
+          {
+            "tmdbId": "438631",
+            "lane": "main",
+            "configuration": {
+              "version": "dev",
+              "tmdbKeyPresent": true,
+              "autoDiscover": true,
+              "includeHls": true,
+              "playImdbEnabled": true,
+              "vixsrcEnabled": true,
+              "hdhubEnabled": true,
+              "archiveEnabled": true,
+              "waploadedEnabled": true,
+              "rarefilmmEnabled": true,
+              "goojaraEnabled": true,
+              "hdrezkaEnabled": true,
+              "hdfilmdelisiEnabled": true,
+              "dizibalEnabled": true,
+              "purstreamEnabled": true,
+              "moviesdriveEnabled": true,
+              "autoSubtitles": true,
+              "subtitleRequired": false,
+              "detailedHlsMetadata": false,
+              "minimumQuality": 0,
+              "maxResults": 20
+            },
+            "identity": {
+              "reason": "ok",
+              "year": 2021,
+              "type": "movie"
+            },
+            "sources": [
+              {
+                "name": "HDRezka",
+                "candidates": 4,
+                "startedMs": 68,
+                "discoveryMs": 1838
+              },
+              {
+                "name": "PlayIMDb",
+                "candidates": 3,
+                "startedMs": 1910,
+                "discoveryMs": 760
+              },
+              {
+                "name": "Goojara",
+                "candidates": 1,
+                "startedMs": 65,
+                "discoveryMs": 2751
+              },
+              {
+                "name": "Internet Archive",
+                "candidates": 2,
+                "startedMs": 57,
+                "discoveryMs": 3292
+              },
+              {
+                "name": "VixSrc",
+                "candidates": 1,
+                "startedMs": 2671,
+                "discoveryMs": 1277
+              },
+              {
+                "name": "FilmModu",
+                "candidates": 0,
+                "startedMs": 2816,
+                "discoveryMs": 1533
+              },
+              {
+                "name": "Waploaded",
+                "candidates": 0,
+                "startedMs": 3948,
+                "discoveryMs": 839
+              },
+              {
+                "name": "RareFilmm",
+                "candidates": 0,
+                "startedMs": 4349,
+                "discoveryMs": 1233
+              },
+              {
+                "name": "MoviesDrive / Pixeldrain",
+                "candidates": 3,
+                "startedMs": 71,
+                "discoveryMs": 5815
+              },
+              {
+                "name": "4KHDHub / HubCloud",
+                "candidates": 5,
+                "startedMs": 3349,
+                "discoveryMs": 6179
+              }
+            ],
+            "rejected": {
+              "video_unavailable": 8
+            },
+            "http": {
+              "api.themoviedb.org:200": 3,
+              "new4.moviesdrive.beer:200": 2,
+              "rezka.ag:200": 3,
+              "ww1.goojara.to:200": 3,
+              "archive.org:200": 7,
+              "mdrive.lol:200": 4,
+              "nuvio-tr-hd-download-bridge.kamilbsr03.chatgpt.site:timeout_or_network": 1,
+              "ww1.goojara.to:302": 1,
+              "opensubtitles-v3.strem.io:200": 1,
+              "hubcloud.ist:200": 10,
+              "www.wootly.ch:200": 1,
+              "altyazidb.online:200": 6,
+              "web.wootly.ch:200": 3,
+              "streamdata.vaplayer.ru:200": 1,
+              "stream.voidboost.one:302": 4,
+              "vixsrc.to:200": 4,
+              "www.filmmodu.one:200": 2,
+              "gamerxyt.com:200": 10,
+              "pixeldrain.dev:200": 3,
+              "opensubtitles.stremio.homes:200": 21,
+              "4khdhub.one:200": 2,
+              "www.filmmodu.one:404": 1,
+              "kurt.stream.voidboost.one:206": 2,
+              "films.waploaded.com:200": 1,
+              "greenmotors.club:302": 6,
+              "rarefilmm.com:200": 1,
+              "greenmotors.cc:200": 6,
+              "stream.voidboost.one:timeout_or_network": 3,
+              "static.voidboost.com:200": 1,
+              "nicheauthorityengine.site:200": 3,
+              "subs5.strem.io:200": 6,
+              "ia600400.us.archive.org:206": 4,
+              "web.wootly.ch:302": 1,
+              "pixeldrain.dev:206": 6,
+              "sc-u20-01.rustykoala25.boats:200": 1,
+              "raspy-art-dcac.pawolis5466501.workers.dev:timeout_or_network": 1,
+              "cold-leaf-b709.witori66148446.workers.dev:timeout_or_network": 1,
+              "jolly-lake-4fd7.soxoso52512929.workers.dev:timeout_or_network": 1,
+              "gentle-snowflake-8a90.kamel42719.workers.dev:timeout_or_network": 1,
+              "steep-butterfly-1810.jarog56524.workers.dev:timeout_or_network": 1,
+              "motega2.nebula.to:206": 2
+            },
+            "subtitleText": {
+              "turkishCharacters": 13,
+              "inlineFont": 8
+            },
+            "results": 17,
+            "reason": "ok",
+            "elapsedMs": 16906
+          },
+          {
+            "tmdbId": "438631",
+            "lane": "fastOnline",
+            "configuration": {
+              "version": "dev",
+              "tmdbKeyPresent": true,
+              "autoDiscover": true,
+              "includeHls": true,
+              "playImdbEnabled": true,
+              "vixsrcEnabled": true,
+              "hdhubEnabled": true,
+              "archiveEnabled": true,
+              "waploadedEnabled": true,
+              "rarefilmmEnabled": true,
+              "goojaraEnabled": true,
+              "hdrezkaEnabled": true,
+              "hdfilmdelisiEnabled": true,
+              "dizibalEnabled": true,
+              "purstreamEnabled": true,
+              "moviesdriveEnabled": true,
+              "autoSubtitles": true,
+              "subtitleRequired": false,
+              "detailedHlsMetadata": false,
+              "minimumQuality": 0,
+              "maxResults": 20
+            },
+            "identity": {
+              "reason": "ok",
+              "year": 2021,
+              "type": "movie"
+            },
+            "sources": [
+              {
+                "name": "DiziBal",
+                "candidates": 0,
+                "startedMs": 72,
+                "discoveryMs": 812
+              },
+              {
+                "name": "Purstream",
+                "candidates": 0,
+                "startedMs": 74,
+                "discoveryMs": 1102
+              },
+              {
+                "name": "HDFilmDelisi",
+                "candidates": 1,
+                "startedMs": 70,
+                "discoveryMs": 1444
+              }
+            ],
+            "rejected": {},
+            "http": {
+              "api.themoviedb.org:200": 3,
+              "hdfilmdelisi.one:200": 2,
+              "api.purstream.club:200": 3,
+              "dizibal.org:200": 1,
+              "pl.vixolity.com:200": 1,
+              "altyazidb.online:200": 5,
+              "ha.vixolity.com:200": 1,
+              "opensubtitles-v3.strem.io:200": 1,
+              "subs5.strem.io:200": 8,
+              "opensubtitles.stremio.homes:200": 2
+            },
+            "subtitleText": {
+              "turkishCharacters": 7,
+              "inlineFont": 5
+            },
+            "results": 1,
+            "reason": "ok",
+            "elapsedMs": 4671
+          }
+        ],
+        "onlineWithTr": true,
+        "downloadUrls": 7,
+        "estimatedDistinctFiles": 7,
+        "downloadQualities": [
+          "426x178",
+          "1146x480",
+          "856x360",
+          "1280x536",
+          "1920x804",
+          "852x362"
+        ],
+        "cleanOnlineWithTr": true,
+        "cleanDownloadQualities": [
+          "426x178",
+          "1146x480",
+          "856x360",
+          "1280x536",
+          "1920x804",
+          "852x362"
+        ],
+        "downloadQualityGrades": [
+          "240p",
+          "480p",
+          "720p",
+          "1080p"
+        ],
+        "cleanDownloadQualityGrades": [
+          "240p",
+          "480p",
+          "720p",
+          "1080p"
+        ],
+        "cleanSmallWithTr": true,
+        "smallWithTr": true,
+        "smallLimitBytes": 3221225472,
+        "sourceCoverageCriteriaMet": true,
+        "gaps": [],
+        "files": [
+          {
+            "source": "HDRezka",
+            "container": "mp4",
+            "bytes": 408697275,
+            "filename": "Dune.2021",
+            "sourceItemId": null,
+            "releaseYearBasis": null,
+            "mediaFilename": null,
+            "audioLanguages": [],
+            "subtitleBestScore": 90,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 426,
+              "height": 178
+            },
+            "quality": "426x178",
+            "qualityGrade": "240p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 5,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 9326.631,
+            "hashAvailable": true
+          },
+          {
+            "source": "Internet Archive",
+            "container": "mp4",
+            "bytes": 949160267,
+            "filename": "Dune_2021_720p_BluRay_x265_HEVC_10bit_AAC_2_0_Hindi_PSA_ASAP.mkv",
+            "sourceItemId": "dune-2021-720p-blu-ray-x-265-hevc-10bit-aac-2-0-hindi-psa-asap_202507",
+            "releaseYearBasis": "content-sample-pinned-file",
+            "mediaFilename": "Dune_2021_720p_BluRay_x265_HEVC_10bit_AAC_2_0_Hindi_PSA_ASAP.mp4",
+            "audioLanguages": [],
+            "subtitleBestScore": 76,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 1146,
+              "height": 480
+            },
+            "quality": "1146x480",
+            "qualityGrade": "480p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 8,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 9326.698,
+            "hashAvailable": true
+          },
+          {
+            "source": "MoviesDrive / Pixeldrain",
+            "container": "mkv",
+            "bytes": 566912339,
+            "filename": "[[ moviesdrives.com ]] Dune.2021.480p.BluRay.Hindi-English.x264.ESub- moviesdrives.com.mkv",
+            "sourceItemId": null,
+            "releaseYearBasis": null,
+            "mediaFilename": null,
+            "audioLanguages": [
+              "hi",
+              "en"
+            ],
+            "subtitleBestScore": 74,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 856,
+              "height": 360
+            },
+            "quality": "856x360",
+            "qualityGrade": "480p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 8,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 9325.172,
+            "hashAvailable": true
+          },
+          {
+            "source": "Internet Archive",
+            "container": "mkv",
+            "bytes": 792903325,
+            "filename": "Dune_2021_720p_BluRay_x265_HEVC_10bit_AAC_2_0_Hindi_PSA_ASAP.mkv",
+            "sourceItemId": "dune-2021-720p-blu-ray-x-265-hevc-10bit-aac-2-0-hindi-psa-asap_202507",
+            "releaseYearBasis": "content-sample-pinned-file",
+            "mediaFilename": "Dune_2021_720p_BluRay_x265_HEVC_10bit_AAC_2_0_Hindi_PSA_ASAP.mkv",
+            "audioLanguages": [
+              "hi"
+            ],
+            "subtitleBestScore": 76,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 1280,
+              "height": 536
+            },
+            "quality": "1280x536",
+            "qualityGrade": "720p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 8,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 9326.659,
+            "hashAvailable": true
+          },
+          {
+            "source": "MoviesDrive / Pixeldrain",
+            "container": "mkv",
+            "bytes": 948305346,
+            "filename": "[[ moviesdrives.com ]] Dune.2021.720p.10bit.BluRay.Hindi-English.x265-- moviesdrives.com.mkv",
+            "sourceItemId": null,
+            "releaseYearBasis": null,
+            "mediaFilename": null,
+            "audioLanguages": [
+              "hi",
+              "en"
+            ],
+            "subtitleBestScore": 76,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 1280,
+              "height": 536
+            },
+            "quality": "1280x536",
+            "qualityGrade": "720p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 8,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 9325.135,
+            "hashAvailable": true
+          },
+          {
+            "source": "MoviesDrive / Pixeldrain",
+            "container": "mkv",
+            "bytes": 2071642223,
+            "filename": "[[ moviesdrives.com ]] Dune.2021.1080p.10bit.BluRay.Hindi-English.x265- moviesdrives.com.mkv",
+            "sourceItemId": null,
+            "releaseYearBasis": null,
+            "mediaFilename": null,
+            "audioLanguages": [
+              "hi",
+              "en"
+            ],
+            "subtitleBestScore": 76,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 1920,
+              "height": 804
+            },
+            "quality": "1920x804",
+            "qualityGrade": "1080p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 8,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 9325.001,
+            "hashAvailable": true
+          },
+          {
+            "source": "Goojara",
+            "container": "mp4",
+            "bytes": 506588493,
+            "filename": "Dune.2021.1080p.HMAX.WEB-DL.DDP5.1.Atmos.x264-EVO.WT11.mp4",
+            "sourceItemId": null,
+            "releaseYearBasis": null,
+            "mediaFilename": null,
+            "audioLanguages": [],
+            "subtitleBestScore": 84,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 852,
+              "height": 362
+            },
+            "quality": "852x362",
+            "qualityGrade": "480p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 8,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 9325.014,
+            "hashAvailable": true
+          }
+        ]
+      },
+      {
+        "key": "inception",
+        "tmdbId": 27205,
+        "title": "Inception",
+        "type": "movie",
+        "control": false,
+        "elapsedMs": 20523,
+        "bytesRead": 10049539,
+        "diagnostics": [
+          {
+            "tmdbId": "27205",
+            "lane": "main",
+            "configuration": {
+              "version": "dev",
+              "tmdbKeyPresent": true,
+              "autoDiscover": true,
+              "includeHls": true,
+              "playImdbEnabled": true,
+              "vixsrcEnabled": true,
+              "hdhubEnabled": true,
+              "archiveEnabled": true,
+              "waploadedEnabled": true,
+              "rarefilmmEnabled": true,
+              "goojaraEnabled": true,
+              "hdrezkaEnabled": true,
+              "hdfilmdelisiEnabled": true,
+              "dizibalEnabled": true,
+              "purstreamEnabled": true,
+              "moviesdriveEnabled": true,
+              "autoSubtitles": true,
+              "subtitleRequired": false,
+              "detailedHlsMetadata": false,
+              "minimumQuality": 0,
+              "maxResults": 20
+            },
+            "identity": {
+              "reason": "ok",
+              "year": 2010,
+              "type": "movie"
+            },
+            "sources": [
+              {
+                "name": "HDRezka",
+                "candidates": 4,
+                "startedMs": 5,
+                "discoveryMs": 1367
+              },
+              {
+                "name": "PlayIMDb",
+                "candidates": 3,
+                "startedMs": 1373,
+                "discoveryMs": 349
+              },
+              {
+                "name": "VixSrc",
+                "candidates": 1,
+                "startedMs": 1723,
+                "discoveryMs": 772
+              },
+              {
+                "name": "Goojara",
+                "candidates": 1,
+                "startedMs": 4,
+                "discoveryMs": 2703
+              },
+              {
+                "name": "Internet Archive",
+                "candidates": 2,
+                "startedMs": 1,
+                "discoveryMs": 3245
+              },
+              {
+                "name": "Waploaded",
+                "candidates": 0,
+                "startedMs": 3246,
+                "discoveryMs": 1
+              },
+              {
+                "name": "RareFilmm",
+                "candidates": 0,
+                "startedMs": 3247,
+                "discoveryMs": 326
+              },
+              {
+                "name": "FilmModu",
+                "candidates": 8,
+                "startedMs": 2496,
+                "discoveryMs": 1328
+              },
+              {
+                "name": "MoviesDrive / Pixeldrain",
+                "candidates": 2,
+                "startedMs": 6,
+                "discoveryMs": 6001
+              },
+              {
+                "name": "4KHDHub / HubCloud",
+                "candidates": 7,
+                "startedMs": 2707,
+                "discoveryMs": 7983
+              }
+            ],
+            "rejected": {
+              "video_unavailable": 10,
+              "subtitle_unavailable": 2
+            },
+            "http": {
+              "api.themoviedb.org:200": 2,
+              "ww1.goojara.to:200": 3,
+              "new4.moviesdrive.beer:200": 2,
+              "rezka.ag:200": 3,
+              "archive.org:200": 12,
+              "ww1.goojara.to:302": 1,
+              "nuvio-tr-hd-download-bridge.kamilbsr03.chatgpt.site:200": 1,
+              "mdrive.lol:200": 4,
+              "altyazidb.online:200": 12,
+              "streamdata.vaplayer.ru:200": 1,
+              "www.wootly.ch:200": 1,
+              "vixsrc.to:200": 3,
+              "opensubtitles-v3.strem.io:200": 1,
+              "hubcloud.ist:200": 11,
+              "web.wootly.ch:200": 3,
+              "stream.voidboost.one:302": 4,
+              "gamerxyt.com:200": 11,
+              "www.filmmodu.one:301": 1,
+              "4khdhub.one:200": 2,
+              "rarefilmm.com:200": 1,
+              "www.filmmodu.one:200": 4,
+              "opensubtitles.stremio.homes:200": 8,
+              "pixeldrain.dev:200": 2,
+              "greenmotors.club:302": 7,
+              "greenmotors.cc:200": 7,
+              "ia600900.us.archive.org:206": 2,
+              "ia600900.us.archive.org:timeout_or_network": 1,
+              "stream.voidboost.one:timeout_or_network": 2,
+              "lyra.stream.voidboost.one:206": 2,
+              "ia800900.us.archive.org:206": 2,
+              "subs5.strem.io:200": 4,
+              "onlinevisibilitysystem.site:200": 3,
+              "web.wootly.ch:302": 1,
+              "imgsapi.pro:200": 8,
+              "static.voidboost.com:200": 1,
+              "pixeldrain.dev:206": 4,
+              "web.wootly.ch:timeout_or_network": 1,
+              "old-art-db58.terapiyo252.workers.dev:timeout_or_network": 1,
+              "proud-sunset-b248.fixal448971142.workers.dev:timeout_or_network": 1,
+              "workers.telegramcdn.workers.dev:timeout_or_network": 1,
+              "raspy-art-dcac.pawolis5466501.workers.dev:timeout_or_network": 1,
+              "dawn-union-d36d.terapiyo365.workers.dev:timeout_or_network": 1,
+              "opensubtitles.stremio.homes:429": 1,
+              "opensubtitles.stremio.homes:timeout_or_network": 7,
+              "floral-dawn-5cec.yisop513915769.workers.dev:timeout_or_network": 1,
+              "myfiles.directfile.workers.dev:timeout_or_network": 1,
+              "crab.stream.voidboost.one:206": 2,
+              "altyazidb.online:502": 1
+            },
+            "subtitleText": {
+              "turkishCharacters": 12
+            },
+            "results": 20,
+            "reason": "ok",
+            "elapsedMs": 20523
+          },
+          {
+            "tmdbId": "27205",
+            "lane": "fastOnline",
+            "configuration": {
+              "version": "dev",
+              "tmdbKeyPresent": true,
+              "autoDiscover": true,
+              "includeHls": true,
+              "playImdbEnabled": true,
+              "vixsrcEnabled": true,
+              "hdhubEnabled": true,
+              "archiveEnabled": true,
+              "waploadedEnabled": true,
+              "rarefilmmEnabled": true,
+              "goojaraEnabled": true,
+              "hdrezkaEnabled": true,
+              "hdfilmdelisiEnabled": true,
+              "dizibalEnabled": true,
+              "purstreamEnabled": true,
+              "moviesdriveEnabled": true,
+              "autoSubtitles": true,
+              "subtitleRequired": false,
+              "detailedHlsMetadata": false,
+              "minimumQuality": 0,
+              "maxResults": 20
+            },
+            "identity": {
+              "reason": "ok",
+              "year": 2010,
+              "type": "movie"
+            },
+            "sources": [
+              {
+                "name": "Purstream",
+                "candidates": 1,
+                "startedMs": 8,
+                "discoveryMs": 643
+              },
+              {
+                "name": "HDFilmDelisi",
+                "candidates": 1,
+                "startedMs": 7,
+                "discoveryMs": 1068
+              },
+              {
+                "name": "DiziBal",
+                "candidates": 1,
+                "startedMs": 7,
+                "discoveryMs": 1410
+              }
+            ],
+            "rejected": {},
+            "http": {
+              "api.themoviedb.org:200": 2,
+              "hdfilmdelisi.one:200": 2,
+              "dizibal.org:200": 3,
+              "api.purstream.club:200": 2,
+              "free.finepulfe.xyz:200": 1,
+              "pl.vixolity.com:200": 1,
+              "altyazidb.online:200": 4,
+              "opensubtitles.stremio.homes:200": 2,
+              "play2.pilavyerplay.top:200": 3,
+              "ha.vixolity.com:200": 1,
+              "opensubtitles-v3.strem.io:200": 1,
+              "subs5.strem.io:200": 4
+            },
+            "subtitleText": {
+              "turkishCharacters": 4
+            },
+            "results": 3,
+            "reason": "deadline",
+            "elapsedMs": 8015
+          }
+        ],
+        "onlineWithTr": true,
+        "downloadUrls": 6,
+        "estimatedDistinctFiles": 6,
+        "downloadQualities": [
+          "1280x536",
+          "427x178",
+          "1920x800",
+          "3840x1598",
+          "638x266"
+        ],
+        "cleanOnlineWithTr": true,
+        "cleanDownloadQualities": [
+          "1280x536",
+          "427x178",
+          "1920x800",
+          "3840x1598",
+          "638x266"
+        ],
+        "downloadQualityGrades": [
+          "720p",
+          "240p",
+          "1080p",
+          "2160p",
+          "360p"
+        ],
+        "cleanDownloadQualityGrades": [
+          "720p",
+          "240p",
+          "1080p",
+          "2160p",
+          "360p"
+        ],
+        "cleanSmallWithTr": true,
+        "smallWithTr": true,
+        "smallLimitBytes": 3221225472,
+        "sourceCoverageCriteriaMet": true,
+        "gaps": [],
+        "files": [
+          {
+            "source": "Internet Archive",
+            "container": "mp4",
+            "bytes": 902428472,
+            "filename": "A.Origem.[2010].baixarfilmesretro.blogspot.com (1).mp4",
+            "sourceItemId": "a.-origem.-2010.baixarfilmesretro.blogspot.com-1",
+            "releaseYearBasis": "content-sample-pinned-file",
+            "mediaFilename": "A.Origem.[2010].baixarfilmesretro.blogspot.com (1).mp4",
+            "audioLanguages": [],
+            "subtitleBestScore": 69,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 1280,
+              "height": 536
+            },
+            "quality": "1280x536",
+            "qualityGrade": "720p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 8,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 8888.086666666666,
+            "hashAvailable": true
+          },
+          {
+            "source": "HDRezka",
+            "container": "mp4",
+            "bytes": 387674406,
+            "filename": "Inception.2010",
+            "sourceItemId": null,
+            "releaseYearBasis": null,
+            "mediaFilename": null,
+            "audioLanguages": [],
+            "subtitleBestScore": 90,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 427,
+              "height": 178
+            },
+            "quality": "427x178",
+            "qualityGrade": "240p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 5,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 8888.319,
+            "hashAvailable": true
+          },
+          {
+            "source": "Internet Archive",
+            "container": "mp4",
+            "bytes": 869895874,
+            "filename": "A.Origem.[2010].baixarfilmesretro.blogspot.com (1).mp4",
+            "sourceItemId": "a.-origem.-2010.baixarfilmesretro.blogspot.com-1",
+            "releaseYearBasis": "content-sample-pinned-file",
+            "mediaFilename": "A.Origem.[2010].baixarfilmesretro.blogspot.com (1).ia.mp4",
+            "audioLanguages": [],
+            "subtitleBestScore": 69,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 1280,
+              "height": 536
+            },
+            "quality": "1280x536",
+            "qualityGrade": "720p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 8,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 8888.088,
+            "hashAvailable": true
+          },
+          {
+            "source": "MoviesDrive / Pixeldrain",
+            "container": "mkv",
+            "bytes": 2495758260,
+            "filename": "[[ moviesdrives.com ]] Inception.2010.1080p.10Bit.BluRay.Hindi.5.1-English.5.1.HEVC.x265- moviesdrives.com.mkv",
+            "sourceItemId": null,
+            "releaseYearBasis": null,
+            "mediaFilename": null,
+            "audioLanguages": [
+              "hi",
+              "en"
+            ],
+            "subtitleBestScore": 69,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 1920,
+              "height": 800
+            },
+            "quality": "1920x800",
+            "qualityGrade": "1080p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 8,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 8888.107,
+            "hashAvailable": true
+          },
+          {
+            "source": "MoviesDrive / Pixeldrain",
+            "container": "mkv",
+            "bytes": 7591975942,
+            "filename": "[[ moviesdrives.com ]] Inception.2010.4K-2160p.SDR.10Bit.BluRay.Hindi.DD5.1-English.5.1.HEVC.x265- moviesdrives.com.mkv",
+            "sourceItemId": null,
+            "releaseYearBasis": null,
+            "mediaFilename": null,
+            "audioLanguages": [
+              "hi",
+              "en"
+            ],
+            "subtitleBestScore": 69,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 3840,
+              "height": 1598
+            },
+            "quality": "3840x1598",
+            "qualityGrade": "2160p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 8,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 8888.341,
+            "hashAvailable": true
+          },
+          {
+            "source": "HDRezka",
+            "container": "mp4",
+            "bytes": 661316643,
+            "filename": "Inception.2010",
+            "sourceItemId": null,
+            "releaseYearBasis": null,
+            "mediaFilename": null,
+            "audioLanguages": [],
+            "subtitleBestScore": 90,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 638,
+              "height": 266
+            },
+            "quality": "638x266",
+            "qualityGrade": "360p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 5,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 8888.319,
+            "hashAvailable": true
+          }
+        ]
+      },
+      {
+        "key": "fleabag-s1e1",
+        "tmdbId": 67070,
+        "title": "Fleabag",
+        "type": "tv",
+        "season": 1,
+        "episode": 1,
+        "control": false,
+        "elapsedMs": 24014,
+        "bytesRead": 4202588,
+        "diagnostics": [
+          {
+            "tmdbId": "67070",
+            "lane": "main",
+            "configuration": {
+              "version": "dev",
+              "tmdbKeyPresent": true,
+              "autoDiscover": true,
+              "includeHls": true,
+              "playImdbEnabled": true,
+              "vixsrcEnabled": true,
+              "hdhubEnabled": true,
+              "archiveEnabled": true,
+              "waploadedEnabled": true,
+              "rarefilmmEnabled": true,
+              "goojaraEnabled": true,
+              "hdrezkaEnabled": true,
+              "hdfilmdelisiEnabled": true,
+              "dizibalEnabled": true,
+              "purstreamEnabled": true,
+              "moviesdriveEnabled": true,
+              "autoSubtitles": true,
+              "subtitleRequired": false,
+              "detailedHlsMetadata": false,
+              "minimumQuality": 0,
+              "maxResults": 20
+            },
+            "identity": {
+              "reason": "ok",
+              "year": 2016,
+              "type": "tv"
+            },
+            "sources": [
+              {
+                "name": "PlayIMDb",
+                "candidates": 3,
+                "startedMs": 8,
+                "discoveryMs": 397
+              },
+              {
+                "name": "Internet Archive",
+                "candidates": 2,
+                "startedMs": 2,
+                "discoveryMs": 913
+              },
+              {
+                "name": "VixSrc",
+                "candidates": 1,
+                "startedMs": 408,
+                "discoveryMs": 1325
+              },
+              {
+                "name": "HDRezka",
+                "candidates": 4,
+                "startedMs": 7,
+                "discoveryMs": 1738
+              },
+              {
+                "name": "Goojara",
+                "candidates": 1,
+                "startedMs": 6,
+                "discoveryMs": 2654
+              },
+              {
+                "name": "DiziYou",
+                "candidates": 1,
+                "startedMs": 915,
+                "discoveryMs": 1943
+              },
+              {
+                "name": "Waploaded",
+                "candidates": 0,
+                "startedMs": 2661,
+                "discoveryMs": 545
+              },
+              {
+                "name": "DiziBak",
+                "candidates": 1,
+                "startedMs": 1734,
+                "discoveryMs": 2279
+              },
+              {
+                "name": "4KHDHub / HubCloud",
+                "candidates": 0,
+                "startedMs": 1746,
+                "discoveryMs": 4006
+              }
+            ],
+            "rejected": {
+              "video_unavailable": 2
+            },
+            "http": {
+              "api.themoviedb.org:200": 1,
+              "nuvio-tr-hd-download-bridge.kamilbsr03.chatgpt.site:200": 1,
+              "ww1.goojara.to:200": 5,
+              "streamdata.vaplayer.ru:200": 1,
+              "altyazidb.online:200": 1,
+              "rezka.ag:200": 4,
+              "archive.org:200": 3,
+              "opensubtitles-v3.strem.io:200": 1,
+              "digitalnomadventures.site:200": 3,
+              "vixsrc.to:200": 4,
+              "subs5.strem.io:200": 11,
+              "ww1.goojara.to:302": 1,
+              "www.diziyou.one:200": 3,
+              "www.wootly.ch:200": 1,
+              "sc-u12-01.secretanchor70.boats:200": 1,
+              "dizibak.net:200": 3,
+              "web.wootly.ch:200": 3,
+              "4khdhub.one:200": 2,
+              "shows.waploaded.com:200": 1,
+              "greenmotors.club:302": 3,
+              "greenmotors.cc:200": 3,
+              "player.dizibak.net:200": 1,
+              "hubcloud.ist:200": 3,
+              "stream.voidboost.one:302": 4,
+              "opensubtitles.stremio.homes:200": 8,
+              "gamerxyt.com:200": 3,
+              "dn600309.us.archive.org:timeout_or_network": 2,
+              "elvis.stream.voidboost.one:206": 3,
+              "noise.stream.voidboost.one:206": 3,
+              "shadow.stream.voidboost.one:206": 3,
+              "web.wootly.ch:302": 1,
+              "static.voidboost.com:200": 1,
+              "mosul2.nebula.to:302": 1,
+              "storage.diziyou.one:200": 3,
+              "man.d1iz-b0ok.xyz:200": 1,
+              "mosul2.nebula.to:206": 2,
+              "opensubtitles.stremio.homes:timeout_or_network": 4,
+              "raven.stream.voidboost.one:206": 2
+            },
+            "subtitleText": {
+              "turkishCharacters": 10
+            },
+            "results": 16,
+            "reason": "deadline",
+            "elapsedMs": 24013
+          },
+          {
+            "tmdbId": "67070",
+            "lane": "fastOnline",
+            "configuration": {
+              "version": "dev",
+              "tmdbKeyPresent": true,
+              "autoDiscover": true,
+              "includeHls": true,
+              "playImdbEnabled": true,
+              "vixsrcEnabled": true,
+              "hdhubEnabled": true,
+              "archiveEnabled": true,
+              "waploadedEnabled": true,
+              "rarefilmmEnabled": true,
+              "goojaraEnabled": true,
+              "hdrezkaEnabled": true,
+              "hdfilmdelisiEnabled": true,
+              "dizibalEnabled": true,
+              "purstreamEnabled": true,
+              "moviesdriveEnabled": true,
+              "autoSubtitles": true,
+              "subtitleRequired": false,
+              "detailedHlsMetadata": false,
+              "minimumQuality": 0,
+              "maxResults": 20
+            },
+            "identity": {
+              "reason": "ok",
+              "year": 2016,
+              "type": "tv"
+            },
+            "sources": [
+              {
+                "name": "Purstream",
+                "candidates": 1,
+                "startedMs": 9,
+                "discoveryMs": 917
+              },
+              {
+                "name": "DiziBal",
+                "candidates": 1,
+                "startedMs": 8,
+                "discoveryMs": 1935
+              }
+            ],
+            "rejected": {},
+            "http": {
+              "api.themoviedb.org:200": 1,
+              "dizibal.org:200": 2,
+              "api.purstream.club:200": 3,
+              "altyazidb.online:200": 1,
+              "opensubtitles-v3.strem.io:200": 1,
+              "free.finepulfe.xyz:200": 1,
+              "subs5.strem.io:200": 9,
+              "pilavyerplay.top:200": 4,
+              "opensubtitles.stremio.homes:timeout_or_network": 2
+            },
+            "subtitleText": {
+              "turkishCharacters": 5
+            },
+            "results": 2,
+            "reason": "ok",
+            "elapsedMs": 5526
+          }
+        ],
+        "onlineWithTr": true,
+        "downloadUrls": 4,
+        "estimatedDistinctFiles": 4,
+        "downloadQualities": [
+          "1278x534",
+          "426x178",
+          "852x356",
+          "853x476"
+        ],
+        "cleanOnlineWithTr": true,
+        "cleanDownloadQualities": [
+          "1278x534",
+          "426x178",
+          "852x356",
+          "853x476"
+        ],
+        "downloadQualityGrades": [
+          "720p",
+          "240p",
+          "480p"
+        ],
+        "cleanDownloadQualityGrades": [
+          "720p",
+          "240p",
+          "480p"
+        ],
+        "cleanSmallWithTr": true,
+        "smallWithTr": true,
+        "smallLimitBytes": 1073741824,
+        "sourceCoverageCriteriaMet": true,
+        "gaps": [],
+        "files": [
+          {
+            "source": "HDRezka",
+            "container": "mp4",
+            "bytes": 225138395,
+            "filename": "Fleabag.2016.S01E01",
+            "sourceItemId": null,
+            "releaseYearBasis": null,
+            "mediaFilename": null,
+            "audioLanguages": [],
+            "subtitleBestScore": 90,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 1278,
+              "height": 534
+            },
+            "quality": "1278x534",
+            "qualityGrade": "720p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 5,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 1565.782,
+            "hashAvailable": true
+          },
+          {
+            "source": "HDRezka",
+            "container": "mp4",
+            "bytes": 58976791,
+            "filename": "Fleabag.2016.S01E01",
+            "sourceItemId": null,
+            "releaseYearBasis": null,
+            "mediaFilename": null,
+            "audioLanguages": [],
+            "subtitleBestScore": 90,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 426,
+              "height": 178
+            },
+            "quality": "426x178",
+            "qualityGrade": "240p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 5,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 1565.782,
+            "hashAvailable": true
+          },
+          {
+            "source": "HDRezka",
+            "container": "mp4",
+            "bytes": 123915344,
+            "filename": "Fleabag.2016.S01E01",
+            "sourceItemId": null,
+            "releaseYearBasis": null,
+            "mediaFilename": null,
+            "audioLanguages": [],
+            "subtitleBestScore": 90,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 852,
+              "height": 356
+            },
+            "quality": "852x356",
+            "qualityGrade": "480p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 5,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 1565.782,
+            "hashAvailable": true
+          },
+          {
+            "source": "Goojara",
+            "container": "mp4",
+            "bytes": 120769545,
+            "filename": "Fleabag.S01E01.720p.WEB.DL.x264-ITSat.WT2.mp4",
+            "sourceItemId": null,
+            "releaseYearBasis": null,
+            "mediaFilename": null,
+            "audioLanguages": [],
+            "subtitleBestScore": 74,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 853,
+              "height": 476
+            },
+            "quality": "853x476",
+            "qualityGrade": "480p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 8,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 1564.885,
+            "hashAvailable": true
+          }
+        ]
+      },
+      {
+        "key": "death-note-s1e1",
+        "tmdbId": 13916,
+        "title": "DEATH NOTE",
+        "type": "tv",
+        "season": 1,
+        "episode": 1,
+        "control": false,
+        "elapsedMs": 8448,
+        "bytesRead": 2942096,
+        "diagnostics": [
+          {
+            "tmdbId": "13916",
+            "lane": "main",
+            "configuration": {
+              "version": "dev",
+              "tmdbKeyPresent": true,
+              "autoDiscover": true,
+              "includeHls": true,
+              "playImdbEnabled": true,
+              "vixsrcEnabled": true,
+              "hdhubEnabled": true,
+              "archiveEnabled": true,
+              "waploadedEnabled": true,
+              "rarefilmmEnabled": true,
+              "goojaraEnabled": true,
+              "hdrezkaEnabled": true,
+              "hdfilmdelisiEnabled": true,
+              "dizibalEnabled": true,
+              "purstreamEnabled": true,
+              "moviesdriveEnabled": true,
+              "autoSubtitles": true,
+              "subtitleRequired": false,
+              "detailedHlsMetadata": false,
+              "minimumQuality": 0,
+              "maxResults": 20
+            },
+            "identity": {
+              "reason": "ok",
+              "year": 2006,
+              "type": "tv"
+            },
+            "sources": [
+              {
+                "name": "PlayIMDb",
+                "candidates": 3,
+                "startedMs": 6,
+                "discoveryMs": 457
+              },
+              {
+                "name": "Goojara",
+                "candidates": 0,
+                "startedMs": 5,
+                "discoveryMs": 691
+              },
+              {
+                "name": "HDRezka",
+                "candidates": 0,
+                "startedMs": 6,
+                "discoveryMs": 882
+              },
+              {
+                "name": "VixSrc",
+                "candidates": 0,
+                "startedMs": 466,
+                "discoveryMs": 493
+              },
+              {
+                "name": "4KHDHub / HubCloud",
+                "candidates": 0,
+                "startedMs": 696,
+                "discoveryMs": 1415
+              },
+              {
+                "name": "Internet Archive",
+                "candidates": 0,
+                "startedMs": 3,
+                "discoveryMs": 2728
+              }
+            ],
+            "rejected": {
+              "video_unavailable": 1
+            },
+            "http": {
+              "api.themoviedb.org:200": 1,
+              "nuvio-tr-hd-download-bridge.kamilbsr03.chatgpt.site:200": 1,
+              "ww1.goojara.to:200": 3,
+              "streamdata.vaplayer.ru:200": 1,
+              "rezka.ag:200": 2,
+              "altyazidb.online:200": 5,
+              "opensubtitles-v3.strem.io:200": 1,
+              "archive.org:200": 6,
+              "vixsrc.to:404": 1,
+              "mindfulwealthjourney.site:200": 2,
+              "subs5.strem.io:200": 1,
+              "mindfulwealthjourney.site:404": 1,
+              "4khdhub.one:200": 2,
+              "opensubtitles.stremio.homes:200": 4
+            },
+            "subtitleText": {
+              "turkishCharacters": 6
+            },
+            "results": 6,
+            "reason": "ok",
+            "elapsedMs": 5406
+          },
+          {
+            "tmdbId": "13916",
+            "lane": "fastOnline",
+            "configuration": {
+              "version": "dev",
+              "tmdbKeyPresent": true,
+              "autoDiscover": true,
+              "includeHls": true,
+              "playImdbEnabled": true,
+              "vixsrcEnabled": true,
+              "hdhubEnabled": true,
+              "archiveEnabled": true,
+              "waploadedEnabled": true,
+              "rarefilmmEnabled": true,
+              "goojaraEnabled": true,
+              "hdrezkaEnabled": true,
+              "hdfilmdelisiEnabled": true,
+              "dizibalEnabled": true,
+              "purstreamEnabled": true,
+              "moviesdriveEnabled": true,
+              "autoSubtitles": true,
+              "subtitleRequired": false,
+              "detailedHlsMetadata": false,
+              "minimumQuality": 0,
+              "maxResults": 20
+            },
+            "identity": {
+              "reason": "ok",
+              "year": 2006,
+              "type": "tv"
+            },
+            "sources": [
+              {
+                "name": "Purstream",
+                "candidates": 0,
+                "startedMs": 8,
+                "discoveryMs": 853
+              },
+              {
+                "name": "DiziBal",
+                "candidates": 1,
+                "startedMs": 7,
+                "discoveryMs": 1604
+              }
+            ],
+            "rejected": {},
+            "http": {
+              "api.themoviedb.org:200": 2,
+              "api.purstream.club:200": 3,
+              "dizibal.org:200": 4,
+              "pilavyerplay.top:200": 3,
+              "opensubtitles-v3.strem.io:200": 1,
+              "altyazidb.online:200": 1,
+              "opensubtitles.stremio.homes:200": 3
+            },
+            "subtitleText": {
+              "turkishCharacters": 1
+            },
+            "results": 1,
+            "reason": "ok",
+            "elapsedMs": 6716
+          },
+          {
+            "tmdbId": "13916",
+            "lane": "anime",
+            "configuration": {
+              "version": "dev",
+              "tmdbKeyPresent": true,
+              "autoDiscover": true,
+              "includeHls": true,
+              "playImdbEnabled": true,
+              "vixsrcEnabled": true,
+              "hdhubEnabled": true,
+              "archiveEnabled": true,
+              "waploadedEnabled": true,
+              "rarefilmmEnabled": true,
+              "goojaraEnabled": true,
+              "hdrezkaEnabled": true,
+              "hdfilmdelisiEnabled": true,
+              "dizibalEnabled": true,
+              "purstreamEnabled": true,
+              "moviesdriveEnabled": true,
+              "autoSubtitles": true,
+              "subtitleRequired": false,
+              "detailedHlsMetadata": false,
+              "minimumQuality": 0,
+              "maxResults": 20
+            },
+            "identity": {
+              "reason": "ok",
+              "year": 2006,
+              "type": "tv"
+            },
+            "sources": [
+              {
+                "name": "SonAnime",
+                "candidates": 2,
+                "startedMs": 10,
+                "discoveryMs": 657
+              },
+              {
+                "name": "Animecix",
+                "candidates": 4,
+                "startedMs": 9,
+                "discoveryMs": 1576
+              }
+            ],
+            "rejected": {},
+            "http": {
+              "api.themoviedb.org:200": 1,
+              "api.sonanime.com:200": 2,
+              "animecix.tv:200": 2,
+              "opensubtitles-v3.strem.io:200": 1,
+              "altyazidb.online:200": 5,
+              "tau-video.xyz:200": 2,
+              "video.konununuzmani.com:206": 4,
+              "subs5.strem.io:200": 1,
+              "alice-4.cfd:206": 2,
+              "opensubtitles.stremio.homes:200": 11,
+              "voxen-2.asia:206": 2,
+              "alfreda-1.cfd:206": 2,
+              "valenx-2.asia:206": 2
+            },
+            "subtitleText": {
+              "turkishCharacters": 7
+            },
+            "results": 4,
+            "reason": "ok",
+            "elapsedMs": 8448
+          }
+        ],
+        "onlineWithTr": true,
+        "downloadUrls": 6,
+        "estimatedDistinctFiles": 4,
+        "downloadQualities": [
+          "1280x720",
+          "852x480"
+        ],
+        "cleanOnlineWithTr": true,
+        "cleanDownloadQualities": [
+          "1280x720",
+          "852x480"
+        ],
+        "downloadQualityGrades": [
+          "720p",
+          "480p"
+        ],
+        "cleanDownloadQualityGrades": [
+          "720p",
+          "480p"
+        ],
+        "cleanSmallWithTr": true,
+        "smallWithTr": true,
+        "smallLimitBytes": 1073741824,
+        "sourceCoverageCriteriaMet": true,
+        "gaps": [],
+        "files": [
+          {
+            "source": "SonAnime",
+            "container": "mp4",
+            "bytes": 240288551,
+            "filename": "DEATH NOTE.2006.S01E01",
+            "sourceItemId": null,
+            "releaseYearBasis": null,
+            "mediaFilename": null,
+            "audioLanguages": [],
+            "subtitleBestScore": 69,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 1280,
+              "height": 720
+            },
+            "quality": "1280x720",
+            "qualityGrade": "720p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 5,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 1390.656,
+            "hashAvailable": true
+          },
+          {
+            "source": "SonAnime",
+            "container": "mp4",
+            "bytes": 108188435,
+            "filename": "DEATH NOTE.2006.S01E01",
+            "sourceItemId": null,
+            "releaseYearBasis": null,
+            "mediaFilename": null,
+            "audioLanguages": [],
+            "subtitleBestScore": 69,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 852,
+              "height": 480
+            },
+            "quality": "852x480",
+            "qualityGrade": "480p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 5,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 1390.656,
+            "hashAvailable": true
+          },
+          {
+            "source": "Animecix",
+            "container": "mp4",
+            "bytes": 94687213,
+            "filename": "DEATH NOTE.2006.S01E01.480p.mp4",
+            "sourceItemId": null,
+            "releaseYearBasis": null,
+            "mediaFilename": null,
+            "audioLanguages": [],
+            "subtitleBestScore": 69,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 852,
+              "height": 480
+            },
+            "quality": "852x480",
+            "qualityGrade": "480p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 5,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 1376.201,
+            "hashAvailable": true
+          },
+          {
+            "source": "Animecix",
+            "container": "mp4",
+            "bytes": 179688354,
+            "filename": "DEATH NOTE.2006.S01E01.720p.mp4",
+            "sourceItemId": null,
+            "releaseYearBasis": null,
+            "mediaFilename": null,
+            "audioLanguages": [],
+            "subtitleBestScore": 69,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 1280,
+              "height": 720
+            },
+            "quality": "1280x720",
+            "qualityGrade": "720p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 5,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 1376.201,
+            "hashAvailable": true
+          }
+        ]
+      },
+      {
+        "key": "your-name",
+        "tmdbId": 372058,
+        "title": "君の名は。",
+        "type": "movie",
+        "control": false,
+        "elapsedMs": 13418,
+        "bytesRead": 9100428,
+        "diagnostics": [
+          {
+            "tmdbId": "372058",
+            "lane": "main",
+            "configuration": {
+              "version": "dev",
+              "tmdbKeyPresent": true,
+              "autoDiscover": true,
+              "includeHls": true,
+              "playImdbEnabled": true,
+              "vixsrcEnabled": true,
+              "hdhubEnabled": true,
+              "archiveEnabled": true,
+              "waploadedEnabled": true,
+              "rarefilmmEnabled": true,
+              "goojaraEnabled": true,
+              "hdrezkaEnabled": true,
+              "hdfilmdelisiEnabled": true,
+              "dizibalEnabled": true,
+              "purstreamEnabled": true,
+              "moviesdriveEnabled": true,
+              "autoSubtitles": true,
+              "subtitleRequired": false,
+              "detailedHlsMetadata": false,
+              "minimumQuality": 0,
+              "maxResults": 20
+            },
+            "identity": {
+              "reason": "ok",
+              "year": 2016,
+              "type": "movie"
+            },
+            "sources": [
+              {
+                "name": "HDRezka",
+                "candidates": 0,
+                "startedMs": 5,
+                "discoveryMs": 826
+              },
+              {
+                "name": "PlayIMDb",
+                "candidates": 0,
+                "startedMs": 831,
+                "discoveryMs": 396
+              },
+              {
+                "name": "VixSrc",
+                "candidates": 0,
+                "startedMs": 1227,
+                "discoveryMs": 411
+              },
+              {
+                "name": "Internet Archive",
+                "candidates": 0,
+                "startedMs": 2,
+                "discoveryMs": 1726
+              },
+              {
+                "name": "Goojara",
+                "candidates": 1,
+                "startedMs": 4,
+                "discoveryMs": 2030
+              },
+              {
+                "name": "4KHDHub / HubCloud",
+                "candidates": 0,
+                "startedMs": 1638,
+                "discoveryMs": 921
+              },
+              {
+                "name": "MoviesDrive / Pixeldrain",
+                "candidates": 1,
+                "startedMs": 6,
+                "discoveryMs": 3975
+              }
+            ],
+            "rejected": {},
+            "http": {
+              "api.themoviedb.org:200": 1,
+              "nuvio-tr-hd-download-bridge.kamilbsr03.chatgpt.site:200": 1,
+              "ww1.goojara.to:200": 4,
+              "rezka.ag:200": 2,
+              "ww1.goojara.to:302": 1,
+              "streamdata.vaplayer.ru:200": 1,
+              "www.wootly.ch:200": 1,
+              "archive.org:200": 2,
+              "vixsrc.to:404": 1,
+              "new4.moviesdrive.beer:200": 3,
+              "web.wootly.ch:200": 3,
+              "opensubtitles-v3.strem.io:200": 1,
+              "web.wootly.ch:302": 1,
+              "4khdhub.one:200": 1,
+              "mdrive.lol:200": 3,
+              "altyazidb.online:200": 8,
+              "hubcloud.ist:200": 3,
+              "gamerxyt.com:200": 3,
+              "opensubtitles.stremio.homes:200": 4,
+              "pixeldrain.dev:200": 1,
+              "motega2.nebula.to:206": 2,
+              "pixeldrain.dev:206": 2,
+              "subs5.strem.io:200": 3,
+              "opensubtitles.stremio.homes:429": 3,
+              "opensubtitles.stremio.homes:timeout_or_network": 7
+            },
+            "subtitleText": {
+              "turkishCharacters": 4
+            },
+            "results": 2,
+            "reason": "ok",
+            "elapsedMs": 13418
+          },
+          {
+            "tmdbId": "372058",
+            "lane": "fastOnline",
+            "configuration": {
+              "version": "dev",
+              "tmdbKeyPresent": true,
+              "autoDiscover": true,
+              "includeHls": true,
+              "playImdbEnabled": true,
+              "vixsrcEnabled": true,
+              "hdhubEnabled": true,
+              "archiveEnabled": true,
+              "waploadedEnabled": true,
+              "rarefilmmEnabled": true,
+              "goojaraEnabled": true,
+              "hdrezkaEnabled": true,
+              "hdfilmdelisiEnabled": true,
+              "dizibalEnabled": true,
+              "purstreamEnabled": true,
+              "moviesdriveEnabled": true,
+              "autoSubtitles": true,
+              "subtitleRequired": false,
+              "detailedHlsMetadata": false,
+              "minimumQuality": 0,
+              "maxResults": 20
+            },
+            "identity": {
+              "reason": "ok",
+              "year": 2016,
+              "type": "movie"
+            },
+            "sources": [
+              {
+                "name": "DiziBal",
+                "candidates": 0,
+                "startedMs": 7,
+                "discoveryMs": 626
+              },
+              {
+                "name": "Purstream",
+                "candidates": 0,
+                "startedMs": 8,
+                "discoveryMs": 806
+              }
+            ],
+            "rejected": {},
+            "http": {
+              "api.themoviedb.org:200": 2,
+              "api.purstream.club:200": 3,
+              "dizibal.org:200": 2
+            },
+            "subtitleText": {},
+            "results": 0,
+            "reason": "no_eligible_sources",
+            "elapsedMs": 814
+          },
+          {
+            "tmdbId": "372058",
+            "lane": "anime",
+            "configuration": {
+              "version": "dev",
+              "tmdbKeyPresent": true,
+              "autoDiscover": true,
+              "includeHls": true,
+              "playImdbEnabled": true,
+              "vixsrcEnabled": true,
+              "hdhubEnabled": true,
+              "archiveEnabled": true,
+              "waploadedEnabled": true,
+              "rarefilmmEnabled": true,
+              "goojaraEnabled": true,
+              "hdrezkaEnabled": true,
+              "hdfilmdelisiEnabled": true,
+              "dizibalEnabled": true,
+              "purstreamEnabled": true,
+              "moviesdriveEnabled": true,
+              "autoSubtitles": true,
+              "subtitleRequired": false,
+              "detailedHlsMetadata": false,
+              "minimumQuality": 0,
+              "maxResults": 20
+            },
+            "identity": {
+              "reason": "ok",
+              "year": 2016,
+              "type": "movie"
+            },
+            "sources": [
+              {
+                "name": "SonAnime",
+                "candidates": 3,
+                "startedMs": 10,
+                "discoveryMs": 594
+              },
+              {
+                "name": "Animecix",
+                "candidates": 0,
+                "startedMs": 9,
+                "discoveryMs": 625
+              }
+            ],
+            "rejected": {},
+            "http": {
+              "api.themoviedb.org:200": 1,
+              "api.sonanime.com:200": 2,
+              "animecix.tv:200": 2,
+              "opensubtitles-v3.strem.io:200": 1,
+              "altyazidb.online:200": 8,
+              "video.konununuzmani.com:206": 6,
+              "subs5.strem.io:200": 3,
+              "opensubtitles.stremio.homes:200": 4,
+              "opensubtitles.stremio.homes:429": 5,
+              "opensubtitles.stremio.homes:timeout_or_network": 4
+            },
+            "subtitleText": {
+              "turkishCharacters": 4
+            },
+            "results": 3,
+            "reason": "ok",
+            "elapsedMs": 10344
+          }
+        ],
+        "onlineWithTr": true,
+        "downloadUrls": 5,
+        "estimatedDistinctFiles": 5,
+        "downloadQualities": [
+          "1280x720",
+          "853x480",
+          "852x480",
+          "1920x1080"
+        ],
+        "cleanOnlineWithTr": true,
+        "cleanDownloadQualities": [
+          "1280x720",
+          "853x480",
+          "852x480",
+          "1920x1080"
+        ],
+        "downloadQualityGrades": [
+          "720p",
+          "480p",
+          "1080p"
+        ],
+        "cleanDownloadQualityGrades": [
+          "720p",
+          "480p",
+          "1080p"
+        ],
+        "cleanSmallWithTr": true,
+        "smallWithTr": true,
+        "smallLimitBytes": 3221225472,
+        "sourceCoverageCriteriaMet": true,
+        "gaps": [],
+        "files": [
+          {
+            "source": "MoviesDrive / Pixeldrain",
+            "container": "mkv",
+            "bytes": 761393489,
+            "filename": "Your.Name.2016.720p.10Bit.BluRay.Hindi-English.HEVC.x265- moviesdrives.cv.mkv",
+            "sourceItemId": null,
+            "releaseYearBasis": null,
+            "mediaFilename": null,
+            "audioLanguages": [
+              "hi",
+              "en"
+            ],
+            "subtitleBestScore": 74,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 1280,
+              "height": 720
+            },
+            "quality": "1280x720",
+            "qualityGrade": "720p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 8,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 6396.373,
+            "hashAvailable": true
+          },
+          {
+            "source": "Goojara",
+            "container": "mp4",
+            "bytes": 488868375,
+            "filename": "Your.Name.2016.720p.BluRay.x264-x0r.WT11.mp4",
+            "sourceItemId": null,
+            "releaseYearBasis": null,
+            "mediaFilename": null,
+            "audioLanguages": [],
+            "subtitleBestScore": 74,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 853,
+              "height": 480
+            },
+            "quality": "853x480",
+            "qualityGrade": "480p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 7,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 6393.238,
+            "hashAvailable": true
+          },
+          {
+            "source": "SonAnime",
+            "container": "mp4",
+            "bytes": 898002079,
+            "filename": "君の名は。.2016",
+            "sourceItemId": null,
+            "releaseYearBasis": null,
+            "mediaFilename": null,
+            "audioLanguages": [],
+            "subtitleBestScore": 69,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 1280,
+              "height": 720
+            },
+            "quality": "1280x720",
+            "qualityGrade": "720p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 7,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 6408.918,
+            "hashAvailable": true
+          },
+          {
+            "source": "SonAnime",
+            "container": "mp4",
+            "bytes": 525532654,
+            "filename": "君の名は。.2016",
+            "sourceItemId": null,
+            "releaseYearBasis": null,
+            "mediaFilename": null,
+            "audioLanguages": [],
+            "subtitleBestScore": 69,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 852,
+              "height": 480
+            },
+            "quality": "852x480",
+            "qualityGrade": "480p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 7,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 6408.918,
+            "hashAvailable": true
+          },
+          {
+            "source": "SonAnime",
+            "container": "mp4",
+            "bytes": 1840796893,
+            "filename": "君の名は。.2016",
+            "sourceItemId": null,
+            "releaseYearBasis": null,
+            "mediaFilename": null,
+            "audioLanguages": [],
+            "subtitleBestScore": 69,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 1920,
+              "height": 1080
+            },
+            "quality": "1920x1080",
+            "qualityGrade": "1080p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 7,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 6408.918,
+            "hashAvailable": true
+          }
+        ]
+      }
+    ],
+    "finishedAt": "2026-10-27T19:11:07.711Z",
+    "allSourceCriteriaMet": true
+  },
+  "finalCoreRegression": {
+    "checkedAt": "2026-10-27T19:12:21.595Z",
+    "version": "1.8.3",
+    "metadata": "fixed canonical reference; does not test phone TMDB API credentials",
+    "acceptance": {
+      "movieSmallFileBytes": 3221225472,
+      "episodeSmallFileBytes": 1073741824,
+      "minimumDistinctDownloadQualities": 2,
+      "requireTurkishSubtitle": true,
+      "physicalPlaybackAndOfflineTest": "not-run"
+    },
+    "transport": "Node limited1MiB, actual source and subtitle HTTP; native iPhone transport not tested",
+    "physicalDevice": "not-run",
+    "fullPlayback": "not-run",
+    "fullDownload": "not-run",
+    "cases": [
+      {
+        "key": "dune",
+        "tmdbId": 438631,
+        "title": "Dune",
+        "type": "movie",
+        "control": false,
+        "elapsedMs": 19132,
+        "bytesRead": 7456412,
+        "diagnostics": [
+          {
+            "tmdbId": "438631",
+            "lane": "main",
+            "configuration": {
+              "version": "dev",
+              "tmdbKeyPresent": true,
+              "autoDiscover": true,
+              "includeHls": true,
+              "playImdbEnabled": true,
+              "vixsrcEnabled": true,
+              "hdhubEnabled": true,
+              "archiveEnabled": true,
+              "waploadedEnabled": true,
+              "rarefilmmEnabled": true,
+              "goojaraEnabled": true,
+              "hdrezkaEnabled": true,
+              "hdfilmdelisiEnabled": true,
+              "dizibalEnabled": true,
+              "purstreamEnabled": true,
+              "moviesdriveEnabled": true,
+              "autoSubtitles": true,
+              "subtitleRequired": false,
+              "detailedHlsMetadata": false,
+              "minimumQuality": 0,
+              "maxResults": 20
+            },
+            "identity": {
+              "reason": "ok",
+              "year": 2021,
+              "type": "movie"
+            },
+            "sources": [
+              {
+                "name": "HDRezka",
+                "candidates": 4,
+                "startedMs": 81,
+                "discoveryMs": 1193
+              },
+              {
+                "name": "Internet Archive",
+                "candidates": 2,
+                "startedMs": 73,
+                "discoveryMs": 1502
+              },
+              {
+                "name": "PlayIMDb",
+                "candidates": 3,
+                "startedMs": 1276,
+                "discoveryMs": 393
+              },
+              {
+                "name": "Goojara",
+                "candidates": 1,
+                "startedMs": 79,
+                "discoveryMs": 2016
+              },
+              {
+                "name": "VixSrc",
+                "candidates": 1,
+                "startedMs": 1575,
+                "discoveryMs": 1014
+              },
+              {
+                "name": "FilmModu",
+                "candidates": 0,
+                "startedMs": 1669,
+                "discoveryMs": 1045
+              },
+              {
+                "name": "Waploaded",
+                "candidates": 0,
+                "startedMs": 2590,
+                "discoveryMs": 410
+              },
+              {
+                "name": "RareFilmm",
+                "candidates": 0,
+                "startedMs": 2714,
+                "discoveryMs": 387
+              },
+              {
+                "name": "MoviesDrive / Pixeldrain",
+                "candidates": 3,
+                "startedMs": 84,
+                "discoveryMs": 4153
+              },
+              {
+                "name": "4KHDHub / HubCloud",
+                "candidates": 5,
+                "startedMs": 2095,
+                "discoveryMs": 4283
+              }
+            ],
+            "rejected": {
+              "video_unavailable": 5
+            },
+            "http": {
+              "api.themoviedb.org:200": 3,
+              "nuvio-tr-hd-download-bridge.kamilbsr03.chatgpt.site:200": 1,
+              "ww1.goojara.to:200": 3,
+              "rezka.ag:200": 3,
+              "new4.moviesdrive.beer:200": 2,
+              "archive.org:200": 7,
+              "ww1.goojara.to:302": 1,
+              "altyazidb.online:200": 6,
+              "opensubtitles-v3.strem.io:200": 1,
+              "www.wootly.ch:200": 1,
+              "mdrive.lol:200": 4,
+              "streamdata.vaplayer.ru:200": 1,
+              "web.wootly.ch:200": 3,
+              "hubcloud.ist:200": 10,
+              "vixsrc.to:200": 4,
+              "www.filmmodu.one:200": 2,
+              "gamerxyt.com:200": 10,
+              "www.filmmodu.one:404": 1,
+              "pixeldrain.dev:200": 3,
+              "ia600400.us.archive.org:206": 4,
+              "4khdhub.one:200": 2,
+              "films.waploaded.com:200": 1,
+              "rarefilmm.com:200": 1,
+              "greenmotors.club:302": 6,
+              "stream.voidboost.one:302": 4,
+              "subs5.strem.io:200": 8,
+              "greenmotors.cc:200": 6,
+              "yttrium.stream.voidboost.one:206": 2,
+              "opensubtitles.stremio.homes:200": 21,
+              "nicheauthorityengine.site:200": 3,
+              "static.voidboost.com:200": 1,
+              "web.wootly.ch:302": 1,
+              "cadmium.stream.voidboost.one:206": 2,
+              "kurt.stream.voidboost.one:206": 2,
+              "motega2.nebula.to:206": 2,
+              "sc-u20-01.rustykoala25.boats:200": 1,
+              "pixeldrain.dev:206": 6,
+              "files.dolic45578.workers.dev:timeout_or_network": 1,
+              "files.netflix-server-69.workers.dev:timeout_or_network": 1,
+              "steep-butterfly-741d.sifor796752386.workers.dev:timeout_or_network": 1,
+              "wispy-bread-0fb3.mexanig1569602.workers.dev:timeout_or_network": 1,
+              "solitary-meadow-dee4.tixexa39416724.workers.dev:timeout_or_network": 1,
+              "spider.stream.voidboost.one:206": 2
+            },
+            "subtitleText": {
+              "turkishCharacters": 15,
+              "inlineFont": 9
+            },
+            "results": 20,
+            "reason": "ok",
+            "elapsedMs": 19131
+          },
+          {
+            "tmdbId": "438631",
+            "lane": "fastOnline",
+            "configuration": {
+              "version": "dev",
+              "tmdbKeyPresent": true,
+              "autoDiscover": true,
+              "includeHls": true,
+              "playImdbEnabled": true,
+              "vixsrcEnabled": true,
+              "hdhubEnabled": true,
+              "archiveEnabled": true,
+              "waploadedEnabled": true,
+              "rarefilmmEnabled": true,
+              "goojaraEnabled": true,
+              "hdrezkaEnabled": true,
+              "hdfilmdelisiEnabled": true,
+              "dizibalEnabled": true,
+              "purstreamEnabled": true,
+              "moviesdriveEnabled": true,
+              "autoSubtitles": true,
+              "subtitleRequired": false,
+              "detailedHlsMetadata": false,
+              "minimumQuality": 0,
+              "maxResults": 20
+            },
+            "identity": {
+              "reason": "ok",
+              "year": 2021,
+              "type": "movie"
+            },
+            "sources": [
+              {
+                "name": "DiziBal",
+                "candidates": 0,
+                "startedMs": 82,
+                "discoveryMs": 558
+              },
+              {
+                "name": "Purstream",
+                "candidates": 0,
+                "startedMs": 85,
+                "discoveryMs": 859
+              },
+              {
+                "name": "HDFilmDelisi",
+                "candidates": 1,
+                "startedMs": 81,
+                "discoveryMs": 1077
+              }
+            ],
+            "rejected": {},
+            "http": {
+              "api.themoviedb.org:200": 3,
+              "hdfilmdelisi.one:200": 2,
+              "api.purstream.club:200": 3,
+              "dizibal.org:200": 1,
+              "pl.vixolity.com:200": 1,
+              "opensubtitles-v3.strem.io:200": 1,
+              "altyazidb.online:200": 5,
+              "ha.vixolity.com:200": 1,
+              "subs5.strem.io:200": 8,
+              "opensubtitles.stremio.homes:200": 2
+            },
+            "subtitleText": {
+              "turkishCharacters": 7,
+              "inlineFont": 5
+            },
+            "results": 1,
+            "reason": "ok",
+            "elapsedMs": 4947
+          }
+        ],
+        "onlineWithTr": true,
+        "downloadUrls": 10,
+        "estimatedDistinctFiles": 10,
+        "downloadQualities": [
+          "1280x536",
+          "1146x480",
+          "1282x536",
+          "856x358",
+          "426x178",
+          "852x362",
+          "856x360",
+          "1920x804",
+          "641x268"
+        ],
+        "cleanOnlineWithTr": true,
+        "cleanDownloadQualities": [
+          "1280x536",
+          "1146x480",
+          "1282x536",
+          "856x358",
+          "426x178",
+          "852x362",
+          "856x360",
+          "1920x804",
+          "641x268"
+        ],
+        "downloadQualityGrades": [
+          "720p",
+          "480p",
+          "240p",
+          "1080p",
+          "360p"
+        ],
+        "cleanDownloadQualityGrades": [
+          "720p",
+          "480p",
+          "240p",
+          "1080p",
+          "360p"
+        ],
+        "cleanSmallWithTr": true,
+        "smallWithTr": true,
+        "smallLimitBytes": 3221225472,
+        "sourceCoverageCriteriaMet": true,
+        "gaps": [],
+        "files": [
+          {
+            "source": "Internet Archive",
+            "container": "mkv",
+            "bytes": 792903325,
+            "filename": "Dune_2021_720p_BluRay_x265_HEVC_10bit_AAC_2_0_Hindi_PSA_ASAP.mkv",
+            "sourceItemId": "dune-2021-720p-blu-ray-x-265-hevc-10bit-aac-2-0-hindi-psa-asap_202507",
+            "releaseYearBasis": "content-sample-pinned-file",
+            "mediaFilename": "Dune_2021_720p_BluRay_x265_HEVC_10bit_AAC_2_0_Hindi_PSA_ASAP.mkv",
+            "audioLanguages": [
+              "hi"
+            ],
+            "subtitleBestScore": 76,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 1280,
+              "height": 536
+            },
+            "quality": "1280x536",
+            "qualityGrade": "720p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 8,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 9326.659,
+            "hashAvailable": true
+          },
+          {
+            "source": "Internet Archive",
+            "container": "mp4",
+            "bytes": 949160267,
+            "filename": "Dune_2021_720p_BluRay_x265_HEVC_10bit_AAC_2_0_Hindi_PSA_ASAP.mkv",
+            "sourceItemId": "dune-2021-720p-blu-ray-x-265-hevc-10bit-aac-2-0-hindi-psa-asap_202507",
+            "releaseYearBasis": "content-sample-pinned-file",
+            "mediaFilename": "Dune_2021_720p_BluRay_x265_HEVC_10bit_AAC_2_0_Hindi_PSA_ASAP.mp4",
+            "audioLanguages": [],
+            "subtitleBestScore": 76,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 1146,
+              "height": 480
+            },
+            "quality": "1146x480",
+            "qualityGrade": "480p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 8,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 9326.698,
+            "hashAvailable": true
+          },
+          {
+            "source": "HDRezka",
+            "container": "mp4",
+            "bytes": 3066517972,
+            "filename": "Dune.2021",
+            "sourceItemId": null,
+            "releaseYearBasis": null,
+            "mediaFilename": null,
+            "audioLanguages": [],
+            "subtitleBestScore": 90,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 1282,
+              "height": 536
+            },
+            "quality": "1282x536",
+            "qualityGrade": "720p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 5,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 9326.631,
+            "hashAvailable": true
+          },
+          {
+            "source": "HDRezka",
+            "container": "mp4",
+            "bytes": 1276563965,
+            "filename": "Dune.2021",
+            "sourceItemId": null,
+            "releaseYearBasis": null,
+            "mediaFilename": null,
+            "audioLanguages": [],
+            "subtitleBestScore": 90,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 856,
+              "height": 358
+            },
+            "quality": "856x358",
+            "qualityGrade": "480p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 5,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 9326.631,
+            "hashAvailable": true
+          },
+          {
+            "source": "HDRezka",
+            "container": "mp4",
+            "bytes": 408697275,
+            "filename": "Dune.2021",
+            "sourceItemId": null,
+            "releaseYearBasis": null,
+            "mediaFilename": null,
+            "audioLanguages": [],
+            "subtitleBestScore": 90,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 426,
+              "height": 178
+            },
+            "quality": "426x178",
+            "qualityGrade": "240p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 5,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 9326.631,
+            "hashAvailable": true
+          },
+          {
+            "source": "Goojara",
+            "container": "mp4",
+            "bytes": 506588493,
+            "filename": "Dune.2021.1080p.HMAX.WEB-DL.DDP5.1.Atmos.x264-EVO.WT11.mp4",
+            "sourceItemId": null,
+            "releaseYearBasis": null,
+            "mediaFilename": null,
+            "audioLanguages": [],
+            "subtitleBestScore": 84,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 852,
+              "height": 362
+            },
+            "quality": "852x362",
+            "qualityGrade": "480p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 8,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 9325.014,
+            "hashAvailable": true
+          },
+          {
+            "source": "MoviesDrive / Pixeldrain",
+            "container": "mkv",
+            "bytes": 566912339,
+            "filename": "[[ moviesdrives.com ]] Dune.2021.480p.BluRay.Hindi-English.x264.ESub- moviesdrives.com.mkv",
+            "sourceItemId": null,
+            "releaseYearBasis": null,
+            "mediaFilename": null,
+            "audioLanguages": [
+              "hi",
+              "en"
+            ],
+            "subtitleBestScore": 74,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 856,
+              "height": 360
+            },
+            "quality": "856x360",
+            "qualityGrade": "480p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 8,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 9325.172,
+            "hashAvailable": true
+          },
+          {
+            "source": "MoviesDrive / Pixeldrain",
+            "container": "mkv",
+            "bytes": 948305346,
+            "filename": "[[ moviesdrives.com ]] Dune.2021.720p.10bit.BluRay.Hindi-English.x265-- moviesdrives.com.mkv",
+            "sourceItemId": null,
+            "releaseYearBasis": null,
+            "mediaFilename": null,
+            "audioLanguages": [
+              "hi",
+              "en"
+            ],
+            "subtitleBestScore": 76,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 1280,
+              "height": 536
+            },
+            "quality": "1280x536",
+            "qualityGrade": "720p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 8,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 9325.135,
+            "hashAvailable": true
+          },
+          {
+            "source": "MoviesDrive / Pixeldrain",
+            "container": "mkv",
+            "bytes": 2071642223,
+            "filename": "[[ moviesdrives.com ]] Dune.2021.1080p.10bit.BluRay.Hindi-English.x265- moviesdrives.com.mkv",
+            "sourceItemId": null,
+            "releaseYearBasis": null,
+            "mediaFilename": null,
+            "audioLanguages": [
+              "hi",
+              "en"
+            ],
+            "subtitleBestScore": 76,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 1920,
+              "height": 804
+            },
+            "quality": "1920x804",
+            "qualityGrade": "1080p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 8,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 9325.001,
+            "hashAvailable": true
+          },
+          {
+            "source": "HDRezka",
+            "container": "mp4",
+            "bytes": 698171132,
+            "filename": "Dune.2021",
+            "sourceItemId": null,
+            "releaseYearBasis": null,
+            "mediaFilename": null,
+            "audioLanguages": [],
+            "subtitleBestScore": 90,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 641,
+              "height": 268
+            },
+            "quality": "641x268",
+            "qualityGrade": "360p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 5,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 9326.631,
+            "hashAvailable": true
+          }
+        ]
+      },
+      {
+        "key": "inception",
+        "tmdbId": 27205,
+        "title": "Inception",
+        "type": "movie",
+        "control": false,
+        "elapsedMs": 20225,
+        "bytesRead": 12199532,
+        "diagnostics": [
+          {
+            "tmdbId": "27205",
+            "lane": "main",
+            "configuration": {
+              "version": "dev",
+              "tmdbKeyPresent": true,
+              "autoDiscover": true,
+              "includeHls": true,
+              "playImdbEnabled": true,
+              "vixsrcEnabled": true,
+              "hdhubEnabled": true,
+              "archiveEnabled": true,
+              "waploadedEnabled": true,
+              "rarefilmmEnabled": true,
+              "goojaraEnabled": true,
+              "hdrezkaEnabled": true,
+              "hdfilmdelisiEnabled": true,
+              "dizibalEnabled": true,
+              "purstreamEnabled": true,
+              "moviesdriveEnabled": true,
+              "autoSubtitles": true,
+              "subtitleRequired": false,
+              "detailedHlsMetadata": false,
+              "minimumQuality": 0,
+              "maxResults": 20
+            },
+            "identity": {
+              "reason": "ok",
+              "year": 2010,
+              "type": "movie"
+            },
+            "sources": [
+              {
+                "name": "HDRezka",
+                "candidates": 4,
+                "startedMs": 5,
+                "discoveryMs": 1206
+              },
+              {
+                "name": "PlayIMDb",
+                "candidates": 3,
+                "startedMs": 1212,
+                "discoveryMs": 418
+              },
+              {
+                "name": "Goojara",
+                "candidates": 1,
+                "startedMs": 4,
+                "discoveryMs": 1996
+              },
+              {
+                "name": "VixSrc",
+                "candidates": 1,
+                "startedMs": 1631,
+                "discoveryMs": 878
+              },
+              {
+                "name": "MoviesDrive / Pixeldrain",
+                "candidates": 2,
+                "startedMs": 6,
+                "discoveryMs": 3003
+              },
+              {
+                "name": "Waploaded",
+                "candidates": 0,
+                "startedMs": 3009,
+                "discoveryMs": 2
+              },
+              {
+                "name": "Internet Archive",
+                "candidates": 2,
+                "startedMs": 2,
+                "discoveryMs": 3213
+              },
+              {
+                "name": "RareFilmm",
+                "candidates": 0,
+                "startedMs": 3011,
+                "discoveryMs": 309
+              },
+              {
+                "name": "FilmModu",
+                "candidates": 8,
+                "startedMs": 2001,
+                "discoveryMs": 1622
+              },
+              {
+                "name": "4KHDHub / HubCloud",
+                "candidates": 7,
+                "startedMs": 2510,
+                "discoveryMs": 6129
+              }
+            ],
+            "rejected": {
+              "video_unavailable": 8,
+              "subtitle_unavailable": 2
+            },
+            "http": {
+              "api.themoviedb.org:200": 2,
+              "nuvio-tr-hd-download-bridge.kamilbsr03.chatgpt.site:200": 1,
+              "ww1.goojara.to:200": 3,
+              "new4.moviesdrive.beer:200": 2,
+              "rezka.ag:200": 3,
+              "archive.org:200": 12,
+              "ww1.goojara.to:302": 1,
+              "opensubtitles-v3.strem.io:200": 1,
+              "altyazidb.online:200": 12,
+              "mdrive.lol:200": 4,
+              "www.wootly.ch:200": 1,
+              "streamdata.vaplayer.ru:200": 1,
+              "opensubtitles.stremio.homes:200": 16,
+              "hubcloud.ist:200": 11,
+              "web.wootly.ch:200": 3,
+              "gamerxyt.com:200": 11,
+              "vixsrc.to:200": 3,
+              "pixeldrain.dev:200": 2,
+              "www.filmmodu.one:301": 1,
+              "stream.voidboost.one:302": 4,
+              "ia600900.us.archive.org:206": 4,
+              "rarefilmm.com:200": 1,
+              "www.filmmodu.one:200": 4,
+              "4khdhub.one:200": 2,
+              "greenmotors.club:302": 7,
+              "greenmotors.cc:200": 7,
+              "subs5.strem.io:200": 4,
+              "orion.stream.voidboost.one:206": 2,
+              "onlinevisibilitysystem.site:200": 3,
+              "lyra.stream.voidboost.one:206": 2,
+              "static.voidboost.com:200": 1,
+              "web.wootly.ch:302": 1,
+              "nexus.stream.voidboost.one:206": 2,
+              "pixeldrain.dev:206": 4,
+              "imgsapi.pro:200": 8,
+              "old-art-db58.terapiyo252.workers.dev:timeout_or_network": 1,
+              "netflix.fakegij908.workers.dev:timeout_or_network": 1,
+              "little-tooth-f1b3.tonoji6913.workers.dev:timeout_or_network": 1,
+              "myfiles.directfile.workers.dev:timeout_or_network": 1,
+              "raspy-art-dcac.pawolis5466501.workers.dev:timeout_or_network": 1,
+              "files.sacow27583.workers.dev:timeout_or_network": 1,
+              "wandering-cloud-0419.falife16573625.workers.dev:timeout_or_network": 1,
+              "web.wootly.ch:timeout_or_network": 1,
+              "crab.stream.voidboost.one:206": 2,
+              "altyazidb.online:502": 1
+            },
+            "subtitleText": {
+              "turkishCharacters": 13,
+              "inlineFont": 1
+            },
+            "results": 20,
+            "reason": "ok",
+            "elapsedMs": 20225
+          },
+          {
+            "tmdbId": "27205",
+            "lane": "fastOnline",
+            "configuration": {
+              "version": "dev",
+              "tmdbKeyPresent": true,
+              "autoDiscover": true,
+              "includeHls": true,
+              "playImdbEnabled": true,
+              "vixsrcEnabled": true,
+              "hdhubEnabled": true,
+              "archiveEnabled": true,
+              "waploadedEnabled": true,
+              "rarefilmmEnabled": true,
+              "goojaraEnabled": true,
+              "hdrezkaEnabled": true,
+              "hdfilmdelisiEnabled": true,
+              "dizibalEnabled": true,
+              "purstreamEnabled": true,
+              "moviesdriveEnabled": true,
+              "autoSubtitles": true,
+              "subtitleRequired": false,
+              "detailedHlsMetadata": false,
+              "minimumQuality": 0,
+              "maxResults": 20
+            },
+            "identity": {
+              "reason": "ok",
+              "year": 2010,
+              "type": "movie"
+            },
+            "sources": [
+              {
+                "name": "Purstream",
+                "candidates": 1,
+                "startedMs": 6,
+                "discoveryMs": 657
+              },
+              {
+                "name": "HDFilmDelisi",
+                "candidates": 1,
+                "startedMs": 5,
+                "discoveryMs": 985
+              },
+              {
+                "name": "DiziBal",
+                "candidates": 1,
+                "startedMs": 6,
+                "discoveryMs": 1170
+              }
+            ],
+            "rejected": {},
+            "http": {
+              "api.themoviedb.org:200": 2,
+              "hdfilmdelisi.one:200": 2,
+              "dizibal.org:200": 3,
+              "api.purstream.club:200": 2,
+              "opensubtitles-v3.strem.io:200": 1,
+              "altyazidb.online:200": 5,
+              "free.finepulfe.xyz:200": 1,
+              "pl.vixolity.com:200": 1,
+              "play2.pilavyerplay.top:200": 3,
+              "subs5.strem.io:200": 4,
+              "opensubtitles.stremio.homes:200": 7,
+              "ha.vixolity.com:200": 1
+            },
+            "subtitleText": {
+              "turkishCharacters": 5,
+              "inlineFont": 1
+            },
+            "results": 3,
+            "reason": "deadline",
+            "elapsedMs": 8004
+          }
+        ],
+        "onlineWithTr": true,
+        "downloadUrls": 8,
+        "estimatedDistinctFiles": 8,
+        "downloadQualities": [
+          "1280x536",
+          "1282x534",
+          "427x178",
+          "854x356",
+          "1920x800",
+          "3840x1598",
+          "638x266"
+        ],
+        "cleanOnlineWithTr": true,
+        "cleanDownloadQualities": [
+          "1280x536",
+          "1282x534",
+          "427x178",
+          "854x356",
+          "1920x800",
+          "3840x1598",
+          "638x266"
+        ],
+        "downloadQualityGrades": [
+          "720p",
+          "240p",
+          "480p",
+          "1080p",
+          "2160p",
+          "360p"
+        ],
+        "cleanDownloadQualityGrades": [
+          "720p",
+          "240p",
+          "480p",
+          "1080p",
+          "2160p",
+          "360p"
+        ],
+        "cleanSmallWithTr": true,
+        "smallWithTr": true,
+        "smallLimitBytes": 3221225472,
+        "sourceCoverageCriteriaMet": true,
+        "gaps": [],
+        "files": [
+          {
+            "source": "Internet Archive",
+            "container": "mp4",
+            "bytes": 869895874,
+            "filename": "A.Origem.[2010].baixarfilmesretro.blogspot.com (1).mp4",
+            "sourceItemId": "a.-origem.-2010.baixarfilmesretro.blogspot.com-1",
+            "releaseYearBasis": "content-sample-pinned-file",
+            "mediaFilename": "A.Origem.[2010].baixarfilmesretro.blogspot.com (1).ia.mp4",
+            "audioLanguages": [],
+            "subtitleBestScore": 69,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 1280,
+              "height": 536
+            },
+            "quality": "1280x536",
+            "qualityGrade": "720p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 8,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 8888.088,
+            "hashAvailable": true
+          },
+          {
+            "source": "Internet Archive",
+            "container": "mp4",
+            "bytes": 902428472,
+            "filename": "A.Origem.[2010].baixarfilmesretro.blogspot.com (1).mp4",
+            "sourceItemId": "a.-origem.-2010.baixarfilmesretro.blogspot.com-1",
+            "releaseYearBasis": "content-sample-pinned-file",
+            "mediaFilename": "A.Origem.[2010].baixarfilmesretro.blogspot.com (1).mp4",
+            "audioLanguages": [],
+            "subtitleBestScore": 69,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 1280,
+              "height": 536
+            },
+            "quality": "1280x536",
+            "qualityGrade": "720p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 8,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 8888.086666666666,
+            "hashAvailable": true
+          },
+          {
+            "source": "HDRezka",
+            "container": "mp4",
+            "bytes": 2918591890,
+            "filename": "Inception.2010",
+            "sourceItemId": null,
+            "releaseYearBasis": null,
+            "mediaFilename": null,
+            "audioLanguages": [],
+            "subtitleBestScore": 90,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 1282,
+              "height": 534
+            },
+            "quality": "1282x534",
+            "qualityGrade": "720p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 5,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 8888.319,
+            "hashAvailable": true
+          },
+          {
+            "source": "HDRezka",
+            "container": "mp4",
+            "bytes": 387674406,
+            "filename": "Inception.2010",
+            "sourceItemId": null,
+            "releaseYearBasis": null,
+            "mediaFilename": null,
+            "audioLanguages": [],
+            "subtitleBestScore": 90,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 427,
+              "height": 178
+            },
+            "quality": "427x178",
+            "qualityGrade": "240p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 5,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 8888.319,
+            "hashAvailable": true
+          },
+          {
+            "source": "HDRezka",
+            "container": "mp4",
+            "bytes": 1210001304,
+            "filename": "Inception.2010",
+            "sourceItemId": null,
+            "releaseYearBasis": null,
+            "mediaFilename": null,
+            "audioLanguages": [],
+            "subtitleBestScore": 90,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 854,
+              "height": 356
+            },
+            "quality": "854x356",
+            "qualityGrade": "480p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 5,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 8888.319,
+            "hashAvailable": true
+          },
+          {
+            "source": "MoviesDrive / Pixeldrain",
+            "container": "mkv",
+            "bytes": 2495758260,
+            "filename": "[[ moviesdrives.com ]] Inception.2010.1080p.10Bit.BluRay.Hindi.5.1-English.5.1.HEVC.x265- moviesdrives.com.mkv",
+            "sourceItemId": null,
+            "releaseYearBasis": null,
+            "mediaFilename": null,
+            "audioLanguages": [
+              "hi",
+              "en"
+            ],
+            "subtitleBestScore": 78,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 1920,
+              "height": 800
+            },
+            "quality": "1920x800",
+            "qualityGrade": "1080p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 8,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 8888.107,
+            "hashAvailable": true
+          },
+          {
+            "source": "MoviesDrive / Pixeldrain",
+            "container": "mkv",
+            "bytes": 7591975942,
+            "filename": "[[ moviesdrives.com ]] Inception.2010.4K-2160p.SDR.10Bit.BluRay.Hindi.DD5.1-English.5.1.HEVC.x265- moviesdrives.com.mkv",
+            "sourceItemId": null,
+            "releaseYearBasis": null,
+            "mediaFilename": null,
+            "audioLanguages": [
+              "hi",
+              "en"
+            ],
+            "subtitleBestScore": 78,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 3840,
+              "height": 1598
+            },
+            "quality": "3840x1598",
+            "qualityGrade": "2160p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 8,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 8888.341,
+            "hashAvailable": true
+          },
+          {
+            "source": "HDRezka",
+            "container": "mp4",
+            "bytes": 661316643,
+            "filename": "Inception.2010",
+            "sourceItemId": null,
+            "releaseYearBasis": null,
+            "mediaFilename": null,
+            "audioLanguages": [],
+            "subtitleBestScore": 90,
+            "burnedSubtitleLanguage": null,
+            "knownForeignBurnedSubtitles": false,
+            "dimensions": {
+              "width": 638,
+              "height": 266
+            },
+            "quality": "638x266",
+            "qualityGrade": "360p",
+            "turkishSubtitle": true,
+            "externalTrackCount": 5,
+            "externalTurkishTracks": 4,
+            "actualDurationSeconds": 8888.319,
+            "hashAvailable": true
+          }
+        ]
+      }
+    ],
+    "finishedAt": "2026-10-27T19:13:00.959Z",
+    "allSourceCriteriaMet": true
+  },
+  "notes": [
+    "First The Eye pass returned zero; after HD query fix it returned two new files.",
+    "Hotel Rwanda first returned six, repeat zero: source/network variability is retained.",
+    "Fleabag reached the24s logical deadline with four existing downloads preserved.",
+    "Source coverage thresholds are partial checks, not all-title/all-quality or device guarantees."
+  ],
+  "allSourceCriteriaMet": false,
+  "physicalDevice": "not-run",
+  "fullPlayback": "not-run",
+  "fullDownload": "not-run",
+  "offline": "not-run",
+  "subtitleAudioSync": "not-run"
+}

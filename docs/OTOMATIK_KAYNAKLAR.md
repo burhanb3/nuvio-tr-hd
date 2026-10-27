@@ -32,6 +32,8 @@ Liste çalışan bütün katalog garantisi değildir. Kaynağın bir bölümde �
 
 İndirme önceliği varsayılan açıktır. Küçük boyutlu HLS satırları, büyük indirilebilir dosyaları 20 sonuç sınırının dışına itmez. Dosyalar ve online yayınlar kendi içinde seçilen sırayla gösterilir; karışık sıralama için bu ayar kapatılabilir.
 
+Internet Archive, Türkçe ve özgün adı birlikte içeren film sürümlerini de arar. Ayrı yıl alanı yoksa kayıt başlığı ve dosya adında aynı özgün ad/yıl aranır; gerçek video süresi ayrıca denetlenir. Yerel adın farklı olması yanlış kimlik/yıl kabulüne yol açmaz. Küçük MP4 türevleri ve HD MKV asılları birlikte değerlendirilir; gerçek ses izleri okunamadığında dosya adındaki dil, doğrulanmış dublaj kanıtı sayılmaz. Bu yol genel film aramasını geliştirir; dizi kuralları değişmez.
+
 RareFilmm bütün film kataloğunu kapsamaz. Genel aramada tam başlık/yıl, makale içindeki oynatıcı, oynatıcının kendi film kimliği/başlığı ve süre denetlenir. Kalite başına gerçek MP4 boyutu ve pikseli okunur. EN görüntüde etiketi, silinemeyen İngilizce altyazı bulunduğunu belirtir; mevcut harici TR/EN dosyaları ayrıca sunulur. Yeni bir sunucu veya hesap gerekmez.
 
 Goojara, ana sağlayıcıda film ve bölüm dosyaları arar. Tam başlık/yıl, filmlerde IMDb, dizilerde seçilen sezon listesi ve bölüm sayfası birlikte denetlenir. Dosya adındaki 720p/1080p etiketi ölçülen pikselin yerine geçmez. Kaynak bir dosyayı HCSubs gibi sabit altyazı işaretiyle sunuyorsa kartta Sabit altyazı yazılır; dili bilinmeden EN/TR diye etiketlenmez. Sunucuya ve bölüme göre erişim değişebilir; her yapım veya 4K garantisi değildir.

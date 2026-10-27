@@ -1,0 +1,722 @@
+{
+  "checkedAt": "2026-10-27T19:14:29.765Z",
+  "version": "1.8.3",
+  "baseline": "1.8.2",
+  "outcome": {
+    "newPartialMovieDownloadAdapters": 0,
+    "improvedExistingAdapters": [
+      "Internet Archive"
+    ],
+    "newFiles": 12,
+    "titleExamples": 4,
+    "newTurkishDubFiles": 6,
+    "smallerMp4Files": 6,
+    "smallMp4MeasuredAudioLanguages": 0,
+    "allNewFilesHaveTurkishSubtitleAlternatives": true,
+    "new4kFiles": 0,
+    "newTvFiles": 0,
+    "newAnimeMovieFiles": 0,
+    "newAnimeEpisodeFiles": 0,
+    "newBackend": 0,
+    "newAccount": 0,
+    "newFixedKey": 0,
+    "newPerTitleVideoPin": 0
+  },
+  "method": {
+    "identity": "Exact original + year in explicit bilingual filename and same combined item heading, or original/official same-TMDB translations. Conflicting explicit IMDb/TMDB/year rejected before alias lookup. No fuzzy matching, arbitrary translated title or per-title video pin.",
+    "structuralLabels": "local - Original (year) and Original - local (year) are release labels, not asserted official TMDB translations; samples/fan edits/collections rejected",
+    "file": "Actual Range/container/bytes/pixels/duration/hash. Bilingual records require measured duration within90–110% of canonical runtime. Filename quality is never verification.",
+    "search": "Existing two bounded12-row searches; HD movie query now accepts canonical year in year field or title, with strict subsequent file checks. TV IMDb/query and episode rules preserved.",
+    "alias": "At most one lazy shared same-TMDB translations request per Archive scan; no extra ordinary-title request",
+    "mainBudgetMs": 24000,
+    "videoNativeSlots": 3,
+    "subtitleNativeSlots": 4,
+    "englishSubtitleNativeSlots": 1,
+    "metadataMode": "Fixed canonical validation references, real anonymous catalogue/metadata/video Range and subtitle HTTP. Phone TMDB credentials and physical transport not tested.",
+    "subtitle": "Existing TR/EN alternatives; presence and release score are not measured scene sync. subtitleBestScore is maximum across languages, not a Turkish-only score."
+  },
+  "newFiles": [
+    {
+      "key": "bridge-remagen",
+      "tmdbId": 15873,
+      "source": "Internet Archive",
+      "container": "mp4",
+      "bytes": 676428753,
+      "filename": "Ecel Köprüsü - The Bridge at Remagen (1969) 1080p BluRay [TR-EN] DD5.1 x264 Türkçe Dublaj Film İndir.mkv",
+      "sourceItemId": "ecel-koprusu-the-bridge-at-remagen-1969-1080p-blu-ray-tr-en-dd-5.1-x-264-turkce-dublaj-film-indir",
+      "releaseYearBasis": "exact-title-and-filename",
+      "mediaFilename": "Ecel Köprüsü - The Bridge at Remagen (1969) 1080p BluRay [TR-EN] DD5.1 x264 Türkçe Dublaj Film İndir.mp4",
+      "audioLanguages": [],
+      "subtitleBestScore": 76,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 1129,
+        "height": 480
+      },
+      "quality": "1129x480",
+      "qualityGrade": "480p",
+      "turkishSubtitle": true,
+      "externalTrackCount": 8,
+      "externalTurkishTracks": 4,
+      "actualDurationSeconds": 6993.995,
+      "hashAvailable": true
+    },
+    {
+      "key": "bridge-remagen",
+      "tmdbId": 15873,
+      "source": "Internet Archive",
+      "container": "mp4",
+      "bytes": 676761552,
+      "filename": "Ecel Köprüsü - The Bridge at Remagen (1969) 720p BluRay [TR-EN] DD5.1 x264 Türkçe Dublaj Film İndir.mkv",
+      "sourceItemId": "ecel-koprusu-the-bridge-at-remagen-1969-1080p-blu-ray-tr-en-dd-5.1-x-264-turkce-dublaj-film-indir",
+      "releaseYearBasis": "exact-title-and-filename",
+      "mediaFilename": "Ecel Köprüsü - The Bridge at Remagen (1969) 720p BluRay [TR-EN] DD5.1 x264 Türkçe Dublaj Film İndir.mp4",
+      "audioLanguages": [],
+      "subtitleBestScore": 76,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 1129,
+        "height": 480
+      },
+      "quality": "1129x480",
+      "qualityGrade": "480p",
+      "turkishSubtitle": true,
+      "externalTrackCount": 8,
+      "externalTurkishTracks": 4,
+      "actualDurationSeconds": 6993.995,
+      "hashAvailable": true
+    },
+    {
+      "key": "bridge-remagen",
+      "tmdbId": 15873,
+      "source": "Internet Archive",
+      "container": "mkv",
+      "bytes": 6226492941,
+      "filename": "Ecel Köprüsü - The Bridge at Remagen (1969) 720p BluRay [TR-EN] DD5.1 x264 Türkçe Dublaj Film İndir.mkv",
+      "sourceItemId": "ecel-koprusu-the-bridge-at-remagen-1969-1080p-blu-ray-tr-en-dd-5.1-x-264-turkce-dublaj-film-indir",
+      "releaseYearBasis": "exact-title-and-filename",
+      "mediaFilename": "Ecel Köprüsü - The Bridge at Remagen (1969) 720p BluRay [TR-EN] DD5.1 x264 Türkçe Dublaj Film İndir.mkv",
+      "audioLanguages": [
+        "tr",
+        "en"
+      ],
+      "subtitleBestScore": 76,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 1280,
+        "height": 544
+      },
+      "quality": "1280x544",
+      "qualityGrade": "720p",
+      "turkishSubtitle": true,
+      "externalTrackCount": 8,
+      "externalTurkishTracks": 4,
+      "actualDurationSeconds": 6993.987,
+      "hashAvailable": true
+    },
+    {
+      "key": "bridge-remagen",
+      "tmdbId": 15873,
+      "source": "Internet Archive",
+      "container": "mkv",
+      "bytes": 10597998602,
+      "filename": "Ecel Köprüsü - The Bridge at Remagen (1969) 1080p BluRay [TR-EN] DD5.1 x264 Türkçe Dublaj Film İndir.mkv",
+      "sourceItemId": "ecel-koprusu-the-bridge-at-remagen-1969-1080p-blu-ray-tr-en-dd-5.1-x-264-turkce-dublaj-film-indir",
+      "releaseYearBasis": "exact-title-and-filename",
+      "mediaFilename": "Ecel Köprüsü - The Bridge at Remagen (1969) 1080p BluRay [TR-EN] DD5.1 x264 Türkçe Dublaj Film İndir.mkv",
+      "audioLanguages": [
+        "tr",
+        "en"
+      ],
+      "subtitleBestScore": 76,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 1920,
+        "height": 816
+      },
+      "quality": "1920x816",
+      "qualityGrade": "1080p",
+      "turkishSubtitle": true,
+      "externalTrackCount": 8,
+      "externalTurkishTracks": 4,
+      "actualDurationSeconds": 6993.987,
+      "hashAvailable": true
+    },
+    {
+      "key": "hotel-rwanda",
+      "tmdbId": 205,
+      "source": "Internet Archive",
+      "container": "mkv",
+      "bytes": 2121243298,
+      "filename": "Hotel Rwanda - Ruanda Oteli (2004) 1080p.BluRay.x265.tr-en.mkv",
+      "sourceItemId": "hotel-rwanda-ruanda-oteli-2004-1080p.-blu-ray.x-265.tr-en",
+      "releaseYearBasis": "exact-title-and-filename",
+      "mediaFilename": "Hotel Rwanda - Ruanda Oteli (2004) 1080p.BluRay.x265.tr-en.mkv",
+      "audioLanguages": [
+        "tr",
+        "en"
+      ],
+      "subtitleBestScore": 65,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 1920,
+        "height": 816
+      },
+      "quality": "1920x816",
+      "qualityGrade": "1080p",
+      "turkishSubtitle": true,
+      "externalTrackCount": 4,
+      "externalTurkishTracks": 4,
+      "actualDurationSeconds": 7311.21,
+      "hashAvailable": true
+    },
+    {
+      "key": "hotel-rwanda",
+      "tmdbId": 205,
+      "source": "Internet Archive",
+      "container": "mp4",
+      "bytes": 717374464,
+      "filename": "Hotel Rwanda - Ruanda Oteli (2004) 1080p.BluRay.x265.tr-en.mkv",
+      "sourceItemId": "hotel-rwanda-ruanda-oteli-2004-1080p.-blu-ray.x-265.tr-en",
+      "releaseYearBasis": "exact-title-and-filename",
+      "mediaFilename": "Hotel Rwanda - Ruanda Oteli (2004) 1080p.BluRay.x265.tr-en.mp4",
+      "audioLanguages": [],
+      "subtitleBestScore": 65,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 1129,
+        "height": 480
+      },
+      "quality": "1129x480",
+      "qualityGrade": "480p",
+      "turkishSubtitle": true,
+      "externalTrackCount": 4,
+      "externalTurkishTracks": 4,
+      "actualDurationSeconds": 7311.21,
+      "hashAvailable": true
+    },
+    {
+      "key": "crow-1994",
+      "tmdbId": 9495,
+      "source": "Internet Archive",
+      "container": "mkv",
+      "bytes": 1940410735,
+      "filename": "The Crow - Ölümsüz Aşk (1994) Remastered.1080p.BluRay.x265.tr-en.mkv",
+      "sourceItemId": "the-crow-olumsuz-ask-1994-remastered.-1080p.-blu-ray.x-265.tr-en",
+      "releaseYearBasis": "exact-title-and-filename",
+      "mediaFilename": "The Crow - Ölümsüz Aşk (1994) Remastered.1080p.BluRay.x265.tr-en.mkv",
+      "audioLanguages": [
+        "tr",
+        "en"
+      ],
+      "subtitleBestScore": 74,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 1920,
+        "height": 1036
+      },
+      "quality": "1920x1036",
+      "qualityGrade": "1080p",
+      "turkishSubtitle": true,
+      "externalTrackCount": 7,
+      "externalTurkishTracks": 4,
+      "actualDurationSeconds": 6109.781,
+      "hashAvailable": true
+    },
+    {
+      "key": "crow-1994",
+      "tmdbId": 9495,
+      "source": "Internet Archive",
+      "container": "mp4",
+      "bytes": 606986271,
+      "filename": "The Crow - Ölümsüz Aşk (1994) Remastered.1080p.BluRay.x265.tr-en.mkv",
+      "sourceItemId": "the-crow-olumsuz-ask-1994-remastered.-1080p.-blu-ray.x-265.tr-en",
+      "releaseYearBasis": "exact-title-and-filename",
+      "mediaFilename": "The Crow - Ölümsüz Aşk (1994) Remastered.1080p.BluRay.x265.tr-en.mp4",
+      "audioLanguages": [],
+      "subtitleBestScore": 74,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 890,
+        "height": 480
+      },
+      "quality": "890x480",
+      "qualityGrade": "480p",
+      "turkishSubtitle": true,
+      "externalTrackCount": 7,
+      "externalTurkishTracks": 4,
+      "actualDurationSeconds": 6109.8,
+      "hashAvailable": true
+    },
+    {
+      "key": "crow-1994",
+      "tmdbId": 9495,
+      "source": "Internet Archive",
+      "container": "mp4",
+      "bytes": 606987927,
+      "filename": "The Crow - Ölümsüz Aşk (1994) Remastered.1080p.BluRay.x265.dvd-tr-en.mkv",
+      "sourceItemId": "the-crow-olumsuz-ask-1994-remastered.-1080p.-blu-ray.x-265.dvd-tr-en",
+      "releaseYearBasis": "exact-title-and-filename",
+      "mediaFilename": "The Crow - Ölümsüz Aşk (1994) Remastered.1080p.BluRay.x265.dvd-tr-en.mp4",
+      "audioLanguages": [],
+      "subtitleBestScore": 74,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 890,
+        "height": 480
+      },
+      "quality": "890x480",
+      "qualityGrade": "480p",
+      "turkishSubtitle": true,
+      "externalTrackCount": 7,
+      "externalTurkishTracks": 4,
+      "actualDurationSeconds": 6109.8,
+      "hashAvailable": true
+    },
+    {
+      "key": "crow-1994",
+      "tmdbId": 9495,
+      "source": "Internet Archive",
+      "container": "mkv",
+      "bytes": 2087076256,
+      "filename": "The Crow - Ölümsüz Aşk (1994) Remastered.1080p.BluRay.x265.dvd-tr-en.mkv",
+      "sourceItemId": "the-crow-olumsuz-ask-1994-remastered.-1080p.-blu-ray.x-265.dvd-tr-en",
+      "releaseYearBasis": "exact-title-and-filename",
+      "mediaFilename": "The Crow - Ölümsüz Aşk (1994) Remastered.1080p.BluRay.x265.dvd-tr-en.mkv",
+      "audioLanguages": [
+        "tr",
+        "en"
+      ],
+      "subtitleBestScore": 74,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 1920,
+        "height": 1036
+      },
+      "quality": "1920x1036",
+      "qualityGrade": "1080p",
+      "turkishSubtitle": true,
+      "externalTrackCount": 7,
+      "externalTurkishTracks": 4,
+      "actualDurationSeconds": 6109.781,
+      "hashAvailable": true
+    },
+    {
+      "key": "eye-2008",
+      "tmdbId": 9030,
+      "source": "Internet Archive",
+      "container": "mkv",
+      "bytes": 1718119794,
+      "filename": "The Eye - Göz (2008) 1080p.BluRay.x265.tr-en.mkv",
+      "sourceItemId": "the-eye-goz-2008-1080p.-blu-ray.x-265.tr-en",
+      "releaseYearBasis": "exact-title-and-filename",
+      "mediaFilename": "The Eye - Göz (2008) 1080p.BluRay.x265.tr-en.mkv",
+      "audioLanguages": [
+        "tr",
+        "en"
+      ],
+      "subtitleBestScore": 74,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 1920,
+        "height": 816
+      },
+      "quality": "1920x816",
+      "qualityGrade": "1080p",
+      "turkishSubtitle": true,
+      "externalTrackCount": 8,
+      "externalTurkishTracks": 4,
+      "actualDurationSeconds": 5798.632,
+      "hashAvailable": true
+    },
+    {
+      "key": "eye-2008",
+      "tmdbId": 9030,
+      "source": "Internet Archive",
+      "container": "mp4",
+      "bytes": 582999488,
+      "filename": "The Eye - Göz (2008) 1080p.BluRay.x265.tr-en.mkv",
+      "sourceItemId": "the-eye-goz-2008-1080p.-blu-ray.x-265.tr-en",
+      "releaseYearBasis": "exact-title-and-filename",
+      "mediaFilename": "The Eye - Göz (2008) 1080p.BluRay.x265.tr-en.mp4",
+      "audioLanguages": [],
+      "subtitleBestScore": 74,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 1129,
+        "height": 480
+      },
+      "quality": "1129x480",
+      "qualityGrade": "480p",
+      "turkishSubtitle": true,
+      "externalTrackCount": 8,
+      "externalTurkishTracks": 4,
+      "actualDurationSeconds": 5793.833,
+      "hashAvailable": true
+    }
+  ],
+  "baselineMetadataReplay": [
+    {
+      "key": "bridge-remagen",
+      "tmdbId": 15873,
+      "method": "Same captured public metadata replay; no video pins or real subtitle/audio work in this comparison",
+      "baseline182": {
+        "candidates": 0,
+        "files": []
+      },
+      "current183": {
+        "candidates": 4,
+        "files": [
+          "Ecel Köprüsü - The Bridge at Remagen (1969) 1080p BluRay [TR-EN] DD5.1 x264 Türkçe Dublaj Film İndir.mp4",
+          "Ecel Köprüsü - The Bridge at Remagen (1969) 720p BluRay [TR-EN] DD5.1 x264 Türkçe Dublaj Film İndir.mp4",
+          "Ecel Köprüsü - The Bridge at Remagen (1969) 720p BluRay [TR-EN] DD5.1 x264 Türkçe Dublaj Film İndir.mkv",
+          "Ecel Köprüsü - The Bridge at Remagen (1969) 1080p BluRay [TR-EN] DD5.1 x264 Türkçe Dublaj Film İndir.mkv"
+        ]
+      }
+    },
+    {
+      "key": "crow-1994",
+      "tmdbId": 9495,
+      "method": "Same captured public metadata replay; no video pins or real subtitle/audio work in this comparison",
+      "baseline182": {
+        "candidates": 0,
+        "files": []
+      },
+      "current183": {
+        "candidates": 4,
+        "files": [
+          "The Crow - Ölümsüz Aşk (1994) Remastered.1080p.BluRay.x265.tr-en.mp4",
+          "The Crow - Ölümsüz Aşk (1994) Remastered.1080p.BluRay.x265.tr-en.mkv",
+          "The Crow - Ölümsüz Aşk (1994) Remastered.1080p.BluRay.x265.dvd-tr-en.mp4",
+          "The Crow - Ölümsüz Aşk (1994) Remastered.1080p.BluRay.x265.dvd-tr-en.mkv"
+        ]
+      }
+    },
+    {
+      "key": "eye-2008",
+      "tmdbId": 9030,
+      "method": "Same captured public metadata replay; no video pins or real subtitle/audio work in this comparison",
+      "baseline182": {
+        "candidates": 0,
+        "files": []
+      },
+      "current183": {
+        "candidates": 2,
+        "files": [
+          "The Eye - Göz (2008) 1080p.BluRay.x265.tr-en.mp4",
+          "The Eye - Göz (2008) 1080p.BluRay.x265.tr-en.mkv"
+        ]
+      }
+    },
+    {
+      "key": "hotel-rwanda",
+      "tmdbId": 205,
+      "method": "Same captured public metadata replay; no video pins or real subtitle/audio work in this comparison",
+      "baseline182": {
+        "candidates": 0,
+        "files": []
+      },
+      "current183": {
+        "candidates": 2,
+        "files": [
+          "Hotel Rwanda - Ruanda Oteli (2004) 1080p.BluRay.x265.tr-en.mp4",
+          "Hotel Rwanda - Ruanda Oteli (2004) 1080p.BluRay.x265.tr-en.mkv"
+        ]
+      }
+    }
+  ],
+  "searchEvidence": [
+    {
+      "key": "crow-1994",
+      "searches": [
+        {
+          "hd": true,
+          "total": 5,
+          "docs": [
+            {
+              "id": "the-crow-1994_20231024",
+              "title": "The Crow (1994) 1080p",
+              "hint": false
+            },
+            {
+              "id": "the-crow-1994-frame-interpolatiion-60-fps-1080p-blu-ray-turkce-dublaj",
+              "title": "The Crow 1994 Frame İnterpolatiıon 60 FPS 1080p Blu Ray Türkçe Dublaj",
+              "hint": false
+            },
+            {
+              "id": "the-crow-olumsuz-ask-1994-remastered.-1080p.-blu-ray.x-265.tr-en",
+              "title": "The Crow Ölümsüz Aşk ( 1994) Remastered. 1080p. Blu Ray.x 265.tr En",
+              "hint": true
+            },
+            {
+              "id": "the.-crow.-1994.-remastered.-1080p.-blu-ray.-1400-mb.-dd-5.1.x-264-galaxy-rg_202610",
+              "title": "The. Crow. 1994. REMASTERED. 1080p. Blu Ray. 1400 MB. DD 5.1.x 264 Galaxy RG",
+              "hint": false
+            },
+            {
+              "id": "the-crow-olumsuz-ask-1994-remastered.-1080p.-blu-ray.x-265.dvd-tr-en",
+              "title": "The Crow Ölümsüz Aşk ( 1994) Remastered. 1080p. Blu Ray.x 265.dvd Tr En",
+              "hint": true
+            }
+          ]
+        },
+        {
+          "hd": false,
+          "total": 17,
+          "docs": [
+            {
+              "id": "the-crow-workprints-1994_202204",
+              "title": "The Crow Workprints [1994]",
+              "hint": true
+            },
+            {
+              "id": "crow-1994-tv-spots",
+              "title": "The Crow (1994) TV Spots",
+              "hint": false
+            },
+            {
+              "id": "the-crow-1994_20231024",
+              "title": "The Crow (1994) 1080p",
+              "hint": false
+            },
+            {
+              "id": "the-crow-lost-souls-1994-fanedit",
+              "title": "The Crow Lost Souls (1994) Fanedit",
+              "hint": true
+            },
+            {
+              "id": "cinecorvo17ocorvothecroweua1994_201911",
+              "title": "Cine Corvo # 17: O Corvo/The Crow (EUA, 1994)",
+              "hint": false
+            },
+            {
+              "id": "youtube-CB4U9FqOi70",
+              "title": "The Crow 1994 at DNA Lounge, Sun Oct 27",
+              "hint": false
+            },
+            {
+              "id": "the-crow-1994-frame-interpolatiion-60-fps-1080p-blu-ray-turkce-dublaj",
+              "title": "The Crow 1994 Frame İnterpolatiıon 60 FPS 1080p Blu Ray Türkçe Dublaj",
+              "hint": false
+            },
+            {
+              "id": "youtube-nICRlMlo6Vs",
+              "title": "The Crow 1994: Crows Only",
+              "hint": false
+            },
+            {
+              "id": "the-crow-a-profile-on-the-crow-author-james-o-barr",
+              "title": "The Crow 1994 A Profile On The Crow Author James O' Barr",
+              "hint": false
+            },
+            {
+              "id": "siskel-ebert-review-the-crow",
+              "title": "Siskel & Ebert The Crow",
+              "hint": false
+            },
+            {
+              "id": "the-cure-burn-the-crow-1994-brandon-lee",
+              "title": "The Crow 1994 Brandon Lee The Cure Burn Song Track",
+              "hint": false
+            },
+            {
+              "id": "brandon-lee-death-inside-the-crow-1994-on-set-shooting",
+              "title": "Brandon Lee Death Inside The Crow 1994 on Set Shooting",
+              "hint": true
+            }
+          ]
+        }
+      ],
+      "metadata": [
+        {
+          "id": "the-crow-olumsuz-ask-1994-remastered.-1080p.-blu-ray.x-265.tr-en",
+          "names": [
+            "the crow olumsuz ask"
+          ],
+          "binding": {
+            "actual": "the crow olumsuz ask 1994 remastered 1080p blu ray x 265 tr en",
+            "name": "the crow olumsuz ask",
+            "suffix": "1994 remastered 1080p blu ray x 265 tr en",
+            "release": true,
+            "titleYear": true,
+            "exact": false,
+            "localized": true
+          }
+        },
+        {
+          "id": "the-crow-olumsuz-ask-1994-remastered.-1080p.-blu-ray.x-265.dvd-tr-en",
+          "names": [
+            "the crow olumsuz ask"
+          ],
+          "binding": {
+            "actual": "the crow olumsuz ask 1994 remastered 1080p blu ray x 265 dvd tr en",
+            "name": "the crow olumsuz ask",
+            "suffix": "1994 remastered 1080p blu ray x 265 dvd tr en",
+            "release": true,
+            "titleYear": true,
+            "exact": false,
+            "localized": true
+          }
+        }
+      ]
+    },
+    {
+      "key": "eye-2008",
+      "searches": [
+        {
+          "hd": true,
+          "total": 1,
+          "docs": [
+            {
+              "id": "the-eye-goz-2008-1080p.-blu-ray.x-265.tr-en",
+              "title": "The Eye Göz ( 2008) 1080p. Blu Ray.x 265.tr En",
+              "hint": true
+            }
+          ]
+        },
+        {
+          "hd": false,
+          "total": 18,
+          "docs": [
+            {
+              "id": "criticaldub",
+              "title": "In the Eye of the Dub Observer: Critical Dub",
+              "hint": false
+            },
+            {
+              "id": "the-eye-2008-dvd-5-rutracker-718516",
+              "title": "Глаз - The Eye (русский DVD)",
+              "hint": false
+            },
+            {
+              "id": "Zzzszeszzze",
+              "title": "The Eye (2008 Korean VHS)",
+              "hint": false
+            },
+            {
+              "id": "the-eye-2008-vcd-dublaji",
+              "title": "The Eye (2008) VCD Dublajı",
+              "hint": false
+            },
+            {
+              "id": "ghosts-spirits-and-demons-part-2-more-than-meets-the-eye",
+              "title": "Ghosts, Spirits, And Demons Part 2 More Than Meets The Eye",
+              "hint": false
+            },
+            {
+              "id": "the-eye-2008-netflix-dublaji",
+              "title": "The Eye (2008) Netflix Dublajı",
+              "hint": false
+            },
+            {
+              "id": "GDC2008Dille",
+              "title": "GDC 2008: Flint Dille - \"The Blur – Creating in the Eye of the Storm\"",
+              "hint": false
+            },
+            {
+              "id": "turner_video_3988",
+              "title": "The Eye",
+              "hint": false
+            },
+            {
+              "id": "turner_video_101456",
+              "title": "The Eye",
+              "hint": false
+            },
+            {
+              "id": "glaz.BD.AVC.chopper887",
+              "title": "Глаз - The Eye (2008)",
+              "hint": true
+            },
+            {
+              "id": "youtube-ADZrPoQgaeg",
+              "title": "The Eye of the Retoucher",
+              "hint": false
+            },
+            {
+              "id": "funny_or_die_video_6c02732bb4",
+              "title": "Funny or Die Video 6c02732bb4: The Eye 1.5",
+              "hint": false
+            }
+          ]
+        }
+      ],
+      "metadata": [
+        {
+          "id": "the-eye-goz-2008-1080p.-blu-ray.x-265.tr-en",
+          "names": [
+            "the eye goz"
+          ],
+          "binding": {
+            "actual": "the eye goz 2008 1080p blu ray x 265 tr en",
+            "name": "the eye goz",
+            "suffix": "2008 1080p blu ray x 265 tr en",
+            "release": true,
+            "titleYear": true,
+            "exact": false,
+            "localized": true
+          }
+        }
+      ]
+    }
+  ],
+  "regression": {
+    "evidence": "compatibility/coverage-183.json",
+    "existing4kPreserved": true,
+    "nativeBudgetsIncreased": false,
+    "allFourScraperIdsPreserved": true,
+    "onlinePathsRemoved": false
+  },
+  "sourceResearch": [
+    {
+      "source": "4KHDHub",
+      "result": "Exact GoT episode and6 HD/4K releases found, but ready terminal pages had no usable published Pixeldrain; one newly published gpdl host had TLS packet error. No actual new4K file."
+    },
+    {
+      "source": "MoviesDrive TV",
+      "result": "GoT/Breaking Bad posts had conflicting2023 metadata and noIMDb. No series guessing or integration."
+    },
+    {
+      "source": "HDHub4u",
+      "result": "Current public search endpoint returned Cloudflare Attention Required, not JSON. No challenge solved."
+    },
+    {
+      "source": "DiziGom",
+      "result": "Correct public search and exact Fleabag episode, but same pilavyer HLS family as DiziBal. No new real MP4 verified; duplicate adapter not added."
+    },
+    {
+      "source": "HDFilmCehennemi",
+      "result": "Own anonymous nonce search returned exact Matrix IMDb/year. Player URL encrypted with a fixed secret used by community code; secret/decrypt route not copied. No verified video file."
+    },
+    {
+      "source": "Archive4K/TR",
+      "result": "General TR sample search produced useful bilingual movies. Separate4K search only reviews; Marigold explicit2011 conflicted with TMDB2012 and was rejected. No year relaxation."
+    }
+  ],
+  "tests": {
+    "local": 269,
+    "compiledQuickJs": true,
+    "upstreamRelease": "0.6.5-beta",
+    "upstreamFiles": 23,
+    "upstreamDrift": 0
+  },
+  "allSourceCriteriaMet": false,
+  "physicalDevice": "not-run",
+  "fullPlayback": "not-run",
+  "fullDownload": "not-run",
+  "offline": "not-run",
+  "subtitleAudioSync": "not-run",
+  "font": "not-run"
+}
