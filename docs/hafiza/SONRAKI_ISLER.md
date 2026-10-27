@@ -2,7 +2,7 @@
 
 ## 1.8.4 öncelik
 
-1. Hazır: HDHubPixel film/bölüm yolu;15yeniMKV,6yeni4K,11gömülüTR. 276fixture/QuickJS;0.6.5-beta/23drift0. CI/Pages/yediHTTP200/SHA yayın kontrolünü tamamla.
+1. Hazır: HDHubPixel film/bölüm yolu;15yeniMKV,6yeni4K,11gömülüTR. 276fixture/QuickJS;0.6.5-beta/23drift0. Yayımlandı: kod 9172166ee08173ef444fe4b636a6934053dd2485, Test 40578064383, Pages 40578064386 başarılı; yedi public HTTP200/SHA eşit.
 2. YeniTRdub0/anime0; film4KveTVkapsamıaçık. Flea3bölüm9yeni,Sev2yeni,3film4yeni; hertekrardatümkataloğunçalışacağıanlamınagelmez. Severanceküçükdosya/kalitesınıfıeksik. EskiDune7/Inception8/Hotel7/Death4 korunmuşörneklerdir.
 3. StrangerThings4Kgerçekfileama sourceposterkanonikTMDBilefarklı. AynıIDresmiimagesbağıaraştırılabilir;eşleşmeyiposteriuydurarakgevşetme. AnimeWorldchallenge/Ultime403/AniPub404/DiziWatchTLS/NakiosDNS/recoveryyanlışfilm yeniolayolmadan tekrarloopolmasın.
 4. FizikseliPhoneindirme/MKVadlandırma/offlineTR/EN/senkron/fontaçık. MasaüstüMPV1MiBbirkaresadeceparser/decoder/TRiziseçimkanıtı. EkPC/backend/accountkurma;nativekotalarınıartırma.
