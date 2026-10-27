@@ -20,3 +20,5 @@ Resmî release ve geliştirme dalındaki ilgili dosyaların SHA'ları `compatibi
 Kaynak kontrolleri sabit kanonik metadata referanslarıyla gerçek public HTTP/Range ve altyazı yanıtlarını sınar; telefonun TMDB API anahtarı bu yöntemle sınanmaz. Tam katalog veya her kalitede dosya başarısı iddiası değildir.
 
 [Yayın doğrulaması](../compatibility/github-publication.json) · [Önceki uyumluluk kayıtları](arsiv/UYUMLULUK_GECMISI.md).
+
+1.7.7 yayın kodu `fe0eed0d323268f186a3f17e85612de2e1bc18f4`: Windows/Linux [CI](https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40499840365) ve [Pages](https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40499840426) başarılı; yedi public varlık HTTP200 ve yerel SHA eşit.
