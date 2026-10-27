@@ -1,0 +1,684 @@
+{
+  "checkedAt": "2026-10-27T20:25:45.398Z",
+  "version": "1.8.4",
+  "baseline": "1.8.3",
+  "outcome": {
+    "improvedExistingAdapters": [
+      "4KHDHub / HubCloud"
+    ],
+    "newFiles": 15,
+    "exampleTitles": 5,
+    "episodeExamples": 4,
+    "movieExamples": 3,
+    "newTvFiles": 11,
+    "newMovieFiles": 4,
+    "new4kFiles": 6,
+    "newEmbeddedTurkishFiles": 11,
+    "newTurkishDubFiles": 0,
+    "newAnimeFiles": 0,
+    "allNewFilesHaveTurkishSubtitles": true,
+    "newBackend": 0,
+    "newAccount": 0,
+    "newFixedKey": 0,
+    "newPerTitleVideoPin": 0,
+    "newScraperIds": 0
+  },
+  "method": {
+    "source": "4KHDHub / Pixeldrain",
+    "entry": "Existing source page and public HubCloud terminal; only literal published Pixeldrain file link. No API key, account, remote code, challenge, rate-limit workaround or invented file URL.",
+    "identity": "Movies exact TMDB ID, canonical title and release year; TV exact canonical title/year and canonical TMDB poster path. Original release, HubCloud heading and public file metadata must normalize to the same file name. Exact S/E required; explicit conflicting years and packs rejected. TV filename may omit year only after independently bound series page.",
+    "file": "Public info must allow downloads, match ID/name/size/MIME and be unrestricted. Actual Range total/container/pixels/audio/duration required; duration within90–110% when canonical runtime is present. EN/TR or non-Hindi original audio is required; HI-only rejected.",
+    "extension": "Existing explicit allowExtensionlessMkv with expected size/container; no new native ABI. Returned MKV remains MKV; Nuvio may save .mp4, MPV sniffs content. No naming bridge call for opted-in verified candidates.",
+    "performance": "Same8s source discovery,12 release routes,2 resolvers,24s main logical budget,video3/sub4/EN1 native slots. Published Pixel info and existing FSL handling proceed independently. Ready file candidate does not wait for a legacy mirror callback. No physical cancellation or per-row Nuvio streaming claim.",
+    "subtitles": "11 actual MKVs have TR text subtitle tracks, including all6 new4K files. Existing external TR/EN alternatives are also queried. Embedded track presence/selection is not scene-sync or full offline proof; subtitleBestScore is max across languages."
+  },
+  "newFiles": [
+    {
+      "key": "fleabag-s1e1",
+      "tmdbId": 67070,
+      "type": "tv",
+      "season": 1,
+      "episode": 1,
+      "source": "4KHDHub / Pixeldrain",
+      "container": "mkv",
+      "bytes": 2917567002,
+      "filename": "Fleabag.S01E01.2160p.AMZN.WEB-DL.DDP5.1.HDR10+.H.265-4kHdHub.Com.mkv",
+      "sourceItemId": null,
+      "releaseYearBasis": null,
+      "mediaFilename": null,
+      "audioLanguages": [
+        "en-us"
+      ],
+      "subtitleBestScore": 74,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 3840,
+        "height": 1600
+      },
+      "quality": "3840x1600",
+      "qualityGrade": "2160p",
+      "turkishSubtitle": true,
+      "embeddedSubtitleLanguages": [
+        "en",
+        "tr"
+      ],
+      "externalTrackCount": 8,
+      "externalTurkishTracks": 4,
+      "actualDurationSeconds": 1611.92,
+      "hashAvailable": true
+    },
+    {
+      "key": "fleabag-s1e1",
+      "tmdbId": 67070,
+      "type": "tv",
+      "season": 1,
+      "episode": 1,
+      "source": "4KHDHub / Pixeldrain",
+      "container": "mkv",
+      "bytes": 3012099492,
+      "filename": "Fleabag.S01E01.2160p.AMZN.WEB-DL.DDP5.1.H.265-4kHdHub.Com.mkv",
+      "sourceItemId": null,
+      "releaseYearBasis": null,
+      "mediaFilename": null,
+      "audioLanguages": [
+        "en-us"
+      ],
+      "subtitleBestScore": 74,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 3840,
+        "height": 1600
+      },
+      "quality": "3840x1600",
+      "qualityGrade": "2160p",
+      "turkishSubtitle": true,
+      "embeddedSubtitleLanguages": [
+        "en",
+        "tr"
+      ],
+      "externalTrackCount": 8,
+      "externalTurkishTracks": 4,
+      "actualDurationSeconds": 1611.92,
+      "hashAvailable": true
+    },
+    {
+      "key": "fleabag-s1e1",
+      "tmdbId": 67070,
+      "type": "tv",
+      "season": 1,
+      "episode": 1,
+      "source": "4KHDHub / Pixeldrain",
+      "container": "mkv",
+      "bytes": 1617536917,
+      "filename": "Fleabag.S01E01.1080p.AMZN.WEB-DL.DDP5.1.H.264-4kHdHub.Com.mkv",
+      "sourceItemId": null,
+      "releaseYearBasis": null,
+      "mediaFilename": null,
+      "audioLanguages": [
+        "en-us"
+      ],
+      "subtitleBestScore": 78,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 1920,
+        "height": 800
+      },
+      "quality": "1920x800",
+      "qualityGrade": "1080p",
+      "turkishSubtitle": true,
+      "embeddedSubtitleLanguages": [
+        "en",
+        "tr"
+      ],
+      "externalTrackCount": 8,
+      "externalTurkishTracks": 4,
+      "actualDurationSeconds": 1611.92,
+      "hashAvailable": true
+    },
+    {
+      "key": "fleabag-s2e1",
+      "tmdbId": 67070,
+      "type": "tv",
+      "season": 2,
+      "episode": 1,
+      "source": "4KHDHub / Pixeldrain",
+      "container": "mkv",
+      "bytes": 2961981824,
+      "filename": "Fleabag.S02E01.2160p.AMZN.WEB-DL.DDP5.1.H.265-4kHdHub.Com.mkv",
+      "sourceItemId": null,
+      "releaseYearBasis": null,
+      "mediaFilename": null,
+      "audioLanguages": [
+        "en-us"
+      ],
+      "subtitleBestScore": 80,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 3840,
+        "height": 2160
+      },
+      "quality": "3840x2160",
+      "qualityGrade": "2160p",
+      "turkishSubtitle": true,
+      "embeddedSubtitleLanguages": [
+        "en",
+        "tr"
+      ],
+      "externalTrackCount": 8,
+      "externalTurkishTracks": 4,
+      "actualDurationSeconds": 1589.88,
+      "hashAvailable": true
+    },
+    {
+      "key": "fleabag-s2e1",
+      "tmdbId": 67070,
+      "type": "tv",
+      "season": 2,
+      "episode": 1,
+      "source": "4KHDHub / Pixeldrain",
+      "container": "mkv",
+      "bytes": 3892065930,
+      "filename": "Fleabag.S02E01.2160p.AMZN.WEB-DL.DDP5.1.HDR10+.H.265-4kHdHub.Com.mkv",
+      "sourceItemId": null,
+      "releaseYearBasis": null,
+      "mediaFilename": null,
+      "audioLanguages": [
+        "en-us"
+      ],
+      "subtitleBestScore": 80,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 3840,
+        "height": 2160
+      },
+      "quality": "3840x2160",
+      "qualityGrade": "2160p",
+      "turkishSubtitle": true,
+      "embeddedSubtitleLanguages": [
+        "en",
+        "tr"
+      ],
+      "externalTrackCount": 8,
+      "externalTurkishTracks": 4,
+      "actualDurationSeconds": 1589.88,
+      "hashAvailable": true
+    },
+    {
+      "key": "fleabag-s2e1",
+      "tmdbId": 67070,
+      "type": "tv",
+      "season": 2,
+      "episode": 1,
+      "source": "4KHDHub / Pixeldrain",
+      "container": "mkv",
+      "bytes": 1591801161,
+      "filename": "Fleabag.S02E01.1080p.AMZN.WEB-DL.DDP5.1.H.264-4kHdHub.Com.mkv",
+      "sourceItemId": null,
+      "releaseYearBasis": null,
+      "mediaFilename": null,
+      "audioLanguages": [
+        "en-us"
+      ],
+      "subtitleBestScore": 78,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 1920,
+        "height": 1080
+      },
+      "quality": "1920x1080",
+      "qualityGrade": "1080p",
+      "turkishSubtitle": true,
+      "embeddedSubtitleLanguages": [
+        "en",
+        "tr"
+      ],
+      "externalTrackCount": 8,
+      "externalTurkishTracks": 4,
+      "actualDurationSeconds": 1589.88,
+      "hashAvailable": true
+    },
+    {
+      "key": "fleabag-s1e2",
+      "tmdbId": 67070,
+      "type": "tv",
+      "season": 1,
+      "episode": 2,
+      "source": "4KHDHub / Pixeldrain",
+      "container": "mkv",
+      "bytes": 1689043370,
+      "filename": "Fleabag.S01E02.1080p.AMZN.WEB-DL.DDP5.1.H.264-4kHdHub.Com.mkv",
+      "sourceItemId": null,
+      "releaseYearBasis": null,
+      "mediaFilename": null,
+      "audioLanguages": [
+        "en-us"
+      ],
+      "subtitleBestScore": 78,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 1920,
+        "height": 800
+      },
+      "quality": "1920x800",
+      "qualityGrade": "1080p",
+      "turkishSubtitle": true,
+      "embeddedSubtitleLanguages": [
+        "en",
+        "tr"
+      ],
+      "externalTrackCount": 8,
+      "externalTurkishTracks": 4,
+      "actualDurationSeconds": 1628.32,
+      "hashAvailable": true
+    },
+    {
+      "key": "fleabag-s1e2",
+      "tmdbId": 67070,
+      "type": "tv",
+      "season": 1,
+      "episode": 2,
+      "source": "4KHDHub / Pixeldrain",
+      "container": "mkv",
+      "bytes": 2953831207,
+      "filename": "Fleabag.S01E02.2160p.AMZN.WEB-DL.DDP5.1.HDR10+.H.265-4kHdHub.Com.mkv",
+      "sourceItemId": null,
+      "releaseYearBasis": null,
+      "mediaFilename": null,
+      "audioLanguages": [
+        "en-us"
+      ],
+      "subtitleBestScore": 74,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 3840,
+        "height": 1600
+      },
+      "quality": "3840x1600",
+      "qualityGrade": "2160p",
+      "turkishSubtitle": true,
+      "embeddedSubtitleLanguages": [
+        "en",
+        "tr"
+      ],
+      "externalTrackCount": 8,
+      "externalTurkishTracks": 4,
+      "actualDurationSeconds": 1628.32,
+      "hashAvailable": true
+    },
+    {
+      "key": "fleabag-s1e2",
+      "tmdbId": 67070,
+      "type": "tv",
+      "season": 1,
+      "episode": 2,
+      "source": "4KHDHub / Pixeldrain",
+      "container": "mkv",
+      "bytes": 3052809460,
+      "filename": "Fleabag.S01E02.2160p.AMZN.WEB-DL.DDP5.1.H.265-4kHdHub.Com.mkv",
+      "sourceItemId": null,
+      "releaseYearBasis": null,
+      "mediaFilename": null,
+      "audioLanguages": [
+        "en-us"
+      ],
+      "subtitleBestScore": 74,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 3840,
+        "height": 1600
+      },
+      "quality": "3840x1600",
+      "qualityGrade": "2160p",
+      "turkishSubtitle": true,
+      "embeddedSubtitleLanguages": [
+        "en",
+        "tr"
+      ],
+      "externalTrackCount": 8,
+      "externalTurkishTracks": 4,
+      "actualDurationSeconds": 1628.32,
+      "hashAvailable": true
+    },
+    {
+      "key": "severance-s1e1",
+      "tmdbId": 95396,
+      "type": "tv",
+      "season": 1,
+      "episode": 1,
+      "source": "4KHDHub / Pixeldrain",
+      "container": "mkv",
+      "bytes": 2019800502,
+      "filename": "Severance 2022 S01E01 1080p DS4K ATVP Webrip DV HDR10+ DDP5.1 x265 - Vialle.mkv",
+      "sourceItemId": null,
+      "releaseYearBasis": null,
+      "mediaFilename": null,
+      "audioLanguages": [
+        "en"
+      ],
+      "subtitleBestScore": 78,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 1920,
+        "height": 804
+      },
+      "quality": "1920x804",
+      "qualityGrade": "1080p",
+      "turkishSubtitle": true,
+      "embeddedSubtitleLanguages": [
+        "en",
+        "tr"
+      ],
+      "externalTrackCount": 3,
+      "externalTurkishTracks": 0,
+      "actualDurationSeconds": 3434.752,
+      "hashAvailable": true
+    },
+    {
+      "key": "severance-s1e1",
+      "tmdbId": 95396,
+      "type": "tv",
+      "season": 1,
+      "episode": 1,
+      "source": "4KHDHub / Pixeldrain",
+      "container": "mkv",
+      "bytes": 2359478833,
+      "filename": "Severance 2022 S01E01 1080p BluRay x265 SDR DDP 5.1 English - DarQ HONE.mkv",
+      "sourceItemId": null,
+      "releaseYearBasis": null,
+      "mediaFilename": null,
+      "audioLanguages": [
+        "en"
+      ],
+      "subtitleBestScore": 68,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 1920,
+        "height": 808
+      },
+      "quality": "1920x808",
+      "qualityGrade": "1080p",
+      "turkishSubtitle": true,
+      "embeddedSubtitleLanguages": [
+        "en",
+        "tr"
+      ],
+      "externalTrackCount": 2,
+      "externalTurkishTracks": 0,
+      "actualDurationSeconds": 3436.736,
+      "hashAvailable": true
+    },
+    {
+      "key": "john-wick",
+      "tmdbId": 245891,
+      "type": "movie",
+      "source": "4KHDHub / Pixeldrain",
+      "container": "mkv",
+      "bytes": 4046097929,
+      "filename": "John Wick 2014 1080p BluRay 10bit HEVC [Hindi DDP 2.0 + English AAC 5.1] x265 Tigole-4kHdHub.mkv",
+      "sourceItemId": null,
+      "releaseYearBasis": null,
+      "mediaFilename": null,
+      "audioLanguages": [
+        "hi",
+        "en"
+      ],
+      "subtitleBestScore": 74,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 1920,
+        "height": 800
+      },
+      "quality": "1920x800",
+      "qualityGrade": "1080p",
+      "turkishSubtitle": true,
+      "embeddedSubtitleLanguages": [
+        "en"
+      ],
+      "externalTrackCount": 8,
+      "externalTurkishTracks": 4,
+      "actualDurationSeconds": 6073.001,
+      "hashAvailable": true
+    },
+    {
+      "key": "john-wick",
+      "tmdbId": 245891,
+      "type": "movie",
+      "source": "4KHDHub / Pixeldrain",
+      "container": "mkv",
+      "bytes": 8257975635,
+      "filename": "John Wick 2014 1080p BluRay [Hindi DDP 2.0 + English DDP 5.1] x264 Hallowed-4kHdHub.mkv",
+      "sourceItemId": null,
+      "releaseYearBasis": null,
+      "mediaFilename": null,
+      "audioLanguages": [
+        "hi",
+        "en"
+      ],
+      "subtitleBestScore": 76,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 1920,
+        "height": 800
+      },
+      "quality": "1920x800",
+      "qualityGrade": "1080p",
+      "turkishSubtitle": true,
+      "embeddedSubtitleLanguages": [
+        "en"
+      ],
+      "externalTrackCount": 8,
+      "externalTurkishTracks": 4,
+      "actualDurationSeconds": 6071.422,
+      "hashAvailable": true
+    },
+    {
+      "key": "dark-knight",
+      "tmdbId": 155,
+      "type": "movie",
+      "source": "4KHDHub / Pixeldrain",
+      "container": "mkv",
+      "bytes": 6444624906,
+      "filename": "The Dark Knight 2008 IMAX 1080p BluRay 10bit HEVC [Hindi DDP 2.0 + English DDP 5.1] x265 Chivaman-LUMiX 4KHDHub.com.mkv",
+      "sourceItemId": null,
+      "releaseYearBasis": null,
+      "mediaFilename": null,
+      "audioLanguages": [
+        "hi",
+        "en"
+      ],
+      "subtitleBestScore": 69,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 1920,
+        "height": 1080
+      },
+      "quality": "1920x1080",
+      "qualityGrade": "1080p",
+      "turkishSubtitle": true,
+      "embeddedSubtitleLanguages": [
+        "en"
+      ],
+      "externalTrackCount": 4,
+      "externalTurkishTracks": 4,
+      "actualDurationSeconds": 9133.296,
+      "hashAvailable": true
+    },
+    {
+      "key": "oppenheimer",
+      "tmdbId": 872585,
+      "type": "movie",
+      "source": "4KHDHub / Pixeldrain",
+      "container": "mkv",
+      "bytes": 2723373896,
+      "filename": "Oppenheimer 2023 IMAX 1080p 10bit BluRay HEVC x265 [Hindi NF DDP 5.1 448kbps + English AAC 5.1] ESub RAGA-PSA-4kHdHub.mkv",
+      "sourceItemId": null,
+      "releaseYearBasis": null,
+      "mediaFilename": null,
+      "audioLanguages": [
+        "hi",
+        "en"
+      ],
+      "subtitleBestScore": 74,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 1920,
+        "height": 1080
+      },
+      "quality": "1920x1080",
+      "qualityGrade": "1080p",
+      "turkishSubtitle": true,
+      "embeddedSubtitleLanguages": [
+        "en"
+      ],
+      "externalTrackCount": 7,
+      "externalTurkishTracks": 4,
+      "actualDurationSeconds": 10825.28,
+      "hashAvailable": true
+    }
+  ],
+  "metadataReferences": [
+    {
+      "id": 872585,
+      "url": "https://www.themoviedb.org/movie/872585",
+      "status": 200,
+      "title": "Oppenheimer",
+      "duration": "PT3H1M",
+      "releaseDate": "2023-07-19"
+    },
+    {
+      "id": 19995,
+      "url": "https://www.themoviedb.org/movie/19995",
+      "status": 200,
+      "title": "Avatar",
+      "duration": "PT2H42M",
+      "releaseDate": "2009-12-16"
+    },
+    {
+      "id": 155,
+      "url": "https://www.themoviedb.org/movie/155",
+      "status": 200,
+      "title": "The Dark Knight",
+      "duration": "PT2H32M",
+      "releaseDate": "2008-07-16"
+    },
+    {
+      "id": 245891,
+      "url": "https://www.themoviedb.org/movie/245891",
+      "status": 200,
+      "title": "John Wick",
+      "duration": "PT1H41M",
+      "releaseDate": "2014-10-16"
+    }
+  ],
+  "desktopSample": {
+    "checkedAt": "2026-10-27T20:22:48.656Z",
+    "player": "official mpv CI v0.41.0-dev-g82667e3cb x86_64 Windows, previously validated archive",
+    "source": "4KHDHub / Pixeldrain",
+    "title": "Fleabag S01E01",
+    "actualBytes": 2917567002,
+    "actualDimensions": {
+      "width": 3840,
+      "height": 1600
+    },
+    "sample": {
+      "bytes": 1048576,
+      "sha256": "5cda37be755785e5d99885ed95c9f5f19b5089d5e0b4bc8d47e2c8a30c4f04a3",
+      "actualContainer": "mkv",
+      "savedExtension": "mp4",
+      "rangeStatus": 206
+    },
+    "args": [
+      "--no-config",
+      "--vo=null",
+      "--ao=null",
+      "--alang=en",
+      "--slang=tr",
+      "--frames=1",
+      "--untimed",
+      "--term-playing-msg=FORMAT=${file-format} VIDEO=${video-params/w}x${video-params/h} SID=${sid} SUB_LANG=${current-tracks/sub/lang}",
+      ".cache/matroska4k184.mp4"
+    ],
+    "exitCode": 0,
+    "output": "[mkv] mkv metadata beyond end of file - incomplete file?\r\n● Video  --vid=1                   (hevc 3840x1600 25 fps) [default original]\r\n● Audio  --aid=1  --alang=en-US    'English' (eac3 6ch 48000 Hz) [default original]\r\n○ Subs   --sid=1  --slang=en-US    'English' (subrip)\r\n○ Subs   --sid=2  --slang=en-US    'English (SDH)' (subrip) [hearing-impaired original]\r\n○ Subs   --sid=3  --slang=ar-EG    'Arabic' (subrip)\r\n○ Subs   --sid=4  --slang=cs-CZ    'Czech' (subrip)\r\n○ Subs   --sid=5  --slang=da-DK    'Danish' (subrip)\r\n○ Subs   --sid=6  --slang=de-DE    'German' (subrip)\r\n○ Subs   --sid=7  --slang=el-GR    'Modern Greek (1453-)' (subrip)\r\n○ Subs   --sid=8  --slang=es-419   'Spanish' (subrip)\r\n○ Subs   --sid=9  --slang=es-ES    'Spanish' (subrip)\r\n○ Subs   --sid=10 --slang=fi-FI    'Finnish' (subrip)\r\n○ Subs   --sid=11 --slang=fil-PH   'Filipino' (subrip)\r\n○ Subs   --sid=12 --slang=fr-FR    'French' (subrip)\r\n○ Subs   --sid=13 --slang=he-IL    'Hebrew' (subrip)\r\n○ Subs   --sid=14 --slang=hi-IN    'Hindi' (subrip)\r\n○ Subs   --sid=15 --slang=hu-HU    'Hungarian' (subrip)\r\n○ Subs   --sid=16 --slang=id-ID    'Indonesian' (subrip)\r\n○ Subs   --sid=17 --slang=it-IT    'Italian' (subrip)\r\n○ Subs   --sid=18 --slang=ja-JP    'Japanese' (subrip)\r\n○ Subs   --sid=19 --slang=ko-KR    'Korean' (subrip)\r\n○ Subs   --sid=20 --slang=ms-MY    'Malay (macrolanguage)' (subrip)\r\n○ Subs   --sid=21 --slang=nb-NO    'Norwegian Bokmål' (subrip)\r\n○ Subs   --sid=22 --slang=nl-NL    'Dutch' (subrip)\r\n○ Subs   --sid=23 --slang=pl-PL    'Polish' (subrip)\r\n○ Subs   --sid=24 --slang=pt-BR    'Portuguese' (subrip)\r\n○ Subs   --sid=25 --slang=pt-PT    'Portuguese' (subrip)\r\n○ Subs   --sid=26 --slang=ro-RO    'Romanian' (subrip)\r\n○ Subs   --sid=27 --slang=ru-RU    'Russian' (subrip)\r\n○ Subs   --sid=28 --slang=sv-SE    'Swedish' (subrip)\r\n○ Subs   --sid=29 --slang=ta-IN    'Tamil' (subrip)\r\n○ Subs   --sid=30 --slang=te-IN    'Telugu' (subrip)\r\n○ Subs   --sid=31 --slang=th-TH    'Thai' (subrip)\r\n● Subs   --sid=32 --slang=tr-TR    'Turkish' (subrip)\r\n○ Subs   --sid=33 --slang=vi-VN    'Vietnamese' (subrip)\r\n○ Subs   --sid=34 --slang=zh-Hans  'Simplified, Chinese' (subrip)\r\n○ Subs   --sid=35 --slang=zh-Hant  'Traditional, Chinese' (subrip)\r\nVO: [null] 3840x1600 yuv420p10\r\nAO: [null] 48000Hz 5.1(side) 6ch floatp\r\nFORMAT=mkv VIDEO=3840x1600 SID=(32) 'Turkish' (tr-TR subrip [Advanced Sub Station Alpha]) SUB_LANG=tr-TR\r\nExiting... (End of file)\r\n",
+    "physicalNuvio": "not-run",
+    "fullEpisode": "not-run",
+    "offlineSubtitles": "not-run",
+    "sceneSync": "not-run",
+    "priorAttempt": {
+      "requestedBytes": 4194304,
+      "result": "fetch/body timeout at12s; player not run",
+      "recovery": "One1MiB Range succeeded; actual one-frame decode andTR selection reported separately"
+    },
+    "partialFileWarning": "MPV incomplete-file warning is expected for the deliberately truncated sample; no full-file conformance claim"
+  },
+  "regression": {
+    "evidence": "compatibility/coverage-184.json",
+    "existingInception4kPreserved": true,
+    "oldTurkishDubArchivePreserved": true,
+    "oldAnimePreserved": true,
+    "onlinePathsRemoved": false
+  },
+  "research": [
+    {
+      "source": "AnimeWorld",
+      "result": "Public canonical DeathNote page200 and exact episode link, but source API returned Cloudflare challenge. No solver or adapter added."
+    },
+    {
+      "source": "AniPub",
+      "result": "Referenced public search route404; not integrated."
+    },
+    {
+      "source": "Anime-Ultime",
+      "result": "Public search403; not integrated."
+    },
+    {
+      "source": "DiziWatch",
+      "result": "Self-signed TLS certificate on public home/search. TLS checks left enabled; no adapter."
+    },
+    {
+      "source": "Nakios",
+      "result": "Current referenced site DNS ENOTFOUND; no adapter."
+    },
+    {
+      "source": "MoviesDrive legacy recovery",
+      "result": "Oppenheimer public recovery query returned a different2022 film. Not accepted, no title/year relaxation. Other original routes remain intact."
+    },
+    {
+      "source": "Stranger Things HDHub",
+      "result": "Two actual files incl3840x2160/5.27GB measured, but source poster differs from current independently fetched canonical TMDB poster. Not counted as adapter/pipeline success; no fabricated poster reference or identity relaxation."
+    },
+    {
+      "source": "Avatar",
+      "result": "Existing files returned, no new Pixel file. Gap retained."
+    }
+  ],
+  "tests": {
+    "local": 276,
+    "compiledQuickJs": true,
+    "upstreamRelease": "0.6.5-beta",
+    "upstreamFiles": 23,
+    "sourceDrift": 0
+  },
+  "allSourceCriteriaMet": false,
+  "physicalDevice": "not-run",
+  "fullPlayback": "not-run",
+  "fullDownload": "not-run",
+  "offline": "not-run",
+  "sceneSync": "not-run",
+  "font": "not-run"
+}

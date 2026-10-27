@@ -1,5 +1,13 @@
 # Tasarım kararları
 
+## 1.8.4 — yayımlanmış ek dosya sunucusu
+
+- HDHub Pixel'i aynı genel film/bölüm taramasında değerlendir; literal yayımlanmış URL ve aynıfiletuple gerekli. BaşkaTVposteri/yıl/S/E veya dosyaadı için korumaları gevşetme. Yeniayar/scraper/hesap/backend/per-titlepin yok.
+- OrtakPixel kontrolleri MoviesDrive'ın eski kimlik ve HI-only reddini korur. Kısıt/403/429 sonrası başkaPixeldrainalanadı/hesapyolu deneme. Gerçek boyut/piksel/süre/ses gerekir; aynı bütçe ve nativekotaları korunur.
+- EskiFSL/bridgeişini yeniPixelinfoadayına bariyer yapma; ayrıca yeniPixel için backendçağrısı açma. Eklenti içinde erkenprobe, Nuvio'da satırsatırsonuçAPI'si değildir.
+- 15yeni dosya/6gerçek4K,11gömülüTR; bu6farklıkalite veya tümkatalog başarısı değildir. YeniTRdub/anime0. Masaüstü1kare/TRiziseçimi cihaz/tamindirme/offline/senkronkanıtı değildir. İlk4MiBtimeout ve sonra1MiBbaşarısını birlikte sakla.
+- StrangerThings'te ölçülmüş4Kfilevar diye farklıposteridentityengelini atlama veya validationposteri uydurma. Mevcutresmiposterdoğrulamasıbaşarısızsa dosya pipelinebaşarısına sayılmaz. Gerekirse gelecek turda aynıTMDBimagesAPI'si ile genel doğrulama araştırılır.
+
 ## 1.8.3 — kaynak kapsamı için genel ad/yıl bağı
 
 - Türkçe/özgün iki adın bir arada bulunduğu sürümleri kaçırma. Resmi TMDB adları veya açık iki parçalı dosya grameri gerekir; serbest öneki resmi alias diye kaydetme. Aynı özgün ad/yıl ve gerçek %90–110 süre zorunlu. Çelişen metadata kimliği/yılı gevşetilmez; üretim başlık/video pini eklenmez.

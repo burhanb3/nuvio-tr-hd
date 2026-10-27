@@ -10,20 +10,150 @@
   },
   "titles": [
     {
+      "key": "fleabag-s1e2",
+      "season": 1,
+      "episode": 2,
+      "tmdb": {
+        "id": 67070,
+        "original_name": "Fleabag",
+        "first_air_date": "2016-07-21",
+        "external_ids": {
+          "imdb_id": "tt5687612"
+        },
+        "episode_run_time": [
+          26
+        ],
+        "poster_path": "/27vEYsRKa3eAniwmoccOoluEXQ1.jpg"
+      },
+      "referenceSources": [
+        "https://www.themoviedb.org/tv/67070"
+      ],
+      "referenceMetadataNote": "Fixed canonical validation reference; public TMDB title/year checked, phone metadata API credentials not tested."
+    },
+    {
+      "key": "severance-s1e1",
+      "season": 1,
+      "episode": 1,
+      "tmdb": {
+        "id": 95396,
+        "original_name": "Severance",
+        "first_air_date": "2022-02-17",
+        "external_ids": {
+          "imdb_id": "tt11280740"
+        },
+        "episode_run_time": [
+          57
+        ],
+        "original_language": "en",
+        "poster_path": "/pPHpeI2X1qEd1CS1SeyrdhZ4qnT.jpg"
+      },
+      "referenceSources": [
+        "https://www.themoviedb.org/tv/95396"
+      ],
+      "referenceMetadataNote": "Fixed canonical validation reference; public TMDB title/year checked, phone metadata API credentials not tested."
+    },
+    {
+      "key": "john-wick",
+      "tmdb": {
+        "id": 245891,
+        "original_title": "John Wick",
+        "release_date": "2014-10-16",
+        "imdb_id": "tt2911666",
+        "runtime": 101,
+        "original_language": "en"
+      },
+      "referenceSources": [
+        "https://www.themoviedb.org/movie/245891"
+      ],
+      "referenceMetadataNote": "Fixed canonical validation reference; public TMDB title/year checked, phone metadata API credentials not tested."
+    },
+    {
+      "key": "dark-knight",
+      "tmdb": {
+        "id": 155,
+        "original_title": "The Dark Knight",
+        "release_date": "2008-07-16",
+        "imdb_id": "tt0468569",
+        "runtime": 152,
+        "original_language": "en"
+      },
+      "referenceSources": [
+        "https://www.themoviedb.org/movie/155"
+      ],
+      "referenceMetadataNote": "Fixed canonical validation reference; public TMDB title/year checked, phone metadata API credentials not tested."
+    },
+    {
+      "key": "avatar",
+      "tmdb": {
+        "id": 19995,
+        "original_title": "Avatar",
+        "release_date": "2009-12-16",
+        "imdb_id": "tt0499549",
+        "runtime": 162,
+        "original_language": "en"
+      },
+      "referenceSources": [
+        "https://www.themoviedb.org/movie/19995"
+      ],
+      "referenceMetadataNote": "Fixed canonical validation reference; public TMDB title/year checked, phone metadata API credentials not tested."
+    },
+    {
+      "key": "oppenheimer",
+      "tmdb": {
+        "id": 872585,
+        "original_title": "Oppenheimer",
+        "release_date": "2023-07-19",
+        "imdb_id": "tt15398776",
+        "runtime": 181,
+        "original_language": "en"
+      },
+      "referenceSources": [
+        "https://www.themoviedb.org/movie/872585"
+      ],
+      "referenceMetadataNote": "Fixed canonical validation reference; public TMDB title/year checked, phone metadata API credentials not tested."
+    },
+    {
       "key": "crow-1994",
-      "tmdb": { "id": 9495, "original_title": "The Crow", "release_date": "1994-05-11", "imdb_id": "tt0109506", "runtime": 102, "original_language": "en" },
-      "referenceSources": ["https://www.themoviedb.org/movie/9495-the-crow"]
+      "tmdb": {
+        "id": 9495,
+        "original_title": "The Crow",
+        "release_date": "1994-05-11",
+        "imdb_id": "tt0109506",
+        "runtime": 102,
+        "original_language": "en"
+      },
+      "referenceSources": [
+        "https://www.themoviedb.org/movie/9495-the-crow"
+      ]
     },
     {
       "key": "eye-2008",
-      "tmdb": { "id": 9030, "original_title": "The Eye", "release_date": "2008-04-24", "imdb_id": "tt0406759", "runtime": 98, "original_language": "en" },
-      "referenceSources": ["https://www.themoviedb.org/movie/9030-the-eye"],
+      "tmdb": {
+        "id": 9030,
+        "original_title": "The Eye",
+        "release_date": "2008-04-24",
+        "imdb_id": "tt0406759",
+        "runtime": 98,
+        "original_language": "en"
+      },
+      "referenceSources": [
+        "https://www.themoviedb.org/movie/9030-the-eye"
+      ],
       "referenceMetadataNote": "Public TMDB page displayed date; source matching uses the year, not this fixture's day."
     },
     {
       "key": "hotel-rwanda",
-      "tmdb": { "id": 205, "original_title": "Hotel Rwanda", "release_date": "2004-12-22", "imdb_id": "tt0395169", "runtime": 121, "original_language": "en" },
-      "referenceSources": ["https://www.themoviedb.org/movie/205-hotel-rwanda"]
+      "tmdb": {
+        "id": 205,
+        "original_title": "Hotel Rwanda",
+        "release_date": "2004-12-22",
+        "imdb_id": "tt0395169",
+        "runtime": 121,
+        "original_language": "en"
+      },
+      "referenceSources": [
+        "https://www.themoviedb.org/movie/205-hotel-rwanda"
+      ]
     },
     {
       "key": "bridge-remagen",
@@ -35,7 +165,12 @@
         "runtime": 117,
         "original_language": "en"
       },
-      "translations": [{ "language": "tr", "title": "Remagen Köprüsü" }],
+      "translations": [
+        {
+          "language": "tr",
+          "title": "Remagen Köprüsü"
+        }
+      ],
       "referenceSources": [
         "https://www.themoviedb.org/movie/15873-the-bridge-at-remagen",
         "https://www.themoviedb.org/movie/15873-the-bridge-at-remagen/translations"

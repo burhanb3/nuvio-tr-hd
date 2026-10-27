@@ -1,8 +1,9 @@
 import{createRequire}from'node:module';
 const{qualityLabel}=createRequire(import.meta.url)('../src/util.cjs');
+const{embeddedSubtitleLanguages}=createRequire(import.meta.url)('../src/subtitles.cjs');
 export function summarizeCoverage(pairs, acceptance, type) {
   const files = pairs.filter(p => p.video.downloadable && ['mp4','mkv'].includes(p.video.container));
-  const withTr = p => p.subtitles?.some(s => s.language === 'tr') || p.video.embeddedTurkish === true || p.candidate.embeddedTurkish === true;
+  const withTr = p => p.subtitles?.some(s => s.language === 'tr') || embeddedSubtitleLanguages(p.video,p.candidate).includes('tr');
   const foreignBurned = p => !!p.candidate.burnedSubtitleLanguage && p.candidate.burnedSubtitleLanguage !== 'tr';
   const cleanTr = p => withTr(p) && !foreignBurned(p);
   const quality = p => p.video.dimensions ? `${p.video.dimensions.width}x${p.video.dimensions.height}` : null;
@@ -43,6 +44,6 @@ export function summarizeCoverage(pairs, acceptance, type) {
       mediaFilename:p.candidate.mediaFilename||null,
       audioLanguages:p.video.audioLanguages||[],subtitleBestScore:Math.max(0,...(p.subtitles||[]).map(s=>s._score||0)),
       burnedSubtitleLanguage:p.candidate.burnedSubtitleLanguage||null,knownForeignBurnedSubtitles:foreignBurned(p),
-      dimensions:p.video.dimensions||null,quality:quality(p)||'unknown',qualityGrade:qualityGrade(p),turkishSubtitle:withTr(p),externalTrackCount:p.subtitles?.length||0,externalTurkishTracks:(p.subtitles||[]).filter(s=>s.language==='tr').length,
+      dimensions:p.video.dimensions||null,quality:quality(p)||'unknown',qualityGrade:qualityGrade(p),turkishSubtitle:withTr(p),embeddedSubtitleLanguages:embeddedSubtitleLanguages(p.video,p.candidate),externalTrackCount:p.subtitles?.length||0,externalTurkishTracks:(p.subtitles||[]).filter(s=>s.language==='tr').length,
       actualDurationSeconds:p.video.durationSource==='tmdb'?null:p.video.duration||null,hashAvailable:!!p.video.videoHash})) };
 }

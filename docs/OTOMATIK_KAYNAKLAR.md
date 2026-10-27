@@ -5,7 +5,7 @@
 | Sağlayıcı | Alan | Sonuç türü |
 | --- | --- | --- |
 | Internet Archive | Film/dizi | MP4/MKV; kimlik ve dosya kontrolüne bağlı |
-| 4KHDHub / HubCloud | Film/dizi | MP4/MKV; public dosya zinciri |
+| 4KHDHub / HubCloud | Film/dizi | FSL/Pixeldrain MP4/MKV; uygun kayıtlarda 1080p/4K |
 | Goojara | Film/dizi | Küçük MP4 alternatifleri; bölüm ve gerçek dosya kontrolü |
 | HDRezka | Film/dizi | Ücretsiz MP4 kaliteleri; özgün ses, IMDb ve bölüm kontrolü |
 | MoviesDrive / Pixeldrain | Film ve anime filmleri | Ek MP4/MKV; gerçek boyut, piksel, süre ve ses kontrolü |
@@ -31,6 +31,8 @@ Liste çalışan bütün katalog garantisi değildir. Kaynağın bir bölümde �
 6. Aynı dosya aynaları birleştirilir; kullanıcı sırası ve gruplamasına göre sunulur.
 
 İndirme önceliği varsayılan açıktır. Küçük boyutlu HLS satırları, büyük indirilebilir dosyaları 20 sonuç sınırının dışına itmez. Dosyalar ve online yayınlar kendi içinde seçilen sırayla gösterilir; karışık sıralama için bu ayar kapatılabilir.
+
+4KHDHub, terminal sayfasında yayımlanan FSL ve Pixeldrain bağlantılarını ayrı değerlendirir. Filmde TMDB kimliği/ad/yıl; dizide kanonik ad/yıl/poster ve tam sezon/bölüm kontrol edilir. Dosya sunucusunun adı, boyutu ve formatı gerçek medya verisiyle karşılaştırılır; uygun ses ve süre aranır. Kaynakta gömülü TR/EN varsa dosyayla birlikte gelir; mevcut harici altyazı alternatifleri de sunulur. Yeni Pixeldrain yolu için adlandırma servisi veya hesap gerekmez. Eski ayna yavaşsa yeni dosyanın kontrolü onu beklemez; toplam arama bütçesi aynı kalır.
 
 Internet Archive, Türkçe ve özgün adı birlikte içeren film sürümlerini de arar. Ayrı yıl alanı yoksa kayıt başlığı ve dosya adında aynı özgün ad/yıl aranır; gerçek video süresi ayrıca denetlenir. Yerel adın farklı olması yanlış kimlik/yıl kabulüne yol açmaz. Küçük MP4 türevleri ve HD MKV asılları birlikte değerlendirilir; gerçek ses izleri okunamadığında dosya adındaki dil, doğrulanmış dublaj kanıtı sayılmaz. Bu yol genel film aramasını geliştirir; dizi kuralları değişmez.
 

@@ -635,7 +635,7 @@ var require_hosted = __commonJS({
       }).filter(Boolean);
     }
     async function registerDownloads(http, candidates, target) {
-      const direct = candidates.filter((c) => /\.(mkv|mp4)(?:$|[?#])/i.test(c.url) || /\.mp4$/i.test(c.filename || ""));
+      const direct = candidates.filter((c) => /\.(mkv|mp4)(?:$|[?#])/i.test(c.url) || /\.mp4$/i.test(c.filename || "") || c.allowExtensionlessMkv === true && c.expectedContainer === "mkv" && Number.isSafeInteger(c.expectedSize) && c.expectedSize > 0);
       const pending = candidates.filter((c) => !direct.includes(c)).slice(0, 3);
       if (!pending.length) return direct;
       const data = await http.json(SERVICE_ORIGIN + "/api/files", {
@@ -1215,14 +1215,52 @@ var require_vixsrc = __commonJS({
   }
 });
 
+// src/providers/pixeldrain.cjs
+var require_pixeldrain = __commonJS({
+  "src/providers/pixeldrain.cjs"(exports2, module2) {
+    "use strict";
+    var { safeUrl, normalizeTitle } = require_util();
+    var { anchors } = require_directory();
+    function pixelPage(html) {
+      const literal = String(html).match(/\bvar\s+pxl\s*=\s*["']([^"']{1,300})["']/)?.[1];
+      const links = literal ? [literal] : anchors(String(html)).filter((a) => /Pixel(?:drain|Server)/i.test(a.text)).map((a) => a.href);
+      return links.map((s) => safeUrl(s)).find((url) => url && /^https:\/\/pixeldrain\.(?:com|dev|net)\/u\/[A-Za-z0-9]{8,12}$/.test(url)) || null;
+    }
+    function publicFile(data, page, hubName, target, { matchesName, normalizeName = normalizeTitle, source }) {
+      if (typeof matchesName !== "function" || !/^https:\/\/pixeldrain\.(?:com|dev|net)\/u\/[A-Za-z0-9]{8,12}$/.test(page || "")) return null;
+      const u = new URL(page), id = u.pathname.split("/").pop();
+      const container = /^video\/(?:x-)?matroska$/.test(data?.mime_type || "") ? "mkv" : data?.mime_type === "video/mp4" ? "mp4" : null;
+      if (!data || data.success !== true || data.id !== id || data.can_download !== true || data.availability || data.abuse_type || !Number.isSafeInteger(data.size) || data.size < 1e6 || !container || !matchesName(data.name, target) || normalizeName(data.name) !== normalizeName(hubName)) return null;
+      return {
+        url: u.origin + "/api/file/" + id,
+        filename: data.name,
+        headers: {},
+        subtitles: [],
+        source,
+        identity: target,
+        identityConfidence: 95,
+        expectedSize: data.size,
+        expectedContainer: container,
+        allowExtensionlessMkv: container === "mkv",
+        requireAudioAny: [.../* @__PURE__ */ new Set(["tr", "en", .../^[a-z]{2}$/.test(target.originalLanguage || "") && target.originalLanguage !== "hi" ? [target.originalLanguage] : []])],
+        requireVideoDimensions: true,
+        requireDuration: true,
+        durationTolerance: 0.1
+      };
+    }
+    module2.exports = { pixelPage, publicFile };
+  }
+});
+
 // src/providers/hdhub.cjs
 var require_hdhub = __commonJS({
   "src/providers/hdhub.cjs"(exports2, module2) {
     "use strict";
     var { safeUrl, normalizeTitle, mapLimit } = require_util();
-    var { anchors } = require_directory();
+    var { anchors, decodeEntities, filenameIdentity } = require_directory();
     var { decodeUtf8 } = require_subtitles();
     var { matchesEpisode } = require_matching();
+    var { pixelPage, publicFile } = require_pixeldrain();
     var HDHUB_ORIGIN = "https://4khdhub.one";
     function decode64(value) {
       if (typeof value !== "string" || value.length > 3e4) return null;
@@ -1299,7 +1337,15 @@ var require_hdhub = __commonJS({
       }
       return out;
     }
-    async function resolveRelease(http, entry, target, allowExtensionless) {
+    function pixelFilename(value, target) {
+      if (typeof value !== "string" || !/\.(mp4|mkv)$/i.test(value)) return false;
+      const name = normalizeTitle(value), title = normalizeTitle(target.originalTitle), suffix = name.startsWith(title + " ") ? name.slice(title.length + 1) : null;
+      if (!suffix || /\b(sample|trailer|fanedit|workprint|hdcam|camrip|hdtc|hdts|telesync)\b/.test(suffix)) return false;
+      const years = target.type === "movie" ? [target.year, ...target.releaseYears || []] : [target.year];
+      if ((suffix.match(/\b(?:19|20)\d{2}\b/g) || []).some((y) => !years.includes(Number(y)))) return false;
+      return target.type === "tv" ? matchesEpisode(value, target) : years.some((year) => filenameIdentity(value, { ...target, year }));
+    }
+    async function resolveRelease(http, entry, target, allowExtensionless, onCandidates) {
       const redirect = await http.text(entry.url);
       const hub = redirect && shortlinkTarget(redirect.text);
       if (!hub || http.expired()) return [];
@@ -1311,26 +1357,38 @@ var require_hdhub = __commonJS({
       if (!terminal || new URL(terminal).hostname !== "gamerxyt.com" || new URL(terminal).pathname !== "/hubcloud.php") return [];
       const result = await http.text(terminal);
       if (!result) return [];
-      return anchors(result.text).filter((a) => /FSL(?:v2)? Server|Download File\s*\[/i.test(a.text)).slice(0, 3).map((a) => {
+      const direct = anchors(result.text).filter((a) => /FSL(?:v2)? Server|Download File\s*\[/i.test(a.text)).slice(0, 3).map((a) => {
         const url = safeUrl(a.href.replace(/ /g, "%20"), result.url);
         if (!url) return null;
         const hostname = new URL(url).hostname;
         const r2 = hostname.endsWith(".r2.cloudflarestorage.com");
-        const publicFile = hostname.endsWith(".workers.dev") && /\.(mkv|mp4)(?:$|[?#])/i.test(url);
-        if (!r2 && !publicFile) return null;
+        const publicFile2 = hostname.endsWith(".workers.dev") && /\.(mkv|mp4)(?:$|[?#])/i.test(url);
+        if (!r2 && !publicFile2) return null;
         if (!allowExtensionless && !/\.(?:mkv|mp4)(?:$|[?#])/i.test(url) && !/\.mp4$/i.test(filename)) return null;
         return {
           url,
           filename,
           headers: { Referer: "https://gamerxyt.com/" },
           subtitles: [],
-          ...publicFile ? { getOnly: true } : {},
+          ...publicFile2 ? { getOnly: true } : {},
           subtitleBase: result.url,
           source: "4KHDHub / HubCloud",
           identity: target,
           identityConfidence: 95
         };
       }).filter(Boolean);
+      const pixel = pixelPage(result.text), extra = [];
+      const pixelWork = (async () => {
+        if (!pixel || http.expired() || !hubName || !pixelFilename(decodeEntities(hubName), target) || normalizeTitle(decodeEntities(hubName)) !== normalizeTitle(entry.filename)) return;
+        const u = new URL(pixel), data = await http.json(u.origin + "/api/file/" + u.pathname.split("/").pop() + "/info");
+        const file = publicFile(data, pixel, decodeEntities(hubName), target, { source: "4KHDHub / Pixeldrain", matchesName: pixelFilename });
+        if (file) {
+          extra.push(file);
+          if (onCandidates) await onCandidates([file]);
+        }
+      })();
+      await Promise.all([pixelWork, direct.length && onCandidates ? onCandidates(direct) : Promise.resolve()]);
+      return [...direct, ...extra];
     }
     async function scanHdHub(http, target, options = {}) {
       const search = await http.text(HDHUB_ORIGIN + "/?s=" + encodeURIComponent(target.originalTitle));
@@ -1351,14 +1409,13 @@ var require_hdhub = __commonJS({
       for (let offset = 0; offset < Math.min(maximum, entries.length) && !http.expired(); offset += 2) {
         if (offset > 0 && !options.onCandidates && resolved.length >= 3) break;
         await mapLimit(entries.slice(offset, offset + 2), 2, async (entry) => {
-          const found = await resolveRelease(http, entry, target, options.allowExtensionless === true);
+          const found = await resolveRelease(http, entry, target, options.allowExtensionless === true, options.onCandidates);
           resolved.push(...found);
-          if (found.length && options.onCandidates) await options.onCandidates(found);
         });
       }
       return options.onCandidates ? resolved : resolved.slice(0, 6);
     }
-    module2.exports = { scanHdHub, shortlinkTarget, pageMatches, releaseEntries, releasePlan, HDHUB_ORIGIN };
+    module2.exports = { scanHdHub, shortlinkTarget, pageMatches, releaseEntries, releasePlan, pixelFilename, HDHUB_ORIGIN };
   }
 });
 
@@ -2033,6 +2090,7 @@ var require_moviesdrive = __commonJS({
     var { safeUrl, normalizeTitle, mapLimit } = require_util();
     var { anchors, decodeEntities, filenameIdentity } = require_directory();
     var { canonicalNames } = require_page_data();
+    var { pixelPage, publicFile } = require_pixeldrain();
     var ORIGIN = "https://new4.moviesdrive.beer";
     var ARCHIVE = "https://mdrive.lol";
     function text(value) {
@@ -2084,31 +2142,9 @@ var require_moviesdrive = __commonJS({
       const small = rows.slice().sort((a, b) => a.size - b.size), high = rows.slice().sort((a, b) => b.quality - a.quality || a.size - b.size), full = rows.filter((r) => r.quality === 1080).sort((a, b) => a.size - b.size);
       return [...new Map([small[0], full[0], high[0], small[1]].filter(Boolean).map((r) => [r.url, r])).values()].slice(0, 4);
     }
-    function pixelPage(html) {
-      const literal = String(html).match(/\bvar\s+pxl\s*=\s*["']([^"']{1,300})["']/)?.[1];
-      const links = literal ? [literal] : anchors(String(html)).filter((a) => /Pixel(?:drain|Server)/i.test(a.text)).map((a) => a.href);
-      return links.map((s) => safeUrl(s)).find((url) => url && /^https:\/\/pixeldrain\.(?:com|dev|net)\/u\/[A-Za-z0-9]{8,12}$/.test(url)) || null;
-    }
     function pixelFile(data, page, hubName, target) {
-      const u = new URL(page), id = u.pathname.split("/").pop();
-      const container = /^video\/(?:x-)?matroska$/.test(data?.mime_type || "") ? "mkv" : data?.mime_type === "video/mp4" ? "mp4" : null;
-      if (!data || data.success !== true || data.id !== id || data.can_download !== true || data.availability || data.abuse_type || !Number.isSafeInteger(data.size) || data.size < 1e6 || !container || !fileMatches(data.name, target) || normalizeTitle(cleanFilename(data.name)) !== normalizeTitle(cleanFilename(hubName))) return null;
-      return {
-        url: u.origin + "/api/file/" + id,
-        filename: data.name,
-        headers: {},
-        subtitles: [],
-        source: "MoviesDrive / Pixeldrain",
-        identity: target,
-        identityConfidence: 90,
-        expectedSize: data.size,
-        expectedContainer: container,
-        allowExtensionlessMkv: container === "mkv",
-        requireAudioAny: [.../* @__PURE__ */ new Set(["tr", "en", .../^[a-z]{2}$/.test(target.originalLanguage || "") && target.originalLanguage !== "hi" ? [target.originalLanguage] : []])],
-        requireVideoDimensions: true,
-        requireDuration: true,
-        durationTolerance: 0.1
-      };
+      const file = publicFile(data, page, hubName, target, { source: "MoviesDrive / Pixeldrain", matchesName: fileMatches, normalizeName: (value) => normalizeTitle(cleanFilename(value)) });
+      return file ? { ...file, identityConfidence: 90 } : null;
     }
     async function resolveRelease(http, entry, target) {
       const page = await http.text(entry.url);
@@ -3829,7 +3865,7 @@ var require_ranking = __commonJS({
 var require_diagnostics = __commonJS({
   "src/diagnostics.cjs"(exports2, module2) {
     "use strict";
-    var VERSION = true ? "1.8.3" : "dev";
+    var VERSION = true ? "1.8.4" : "dev";
     function effectiveTmdbKey(settings, injectedKey) {
       return typeof settings.tmdbApiKey === "string" && settings.tmdbApiKey.trim() ? settings.tmdbApiKey.trim() : typeof injectedKey === "string" ? injectedKey.trim() : "";
     }
@@ -4176,7 +4212,7 @@ var require_index = __commonJS({
                 if (hosted) {
                   for (const pair of hosted) {
                     const source = pair.candidate.source;
-                    if (source.startsWith("VixSrc") && settings.vixsrcEnabled === false || source === "Internet Archive" && settings.archiveEnabled === false || source === "PlayIMDb" && settings.playImdbEnabled === false || source === "4KHDHub / HubCloud" && settings.hdhubEnabled === false || pair.video.container === "hls" && settings.includeHls === false || pair.video.dimensions && parseInt(qualityLabel(pair.video.dimensions)) < Number(settings.minimumQuality || 0) || strictSubtitles && !pair.subtitles.some((s) => s.language === "tr") && !embeddedSubtitleLanguages(pair.video, pair.candidate).includes("tr")) continue;
+                    if (source.startsWith("VixSrc") && settings.vixsrcEnabled === false || source === "Internet Archive" && settings.archiveEnabled === false || source === "PlayIMDb" && settings.playImdbEnabled === false || source.startsWith("4KHDHub / ") && settings.hdhubEnabled === false || pair.video.container === "hls" && settings.includeHls === false || pair.video.dimensions && parseInt(qualityLabel(pair.video.dimensions)) < Number(settings.minimumQuality || 0) || strictSubtitles && !pair.subtitles.some((s) => s.language === "tr") && !embeddedSubtitleLanguages(pair.video, pair.candidate).includes("tr")) continue;
                     completed.push(pair);
                   }
                   report.sources.push({ name: "Ortak tarama", candidates: hosted.length });
@@ -4348,7 +4384,7 @@ var require_index = __commonJS({
         },
         { type: "toggle", key: "useDownloadBridge", label: "MKV indirme adını koruyan dosya köprüsü", defaultValue: true, description: "Kaynaklar telefondan aranır. Yalnız bulunan public dosya adresi ve film metadatası köprüde doğrulanır. Video doğrudan kaynaktan gelir; kişisel katalog/anahtar gönderilmez." },
         { type: "toggle", key: "vixsrcEnabled", label: "VixSrc çevrimiçi alternatifleri", defaultValue: true },
-        { type: "toggle", key: "hdhubEnabled", label: "4KHDHub / HubCloud doğrudan dosya araması", defaultValue: true, description: "Ücretsiz public FSL dosyaları doğrulanır. Kaynak metadatası boyut/piksel doğrulaması sayılmaz." },
+        { type: "toggle", key: "hdhubEnabled", label: "4KHDHub / HubCloud doğrudan dosya araması", defaultValue: true, description: "Ek film/bölüm indirmeleri ve uygun kayıtlarda 4K. FSL/Pixeldrain dosyalarının gerçek boyutu ve pikseli okunur; TR/EN altyazı aranır." },
         { type: "toggle", key: "rarefilmmEnabled", label: "RareFilmm ek film arşivi", defaultValue: true, description: "Eski ve az bulunan filmlerde küçük MP4 seçenekleri. Bazılarında İngilizce altyazı görüntüye işlenmiştir; 4K veya TR dublaj garantisi yoktur." },
         { type: "toggle", key: "goojaraEnabled", label: "Goojara film ve bölüm dosyaları", defaultValue: true, description: "Küçük MP4 alternatifleri; tam başlık/yıl/film IMDb ve bölüm kontrolü. Eksik veya yanlış yıl eşleşmeleri atlanır. Mevcut TR/EN altyazı araması uygulanır." },
         { type: "toggle", key: "hdrezkaEnabled", label: "HDRezka farklı boyutlarda film/dizi dosyaları", defaultValue: true, description: "Ücretsiz özgün sesli MP4 seçenekleri ve mevcut TR/EN altyazılar. IMDb, başlık/yıl ve tam bölüm denetlenir; ücretli kalite ve örnek videolar eklenmez." },

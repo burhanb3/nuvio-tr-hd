@@ -1,5 +1,12 @@
 # Sonraki işler
 
+## 1.8.4 öncelik
+
+1. Hazır: HDHubPixel film/bölüm yolu;15yeniMKV,6yeni4K,11gömülüTR. 276fixture/QuickJS;0.6.5-beta/23drift0. CI/Pages/yediHTTP200/SHA yayın kontrolünü tamamla.
+2. YeniTRdub0/anime0; film4KveTVkapsamıaçık. Flea3bölüm9yeni,Sev2yeni,3film4yeni; hertekrardatümkataloğunçalışacağıanlamınagelmez. Severanceküçükdosya/kalitesınıfıeksik. EskiDune7/Inception8/Hotel7/Death4 korunmuşörneklerdir.
+3. StrangerThings4Kgerçekfileama sourceposterkanonikTMDBilefarklı. AynıIDresmiimagesbağıaraştırılabilir;eşleşmeyiposteriuydurarakgevşetme. AnimeWorldchallenge/Ultime403/AniPub404/DiziWatchTLS/NakiosDNS/recoveryyanlışfilm yeniolayolmadan tekrarloopolmasın.
+4. FizikseliPhoneindirme/MKVadlandırma/offlineTR/EN/senkron/fontaçık. MasaüstüMPV1MiBbirkaresadeceparser/decoder/TRiziseçimkanıtı. EkPC/backend/accountkurma;nativekotalarınıartırma.
+
 ## 1.8.3 öncelik
 
 1. Kod ve kanıtlar hazır: Archive iki dilli genel eşleştirme + yıl alanı olmayan HD araması;269check/QuickJS,0.6.5-beta/23blob drift0. download-expansion-183 ve coverage-183 içinde12yeni dosya/4film,6ölçülmüş TR+EN MKV. Yayımlandı: kod7bb885fe547f2c14e82292c0df499b3a0e82e4c3,Test40567450137,Pages40567450138 başarılı;7publicHTTP200/SHA eşit.

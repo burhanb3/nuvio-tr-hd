@@ -13,9 +13,11 @@ Resmî release ve geliştirme dalındaki ilgili dosyaların SHA'ları `compatibi
 
 ## Güncel kontrol
 
-1.8.3: 269 fixture/gerçek QuickJS testi. En son doğrulanan Nuvio sürümü **0.6.5-beta**; kilitli 23 dosyada drift yok, kilit değiştirilmedi. [Upstream raporu](../compatibility/upstream-183-check.json), [yeni indirme dosyaları](../compatibility/download-expansion-183.json), [kapsam ve başarısız taramalar](../compatibility/coverage-183.json).
+1.8.4: 276 fixture/gerçek QuickJS testi. En son doğrulanan Nuvio sürümü **0.6.5-beta**; kilitli 23 dosyada drift yok, kilit değiştirilmedi. [Upstream raporu](../compatibility/upstream-184-check.json), [yeni indirme dosyaları](../compatibility/download-expansion-184.json), [kapsam ve tekrarlar](../compatibility/coverage-184.json).
 
 Uzantısız MKV için önceki eleme kararı gözden geçirildi: Nuvio iOS dosya gövdesini doğrudan yazar ve dosyayı MPV `loadfile` yoluna iletir. Nuvio'nun `.mp4` kayıt adı, dosyayı MP4'e dönüştürmez. Boyut/format ve gerçek video/ses denetimi geçen kaynaklar bu yola sınırlı olarak alınır. Resmî MPV masaüstü CI derlemesinde 1080p ve 4K MKV örnekleri `.mp4` adıyla tanındı ve bir kare çözüldü. Bu, fiziksel Nuvio/iPhone oynatma veya tam indirme kanıtı değildir.
+
+1.8.4'te bir Fleabag 4K dosyasının ilk 1 MiB'ı masaüstü MPV'de bir kareyle sınandı; MP4 kayıt adı altında gerçek MKV/3840×1600 tanındı, EN-US ses ve TR-TR metin altyazı izi seçildi. Önceki 4 MiB örnek isteği zaman aşımına uğradı. Bu kısa, kesilmiş örnek tam dosya veya fiziksel Nuvio/altyazı senkronu testi değildir.
 
 Üretilmiş JavaScript QuickJS WASM motorunda, Nuvio'nun API yüzeyine benzeyen köprüyle çalıştırılır. Bu test quickjs-kt JNI/Native köprüsünü veya fiziksel iPhone taşımasını çalıştırmaz. Fiziksel iPhone/Android, Kotlin derlemesi, tam film oynatma/indirme, offline altyazı ve sahne senkronu henüz sınanmadı.
 
@@ -25,4 +27,4 @@ Kaynak kontrolleri sabit kanonik metadata referanslarıyla gerçek public HTTP/R
 
 [Yayın doğrulaması](../compatibility/github-publication.json) · [Önceki uyumluluk kayıtları](arsiv/UYUMLULUK_GECMISI.md).
 
-1.8.3 yayın kodu `7bb885fe547f2c14e82292c0df499b3a0e82e4c3`: Windows/Linux [CI](https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40567450137) ve [Pages](https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40567450138) başarılı; yedi public varlık HTTP200 ve yerel SHA eşit.
+1.8.4 yayın kontrolü bekleniyor. Başarıdan sonra CI/Pages ve public SHA kanıtı eklenecek.

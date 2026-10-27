@@ -1,5 +1,19 @@
 # Proje hafızası
 
+## 1.8.4 — bölüm indirmeleri ve gerçek 4K
+
+HDHub terminalindeki literal pxl/PixelServer bağlantıları eski kodda yok sayılıyordu. Yeni ortak pixeldrain.cjs, mevcut MoviesDrive doğrulamasını paylaşır; MoviesDrive film-only davranışı ve dört sürüm kuralı değişmedi. Yeni HDHub Pixel yolu filmde aynıTMDB/özgünad/yıl; TVde aynıad/yıl/kanonikposter + tamS/E; release/HubCloud/info adının normalize eşitliği gerektirir. Yıl içermeyenTVdosyası ancak seri sayfası bağı kurulduktan sonra kabul edilir. Yanlış yıl/pack/sample/HI-only elenir. InfoID/name/size/MIME/can_download ve unrestricted alanları, gerçekRange/byte/container/piksel/süre/%90–110/uygunölçülmüşses birlikte kontrol edilir. Public dosya adı veya ID üretimepinlenmedi.
+
+HDHub aynı8s/12release/2resolver,main24s,video3/sub4/EN1. Pixelinfo ve eskiFSL callback paralel; eskibridge beklerken yeniaday teslim olur. registerDownloads yalnız explicitMKVoptin+expectedContainer+pozitifexpectedSize adayını doğrudan gerçekprobe'a geçirir; yeniPixel için backendçağrısı yok. GenelJSON/HLS formatkorumaları aynı. Per-rowNuvioABI veya fizikseliPhoneiptal/süregarantisi yok. DörtID/ayarlar korunur. hdhubEnabled açıklaması yenilendi.
+
+Canlı15yeniMKV/5yapım: Fleabag3bölümde9,Severance1bölümde2,3filmde4. FleaS1E1/S1E2/S2E1 herbirinde1080p+iki2160p(HDR10+/diğersürüm); toplam6yeni4K. Flea1080 1.59–1.69GB,4K2.92–3.89GB. Severance2.02/2.36GB1080. Oppenheimer2.72GB,DarkKnight6.44GB,JohnWick4.05/8.26GB1080. Tümü gerçekhash+TR;11inde gömülüTR metin izi, diğer4ünde hariciTR. YeniTRdub0/anime0. EN+HI dublajTR değildir. DillerarasımaxsubtitleBestScore TRsenkronpuanı değildir.
+
+İlkFeature turları versionbumpöncesi1.8.3paketetiketini korur; yeni1.8.4kod yolu bu turlarda vardır. Sontekrar1.8.4 FleaS1E1yeni3/Sevyeni2 yinebulundu; eskifiletotal10->8/6->7 değişti. Severanceküçük<=1GiB/ikikalitesınıfıaçığısürüyor. RegresyonHotel7/Dune7/Inception8/Death4; eskiTRdub veInception4Kkorundu. Avatarnew0. coverage-184 tümeksiklerle saklanır.
+
+MasaüstüMPVilk4MiBfetch12s timeout,playerçalışmadı. Sonra1MiBRange206 başarılı; .mp4adlıgerçekMKV 3840×1600HEVCbirkaresiçözüldü,EN-USses/TR-TRsubripiziseçildi. Truncatedsampleuyarısıbeklenen;tamdosyasağlamlığı/senkron/telefon/offlinekanıtıdeğil.276fixture/QuickJS,upstream0.6.5-beta/23blobdrift0. Lockdeğişmedi. Fizikselcihaz/tamindirme/oynatma/offline/senkron/fontyok.
+
+Yeniaraştırma: AnimeWorldsourceAPICloudflare;AniPubsearch404;Ultime403;DiziWatchself-signedTLS;NakiosDNSyok. TLS/challengekorumasıaşılmadı. MoviesDriveOppenheimerlegacyrecoverfarklı2022filmverdi,reject;yeniyolentegredeğil. StrangerThingsgerçek1080/4KfileölçüldüamaHDHubposterigüncelkanonikTMDB'denfarklı;pipelinebaşarısıyasayılmadı/fixtureposteriuydurulmadı. Bu başarısızlarıyenidurumolmadantekrarlama. YeniTVposterinresmiaynıIDimagesdoğrulamasıgelecekteincelenebilir;ilkresmiTMDBenposterlistesindeeskiyolbulunmadı. Yayın bekliyor;CI/Pages/yediSHAkanıtısonraeklenecek.
+
 ## 1.8.3 — iki dilli indirme ve ölçülmüş TR dublaj
 
 Archive genel eşleştirmesi geliştirildi; yeni adaptör veya üretim video pini yok. Resmi aynıTMDB TR/EN adlarıyla iki sıralı birleşim kabul edilebilir. Alternatif olarak yalnız açık "yerel - Original (year)" / "Original - yerel (year)" dosya biçiminden birleşik başlık etiketi çıkarılır; yerel etiket resmi çeviri sayılmaz. Ecel Köprüsü bu yapıyla kabul edilir; TMDB TR adı Remagen Köprüsü olarak korunur. Özgün ad/yıl hem gerçek dosya adında hem aynı birleşik kayıt başlığında gerekir. Çelişen metadata yıl/IMDb/TMDB önce reddedilir. Gerçek süre %90–110 zorunlu; fan edit/workprint/koleksiyon etiketleri engellenir. TV eşleştirmesi gevşetilmedi.

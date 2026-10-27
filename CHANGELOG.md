@@ -1,5 +1,14 @@
 # Sürüm notları
 
+## 1.8.4 — 27 Ekim 2026
+
+- 4KHDHub'ın yayımladığı Pixeldrain bağlantıları film ve tam dizi bölümleri için aramaya alındı. Önceki FSL yolları korunur; yeni dosyalar için adlandırma servisi veya hesap gerekmez.
+- Canlı kontrolde 15 ek MKV: Fleabag S01E01/S01E02/S02E01 için dokuz, Severance S01E01 için iki, Oppenheimer/The Dark Knight/John Wick için dört dosya. Bunların altısı gerçek 4K, 11'inde dosya içinde Türkçe metin altyazısı var; tümünde mevcut TR alternatifleri bulundu.
+- Fleabag için yaklaşık 1,59–1,69 GB 1080p ve 2,92–3,89 GB 4K seçenekler. Kaynağın kalite adı yerine gerçek piksel gösterilir; başka bölüm, yanlış dosya ve yalnız HI sesli kayıtlar elenir.
+- Hazır dosya kontrolü eski aynanın yanıtını beklemez. Kaynak/arama bütçeleri ve native iş kotaları artırılmadı. Nuvio'nun sonuçları scraper tamamlandığında göstermesi değişmedi.
+- 276 fixture/QuickJS testi; Nuvio 0.6.5-beta ve 23 kilitli kaynak dosyasında değişiklik yok. Bir Fleabag 4K örneği masaüstü MPV'de bir kareyle açıldı ve gömülü TR izi seçildi.
+- Bu tur yeni Türkçe dublaj veya anime dosyası doğrulanmadı. Fiziksel cihaz, tam indirme/oynatma ve bölüm boyunca altyazı senkronu test edilmedi.
+
 ## 1.8.3 — 27 Ekim 2026
 
 - Archive aramasında Türkçe ve özgün adı birlikte taşıyan film sürümleri için daha iyi eşleştirme. Ayrı yıl alanı eksik olan HD kayıtlar, başlık/dosya yılı ve gerçek süreyle doğrulanır; yanlış kimlik ve yıl kabul edilmez.

@@ -2,6 +2,7 @@
 const {safeUrl,normalizeTitle,mapLimit}=require('../util.cjs');
 const {anchors,decodeEntities,filenameIdentity}=require('./directory.cjs');
 const {canonicalNames}=require('./page-data.cjs');
+const {pixelPage,publicFile}=require('./pixeldrain.cjs');
 const ORIGIN='https://new4.moviesdrive.beer',ARCHIVE='https://mdrive.lol';
 function text(value){return decodeEntities(String(value||'').replace(/&nbsp;/gi,' ')).replace(/\u00a0/g,' ');}
 function titleMatches(value,target){
@@ -40,21 +41,9 @@ function releaseEntries(html,target){
   const small=rows.slice().sort((a,b)=>a.size-b.size),high=rows.slice().sort((a,b)=>b.quality-a.quality||a.size-b.size),full=rows.filter(r=>r.quality===1080).sort((a,b)=>a.size-b.size);
   return [...new Map([small[0],full[0],high[0],small[1]].filter(Boolean).map(r=>[r.url,r])).values()].slice(0,4);
 }
-function pixelPage(html){
-  const literal=String(html).match(/\bvar\s+pxl\s*=\s*["']([^"']{1,300})["']/)?.[1];
-  const links=literal?[literal]:anchors(String(html)).filter(a=>/Pixel(?:drain|Server)/i.test(a.text)).map(a=>a.href);
-  return links.map(s=>safeUrl(s)).find(url=>url&&/^https:\/\/pixeldrain\.(?:com|dev|net)\/u\/[A-Za-z0-9]{8,12}$/.test(url))||null;
-}
 function pixelFile(data,page,hubName,target){
-  const u=new URL(page),id=u.pathname.split('/').pop();
-  const container=/^video\/(?:x-)?matroska$/.test(data?.mime_type||'')?'mkv':data?.mime_type==='video/mp4'?'mp4':null;
-  if(!data||data.success!==true||data.id!==id||data.can_download!==true||data.availability||data.abuse_type||
-    !Number.isSafeInteger(data.size)||data.size<1000000||!container||!fileMatches(data.name,target)||
-    normalizeTitle(cleanFilename(data.name))!==normalizeTitle(cleanFilename(hubName)))return null;
-  return {url:u.origin+'/api/file/'+id,filename:data.name,headers:{},subtitles:[],source:'MoviesDrive / Pixeldrain',
-    identity:target,identityConfidence:90,expectedSize:data.size,expectedContainer:container,allowExtensionlessMkv:container==='mkv',
-    requireAudioAny:[...new Set(['tr','en',...(/^[a-z]{2}$/.test(target.originalLanguage||'')&&target.originalLanguage!=='hi'?[target.originalLanguage]:[])])],
-    requireVideoDimensions:true,requireDuration:true,durationTolerance:0.1};
+  const file=publicFile(data,page,hubName,target,{source:'MoviesDrive / Pixeldrain',matchesName:fileMatches,normalizeName:value=>normalizeTitle(cleanFilename(value))});
+  return file?{...file,identityConfidence:90}:null;
 }
 async function resolveRelease(http,entry,target){
   const page=await http.text(entry.url);if(!page||page.url!==entry.url||!titleMatches(page.text.match(/<title\b[^>]*>([\s\S]{0,1500}?)<\/title>/i)?.[1]||'',target))return null;

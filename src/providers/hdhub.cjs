@@ -1,8 +1,9 @@
 'use strict';
 const { safeUrl, normalizeTitle, mapLimit } = require('../util.cjs');
-const { anchors } = require('./directory.cjs');
+const { anchors,decodeEntities,filenameIdentity } = require('./directory.cjs');
 const { decodeUtf8 } = require('../subtitles.cjs');
 const { matchesEpisode } = require('../matching.cjs');
+const {pixelPage,publicFile}=require('./pixeldrain.cjs');
 const HDHUB_ORIGIN = 'https://4khdhub.one';
 
 function decode64(value) {
@@ -82,7 +83,15 @@ function releasePlan(entries,maximum=12) {
   }
   return out;
 }
-async function resolveRelease(http, entry, target, allowExtensionless) {
+function pixelFilename(value,target){
+  if(typeof value!=='string'||!/\.(mp4|mkv)$/i.test(value))return false;
+  const name=normalizeTitle(value),title=normalizeTitle(target.originalTitle),suffix=name.startsWith(title+' ')?name.slice(title.length+1):null;
+  if(!suffix||/\b(sample|trailer|fanedit|workprint|hdcam|camrip|hdtc|hdts|telesync)\b/.test(suffix))return false;
+  const years=target.type==='movie'?[target.year,...(target.releaseYears||[])]:[target.year];
+  if((suffix.match(/\b(?:19|20)\d{2}\b/g)||[]).some(y=>!years.includes(Number(y))))return false;
+  return target.type==='tv'?matchesEpisode(value,target):years.some(year=>filenameIdentity(value,{...target,year}));
+}
+async function resolveRelease(http, entry, target, allowExtensionless,onCandidates) {
   const redirect = await http.text(entry.url);
   const hub = redirect && shortlinkTarget(redirect.text);
   if (!hub || http.expired()) return [];
@@ -96,7 +105,7 @@ async function resolveRelease(http, entry, target, allowExtensionless) {
   if (!terminal || new URL(terminal).hostname !== 'gamerxyt.com' || new URL(terminal).pathname !== '/hubcloud.php') return [];
   const result = await http.text(terminal);
   if (!result) return [];
-  return anchors(result.text).filter(a => /FSL(?:v2)? Server|Download File\s*\[/i.test(a.text)).slice(0, 3).map(a => {
+  const direct=anchors(result.text).filter(a => /FSL(?:v2)? Server|Download File\s*\[/i.test(a.text)).slice(0, 3).map(a => {
     // Some public terminal anchors contain literal filename spaces. Encode
     // only those spaces; do not double-encode existing signed URL escapes.
     const url = safeUrl(a.href.replace(/ /g, '%20'), result.url);
@@ -112,6 +121,18 @@ async function resolveRelease(http, entry, target, allowExtensionless) {
       ...(publicFile ? { getOnly: true } : {}),
       subtitleBase: result.url, source: '4KHDHub / HubCloud', identity: target, identityConfidence: 95 };
   }).filter(Boolean);
+  // This is a separately published file host. Never route it through the R2
+  // naming service, and never wait for a slow legacy mirror before checking it.
+  const pixel=pixelPage(result.text),extra=[];
+  const pixelWork=(async()=>{
+    if(!pixel||http.expired()||!hubName||!pixelFilename(decodeEntities(hubName),target)||
+      normalizeTitle(decodeEntities(hubName))!==normalizeTitle(entry.filename))return;
+    const u=new URL(pixel),data=await http.json(u.origin+'/api/file/'+u.pathname.split('/').pop()+'/info');
+    const file=publicFile(data,pixel,decodeEntities(hubName),target,{source:'4KHDHub / Pixeldrain',matchesName:pixelFilename});
+    if(file){extra.push(file);if(onCandidates)await onCandidates([file]);}
+  })();
+  await Promise.all([pixelWork,direct.length&&onCandidates?onCandidates(direct):Promise.resolve()]);
+  return [...direct,...extra];
 }
 async function scanHdHub(http, target, options = {}) {
   const search = await http.text(HDHUB_ORIGIN + '/?s=' + encodeURIComponent(target.originalTitle));
@@ -135,11 +156,10 @@ async function scanHdHub(http, target, options = {}) {
   for (let offset = 0; offset < Math.min(maximum, entries.length) && !http.expired(); offset += 2) {
     if (offset > 0 && !options.onCandidates && resolved.length >= 3) break;
     await mapLimit(entries.slice(offset, offset + 2), 2, async entry => {
-      const found = await resolveRelease(http, entry, target, options.allowExtensionless === true);
+      const found = await resolveRelease(http, entry, target, options.allowExtensionless === true,options.onCandidates);
       resolved.push(...found);
-      if (found.length && options.onCandidates) await options.onCandidates(found);
     });
   }
   return options.onCandidates ? resolved : resolved.slice(0, 6);
 }
-module.exports = { scanHdHub, shortlinkTarget, pageMatches, releaseEntries, releasePlan, HDHUB_ORIGIN };
+module.exports = { scanHdHub, shortlinkTarget, pageMatches, releaseEntries, releasePlan,pixelFilename, HDHUB_ORIGIN };

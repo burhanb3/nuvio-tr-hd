@@ -14,6 +14,24 @@ const animeBundle = await readFile(new URL('../providers/nuvio-tr-hd-anime.js', 
 const extraAnimeBundle = await readFile(new URL('../providers/nuvio-tr-hd-extra-anime.js', import.meta.url), 'utf8');
 const fastOnlineBundle = await readFile(new URL('../providers/nuvio-tr-hd-fast-online.js', import.meta.url), 'utf8');
 
+test('QuickJS: HDHub Pixel bölümünde gerçek 4K/EN ve gömülü TR korunur; ad servisine ihtiyaç duyulmaz',async()=>{
+ const name='Example.Series.S01E02.2160p.WEB-DL.mkv',pixel='https://pixeldrain.dev/u/Fixture1',file='https://pixeldrain.dev/api/file/Fixture1',hub='https://hubcloud.ist/drive/example',terminal='https://gamerxyt.com/hubcloud.php?id=example';
+ const enc=s=>Buffer.from(s).toString('base64'),packed=enc(JSON.stringify({o:enc(hub)})).replace(/[A-Za-z]/g,c=>String.fromCharCode(c.charCodeAt(0)+(c.toLowerCase()<='m'?13:-13)));
+ const e=helpers.ebml,duration=Buffer.alloc(8);duration.writeDoubleBE(1800000);
+ const tracks=[e('ae',Buffer.concat([e('83',[1]),e('e0',Buffer.concat([e('b0',[15,0]),e('ba',[6,64])]))])),e('ae',Buffer.concat([e('83',[2]),e('22b59c',Buffer.from('en-US'))])),e('ae',Buffer.concat([e('83',[17]),e('22b59c',Buffer.from('tur')),e('86',Buffer.from('S_TEXT/UTF8'))]))];
+ const body=Buffer.concat([e('1a45dfa3',e('4282',Buffer.from('matroska'))),e('18538067',Buffer.concat([e('1549a966',e('4489',duration)),e('1654ae6b',Buffer.concat(tracks))])),Buffer.alloc(1000000)]);
+ const fixture={
+  'https://api.themoviedb.org/3/tv/123456?api_key=test&append_to_response=external_ids':{json:{id:123456,original_name:'Example Series',first_air_date:'2020-01-01',original_language:'en',episode_run_time:[30],poster_path:'/Example.jpg'}},
+  'https://4khdhub.one/?s=Example%20Series':{body:'<a href="/example-series-1/">Example Series 2020</a>'},
+  'https://4khdhub.one/example-series-1/':{body:'<script type="application/ld+json">{"@type":"TVSeries","name":"Example Series","startDate":"2020","image":"https://image.tmdb.org/t/p/w500/Example.jpg"}</script><div class="episode-download-item"><div class="episode-file-title">'+name+'</div><span>1 GB</span><a href="https://greenmotors.club/example">Download HubCloud</a></div>'},
+  'https://greenmotors.club/example':{body:`s('o','${enc(enc(packed))}')`},[hub]:{body:'<title>'+name+'</title><script>var url="'+terminal+'";</script>'},[terminal]:{body:'var pxl="'+pixel+'";'},
+  [file+'/info']:{json:{success:true,id:'Fixture1',name,size:body.length,mime_type:'video/matroska',can_download:true,availability:'',abuse_type:''}},[file]:{body,mime:'video/matroska'}
+ };
+ const settings={autoSubtitles:false,subtitlePolicy:'require',useDownloadBridge:true,archiveEnabled:false,moviesdriveEnabled:false,goojaraEnabled:false,hdrezkaEnabled:false,waploadedEnabled:false,rarefilmmEnabled:false,playImdbEnabled:false,vixsrcEnabled:false,diziyouEnabled:false,dizibakEnabled:false,filmmoduEnabled:false},calls=[];
+ const rows=await runInQuickJs(fixture,{settings,args:['123456','tv',1,2],nativeTimers:true,fetchCalls:calls});assert.equal(rows.length,1);assert.equal(rows[0].type,'mkv');assert.equal(rows[0].url,file);assert.equal(rows[0].quality,'2160p · 3840×1600');assert.match(rows[0].language,/Ses: EN/);assert.match(rows[0].language,/TR/);assert.ok(!calls.some(c=>c.includes('/api/files')));
+ assert.deepEqual(await runInQuickJs(fixture,{settings:{...settings,hdhubEnabled:false},args:['123456','tv',1,2]}),[]);
+});
+
 test('QuickJS: iki adlı Archive kaydı özgün dosya/yıl/süreyle gerçek 4K ve TR/EN ses verir',async()=>{
  const {archiveQuery}=require('../src/providers/archive.cjs'),meta={...helpers.tmdb,runtime:120},target={...helpers.target,runtimeMinutes:120};
  const filename='Yerel Başlık - The Matrix (1999) 1080p.mkv',url='https://archive.org/download/bilingual-example/'+encodeURIComponent(filename),heading='Yerel Başlık The Matrix (1999) 1080p';

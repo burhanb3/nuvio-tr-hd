@@ -3,6 +3,10 @@ const limits={movieSmallFileBytes:3*1024**3,episodeSmallFileBytes:1024**3,minimu
 function pair({hash='0011223344556677',size=700*1024**2,width=1280,height=536,tr=true,type='mkv'}={}){
  return{candidate:{source:'Fixture',filename:'Movie.2021.mkv'},video:{container:type,downloadable:type!=='hls',size,dimensions:{width,height},videoHash:hash},subtitles:tr?[{language:'tr'}]:[]};
 }
+test('gömülü Türkçe metin altyazısı harici dosyası olmadan doğru sayılır; kaynak adından dil uydurulmaz',()=>{
+ const a=pair({tr:false});a.video.subtitleTracks=[{language:'tur',codec:'S_TEXT/UTF8'}];const b=pair({tr:false,hash:'1122334455667788',width:3840,height:1600});b.video.subtitleTracks=[{language:'tr',codec:'S_TEXT/UTF8'}];
+ const r=summarizeCoverage([a,b],limits,'tv');assert.equal(r.sourceCoverageCriteriaMet,true);assert.equal(r.files[0].externalTurkishTracks,0);assert.deepEqual(r.files[0].embeddedSubtitleLanguages,['tr']);assert.equal(summarizeCoverage([pair({tr:false})],limits,'tv').onlineWithTr,false);
+});
 test('kapsam raporu aynaları ayrı başarı saymaz; gerçek pikseli p etiketiyle yuvarlamaz',()=>{
  const result=summarizeCoverage([pair(),pair(),pair({hash:'1111223344556677',width:1920,height:800})],limits,'movie');
  assert.equal(result.downloadUrls,3);assert.equal(result.estimatedDistinctFiles,2);
