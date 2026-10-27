@@ -18,7 +18,7 @@ Regresyonun ilk turunda Hotel 7, Dune 9, Inception 8; Fleabag ve Death Note sıf
 
 288 test/QuickJS kontrolü geçti. Nuvio 0.6.5-beta aynı; geliştirme dalı 86e0d5bb45f20d541d17f92146d60746420db71d'ye ilerledi, ancak izlenen 23 dosyada değişiklik yok. Kilit güncellenmedi. Anizium sabit token/Cf-Control yöntemi kullanılmadı; kimliksiz Mononoke dosyaları zorla eşleştirilmedi; Totoro 4K item'ında video yoktu. Yeni uygun Türkçe dublaj adaptasyonu doğrulanmadı.
 
-Yayın bekliyor;CI/Pages/yediSHAkanıtısonraeklenecek.
+Yayımlandı: kaynak commit e454421efc8ed2ec642640ef51a1a0d0a79ae74b; Windows/Linux testleri ve Pages başarılı. Yedi public dosya HTTP 200 döndü, SHA/byte karşılaştırmaları yerel paketle aynı. Test: https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40601281450; Pages: https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40601281261. Kanıt compatibility/github-publication.json içinde.
 
 ## 1.8.4 — bölüm indirmeleri ve gerçek 4K
 
