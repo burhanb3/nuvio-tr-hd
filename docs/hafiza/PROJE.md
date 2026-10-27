@@ -14,7 +14,7 @@ Coverage helper düzeltildi: iki kırpılmış480p iki kalite sayılmaz; pixelGr
 
 Araştırma: HDHub göz ardı edilenPixel/10Gbps publicyollar metadata404 veyaWorkerSSL_PACKET_LENGTH_TOO_LONG; curl35 de aynı, TLS koruması kapatılmadı. Jet.net searchtimeout, FilmEkseni search404, Cizgi searchtimeout; adapter eklenmedi. Archive4K sonuçları trailer/clip; Sintel0. Shameless HDRezka doğru2011/IMDb ama yalnız RU/UA/KA çeviriler, özgün/TRyok; boşluğu gizlemek için ses uydurma. Animecix language=tr tekbaşınaTRses değildir. Aynı başarısız yolları yeni durum olmadan tekrar döndürme.
 
-Yayın 1.8.0 hazırlanıyor; CI ve public dosya SHA kanıtını tamamla.
+1.8.0 yayımlandı: kod 7ea52b8609fa1e236147bff1d359753b37be1be2; Windows/Linux Test 40522695904, Pages 40522696038 başarılı; yedi public dosya HTTP200 ve yerel SHA eşit. github-publication.json güncel.
 
 ## 1.7.9 — küçük film ve bölüm dosyaları
 
