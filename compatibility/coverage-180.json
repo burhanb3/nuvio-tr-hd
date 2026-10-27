@@ -1,0 +1,3233 @@
+{
+  "checkedAt": "2026-10-27T14:35:39.186Z",
+  "version": "1.8.0",
+  "metadata": "fixed canonical reference; does not test phone TMDB API credentials",
+  "note": "Dune alternate title is a fixed known alias in validation/titles.json. Live phone TMDB alternative_titles API is not verified; production requires the exact matching TMDB record. Pixel groups and p grades are distinct. Subtitle best score is across languages (often source-paired EN), not guaranteed TR score.",
+  "acceptance": {
+    "movieSmallFileBytes": 3221225472,
+    "episodeSmallFileBytes": 1073741824,
+    "minimumDistinctDownloadQualities": 2,
+    "requireTurkishSubtitle": true,
+    "physicalPlaybackAndOfflineTest": "not-run"
+  },
+  "transport": "Node limited1MiB, actual source and subtitle HTTP; native iPhone transport not tested",
+  "rounds": [
+    {
+      "kind": "base",
+      "checkedAt": "2026-10-27T14:25:21.617Z",
+      "version": "1.8.0",
+      "cases": [
+        {
+          "key": "no-way-home",
+          "tmdbId": 634649,
+          "title": "Spider-Man: No Way Home",
+          "type": "movie",
+          "elapsedMs": 9013,
+          "downloadFiles": 5,
+          "onlineWithTr": true,
+          "cleanSmallWithTr": true,
+          "downloadQualityGrades": [
+            "240p",
+            "720p",
+            "304p",
+            "480p",
+            "360p"
+          ],
+          "downloadPixelGroups": [
+            "427x178",
+            "1282x534",
+            "720x304",
+            "854x356",
+            "638x266"
+          ],
+          "gaps": [],
+          "sourceCoverageCriteriaMet": true,
+          "sources": [
+            {
+              "lane": "main",
+              "reason": "ok",
+              "elapsedMs": 9012,
+              "sources": [
+                {
+                  "name": "PlayIMDb",
+                  "candidates": 3,
+                  "startedMs": 72,
+                  "discoveryMs": 412
+                },
+                {
+                  "name": "HDRezka",
+                  "candidates": 4,
+                  "startedMs": 69,
+                  "discoveryMs": 1180
+                },
+                {
+                  "name": "VixSrc",
+                  "candidates": 1,
+                  "startedMs": 496,
+                  "discoveryMs": 990
+                },
+                {
+                  "name": "Goojara",
+                  "candidates": 0,
+                  "startedMs": 67,
+                  "discoveryMs": 1437
+                },
+                {
+                  "name": "Internet Archive",
+                  "candidates": 1,
+                  "startedMs": 61,
+                  "discoveryMs": 1903
+                },
+                {
+                  "name": "Waploaded",
+                  "candidates": 0,
+                  "startedMs": 1504,
+                  "discoveryMs": 471
+                },
+                {
+                  "name": "RareFilmm",
+                  "candidates": 0,
+                  "startedMs": 1964,
+                  "discoveryMs": 400
+                },
+                {
+                  "name": "FilmModu",
+                  "candidates": 6,
+                  "startedMs": 1252,
+                  "discoveryMs": 1337
+                },
+                {
+                  "name": "4KHDHub / HubCloud",
+                  "candidates": 9,
+                  "startedMs": 1486,
+                  "discoveryMs": 7355
+                }
+              ],
+              "rejected": {
+                "video_unavailable": 9
+              }
+            },
+            {
+              "lane": "fastOnline",
+              "reason": "ok",
+              "elapsedMs": 5849,
+              "sources": [
+                {
+                  "name": "DiziBal",
+                  "candidates": 0,
+                  "startedMs": 73,
+                  "discoveryMs": 614
+                },
+                {
+                  "name": "HDFilmDelisi",
+                  "candidates": 1,
+                  "startedMs": 71,
+                  "discoveryMs": 1226
+                }
+              ],
+              "rejected": {}
+            }
+          ],
+          "files": [
+            {
+              "source": "HDRezka",
+              "container": "mp4",
+              "bytes": 389561221,
+              "filename": "Spider-Man: No Way Home.2021",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [],
+              "subtitleBestScore": 90,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 427,
+                "height": 178
+              },
+              "quality": "427x178",
+              "qualityGrade": "240p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 5,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 8889.903,
+              "hashAvailable": true
+            },
+            {
+              "source": "HDRezka",
+              "container": "mp4",
+              "bytes": 2920628815,
+              "filename": "Spider-Man: No Way Home.2021",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [],
+              "subtitleBestScore": 90,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 1282,
+                "height": 534
+              },
+              "quality": "1282x534",
+              "qualityGrade": "720p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 5,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 8889.903,
+              "hashAvailable": true
+            },
+            {
+              "source": "Internet Archive",
+              "container": "mp4",
+              "bytes": 881009469,
+              "filename": "Spider-Man.No.Way.Home.2021.FRENCH.BDRip.XviD.Wawacity.blue.avi",
+              "sourceItemId": "spider-man.-no.-way.-home.-2021.-french.-bdrip.-xvi-d.-wawacity.blue",
+              "releaseYearBasis": "exact-title-and-filename",
+              "mediaFilename": "Spider-Man.No.Way.Home.2021.FRENCH.BDRip.XviD.Wawacity.blue.mp4",
+              "audioLanguages": [],
+              "subtitleBestScore": 69,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 720,
+                "height": 304
+              },
+              "quality": "720x304",
+              "qualityGrade": "304p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 6,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 8889.931,
+              "hashAvailable": true
+            },
+            {
+              "source": "HDRezka",
+              "container": "mp4",
+              "bytes": 1216525089,
+              "filename": "Spider-Man: No Way Home.2021",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [],
+              "subtitleBestScore": 90,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 854,
+                "height": 356
+              },
+              "quality": "854x356",
+              "qualityGrade": "480p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 5,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 8889.903,
+              "hashAvailable": true
+            },
+            {
+              "source": "HDRezka",
+              "container": "mp4",
+              "bytes": 665878894,
+              "filename": "Spider-Man: No Way Home.2021",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [],
+              "subtitleBestScore": 90,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 638,
+                "height": 266
+              },
+              "quality": "638x266",
+              "qualityGrade": "360p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 5,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 8889.903,
+              "hashAvailable": true
+            }
+          ]
+        },
+        {
+          "key": "spider-verse",
+          "tmdbId": 324857,
+          "title": "Spider-Man: Into the Spider-Verse",
+          "type": "movie",
+          "elapsedMs": 6560,
+          "downloadFiles": 2,
+          "onlineWithTr": true,
+          "cleanSmallWithTr": true,
+          "downloadQualityGrades": [
+            "1080p",
+            "480p"
+          ],
+          "downloadPixelGroups": [
+            "1920x800",
+            "850x356"
+          ],
+          "gaps": [],
+          "sourceCoverageCriteriaMet": true,
+          "sources": [
+            {
+              "lane": "main",
+              "reason": "ok",
+              "elapsedMs": 6560,
+              "sources": [
+                {
+                  "name": "PlayIMDb",
+                  "candidates": 3,
+                  "startedMs": 6,
+                  "discoveryMs": 355
+                },
+                {
+                  "name": "HDRezka",
+                  "candidates": 0,
+                  "startedMs": 5,
+                  "discoveryMs": 507
+                },
+                {
+                  "name": "VixSrc",
+                  "candidates": 1,
+                  "startedMs": 364,
+                  "discoveryMs": 825
+                },
+                {
+                  "name": "FilmModu",
+                  "candidates": 6,
+                  "startedMs": 512,
+                  "discoveryMs": 965
+                },
+                {
+                  "name": "Waploaded",
+                  "candidates": 0,
+                  "startedMs": 1479,
+                  "discoveryMs": 2
+                },
+                {
+                  "name": "Goojara",
+                  "candidates": 1,
+                  "startedMs": 4,
+                  "discoveryMs": 1709
+                },
+                {
+                  "name": "RareFilmm",
+                  "candidates": 0,
+                  "startedMs": 1481,
+                  "discoveryMs": 300
+                },
+                {
+                  "name": "Internet Archive",
+                  "candidates": 1,
+                  "startedMs": 2,
+                  "discoveryMs": 2194
+                },
+                {
+                  "name": "4KHDHub / HubCloud",
+                  "candidates": 6,
+                  "startedMs": 1190,
+                  "discoveryMs": 5225
+                }
+              ],
+              "rejected": {
+                "video_unavailable": 6
+              }
+            },
+            {
+              "lane": "fastOnline",
+              "reason": "ok",
+              "elapsedMs": 5767,
+              "sources": [
+                {
+                  "name": "DiziBal",
+                  "candidates": 0,
+                  "startedMs": 8,
+                  "discoveryMs": 438
+                },
+                {
+                  "name": "HDFilmDelisi",
+                  "candidates": 1,
+                  "startedMs": 6,
+                  "discoveryMs": 930
+                }
+              ],
+              "rejected": {}
+            }
+          ],
+          "files": [
+            {
+              "source": "Internet Archive",
+              "container": "mp4",
+              "bytes": 2016133619,
+              "filename": "Spider-Man Into the Spider-Verse (2018) [1080p] [BluRay] [YTS.MX].torrent",
+              "sourceItemId": "spider-man-into-the-spider-verse-2018-1080p-blu-ray-yts.-mx",
+              "releaseYearBasis": "exact-title-and-filename",
+              "mediaFilename": "Spider-Man Into The Spider-Verse (2018) [BluRay] [1080p] [YTS.AM]/Spider-Man.Into.The.Spider-Verse.2018.1080p.BluRay.x264-[YTS.AM].mp4",
+              "audioLanguages": [],
+              "subtitleBestScore": 74,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 1920,
+                "height": 800
+              },
+              "quality": "1920x800",
+              "qualityGrade": "1080p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 7,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 7010.059,
+              "hashAvailable": true
+            },
+            {
+              "source": "Goojara",
+              "container": "mp4",
+              "bytes": 1178669652,
+              "filename": "Spider-Man.Into.the.Spider-Verse.2018.720p.BluRay.x264-SPARKS.WT11.mp4",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [],
+              "subtitleBestScore": 76,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 850,
+                "height": 356
+              },
+              "quality": "850x356",
+              "qualityGrade": "480p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 7,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 7010.037,
+              "hashAvailable": true
+            }
+          ]
+        },
+        {
+          "key": "dune",
+          "tmdbId": 438631,
+          "title": "Dune",
+          "type": "movie",
+          "elapsedMs": 6738,
+          "downloadFiles": 7,
+          "onlineWithTr": true,
+          "cleanSmallWithTr": true,
+          "downloadQualityGrades": [
+            "480p",
+            "720p",
+            "240p",
+            "360p"
+          ],
+          "downloadPixelGroups": [
+            "1146x480",
+            "1282x536",
+            "1280x536",
+            "426x178",
+            "856x358",
+            "852x362",
+            "641x268"
+          ],
+          "gaps": [],
+          "sourceCoverageCriteriaMet": true,
+          "sources": [
+            {
+              "lane": "main",
+              "reason": "ok",
+              "elapsedMs": 6738,
+              "sources": [
+                {
+                  "name": "PlayIMDb",
+                  "candidates": 3,
+                  "startedMs": 8,
+                  "discoveryMs": 347
+                },
+                {
+                  "name": "HDRezka",
+                  "candidates": 4,
+                  "startedMs": 7,
+                  "discoveryMs": 1005
+                },
+                {
+                  "name": "VixSrc",
+                  "candidates": 1,
+                  "startedMs": 359,
+                  "discoveryMs": 1123
+                },
+                {
+                  "name": "Internet Archive",
+                  "candidates": 2,
+                  "startedMs": 2,
+                  "discoveryMs": 1517
+                },
+                {
+                  "name": "Waploaded",
+                  "candidates": 0,
+                  "startedMs": 1519,
+                  "discoveryMs": 1
+                },
+                {
+                  "name": "Goojara",
+                  "candidates": 1,
+                  "startedMs": 6,
+                  "discoveryMs": 1571
+                },
+                {
+                  "name": "FilmModu",
+                  "candidates": 0,
+                  "startedMs": 1014,
+                  "discoveryMs": 826
+                },
+                {
+                  "name": "RareFilmm",
+                  "candidates": 0,
+                  "startedMs": 1520,
+                  "discoveryMs": 380
+                },
+                {
+                  "name": "4KHDHub / HubCloud",
+                  "candidates": 5,
+                  "startedMs": 1482,
+                  "discoveryMs": 4632
+                }
+              ],
+              "rejected": {
+                "video_unavailable": 5
+              }
+            },
+            {
+              "lane": "fastOnline",
+              "reason": "ok",
+              "elapsedMs": 3194,
+              "sources": [
+                {
+                  "name": "DiziBal",
+                  "candidates": 0,
+                  "startedMs": 10,
+                  "discoveryMs": 420
+                },
+                {
+                  "name": "HDFilmDelisi",
+                  "candidates": 1,
+                  "startedMs": 8,
+                  "discoveryMs": 1013
+                }
+              ],
+              "rejected": {}
+            }
+          ],
+          "files": [
+            {
+              "source": "Internet Archive",
+              "container": "mp4",
+              "bytes": 949160267,
+              "filename": "Dune_2021_720p_BluRay_x265_HEVC_10bit_AAC_2_0_Hindi_PSA_ASAP.mkv",
+              "sourceItemId": "dune-2021-720p-blu-ray-x-265-hevc-10bit-aac-2-0-hindi-psa-asap_202507",
+              "releaseYearBasis": "content-sample-pinned-file",
+              "mediaFilename": "Dune_2021_720p_BluRay_x265_HEVC_10bit_AAC_2_0_Hindi_PSA_ASAP.mp4",
+              "audioLanguages": [],
+              "subtitleBestScore": 76,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 1146,
+                "height": 480
+              },
+              "quality": "1146x480",
+              "qualityGrade": "480p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 8,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 9326.698,
+              "hashAvailable": true
+            },
+            {
+              "source": "HDRezka",
+              "container": "mp4",
+              "bytes": 3066517972,
+              "filename": "Dune.2021",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [],
+              "subtitleBestScore": 90,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 1282,
+                "height": 536
+              },
+              "quality": "1282x536",
+              "qualityGrade": "720p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 5,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 9326.631,
+              "hashAvailable": true
+            },
+            {
+              "source": "Internet Archive",
+              "container": "mkv",
+              "bytes": 792903325,
+              "filename": "Dune_2021_720p_BluRay_x265_HEVC_10bit_AAC_2_0_Hindi_PSA_ASAP.mkv",
+              "sourceItemId": "dune-2021-720p-blu-ray-x-265-hevc-10bit-aac-2-0-hindi-psa-asap_202507",
+              "releaseYearBasis": "content-sample-pinned-file",
+              "mediaFilename": "Dune_2021_720p_BluRay_x265_HEVC_10bit_AAC_2_0_Hindi_PSA_ASAP.mkv",
+              "audioLanguages": [
+                "hi"
+              ],
+              "subtitleBestScore": 76,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 1280,
+                "height": 536
+              },
+              "quality": "1280x536",
+              "qualityGrade": "720p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 8,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 9326.659,
+              "hashAvailable": true
+            },
+            {
+              "source": "HDRezka",
+              "container": "mp4",
+              "bytes": 408697275,
+              "filename": "Dune.2021",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [],
+              "subtitleBestScore": 90,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 426,
+                "height": 178
+              },
+              "quality": "426x178",
+              "qualityGrade": "240p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 5,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 9326.631,
+              "hashAvailable": true
+            },
+            {
+              "source": "HDRezka",
+              "container": "mp4",
+              "bytes": 1276563965,
+              "filename": "Dune.2021",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [],
+              "subtitleBestScore": 90,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 856,
+                "height": 358
+              },
+              "quality": "856x358",
+              "qualityGrade": "480p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 5,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 9326.631,
+              "hashAvailable": true
+            },
+            {
+              "source": "Goojara",
+              "container": "mp4",
+              "bytes": 506588493,
+              "filename": "Dune.2021.1080p.HMAX.WEB-DL.DDP5.1.Atmos.x264-EVO.WT11.mp4",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [],
+              "subtitleBestScore": 84,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 852,
+                "height": 362
+              },
+              "quality": "852x362",
+              "qualityGrade": "480p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 8,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 9325.014,
+              "hashAvailable": true
+            },
+            {
+              "source": "HDRezka",
+              "container": "mp4",
+              "bytes": 698171132,
+              "filename": "Dune.2021",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [],
+              "subtitleBestScore": 90,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 641,
+                "height": 268
+              },
+              "quality": "641x268",
+              "qualityGrade": "360p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 5,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 9326.631,
+              "hashAvailable": true
+            }
+          ]
+        },
+        {
+          "key": "matrix",
+          "tmdbId": 603,
+          "title": "The Matrix",
+          "type": "movie",
+          "elapsedMs": 5994,
+          "downloadFiles": 5,
+          "onlineWithTr": true,
+          "cleanSmallWithTr": true,
+          "downloadQualityGrades": [
+            "720p",
+            "480p",
+            "240p",
+            "360p"
+          ],
+          "downloadPixelGroups": [
+            "1280x720",
+            "853x480",
+            "427x240",
+            "850x360",
+            "640x360"
+          ],
+          "gaps": [],
+          "sourceCoverageCriteriaMet": true,
+          "sources": [
+            {
+              "lane": "main",
+              "reason": "ok",
+              "elapsedMs": 5993,
+              "sources": [
+                {
+                  "name": "PlayIMDb",
+                  "candidates": 3,
+                  "startedMs": 7,
+                  "discoveryMs": 352
+                },
+                {
+                  "name": "HDRezka",
+                  "candidates": 4,
+                  "startedMs": 5,
+                  "discoveryMs": 1023
+                },
+                {
+                  "name": "VixSrc",
+                  "candidates": 1,
+                  "startedMs": 363,
+                  "discoveryMs": 797
+                },
+                {
+                  "name": "Goojara",
+                  "candidates": 1,
+                  "startedMs": 4,
+                  "discoveryMs": 1806
+                },
+                {
+                  "name": "Waploaded",
+                  "candidates": 0,
+                  "startedMs": 1811,
+                  "discoveryMs": 0
+                },
+                {
+                  "name": "RareFilmm",
+                  "candidates": 0,
+                  "startedMs": 1812,
+                  "discoveryMs": 295
+                },
+                {
+                  "name": "FilmModu",
+                  "candidates": 8,
+                  "startedMs": 1032,
+                  "discoveryMs": 1214
+                },
+                {
+                  "name": "Internet Archive",
+                  "candidates": 0,
+                  "startedMs": 2,
+                  "discoveryMs": 4024
+                },
+                {
+                  "name": "4KHDHub / HubCloud",
+                  "candidates": 6,
+                  "startedMs": 1162,
+                  "discoveryMs": 3336
+                }
+              ],
+              "rejected": {
+                "video_unavailable": 6
+              }
+            },
+            {
+              "lane": "fastOnline",
+              "reason": "ok",
+              "elapsedMs": 4876,
+              "sources": [
+                {
+                  "name": "DiziBal",
+                  "candidates": 1,
+                  "startedMs": 8,
+                  "discoveryMs": 1051
+                },
+                {
+                  "name": "HDFilmDelisi",
+                  "candidates": 1,
+                  "startedMs": 7,
+                  "discoveryMs": 1269
+                }
+              ],
+              "rejected": {}
+            }
+          ],
+          "files": [
+            {
+              "source": "HDRezka",
+              "container": "mp4",
+              "bytes": 2696070370,
+              "filename": "The Matrix.1999",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [],
+              "subtitleBestScore": 90,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 1280,
+                "height": 720
+              },
+              "quality": "1280x720",
+              "qualityGrade": "720p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 5,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 8201.652,
+              "hashAvailable": true
+            },
+            {
+              "source": "HDRezka",
+              "container": "mp4",
+              "bytes": 1122507349,
+              "filename": "The Matrix.1999",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [],
+              "subtitleBestScore": 90,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 853,
+                "height": 480
+              },
+              "quality": "853x480",
+              "qualityGrade": "480p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 5,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 8201.652,
+              "hashAvailable": true
+            },
+            {
+              "source": "HDRezka",
+              "container": "mp4",
+              "bytes": 359158239,
+              "filename": "The Matrix.1999",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [],
+              "subtitleBestScore": 90,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 427,
+                "height": 240
+              },
+              "quality": "427x240",
+              "qualityGrade": "240p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 5,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 8201.652,
+              "hashAvailable": true
+            },
+            {
+              "source": "Goojara",
+              "container": "mp4",
+              "bytes": 784642932,
+              "filename": "The.Matrix.1999.720p.BRRip.x264-x0r.WT11.mp4",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [],
+              "subtitleBestScore": 76,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 850,
+                "height": 360
+              },
+              "quality": "850x360",
+              "qualityGrade": "480p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 8,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 8177.846,
+              "hashAvailable": true
+            },
+            {
+              "source": "HDRezka",
+              "container": "mp4",
+              "bytes": 613854831,
+              "filename": "The Matrix.1999",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [],
+              "subtitleBestScore": 90,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 640,
+                "height": 360
+              },
+              "quality": "640x360",
+              "qualityGrade": "360p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 5,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 8201.652,
+              "hashAvailable": true
+            }
+          ]
+        },
+        {
+          "key": "inception",
+          "tmdbId": 27205,
+          "title": "Inception",
+          "type": "movie",
+          "elapsedMs": 9895,
+          "downloadFiles": 6,
+          "onlineWithTr": true,
+          "cleanSmallWithTr": true,
+          "downloadQualityGrades": [
+            "720p",
+            "240p",
+            "480p",
+            "360p"
+          ],
+          "downloadPixelGroups": [
+            "1282x534",
+            "427x178",
+            "1280x536",
+            "854x356",
+            "638x266"
+          ],
+          "gaps": [],
+          "sourceCoverageCriteriaMet": true,
+          "sources": [
+            {
+              "lane": "main",
+              "reason": "ok",
+              "elapsedMs": 9895,
+              "sources": [
+                {
+                  "name": "PlayIMDb",
+                  "candidates": 3,
+                  "startedMs": 7,
+                  "discoveryMs": 399
+                },
+                {
+                  "name": "HDRezka",
+                  "candidates": 4,
+                  "startedMs": 6,
+                  "discoveryMs": 901
+                },
+                {
+                  "name": "VixSrc",
+                  "candidates": 1,
+                  "startedMs": 411,
+                  "discoveryMs": 802
+                },
+                {
+                  "name": "Goojara",
+                  "candidates": 1,
+                  "startedMs": 5,
+                  "discoveryMs": 1536
+                },
+                {
+                  "name": "Waploaded",
+                  "candidates": 0,
+                  "startedMs": 1543,
+                  "discoveryMs": 1
+                },
+                {
+                  "name": "FilmModu",
+                  "candidates": 8,
+                  "startedMs": 909,
+                  "discoveryMs": 815
+                },
+                {
+                  "name": "RareFilmm",
+                  "candidates": 0,
+                  "startedMs": 1544,
+                  "discoveryMs": 310
+                },
+                {
+                  "name": "Internet Archive",
+                  "candidates": 2,
+                  "startedMs": 3,
+                  "discoveryMs": 2562
+                },
+                {
+                  "name": "4KHDHub / HubCloud",
+                  "candidates": 7,
+                  "startedMs": 1213,
+                  "discoveryMs": 5452
+                }
+              ],
+              "rejected": {
+                "video_unavailable": 8,
+                "subtitle_unavailable": 2
+              }
+            },
+            {
+              "lane": "fastOnline",
+              "reason": "ok",
+              "elapsedMs": 7003,
+              "sources": [
+                {
+                  "name": "HDFilmDelisi",
+                  "candidates": 1,
+                  "startedMs": 7,
+                  "discoveryMs": 896
+                },
+                {
+                  "name": "DiziBal",
+                  "candidates": 1,
+                  "startedMs": 8,
+                  "discoveryMs": 1385
+                }
+              ],
+              "rejected": {}
+            }
+          ],
+          "files": [
+            {
+              "source": "HDRezka",
+              "container": "mp4",
+              "bytes": 2918591890,
+              "filename": "Inception.2010",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [],
+              "subtitleBestScore": 90,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 1282,
+                "height": 534
+              },
+              "quality": "1282x534",
+              "qualityGrade": "720p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 5,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 8888.319,
+              "hashAvailable": true
+            },
+            {
+              "source": "HDRezka",
+              "container": "mp4",
+              "bytes": 387674406,
+              "filename": "Inception.2010",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [],
+              "subtitleBestScore": 90,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 427,
+                "height": 178
+              },
+              "quality": "427x178",
+              "qualityGrade": "240p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 5,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 8888.319,
+              "hashAvailable": true
+            },
+            {
+              "source": "Internet Archive",
+              "container": "mp4",
+              "bytes": 869895874,
+              "filename": "A.Origem.[2010].baixarfilmesretro.blogspot.com (1).mp4",
+              "sourceItemId": "a.-origem.-2010.baixarfilmesretro.blogspot.com-1",
+              "releaseYearBasis": "content-sample-pinned-file",
+              "mediaFilename": "A.Origem.[2010].baixarfilmesretro.blogspot.com (1).ia.mp4",
+              "audioLanguages": [],
+              "subtitleBestScore": 69,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 1280,
+                "height": 536
+              },
+              "quality": "1280x536",
+              "qualityGrade": "720p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 8,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 8888.088,
+              "hashAvailable": true
+            },
+            {
+              "source": "Internet Archive",
+              "container": "mp4",
+              "bytes": 902428472,
+              "filename": "A.Origem.[2010].baixarfilmesretro.blogspot.com (1).mp4",
+              "sourceItemId": "a.-origem.-2010.baixarfilmesretro.blogspot.com-1",
+              "releaseYearBasis": "content-sample-pinned-file",
+              "mediaFilename": "A.Origem.[2010].baixarfilmesretro.blogspot.com (1).mp4",
+              "audioLanguages": [],
+              "subtitleBestScore": 69,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 1280,
+                "height": 536
+              },
+              "quality": "1280x536",
+              "qualityGrade": "720p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 8,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 8888.086666666666,
+              "hashAvailable": true
+            },
+            {
+              "source": "HDRezka",
+              "container": "mp4",
+              "bytes": 1210001304,
+              "filename": "Inception.2010",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [],
+              "subtitleBestScore": 90,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 854,
+                "height": 356
+              },
+              "quality": "854x356",
+              "qualityGrade": "480p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 5,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 8888.319,
+              "hashAvailable": true
+            },
+            {
+              "source": "HDRezka",
+              "container": "mp4",
+              "bytes": 661316643,
+              "filename": "Inception.2010",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [],
+              "subtitleBestScore": 90,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 638,
+                "height": 266
+              },
+              "quality": "638x266",
+              "qualityGrade": "360p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 5,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 8888.319,
+              "hashAvailable": true
+            }
+          ]
+        },
+        {
+          "key": "fleabag-s1e1",
+          "tmdbId": 67070,
+          "title": "Fleabag",
+          "type": "tv",
+          "season": 1,
+          "episode": 1,
+          "elapsedMs": 12476,
+          "downloadFiles": 6,
+          "onlineWithTr": true,
+          "cleanSmallWithTr": true,
+          "downloadQualityGrades": [
+            "480p",
+            "720p",
+            "240p",
+            "360p"
+          ],
+          "downloadPixelGroups": [
+            "848x354",
+            "1278x534",
+            "426x178",
+            "852x356",
+            "642x268",
+            "853x476"
+          ],
+          "gaps": [],
+          "sourceCoverageCriteriaMet": true,
+          "sources": [
+            {
+              "lane": "main",
+              "reason": "ok",
+              "elapsedMs": 12476,
+              "sources": [
+                {
+                  "name": "PlayIMDb",
+                  "candidates": 3,
+                  "startedMs": 6,
+                  "discoveryMs": 360
+                },
+                {
+                  "name": "HDRezka",
+                  "candidates": 4,
+                  "startedMs": 5,
+                  "discoveryMs": 1116
+                },
+                {
+                  "name": "VixSrc",
+                  "candidates": 1,
+                  "startedMs": 369,
+                  "discoveryMs": 889
+                },
+                {
+                  "name": "DiziYou",
+                  "candidates": 1,
+                  "startedMs": 1122,
+                  "discoveryMs": 674
+                },
+                {
+                  "name": "Goojara",
+                  "candidates": 1,
+                  "startedMs": 5,
+                  "discoveryMs": 1897
+                },
+                {
+                  "name": "Internet Archive",
+                  "candidates": 2,
+                  "startedMs": 2,
+                  "discoveryMs": 1998
+                },
+                {
+                  "name": "Waploaded",
+                  "candidates": 0,
+                  "startedMs": 1903,
+                  "discoveryMs": 317
+                },
+                {
+                  "name": "DiziBak",
+                  "candidates": 1,
+                  "startedMs": 1258,
+                  "discoveryMs": 1253
+                },
+                {
+                  "name": "4KHDHub / HubCloud",
+                  "candidates": 0,
+                  "startedMs": 1796,
+                  "discoveryMs": 3440
+                }
+              ],
+              "rejected": {
+                "video_unavailable": 1
+              }
+            },
+            {
+              "lane": "fastOnline",
+              "reason": "ok",
+              "elapsedMs": 1495,
+              "sources": [
+                {
+                  "name": "DiziBal",
+                  "candidates": 1,
+                  "startedMs": 7,
+                  "discoveryMs": 1074
+                }
+              ],
+              "rejected": {}
+            }
+          ],
+          "files": [
+            {
+              "source": "Internet Archive",
+              "container": "mp4",
+              "bytes": 162737999,
+              "filename": "Fleabag.S01E01.480p.WEB-DL.Tehmovies.biz.mkv",
+              "sourceItemId": "fleabag.s01e01.480p.webdl.tehmovies.biz",
+              "releaseYearBasis": "content-sample-pinned-file",
+              "mediaFilename": "Fleabag.S01E01.480p.WEB-DL.Tehmovies.biz.mp4",
+              "audioLanguages": [],
+              "subtitleBestScore": 74,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 848,
+                "height": 354
+              },
+              "quality": "848x354",
+              "qualityGrade": "480p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 8,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 1564.866,
+              "hashAvailable": true
+            },
+            {
+              "source": "HDRezka",
+              "container": "mp4",
+              "bytes": 225138395,
+              "filename": "Fleabag.2016.S01E01",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [],
+              "subtitleBestScore": 90,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 1278,
+                "height": 534
+              },
+              "quality": "1278x534",
+              "qualityGrade": "720p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 5,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 1565.782,
+              "hashAvailable": true
+            },
+            {
+              "source": "HDRezka",
+              "container": "mp4",
+              "bytes": 58976791,
+              "filename": "Fleabag.2016.S01E01",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [],
+              "subtitleBestScore": 90,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 426,
+                "height": 178
+              },
+              "quality": "426x178",
+              "qualityGrade": "240p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 5,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 1565.782,
+              "hashAvailable": true
+            },
+            {
+              "source": "HDRezka",
+              "container": "mp4",
+              "bytes": 123915344,
+              "filename": "Fleabag.2016.S01E01",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [],
+              "subtitleBestScore": 90,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 852,
+                "height": 356
+              },
+              "quality": "852x356",
+              "qualityGrade": "480p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 5,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 1565.782,
+              "hashAvailable": true
+            },
+            {
+              "source": "HDRezka",
+              "container": "mp4",
+              "bytes": 85117635,
+              "filename": "Fleabag.2016.S01E01",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [],
+              "subtitleBestScore": 90,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 642,
+                "height": 268
+              },
+              "quality": "642x268",
+              "qualityGrade": "360p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 5,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 1565.782,
+              "hashAvailable": true
+            },
+            {
+              "source": "Goojara",
+              "container": "mp4",
+              "bytes": 120769545,
+              "filename": "Fleabag.S01E01.720p.WEB.DL.x264-ITSat.WT2.mp4",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [],
+              "subtitleBestScore": 74,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 853,
+                "height": 476
+              },
+              "quality": "853x476",
+              "qualityGrade": "480p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 8,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 1564.885,
+              "hashAvailable": true
+            }
+          ]
+        },
+        {
+          "key": "shameless-s1e1",
+          "tmdbId": 34307,
+          "title": "Shameless",
+          "type": "tv",
+          "season": 1,
+          "episode": 1,
+          "elapsedMs": 3557,
+          "downloadFiles": 0,
+          "onlineWithTr": true,
+          "cleanSmallWithTr": false,
+          "downloadQualityGrades": [],
+          "downloadPixelGroups": [],
+          "gaps": [
+            "download_missing",
+            "small_download_with_tr_missing",
+            "multiple_verified_download_qualities_missing"
+          ],
+          "sourceCoverageCriteriaMet": false,
+          "sources": [
+            {
+              "lane": "main",
+              "reason": "ok",
+              "elapsedMs": 3556,
+              "sources": [
+                {
+                  "name": "PlayIMDb",
+                  "candidates": 3,
+                  "startedMs": 6,
+                  "discoveryMs": 346
+                },
+                {
+                  "name": "Goojara",
+                  "candidates": 0,
+                  "startedMs": 4,
+                  "discoveryMs": 466
+                },
+                {
+                  "name": "HDRezka",
+                  "candidates": 0,
+                  "startedMs": 5,
+                  "discoveryMs": 824
+                },
+                {
+                  "name": "VixSrc",
+                  "candidates": 1,
+                  "startedMs": 355,
+                  "discoveryMs": 936
+                },
+                {
+                  "name": "4KHDHub / HubCloud",
+                  "candidates": 0,
+                  "startedMs": 1292,
+                  "discoveryMs": 527
+                },
+                {
+                  "name": "Waploaded",
+                  "candidates": 0,
+                  "startedMs": 1819,
+                  "discoveryMs": 0
+                },
+                {
+                  "name": "DiziBak",
+                  "candidates": 1,
+                  "startedMs": 829,
+                  "discoveryMs": 1057
+                },
+                {
+                  "name": "Internet Archive",
+                  "candidates": 0,
+                  "startedMs": 1,
+                  "discoveryMs": 2260
+                },
+                {
+                  "name": "DiziYou",
+                  "candidates": 0,
+                  "startedMs": 470,
+                  "discoveryMs": 2026
+                }
+              ],
+              "rejected": {}
+            },
+            {
+              "lane": "fastOnline",
+              "reason": "ok",
+              "elapsedMs": 1839,
+              "sources": [
+                {
+                  "name": "DiziBal",
+                  "candidates": 1,
+                  "startedMs": 7,
+                  "discoveryMs": 949
+                }
+              ],
+              "rejected": {}
+            }
+          ],
+          "files": []
+        },
+        {
+          "key": "got-s1e1",
+          "tmdbId": 1399,
+          "title": "Game of Thrones",
+          "type": "tv",
+          "season": 1,
+          "episode": 1,
+          "elapsedMs": 13934,
+          "downloadFiles": 5,
+          "onlineWithTr": true,
+          "cleanSmallWithTr": true,
+          "downloadQualityGrades": [
+            "480p",
+            "720p",
+            "240p",
+            "360p"
+          ],
+          "downloadPixelGroups": [
+            "853x480",
+            "1280x720",
+            "427x240",
+            "640x360"
+          ],
+          "gaps": [],
+          "sourceCoverageCriteriaMet": true,
+          "sources": [
+            {
+              "lane": "main",
+              "reason": "ok",
+              "elapsedMs": 13933,
+              "sources": [
+                {
+                  "name": "PlayIMDb",
+                  "candidates": 3,
+                  "startedMs": 3,
+                  "discoveryMs": 200
+                },
+                {
+                  "name": "Internet Archive",
+                  "candidates": 0,
+                  "startedMs": 1,
+                  "discoveryMs": 784
+                },
+                {
+                  "name": "VixSrc",
+                  "candidates": 1,
+                  "startedMs": 206,
+                  "discoveryMs": 647
+                },
+                {
+                  "name": "HDRezka",
+                  "candidates": 4,
+                  "startedMs": 3,
+                  "discoveryMs": 904
+                },
+                {
+                  "name": "DiziBak",
+                  "candidates": 0,
+                  "startedMs": 853,
+                  "discoveryMs": 194
+                },
+                {
+                  "name": "Waploaded",
+                  "candidates": 0,
+                  "startedMs": 1047,
+                  "discoveryMs": 1
+                },
+                {
+                  "name": "Goojara",
+                  "candidates": 1,
+                  "startedMs": 3,
+                  "discoveryMs": 1752
+                },
+                {
+                  "name": "DiziYou",
+                  "candidates": 0,
+                  "startedMs": 785,
+                  "discoveryMs": 1598
+                },
+                {
+                  "name": "4KHDHub / HubCloud",
+                  "candidates": 5,
+                  "startedMs": 908,
+                  "discoveryMs": 3725
+                }
+              ],
+              "rejected": {
+                "video_unavailable": 5
+              }
+            },
+            {
+              "lane": "fastOnline",
+              "reason": "no_eligible_sources",
+              "elapsedMs": 757,
+              "sources": [
+                {
+                  "name": "DiziBal",
+                  "candidates": 0,
+                  "startedMs": 3,
+                  "discoveryMs": 754
+                }
+              ],
+              "rejected": {}
+            }
+          ],
+          "files": [
+            {
+              "source": "HDRezka",
+              "container": "mp4",
+              "bytes": 500238167,
+              "filename": "Game of Thrones.2011.S01E01",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [],
+              "subtitleBestScore": 90,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 853,
+                "height": 480
+              },
+              "quality": "853x480",
+              "qualityGrade": "480p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 4,
+              "externalTurkishTracks": 3,
+              "actualDurationSeconds": 3697.174,
+              "hashAvailable": true
+            },
+            {
+              "source": "HDRezka",
+              "container": "mp4",
+              "bytes": 1214361410,
+              "filename": "Game of Thrones.2011.S01E01",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [],
+              "subtitleBestScore": 90,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 1280,
+                "height": 720
+              },
+              "quality": "1280x720",
+              "qualityGrade": "720p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 4,
+              "externalTurkishTracks": 3,
+              "actualDurationSeconds": 3697.174,
+              "hashAvailable": true
+            },
+            {
+              "source": "HDRezka",
+              "container": "mp4",
+              "bytes": 160562724,
+              "filename": "Game of Thrones.2011.S01E01",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [],
+              "subtitleBestScore": 90,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 427,
+                "height": 240
+              },
+              "quality": "427x240",
+              "qualityGrade": "240p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 4,
+              "externalTurkishTracks": 3,
+              "actualDurationSeconds": 3697.174,
+              "hashAvailable": true
+            },
+            {
+              "source": "Goojara",
+              "container": "mp4",
+              "bytes": 777811986,
+              "filename": "Game.Of.Thrones.S01E01.BRRip.720p.XVID.AC3.HCSubs-KaOs.WT11.mp4",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [],
+              "subtitleBestScore": 78,
+              "burnedSubtitleLanguage": "und",
+              "knownForeignBurnedSubtitles": true,
+              "dimensions": {
+                "width": 1280,
+                "height": 720
+              },
+              "quality": "1280x720",
+              "qualityGrade": "720p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 8,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 3697.156,
+              "hashAvailable": true
+            },
+            {
+              "source": "HDRezka",
+              "container": "mp4",
+              "bytes": 273913101,
+              "filename": "Game of Thrones.2011.S01E01",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [],
+              "subtitleBestScore": 90,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 640,
+                "height": 360
+              },
+              "quality": "640x360",
+              "qualityGrade": "360p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 4,
+              "externalTurkishTracks": 3,
+              "actualDurationSeconds": 3697.174,
+              "hashAvailable": true
+            }
+          ]
+        },
+        {
+          "key": "death-note-s1e1",
+          "tmdbId": 13916,
+          "title": "DEATH NOTE",
+          "type": "tv",
+          "season": 1,
+          "episode": 1,
+          "elapsedMs": 9078,
+          "downloadFiles": 4,
+          "onlineWithTr": true,
+          "cleanSmallWithTr": true,
+          "downloadQualityGrades": [
+            "480p",
+            "720p"
+          ],
+          "downloadPixelGroups": [
+            "852x480",
+            "1280x720"
+          ],
+          "gaps": [],
+          "sourceCoverageCriteriaMet": true,
+          "sources": [
+            {
+              "lane": "main",
+              "reason": "ok",
+              "elapsedMs": 7046,
+              "sources": [
+                {
+                  "name": "PlayIMDb",
+                  "candidates": 3,
+                  "startedMs": 6,
+                  "discoveryMs": 354
+                },
+                {
+                  "name": "Goojara",
+                  "candidates": 0,
+                  "startedMs": 4,
+                  "discoveryMs": 648
+                },
+                {
+                  "name": "HDRezka",
+                  "candidates": 0,
+                  "startedMs": 5,
+                  "discoveryMs": 718
+                },
+                {
+                  "name": "VixSrc",
+                  "candidates": 0,
+                  "startedMs": 364,
+                  "discoveryMs": 497
+                },
+                {
+                  "name": "4KHDHub / HubCloud",
+                  "candidates": 0,
+                  "startedMs": 652,
+                  "discoveryMs": 724
+                },
+                {
+                  "name": "Internet Archive",
+                  "candidates": 0,
+                  "startedMs": 2,
+                  "discoveryMs": 4409
+                }
+              ],
+              "rejected": {
+                "video_unavailable": 1
+              }
+            },
+            {
+              "lane": "fastOnline",
+              "reason": "ok",
+              "elapsedMs": 7071,
+              "sources": [
+                {
+                  "name": "DiziBal",
+                  "candidates": 1,
+                  "startedMs": 7,
+                  "discoveryMs": 1629
+                }
+              ],
+              "rejected": {}
+            },
+            {
+              "lane": "anime",
+              "reason": "ok",
+              "elapsedMs": 9077,
+              "sources": [
+                {
+                  "name": "SonAnime",
+                  "candidates": 2,
+                  "startedMs": 10,
+                  "discoveryMs": 666
+                },
+                {
+                  "name": "Animecix",
+                  "candidates": 4,
+                  "startedMs": 8,
+                  "discoveryMs": 978
+                }
+              ],
+              "rejected": {}
+            }
+          ],
+          "files": [
+            {
+              "source": "SonAnime",
+              "container": "mp4",
+              "bytes": 108188435,
+              "filename": "DEATH NOTE.2006.S01E01",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [],
+              "subtitleBestScore": 69,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 852,
+                "height": 480
+              },
+              "quality": "852x480",
+              "qualityGrade": "480p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 5,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 1390.656,
+              "hashAvailable": true
+            },
+            {
+              "source": "SonAnime",
+              "container": "mp4",
+              "bytes": 240288551,
+              "filename": "DEATH NOTE.2006.S01E01",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [],
+              "subtitleBestScore": 69,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 1280,
+                "height": 720
+              },
+              "quality": "1280x720",
+              "qualityGrade": "720p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 5,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 1390.656,
+              "hashAvailable": true
+            },
+            {
+              "source": "Animecix",
+              "container": "mp4",
+              "bytes": 94687213,
+              "filename": "DEATH NOTE.2006.S01E01.480p.mp4",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [],
+              "subtitleBestScore": 69,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 852,
+                "height": 480
+              },
+              "quality": "852x480",
+              "qualityGrade": "480p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 5,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 1376.201,
+              "hashAvailable": true
+            },
+            {
+              "source": "Animecix",
+              "container": "mp4",
+              "bytes": 179688354,
+              "filename": "DEATH NOTE.2006.S01E01.720p.mp4",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [],
+              "subtitleBestScore": 69,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 1280,
+                "height": 720
+              },
+              "quality": "1280x720",
+              "qualityGrade": "720p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 5,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 1376.201,
+              "hashAvailable": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "repeat-and-additional-episodes",
+      "checkedAt": "2026-10-27T14:27:05.969Z",
+      "version": "1.8.0",
+      "cases": [
+        {
+          "key": "dune",
+          "tmdbId": 438631,
+          "title": "Dune",
+          "type": "movie",
+          "elapsedMs": 24019,
+          "downloadFiles": 0,
+          "onlineWithTr": true,
+          "cleanSmallWithTr": false,
+          "downloadQualityGrades": [],
+          "downloadPixelGroups": [],
+          "gaps": [
+            "download_missing",
+            "small_download_with_tr_missing",
+            "multiple_verified_download_qualities_missing"
+          ],
+          "sourceCoverageCriteriaMet": false,
+          "sources": [
+            {
+              "lane": "main",
+              "reason": "deadline",
+              "elapsedMs": 24018,
+              "sources": [
+                {
+                  "name": "PlayIMDb",
+                  "candidates": 3,
+                  "startedMs": 64,
+                  "discoveryMs": 351
+                },
+                {
+                  "name": "HDRezka",
+                  "candidates": 4,
+                  "startedMs": 62,
+                  "discoveryMs": 941
+                },
+                {
+                  "name": "VixSrc",
+                  "candidates": 1,
+                  "startedMs": 423,
+                  "discoveryMs": 1066
+                },
+                {
+                  "name": "FilmModu",
+                  "candidates": 0,
+                  "startedMs": 1006,
+                  "discoveryMs": 742
+                },
+                {
+                  "name": "Internet Archive",
+                  "candidates": 2,
+                  "startedMs": 55,
+                  "discoveryMs": 4671
+                },
+                {
+                  "name": "Goojara",
+                  "candidates": 0,
+                  "startedMs": 60,
+                  "discoveryMs": 5535
+                },
+                {
+                  "name": "4KHDHub / HubCloud",
+                  "candidates": 0,
+                  "startedMs": 1490,
+                  "discoveryMs": 4501
+                },
+                {
+                  "name": "Waploaded",
+                  "candidates": 0,
+                  "startedMs": 1748,
+                  "discoveryMs": 4514
+                },
+                {
+                  "name": "RareFilmm",
+                  "candidates": 0,
+                  "startedMs": 4727,
+                  "discoveryMs": 4515
+                }
+              ],
+              "rejected": {
+                "video_unavailable": 6
+              }
+            },
+            {
+              "lane": "fastOnline",
+              "reason": "no_eligible_sources",
+              "elapsedMs": 5517,
+              "sources": [
+                {
+                  "name": "DiziBal",
+                  "candidates": 0,
+                  "startedMs": 63,
+                  "discoveryMs": 428
+                },
+                {
+                  "name": "HDFilmDelisi",
+                  "candidates": 1,
+                  "startedMs": 62,
+                  "discoveryMs": 945
+                }
+              ],
+              "rejected": {
+                "video_unavailable": 1
+              }
+            }
+          ],
+          "files": []
+        },
+        {
+          "key": "matrix",
+          "tmdbId": 603,
+          "title": "The Matrix",
+          "type": "movie",
+          "elapsedMs": 13099,
+          "downloadFiles": 4,
+          "onlineWithTr": true,
+          "cleanSmallWithTr": true,
+          "downloadQualityGrades": [
+            "720p",
+            "480p",
+            "240p"
+          ],
+          "downloadPixelGroups": [
+            "1280x720",
+            "853x480",
+            "427x240",
+            "850x360"
+          ],
+          "gaps": [],
+          "sourceCoverageCriteriaMet": true,
+          "sources": [
+            {
+              "lane": "main",
+              "reason": "ok",
+              "elapsedMs": 13099,
+              "sources": [
+                {
+                  "name": "PlayIMDb",
+                  "candidates": 3,
+                  "startedMs": 8,
+                  "discoveryMs": 368
+                },
+                {
+                  "name": "HDRezka",
+                  "candidates": 4,
+                  "startedMs": 7,
+                  "discoveryMs": 934
+                },
+                {
+                  "name": "VixSrc",
+                  "candidates": 1,
+                  "startedMs": 379,
+                  "discoveryMs": 751
+                },
+                {
+                  "name": "Goojara",
+                  "candidates": 1,
+                  "startedMs": 6,
+                  "discoveryMs": 1521
+                },
+                {
+                  "name": "Waploaded",
+                  "candidates": 0,
+                  "startedMs": 1528,
+                  "discoveryMs": 285
+                },
+                {
+                  "name": "RareFilmm",
+                  "candidates": 0,
+                  "startedMs": 1813,
+                  "discoveryMs": 306
+                },
+                {
+                  "name": "FilmModu",
+                  "candidates": 8,
+                  "startedMs": 945,
+                  "discoveryMs": 1386
+                },
+                {
+                  "name": "Internet Archive",
+                  "candidates": 0,
+                  "startedMs": 3,
+                  "discoveryMs": 8678
+                },
+                {
+                  "name": "4KHDHub / HubCloud",
+                  "candidates": 4,
+                  "startedMs": 1131,
+                  "discoveryMs": 8010
+                }
+              ],
+              "rejected": {
+                "video_unavailable": 5
+              }
+            },
+            {
+              "lane": "fastOnline",
+              "reason": "deadline",
+              "elapsedMs": 8005,
+              "sources": [
+                {
+                  "name": "HDFilmDelisi",
+                  "candidates": 1,
+                  "startedMs": 8,
+                  "discoveryMs": 905
+                },
+                {
+                  "name": "DiziBal",
+                  "candidates": 1,
+                  "startedMs": 9,
+                  "discoveryMs": 1168
+                }
+              ],
+              "rejected": {}
+            }
+          ],
+          "files": [
+            {
+              "source": "HDRezka",
+              "container": "mp4",
+              "bytes": 2696070370,
+              "filename": "The Matrix.1999",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [],
+              "subtitleBestScore": 90,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 1280,
+                "height": 720
+              },
+              "quality": "1280x720",
+              "qualityGrade": "720p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 5,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 8201.652,
+              "hashAvailable": true
+            },
+            {
+              "source": "HDRezka",
+              "container": "mp4",
+              "bytes": 1122507349,
+              "filename": "The Matrix.1999",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [],
+              "subtitleBestScore": 90,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 853,
+                "height": 480
+              },
+              "quality": "853x480",
+              "qualityGrade": "480p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 5,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 8201.652,
+              "hashAvailable": true
+            },
+            {
+              "source": "HDRezka",
+              "container": "mp4",
+              "bytes": 359158239,
+              "filename": "The Matrix.1999",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [],
+              "subtitleBestScore": 90,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 427,
+                "height": 240
+              },
+              "quality": "427x240",
+              "qualityGrade": "240p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 5,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 8201.652,
+              "hashAvailable": true
+            },
+            {
+              "source": "Goojara",
+              "container": "mp4",
+              "bytes": 784642932,
+              "filename": "The.Matrix.1999.720p.BRRip.x264-x0r.WT11.mp4",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [],
+              "subtitleBestScore": 76,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 850,
+                "height": 360
+              },
+              "quality": "850x360",
+              "qualityGrade": "480p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 8,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 8177.846,
+              "hashAvailable": true
+            }
+          ]
+        },
+        {
+          "key": "fleabag-s2e1",
+          "tmdbId": 67070,
+          "title": "Fleabag",
+          "type": "tv",
+          "season": 2,
+          "episode": 1,
+          "elapsedMs": 12526,
+          "downloadFiles": 5,
+          "onlineWithTr": true,
+          "cleanSmallWithTr": true,
+          "downloadQualityGrades": [
+            "240p",
+            "480p",
+            "360p",
+            "720p"
+          ],
+          "downloadPixelGroups": [
+            "428x180",
+            "855x360",
+            "853x480",
+            "642x270",
+            "1280x720"
+          ],
+          "gaps": [],
+          "sourceCoverageCriteriaMet": true,
+          "sources": [
+            {
+              "lane": "main",
+              "reason": "ok",
+              "elapsedMs": 12526,
+              "sources": [
+                {
+                  "name": "PlayIMDb",
+                  "candidates": 3,
+                  "startedMs": 5,
+                  "discoveryMs": 341
+                },
+                {
+                  "name": "HDRezka",
+                  "candidates": 4,
+                  "startedMs": 5,
+                  "discoveryMs": 1093
+                },
+                {
+                  "name": "VixSrc",
+                  "candidates": 1,
+                  "startedMs": 351,
+                  "discoveryMs": 1024
+                },
+                {
+                  "name": "DiziYou",
+                  "candidates": 1,
+                  "startedMs": 1100,
+                  "discoveryMs": 680
+                },
+                {
+                  "name": "Goojara",
+                  "candidates": 1,
+                  "startedMs": 4,
+                  "discoveryMs": 1810
+                },
+                {
+                  "name": "Internet Archive",
+                  "candidates": 2,
+                  "startedMs": 1,
+                  "discoveryMs": 2008
+                },
+                {
+                  "name": "Waploaded",
+                  "candidates": 0,
+                  "startedMs": 1814,
+                  "discoveryMs": 294
+                },
+                {
+                  "name": "DiziBak",
+                  "candidates": 1,
+                  "startedMs": 1375,
+                  "discoveryMs": 1129
+                },
+                {
+                  "name": "4KHDHub / HubCloud",
+                  "candidates": 0,
+                  "startedMs": 1780,
+                  "discoveryMs": 5991
+                }
+              ],
+              "rejected": {
+                "video_unavailable": 2
+              }
+            },
+            {
+              "lane": "fastOnline",
+              "reason": "ok",
+              "elapsedMs": 1600,
+              "sources": [
+                {
+                  "name": "DiziBal",
+                  "candidates": 1,
+                  "startedMs": 6,
+                  "discoveryMs": 1072
+                }
+              ],
+              "rejected": {}
+            }
+          ],
+          "files": [
+            {
+              "source": "HDRezka",
+              "container": "mp4",
+              "bytes": 66341380,
+              "filename": "Fleabag.2016.S02E01",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [],
+              "subtitleBestScore": 90,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 428,
+                "height": 180
+              },
+              "quality": "428x180",
+              "qualityGrade": "240p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 5,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 1536.662,
+              "hashAvailable": true
+            },
+            {
+              "source": "HDRezka",
+              "container": "mp4",
+              "bytes": 206697478,
+              "filename": "Fleabag.2016.S02E01",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [],
+              "subtitleBestScore": 90,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 855,
+                "height": 360
+              },
+              "quality": "855x360",
+              "qualityGrade": "480p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 5,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 1536.662,
+              "hashAvailable": true
+            },
+            {
+              "source": "Internet Archive",
+              "container": "mp4",
+              "bytes": 154176179,
+              "filename": "FL34B4G SUB T02XE01.mkv",
+              "sourceItemId": "fleabag.-s-01-e-05.-hdtv.-subtitulado-esp.-sc",
+              "releaseYearBasis": "content-sample-pinned-file",
+              "mediaFilename": "Fleabag Season 2/FL34B4G SUB T02XE01.mp4",
+              "audioLanguages": [],
+              "subtitleBestScore": 69,
+              "burnedSubtitleLanguage": "es",
+              "knownForeignBurnedSubtitles": true,
+              "dimensions": {
+                "width": 853,
+                "height": 480
+              },
+              "quality": "853x480",
+              "qualityGrade": "480p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 8,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 1531.455,
+              "hashAvailable": true
+            },
+            {
+              "source": "HDRezka",
+              "container": "mp4",
+              "bytes": 113225094,
+              "filename": "Fleabag.2016.S02E01",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [],
+              "subtitleBestScore": 90,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 642,
+                "height": 270
+              },
+              "quality": "642x270",
+              "qualityGrade": "360p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 5,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 1536.662,
+              "hashAvailable": true
+            },
+            {
+              "source": "Internet Archive",
+              "container": "mkv",
+              "bytes": 633782892,
+              "filename": "FL34B4G SUB T02XE01.mkv",
+              "sourceItemId": "fleabag.-s-01-e-05.-hdtv.-subtitulado-esp.-sc",
+              "releaseYearBasis": "content-sample-pinned-file",
+              "mediaFilename": "Fleabag Season 2/FL34B4G SUB T02XE01.mkv",
+              "audioLanguages": [],
+              "subtitleBestScore": 69,
+              "burnedSubtitleLanguage": "es",
+              "knownForeignBurnedSubtitles": true,
+              "dimensions": {
+                "width": 1280,
+                "height": 720
+              },
+              "quality": "1280x720",
+              "qualityGrade": "720p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 8,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 1531.389,
+              "hashAvailable": true
+            }
+          ]
+        },
+        {
+          "key": "breaking-bad-s1e1",
+          "tmdbId": 1396,
+          "title": "Breaking Bad",
+          "type": "tv",
+          "season": 1,
+          "episode": 1,
+          "elapsedMs": 9127,
+          "downloadFiles": 6,
+          "onlineWithTr": true,
+          "cleanSmallWithTr": true,
+          "downloadQualityGrades": [
+            "720p",
+            "240p",
+            "480p",
+            "360p"
+          ],
+          "downloadPixelGroups": [
+            "1280x720",
+            "427x240",
+            "853x480",
+            "640x360"
+          ],
+          "gaps": [],
+          "sourceCoverageCriteriaMet": true,
+          "sources": [
+            {
+              "lane": "main",
+              "reason": "ok",
+              "elapsedMs": 9127,
+              "sources": [
+                {
+                  "name": "PlayIMDb",
+                  "candidates": 3,
+                  "startedMs": 7,
+                  "discoveryMs": 328
+                },
+                {
+                  "name": "HDRezka",
+                  "candidates": 4,
+                  "startedMs": 7,
+                  "discoveryMs": 1077
+                },
+                {
+                  "name": "VixSrc",
+                  "candidates": 1,
+                  "startedMs": 339,
+                  "discoveryMs": 749
+                },
+                {
+                  "name": "DiziBak",
+                  "candidates": 0,
+                  "startedMs": 1088,
+                  "discoveryMs": 434
+                },
+                {
+                  "name": "Goojara",
+                  "candidates": 1,
+                  "startedMs": 6,
+                  "discoveryMs": 1708
+                },
+                {
+                  "name": "Waploaded",
+                  "candidates": 0,
+                  "startedMs": 1715,
+                  "discoveryMs": 1
+                },
+                {
+                  "name": "DiziYou",
+                  "candidates": 2,
+                  "startedMs": 1085,
+                  "discoveryMs": 780
+                },
+                {
+                  "name": "4KHDHub / HubCloud",
+                  "candidates": 0,
+                  "startedMs": 1522,
+                  "discoveryMs": 708
+                },
+                {
+                  "name": "Internet Archive",
+                  "candidates": 2,
+                  "startedMs": 2,
+                  "discoveryMs": 5320
+                }
+              ],
+              "rejected": {
+                "video_unavailable": 1
+              }
+            },
+            {
+              "lane": "fastOnline",
+              "reason": "ok",
+              "elapsedMs": 2071,
+              "sources": [
+                {
+                  "name": "DiziBal",
+                  "candidates": 1,
+                  "startedMs": 7,
+                  "discoveryMs": 1621
+                }
+              ],
+              "rejected": {}
+            }
+          ],
+          "files": [
+            {
+              "source": "Internet Archive",
+              "container": "mkv",
+              "bytes": 487194215,
+              "filename": "Breaking Bad s01e01 720p.BRrip.Sujaidr.mkv",
+              "sourceItemId": "breaking-bad-s-01e-01-720p.-brrip.-sujaidr_202411",
+              "releaseYearBasis": "content-sample-pinned-file",
+              "mediaFilename": "Breaking Bad s01e01 720p.BRrip.Sujaidr.mkv",
+              "audioLanguages": [
+                "eng"
+              ],
+              "subtitleBestScore": 76,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 1280,
+                "height": 720
+              },
+              "quality": "1280x720",
+              "qualityGrade": "720p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 8,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 3486.44175,
+              "hashAvailable": true
+            },
+            {
+              "source": "HDRezka",
+              "container": "mp4",
+              "bytes": 1145043718,
+              "filename": "Breaking Bad.2008.S01E01",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [],
+              "subtitleBestScore": 90,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 1280,
+                "height": 720
+              },
+              "quality": "1280x720",
+              "qualityGrade": "720p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 5,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 3481.5,
+              "hashAvailable": true
+            },
+            {
+              "source": "HDRezka",
+              "container": "mp4",
+              "bytes": 152000526,
+              "filename": "Breaking Bad.2008.S01E01",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [],
+              "subtitleBestScore": 90,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 427,
+                "height": 240
+              },
+              "quality": "427x240",
+              "qualityGrade": "240p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 5,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 3481.5,
+              "hashAvailable": true
+            },
+            {
+              "source": "Internet Archive",
+              "container": "mp4",
+              "bytes": 344478919,
+              "filename": "Breaking Bad s01e01 720p.BRrip.Sujaidr.mkv",
+              "sourceItemId": "breaking-bad-s-01e-01-720p.-brrip.-sujaidr_202411",
+              "releaseYearBasis": "content-sample-pinned-file",
+              "mediaFilename": "Breaking Bad s01e01 720p.BRrip.Sujaidr.mp4",
+              "audioLanguages": [],
+              "subtitleBestScore": 76,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 853,
+                "height": 480
+              },
+              "quality": "853x480",
+              "qualityGrade": "480p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 8,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 3486.592,
+              "hashAvailable": true
+            },
+            {
+              "source": "HDRezka",
+              "container": "mp4",
+              "bytes": 474811900,
+              "filename": "Breaking Bad.2008.S01E01",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [],
+              "subtitleBestScore": 90,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 853,
+                "height": 480
+              },
+              "quality": "853x480",
+              "qualityGrade": "480p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 5,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 3481.5,
+              "hashAvailable": true
+            },
+            {
+              "source": "HDRezka",
+              "container": "mp4",
+              "bytes": 259610558,
+              "filename": "Breaking Bad.2008.S01E01",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [],
+              "subtitleBestScore": 90,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 640,
+                "height": 360
+              },
+              "quality": "640x360",
+              "qualityGrade": "360p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 5,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 3481.5,
+              "hashAvailable": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "source-disabled-comparison",
+      "checkedAt": "2026-10-27T14:29:34.731Z",
+      "version": "1.8.0",
+      "cases": [
+        {
+          "key": "dune",
+          "tmdbId": 438631,
+          "title": "Dune",
+          "type": "movie",
+          "elapsedMs": 7497,
+          "downloadFiles": 3,
+          "onlineWithTr": true,
+          "cleanSmallWithTr": true,
+          "downloadQualityGrades": [
+            "480p",
+            "720p"
+          ],
+          "downloadPixelGroups": [
+            "852x362",
+            "1146x480",
+            "1280x536"
+          ],
+          "gaps": [],
+          "sourceCoverageCriteriaMet": true,
+          "sources": [
+            {
+              "lane": "main",
+              "reason": "ok",
+              "elapsedMs": 7495,
+              "sources": [
+                {
+                  "name": "PlayIMDb",
+                  "candidates": 3,
+                  "startedMs": 56,
+                  "discoveryMs": 335
+                },
+                {
+                  "name": "VixSrc",
+                  "candidates": 1,
+                  "startedMs": 57,
+                  "discoveryMs": 918
+                },
+                {
+                  "name": "FilmModu",
+                  "candidates": 0,
+                  "startedMs": 400,
+                  "discoveryMs": 655
+                },
+                {
+                  "name": "Waploaded",
+                  "candidates": 0,
+                  "startedMs": 1055,
+                  "discoveryMs": 341
+                },
+                {
+                  "name": "Goojara",
+                  "candidates": 1,
+                  "startedMs": 54,
+                  "discoveryMs": 1668
+                },
+                {
+                  "name": "RareFilmm",
+                  "candidates": 0,
+                  "startedMs": 1396,
+                  "discoveryMs": 389
+                },
+                {
+                  "name": "Internet Archive",
+                  "candidates": 2,
+                  "startedMs": 50,
+                  "discoveryMs": 1805
+                },
+                {
+                  "name": "4KHDHub / HubCloud",
+                  "candidates": 5,
+                  "startedMs": 977,
+                  "discoveryMs": 4006
+                }
+              ],
+              "rejected": {
+                "video_unavailable": 5
+              }
+            },
+            {
+              "lane": "fastOnline",
+              "reason": "ok",
+              "elapsedMs": 3312,
+              "sources": [
+                {
+                  "name": "DiziBal",
+                  "candidates": 0,
+                  "startedMs": 57,
+                  "discoveryMs": 457
+                },
+                {
+                  "name": "HDFilmDelisi",
+                  "candidates": 1,
+                  "startedMs": 56,
+                  "discoveryMs": 838
+                }
+              ],
+              "rejected": {}
+            }
+          ],
+          "files": [
+            {
+              "source": "Goojara",
+              "container": "mp4",
+              "bytes": 506588493,
+              "filename": "Dune.2021.1080p.HMAX.WEB-DL.DDP5.1.Atmos.x264-EVO.WT11.mp4",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [],
+              "subtitleBestScore": 84,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 852,
+                "height": 362
+              },
+              "quality": "852x362",
+              "qualityGrade": "480p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 8,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 9325.014,
+              "hashAvailable": true
+            },
+            {
+              "source": "Internet Archive",
+              "container": "mp4",
+              "bytes": 949160267,
+              "filename": "Dune_2021_720p_BluRay_x265_HEVC_10bit_AAC_2_0_Hindi_PSA_ASAP.mkv",
+              "sourceItemId": "dune-2021-720p-blu-ray-x-265-hevc-10bit-aac-2-0-hindi-psa-asap_202507",
+              "releaseYearBasis": "content-sample-pinned-file",
+              "mediaFilename": "Dune_2021_720p_BluRay_x265_HEVC_10bit_AAC_2_0_Hindi_PSA_ASAP.mp4",
+              "audioLanguages": [],
+              "subtitleBestScore": 76,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 1146,
+                "height": 480
+              },
+              "quality": "1146x480",
+              "qualityGrade": "480p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 8,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 9326.698,
+              "hashAvailable": true
+            },
+            {
+              "source": "Internet Archive",
+              "container": "mkv",
+              "bytes": 792903325,
+              "filename": "Dune_2021_720p_BluRay_x265_HEVC_10bit_AAC_2_0_Hindi_PSA_ASAP.mkv",
+              "sourceItemId": "dune-2021-720p-blu-ray-x-265-hevc-10bit-aac-2-0-hindi-psa-asap_202507",
+              "releaseYearBasis": "content-sample-pinned-file",
+              "mediaFilename": "Dune_2021_720p_BluRay_x265_HEVC_10bit_AAC_2_0_Hindi_PSA_ASAP.mkv",
+              "audioLanguages": [
+                "hi"
+              ],
+              "subtitleBestScore": 76,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 1280,
+                "height": 536
+              },
+              "quality": "1280x536",
+              "qualityGrade": "720p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 8,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 9326.659,
+              "hashAvailable": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "source-enabled-recovery",
+      "checkedAt": "2026-10-27T14:29:42.385Z",
+      "version": "1.8.0",
+      "cases": [
+        {
+          "key": "dune",
+          "tmdbId": 438631,
+          "title": "Dune",
+          "type": "movie",
+          "elapsedMs": 9749,
+          "downloadFiles": 6,
+          "onlineWithTr": true,
+          "cleanSmallWithTr": true,
+          "downloadQualityGrades": [
+            "720p",
+            "240p",
+            "480p",
+            "360p"
+          ],
+          "downloadPixelGroups": [
+            "1282x536",
+            "426x178",
+            "856x358",
+            "1280x536",
+            "1146x480",
+            "641x268"
+          ],
+          "gaps": [],
+          "sourceCoverageCriteriaMet": true,
+          "sources": [
+            {
+              "lane": "main",
+              "reason": "ok",
+              "elapsedMs": 9748,
+              "sources": [
+                {
+                  "name": "PlayIMDb",
+                  "candidates": 3,
+                  "startedMs": 68,
+                  "discoveryMs": 316
+                },
+                {
+                  "name": "HDRezka",
+                  "candidates": 4,
+                  "startedMs": 67,
+                  "discoveryMs": 937
+                },
+                {
+                  "name": "VixSrc",
+                  "candidates": 1,
+                  "startedMs": 394,
+                  "discoveryMs": 909
+                },
+                {
+                  "name": "Goojara",
+                  "candidates": 1,
+                  "startedMs": 64,
+                  "discoveryMs": 1606
+                },
+                {
+                  "name": "FilmModu",
+                  "candidates": 0,
+                  "startedMs": 1010,
+                  "discoveryMs": 793
+                },
+                {
+                  "name": "Waploaded",
+                  "candidates": 0,
+                  "startedMs": 1670,
+                  "discoveryMs": 288
+                },
+                {
+                  "name": "RareFilmm",
+                  "candidates": 0,
+                  "startedMs": 1803,
+                  "discoveryMs": 381
+                },
+                {
+                  "name": "Internet Archive",
+                  "candidates": 2,
+                  "startedMs": 60,
+                  "discoveryMs": 2282
+                },
+                {
+                  "name": "4KHDHub / HubCloud",
+                  "candidates": 5,
+                  "startedMs": 1304,
+                  "discoveryMs": 3873
+                }
+              ],
+              "rejected": {
+                "video_unavailable": 6
+              }
+            },
+            {
+              "lane": "fastOnline",
+              "reason": "ok",
+              "elapsedMs": 3714,
+              "sources": [
+                {
+                  "name": "DiziBal",
+                  "candidates": 0,
+                  "startedMs": 67,
+                  "discoveryMs": 434
+                },
+                {
+                  "name": "HDFilmDelisi",
+                  "candidates": 1,
+                  "startedMs": 65,
+                  "discoveryMs": 737
+                }
+              ],
+              "rejected": {}
+            }
+          ],
+          "files": [
+            {
+              "source": "HDRezka",
+              "container": "mp4",
+              "bytes": 3066517972,
+              "filename": "Dune.2021",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [],
+              "subtitleBestScore": 90,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 1282,
+                "height": 536
+              },
+              "quality": "1282x536",
+              "qualityGrade": "720p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 5,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 9326.631,
+              "hashAvailable": true
+            },
+            {
+              "source": "HDRezka",
+              "container": "mp4",
+              "bytes": 408697275,
+              "filename": "Dune.2021",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [],
+              "subtitleBestScore": 90,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 426,
+                "height": 178
+              },
+              "quality": "426x178",
+              "qualityGrade": "240p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 5,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 9326.631,
+              "hashAvailable": true
+            },
+            {
+              "source": "HDRezka",
+              "container": "mp4",
+              "bytes": 1276563965,
+              "filename": "Dune.2021",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [],
+              "subtitleBestScore": 90,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 856,
+                "height": 358
+              },
+              "quality": "856x358",
+              "qualityGrade": "480p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 5,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 9326.631,
+              "hashAvailable": true
+            },
+            {
+              "source": "Internet Archive",
+              "container": "mkv",
+              "bytes": 792903325,
+              "filename": "Dune_2021_720p_BluRay_x265_HEVC_10bit_AAC_2_0_Hindi_PSA_ASAP.mkv",
+              "sourceItemId": "dune-2021-720p-blu-ray-x-265-hevc-10bit-aac-2-0-hindi-psa-asap_202507",
+              "releaseYearBasis": "content-sample-pinned-file",
+              "mediaFilename": "Dune_2021_720p_BluRay_x265_HEVC_10bit_AAC_2_0_Hindi_PSA_ASAP.mkv",
+              "audioLanguages": [
+                "hi"
+              ],
+              "subtitleBestScore": 76,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 1280,
+                "height": 536
+              },
+              "quality": "1280x536",
+              "qualityGrade": "720p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 8,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 9326.659,
+              "hashAvailable": true
+            },
+            {
+              "source": "Internet Archive",
+              "container": "mp4",
+              "bytes": 949160267,
+              "filename": "Dune_2021_720p_BluRay_x265_HEVC_10bit_AAC_2_0_Hindi_PSA_ASAP.mkv",
+              "sourceItemId": "dune-2021-720p-blu-ray-x-265-hevc-10bit-aac-2-0-hindi-psa-asap_202507",
+              "releaseYearBasis": "content-sample-pinned-file",
+              "mediaFilename": "Dune_2021_720p_BluRay_x265_HEVC_10bit_AAC_2_0_Hindi_PSA_ASAP.mp4",
+              "audioLanguages": [],
+              "subtitleBestScore": 76,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 1146,
+                "height": 480
+              },
+              "quality": "1146x480",
+              "qualityGrade": "480p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 8,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 9326.698,
+              "hashAvailable": true
+            },
+            {
+              "source": "HDRezka",
+              "container": "mp4",
+              "bytes": 698171132,
+              "filename": "Dune.2021",
+              "sourceItemId": null,
+              "releaseYearBasis": null,
+              "mediaFilename": null,
+              "audioLanguages": [],
+              "subtitleBestScore": 90,
+              "burnedSubtitleLanguage": null,
+              "knownForeignBurnedSubtitles": false,
+              "dimensions": {
+                "width": 641,
+                "height": 268
+              },
+              "quality": "641x268",
+              "qualityGrade": "360p",
+              "turkishSubtitle": true,
+              "externalTrackCount": 5,
+              "externalTurkishTracks": 4,
+              "actualDurationSeconds": 9326.631,
+              "hashAvailable": true
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "allSourceCriteriaMet": false,
+  "physicalDevice": "not-run",
+  "fullPlayback": "not-run",
+  "fullDownload": "not-run",
+  "offline": "not-run",
+  "subtitleAudioSync": "not-run"
+}

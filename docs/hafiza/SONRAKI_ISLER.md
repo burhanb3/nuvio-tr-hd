@@ -1,5 +1,13 @@
 # Sonraki işler
 
+## 1.8.0 öncelik
+
+1. Aynı adrese1.8.0 hazırlanıyor:248check/QuickJS,Nuvio0.6.5-beta/20drift0,dörtaktifID. CI/Pages/yedipublicdosyaSHA kontrolünü tamamla ve yayın kaydını güncelle.
+2. Yeni HDRezka31MP4/8örnek+TR,59MB–3,07GB/240–720p. Matrix indirme açığı kısmen kapandı; Shameless0 sürüyor. Yeni indirilebilir4K/TRdub0, animeyeniHD0. Premium4K veya RUdublajı bu hedefleri karşılamış gibi sayma; yeni gerçek ücretsizdosya yollarını araştır.
+3. Bir Dune tekrarı24s/0oldu; sonrakiHDkapalı3,açık6(HD4) dosya verdi. CDN değişkenliğini saklama. sourceoff/on farklı zamanlarda; telefonhızı/kararlılık kanıtı değil. root24s/native3/sub4/EN1,HDkeşif10s aynı.
+4. Dunealias fixture gerçektelefonTMDBalternative_titles API kontrolü değildir. FizikseliPhone özgünses, bütün dosya, TR/ENindirme/offline/senkron/font hâlâ sınanmadı. YeniPC/helper/backend/hesap/secret/per-titlepin ekleme.
+5. Bu tur başarısız: HDHubPixel404/10GbpsWorkerTLS(Node+curl),Jet.nettimeout,Eksen404,Cizgitimeout;Archive4Ktrailer. Güncel durum değişmedikçe aynı düğümlerde dönme. Shameless'te yalnızRU/UA/KA var, gizlioriginalIDzorlamayla ekleme.
+
 ## 1.7.9 öncelik
 
 1. Tamamlandı:1.7.9 aynı adreste yayımlandı; kod 9cc51c8c95ad77579812f2818541ad512e92e6d9, 238 check/QuickJS, Nuvio0.6.5-beta/20 drift0, dört aktif ID. Windows/Linux 40516316789, Pages 40516317132, yedi public dosya HTTP200/SHA başarılı; github-publication.json güncel.

@@ -1,3 +1,5 @@
+import{createRequire}from'node:module';
+const{qualityLabel}=createRequire(import.meta.url)('../src/util.cjs');
 export function summarizeCoverage(pairs, acceptance, type) {
   const files = pairs.filter(p => p.video.downloadable && ['mp4','mkv'].includes(p.video.container));
   const withTr = p => p.subtitles?.some(s => s.language === 'tr') || p.video.embeddedTurkish === true || p.candidate.embeddedTurkish === true;
@@ -18,6 +20,9 @@ export function summarizeCoverage(pairs, acceptance, type) {
   const smallLimit=type==='tv'?acceptance.episodeSmallFileBytes:acceptance.movieSmallFileBytes;
   const qualities=[...new Set(downloads.filter(withTr).map(quality).filter(Boolean))];
   const cleanQualities=[...new Set(downloads.filter(cleanTr).map(quality).filter(Boolean))];
+  const qualityGrade=p=>p.video.dimensions?qualityLabel(p.video.dimensions):null;
+  const grades=[...new Set(downloads.filter(withTr).map(qualityGrade).filter(Boolean))];
+  const cleanGrades=[...new Set(downloads.filter(cleanTr).map(qualityGrade).filter(Boolean))];
   const online=pairs.some(p=>(p.video.container==='hls'||p.video.downloadable)&&withTr(p));
   const cleanOnline=pairs.some(p=>(p.video.container==='hls'||p.video.downloadable)&&cleanTr(p));
   const small=downloads.some(p=>p.video.size>0&&p.video.size<=smallLimit&&withTr(p));
@@ -29,15 +34,15 @@ export function summarizeCoverage(pairs, acceptance, type) {
   if(!small)gaps.push('small_download_with_tr_missing');
   if(small&&!cleanSmall)gaps.push('only_known_foreign_burned_subtitle_small_downloads');
   if(online&&!cleanOnline)gaps.push('only_known_foreign_burned_subtitle_online');
-  if(cleanQualities.length<acceptance.minimumDistinctDownloadQualities)gaps.push('multiple_verified_download_qualities_missing');
+  if(cleanGrades.length<acceptance.minimumDistinctDownloadQualities)gaps.push('multiple_verified_download_qualities_missing');
   return { onlineWithTr:online, downloadUrls:files.length, estimatedDistinctFiles:downloads.length, downloadQualities:qualities,
-    cleanOnlineWithTr:cleanOnline,cleanDownloadQualities:cleanQualities,cleanSmallWithTr:cleanSmall,
+    cleanOnlineWithTr:cleanOnline,cleanDownloadQualities:cleanQualities,downloadQualityGrades:grades,cleanDownloadQualityGrades:cleanGrades,cleanSmallWithTr:cleanSmall,
     smallWithTr:small, smallLimitBytes:smallLimit, sourceCoverageCriteriaMet:!gaps.length,gaps,
     files:downloads.map(p=>({source:p.candidate.source,container:p.video.container,bytes:p.video.size,
       filename:p.candidate.filename||null,sourceItemId:p.candidate.sourceItemId||null,releaseYearBasis:p.candidate.releaseYearBasis||null,
       mediaFilename:p.candidate.mediaFilename||null,
       audioLanguages:p.video.audioLanguages||[],subtitleBestScore:Math.max(0,...(p.subtitles||[]).map(s=>s._score||0)),
       burnedSubtitleLanguage:p.candidate.burnedSubtitleLanguage||null,knownForeignBurnedSubtitles:foreignBurned(p),
-      dimensions:p.video.dimensions||null,quality:quality(p)||'unknown',turkishSubtitle:withTr(p),externalTurkishTracks:p.subtitles?.length||0,
+      dimensions:p.video.dimensions||null,quality:quality(p)||'unknown',qualityGrade:qualityGrade(p),turkishSubtitle:withTr(p),externalTrackCount:p.subtitles?.length||0,externalTurkishTracks:(p.subtitles||[]).filter(s=>s.language==='tr').length,
       actualDurationSeconds:p.video.durationSource==='tmdb'?null:p.video.duration||null,hashAvailable:!!p.video.videoHash})) };
 }

@@ -90,4 +90,12 @@ async function resolveTranslatedTitles(http,target,key) {
   return [...new Set(data.translations.filter(r=>['tr','en'].includes(r.iso_639_1))
     .map(r=>target.type==='movie'?r.data?.title:r.data?.name).filter(v=>typeof v==='string'&&v.trim()))].slice(0,4);
 }
-module.exports = { resolveIdentity, resolveTranslatedTitles, matchesIdentity, matchesAddonMeta, matchesStreamFilename, matchesEpisode };
+async function resolveAlternativeTitles(http,target,key) {
+  if(!key||http.expired())return [];
+  const data=await http.json(`https://api.themoviedb.org/3/${target.type}/${target.tmdbId}/alternative_titles?api_key=${encodeURIComponent(key)}`,{timeoutMs:3000});
+  if(data?.id!==target.tmdbId)return [];
+  const rows=target.type==='movie'?data.titles:data.results;
+  return Array.isArray(rows)?[...new Set(rows.slice(0,150).filter(r=>['US','GB','TR'].includes(r.iso_3166_1))
+    .map(r=>r.title).filter(t=>typeof t==='string'&&t.trim()&&t.length<=200))].slice(0,30):[];
+}
+module.exports = { resolveIdentity, resolveTranslatedTitles, resolveAlternativeTitles, matchesIdentity, matchesAddonMeta, matchesStreamFilename, matchesEpisode };

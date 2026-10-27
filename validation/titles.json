@@ -31,6 +31,9 @@
     },
     {
       "key": "dune",
+      "alternativeTitles": [
+        {"iso_3166_1":"US","title":"Dune: Part One"}
+      ],
       "tmdb": {
         "id": 438631,
         "original_title": "Dune",

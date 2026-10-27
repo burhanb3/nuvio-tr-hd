@@ -1,5 +1,13 @@
 # Tasarım kararları
 
+## 1.8.0 — özgün sesli ücretsiz dosyalar
+
+- HDRezka genel film/dizi araması main/files'a açık. Kimlik aynıIMDb + tamkanonikad/yıl; farklı ad yalnız aynıTMDBID alternative_titles yanıtından. Kaynaksearch ilksonucu veya altbaşlık benzerliği yeterli değildir. Dunealias testfixture'ı telefonTMDBAPI kanıtı değil.
+- Dizide seçilen çevirinin kendi get_episodes yanıtında parentID/S/E bulunmalı. Bilinmeyen/gizli çeviriID, sonsezon veya mutlak bölüm tahmini yok. KaynakRUdublaj etiketi TR/EN sayılmaz; özgün veya açıkTR seçilir.
+- Premium kalite/kayıt ve kısa teaser atlanır. Dune4K premium bulundu diye4Kkaynak eklendi deme. ÜcretsizMP4 literalURL yalnız kendi publicJSON yanıtından; mediaRange/byte/piksel/süre/hash korumaları aynı. HLS alternatifi indirilebilir yapılmaz.
+- 31varyant/8örnek kısmi tarihsel başarı; Dune0 tekrar başarısızlığı ve sourceoff/onrecovery karşılaştırması birlikte raporlanır. Node/iPhone ağ farkını veya tümkatalogkararlılığı varsayma. Kotayı/bütçeyi artırma, yeni server/hesap ekleme.
+- Kapsam testi kalite sınıfını kartla aynı gerçekpiksel kuralından hesaplar. Farklı kırpılmış480p iki kalite değildir. HariciTR sayısı ile tümTR/EN sayısı farklı; dillerarasımaxscore TRsenkronpuanı değildir.
+
 ## 1.7.9 — Goojara ve gerçek kalite
 
 - Kısmi ama çalışan film/dizi dosya sağlayıcısı ana aramaya eklenebilir. Altı örnek tüm katalog başarısı değildir; yeni 4K/TR dub yokken var deme. Eski büyük/yüksek dosya ve online yolları koru.

@@ -7,6 +7,7 @@
 | Internet Archive | Film/dizi | MP4/MKV; kimlik ve dosya kontrolüne bağlı |
 | 4KHDHub / HubCloud | Film/dizi | MP4/MKV; public dosya zinciri |
 | Goojara | Film/dizi | Küçük MP4 alternatifleri; bölüm ve gerçek dosya kontrolü |
+| HDRezka | Film/dizi | Ücretsiz MP4 kaliteleri; özgün ses, IMDb ve bölüm kontrolü |
 | Waploaded | Film/dizi | MP4/MKV; son güncellenen kısmi katalog |
 | RareFilmm | Eski/az bulunan filmler | Küçük MP4 alternatifleri; bazı sürümlerde EN görüntüde |
 | PlayIMDb, VixSrc | Film/dizi | Online HLS |
@@ -32,6 +33,8 @@ Liste çalışan bütün katalog garantisi değildir. Kaynağın bir bölümde �
 RareFilmm bütün film kataloğunu kapsamaz. Genel aramada tam başlık/yıl, makale içindeki oynatıcı, oynatıcının kendi film kimliği/başlığı ve süre denetlenir. Kalite başına gerçek MP4 boyutu ve pikseli okunur. EN görüntüde etiketi, silinemeyen İngilizce altyazı bulunduğunu belirtir; mevcut harici TR/EN dosyaları ayrıca sunulur. Yeni bir sunucu veya hesap gerekmez.
 
 Goojara, ana sağlayıcıda film ve bölüm dosyaları arar. Tam başlık/yıl, filmlerde IMDb, dizilerde seçilen sezon listesi ve bölüm sayfası birlikte denetlenir. Dosya adındaki 720p/1080p etiketi ölçülen pikselin yerine geçmez. Kaynak bir dosyayı HCSubs gibi sabit altyazı işaretiyle sunuyorsa kartta Sabit altyazı yazılır; dili bilinmeden EN/TR diye etiketlenmez. Sunucuya ve bölüme göre erişim değişebilir; her yapım veya 4K garantisi değildir.
+
+HDRezka'da aynı IMDb, kanonik başlık ve yıl birlikte aranır. Farklı başlık gerekiyorsa yalnız aynı TMDB kaydının alternatif başlıkları kabul edilir. Dizilerde seçilen ses sürümünün kendi bölüm listesinde tam sezon ve bölüm bulunmalıdır. Hesap, kullanıcı çerezi veya yeni sunucu gerekmez. Ücretli işaretli kalite ve kısa örnek videolar atlanır; ücretsiz 4K bulunduğu varsayılmaz. Mevcut TR/EN altyazı araması dosya bazında devam eder.
 
 Hızlı İzle, HDFilmDelisi ve yeni DiziBal kaynaklarını bağımsız tarar; ana sağlayıcıda aynı işler tekrarlanmaz. Eski üç sağlayıcının kimlikleri korunur. Ana sağlayıcıdaki PlayIMDb/VixSrc ve diğer online yollar çalışmaya devam eder; HDFilmDelisi yeni Hızlı İzle grubuna taşınmıştır.
 

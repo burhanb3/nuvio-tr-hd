@@ -23,3 +23,8 @@ test('HLS kaliteleri indirme kapsamını doldurmaz; altyazısız veya büyük do
  assert.ok(result.gaps.includes('multiple_verified_download_qualities_missing'));
  assert.equal(summarizeCoverage([pair({type:'hls'})],limits,'tv').downloadUrls,0);
 });
+test('aynı 480p sınıfındaki iki kırpma iki farklı indirme kalitesi sayılmaz; TR/EN adedi ayrılır',()=>{
+ const a=pair({width:848,height:354}),b=pair({hash:'3333444455556666',width:853,height:476});a.subtitles.push({language:'en'});
+ const result=summarizeCoverage([a,b],limits,'tv');assert.equal(result.downloadQualities.length,2);assert.deepEqual(result.downloadQualityGrades,['480p']);assert.equal(result.sourceCoverageCriteriaMet,false);
+ assert.equal(result.files[0].externalTrackCount,2);assert.equal(result.files[0].externalTurkishTracks,1);
+});

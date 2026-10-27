@@ -14,6 +14,22 @@ const animeBundle = await readFile(new URL('../providers/nuvio-tr-hd-anime.js', 
 const extraAnimeBundle = await readFile(new URL('../providers/nuvio-tr-hd-extra-anime.js', import.meta.url), 'utf8');
 const fastOnlineBundle = await readFile(new URL('../providers/nuvio-tr-hd-fast-online.js', import.meta.url), 'utf8');
 
+test('QuickJS: HDRezka public HTML-JSON yanıtı gerçek MP4 verir, ücretli kaliteyi ve yanlış IMDb başlığını atlar',async()=>{
+ const root='https://rezka.ag',page=root+'/films/fiction/100-the-matrix-1999.html',file='https://stream.voidboost.one/full.mp4';
+ const mvhd=Buffer.alloc(20);mvhd.writeUInt32BE(1000,12);mvhd.writeUInt32BE(8160000,16);
+ const body=Buffer.concat([helpers.box('ftyp',Buffer.from('isom\0\0\0\0isommp42','binary')),helpers.box('moov',helpers.box('mvhd',mvhd),helpers.moov(1280,720).subarray(8)),helpers.box('mdat',Buffer.alloc(32))]);
+ const ajax={json:{success:true,premium_content:0,url:'[1080p]'+file+',[<span class="pjs-prem-quality">4K</span>]https://stream.voidboost.one/teaser.mp4'},mime:'text/html'};
+ const base=makeFixture({extra:{
+  [root+'/search/?do=search&subaction=search&q=The%20Matrix']:{body:'<div class="b-content__inline_item" data-id="100" data-url="'+page+'">1999</div>'},
+  [page]:{body:'<meta property="og:url" content="'+page+'"><div class="b-post__origtitle">The Matrix</div><tr><td>Дата выхода</td><td>1999</td></tr><a href="https://www.imdb.com/title/tt0133093/">IMDb</a><li class="b-translator__item" data-id="100" data-translator_id="25" title="Оригинал (+субтитры)">Original</li>'},
+  [file]:{body,mime:'video/mp4'}
+ }}),fixture=new Proxy(base,{get:(t,k)=>typeof k==='string'&&k.startsWith(root+'/ajax/get_cdn_series/?')?ajax:t[k]});
+ const settings={autoSubtitles:false,includeHls:false,archiveEnabled:false,goojaraEnabled:false,hdhubEnabled:false,waploadedEnabled:false,rarefilmmEnabled:false,playImdbEnabled:false,vixsrcEnabled:false,filmmoduEnabled:false,useDownloadBridge:false};
+ const streams=await runInQuickJs(fixture,{settings});assert.equal(streams.length,1);assert.equal(streams[0].url,file);assert.equal(streams[0].quality,'720p · 1280×720');assert.match(streams[0].name,/İndirilebilir · HDRezka/);
+ assert.deepEqual(await runInQuickJs(fixture,{settings:{...settings,hdrezkaEnabled:false}}),[]);
+ base[page].body=base[page].body.replace('tt0133093','tt9999999');assert.deepEqual(await runInQuickJs(fixture,{settings}),[]);
+});
+
 test('QuickJS: Goojara anonymous session, public player form and real MP4 stay native compatible',async()=>{
  const root='https://ww1.goojara.to',wrapper='https://www.wootly.ch/?v=fixture',embed='https://web.wootly.ch/e/publicFixture',source='https://web.wootly.ch/source?id=fixture',file='https://cdn.test/movie.mp4';
  const mvhd=Buffer.alloc(20);mvhd.writeUInt32BE(1000,12);mvhd.writeUInt32BE(8160000,16);

@@ -1,5 +1,14 @@
 # Sürüm notları
 
+## 1.8.0 — 27 Ekim 2026
+
+- Film ve dizi indirmeleri için HDRezka araması. Aynı IMDb, başlık/yıl ve tam bölüm denetlenir; ücretsiz özgün sesli MP4 seçenekleri mevcut TR/EN altyazılarla eşleştirilir.
+- Gerekli olduğunda aynı TMDB kaydından alternatif başlık doğrulaması. Kaynak başlığı farklı diye benzer bir yapıma veya başka bölüme geçilmez.
+- Ücretli kalite, reklamlı/camrip çeviri ve kısa örnek videolar atlanır. Kaynağın 1080p/4K etiketi gerçek piksel doğrulaması sayılmaz.
+- Kapsam kontrolünde iki farklı kırpılmış 480p dosya artık iki ayrı kalite sayılmaz. Harici TR ve toplam altyazı sayıları ayrı tutulur.
+- Canlı kontrolde sekiz film/bölümde 31 yeni MP4 varyantı ve mevcut TR altyazılar; yaklaşık 59 MB–3,07 GB, gerçek 240p–720p. Bir Dune tekrarı boş döndü; sonraki kontrolde eski ve yeni dosyalar yeniden bulundu.
+- Nuvio **0.6.5-beta** kaynak sözleşmesi ve 248 fixture/QuickJS testi geçti. Yeni indirilebilir 4K/TR dublaj bu tur doğrulanmadı; fiziksel cihaz, tam indirme ve senkron testi yapılmadı.
+
 ## 1.7.9 — 27 Ekim 2026
 
 - Goojara genel film/dizi dosya araması. Tam başlık/yıl, film IMDb kimliği, seçilen sezon ve bölüm, oynatıcı dosya adı ve gerçek video süresi denetlenir. Yeni sunucu veya hesap gerekmez.

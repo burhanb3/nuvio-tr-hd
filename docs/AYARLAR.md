@@ -28,6 +28,8 @@ RareFilmm, eski ve az bulunan filmler için ana sağlayıcıda varsayılan açı
 
 Goojara film ve bölüm dosyaları da ana sağlayıcıda varsayılan açıktır. Küçük MP4 seçenekleri mevcut TR/EN altyazı aramasıyla sunulur. Kaynakta yanlış yıl, bölüm veya bozuk dosya varsa o sonuç atlanır; diğer sağlayıcıların sonuçları korunur.
 
+HDRezka, farklı boyutlarda ücretsiz MP4 seçenekleri için varsayılan açıktır. Özgün ses veya açıkça Türkçe olarak belirtilen sürümler seçilir; diğer dublajlar TR diye etiketlenmez. Kaynağın ücretli kalite seçenekleri eklenmez. Dosyadaki gerçek piksel, oynatıcının kalite etiketinden önce gelir.
+
 MKV dosya köprüsü, desteklediği public uzantısız dosyalara doğru indirme adı sağlar. Bütün hostları desteklemez. Yeni kaynak aramaları için ayrı bir sunucu veya hesap kurmanız gerekmez.
 
 JSON katalog, Stremio ve alternatif altyazı adresleri isteğe bağlıdır. Bunlar olmadan yerleşik arama çalışır. [Kişisel kaynak rehberi](KAYNAKLAR.md).

@@ -13,6 +13,7 @@ function configuration(settings = {}, injectedKey) {
     waploadedEnabled: settings.waploadedEnabled !== false,
     rarefilmmEnabled: settings.rarefilmmEnabled !== false,
     goojaraEnabled: settings.goojaraEnabled !== false,
+    hdrezkaEnabled: settings.hdrezkaEnabled !== false,
     hdfilmdelisiEnabled:settings.hdfilmdelisiEnabled!==false,
     dizibalEnabled:settings.dizibalEnabled!==false,
     autoSubtitles: settings.autoSubtitles !== false, subtitleRequired: settings.subtitlePolicy === 'require',

@@ -1,5 +1,21 @@
 # Proje hafızası
 
+## 1.8.0 — film/dizi indirme kaliteleri
+
+Yeni HDRezka genel adaptörü ana grupta varsayılan açık (hdrezkaEnabled). Public arama -> en fazla iki tür/yıl aday sayfası -> aynı IMDb (sayfanın kendi base64/percent kodlu IMDb bağlantısı), kanonik başlık ve yıl -> yalnız özgün ses veya açık Türkçe çeviri -> çevirinin kendi tam S/E listesi -> ücretsiz literal MP4 URL'leri. Hesap, Cookie, sabit key, challenge/PoW, remote script/eval yok. HTML MIME'lı JSON yalnız kendi kesin AJAX endpointinde bounded JSON.parse ile okunur. Premium etiket/kayıt, camrip/reklam/director sürümü ve kısa teaser reddedilir; gizli çeviri ID zorlanmaz.
+
+Ad farklıysa resolveAlternativeTitles aynı TMDB kimliğinden US/GB/TR kayıtlarını yükler; yalnız IMDb/yıl zaten doğruysa, bir aramada bir kez. Üretimde başlık pini/fuzzy fallback yok. Dune:PartOne alias doğrulama fixture'ında bilinen sabit referanstır; gerçek telefon TMDB alternatif başlık API yanıtı sınanmadı. TMDB public titles sayfası bu araçta erişilemedi. Yanlış IMDb/yıl/ID ve başka bölüm kabul edilmez. Kaynak4ücretsizvariant/çeviri, en fazla2ses; yüksek/küçük/ikinciyüksek/ikinciküçük sırası, gerçek piksel üstündür. Keşif10s/main24s/native3/sub4/EN1 aynı. Dört scraper ID korunur; yeni helper/backend/hesap/videoPin yok.
+
+Birleşik ana turda 6 film/bölümde 24 yeni MP4+TR (NoWayHome,Dune,Matrix,Inception,Fleabag1x1,GoT1x1 her biri4). Ek Fleabag2x1 üç ve BreakingBad1x1 dört: 8 örnekte31 farklı boyutlu/hash doğrulanmış MP4+TR; 58976791–3066517972byte, gerçek240/360/480/720p. 1080 kaynak etiketi yaklaşık1280piksel/720p çıktı; 4K/Ultra/2K premium atlandı. Yeni canlı4K ve TRdub sıfır. Ses source-original/kanonik dil ipucudur, ölçülmüş EN veya yeniTRdublaj kanıtı değildir. Source pairedEN çoğunlukla90score; subtitleBestScore diller arası max, TR puanı gibi sunma. TR gövdeleri bulundu; görsel senkron yok.
+
+Ana tur toplam dosya sayıları: NoWay5, SpiderVerse2 (yeniHD0), Dune7, Matrix5, Inception6, Fleabag1x1 6, Shameless0, GoT5, DeathNote4 (yeniHD0). Yeni Matrix dosyaları önceki boşluğu kısmen doldurdu. Bir tekrarda Dune24s/0: HDCDN, Archive replikaları, Goojara ve başka originler timeout; bu başarısızlık kanıtta korunur. Sonraki sıralı karşılaştırmada HDkapalı Dune3/7497ms; açıkrecovery6/9749ms, HD4+eski2. Bu kontrollü ağ veya iPhone hız garantisi değildir. Matrix tekrarHD3, Fleabag2x1HD3, BreakingHD4. 31 tarihsel dosya örneği her tekrarda31 anlamına gelmez. Eski online/yüksek dosya yolları silinmedi.
+
+Coverage helper düzeltildi: iki kırpılmış480p iki kalite sayılmaz; pixelGroups ve pGrades ayrı. externalTurkishTracks artık gerçekTRadedi, externalTrackCount tüm harici; önceki179raporlarda eski yanlış isim notunu koru.248check/gerçekQuickJS geçti; Nuvio0.6.5-beta/20blob drift0, lock değişmedi. Kanıt download-expansion-180/coverage-180/upstream-180-check.json. Fiziksel cihaz/tamoynatım/indirme/offline/senkron/font testi yok.
+
+Araştırma: HDHub göz ardı edilenPixel/10Gbps publicyollar metadata404 veyaWorkerSSL_PACKET_LENGTH_TOO_LONG; curl35 de aynı, TLS koruması kapatılmadı. Jet.net searchtimeout, FilmEkseni search404, Cizgi searchtimeout; adapter eklenmedi. Archive4K sonuçları trailer/clip; Sintel0. Shameless HDRezka doğru2011/IMDb ama yalnız RU/UA/KA çeviriler, özgün/TRyok; boşluğu gizlemek için ses uydurma. Animecix language=tr tekbaşınaTRses değildir. Aynı başarısız yolları yeni durum olmadan tekrar döndürme.
+
+Yayın 1.8.0 hazırlanıyor; CI ve public dosya SHA kanıtını tamamla.
+
 ## 1.7.9 — küçük film ve bölüm dosyaları
 
 Yeni Goojara genel film/dizi adaptörü ana grupta varsayılan açık (goojaraEnabled). Public anonim oturum ve sayfanın kendi nonce'u ile normal arama yapılır; kullanıcı çerezi, hesap, kopya sabit key, challenge çözümü veya uzak script çalıştırma yok. Tam başlık/yıl; filmde IMDb; dizide üst kayıt, seçilmiş sezon ve tam bölüm, breadcrumb ve oynatıcı dosya adı birlikte kontrol edilir. Dosya başına gerçek Range/konteyner/byte/piksel/süre/hash ve mevcut TR/EN eşleştirmesi. Keşif payı 12s; ana bütçe 24s, native video3/altyazı4/EN1 değişmedi. Dört scraper kimliği korundu; yeni helper/backend/hesap/video pini yok. Geçici oturum ve imzalı adresler kalıcı tutulmaz.

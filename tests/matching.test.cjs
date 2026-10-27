@@ -1,8 +1,17 @@
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
-const { matchesIdentity, matchesAddonMeta, matchesStreamFilename, resolveIdentity } = require('../src/matching.cjs');
+const { matchesIdentity, matchesAddonMeta, matchesStreamFilename, resolveIdentity, resolveAlternativeTitles } = require('../src/matching.cjs');
 const { target, identity, makeFixture, fixtureFetch } = require('./helpers.cjs');
 const { createHttp } = require('../src/http.cjs');
+
+test('alternatif başlıklar aynı TMDB kimliğinden alınır; bozuk/yanlış yanıt eşleşmeyi gevşetmez',async()=>{
+ let data={id:603,titles:[{iso_3166_1:'US',title:'The Matrix Alias'},{iso_3166_1:'TR',title:'Matrix'},{iso_3166_1:'US',title:'The Matrix Alias'},{iso_3166_1:'XX',title:'Other'}]},url;
+ const http={expired:()=>false,json:async u=>{url=u;return data;}};
+ assert.deepEqual(await resolveAlternativeTitles(http,target,'fixture'),['The Matrix Alias','Matrix']);assert.match(url,/movie\/603\/alternative_titles/);
+ data={...data,id:604};assert.deepEqual(await resolveAlternativeTitles(http,target,'fixture'),[]);
+ data={id:603,results:[{iso_3166_1:'GB',title:'TV Alias'}]};assert.deepEqual(await resolveAlternativeTitles(http,{...target,type:'tv'},'fixture'),['TV Alias']);
+ assert.deepEqual(await resolveAlternativeTitles(http,target,''),[]);
+});
 
 test('TMDB, orijinal başlık ve yıl birlikte eşleşir', () => {
   assert.equal(matchesIdentity(identity, target), true);

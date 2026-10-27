@@ -2,7 +2,7 @@
 const { createHttp } = require('./http.cjs');
 const { createScheduler } = require('./scheduler.cjs');
 const { loadHosted, registerDownloads, SERVICE_ORIGIN } = require('./hosted.cjs');
-const { resolveIdentity,resolveTranslatedTitles } = require('./matching.cjs');
+const { resolveIdentity,resolveTranslatedTitles,resolveAlternativeTitles } = require('./matching.cjs');
 const { loadCatalog } = require('./providers/catalog.cjs');
 const { loadAddon } = require('./providers/stremio.cjs');
 const { scanDirectory } = require('./providers/directory.cjs');
@@ -13,6 +13,7 @@ const { scanHdHub } = require('./providers/hdhub.cjs');
 const { scanWaploaded } = require('./providers/waploaded.cjs');
 const { scanRareFilmm } = require('./providers/rarefilmm.cjs');
 const { scanGoojara } = require('./providers/goojara.cjs');
+const { scanHdRezka } = require('./providers/hdrezka.cjs');
 const { scanAnimecix } = require('./providers/animecix.cjs');
 const { scanSonAnime } = require('./providers/sonanime.cjs');
 const { scanDiziYou } = require('./providers/diziyou.cjs');
@@ -238,6 +239,10 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs = 24000, r
             if (filesLane && settings.directoryEnabled === true) sourceJobs.push({ name: 'DahmerMovies', run: () => scanDirectory(http, target, settings) });
             if (filesLane && settings.archiveEnabled !== false) sourceJobs.push({ name: 'Internet Archive', run: () => scanArchive(http, target, { onCandidates: acceptArchive }) });
             if (filesLane && settings.goojaraEnabled !== false) sourceJobs.push({name:'Goojara',run:()=>scanGoojara(http.scope(12000),target)});
+            if (filesLane && settings.hdrezkaEnabled !== false) sourceJobs.push({name:'HDRezka',run:()=>{
+              const sourceHttp=http.scope(10000);
+              return scanHdRezka(sourceHttp,target,{loadTitles:()=>resolveAlternativeTitles(sourceHttp,target,effectiveTmdbKey(settings,tmdbKey))});
+            }});
             if (onlineLane && settings.playImdbEnabled !== false) sourceJobs.push({ name: 'PlayIMDb', run: () => scanPlayImdb(http, target) });
             if (onlineLane && settings.vixsrcEnabled !== false && settings.includeHls !== false && !sourceFactories.some(s => s.name === 'VixSrc'))
               sourceJobs.push({ name: 'VixSrc', run: () => scanVixDirect(http, target) });
@@ -343,6 +348,7 @@ function onSettings() {
     { type: 'toggle', key: 'hdhubEnabled', label: '4KHDHub / HubCloud doğrudan dosya araması', defaultValue: true, description: 'Ücretsiz public FSL dosyaları doğrulanır. Kaynak metadatası boyut/piksel doğrulaması sayılmaz.' },
     { type: 'toggle', key: 'rarefilmmEnabled', label: 'RareFilmm ek film arşivi', defaultValue: true, description: 'Eski ve az bulunan filmlerde küçük MP4 seçenekleri. Bazılarında İngilizce altyazı görüntüye işlenmiştir; 4K veya TR dublaj garantisi yoktur.' },
     { type: 'toggle', key: 'goojaraEnabled', label: 'Goojara film ve bölüm dosyaları', defaultValue: true, description: 'Küçük MP4 alternatifleri; tam başlık/yıl/film IMDb ve bölüm kontrolü. Eksik veya yanlış yıl eşleşmeleri atlanır. Mevcut TR/EN altyazı araması uygulanır.' },
+    { type: 'toggle', key: 'hdrezkaEnabled', label: 'HDRezka farklı boyutlarda film/dizi dosyaları', defaultValue: true, description: 'Ücretsiz özgün sesli MP4 seçenekleri ve mevcut TR/EN altyazılar. IMDb, başlık/yıl ve tam bölüm denetlenir; ücretli kalite ve örnek videolar eklenmez.' },
     {type:'toggle',key:'hdfilmdelisiEnabled',label:'HDFilmDelisi Türkçe dublaj ve çoklu ses',defaultValue:true,description:'Public film kataloğu ve gerçek HLS listesi. Ses/altyazı dilleri yayıncıdan okunur; bu kaynak online izleme içindir.'},
     {type:'toggle',key:'dizibalEnabled',label:'DiziBal film, dizi ve anime',defaultValue:true,description:'Türkçe dublaj ve altyazılı online alternatifler. Özgün veya TMDB çeviri adı, yıl ve tam bölüm denetlenir.'},
     { type: 'toggle', key: 'waploadedEnabled', label: 'Waploaded güncel film/dizi dosyaları', defaultValue: true, description: 'Kısmi kapsam: kaynağın son güncellenen listesi taranır; tüm arşivi kapsamaz. Gerçek dosya, yıl ve bölüm doğrulanır. Mevcut TR/EN araması uygulanır.' },
@@ -385,7 +391,7 @@ async function getStreams(tmdbId, mediaType, season, episode) {
 }
 function createEntry(lane) {
   const titles = { main: 'Film/dizi · online ve dosyalar', files: 'Dosyalar', online: 'Hızlı kaynaklar', anime: 'Anime', extraAnime:'Ek Anime',fastOnline:'Hızlı İzle' };
-  const only = { files: ['hdhubEnabled','directoryEnabled','archiveEnabled','waploadedEnabled','rarefilmmEnabled','goojaraEnabled','catalogUrls','addonUrls'], online: ['playImdbEnabled','vixsrcEnabled','diziyouEnabled','dizibakEnabled','filmmoduEnabled','hdfilmdelisiEnabled','hlsView'], anime: ['animecixEnabled','sonanimeEnabled'],extraAnime:['animomEnabled','seicodeEnabled'],fastOnline:['hdfilmdelisiEnabled','dizibalEnabled','hlsView'] };
+  const only = { files: ['hdhubEnabled','directoryEnabled','archiveEnabled','waploadedEnabled','rarefilmmEnabled','goojaraEnabled','hdrezkaEnabled','catalogUrls','addonUrls'], online: ['playImdbEnabled','vixsrcEnabled','diziyouEnabled','dizibakEnabled','filmmoduEnabled','hdfilmdelisiEnabled','hlsView'], anime: ['animecixEnabled','sonanimeEnabled'],extraAnime:['animomEnabled','seicodeEnabled'],fastOnline:['hdfilmdelisiEnabled','dizibalEnabled','hlsView'] };
   only.main = [...only.files, ...only.online.filter(key=>key!=='hdfilmdelisiEnabled')];
   const sourceFields = Object.values(only).flat();
   return {
