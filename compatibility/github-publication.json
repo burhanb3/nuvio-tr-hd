@@ -1,15 +1,15 @@
 {
-  "checkedAt": "2026-10-27T11:57:45.357Z",
-  "version": "1.7.7",
+  "checkedAt": "2026-10-27T13:12:42.474Z",
+  "version": "1.7.8",
   "origin": "https://burhanb3.github.io/nuvio-tr-hd",
   "authenticated": false,
   "assetRequestsAuthenticated": false,
   "ciMetadataAuthenticated": true,
   "repository": "https://github.com/burhanb3/nuvio-tr-hd",
-  "sourceCommit": "fe0eed0d323268f186a3f17e85612de2e1bc18f4",
+  "sourceCommit": "fa935e2aca48cfb1c324a942971272c9c10e2b42",
   "branch": "codex/publish-nuvio-tr-hd",
   "actions": {
-    "tests": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40499840365",
+    "tests": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40509886549",
     "testsConclusion": "success",
     "jobs": [
       {
@@ -21,7 +21,7 @@
         "conclusion": "success"
       }
     ],
-    "pages": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40499840426",
+    "pages": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40509886492",
     "pagesConclusion": "success"
   },
   "checks": [
@@ -30,47 +30,47 @@
       "status": 200,
       "type": "application/json; charset=utf-8",
       "bytes": 2630,
-      "sha256": "f429fb699c8e1c8d9306f05c581e26a00c5c99608a0e31cc349838124d79d235",
+      "sha256": "5963e49cc44215a6fe1252e6e3d38846c3b0b351691353ab63316d614db53db7",
       "matchesLocal": true
     },
     {
-      "path": "/providers/nuvio-tr-hd.js?v=1.7.7",
+      "path": "/providers/nuvio-tr-hd.js?v=1.7.8",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 226521,
-      "sha256": "3a316e89f1a514bd2b436e89d270c2969fbef7574f164b1c13f6d4204d8c8488",
+      "bytes": 234749,
+      "sha256": "77de7038b538f3709b59150cfbc8ffc1a3388341397dc63c895ef6784e73b755",
       "matchesLocal": true
     },
     {
-      "path": "/providers/nuvio-tr-hd-anime.js?v=1.7.7",
+      "path": "/providers/nuvio-tr-hd-anime.js?v=1.7.8",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 226522,
-      "sha256": "e0cc71482f3ccc431e918fb775d152230467b7ea7df07c0000d55ea58e6851da",
+      "bytes": 234750,
+      "sha256": "7d572eb05be8852a52d7c17f39aa6caa2d8145a8936800f203af1683b2779894",
       "matchesLocal": true
     },
     {
-      "path": "/providers/nuvio-tr-hd-extra-anime.js?v=1.7.7",
+      "path": "/providers/nuvio-tr-hd-extra-anime.js?v=1.7.8",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 226533,
-      "sha256": "4d4c3b17a29f4352e1f3a474575ba9bd1c5124a307e20fb072ef2d341bf02f04",
+      "bytes": 234761,
+      "sha256": "3d02c1eb96b18b8813e46a7d9556cf95716c5ab03753900356ceb274d4eeeb26",
       "matchesLocal": true
     },
     {
-      "path": "/providers/nuvio-tr-hd-fast-online.js?v=1.7.7",
+      "path": "/providers/nuvio-tr-hd-fast-online.js?v=1.7.8",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 226533,
-      "sha256": "f6fa0d4de938d9a0be4016900faddbc978b0394bc1afb8fc8129a204060f2f5a",
+      "bytes": 234761,
+      "sha256": "ba906f85b42fff64e216b9cc248c5f2eab0287abf663af532e3d3e2d19d66b83",
       "matchesLocal": true
     },
     {
       "path": "/providers/nuvio-tr-hd-online.js",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 226524,
-      "sha256": "b7183de4272d0b9f08435bb8f9b82478b26b3cb74ffdc61ea8c06df5d3ca55db",
+      "bytes": 234752,
+      "sha256": "5917fb04274932b8839ba3573368c4f7e520f59f1b43eeead90f327c2b0eb137",
       "matchesLocal": true
     },
     {
@@ -78,51 +78,44 @@
       "status": 200,
       "type": "text/html; charset=utf-8",
       "bytes": 6253,
-      "sha256": "28032762dfed31ed0acd3329b8b3a6a42428b740c352dcc1137a9b229a77b7fe",
+      "sha256": "110c53903245057a9eb761bf51e7406c8b75d64141754fecbb24d66349109e9b",
       "matchesLocal": true
     }
   ],
   "tests": {
-    "local": 222,
+    "local": 229,
     "compiledQuickJs": true
   },
-  "upstreamEvidence": "compatibility/upstream-177-check.json",
-  "sourceEvidence": "compatibility/sources-and-performance-177.json",
-  "regressionEvidence": "compatibility/coverage-177.json",
+  "upstreamEvidence": "compatibility/upstream-178-check.json",
+  "sourceEvidence": "compatibility/download-expansion-178.json",
+  "regressionEvidence": "compatibility/coverage-178.json",
   "manifestIds": [
     "nuvio-tr-hd",
     "nuvio-tr-hd-anime",
     "nuvio-tr-hd-extra-anime",
     "nuvio-tr-hd-fast-online"
   ],
-  "newPartialFilmTvDownloadAdapters": 0,
-  "newOnlineFilmDubAdapters": 1,
+  "newPartialFilmTvDownloadAdapters": 1,
+  "newOnlineFilmDubAdapters": 0,
   "newUniversalFilmTvDownloadAdapters": 0,
-  "newScraperEntries": 1,
+  "newScraperEntries": 0,
   "newHelperBackends": 0,
   "newAccounts": 0,
   "newPerTitleVideoPins": 0,
   "features": {
-    "independentFastOnlineLane": true,
-    "fastOnlineSources": [
-      "HDFilmDelisi",
-      "DiziBal"
-    ],
-    "legacyThreeIdsPreserved": true,
-    "hdfMovedFromMain": true,
-    "noDuplicateFastSourcesInMain": true,
-    "newDizibalOnlineAdapter": true,
-    "canonicalTranslatedNames": true,
-    "sourceDiscoveryDoesNotWaitForProbes": true,
-    "subtitleCatalogueTimeoutMs": 4500,
-    "hashLookupsRequireHealthyCatalogue": true,
-    "hdhubDiscoveryBudgetMs": 8000,
-    "lightweightHlsKeepsAllBoundedVariants": true,
-    "noNewLive4kTitleClaim": true,
-    "newVerifiedDownloadAdapter": false,
-    "productReadmeAndGuides": true,
-    "githubMetadataEvidence": "compatibility/repository-metadata-177.json",
-    "nativePhysicalCancellationClaim": false
+    "newPartialMovieAdapter": "RareFilmm",
+    "sourceSetting": "rarefilmmEnabled",
+    "newVerifiedDownloadAdapter": true,
+    "liveVerifiedMp4Variants": 9,
+    "liveRepeatedVariants": 9,
+    "downloadFirstDefault": true,
+    "downloadFirstBeforeLimit": true,
+    "nativeFilenameExtensionGuard": true,
+    "englishBurnedLabel": true,
+    "allFourScraperIdsPreserved": true,
+    "newLive4kSources": 0,
+    "newTurkishDubSources": 0,
+    "noNativePhysicalCancellationClaim": true
   },
   "allSourceCriteriaMet": false,
   "deviceTest": "not-run",

@@ -10,7 +10,7 @@ Yeni downloadFirst varsayılanaçık: indirme/online ayrımı maxResults uygulan
 
 Regresyon5başlık: Dune2/Fleabag2/DeathNote4dosya; Matrix/Shameless0dosya+onlineTR. Node3,4–6s sabitmetadatayla, iPhonegarantisi değil. Yeni canlı4K0/TRdub0; genel film/dizi/anime indirme hedefi açık. MoviesMod yeni.meme publicnormalformlar Matrixgerçek502MBMKVyeulaştı amaRange200/tümgövde+uzantısız/HIonly; nativeyeeklenmedi. UHD.beauty Dune4K22,62GBGenerateUnknownerror; MatrixResumeUploadinprogress hazırdosyadeğil. HDHub5workerNodeağhatası; fullhd403,sezon/jet/nkiri/CTGağhatası,Sibnet403. Aynı düğümleri yeni durum yokken tekrarlama. Kanıt compatibility/download-expansion-178.json,coverage-178.json,upstream-178-check.json. Fizikselcihaz/tamoynatım/indirme/offline/senkronyok.
 
-Yayın 1.7.8 hazırlanıyor; CI/public dosya SHA kanıtını tamamla.
+1.7.8 yayımlandı: kodfa935e2aca48cfb1c324a942971272c9c10e2b42; Windows/Linux Test40509886549, Pages40509886492 başarılı; 7publicHTTP200/yerelSHAeşit. github-publication.json güncel.
 
 ## 1.7.7 — kaynaklar, hız ve depo düzeni
 
