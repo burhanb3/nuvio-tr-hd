@@ -28,6 +28,22 @@ test('MoviesDrive: genel başlık/yıl -> yayımlanmış dosya -> gerçek 4K MKV
   assert.ok(!calls.some(c=>/\/u\/negn6f|\/api\/files/.test(c.url)));assert.ok(calls.every(c=>!Object.keys(c.headers||{}).some(k=>/cookie|authorization/i.test(k))));
  }finally{http.close();}
 });
+test('MoviesDrive: resmi alternatif başlık arama/sayfa/dosyada kullanılabilir; tek tembel lookup açılır',async()=>{
+ const f=fixture(),alias='Franchise Example Movie';
+ f[origin+'/search.php?q=Example%20Movie&page=1'].json.hits[0].document.post_title='Franchise Example Movie (2020)';
+ for(const value of Object.values(f))if(typeof value.body==='string')value.body=value.body.replaceAll('Example Movie (2020)',alias+' (2020)').replaceAll('Example.Movie.','Franchise.Example.Movie.');
+ f[file+'/info'].json.name=filename.replace('Example.Movie.','Franchise.Example.Movie.');let loads=0;
+ const http=createHttp({fetchImpl:fixtureFetch(f)});try{const rows=await scanMoviesDrive(http,target,{loadTitles:async()=>{loads++;return[alias];}});assert.equal(rows.length,1);assert.equal(loads,1);assert.equal(rows[0].identity.originalTitle,target.originalTitle);assert.deepEqual((await probe(http,rows[0])).dimensions,{width:3840,height:1600});}finally{http.close();}
+});
+test('MoviesDrive: alternatif başlık tahmin edilmez; yanlış yıl/IMDb veya bozuk hits kabul edilmez',async()=>{
+ for(const mode of['noAlias','year','imdb','badHits']){const f=fixture();f[origin+'/search.php?q=Example%20Movie&page=1'].json.hits[0].document.post_title='Franchise Example Movie (2020)';if(mode==='year')f[origin+'/search.php?q=Example%20Movie&page=1'].json.hits[0].document.post_title='Franchise Example Movie (2021)';if(mode==='imdb')f[origin+'/search.php?q=Example%20Movie&page=1'].json.hits[0].document.imdb_id='tt9999999';if(mode==='badHits')f[origin+'/search.php?q=Example%20Movie&page=1'].json.hits={bad:true};let loads=0;
+ const http=createHttp({fetchImpl:fixtureFetch(f)});try{assert.deepEqual(await scanMoviesDrive(http,target,{loadTitles:async()=>{loads++;return[];}}),[]);assert.equal(loads,mode==='noAlias'?1:0,mode);}finally{http.close();}}
+});
+test('MoviesDrive: zaten eşleşen filmde ek lookup yok; dosya başlığı alias ise aynı listeyle bağlanır',async()=>{
+ let loads=0;const f=fixture(),http=createHttp({fetchImpl:fixtureFetch(f)});try{assert.equal((await scanMoviesDrive(http,target,{loadTitles:async()=>{loads++;return[];}})).length,1);assert.equal(loads,0);}finally{http.close();}
+ f[hub].body=f[hub].body.replace('Example.Movie.','Franchise.Example.Movie.');f[file+'/info'].json.name=filename.replace('Example.Movie.','Franchise.Example.Movie.');
+ const aliasHttp=createHttp({fetchImpl:fixtureFetch(f)});try{assert.equal((await scanMoviesDrive(aliasHttp,target,{loadTitles:async()=>['Franchise Example Movie']})).length,1);}finally{aliasHttp.close();}
+});
 test('MoviesDrive: kaynak kalite iddiası pikseli geçmez; HI-only, boyut/format çelişkisi ve kısa dosya elenir',async()=>{
  for(const change of ['low','hi','size','container','short','audioonly']){
   const f=fixture();if(change==='low')f[file].body=media(1280,534);if(change==='hi')f[file].body=media(1920,800,'hin');

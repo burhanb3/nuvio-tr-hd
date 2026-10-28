@@ -252,7 +252,7 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs = 24000, r
             if(filesLane&&settings.moviesdriveEnabled!==false&&(target.type==='movie'||target.type==='tv'&&target.imdbId))
               sourceJobs.push({name:'MoviesDrive / Pixeldrain',run:()=>{
                 const sourceHttp=http.scope(10000);
-                return scanMoviesDrive(sourceHttp,target,{onCandidates:acceptCandidates,loadSeason:()=>resolveSeasonEpisode(sourceHttp,target,effectiveTmdbKey(settings,tmdbKey))});
+                return scanMoviesDrive(sourceHttp,target,{onCandidates:acceptCandidates,loadSeason:()=>resolveSeasonEpisode(sourceHttp,target,effectiveTmdbKey(settings,tmdbKey)),loadTitles:()=>resolveAlternativeTitles(sourceHttp,target,effectiveTmdbKey(settings,tmdbKey))});
               }});
             if (onlineLane && settings.playImdbEnabled !== false) sourceJobs.push({ name: 'PlayIMDb', run: () => scanPlayImdb(http, target) });
             if (onlineLane && settings.vixsrcEnabled !== false && settings.includeHls !== false && !sourceFactories.some(s => s.name === 'VixSrc'))

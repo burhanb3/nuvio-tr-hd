@@ -1,5 +1,20 @@
 # Proje hafızası
 
+## 1.8.8 — resmî dosya adları ve film 4K
+
+Archive item kimliği/ad/yıl bağlandıktan sonra dosya adını yalnız İngilizce bilmek yeterli olmuyordu. Aynı TMDB kaydının resmî TR/EN çevirisi yalnız gerektiğinde tembel olarak istenir. İstenen yılı taşıyan, örnek olmayan ve bilinen süresi makul video adları kontrol edilir. İngilizce dosya mevcut olsa da farklı resmî Türkçe dosya kaçırılmaz. Ad tahmini yapılmaz; gerçek dosya yılı ve %90–110 süre zorunludur. Bir shared titleJob en fazla bir ek3s çeviri isteği açar; iki Archive sorgusu/12 metadata sınırı değişmez.
+
+MoviesDrive'da aynı yıl/özgün ad ipucu veya tam IMDb, resmî US/GB/TR alternatif başlık listesine bakma gerekçesidir; ipucu tek başına kabul değildir. Başlık/yıl, sayfa ve gerçek dosya ancak aynı TMDB'den gelen adla eşleşir. Aynı memoized promise arama/sayfa/dosyaya paylaşılır. Yanlış yıl veya video olmayan wrapper için gereksiz metadata çağrısı yok. Yeni query/route yok; aynı4route/2resolver/10s. Film ve Archive birer isteği gerektiğinde ekleyebilir; tüm ağ işlerinin aynı kaldığını söyleme. Main24s/video3/sub4/EN1 ve dört scraperID korunur.
+
+Önceki kodla tam canlı baseline: Dark5 dosya/MovieDrive0, Stuart11,Death5,Vikings11. Yeni iki tur Dark8/3yeniMKV; Stuart13URL ama aynı boyut/piksel/süre/original adındaki .ia kopyası muhafazakâr tek yeni dosya sayılır; Deathilk7/tekrar6 içinde2yeniMP4. Vikings11/11eski kontrol. Üç filmde toplam6yeni dosya,1yeni4K. Dark17722031014byte3840×2160/9133.312s,1363716511byte1280×528/9133.249s,474541833byte720×298/9133.478s. Sonuncuyu dosyadaki480p etiketiyle sunma. Gerçek EN+HI;4KdaTA/TE de var. DublajTR değildir.
+
+Küçük Kardeşim1310002168byte1280×720/5075.859s, Ölüm Avı1640304149 ve1670968421byte1280×720/5818.747–5818.750s. Yeni3MP4 metadata.title ve language:tur ile TRdub olarak yayımlanmış; gerçek audioLanguages boş. Bunlar publisherLabelledTR3,verifiedTRdub0 olarak ayrı tutulur; dosya veya parent adından ses ölçümü uydurma. Hepsinde gerçek hash ve3–4mevcut hariciTR alternatifi var; senkron testi değildir. Yeni TV/anime0. Batman: The Dark Knight US aliası public TMDB155 titles sayfasında; TR dosya adları aynıID EN/TR public sayfalarda bağımsız doğrulandı. Fixture TMDB yanıtı gerçek telefon key/taşıma testi değildir.
+
+Regresyon S5E1 3/Fury11/Hotel6/Inception8/Flea10/YourName9; eski4K ve ölçülmüşFury/HotelTR korundu. Fury24s mantıksal sınıra geldi; hız artışı garantisi verme. Dune/Interstellar yeni yüksek kalite yolu çözülemedi; mevcutInception4K yeni katkı sayılmaz. Diğer TR arşiv kayıtları zaten desteklenen iki dilli dosya biçimini kullanıyordu, yeni sayılmadı. Beşroute genişletmesi veya yeni/pinli kaynak eklenmedi.
+
+312check/QuickJS geçti. Upstream anonimGitHubAPI403 yüzünden ilk kontrol tamamlanmadı; mevcutGitHub kimlik bilgisi yalnız bellekte kullanılarak tekrarlandı:0.6.5-beta/23blob drift0, lock değişmedi. Runtime eklentiye hesap/key/sunucu eklenmedi. Fiziksel cihaz/tam indirme/oynatma/offline/senkron/font sınanmadı. Yayın bekliyor; CI/Pages/yedi SHA kanıtı sonra eklenecek.
+
+
 ## 1.8.7 — doğrulanmış sonraki sezonlar ve ikinci 4K
 
 MoviesDrive'ın ilk sezon sınırı, kanonik sezon metadata'sı ile kontrollü genişletildi. resolveSeasonEpisode yalnız TVde aynı /tv/TMDB/season/N yolundan,3s source scope içinde season_number,air_date ve tam episode_number/show_id/season_number/runtime ister. Eksik/yanlış show veya sezon, duplicate bölüm, boş süre reddedilir. Season yılının seri ilk yılına eşit olması aranmaz; seri year2016 olarak korunurken seasonReleaseYear2025 ve aday runtime72/58 olur. Film ve S1 yeni metadata isteği açmaz. Sonraki TV için bir kaynak işi ve bir TMDB isteği artık uygundur; iş yükünün aynı kaldığını söyleme.

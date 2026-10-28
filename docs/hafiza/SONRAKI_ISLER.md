@@ -1,5 +1,13 @@
 # Sonraki işler
 
+## 1.8.8 öncelik
+
+1. Hazır: Archive resmî yerel dosya adı ve MoviesDrive resmî film aliası;6yeni dosya/3film/1yeni4K.312test ve23upstream drift0. CI/Pages/yediHTTP200/SHA yayın kontrolünü tamamla.
+2. Gerçek TRdublaj/film-dizi-anime/4K kapsamı açık. Üç yeniMP4 kaynakta TRdub etiketli ama ses metadata'sı yok; doğrulanmış TR0. Farklı ses veya senkronu dosya adından/parent'tan uydurma. YeniTV/anime0; eski kaynakların çalışması yeni uygun kaynak aramayı bırakma gerekçesi değildir.
+3. Yeni4KDark17.72GB yanında1.36GB720 ve475MB720×298 seçenekleri var. Stuart1.31GB/Death1.64–1.67GB720 yeni; Stuart.ia kopyası ek dosya sayılmaz. Vikings11/11kontrol, yeni değil. Dune/Interstellar çözülemeyen yüksek kalite yolunu yeni veri olmadan tekrar etme.
+4. Fury24s mantıksal sınır, eski4K/TR korunmuş olsa da fiziksel iPhone hızı/kararlılığı garantisi yok. Upstream anonim403 olursa mevcutGitHub doğrulamasını yalnız bellekte kullan; token/userURL commit etme. Fiziksel cihaz/tam indirme/offline/senkron/font açık.
+
+
 ## 1.8.7 öncelik
 
 1. Hazır: sonraki sezonların kanonik yılı/süresiyle MoviesDrive; aynı4route içinde ikinci4K.6yeniMKV/2yeni4K,303test ve23upstream drift0. Yayımlandı: ffe3ee430254d2e9a6f19f622758dad7399854d6; Test40606575896/Pages40606575720 başarılı, yedi public HTTP200/SHA eşit.

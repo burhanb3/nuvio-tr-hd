@@ -1,5 +1,14 @@
 # Sürüm notları
 
+## 1.8.8 — 28 Ekim 2026
+
+- Arşiv kaydı İngilizce, dosya adı Türkçe olduğunda aynı TMDB kaydının resmî çevirisiyle dosya eşleştirilir. Mevcut İngilizce dosyalar yerel alternatifleri gizlemez; yanlış yıl/kimlik ve kısa video kontrolleri korunur.
+- MoviesDrive film aramasında resmî alternatif başlıklar da kullanılabilir. Özgün adı içeren bir ipucu tek başına sonuç kabul edilmez; alternatif adın aynı TMDB kimliğinden gelmesi gerekir.
+- Üç filmde altı ek indirme: The Dark Knight için 17,72 GB/3840×2160, 1,36 GB/1280×528 ve 475 MB/720×298 MKV; Küçük Kardeşim için 1,31 GB/720p, Ölüm Avı için 1,64–1,67 GB/720p MP4. Hepsinde mevcut Türkçe altyazı alternatifleri var.
+- Son üç MP4 kaynakta Türkçe dublaj olarak yayımlanmış; dosyalardaki ses dili metadatası okunamadığı için doğrulanmış TR ses sayılmaz. Aynı arşiv kopyası ek dosya sayısına dahil edilmedi.
+- 312 fixture/QuickJS testi ve Nuvio 0.6.5-beta/23 kaynak dosyası kontrolü geçti. Önceki 4K/dublaj örnekleri korundu. Fiziksel telefon, tam indirme/oynatma ve altyazı senkronu sınanmadı.
+
+
 ## 1.8.7 — 28 Ekim 2026
 
 - MoviesDrive'da sonraki sezonlar için ek bölüm araması. Dizinin ilk yılı korunur; sezon yılı ve bölüm süresi aynı TMDB kaydından ayrıca doğrulanır. Kaynak sayfasındaki yıl, IMDb ve tam sezon/bölüm birlikte eşleşir.

@@ -10,6 +10,10 @@ function titleMatches(value,target){
   const match=text(value).match(/^(?:Download\s+)?(.+?)\s*\((\d{4})\)(?=\s|$)/i);
   return !!match&&Number(match[2])===target.year&&canonicalNames(target).includes(normalizeTitle(match[1]));
 }
+function titleLookupHint(value,target,imdbBound=false){
+  const m=text(value).match(/^(?:Download\s+)?(.+?)\s*\((\d{4})\)(?=\s|$)/i);
+  return target.type==='movie'&&!!m&&Number(m[2])===target.year&&(imdbBound||canonicalNames(target).some(name=>(' '+normalizeTitle(m[1])+' ').includes(' '+name+' ')));
+}
 function cleanFilename(value){return decodeEntities(value).replace(/^(?:\[\[?\s*(?:www\.)?moviesdrives?\.[a-z]+\s*\]\]?\s*[-._ ]*)+/i,'').trim();}
 function seriesTitleMatches(value,target,requireYear=true){
   // Later seasons need their own canonical season year and episode runtime.
@@ -64,13 +68,16 @@ function pixelFile(data,page,hubName,target){
   const file=publicFile(data,page,hubName,target,{source:'MoviesDrive / Pixeldrain',matchesName:fileMatches,normalizeName:value=>normalizeTitle(cleanFilename(value))});
   return file?{...file,identityConfidence:90}:null;
 }
-async function resolveRelease(http,entry,target){
+async function resolveRelease(http,entry,target,options={}){
   const page=await http.text(entry.url);if(!page||page.url!==entry.url)return null;
   const title=page.text.match(/<title\b[^>]*>([\s\S]{0,1500}?)<\/title>/i)?.[1]||'';
+  if(target.type==='movie'&&!titleMatches(title,target)&&options.loadTarget&&titleLookupHint(title,target,true))target=await options.loadTarget();
   if(!(target.type==='tv'?seriesTitleMatches(title,target,false):titleMatches(title,target)))return null;
   const hub=target.type==='tv'?episodeHub(page.text,target):anchors(page.text,400).map(a=>safeUrl(a.href)).find(isHub);
   if(!hub)return null;const wrapper=await http.text(hub),name=wrapper?.text.match(/<title\b[^>]*>([\s\S]{0,1500}?)<\/title>/i)?.[1];
-  if(!name||!fileMatches(name,target))return null;
+  if(!name)return null;
+  if(target.type==='movie'&&!fileMatches(name,target)&&options.loadTarget&&/\.(mp4|mkv)$/i.test(name)&&(' '+normalizeTitle(name)+' ').includes(' '+target.year+' '))target=await options.loadTarget();
+  if(!fileMatches(name,target))return null;
   const terminal=safeUrl(wrapper.text.match(/\bvar\s+url\s*=\s*["']([^"']{1,4000})["']/)?.[1]);
   if(!terminal||new URL(terminal).origin!=='https://gamerxyt.com'||new URL(terminal).pathname!=='/hubcloud.php')return null;
   const result=await http.text(terminal),pixel=result&&pixelPage(result.text);if(!pixel)return null;
@@ -96,16 +103,25 @@ async function scanMoviesDrive(http,target,options={}){
     if(!Number.isInteger(season?.seasonReleaseYear)||season.seasonReleaseYear<target.year||!Number.isInteger(season.runtimeMinutes)||season.runtimeMinutes<=0)return [];
     target={...target,seasonReleaseYear:season.seasonReleaseYear,runtimeMinutes:season.runtimeMinutes};
   }
+  let titleJob;
+  const loadTarget=async()=>{
+    if(!titleJob)titleJob=Promise.resolve().then(()=>options.loadTitles?.()).then(titles=>{
+      if(Array.isArray(titles))target={...target,searchTitles:[...new Set([...(target.searchTitles||[]),...titles.filter(t=>typeof t==='string'&&t.trim()&&t.length<=200).slice(0,30)])]};
+      return target;
+    }).catch(()=>target);
+    return titleJob;
+  };
   const queries=[target.originalTitle,...(target.searchTitles||[])];if(/^the\s+/i.test(target.originalTitle))queries.splice(1,0,target.originalTitle.replace(/^the\s+/i,''));
   for(const query of [...new Set(queries)].slice(0,2)){
    if(http.expired())break;
    const search=await http.json(ORIGIN+'/search.php?q='+encodeURIComponent(query)+'&page=1');
+   if(target.type==='movie'&&options.loadTitles&&!searchPages(search,target).length&&Array.isArray(search?.hits)&&search.hits.slice(0,30).some(h=>h?.document&&(!h.document.imdb_id||h.document.imdb_id===target.imdbId)&&titleLookupHint(h.document.post_title,target,!!target.imdbId&&h.document.imdb_id===target.imdbId)))await loadTarget();
    for(const row of searchPages(search,target)){
     if(http.expired())break;
     const page=await http.text(ORIGIN+row.permalink);if(!page||new URL(page.url).origin!==ORIGIN)continue;
     const entries=releaseEntries(page.text,target);if(!entries.length)continue;
     const found=[],seen=new Set();
-    await mapLimit(entries,2,async entry=>{if(http.expired())return;const file=await resolveRelease(http,entry,target);if(file&&!seen.has(file.url)){seen.add(file.url);found.push(file);if(options.onCandidates)await options.onCandidates([file]);}});
+    await mapLimit(entries,2,async entry=>{if(http.expired())return;const file=await resolveRelease(http,entry,target,{loadTarget:target.type==='movie'&&options.loadTitles?loadTarget:null});if(file&&!seen.has(file.url)){seen.add(file.url);found.push(file);if(options.onCandidates)await options.onCandidates([file]);}});
     return found;
    }
   }

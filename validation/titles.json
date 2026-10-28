@@ -10,6 +10,78 @@
   },
   "titles": [
     {
+      "key": "the-vikings",
+      "tmdb": {
+        "id": 42661,
+        "title": "The Vikings",
+        "original_title": "The Vikings",
+        "release_date": "1958-06-11",
+        "imdb_id": "tt0052365",
+        "runtime": 115,
+        "original_language": "en"
+      },
+      "translations": [
+        {
+          "language": "tr",
+          "title": "Vikingler"
+        }
+      ],
+      "referenceSources": [
+        "https://www.themoviedb.org/movie/42661?language=en-US",
+        "https://www.themoviedb.org/movie/42661?language=tr-TR",
+        "https://www.imdb.com/title/tt0052365/"
+      ],
+      "referenceMetadataNote": "Title, release year, runtime and official Turkish title checked on public same-ID TMDB pages. IMDb reference verified separately on its primary page. Fixed reference is not phone API credential verification."
+    },
+    {
+      "key": "death-hunt",
+      "tmdb": {
+        "id": 26444,
+        "title": "Death Hunt",
+        "original_title": "Death Hunt",
+        "release_date": "1981-04-15",
+        "imdb_id": "tt0082247",
+        "runtime": 97,
+        "original_language": "en"
+      },
+      "translations": [
+        {
+          "language": "tr",
+          "title": "Ölüm Avı"
+        }
+      ],
+      "referenceSources": [
+        "https://www.themoviedb.org/movie/26444?language=en-US",
+        "https://www.themoviedb.org/movie/26444?language=tr-TR",
+        "https://www.imdb.com/title/tt0082247/"
+      ],
+      "referenceMetadataNote": "Title, release year, runtime and official Turkish title checked on public same-ID TMDB pages. IMDb reference verified separately on its primary page. Fixed reference is not phone API credential verification."
+    },
+    {
+      "key": "stuart-little",
+      "tmdb": {
+        "id": 10137,
+        "title": "Stuart Little",
+        "original_title": "Stuart Little",
+        "release_date": "1999-12-17",
+        "imdb_id": "tt0164912",
+        "runtime": 84,
+        "original_language": "en"
+      },
+      "translations": [
+        {
+          "language": "tr",
+          "title": "Küçük Kardeşim"
+        }
+      ],
+      "referenceSources": [
+        "https://www.themoviedb.org/movie/10137?language=en-US",
+        "https://www.themoviedb.org/movie/10137?language=tr-TR",
+        "https://www.imdb.com/title/tt0164912/"
+      ],
+      "referenceMetadataNote": "Title, release year, runtime and official Turkish title checked on public same-ID TMDB pages. IMDb reference verified separately on its primary page. Fixed reference is not phone API credential verification."
+    },
+    {
       "key": "stranger-things-s5e2",
       "season": 5,
       "episode": 2,
@@ -325,9 +397,16 @@
         "original_language": "en"
       },
       "referenceSources": [
-        "https://www.themoviedb.org/movie/155"
+        "https://www.themoviedb.org/movie/155",
+        "https://www.themoviedb.org/movie/155/titles?language=en-US"
       ],
-      "referenceMetadataNote": "Fixed canonical validation reference; public TMDB title/year checked, phone metadata API credentials not tested."
+      "referenceMetadataNote": "Fixed canonical validation reference; public TMDB title/year checked, phone metadata API credentials not tested. US alternative title Batman: The Dark Knight independently checked on same-ID public TMDB titles page.",
+      "alternativeTitles": [
+        {
+          "iso_3166_1": "US",
+          "title": "Batman: The Dark Knight"
+        }
+      ]
     },
     {
       "key": "avatar",

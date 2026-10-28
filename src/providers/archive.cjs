@@ -151,6 +151,16 @@ async function scanArchive(http, target, options = {}) {
     if (!pinnedItem && ((!binding.exact && !binding.release && !binding.titleYear && !seriesTitle && !identifierYearBound) ||
       (!explicitYear && datedYear !== target.year && !yearFromTitle && !seriesImdbBound && !identifierYearBound))) return [];
     const files = data.files.filter(f => typeof f.name === 'string' && f.private !== 'true');
+    // A canonically bound English item may store only a Turkish filename.
+    // Look up names from that SAME TMDB record only for files that miss the
+    // names already known. The shared promise opens at most one
+    // translations request; it does not relax the filename/year requirement.
+    if(!pinnedItem&&target.type==='movie'&&(yearFromTitle||binding.localized||identifierYearBound)&&options.loadTitles){
+      const possible=files.filter(f=>/\.(mp4|mkv)$/i.test(f.name)&&(' '+normalizeTitle(f.name)+' ').includes(' '+target.year+' ')&&!/\b(sample|trailer|commercial|teaser)\b/.test(normalizeTitle(f.name))&&
+        (!(Number(f.length)>0)||!(target.runtimeMinutes>0)||Number(f.length)>=target.runtimeMinutes*60*0.9&&Number(f.length)<=target.runtimeMinutes*60*1.1));
+      if(possible.some(f=>!fileIdentityNames.some(name=>filenameIdentity(f.name.split('/').pop(),{...target,originalTitle:name}))))
+        for(const name of await localizedNames())if(!fileIdentityNames.includes(name))fileIdentityNames.push(name);
+    }
     const directory = typeof data.dir === 'string' && /^\/\d+\/items\/[\w.-]+$/.test(data.dir) && data.dir.endsWith('/items/' + doc.identifier) ? data.dir : null;
     // These are Archive's generated replica fields, not uploader-provided
     // arbitrary URLs. Avoid the extra front-door redirect on every range.

@@ -1,5 +1,13 @@
 # Tasarım kararları
 
+## 1.8.8 — çeviri ve alternatif ad sınırı
+
+- Resmî yerel dosya adı yalnız aynı TMDB kaydından gelen çeviriyle kabul edilir; yıl/süre/IMDb/TMDB çelişkileri gevşetilmez. Bilinen İngilizce dosya, aynı item'daki resmî Türkçe alternatifini bastırmamalıdır. Her adapter lookup'u memoize eder; sırf başka başlık/yıl göründü diye ağ işi açılmaz.
+- MoviesDrive'da franchise öneki bir lookup ipucudur, resmî alias kanıtı değildir. Aynı ID'nin alternatif başlık listesi gelmeden kaynak kabul edilmez. Arama, wrapper ve dosya birlikte bağlanır; özgün ad/yıl hedefte değişmez.
+- MP4'te audioLanguages boşsa source language:tur veya Türkçe Dublaj yazısı ölçülmüş ses değildir. Yeni publisherLabelledTR3 ve verifiedTR0 ayrı tutulur. Aynı item/original ad/byte/piksel/süre kopyası artışa eklenmez; uygulamanın hash tekilleştirmesinin bütün kopyaları birleştirdiğini iddia etme.
+- Gerçek720×298 dosya, adındaki480p diye doğrulanmış gösterilmez. Altı yeni dosya tüm film/dizi/anime kapsamı değildir. Native fiziksel süre ve offline/senkron testleri yapılmadı.
+
+
 ## 1.8.7 — sezon yılını ayrı doğrula
 
 - Seri ilk yılı ile sonraki sezonun yılı ayrı kanonik bilgilerdir. Seri year'ını değiştirme; yalnız aynı TMDB sezon yanıtındaki tam show_id/sezon/bölüm ve pozitif süre ile seasonReleaseYear/aday runtime bağla. Kaynak Released Year aynı olmalıdır. Eksik API/süre/etiket varsa sonraki sezon elenir.

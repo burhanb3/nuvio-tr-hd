@@ -1028,6 +1028,12 @@ var require_archive = __commonJS({
         if (!pinnedItem && (yearFromTitle || identifierYearBound) && datedYear > 0 && datedYear < target.year) return [];
         if (!pinnedItem && (!binding.exact && !binding.release && !binding.titleYear && !seriesTitle && !identifierYearBound || !explicitYear && datedYear !== target.year && !yearFromTitle && !seriesImdbBound && !identifierYearBound)) return [];
         const files = data.files.filter((f) => typeof f.name === "string" && f.private !== "true");
+        if (!pinnedItem && target.type === "movie" && (yearFromTitle || binding.localized || identifierYearBound) && options.loadTitles) {
+          const possible = files.filter((f) => /\.(mp4|mkv)$/i.test(f.name) && (" " + normalizeTitle(f.name) + " ").includes(" " + target.year + " ") && !/\b(sample|trailer|commercial|teaser)\b/.test(normalizeTitle(f.name)) && (!(Number(f.length) > 0) || !(target.runtimeMinutes > 0) || Number(f.length) >= target.runtimeMinutes * 60 * 0.9 && Number(f.length) <= target.runtimeMinutes * 60 * 1.1));
+          if (possible.some((f) => !fileIdentityNames.some((name) => filenameIdentity(f.name.split("/").pop(), { ...target, originalTitle: name })))) {
+            for (const name of await localizedNames()) if (!fileIdentityNames.includes(name)) fileIdentityNames.push(name);
+          }
+        }
         const directory = typeof data.dir === "string" && /^\/\d+\/items\/[\w.-]+$/.test(data.dir) && data.dir.endsWith("/items/" + doc.identifier) ? data.dir : null;
         const servers = [.../* @__PURE__ */ new Set([data.d1, ...Array.isArray(data.workable_servers) ? data.workable_servers : [], data.d2])].filter((host) => typeof host === "string" && /^[a-z]{2}\d{4,8}\.(?:us|eu|ca)\.archive\.org$/.test(host)).slice(0, 2);
         const urlsFor = (name) => {
@@ -2133,6 +2139,10 @@ var require_moviesdrive = __commonJS({
       const match = text(value).match(/^(?:Download\s+)?(.+?)\s*\((\d{4})\)(?=\s|$)/i);
       return !!match && Number(match[2]) === target.year && canonicalNames(target).includes(normalizeTitle(match[1]));
     }
+    function titleLookupHint(value, target, imdbBound = false) {
+      const m = text(value).match(/^(?:Download\s+)?(.+?)\s*\((\d{4})\)(?=\s|$)/i);
+      return target.type === "movie" && !!m && Number(m[2]) === target.year && (imdbBound || canonicalNames(target).some((name) => (" " + normalizeTitle(m[1]) + " ").includes(" " + name + " ")));
+    }
     function cleanFilename(value) {
       return decodeEntities(value).replace(/^(?:\[\[?\s*(?:www\.)?moviesdrives?\.[a-z]+\s*\]\]?\s*[-._ ]*)+/i, "").trim();
     }
@@ -2195,15 +2205,18 @@ var require_moviesdrive = __commonJS({
       const file = publicFile(data, page, hubName, target, { source: "MoviesDrive / Pixeldrain", matchesName: fileMatches, normalizeName: (value) => normalizeTitle(cleanFilename(value)) });
       return file ? { ...file, identityConfidence: 90 } : null;
     }
-    async function resolveRelease(http, entry, target) {
+    async function resolveRelease(http, entry, target, options = {}) {
       const page = await http.text(entry.url);
       if (!page || page.url !== entry.url) return null;
       const title = page.text.match(/<title\b[^>]*>([\s\S]{0,1500}?)<\/title>/i)?.[1] || "";
+      if (target.type === "movie" && !titleMatches(title, target) && options.loadTarget && titleLookupHint(title, target, true)) target = await options.loadTarget();
       if (!(target.type === "tv" ? seriesTitleMatches(title, target, false) : titleMatches(title, target))) return null;
       const hub = target.type === "tv" ? episodeHub(page.text, target) : anchors(page.text, 400).map((a) => safeUrl(a.href)).find(isHub);
       if (!hub) return null;
       const wrapper = await http.text(hub), name = wrapper?.text.match(/<title\b[^>]*>([\s\S]{0,1500}?)<\/title>/i)?.[1];
-      if (!name || !fileMatches(name, target)) return null;
+      if (!name) return null;
+      if (target.type === "movie" && !fileMatches(name, target) && options.loadTarget && /\.(mp4|mkv)$/i.test(name) && (" " + normalizeTitle(name) + " ").includes(" " + target.year + " ")) target = await options.loadTarget();
+      if (!fileMatches(name, target)) return null;
       const terminal = safeUrl(wrapper.text.match(/\bvar\s+url\s*=\s*["']([^"']{1,4000})["']/)?.[1]);
       if (!terminal || new URL(terminal).origin !== "https://gamerxyt.com" || new URL(terminal).pathname !== "/hubcloud.php") return null;
       const result = await http.text(terminal), pixel = result && pixelPage(result.text);
@@ -2235,11 +2248,20 @@ var require_moviesdrive = __commonJS({
         if (!Number.isInteger(season?.seasonReleaseYear) || season.seasonReleaseYear < target.year || !Number.isInteger(season.runtimeMinutes) || season.runtimeMinutes <= 0) return [];
         target = { ...target, seasonReleaseYear: season.seasonReleaseYear, runtimeMinutes: season.runtimeMinutes };
       }
+      let titleJob;
+      const loadTarget = async () => {
+        if (!titleJob) titleJob = Promise.resolve().then(() => options.loadTitles?.()).then((titles) => {
+          if (Array.isArray(titles)) target = { ...target, searchTitles: [.../* @__PURE__ */ new Set([...target.searchTitles || [], ...titles.filter((t) => typeof t === "string" && t.trim() && t.length <= 200).slice(0, 30)])] };
+          return target;
+        }).catch(() => target);
+        return titleJob;
+      };
       const queries = [target.originalTitle, ...target.searchTitles || []];
       if (/^the\s+/i.test(target.originalTitle)) queries.splice(1, 0, target.originalTitle.replace(/^the\s+/i, ""));
       for (const query of [...new Set(queries)].slice(0, 2)) {
         if (http.expired()) break;
         const search = await http.json(ORIGIN + "/search.php?q=" + encodeURIComponent(query) + "&page=1");
+        if (target.type === "movie" && options.loadTitles && !searchPages(search, target).length && Array.isArray(search?.hits) && search.hits.slice(0, 30).some((h) => h?.document && (!h.document.imdb_id || h.document.imdb_id === target.imdbId) && titleLookupHint(h.document.post_title, target, !!target.imdbId && h.document.imdb_id === target.imdbId))) await loadTarget();
         for (const row of searchPages(search, target)) {
           if (http.expired()) break;
           const page = await http.text(ORIGIN + row.permalink);
@@ -2249,7 +2271,7 @@ var require_moviesdrive = __commonJS({
           const found = [], seen = /* @__PURE__ */ new Set();
           await mapLimit(entries, 2, async (entry) => {
             if (http.expired()) return;
-            const file = await resolveRelease(http, entry, target);
+            const file = await resolveRelease(http, entry, target, { loadTarget: target.type === "movie" && options.loadTitles ? loadTarget : null });
             if (file && !seen.has(file.url)) {
               seen.add(file.url);
               found.push(file);
@@ -3953,7 +3975,7 @@ var require_ranking = __commonJS({
 var require_diagnostics = __commonJS({
   "src/diagnostics.cjs"(exports2, module2) {
     "use strict";
-    var VERSION = true ? "1.8.7" : "dev";
+    var VERSION = true ? "1.8.8" : "dev";
     function effectiveTmdbKey(settings, injectedKey) {
       return typeof settings.tmdbApiKey === "string" && settings.tmdbApiKey.trim() ? settings.tmdbApiKey.trim() : typeof injectedKey === "string" ? injectedKey.trim() : "";
     }
@@ -4347,7 +4369,7 @@ var require_index = __commonJS({
                 if (filesLane && settings.moviesdriveEnabled !== false && (target.type === "movie" || target.type === "tv" && target.imdbId))
                   sourceJobs.push({ name: "MoviesDrive / Pixeldrain", run: () => {
                     const sourceHttp = http.scope(1e4);
-                    return scanMoviesDrive(sourceHttp, target, { onCandidates: acceptCandidates, loadSeason: () => resolveSeasonEpisode(sourceHttp, target, effectiveTmdbKey(settings, tmdbKey)) });
+                    return scanMoviesDrive(sourceHttp, target, { onCandidates: acceptCandidates, loadSeason: () => resolveSeasonEpisode(sourceHttp, target, effectiveTmdbKey(settings, tmdbKey)), loadTitles: () => resolveAlternativeTitles(sourceHttp, target, effectiveTmdbKey(settings, tmdbKey)) });
                   } });
                 if (onlineLane && settings.playImdbEnabled !== false) sourceJobs.push({ name: "PlayIMDb", run: () => scanPlayImdb(http, target) });
                 if (onlineLane && settings.vixsrcEnabled !== false && settings.includeHls !== false && !sourceFactories.some((s) => s.name === "VixSrc"))

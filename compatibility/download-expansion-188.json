@@ -1,0 +1,812 @@
+{
+  "checkedAt": "2026-10-28T00:34:32.882Z",
+  "version": "1.8.8",
+  "baselineVersion": "1.8.7",
+  "baselineCommit": "b977c066dc8ad966ecd0df795c001df9385da280",
+  "outcome": {
+    "newFiles": 6,
+    "newMkvFiles": 3,
+    "newMp4Files": 3,
+    "new4kFiles": 1,
+    "new720pFiles": 4,
+    "newMovieFiles": 6,
+    "newTvFiles": 0,
+    "newAnimeFiles": 0,
+    "newTurkishDubFiles": 0,
+    "newPublisherLabelledTurkishDubFiles": 3,
+    "titleExamples": 3,
+    "allNewFilesHaveTurkishSubtitleAlternatives": true,
+    "newBackend": 0,
+    "newAccount": 0,
+    "newFixedKey": 0,
+    "newPerTitleVideoPin": 0,
+    "newScraperIds": 0
+  },
+  "newFiles": [
+    {
+      "key": "death-hunt",
+      "source": "Internet Archive",
+      "container": "mp4",
+      "bytes": 1670968421,
+      "filename": "Death Hunt Ölüm Avı 1981 HD.mp4",
+      "sourceItemId": "death-hunt-olum-avi-1981-hd",
+      "releaseYearBasis": "exact-title-and-filename",
+      "mediaFilename": "Death Hunt Ölüm Avı 1981 HD.mp4",
+      "audioLanguages": [],
+      "subtitleBestScore": 67,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 1280,
+        "height": 720
+      },
+      "quality": "1280x720",
+      "qualityGrade": "720p",
+      "turkishSubtitle": true,
+      "embeddedSubtitleLanguages": [],
+      "externalTrackCount": 8,
+      "externalTurkishTracks": 4,
+      "actualDurationSeconds": 5818.75,
+      "hashAvailable": true
+    },
+    {
+      "key": "death-hunt",
+      "source": "Internet Archive",
+      "container": "mp4",
+      "bytes": 1640304149,
+      "filename": "Death Hunt Ölüm Avı 1981 HD.mp4",
+      "sourceItemId": "death-hunt-olum-avi-1981-hd",
+      "releaseYearBasis": "exact-title-and-filename",
+      "mediaFilename": "Death Hunt Ölüm Avı 1981 HD.ia.mp4",
+      "audioLanguages": [],
+      "subtitleBestScore": 67,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 1280,
+        "height": 720
+      },
+      "quality": "1280x720",
+      "qualityGrade": "720p",
+      "turkishSubtitle": true,
+      "embeddedSubtitleLanguages": [],
+      "externalTrackCount": 8,
+      "externalTurkishTracks": 4,
+      "actualDurationSeconds": 5818.747,
+      "hashAvailable": true
+    },
+    {
+      "key": "stuart-little",
+      "source": "Internet Archive",
+      "container": "mp4",
+      "bytes": 1310002168,
+      "filename": "küçük kardeşim 1999 türkçe dublaj.mp4",
+      "sourceItemId": "kucuk-kardesim-1999-turkce-dublaj",
+      "releaseYearBasis": "exact-title-and-filename",
+      "mediaFilename": "küçük kardeşim 1999 türkçe dublaj.mp4",
+      "audioLanguages": [],
+      "subtitleBestScore": 69,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 1280,
+        "height": 720
+      },
+      "quality": "1280x720",
+      "qualityGrade": "720p",
+      "turkishSubtitle": true,
+      "embeddedSubtitleLanguages": [],
+      "externalTrackCount": 6,
+      "externalTurkishTracks": 3,
+      "actualDurationSeconds": 5075.859,
+      "hashAvailable": true
+    },
+    {
+      "key": "dark-knight",
+      "source": "MoviesDrive / Pixeldrain",
+      "container": "mkv",
+      "bytes": 474541833,
+      "filename": "The.Dark.Knight.2008.480p.Dual.Audio.Hin-Eng.moviesdrives.com.mkv",
+      "sourceItemId": null,
+      "releaseYearBasis": null,
+      "mediaFilename": null,
+      "audioLanguages": [
+        "hi",
+        "en"
+      ],
+      "subtitleBestScore": 69,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 720,
+        "height": 298
+      },
+      "quality": "720x298",
+      "qualityGrade": "298p",
+      "turkishSubtitle": true,
+      "embeddedSubtitleLanguages": [],
+      "externalTrackCount": 4,
+      "externalTurkishTracks": 4,
+      "actualDurationSeconds": 9133.478,
+      "hashAvailable": true
+    },
+    {
+      "key": "dark-knight",
+      "source": "MoviesDrive / Pixeldrain",
+      "container": "mkv",
+      "bytes": 17722031014,
+      "filename": "The Dark Knight 2008 - 4K HDR - IMAX Bluray - Multi Audio - x265 [Tam-Tel-Hin DD+ 2.0 224Kbps] + [Eng DD 5.1 640Kbps] ESubs By - moviesdrives.com.mkv",
+      "sourceItemId": null,
+      "releaseYearBasis": null,
+      "mediaFilename": null,
+      "audioLanguages": [
+        "ta",
+        "te",
+        "hi",
+        "en"
+      ],
+      "subtitleBestScore": 69,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 3840,
+        "height": 2160
+      },
+      "quality": "3840x2160",
+      "qualityGrade": "2160p",
+      "turkishSubtitle": true,
+      "embeddedSubtitleLanguages": [
+        "en"
+      ],
+      "externalTrackCount": 4,
+      "externalTurkishTracks": 4,
+      "actualDurationSeconds": 9133.312,
+      "hashAvailable": true
+    },
+    {
+      "key": "dark-knight",
+      "source": "MoviesDrive / Pixeldrain",
+      "container": "mkv",
+      "bytes": 1363716511,
+      "filename": "The.Dark.Knight.2008.720p.Dual.Audio.Hin-Eng.moviesdrives.com.mkv",
+      "sourceItemId": null,
+      "releaseYearBasis": null,
+      "mediaFilename": null,
+      "audioLanguages": [
+        "en",
+        "hi"
+      ],
+      "subtitleBestScore": 69,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 1280,
+        "height": 528
+      },
+      "quality": "1280x528",
+      "qualityGrade": "720p",
+      "turkishSubtitle": true,
+      "embeddedSubtitleLanguages": [],
+      "externalTrackCount": 4,
+      "externalTurkishTracks": 4,
+      "actualDurationSeconds": 9133.249,
+      "hashAvailable": true
+    }
+  ],
+  "method": {
+    "archive": "An English canonical item can store only an official translated filename. After item ID/title/year checks, unmatched video filenames with the target year and plausible declared duration trigger at most one same-ID TR/EN translations request. Its canonical names/combinations join the filename/year checks. Known matching files do not block other translated files. Actual duration90–110% still required; no guessed Turkish aliases.",
+    "moviesdrive": "Exact same-year original-title hint or exact IMDb may request at most one same-ID US/GB/TR alternative-title list. Search/page/file must then exactly match a canonical name and year; the hint alone is never accepted. Title-less/wrong-year/archive or nonvideo/wrong-year filenames do not waste a lookup. Existing source and real pixel/audio/container/byte/duration checks remain.",
+    "resources": "No additional catalogue search jobs, scraper ID, backend/account/key or fixed video pin. Each adapter can add one lazy3s metadata request only when needed. MovieDrive10s/four routes/two resolvers; Archive two searches/12metadata; main24s/video3/sub4/EN1 unchanged. No physical iPhone cancellation/latency guarantee.",
+    "audio": "Three new MoviesDrive MKVs actually contain English/Hindi;4K also Tamil/Telugu. Three MP4 files are publisher-labelled Turkish dub (fresh item title/language tur), but their audio language metadata is absent. No verified Turkish dub inferred and no audio copied from source parent filename.",
+    "subtitles": "All six files have existing external TR alternatives, actual size/pixels/duration/hash. Subtitle existence/score is not scene-sync measurement."
+  },
+  "baseline": {
+    "evidence": "compatibility/coverage-188.json",
+    "method": "Old committed1.8.7 Archive/MoviesDrive/index source with identical canonical refs and live media transport. Dark old5 files/noMovieDrive; new8 with3MovieDrive. Stuart old11/new13URLs, but duplicate conservatively collapsed to1 new file. DeathHunt old5/new7first or6repeat, two distinct new Archive MP4s. Vikings11/11 control, not counted.",
+    "counts": [
+      {
+        "key": "the-vikings",
+        "files": 11
+      },
+      {
+        "key": "death-hunt",
+        "files": 5
+      },
+      {
+        "key": "stuart-little",
+        "files": 11
+      },
+      {
+        "key": "dark-knight",
+        "files": 5
+      }
+    ]
+  },
+  "duplicateCollapse": {
+    "rawNewUrls": 7,
+    "newDistinctFiles": 6,
+    "method": "Same item/original filename/bytes/pixels/duration. Stuart .ia and original collapsed even though returned hashes can differ; actual app hash dedupe is not asserted to collapse these copies."
+  },
+  "regression": {
+    "evidence": "compatibility/coverage-188.json",
+    "oldInception4k": true,
+    "oldFleabag4k": true,
+    "oldYourName4k": true,
+    "oldStrangerThings5FourK": true,
+    "oldFuryTurkishDub": true,
+    "oldHotelTurkishDub": true,
+    "counts": [
+      {
+        "key": "stranger-things-s5e1",
+        "files": 3,
+        "ms": 10108
+      },
+      {
+        "key": "fury",
+        "files": 11,
+        "ms": 24023
+      },
+      {
+        "key": "hotel-rwanda",
+        "files": 6,
+        "ms": 22833
+      },
+      {
+        "key": "inception",
+        "files": 8,
+        "ms": 10742
+      },
+      {
+        "key": "fleabag-s1e1",
+        "files": 10,
+        "ms": 9035
+      },
+      {
+        "key": "your-name",
+        "files": 9,
+        "ms": 12278
+      }
+    ],
+    "note": "Fury reached24s logical deadline with11 files, Hotel6; no claim of latency improvement. Extra metadata calls only when names need resolving. Native physical/iPhone tests not run."
+  },
+  "publisherTurkishLabels": [
+    {
+      "id": "kucuk-kardesim-1999-turkce-dublaj",
+      "status": 200,
+      "title": "Stuart Little (1999) Türkçe Dublaj",
+      "language": "tur",
+      "files": [
+        {
+          "name": "küçük kardeşim 1999 türkçe dublaj.ia.mp4",
+          "bytes": "1310002168",
+          "length": "5075.86",
+          "original": "küçük kardeşim 1999 türkçe dublaj.mp4"
+        },
+        {
+          "name": "küçük kardeşim 1999 türkçe dublaj.mp4",
+          "bytes": "1310002168",
+          "length": "5075.86"
+        }
+      ]
+    },
+    {
+      "id": "death-hunt-olum-avi-1981-hd",
+      "status": 200,
+      "title": "Death Hunt (1981) Türkçe Dublaj",
+      "language": "tur",
+      "files": [
+        {
+          "name": "Death Hunt Ölüm Avı 1981 HD.ia.mp4",
+          "bytes": "1640304149",
+          "length": "5818.75",
+          "original": "Death Hunt Ölüm Avı 1981 HD.mp4"
+        },
+        {
+          "name": "Death Hunt Ölüm Avı 1981 HD.mp4",
+          "bytes": "1670968421",
+          "length": "5818.75"
+        }
+      ]
+    }
+  ],
+  "metadataReferences": [
+    {
+      "id": 10137,
+      "imdb": "tt0164912",
+      "pages": [
+        {
+          "url": "https://www.themoviedb.org/movie/10137?language=en-US",
+          "status": 200,
+          "data": {
+            "@context": "https://schema.org",
+            "@type": "Movie",
+            "dateCreated": "2010-04-16T18:26:52Z",
+            "dateModified": "2026-10-16T15:33:00Z",
+            "description": "When the Littles adopt Stuart, the mouse, George is initially unwelcoming to his new brother, and the family cat, Snowbell, is even less enthusiastic. Stuart resolves to face these difficulties with as much pluck and courage as he can muster.",
+            "isFamilyFriendly": true,
+            "name": "Stuart Little",
+            "url": "https://www.themoviedb.org/movie/10137-stuart-little",
+            "aggregateRating": {
+              "@type": "aggregateRating",
+              "bestRating": 10,
+              "ratingValue": 6.1,
+              "ratingCount": 4806,
+              "worstRating": 0,
+              "reviewCount": 1
+            },
+            "countryOfOrigin": [
+              {
+                "@type": "Country",
+                "name": "United States"
+              }
+            ],
+            "duration": "PT1H24M",
+            "genre": [
+              "Family",
+              "Fantasy",
+              "Comedy",
+              "Adventure"
+            ],
+            "image": "https://image.tmdb.org/t/p/w500/362lcwTJlNyAhitTlp2UraECISR.jpg",
+            "releasedEvent": [
+              {
+                "@type": "PublicationEvent",
+                "startDate": "1999-12-17"
+              }
+            ]
+          },
+          "title": "Stuart Little (1999) &#8212; The Movie Database (TMDB)"
+        },
+        {
+          "url": "https://www.themoviedb.org/movie/10137?language=tr-TR",
+          "status": 200,
+          "data": {
+            "@context": "https://schema.org",
+            "@type": "Movie",
+            "dateCreated": "2010-04-16T18:26:52Z",
+            "dateModified": "2026-10-16T15:33:00Z",
+            "description": "Küçük fakat dev gibi bir yüreğe sahipFilm, ünlü aktör Michael J. Fox'un seslendirdiği, küçük fakat dev gibi bir yüreğe sahip olan küçük fare Stuart'ın kendi kimliğini ve ait olduğu yeri araması sırasında başından geçenleri konu ediyor. Oskarlı oyuncu Geena Davis, Jonahtan Lipnicki ve Hugh Laurie'nin canlandırdığı gerçek insanlardan oluşan Little ailesi Stuart'ı evlat edinir. Bir birliktelikten sonra ailenin kedisi olan ve Nathan Lane'nin seslendirdiği Snowbell, Stuart'ın can düşmanı olur. Maceralarla dolu bu garip birliktelik Stuart'a aile, sadakat ve arkadaşlık kavramlarının gerçek anlamlarını öğretir.",
+            "isFamilyFriendly": true,
+            "name": "Küçük Kardeşim",
+            "url": "https://www.themoviedb.org/movie/10137-stuart-little",
+            "aggregateRating": {
+              "@type": "aggregateRating",
+              "bestRating": 10,
+              "ratingValue": 6.1,
+              "ratingCount": 4806,
+              "worstRating": 0
+            },
+            "countryOfOrigin": [
+              {
+                "@type": "Country",
+                "name": "ABD"
+              }
+            ],
+            "duration": "PT1H24M",
+            "genre": [
+              "Aile",
+              "Fantastik",
+              "Komedi",
+              "Macera"
+            ],
+            "image": "https://image.tmdb.org/t/p/w500/fhfKYrsFPq0J0OEvqEdzxRfOsy5.jpg",
+            "releasedEvent": [
+              {
+                "@type": "PublicationEvent",
+                "startDate": "1999-12-17"
+              }
+            ]
+          },
+          "title": "Küçük Kardeşim (1999) &#8212; The Movie Database (TMDB)"
+        }
+      ]
+    },
+    {
+      "id": 26444,
+      "imdb": "tt0082247",
+      "pages": [
+        {
+          "url": "https://www.themoviedb.org/movie/26444?language=en-US",
+          "status": 200,
+          "data": {
+            "@context": "https://schema.org",
+            "@type": "Movie",
+            "dateCreated": "2010-04-16T20:28:20Z",
+            "dateModified": "2026-10-24T07:19:55Z",
+            "description": "Yukon Territory, Canada, November 1931. Albert Johnson, a trapper who lives alone in the mountains, buys a dog almost dead after a brutal dogfight, a good deed that will put him in trouble.",
+            "isFamilyFriendly": true,
+            "name": "Death Hunt",
+            "url": "https://www.themoviedb.org/movie/26444-death-hunt",
+            "aggregateRating": {
+              "@type": "aggregateRating",
+              "bestRating": 10,
+              "ratingValue": 6.7,
+              "ratingCount": 217,
+              "worstRating": 0
+            },
+            "countryOfOrigin": [
+              {
+                "@type": "Country",
+                "name": "United States"
+              },
+              {
+                "@type": "Country",
+                "name": "Hong Kong SAR China"
+              }
+            ],
+            "duration": "PT1H37M",
+            "genre": [
+              "Adventure",
+              "Western"
+            ],
+            "image": "https://image.tmdb.org/t/p/w500/j9nVLvOv2Sz3KekD7elwGZII8F9.jpg",
+            "releasedEvent": [
+              {
+                "@type": "PublicationEvent",
+                "startDate": "1981-04-15"
+              }
+            ]
+          },
+          "title": "Death Hunt (1981) &#8212; The Movie Database (TMDB)"
+        },
+        {
+          "url": "https://www.themoviedb.org/movie/26444?language=tr-TR",
+          "status": 200,
+          "data": {
+            "@context": "https://schema.org",
+            "@type": "Movie",
+            "dateCreated": "2010-04-16T20:28:20Z",
+            "dateModified": "2026-10-24T07:19:55Z",
+            "description": "31 Aralık 1931'de, yalnız bir avcı olan Albert Johnson, dağdaki kulübesinde bir adamı kendini savunurken vurarak öldürür. Bunun üzerine Çavuş Edgar Millen, Johnson’u tutuklamak için ağır silahlarla donatılmış bir ekiple dağa çıkar. Ancak bu acımasız kuşatma sırasında, Johnson buz gibi dağlık bölgeye kaçmadan önce dört kişi daha hayatını kaybedecektir...",
+            "isFamilyFriendly": true,
+            "name": "Ölüm Avı",
+            "url": "https://www.themoviedb.org/movie/26444-death-hunt",
+            "aggregateRating": {
+              "@type": "aggregateRating",
+              "bestRating": 10,
+              "ratingValue": 6.7,
+              "ratingCount": 217,
+              "worstRating": 0
+            },
+            "countryOfOrigin": [
+              {
+                "@type": "Country",
+                "name": "ABD"
+              },
+              {
+                "@type": "Country",
+                "name": "Çin Hong Kong ÖYB"
+              }
+            ],
+            "duration": "PT1H37M",
+            "genre": [
+              "Macera",
+              "Vahşi Batı"
+            ],
+            "image": "https://image.tmdb.org/t/p/w500/j9nVLvOv2Sz3KekD7elwGZII8F9.jpg",
+            "releasedEvent": [
+              {
+                "@type": "PublicationEvent",
+                "startDate": "1981-04-15"
+              }
+            ]
+          },
+          "title": "Ölüm Avı (1981) &#8212; The Movie Database (TMDB)"
+        }
+      ]
+    },
+    {
+      "id": 42661,
+      "imdb": "tt0052365",
+      "pages": [
+        {
+          "url": "https://www.themoviedb.org/movie/42661?language=en-US",
+          "status": 200,
+          "data": {
+            "@context": "https://schema.org",
+            "@type": "Movie",
+            "dateCreated": "2010-08-10T14:51:36Z",
+            "dateModified": "2026-10-26T05:44:57Z",
+            "description": "Einar, brutal son of the viking Ragnar and future heir to his throne, tangles with clever slave Eric, for the hand of a beautiful English maiden.",
+            "isFamilyFriendly": true,
+            "name": "The Vikings",
+            "url": "https://www.themoviedb.org/movie/42661-the-vikings",
+            "aggregateRating": {
+              "@type": "aggregateRating",
+              "bestRating": 10,
+              "ratingValue": 7,
+              "ratingCount": 392,
+              "worstRating": 0,
+              "reviewCount": 2
+            },
+            "countryOfOrigin": [
+              {
+                "@type": "Country",
+                "name": "United States"
+              }
+            ],
+            "duration": "PT1H55M",
+            "genre": [
+              "Adventure",
+              "History",
+              "Action"
+            ],
+            "image": "https://image.tmdb.org/t/p/w500/fagWQmo7VZkjtMchqCu9jR7d6fK.jpg",
+            "releasedEvent": [
+              {
+                "@type": "PublicationEvent",
+                "startDate": "1958-06-11"
+              }
+            ]
+          },
+          "title": "The Vikings (1958) &#8212; The Movie Database (TMDB)"
+        },
+        {
+          "url": "https://www.themoviedb.org/movie/42661?language=tr-TR",
+          "status": 200,
+          "data": {
+            "@context": "https://schema.org",
+            "@type": "Movie",
+            "dateCreated": "2010-08-10T14:51:36Z",
+            "dateModified": "2026-10-26T05:44:57Z",
+            "description": "Krallık tacı için savaşan iki kardeşin mücadelesini anlatan film, iki büyük aktörü karşı karşıya getiriyor. 8. ve 9. yüzyılda Avrupa'da hüküm süren, tüm yaşamlarını savaş Tanrısı Odine'ye adayan ve her yeri yıkıp yağmalayan Vikingler'i anlatan, unutulmaz film. Edison Marshall'ın romanından yapılan uyarlama, güzel renkleri, oyuncuların performansı, doğal setleri ve akıcı temposuyla sivriliyor. Filmin en ilginç özelliği ise hikayeyi Orson Welles'in anlatıyor oluşu.",
+            "isFamilyFriendly": true,
+            "name": "Vikingler",
+            "url": "https://www.themoviedb.org/movie/42661-the-vikings",
+            "aggregateRating": {
+              "@type": "aggregateRating",
+              "bestRating": 10,
+              "ratingValue": 7,
+              "ratingCount": 392,
+              "worstRating": 0
+            },
+            "countryOfOrigin": [
+              {
+                "@type": "Country",
+                "name": "ABD"
+              }
+            ],
+            "duration": "PT1H55M",
+            "genre": [
+              "Macera",
+              "Tarih",
+              "Aksiyon"
+            ],
+            "image": "https://image.tmdb.org/t/p/w500/fagWQmo7VZkjtMchqCu9jR7d6fK.jpg",
+            "releasedEvent": [
+              {
+                "@type": "PublicationEvent",
+                "startDate": "1958-06-11"
+              }
+            ]
+          },
+          "title": "Vikingler (1958) &#8212; The Movie Database (TMDB)"
+        }
+      ]
+    }
+  ],
+  "darkKnightAliasReference": {
+    "url": "https://www.themoviedb.org/movie/155/titles?language=en-US",
+    "country": "US",
+    "title": "Batman: The Dark Knight",
+    "method": "Same-ID public TMDB titles page independently inspected; live validator uses schema-shaped alternative_titles fixture, not phone API credential test."
+  },
+  "research": {
+    "movies": [
+      {
+        "key": "dune",
+        "entries": [
+          {
+            "quality": 2160,
+            "bytesHint": 21000000000
+          }
+        ],
+        "files": [
+          {
+            "eligible": false,
+            "actual": null
+          }
+        ]
+      },
+      {
+        "key": "inception",
+        "entries": [
+          {
+            "quality": 2160,
+            "bytesHint": null
+          }
+        ],
+        "files": [
+          {
+            "eligible": true,
+            "name": "[[ moviesdrives.com ]] Inception.2010.4K-2160p.SDR.10Bit.BluRay.Hindi.DD5.1-English.5.1.HEVC.x265- moviesdrives.com.mkv",
+            "bytes": 7591975942,
+            "actual": {
+              "size": 7591975942,
+              "dimensions": {
+                "width": 3840,
+                "height": 1598
+              },
+              "audio": [
+                "hi",
+                "en"
+              ],
+              "duration": 8888.341
+            }
+          }
+        ]
+      },
+      {
+        "key": "interstellar",
+        "entries": [
+          {
+            "quality": 2160,
+            "bytesHint": 10800000000
+          }
+        ],
+        "files": [
+          {
+            "eligible": false,
+            "actual": null
+          }
+        ]
+      }
+    ],
+    "dark4k": {
+      "key": "dark-knight",
+      "entries": [
+        {
+          "quality": 2160,
+          "bytesHint": 16500000000
+        }
+      ],
+      "files": [
+        {
+          "eligible": true,
+          "name": "The Dark Knight 2008 - 4K HDR - IMAX Bluray - Multi Audio - x265 [Tam-Tel-Hin DD+ 2.0 224Kbps] + [Eng DD 5.1 640Kbps] ESubs By - moviesdrives.com.mkv",
+          "bytes": 17722031014,
+          "actual": {
+            "size": 17722031014,
+            "dimensions": {
+              "width": 3840,
+              "height": 2160
+            },
+            "audio": [
+              "ta",
+              "te",
+              "hi",
+              "en"
+            ],
+            "duration": 9133.312
+          }
+        }
+      ]
+    },
+    "otherTurkishRecords": [
+      {
+        "id": "terror-among-us-icimizdeki-teror-1981-1080p.webrip.x-264.tr-en-dual",
+        "status": 200,
+        "title": "Terror Among Us İçimizdeki Terör ( 1981) 1080p.webrip.x 264.tr En Dual",
+        "files": [
+          {
+            "name": "Terror Among Us - İçimizdeki Terör (1981) 1080p.webrip.x264.tr-en dual.mkv",
+            "bytes": "1827638270",
+            "duration": "5755.29",
+            "height": "1080"
+          },
+          {
+            "name": "Terror Among Us - İçimizdeki Terör (1981) 1080p.webrip.x264.tr-en dual.mp4",
+            "bytes": "561177535",
+            "duration": "5755.26",
+            "height": "480"
+          }
+        ]
+      },
+      {
+        "id": "high-desert-kill-colun-olduren-sirri-1989-1080p.-blu-ray.x-265.tr-en",
+        "status": 200,
+        "title": "High Desert Kill Çölün Öldüren Sırrı ( 1989) 1080p. Blu Ray.x 265.tr En",
+        "files": [
+          {
+            "name": "High Desert Kill - Çölün Öldüren Sırrı (1989) 1080p.BluRay.x265.tr-en.mkv",
+            "bytes": "1664128982",
+            "duration": "5506.5",
+            "height": "1080"
+          },
+          {
+            "name": "High Desert Kill - Çölün Öldüren Sırrı (1989) 1080p.BluRay.x265.tr-en.mp4",
+            "bytes": "550539972",
+            "duration": "5506.51",
+            "height": "480"
+          }
+        ]
+      },
+      {
+        "id": "the-commitments-genclik-atesi-1991-1080p.-blu-ray.x-265.tr-en",
+        "status": 200,
+        "title": "The Commitments Gençlik Ateşi ( 1991) 1080p. Blu Ray.x 265.tr En",
+        "files": [
+          {
+            "name": "The Commitments - Gençlik Ateşi (1991) 1080p.BluRay.x265.tr-en.mkv",
+            "bytes": "2146602180",
+            "duration": "7086.07",
+            "height": "1080"
+          },
+          {
+            "name": "The Commitments - Gençlik Ateşi (1991) 1080p.BluRay.x265.tr-en.mp4",
+            "bytes": "695406315",
+            "duration": "7085.16",
+            "height": "480"
+          }
+        ]
+      },
+      {
+        "id": "death-rage-golgedeki-katil-1976-1080p.-blu-ray.x-264.tr-en",
+        "status": 200,
+        "title": "Death Rage Gölgedeki Katil ( 1976) 1080p. Blu Ray.x 264.tr En",
+        "files": []
+      },
+      {
+        "id": "return-to-paradise-cennete-donus-1998-1080p.-blu-ray.x-265.tr-en",
+        "status": 200,
+        "title": "Return To Paradise Cennete Dönüş ( 1998) 1080p. Blu Ray.x 265.tr En",
+        "files": [
+          {
+            "name": "Return to Paradise - Cennete Dönüş (1998) 1080p.BluRay.x265.tr-en.mkv",
+            "bytes": "2029819057",
+            "duration": "6713",
+            "height": "816"
+          },
+          {
+            "name": "Return to Paradise - Cennete Dönüş (1998) 1080p.BluRay.x265.tr-en.mp4",
+            "bytes": "661152283",
+            "duration": "6713",
+            "height": "480"
+          }
+        ]
+      },
+      {
+        "id": "mutant-hunt-mutant-avi-1987-1080p.-blu-ray.x-265.tr-en",
+        "status": 200,
+        "title": "Mutant Hunt Mutant Avı ( 1987) 1080p. Blu Ray.x 265.tr En",
+        "files": [
+          {
+            "name": "Mutant Hunt - Mutant Avı (1987) 1080p.BluRay.x265.tr-en.mkv",
+            "bytes": "1396208747",
+            "duration": "4620.95",
+            "height": "1080"
+          },
+          {
+            "name": "Mutant Hunt - Mutant Avı (1987) 1080p.BluRay.x265.tr-en.mp4",
+            "bytes": "455290178",
+            "duration": "4620.94",
+            "height": "480"
+          }
+        ]
+      }
+    ],
+    "notes": [
+      "Other TR/EN records already use supported bilingual filenames; not newly counted.",
+      "Dune and Interstellar first high-resolution route did not resolve; existing Inception4K retained, not counted as new.",
+      "No five-route expansion, article-omission guess or invented bilingual alias was added.",
+      "Initial feature reports precede version bump; repeat/final report use1.8.8."
+    ]
+  },
+  "tests": {
+    "local": 312,
+    "compiledQuickJs": true,
+    "upstreamRelease": "0.6.5-beta",
+    "trackedFiles": 23,
+    "sourceDrift": 0,
+    "lockChanged": false,
+    "upstreamAnonymousAttempt": "HTTP403; verification incomplete",
+    "upstreamRetry": "existing GitHub credential used in memory by development check only; runtime plugin has no new account/key"
+  },
+  "allSourceCriteriaMet": false,
+  "physicalDevice": "not-run",
+  "fullPlayback": "not-run",
+  "fullDownload": "not-run",
+  "offline": "not-run",
+  "sceneSync": "not-run",
+  "font": "not-run"
+}

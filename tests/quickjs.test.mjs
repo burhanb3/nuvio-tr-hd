@@ -14,6 +14,36 @@ const animeBundle = await readFile(new URL('../providers/nuvio-tr-hd-anime.js', 
 const extraAnimeBundle = await readFile(new URL('../providers/nuvio-tr-hd-extra-anime.js', import.meta.url), 'utf8');
 const fastOnlineBundle = await readFile(new URL('../providers/nuvio-tr-hd-fast-online.js', import.meta.url), 'utf8');
 
+function aliasFeatureSample(language='eng',width=3840,height=2160){
+ const e=helpers.ebml,duration=Buffer.alloc(8),size=n=>[n>>8,n&255];duration.writeDoubleBE(7200000);
+ return Buffer.concat([e('1a45dfa3',e('4282',Buffer.from('matroska'))),e('18538067',Buffer.concat([e('1549a966',e('4489',duration)),e('1654ae6b',Buffer.concat([e('ae',Buffer.concat([e('83',[1]),e('e0',Buffer.concat([e('b0',size(width)),e('ba',size(height))]))])),e('ae',Buffer.concat([e('83',[2]),e('22b59c',Buffer.from(language))]))]))])),Buffer.alloc(1000000)]);
+}
+test('QuickJS: resmi TR dosya adı tembel çeviriyle bulunur; başka TMDB çevirisi kabul edilmez',async()=>{
+ const{archiveQuery}=require('../src/providers/archive.cjs'),wanted={...helpers.target,runtimeMinutes:120},name='Örnek Film (1999).mkv',url='https://archive.org/download/local-example/'+encodeURIComponent(name),translations='https://api.themoviedb.org/3/movie/603/translations?api_key=test';
+ const fixture=makeFixture({extra:{
+ ['https://api.themoviedb.org/3/movie/603?api_key=test&append_to_response=external_ids,release_dates']:{json:{...helpers.tmdb,runtime:120}},
+ [archiveQuery(wanted,true)]:{json:{response:{docs:[{identifier:'local-example',title:'The Matrix (1999)'}]}}},[archiveQuery(wanted)]:{json:{response:{docs:[]}}},
+ ['https://archive.org/metadata/local-example']:{json:{metadata:{title:'The Matrix (1999)'},files:[{name,length:7200}]}},
+ [translations]:{json:{id:603,translations:[{iso_639_1:'tr',data:{title:'Örnek Film'}}]}},[url]:{body:aliasFeatureSample('tur',1280,720),mime:'video/matroska'}}});
+ const settings={autoSubtitles:false,useDownloadBridge:false,hdhubEnabled:false,moviesdriveEnabled:false,goojaraEnabled:false,hdrezkaEnabled:false,waploadedEnabled:false,rarefilmmEnabled:false,playImdbEnabled:false,vixsrcEnabled:false},calls=[];
+ const rows=await runInQuickJs(fixture,{settings,nativeTimers:true,fetchCalls:calls});assert.equal(rows.length,1);assert.match(rows[0].language,/Ses: TR/);assert.equal(calls.filter(u=>u===translations).length,1);
+ fixture[translations].json.id=999999;assert.deepEqual(await runInQuickJs(fixture,{settings,nativeTimers:true}),[]);
+});
+test('QuickJS: resmi alternatif başlık ayrı film4K yolunu açar; orijinal TMDB kimliği korunur',async()=>{
+ const origin='https://new4.moviesdrive.beer',archive='https://mdrive.lol/archive/123/',hub='https://hubcloud.ist/drive/Example1',terminal='https://gamerxyt.com/hubcloud.php?id=example',file='https://pixeldrain.dev/api/file/Example1',name='Franchise.The.Matrix.1999.2160p.mkv',body=aliasFeatureSample();
+ const aliases='https://api.themoviedb.org/3/movie/603/alternative_titles?api_key=test';
+ const fixture=makeFixture({extra:{
+ ['https://api.themoviedb.org/3/movie/603?api_key=test&append_to_response=external_ids,release_dates']:{json:{...helpers.tmdb,runtime:120}},
+ [aliases]:{json:{id:603,titles:[{iso_3166_1:'US',title:'Franchise The Matrix'}]}},
+ [origin+'/search.php?q=The%20Matrix&page=1']:{json:{hits:[{document:{post_title:'Franchise The Matrix (1999)',permalink:'/example/',imdb_id:'tt0133093'}}]}},
+ [origin+'/example/']:{body:'<article class="post-content"><h1>Franchise The Matrix (1999)</h1><h5>Franchise The Matrix (1999) 2160p</h5><h5><a href="'+archive+'">2160p [1GB]</a></h5></article>'},
+ [archive]:{body:'<title>Franchise The Matrix (1999) 2160p</title><a href="'+hub+'">Download</a>'},[hub]:{body:'<title>'+name+'</title><script>var url="'+terminal+'";</script>'},[terminal]:{body:'<script>var pxl="https://pixeldrain.dev/u/Example1";</script>'},
+ [file+'/info']:{json:{success:true,id:'Example1',name,size:body.length,mime_type:'video/matroska',can_download:true}},[file]:{body,mime:'video/matroska'}}});
+ const settings={autoSubtitles:false,useDownloadBridge:false,archiveEnabled:false,hdhubEnabled:false,goojaraEnabled:false,hdrezkaEnabled:false,waploadedEnabled:false,rarefilmmEnabled:false,playImdbEnabled:false,vixsrcEnabled:false},calls=[];
+ const rows=await runInQuickJs(fixture,{settings,nativeTimers:true,fetchCalls:calls});assert.equal(rows.length,1);assert.equal(rows[0].quality,'2160p · 3840×2160');assert.equal(calls.filter(u=>u===aliases).length,1);
+ fixture[aliases].json.id=999999;assert.deepEqual(await runInQuickJs(fixture,{settings,nativeTimers:true}),[]);
+});
+
 test('QuickJS: MoviesDrive ilk/sonraki sezonun bölümünü ve kendi süresini bulur, IMDb çelişkisini reddeder',async()=>{
  const origin='https://new4.moviesdrive.beer',archive='https://mdrive.lol/archive/123/',hub='https://hubcloud.ist/drive/Example2',terminal='https://gamerxyt.com/hubcloud.php?id=example',file='https://pixeldrain.dev/api/file/Example2',name='Example.Series.S01E02.1080p.mkv';
  const e=helpers.ebml,duration=Buffer.alloc(8);duration.writeDoubleBE(1800000);const body=Buffer.concat([e('1a45dfa3',e('4282',Buffer.from('matroska'))),e('18538067',Buffer.concat([e('1549a966',e('4489',duration)),e('1654ae6b',Buffer.concat([e('ae',Buffer.concat([e('83',[1]),e('e0',Buffer.concat([e('b0',[7,128]),e('ba',[4,56])]))])),e('ae',Buffer.concat([e('83',[2]),e('22b59c',Buffer.from('eng'))]))]))])),Buffer.alloc(1000000)]);
