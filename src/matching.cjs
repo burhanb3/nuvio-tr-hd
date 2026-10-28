@@ -99,4 +99,14 @@ async function resolveAlternativeTitles(http,target,key) {
   return Array.isArray(rows)?[...new Set(rows.slice(0,150).filter(r=>['US','GB','TR'].includes(r.iso_3166_1))
     .map(r=>r.title).filter(t=>typeof t==='string'&&t.trim()&&t.length<=200))].slice(0,30):[];
 }
-module.exports = { resolveIdentity, resolveTranslatedTitles, resolveAlternativeTitles, matchesIdentity, matchesAddonMeta, matchesStreamFilename, matchesEpisode };
+async function resolveSeasonEpisode(http,target,key){
+  if(!key||target.type!=='tv'||!positiveInt(target.season)||!positiveInt(target.episode)||http.expired())return null;
+  const data=await http.json(`https://api.themoviedb.org/3/tv/${target.tmdbId}/season/${target.season}?api_key=${encodeURIComponent(key)}`,{timeoutMs:3000});
+  if(data?.season_number!==target.season||!/^\d{4}-\d{2}-\d{2}$/.test(data.air_date||'')||!Array.isArray(data.episodes)||data.episodes.length>200)return null;
+  const year=Number(data.air_date.slice(0,4)),episodes=data.episodes.filter(e=>e?.episode_number===target.episode);
+  const episode=episodes[0];
+  if(episodes.length!==1||episode.show_id!==target.tmdbId||episode.season_number!==target.season||
+    !Number.isInteger(episode.runtime)||episode.runtime<=0||episode.runtime>1000||year<target.year||year>2099)return null;
+  return{seasonReleaseYear:year,runtimeMinutes:episode.runtime};
+}
+module.exports = { resolveIdentity, resolveTranslatedTitles, resolveAlternativeTitles, resolveSeasonEpisode, matchesIdentity, matchesAddonMeta, matchesStreamFilename, matchesEpisode };

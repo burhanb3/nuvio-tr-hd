@@ -23,3 +23,25 @@ test('MoviesDrive TV: eksik/çoklu bölüm başlığı, farklı arşiv veya dosy
  for(const change of['wrongFile','wrongArchive','restricted']){const data=fixture();if(change==='wrongFile')data[hub].body=data[hub].body.replace('E02','E03');if(change==='wrongArchive')data[archive].body=data[archive].body.replace('Season 1','Season 2');if(change==='restricted')data[file+'/info'].json.can_download=false;
  const http=createHttp({fetchImpl:fixtureFetch(data)});try{assert.deepEqual(await scanMoviesDrive(http,target),[],change);}finally{http.close();}}
 });
+function laterFixture(){
+ const data=fixture();for(const value of Object.values(data))if(typeof value.body==='string')value.body=value.body.replaceAll('Season 1','Season 3').replaceAll('S01E02','S03E02');
+ data[origin+'/search.php?q=Example%20Series&page=1'].json.hits[0].document.post_title='Example Series (Season 3) Dual Audio';
+ data[origin+'/example-series/'].body=data[origin+'/example-series/'].body.replace('Season 3) 2020','Season 3)').replace('</article>','<strong>Released Year:</strong> 2024<br></article>');
+ data[file+'/info'].json.name=name.replace('S01','S03');const bytes=data[file].body,p=bytes.indexOf(Buffer.from('4489','hex'));bytes.writeDoubleBE(4320000,p+3);return data;
+}
+test('MoviesDrive TV: sonraki sezonun yılı ve kendi süresi kullanılır; seri ilk yılı değişmez',async()=>{
+ const f=laterFixture(),later={...target,season:3},http=createHttp({fetchImpl:fixtureFetch(f)});let loads=0;
+ try{const rows=await scanMoviesDrive(http,later,{loadSeason:async()=>{loads++;return{seasonReleaseYear:2024,runtimeMinutes:72};}});assert.equal(loads,1);assert.equal(rows.length,1);assert.equal(rows[0].identity.year,2020);assert.equal(rows[0].identity.runtimeMinutes,72);assert.equal(later.runtimeMinutes,30);assert.equal((await probe(http,rows[0])).duration,4320);}finally{http.close();}
+});
+test('MoviesDrive TV: kanonik sezon verisi veya kaynak sezon yılı uyuşmazsa sonuca zorlanmaz',async()=>{
+ for(const change of['missing','year','absentYear','wrongEpisode']){const f=laterFixture();if(change==='year')f[origin+'/example-series/'].body=f[origin+'/example-series/'].body.replace('2024','2025');if(change==='absentYear')f[origin+'/example-series/'].body=f[origin+'/example-series/'].body.replace('Released Year:','Upload Year:');if(change==='wrongEpisode')f[hub].body=f[hub].body.replace('E02','E03');
+ const calls=[],http=createHttp({fetchImpl:fixtureFetch(f,calls)});try{assert.deepEqual(await scanMoviesDrive(http,{...target,season:3},{loadSeason:async()=>change==='missing'?null:{seasonReleaseYear:2024,runtimeMinutes:72}}),[],change);if(change==='missing')assert.equal(calls.length,0);}finally{http.close();}}
+});
+test('MoviesDrive TV: kısıtlı ilk4K yanında ayrı yayımlanan ikinci4K da aynı dört route sınırında aranır',async()=>{
+ const f=fixture(),highA='https://mdrive.lol/archive/401/',highB='https://mdrive.lol/archive/402/';
+ f[origin+'/example-series/'].body=f[origin+'/example-series/'].body.replace('</article>',[highA,highB].map(u=>'<h5>Example Series (Season 1) 2160p [2GB/E]</h5><h5><a href="'+u+'">2160p Single Episode</a></h5>').join('')+'</article>');
+ const highName=name.replace('1080p','2160p'),highBody=Buffer.from(f[file].body);const width=highBody.indexOf(Buffer.from('b0820780','hex')),height=highBody.indexOf(Buffer.from('ba820438','hex'));highBody.writeUInt16BE(3840,width+2);highBody.writeUInt16BE(2160,height+2);
+ for(const[id,url]of[['High0001',highA],['High0002',highB]]){const h='https://hubcloud.ist/drive/'+id,t='https://gamerxyt.com/hubcloud.php?id='+id,p='https://pixeldrain.dev/api/file/'+id;
+ f[url]={body:'<title>Example Series (Season 1) 2160p</title><h5>Ep02&ndash;2160p [2GB]</h5><h5><a href="'+h+'">HubCloud</a></h5>'};f[h]={body:'<title>'+highName+'</title><script>var url="'+t+'";</script>'};f[t]={body:'<script>var pxl="https://pixeldrain.dev/u/'+id+'";</script>'};f[p+'/info']={json:{success:true,id,name:highName,size:highBody.length,mime_type:'video/matroska',can_download:true,...(id==='High0001'?{availability:'file_rate_limited_captcha_required'}:{})}};f[p]={body:highBody,mime:'video/matroska'};}
+ const calls=[],http=createHttp({fetchImpl:fixtureFetch(f,calls)});try{const rows=await scanMoviesDrive(http,target);assert.equal(rows.length,2);const v=await probe(http,rows.find(r=>r.url.endsWith('High0002')));assert.deepEqual(v.dimensions,{width:3840,height:2160});assert.ok(!calls.some(c=>c.url==='https://pixeldrain.dev/api/file/High0001'));assert.ok(calls.filter(c=>c.url.includes('/archive/')).length<=4);}finally{http.close();}
+});

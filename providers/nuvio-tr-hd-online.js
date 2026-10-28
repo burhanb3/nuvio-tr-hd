@@ -412,7 +412,16 @@ var require_matching = __commonJS({
       const rows = target.type === "movie" ? data.titles : data.results;
       return Array.isArray(rows) ? [...new Set(rows.slice(0, 150).filter((r) => ["US", "GB", "TR"].includes(r.iso_3166_1)).map((r) => r.title).filter((t) => typeof t === "string" && t.trim() && t.length <= 200))].slice(0, 30) : [];
     }
-    module2.exports = { resolveIdentity, resolveTranslatedTitles, resolveAlternativeTitles, matchesIdentity, matchesAddonMeta, matchesStreamFilename, matchesEpisode };
+    async function resolveSeasonEpisode(http, target, key) {
+      if (!key || target.type !== "tv" || !positiveInt(target.season) || !positiveInt(target.episode) || http.expired()) return null;
+      const data = await http.json(`https://api.themoviedb.org/3/tv/${target.tmdbId}/season/${target.season}?api_key=${encodeURIComponent(key)}`, { timeoutMs: 3e3 });
+      if (data?.season_number !== target.season || !/^\d{4}-\d{2}-\d{2}$/.test(data.air_date || "") || !Array.isArray(data.episodes) || data.episodes.length > 200) return null;
+      const year = Number(data.air_date.slice(0, 4)), episodes = data.episodes.filter((e) => e?.episode_number === target.episode);
+      const episode = episodes[0];
+      if (episodes.length !== 1 || episode.show_id !== target.tmdbId || episode.season_number !== target.season || !Number.isInteger(episode.runtime) || episode.runtime <= 0 || episode.runtime > 1e3 || year < target.year || year > 2099) return null;
+      return { seasonReleaseYear: year, runtimeMinutes: episode.runtime };
+    }
+    module2.exports = { resolveIdentity, resolveTranslatedTitles, resolveAlternativeTitles, resolveSeasonEpisode, matchesIdentity, matchesAddonMeta, matchesStreamFilename, matchesEpisode };
   }
 });
 
@@ -2128,13 +2137,13 @@ var require_moviesdrive = __commonJS({
       return decodeEntities(value).replace(/^(?:\[\[?\s*(?:www\.)?moviesdrives?\.[a-z]+\s*\]\]?\s*[-._ ]*)+/i, "").trim();
     }
     function seriesTitleMatches(value, target, requireYear = true) {
-      if (target.type !== "tv" || target.season !== 1) return false;
+      if (target.type !== "tv" || target.season !== 1 && !Number.isInteger(target.seasonReleaseYear)) return false;
       const m = text(value).match(/^(?:Download\s+)?(.+?)\s*\(Season\s+(\d{1,2})\)\s*(?:(\d{4})\b)?/i);
-      return !!m && Number(m[2]) === target.season && canonicalNames(target).includes(normalizeTitle(m[1])) && (!m[3] || Number(m[3]) === target.year) && (!requireYear || Number(m[3]) === target.year);
+      return !!m && Number(m[2]) === target.season && canonicalNames(target).includes(normalizeTitle(m[1])) && (!m[3] || [target.year, target.seasonReleaseYear].includes(Number(m[3]))) && (!requireYear || target.season > 1 || Number(m[3]) === target.year);
     }
     function fileMatches(value, target) {
       const name = cleanFilename(value);
-      return /\.(mkv|mp4)$/i.test(name) && canonicalNames(target).some((title) => filenameIdentity(name, { ...target, originalTitle: title }, target.type !== "tv")) && (target.type !== "tv" || canonicalNames(target).some((title) => normalizeTitle(name).startsWith(title + " ") && /^(?:(?:19|20)\d{2} )?(?:s\d{1,3} ?e\d{1,3}|\d{1,2}x\d{1,3})\b/.test(normalizeTitle(name).slice(title.length + 1)))) && (target.type !== "tv" || matchesEpisode(name, target) && !(normalizeTitle(name).match(/\b(?:19|20)\d{2}\b/g) || []).some((y) => Number(y) !== target.year)) && !/\b(sample|trailer|hdcam|camrip|hdtc|hdts|telesync)\b/i.test(normalizeTitle(name).slice(normalizeTitle(target.originalTitle).length));
+      return /\.(mkv|mp4)$/i.test(name) && canonicalNames(target).some((title) => filenameIdentity(name, { ...target, originalTitle: title }, target.type !== "tv")) && (target.type !== "tv" || canonicalNames(target).some((title) => normalizeTitle(name).startsWith(title + " ") && /^(?:(?:19|20)\d{2} )?(?:s\d{1,3} ?e\d{1,3}|\d{1,2}x\d{1,3})\b/.test(normalizeTitle(name).slice(title.length + 1)))) && (target.type !== "tv" || matchesEpisode(name, target) && !(normalizeTitle(name).match(/\b(?:19|20)\d{2}\b/g) || []).some((y) => ![target.year, target.seasonReleaseYear].includes(Number(y)))) && !/\b(sample|trailer|hdcam|camrip|hdtc|hdts|telesync)\b/i.test(normalizeTitle(name).slice(normalizeTitle(target.originalTitle).length));
     }
     function searchPages(data, target) {
       if (!Array.isArray(data?.hits)) return [];
@@ -2148,6 +2157,10 @@ var require_moviesdrive = __commonJS({
       const ids = anchors(article, 1e3).map((a) => a.href.match(/^https?:\/\/(?:www\.)?imdb\.com\/title\/(tt\d+)(?:$|[/?#])/i)?.[1]).filter(Boolean);
       if (target.imdbId && ids.some((id) => id !== target.imdbId)) return [];
       if (target.type === "tv" && (!target.imdbId || !ids.includes(target.imdbId))) return [];
+      if (target.type === "tv" && target.season > 1) {
+        const years = [...text(article.replace(/<[^>]+>/g, " ")).matchAll(/\bReleased Year:\s*((?:19|20)\d{2})\b/gi)].map((m) => Number(m[1]));
+        if (!years.length || years.some((year) => year !== target.seasonReleaseYear)) return [];
+      }
       let release = null;
       const rows = [];
       for (const m of article.matchAll(/<h[45]\b[^>]*>([\s\S]{0,5000}?)<\/h[45]>/gi)) {
@@ -2174,7 +2187,8 @@ var require_moviesdrive = __commonJS({
         release = null;
       }
       const small = rows.slice().sort((a, b) => a.size - b.size), high = rows.slice().sort((a, b) => b.quality - a.quality || a.size - b.size), full = rows.filter((r) => r.quality === 1080).sort((a, b) => a.size - b.size);
-      const plan = target.type === "tv" ? [full[0], high[0], small.find((r) => r.quality === 720), small[0]] : [small[0], full[0], high[0], small[1]];
+      const secondHigh = high.find((r) => r.url !== high[0]?.url && r.quality >= 2160);
+      const plan = target.type === "tv" ? [full[0], high[0], small.find((r) => r.quality === 720) || small[0], secondHigh || small[0]] : [small[0], full[0], high[0], small[1]];
       return [...new Map(plan.filter(Boolean).map((r) => [r.url, r])).values()].slice(0, 4);
     }
     function pixelFile(data, page, hubName, target) {
@@ -2215,7 +2229,12 @@ var require_moviesdrive = __commonJS({
       return null;
     }
     async function scanMoviesDrive(http, target, options = {}) {
-      if (target.type !== "movie" && (target.type !== "tv" || target.season !== 1 || !target.imdbId)) return [];
+      if (target.type !== "movie" && (target.type !== "tv" || !target.imdbId)) return [];
+      if (target.type === "tv" && target.season > 1) {
+        const season = await options.loadSeason?.();
+        if (!Number.isInteger(season?.seasonReleaseYear) || season.seasonReleaseYear < target.year || !Number.isInteger(season.runtimeMinutes) || season.runtimeMinutes <= 0) return [];
+        target = { ...target, seasonReleaseYear: season.seasonReleaseYear, runtimeMinutes: season.runtimeMinutes };
+      }
       const queries = [target.originalTitle, ...target.searchTitles || []];
       if (/^the\s+/i.test(target.originalTitle)) queries.splice(1, 0, target.originalTitle.replace(/^the\s+/i, ""));
       for (const query of [...new Set(queries)].slice(0, 2)) {
@@ -3934,7 +3953,7 @@ var require_ranking = __commonJS({
 var require_diagnostics = __commonJS({
   "src/diagnostics.cjs"(exports2, module2) {
     "use strict";
-    var VERSION = true ? "1.8.6" : "dev";
+    var VERSION = true ? "1.8.7" : "dev";
     function effectiveTmdbKey(settings, injectedKey) {
       return typeof settings.tmdbApiKey === "string" && settings.tmdbApiKey.trim() ? settings.tmdbApiKey.trim() : typeof injectedKey === "string" ? injectedKey.trim() : "";
     }
@@ -3986,7 +4005,7 @@ var require_index = __commonJS({
     var { createHttp } = require_http();
     var { createScheduler } = require_scheduler();
     var { loadHosted, registerDownloads, SERVICE_ORIGIN } = require_hosted();
-    var { resolveIdentity, resolveTranslatedTitles, resolveAlternativeTitles } = require_matching();
+    var { resolveIdentity, resolveTranslatedTitles, resolveAlternativeTitles, resolveSeasonEpisode } = require_matching();
     var { loadCatalog } = require_catalog();
     var { loadAddon } = require_stremio();
     var { scanDirectory } = require_directory();
@@ -4325,8 +4344,11 @@ var require_index = __commonJS({
                   const sourceHttp = http.scope(1e4);
                   return scanHdRezka(sourceHttp, target, { loadTitles: () => resolveAlternativeTitles(sourceHttp, target, effectiveTmdbKey(settings, tmdbKey)) });
                 } });
-                if (filesLane && settings.moviesdriveEnabled !== false && (target.type === "movie" || target.type === "tv" && target.season === 1 && target.imdbId))
-                  sourceJobs.push({ name: "MoviesDrive / Pixeldrain", run: () => scanMoviesDrive(http.scope(1e4), target, { onCandidates: acceptCandidates }) });
+                if (filesLane && settings.moviesdriveEnabled !== false && (target.type === "movie" || target.type === "tv" && target.imdbId))
+                  sourceJobs.push({ name: "MoviesDrive / Pixeldrain", run: () => {
+                    const sourceHttp = http.scope(1e4);
+                    return scanMoviesDrive(sourceHttp, target, { onCandidates: acceptCandidates, loadSeason: () => resolveSeasonEpisode(sourceHttp, target, effectiveTmdbKey(settings, tmdbKey)) });
+                  } });
                 if (onlineLane && settings.playImdbEnabled !== false) sourceJobs.push({ name: "PlayIMDb", run: () => scanPlayImdb(http, target) });
                 if (onlineLane && settings.vixsrcEnabled !== false && settings.includeHls !== false && !sourceFactories.some((s) => s.name === "VixSrc"))
                   sourceJobs.push({ name: "VixSrc", run: () => scanVixDirect(http, target) });
@@ -4475,7 +4497,7 @@ var require_index = __commonJS({
         { type: "toggle", key: "dizibakEnabled", label: "DiziBak dizi alternatifi", defaultValue: true, description: "Küçük public metadata yanıtları kullanılır. İlk bölüm tarihi ve dizi kategorisi uyuşmazsa sonuç eklenmez." },
         { type: "toggle", key: "filmmoduEnabled", label: "FilmModu online film ve kaynak ses seçenekleri", defaultValue: true },
         { type: "toggle", key: "purstreamEnabled", label: "Purstream ek online film ve dizi seçenekleri", defaultValue: true },
-        { type: "toggle", key: "moviesdriveEnabled", label: "MoviesDrive ek film ve bölüm indirmeleri", defaultValue: true, description: "Film/anime filmi ve uygun ilk sezon sayfalarında bölüm dosyaları aranır; ad, yıl, IMDb, bölüm ve gerçek medya kontrol edilir. Uzantısız MKV dosyaları Nuvio’da .mp4 adıyla kaydedilebilir; dahili MPV gerçek formatı içerikten okur. Harici oynatıcıda .mkv olarak yeniden adlandırmak gerekebilir." },
+        { type: "toggle", key: "moviesdriveEnabled", label: "MoviesDrive ek film ve bölüm indirmeleri", defaultValue: true, description: "Film/anime filmi ve bölüm dosyaları aranır. Sonraki sezonların yılı ve bölüm süresi aynı TMDB kaydından doğrulanır; ad, IMDb, bölüm ve gerçek medya denetlenir. Uzantısız MKV dosyaları Nuvio’da .mp4 adıyla kaydedilebilir; dahili MPV gerçek formatı içerikten okur. Harici oynatıcıda .mkv olarak yeniden adlandırmak gerekebilir." },
         { type: "info", label: "Ses kodları: EN İngilizce, TR Türkçe, JA Japonca, HI Hintçe. EN/ES görüntüde, görüntüye işlenmiş altyazıdır; ses dili değildir." },
         { type: "toggle", key: "autoSubtitles", label: "TR ve EN altyazıları otomatik ara", defaultValue: true },
         { type: "toggle", key: "animomEnabled", label: "Deneysel AniMOM anime dosyaları", defaultValue: false, description: "Varsayılan kapalı: tekil MP4/TR doğrulandı, birleşik arama ve bazı bölümlerde CDN kararsız. Tam ad/yıl/bölüm gerekir; düz bölüm numarası başka sezona taşınmaz." },

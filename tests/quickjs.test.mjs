@@ -14,7 +14,7 @@ const animeBundle = await readFile(new URL('../providers/nuvio-tr-hd-anime.js', 
 const extraAnimeBundle = await readFile(new URL('../providers/nuvio-tr-hd-extra-anime.js', import.meta.url), 'utf8');
 const fastOnlineBundle = await readFile(new URL('../providers/nuvio-tr-hd-fast-online.js', import.meta.url), 'utf8');
 
-test('QuickJS: ana dosya sağlayıcısı MoviesDrive ilk sezonunun tam bölümünü bulur, IMDb çelişkisini reddeder',async()=>{
+test('QuickJS: MoviesDrive ilk/sonraki sezonun bölümünü ve kendi süresini bulur, IMDb çelişkisini reddeder',async()=>{
  const origin='https://new4.moviesdrive.beer',archive='https://mdrive.lol/archive/123/',hub='https://hubcloud.ist/drive/Example2',terminal='https://gamerxyt.com/hubcloud.php?id=example',file='https://pixeldrain.dev/api/file/Example2',name='Example.Series.S01E02.1080p.mkv';
  const e=helpers.ebml,duration=Buffer.alloc(8);duration.writeDoubleBE(1800000);const body=Buffer.concat([e('1a45dfa3',e('4282',Buffer.from('matroska'))),e('18538067',Buffer.concat([e('1549a966',e('4489',duration)),e('1654ae6b',Buffer.concat([e('ae',Buffer.concat([e('83',[1]),e('e0',Buffer.concat([e('b0',[7,128]),e('ba',[4,56])]))])),e('ae',Buffer.concat([e('83',[2]),e('22b59c',Buffer.from('eng'))]))]))])),Buffer.alloc(1000000)]);
  const fixture={
@@ -26,6 +26,14 @@ test('QuickJS: ana dosya sağlayıcısı MoviesDrive ilk sezonunun tam bölümü
  const settings={autoSubtitles:false,useDownloadBridge:false,archiveEnabled:false,hdhubEnabled:false,goojaraEnabled:false,hdrezkaEnabled:false,waploadedEnabled:false,rarefilmmEnabled:false,playImdbEnabled:false,vixsrcEnabled:false};
  const rows=await runInQuickJs(fixture,{args:['123456','tv',1,2],settings,nativeTimers:true});assert.equal(rows.length,1);assert.equal(rows[0].quality,'1080p · 1920×1080');assert.match(rows[0].language,/Ses: EN/);
  fixture[origin+'/example-series/'].body=fixture[origin+'/example-series/'].body.replace('tt1234567','tt9999999');assert.deepEqual(await runInQuickJs(fixture,{args:['123456','tv',1,2],settings,nativeTimers:true}),[]);
+ fixture[origin+'/example-series/'].body=fixture[origin+'/example-series/'].body.replace('tt9999999','tt1234567').replaceAll('Season 1','Season 3').replace('</article>','<strong>Released Year:</strong> 2024<br></article>');
+ fixture[origin+'/search.php?q=Example%20Series&page=1'].json.hits[0].document.post_title='Example Series (Season 3) Dual Audio';
+ fixture[archive].body=fixture[archive].body.replace('Season 1','Season 3');fixture[hub].body=fixture[hub].body.replace('S01E02','S03E02');fixture[file+'/info'].json.name=name.replace('S01E02','S03E02');
+ fixture['https://api.themoviedb.org/3/tv/123456/season/3?api_key=test']={json:{season_number:3,air_date:'2024-02-01',episodes:[{show_id:123456,season_number:3,episode_number:2,runtime:72}]}};
+ const p=body.indexOf(Buffer.from('4489','hex'));body.writeDoubleBE(4320000,p+3);
+ assert.equal((await runInQuickJs(fixture,{args:['123456','tv',3,2],settings,nativeTimers:true})).length,1);
+ fixture['https://api.themoviedb.org/3/tv/123456/season/3?api_key=test'].json.episodes[0].show_id=999999;
+ assert.deepEqual(await runInQuickJs(fixture,{args:['123456','tv',3,2],settings,nativeTimers:true}),[]);
 });
 
 test('QuickJS: yıl alanı olmayan dublaj kaydı tam kimlik/dosya yılı ve gerçek ses/süreyle bulunur',async()=>{

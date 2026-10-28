@@ -10,6 +10,146 @@
   },
   "titles": [
     {
+      "key": "stranger-things-s5e2",
+      "season": 5,
+      "episode": 2,
+      "tmdb": {
+        "id": 66732,
+        "name": "Stranger Things",
+        "original_name": "Stranger Things",
+        "first_air_date": "2016-07-15",
+        "original_language": "en",
+        "external_ids": {
+          "imdb_id": "tt4574334"
+        },
+        "poster_path": "/uOOtwVbSr4QDjAGIifLDwpb2Pdl.jpg",
+        "episode_run_time": [
+          48
+        ]
+      },
+      "seasonReference": {
+        "season_number": 5,
+        "air_date": "2025-11-26",
+        "episodes": [
+          {
+            "show_id": 66732,
+            "season_number": 5,
+            "episode_number": 2,
+            "runtime": 58
+          }
+        ]
+      },
+      "referenceSources": [
+        "https://www.themoviedb.org/tv/66732/season/5?language=en-US"
+      ],
+      "referenceMetadataNote": "Season premiere and episode runtime independently checked on public same-series TMDB season page. Season API uses fixed schema-shaped reference; not a live credential test."
+    },
+    {
+      "key": "stranger-things-s5e1",
+      "season": 5,
+      "episode": 1,
+      "tmdb": {
+        "id": 66732,
+        "name": "Stranger Things",
+        "original_name": "Stranger Things",
+        "first_air_date": "2016-07-15",
+        "original_language": "en",
+        "external_ids": {
+          "imdb_id": "tt4574334"
+        },
+        "poster_path": "/uOOtwVbSr4QDjAGIifLDwpb2Pdl.jpg",
+        "episode_run_time": [
+          48
+        ]
+      },
+      "seasonReference": {
+        "season_number": 5,
+        "air_date": "2025-11-26",
+        "episodes": [
+          {
+            "show_id": 66732,
+            "season_number": 5,
+            "episode_number": 1,
+            "runtime": 72
+          }
+        ]
+      },
+      "referenceSources": [
+        "https://www.themoviedb.org/tv/66732/season/5?language=en-US"
+      ],
+      "referenceMetadataNote": "Season premiere and episode runtime independently checked on public same-series TMDB season page. Season API uses fixed schema-shaped reference; not a live credential test."
+    },
+    {
+      "key": "stranger-things-s3e2",
+      "season": 3,
+      "episode": 2,
+      "tmdb": {
+        "id": 66732,
+        "name": "Stranger Things",
+        "original_name": "Stranger Things",
+        "first_air_date": "2016-07-15",
+        "original_language": "en",
+        "external_ids": {
+          "imdb_id": "tt4574334"
+        },
+        "poster_path": "/uOOtwVbSr4QDjAGIifLDwpb2Pdl.jpg",
+        "episode_run_time": [
+          48
+        ]
+      },
+      "seasonReference": {
+        "season_number": 3,
+        "air_date": "2019-07-04",
+        "episodes": [
+          {
+            "show_id": 66732,
+            "season_number": 3,
+            "episode_number": 2,
+            "runtime": 51
+          }
+        ]
+      },
+      "referenceSources": [
+        "https://www.themoviedb.org/tv/66732/season/3?language=en-US"
+      ],
+      "referenceMetadataNote": "Season premiere and episode runtime independently checked on public same-series TMDB season page. Season API uses fixed schema-shaped reference; not a live credential test."
+    },
+    {
+      "key": "stranger-things-s3e1",
+      "season": 3,
+      "episode": 1,
+      "tmdb": {
+        "id": 66732,
+        "name": "Stranger Things",
+        "original_name": "Stranger Things",
+        "first_air_date": "2016-07-15",
+        "original_language": "en",
+        "external_ids": {
+          "imdb_id": "tt4574334"
+        },
+        "poster_path": "/uOOtwVbSr4QDjAGIifLDwpb2Pdl.jpg",
+        "episode_run_time": [
+          48
+        ]
+      },
+      "seasonReference": {
+        "season_number": 3,
+        "air_date": "2019-07-04",
+        "episodes": [
+          {
+            "show_id": 66732,
+            "season_number": 3,
+            "episode_number": 1,
+            "runtime": 51
+          }
+        ]
+      },
+      "referenceSources": [
+        "https://www.themoviedb.org/tv/66732/season/3?language=en-US"
+      ],
+      "referenceMetadataNote": "Season premiere and episode runtime independently checked on public same-series TMDB season page. Season API uses fixed schema-shaped reference; not a live credential test."
+    },
+    {
       "key": "stranger-things-s1e2",
       "season": 1,
       "episode": 2,

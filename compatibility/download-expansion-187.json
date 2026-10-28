@@ -1,0 +1,758 @@
+{
+  "checkedAt": "2026-10-28T00:04:59.797Z",
+  "version": "1.8.7",
+  "baselineVersion": "1.8.6",
+  "baselineCommit": "07e9d1d63edecd50c05fce11bd08e8bdff5556e6",
+  "outcome": {
+    "newFiles": 6,
+    "newMkvFiles": 6,
+    "new4kFiles": 2,
+    "new1080pFiles": 2,
+    "new720pFiles": 2,
+    "newTvFiles": 6,
+    "newMovieFiles": 0,
+    "newTurkishDubFiles": 0,
+    "newAnimeFiles": 0,
+    "titleExamples": 1,
+    "episodeExamples": 2,
+    "allNewFilesHaveTurkishSubtitleAlternatives": true,
+    "newBackend": 0,
+    "newAccount": 0,
+    "newFixedKey": 0,
+    "newPerTitleVideoPin": 0,
+    "newScraperIds": 0
+  },
+  "newFiles": [
+    {
+      "key": "stranger-things-s5e2",
+      "source": "MoviesDrive / Pixeldrain",
+      "container": "mkv",
+      "bytes": 992820355,
+      "filename": "Stranger.Things.S05E02.1080p.10Bit.WEB-DL.Hindi.5.1-English.5.1.HEVC.x265-[Moviesdrives.cv].mkv",
+      "sourceItemId": null,
+      "releaseYearBasis": null,
+      "mediaFilename": null,
+      "audioLanguages": [
+        "hi",
+        "en"
+      ],
+      "subtitleBestScore": 74,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 1920,
+        "height": 960
+      },
+      "quality": "1920x960",
+      "qualityGrade": "1080p",
+      "turkishSubtitle": true,
+      "embeddedSubtitleLanguages": [
+        "en"
+      ],
+      "externalTrackCount": 7,
+      "externalTurkishTracks": 3,
+      "actualDurationSeconds": 3472.939,
+      "hashAvailable": true
+    },
+    {
+      "key": "stranger-things-s5e2",
+      "source": "MoviesDrive / Pixeldrain",
+      "container": "mkv",
+      "bytes": 9031097416,
+      "filename": "Stranger.Things.S05E02.Chapter.Two.The.Vanishing.of.REPACK2.2160p.NF.WEB-DL.Multi.DDP5.1.Atmos.DV.HDR.H.265-[Moviesdrives.cv].mkv",
+      "sourceItemId": null,
+      "releaseYearBasis": null,
+      "mediaFilename": null,
+      "audioLanguages": [
+        "hi",
+        "ta",
+        "te",
+        "en"
+      ],
+      "subtitleBestScore": 85,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 3840,
+        "height": 2160
+      },
+      "quality": "3840x2160",
+      "qualityGrade": "2160p",
+      "turkishSubtitle": true,
+      "embeddedSubtitleLanguages": [
+        "en"
+      ],
+      "externalTrackCount": 7,
+      "externalTurkishTracks": 3,
+      "actualDurationSeconds": 3472.832,
+      "hashAvailable": true
+    },
+    {
+      "key": "stranger-things-s5e2",
+      "source": "MoviesDrive / Pixeldrain",
+      "container": "mkv",
+      "bytes": 415290112,
+      "filename": "Stranger.Things.S05E02.720p.10Bit.WEB-DL.Hindi.5.1-English.5.1.HEVC.x265-[Moviesdrives.cv].mkv",
+      "sourceItemId": null,
+      "releaseYearBasis": null,
+      "mediaFilename": null,
+      "audioLanguages": [
+        "hi",
+        "en"
+      ],
+      "subtitleBestScore": 74,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 1280,
+        "height": 640
+      },
+      "quality": "1280x640",
+      "qualityGrade": "720p",
+      "turkishSubtitle": true,
+      "embeddedSubtitleLanguages": [
+        "en"
+      ],
+      "externalTrackCount": 7,
+      "externalTurkishTracks": 3,
+      "actualDurationSeconds": 3472.939,
+      "hashAvailable": true
+    },
+    {
+      "key": "stranger-things-s5e1",
+      "source": "MoviesDrive / Pixeldrain",
+      "container": "mkv",
+      "bytes": 1224546340,
+      "filename": "Stranger.Things.S05E01.1080p.10Bit.WEB-DL.Hindi.5.1-English.5.1.HEVC.x265-[Moviesdrives.cv].mkv",
+      "sourceItemId": null,
+      "releaseYearBasis": null,
+      "mediaFilename": null,
+      "audioLanguages": [
+        "hi",
+        "en"
+      ],
+      "subtitleBestScore": 74,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 1920,
+        "height": 960
+      },
+      "quality": "1920x960",
+      "qualityGrade": "1080p",
+      "turkishSubtitle": true,
+      "embeddedSubtitleLanguages": [
+        "en"
+      ],
+      "externalTrackCount": 7,
+      "externalTurkishTracks": 3,
+      "actualDurationSeconds": 4288.17,
+      "hashAvailable": true
+    },
+    {
+      "key": "stranger-things-s5e1",
+      "source": "MoviesDrive / Pixeldrain",
+      "container": "mkv",
+      "bytes": 508917660,
+      "filename": "Stranger.Things.S05E01.720p.10Bit.WEB-DL.Hindi.5.1-English.5.1.HEVC.x265-[Moviesdrives.cv].mkv",
+      "sourceItemId": null,
+      "releaseYearBasis": null,
+      "mediaFilename": null,
+      "audioLanguages": [
+        "hi",
+        "en"
+      ],
+      "subtitleBestScore": 74,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 1280,
+        "height": 640
+      },
+      "quality": "1280x640",
+      "qualityGrade": "720p",
+      "turkishSubtitle": true,
+      "embeddedSubtitleLanguages": [
+        "en"
+      ],
+      "externalTrackCount": 7,
+      "externalTurkishTracks": 3,
+      "actualDurationSeconds": 4288.17,
+      "hashAvailable": true
+    },
+    {
+      "key": "stranger-things-s5e1",
+      "source": "MoviesDrive / Pixeldrain",
+      "container": "mkv",
+      "bytes": 11171197456,
+      "filename": "Stranger.Things.S05E01.Chapter.One.The.Crawl.REPACK2.2160p.NF.WEB-DL.Multi.DDP5.1.Atmos.DV.HDR.H.265-[Moviesdrives.cv].mkv",
+      "sourceItemId": null,
+      "releaseYearBasis": null,
+      "mediaFilename": null,
+      "audioLanguages": [
+        "hi",
+        "ta",
+        "te",
+        "en"
+      ],
+      "subtitleBestScore": 74,
+      "burnedSubtitleLanguage": null,
+      "knownForeignBurnedSubtitles": false,
+      "dimensions": {
+        "width": 3840,
+        "height": 2160
+      },
+      "quality": "3840x2160",
+      "qualityGrade": "2160p",
+      "turkishSubtitle": true,
+      "embeddedSubtitleLanguages": [
+        "en"
+      ],
+      "externalTrackCount": 7,
+      "externalTurkishTracks": 3,
+      "actualDurationSeconds": 4288.064,
+      "hashAvailable": true
+    }
+  ],
+  "method": {
+    "identity": "Series TMDB/IMDb/original title/first year remain unchanged. Later seasons additionally request the canonical TMDB season (3s within the source10s scope), require matching season number and exact episode with show_id=targetTMDB, valid canonical season premiere year and positive episode runtime. Missing/wrong metadata rejects; no guessed +/-years or durations.",
+    "source": "Search doc and article IMDb, canonical series name, exact season, source Released Year equal to canonical season year, selected EpNN heading and exact file S/E all required. Filename years, when present, must be canonical series/season years. Actual bytes/container/duration90–110%/pixels/audio then validate.",
+    "routes": "Same max4 routes/2resolvers; reserve a second separately published2160p route alongside1080p and small720p when present. A restricted first4K is not downloaded or retried through another host/account. Independently published second4K is checked normally.",
+    "native": "One extra canonical metadata request for later TV seasons; no added request for films or first seasons. Later TV MoviesDrive jobs are newly eligible. Main24s/video3/sub4/EN1 and source10s remain; no physical iPhone cancellation/latency or row-streaming claim.",
+    "audioAndSubtitles": "Six actual MKVs have English plus Hindi;4K files also Tamil/Telugu. No Turkish dub inferred. Two to three existing external TR alternatives per new file, actual video hash. Subtitle presence/ranking is not scene sync."
+  },
+  "baseline": {
+    "evidence": "compatibility/coverage-187.json",
+    "method": "Committed1.8.6 index/Archive/MoviesDrive loaded from HEAD, same fixed canonical references and live source/subtitle transport. Old MoviesDrive guard does not query later seasons; no download file in either baseline case. Other online results not counted as files.",
+    "files": [
+      {
+        "key": "stranger-things-s5e2",
+        "files": 0,
+        "onlineWithTr": true
+      },
+      {
+        "key": "stranger-things-s5e1",
+        "files": 0,
+        "onlineWithTr": true
+      }
+    ]
+  },
+  "repeat": {
+    "evidence": "compatibility/coverage-187.json",
+    "first": [
+      {
+        "key": "stranger-things-s5e2",
+        "files": 3,
+        "newFiles": 3,
+        "ms": 6995
+      },
+      {
+        "key": "stranger-things-s5e1",
+        "files": 3,
+        "newFiles": 3,
+        "ms": 10235
+      },
+      {
+        "key": "stranger-things-s3e2",
+        "files": 0,
+        "newFiles": 0,
+        "ms": 8089
+      },
+      {
+        "key": "stranger-things-s3e1",
+        "files": 1,
+        "newFiles": 0,
+        "ms": 9418
+      }
+    ],
+    "second": [
+      {
+        "key": "stranger-things-s5e2",
+        "files": 3,
+        "ms": 6502
+      },
+      {
+        "key": "stranger-things-s5e1",
+        "files": 3,
+        "ms": 6862
+      }
+    ],
+    "note": "S5E1/E2 each yielded3 new files in both passes. S3E1/E2 yielded no new MoviesDrive file; gaps retained. Fixed season metadata means these times do not include phone TMDB API latency."
+  },
+  "regression": {
+    "evidence": "compatibility/coverage-187.json",
+    "existingInception4k": true,
+    "existingFleabag4k": true,
+    "existingYourName4k": true,
+    "existingFuryTurkishDub": true,
+    "existingHotelTurkishDub": true,
+    "firstCounts": [
+      {
+        "key": "stranger-things-s1e2",
+        "files": 3,
+        "ms": 10793
+      },
+      {
+        "key": "fury",
+        "files": 11,
+        "ms": 11681
+      },
+      {
+        "key": "hotel-rwanda",
+        "files": 7,
+        "ms": 7597
+      },
+      {
+        "key": "dune",
+        "files": 7,
+        "ms": 24015
+      },
+      {
+        "key": "inception",
+        "files": 0,
+        "ms": 14474
+      },
+      {
+        "key": "fleabag-s1e1",
+        "files": 0,
+        "ms": 18097
+      },
+      {
+        "key": "your-name",
+        "files": 0,
+        "ms": 13528
+      }
+    ],
+    "recoveryCounts": [
+      {
+        "key": "inception",
+        "files": 9,
+        "ms": 10511
+      },
+      {
+        "key": "fleabag-s1e1",
+        "files": 10,
+        "ms": 8921
+      },
+      {
+        "key": "your-name",
+        "files": 9,
+        "ms": 10522
+      }
+    ],
+    "note": "Inception/Fleabag/YourName initially0 with multiple independent source timeouts; recovered9/10/9. Dune retained7 at24s logical deadline. Failed passes retained. Initial validation jobs overlapped; no whole-catalogue or physical-device stability claim."
+  },
+  "mediaResearch": [
+    {
+      "id": 10631,
+      "name": "Stranger.Things.S05E01.Chapter.One.The.Crawl.2160p.NF.WEB-DL.Multi.DDP5.1.Atmos.H.265-[Moviesdrives.cv].mkv",
+      "status": 200,
+      "canDownload": true,
+      "restriction": "file_rate_limited_captcha_required",
+      "bytes": 7567857960,
+      "video": null
+    },
+    {
+      "id": 10633,
+      "name": "Stranger.Things.S05E01.Chapter.One.The.Crawl.REPACK2.2160p.NF.WEB-DL.Multi.DDP5.1.Atmos.DV.HDR.H.265-[Moviesdrives.cv].mkv",
+      "status": 200,
+      "canDownload": true,
+      "restriction": "",
+      "bytes": 11171197456,
+      "video": {
+        "dimensions": {
+          "width": 3840,
+          "height": 2160
+        },
+        "container": "mkv",
+        "size": 11171197456,
+        "duration": 4288.064,
+        "audioLanguages": [
+          "hi",
+          "ta",
+          "te",
+          "en"
+        ]
+      }
+    }
+  ],
+  "metadataReferences": [
+    {
+      "url": "https://www.themoviedb.org/tv/66732/season/3?language=en-US",
+      "status": 200,
+      "season": 3,
+      "title": "Stranger Things: Stranger Things 3 (2019) &#8212; The Movie Database (TMDB)",
+      "episodes": [
+        {
+          "number": 1,
+          "title": "Chapter One: Suzie, Do You Copy?",
+          "runtime": 51,
+          "date": "July  4, 2019"
+        },
+        {
+          "number": 2,
+          "title": "Chapter Two: The Mall Rats",
+          "runtime": 51,
+          "date": "July  4, 2019"
+        },
+        {
+          "number": 3,
+          "title": "Chapter Three: The Case of the Missing Lifeguard",
+          "runtime": 50,
+          "date": "July  4, 2019"
+        },
+        {
+          "number": 4,
+          "title": "Chapter Four: The Sauna Test",
+          "runtime": 53,
+          "date": "July  4, 2019"
+        },
+        {
+          "number": 5,
+          "title": "Chapter Five: The Flayed",
+          "runtime": 52,
+          "date": "July  4, 2019"
+        },
+        {
+          "number": 6,
+          "title": "Chapter Six: E Pluribus Unum",
+          "runtime": 60,
+          "date": "July  4, 2019"
+        },
+        {
+          "number": 7,
+          "title": "Chapter Seven: The Bite",
+          "runtime": 56,
+          "date": "July  4, 2019"
+        },
+        {
+          "number": 8,
+          "title": "Chapter Eight: The Battle of Starcourt",
+          "runtime": 78,
+          "date": "July  4, 2019"
+        }
+      ]
+    },
+    {
+      "url": "https://www.themoviedb.org/tv/66732/season/5?language=en-US",
+      "status": 200,
+      "season": 5,
+      "title": "Stranger Things: Stranger Things 5 (2025) &#8212; The Movie Database (TMDB)",
+      "episodes": [
+        {
+          "number": 1,
+          "title": "Chapter One: The Crawl",
+          "runtime": 72,
+          "date": "November 26, 2025"
+        },
+        {
+          "number": 2,
+          "title": "Chapter Two: The Vanishing of...",
+          "runtime": 58,
+          "date": "November 26, 2025"
+        },
+        {
+          "number": 3,
+          "title": "Chapter Three: The Turnbow Trap",
+          "runtime": 70,
+          "date": "November 26, 2025"
+        },
+        {
+          "number": 4,
+          "title": "Chapter Four: Sorcerer",
+          "runtime": 87,
+          "date": "November 26, 2025"
+        },
+        {
+          "number": 5,
+          "title": "Chapter Five: Shock Jock",
+          "runtime": 69,
+          "date": "December 25, 2025"
+        },
+        {
+          "number": 6,
+          "title": "Chapter Six: Escape from Camazotz",
+          "runtime": 76,
+          "date": "December 25, 2025"
+        },
+        {
+          "number": 7,
+          "title": "Chapter Seven: The Bridge",
+          "runtime": 67,
+          "date": "December 25, 2025"
+        },
+        {
+          "number": 8,
+          "title": "Chapter Eight: The Rightside Up",
+          "runtime": 129,
+          "date": "December 31, 2025"
+        }
+      ]
+    }
+  ],
+  "apiContract": {
+    "url": "https://developer.themoviedb.org/openapi/tmdb-api.json",
+    "status": 200,
+    "path": "/3/tv/{series_id}/season/{season_number}",
+    "episodeFields": [
+      "air_date",
+      "episode_number",
+      "episode_type",
+      "id",
+      "name",
+      "overview",
+      "production_code",
+      "runtime",
+      "season_number",
+      "show_id",
+      "still_path",
+      "vote_average",
+      "vote_count",
+      "crew",
+      "guest_stars"
+    ],
+    "requiresShowId": true
+  },
+  "turkishDubResearch": {
+    "formatLanguageCatalogue": [
+      {
+        "key": "tr-download",
+        "status": 200,
+        "total": 13,
+        "docs": [
+          {
+            "identifier": "al_fatihah_abdul_samad_tr_1080p_story",
+            "title": "al_fatihah_abdul_samad_tr_1080p_story"
+          },
+          {
+            "identifier": "el-camino-a-breaking-bad-movie-2019-web-dl-1080p-dual",
+            "title": "El Camino A Breaking Bad Movie 2019 WEB DL 1080p DUAL"
+          },
+          {
+            "identifier": "themanwhosavedtheworld",
+            "title": "The Man Who Saved the World | Dünyayı Kurtaran Adam (1982) - Theatrical Reconstruction (1080p Blu-ray Rip)",
+            "year": 2025
+          },
+          {
+            "identifier": "suriye-ve-gerceklerin-ortaya-cikarilmasi-1080p",
+            "title": "Suriye Ve Gerçeklerin Ortaya Çıkarılması 1080p",
+            "year": 2025
+          },
+          {
+            "identifier": "garfield.-a-tail-of-two-kitties-2006-1080p",
+            "title": "Garfield. İki Kedinin Kuyruğu 2006 1080p"
+          },
+          {
+            "identifier": "hamta-film-sakla-beni-02-1080p",
+            "title": "Sakla Beni 02 (1080p)"
+          },
+          {
+            "identifier": "hamta-film-sakla-beni-01-1080p",
+            "title": "Sakla Beni 01 (1080p)"
+          },
+          {
+            "identifier": "asyasmr3",
+            "title": "Mouth Sounds Spit Painting Sohbet Asmr 😴😴 Sleep Asmr ( 1080p 30fps H 264 128kbit AAC)"
+          },
+          {
+            "identifier": "snap-save.io-nurselin-mutfagi-109.-bolum-giresun-1080p",
+            "title": "Nursel'in Mutfağı 109. Bölüm Giresun ( 1080p)",
+            "year": 2015
+          },
+          {
+            "identifier": "gibi-s-03-e-05-1080p-exxen-web-dl-tr-aac-h-264-turg.mkv",
+            "title": "Gibi S03E05 1080p EXXEN WEB DL [TR] AAC H 264 TURG"
+          },
+          {
+            "identifier": "gibi-s-03-e-04-1080p-exxen-web-dl-tr-aac-h-264-turg.mkv",
+            "title": "Gibi S03E04 1080p EXXEN WEB DL [ TR] AAC H 264 TURG.mkv"
+          },
+          {
+            "identifier": "y-2mate.com-mood-evli-9-bolum-1080p",
+            "title": "Y 2mate.com Mood Evli 9 Bölüm 1080p"
+          },
+          {
+            "identifier": "y2mate.comremixadamensevilenmontajlarveremixler1d32lr8exsgi1080p",
+            "title": "Y 2mate.com Remix Adam En Sevilen Montajlar Ve Remixler # 1 D 32 LR 8exsg I 1080p",
+            "year": 2020
+          }
+        ]
+      },
+      {
+        "key": "dual-tr",
+        "status": 200,
+        "total": 31,
+        "docs": [
+          {
+            "identifier": "the-crow-olumsuz-ask-1994-remastered.-1080p.-blu-ray.x-265.dvd-tr-en",
+            "title": "The Crow Ölümsüz Aşk ( 1994) Remastered. 1080p. Blu Ray.x 265.dvd Tr En"
+          },
+          {
+            "identifier": "the-crow-olumsuz-ask-1994-remastered.-1080p.-blu-ray.x-265.tr-en",
+            "title": "The Crow Ölümsüz Aşk ( 1994) Remastered. 1080p. Blu Ray.x 265.tr En"
+          },
+          {
+            "identifier": "high-desert-kill-colun-olduren-sirri-1989-1080p.-blu-ray.x-265.tr-en",
+            "title": "High Desert Kill Çölün Öldüren Sırrı ( 1989) 1080p. Blu Ray.x 265.tr En"
+          },
+          {
+            "identifier": "terror-among-us-icimizdeki-teror-1981-1080p.webrip.x-264.tr-en-dual",
+            "title": "Terror Among Us İçimizdeki Terör ( 1981) 1080p.webrip.x 264.tr En Dual"
+          },
+          {
+            "identifier": "who.-1974.1080p.-blu-ray.x-265-tr.-eng",
+            "title": "Who. 1974.1080p. Blu Ray.x 265 TR. ENG"
+          },
+          {
+            "identifier": "death-rage-golgedeki-katil-1976-1080p.-blu-ray.x-264.tr-en",
+            "title": "Death Rage Gölgedeki Katil ( 1976) 1080p. Blu Ray.x 264.tr En"
+          },
+          {
+            "identifier": "the-great-train-robbery-buyuk-tren-soygunu-1978-1080p.-blu-ray.x-265.tr-en",
+            "title": "The Great Train Robbery Büyük Tren Soygunu ( 1978) 1080p. Blu Ray.x 265.tr En"
+          },
+          {
+            "identifier": "the-commitments-genclik-atesi-1991-1080p.-blu-ray.x-265.tr-en",
+            "title": "The Commitments Gençlik Ateşi ( 1991) 1080p. Blu Ray.x 265.tr En"
+          },
+          {
+            "identifier": "return-to-paradise-cennete-donus-1998-1080p.-blu-ray.x-265.tr-en",
+            "title": "Return To Paradise Cennete Dönüş ( 1998) 1080p. Blu Ray.x 265.tr En"
+          },
+          {
+            "identifier": "hotel-rwanda-ruanda-oteli-2004-1080p.-blu-ray.x-265.tr-en",
+            "title": "Hotel Rwanda Ruanda Oteli ( 2004) 1080p. Blu Ray.x 265.tr En"
+          },
+          {
+            "identifier": "mutant-hunt-mutant-avi-1987-1080p.-blu-ray.x-265.tr-en",
+            "title": "Mutant Hunt Mutant Avı ( 1987) 1080p. Blu Ray.x 265.tr En"
+          },
+          {
+            "identifier": "mutant-hunt-1987-dvdrip-xvi-d.-tr.-eng",
+            "title": "Mutant Hunt 1987 DVDRip XVi D. TR. ENG"
+          },
+          {
+            "identifier": "best.of.the.-best.-2.1993.1080p.-blu-ray.x-265-rarbg.-tr.-eng",
+            "title": "Best.of.the. Best. 2.1993.1080p. Blu Ray.x 265 RARBG. TR. ENG"
+          },
+          {
+            "identifier": "the-eye-goz-2008-1080p.-blu-ray.x-265.tr-en",
+            "title": "The Eye Göz ( 2008) 1080p. Blu Ray.x 265.tr En"
+          },
+          {
+            "identifier": "mo-money-daha-cok-para-1992-1080p.-blu-ray.x-264.tr-en",
+            "title": "Mo' Money Daha Çok Para ( 1992) 1080p. Blu Ray.x 264.tr En"
+          },
+          {
+            "identifier": "bilal.-ozgurlugun.-sesi.-2017.1080p.-blu-ray.-dual.-tr.-en-fullindirsene.net",
+            "title": "Bilal. Ozgurlugun. Sesi. 2017.1080p. Blu Ray. DUAL. TR. EN Fullindirsene.net"
+          },
+          {
+            "identifier": "lv_0_20251025151732",
+            "title": "Sakın Utanma Ağla Kardeşim (TR/EN)",
+            "year": 2025
+          },
+          {
+            "identifier": "yildizlararasi.-interstellar.-2014.2014.1080p.-blu-ray.x-264.-tr.-eng.-dual-fullindirsene.-net",
+            "title": "Yıldızlararası. Interstellar. 2014.2014.1080p. Blu Ray.x 264. TR. ENG. Dual"
+          },
+          {
+            "identifier": "jurassic.-world.-fallen.-kingdom.-2018.m-1080p.-bluray.x-264-dual.-tr.-eng-fullindirsene.net",
+            "title": "Jurassic. World. Fallen. Kingdom. 2018.m 1080p. BLURAY.x 264 DUAL. TR. ENG Fullindirsene.net"
+          },
+          {
+            "identifier": "le.-loup.-et.-le.-lion.-2021.1080p.-blu-ray.x-264.-aac-5.1-tr.-eng.-dual",
+            "title": "Le. Loup. Et. Le. Lion. 2021.1080p. Blu Ray.x 264. AAC 5.1 TR. ENG. DUAL"
+          },
+          {
+            "identifier": "black-mirror-s-1-s-2-s-3-s-4-s-5-1080p-nf-web-dl-ddp-5-1-x-264-dual-tr-en-tsrg.t",
+            "title": "Black Mirror S 1 S 2 S 3 S 4 S 5 1080p Nf Web Dl Ddp 5 1 X 264 Dual Tr En Tsrg.torrent [trendfilm Net] ( 1)"
+          },
+          {
+            "identifier": "ben.-tonya.-2018.1080p.-blu-ray.-dual.-tr.-eng.-dual-fullindirsene.-net",
+            "title": "Ben. Tonya. 2018.1080p. Blu Ray. DUAL. TR. ENG. Dual Fullindirsene. NET",
+            "year": 2000
+          },
+          {
+            "identifier": "buz.-devri.-s-01-e-06.1080p.-blu-ray.x-264.-tr.-eng-viparsivindir-series_202204",
+            "title": "Buz. Devri. S 01 E 06.1080p. Blu Ray.x 264. TR. ENG Viparsivindir Series"
+          },
+          {
+            "identifier": "buz.-devri.-s-01-e-06.1080p.-blu-ray.x-264.-tr.-eng-viparsivindir-series",
+            "title": "Buz. Devri. S 01 E 06.1080p. Blu Ray.x 264. TR. ENG Viparsivindir Series"
+          },
+          {
+            "identifier": "larva-adasi-filmi-the-larva-island-movie-2020-webrip-m-1080p-x-264-ac-3-tr-en-viphane.com",
+            "title": "Larva Adası Filmi ( The Larva Island Movie) 2020 WEBRip M 1080p X 264 AC 3 [ TR EN] Viphane.com"
+          },
+          {
+            "identifier": "ecel-koprusu-the-bridge-at-remagen-1969-720p-blu-ray-tr-en-dd-5.1-x-264-turkce-dublaj-film-indir",
+            "title": "Ecel Köprüsü The Bridge At Remagen ( 1969) 720p Blu Ray [ TR EN] DD 5.1 X 264 Türkçe Dublaj Film İndir"
+          },
+          {
+            "identifier": "hayatimin-tatili-the-best-exotic-marigold-hotel-2011-1080p-blu-ray-tr-en-dd-5.1-_202011",
+            "title": "Hayatımın Tatili The Best Exotic Marigold Hotel ( 2011) 1080p Blu Ray [ TR EN] DD 5.1 X 264 Türkçe Dublaj Film İndir"
+          },
+          {
+            "identifier": "ecel-koprusu-the-bridge-at-remagen-1969-1080p-blu-ray-tr-en-dd-5.1-x-264-turkce-dublaj-film-indir",
+            "title": "Ecel Köprüsü The Bridge At Remagen ( 1969) 1080p Blu Ray [ TR EN] DD 5.1 X 264 Türkçe Dublaj Film İndir"
+          },
+          {
+            "identifier": "hayatimin-tatili-the-best-exotic-marigold-hotel-2011-1080p-blu-ray-tr-en-dd-5.1-",
+            "title": "Hayatımın Tatili The Best Exotic Marigold Hotel ( 2011) 1080p Blu Ray [ TR EN] DD 5.1 X 264 Türkçe Dublaj Film İndir"
+          },
+          {
+            "identifier": "hayatimin-tatili-the-best-exotic-marigold-hotel-2011-720p-blu-ray-tr-en-dd-5.1-x",
+            "title": "Hayatımın Tatili The Best Exotic Marigold Hotel ( 2011) 720p Blu Ray [ TR EN] DD 5.1 X 264 Türkçe Dublaj Film İndir"
+          }
+        ]
+      }
+    ],
+    "fourKCatalogue": {
+      "responseHeader": {
+        "status": 0,
+        "QTime": 437,
+        "params": {
+          "query": "mediatype:movies AND (title:&quot;TR ENG&quot; OR title:&quot;TR EN&quot; OR title:&quot;turkce dublaj&quot;) AND (title:2160p OR title:4k)",
+          "qin": "mediatype:movies AND (title:&quot;TR ENG&quot; OR title:&quot;TR EN&quot; OR title:&quot;turkce dublaj&quot;) AND (title:2160p OR title:4k)",
+          "fields": "identifier,title,year",
+          "wt": "json",
+          "sort": "downloads desc",
+          "rows": 30,
+          "start": 0
+        }
+      },
+      "response": {
+        "numFound": 2,
+        "start": 0,
+        "docs": [
+          {
+            "identifier": "muhtesem-kopek-2023-turkce-dublaj-ful-4k",
+            "title": "Step Dogs/Muhteşem Köpek ( 2013) Türkçe Dublaj Ful 4k",
+            "year": 2023
+          },
+          {
+            "identifier": "seytanin-mezari-the-devil-s-tomb-turkce-dublaj-korku-aksiyon-filmi-izle-4k-oml-62-dr-3h-n-0",
+            "title": "Şeytanın Mezarı The Devil S Tomb Türkçe Dublaj Korku & Aksiyon Filmi İzle 4k( OML 62 Dr 3h N 0 )"
+          }
+        ]
+      }
+    },
+    "result": "No newly eligible verified Turkish dub file in this change. Known TR/EN Archive records remain; metadata-only labels not counted. StepDogs 4K-labelled record has contradictory2013/2023 year; no relaxed binding or4K claim."
+  },
+  "tests": {
+    "local": 303,
+    "compiledQuickJs": true,
+    "upstreamRelease": "0.6.5-beta",
+    "trackedFiles": 23,
+    "sourceDrift": 0,
+    "lockChanged": false
+  },
+  "allSourceCriteriaMet": false,
+  "physicalDevice": "not-run",
+  "fullPlayback": "not-run",
+  "fullDownload": "not-run",
+  "offline": "not-run",
+  "sceneSync": "not-run",
+  "font": "not-run"
+}

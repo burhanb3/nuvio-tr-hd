@@ -2,7 +2,7 @@
 const { createHttp } = require('./http.cjs');
 const { createScheduler } = require('./scheduler.cjs');
 const { loadHosted, registerDownloads, SERVICE_ORIGIN } = require('./hosted.cjs');
-const { resolveIdentity,resolveTranslatedTitles,resolveAlternativeTitles } = require('./matching.cjs');
+const { resolveIdentity,resolveTranslatedTitles,resolveAlternativeTitles,resolveSeasonEpisode } = require('./matching.cjs');
 const { loadCatalog } = require('./providers/catalog.cjs');
 const { loadAddon } = require('./providers/stremio.cjs');
 const { scanDirectory } = require('./providers/directory.cjs');
@@ -249,8 +249,11 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs = 24000, r
               const sourceHttp=http.scope(10000);
               return scanHdRezka(sourceHttp,target,{loadTitles:()=>resolveAlternativeTitles(sourceHttp,target,effectiveTmdbKey(settings,tmdbKey))});
             }});
-            if(filesLane&&settings.moviesdriveEnabled!==false&&(target.type==='movie'||target.type==='tv'&&target.season===1&&target.imdbId))
-              sourceJobs.push({name:'MoviesDrive / Pixeldrain',run:()=>scanMoviesDrive(http.scope(10000),target,{onCandidates:acceptCandidates})});
+            if(filesLane&&settings.moviesdriveEnabled!==false&&(target.type==='movie'||target.type==='tv'&&target.imdbId))
+              sourceJobs.push({name:'MoviesDrive / Pixeldrain',run:()=>{
+                const sourceHttp=http.scope(10000);
+                return scanMoviesDrive(sourceHttp,target,{onCandidates:acceptCandidates,loadSeason:()=>resolveSeasonEpisode(sourceHttp,target,effectiveTmdbKey(settings,tmdbKey))});
+              }});
             if (onlineLane && settings.playImdbEnabled !== false) sourceJobs.push({ name: 'PlayIMDb', run: () => scanPlayImdb(http, target) });
             if (onlineLane && settings.vixsrcEnabled !== false && settings.includeHls !== false && !sourceFactories.some(s => s.name === 'VixSrc'))
               sourceJobs.push({ name: 'VixSrc', run: () => scanVixDirect(http, target) });
@@ -374,7 +377,7 @@ function onSettings() {
     { type: 'toggle', key: 'dizibakEnabled', label: 'DiziBak dizi alternatifi', defaultValue: true, description: 'Küçük public metadata yanıtları kullanılır. İlk bölüm tarihi ve dizi kategorisi uyuşmazsa sonuç eklenmez.' },
     { type: 'toggle', key: 'filmmoduEnabled', label: 'FilmModu online film ve kaynak ses seçenekleri', defaultValue: true },
     { type: 'toggle', key: 'purstreamEnabled', label: 'Purstream ek online film ve dizi seçenekleri', defaultValue: true },
-    { type: 'toggle', key: 'moviesdriveEnabled', label: 'MoviesDrive ek film ve bölüm indirmeleri', defaultValue: true, description: 'Film/anime filmi ve uygun ilk sezon sayfalarında bölüm dosyaları aranır; ad, yıl, IMDb, bölüm ve gerçek medya kontrol edilir. Uzantısız MKV dosyaları Nuvio’da .mp4 adıyla kaydedilebilir; dahili MPV gerçek formatı içerikten okur. Harici oynatıcıda .mkv olarak yeniden adlandırmak gerekebilir.' },
+    { type: 'toggle', key: 'moviesdriveEnabled', label: 'MoviesDrive ek film ve bölüm indirmeleri', defaultValue: true, description: 'Film/anime filmi ve bölüm dosyaları aranır. Sonraki sezonların yılı ve bölüm süresi aynı TMDB kaydından doğrulanır; ad, IMDb, bölüm ve gerçek medya denetlenir. Uzantısız MKV dosyaları Nuvio’da .mp4 adıyla kaydedilebilir; dahili MPV gerçek formatı içerikten okur. Harici oynatıcıda .mkv olarak yeniden adlandırmak gerekebilir.' },
     { type: 'info', label: 'Ses kodları: EN İngilizce, TR Türkçe, JA Japonca, HI Hintçe. EN/ES görüntüde, görüntüye işlenmiş altyazıdır; ses dili değildir.' },
     { type: 'toggle', key: 'autoSubtitles', label: 'TR ve EN altyazıları otomatik ara', defaultValue: true },
     { type: 'toggle', key: 'animomEnabled', label: 'Deneysel AniMOM anime dosyaları', defaultValue: false, description: 'Varsayılan kapalı: tekil MP4/TR doğrulandı, birleşik arama ve bazı bölümlerde CDN kararsız. Tam ad/yıl/bölüm gerekir; düz bölüm numarası başka sezona taşınmaz.' },

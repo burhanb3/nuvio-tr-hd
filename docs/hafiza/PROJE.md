@@ -1,5 +1,20 @@
 # Proje hafızası
 
+## 1.8.7 — doğrulanmış sonraki sezonlar ve ikinci 4K
+
+MoviesDrive'ın ilk sezon sınırı, kanonik sezon metadata'sı ile kontrollü genişletildi. resolveSeasonEpisode yalnız TVde aynı /tv/TMDB/season/N yolundan,3s source scope içinde season_number,air_date ve tam episode_number/show_id/season_number/runtime ister. Eksik/yanlış show veya sezon, duplicate bölüm, boş süre reddedilir. Season yılının seri ilk yılına eşit olması aranmaz; seri year2016 olarak korunurken seasonReleaseYear2025 ve aday runtime72/58 olur. Film ve S1 yeni metadata isteği açmaz. Sonraki TV için bir kaynak işi ve bir TMDB isteği artık uygundur; iş yükünün aynı kaldığını söyleme.
+
+Searchdoc/articleIMDb, kanonik ad/sezon, source Released Year=kanonik sezon yılı, arşiv sayfası/EpNN ve gerçek filename S/E birlikte gerekir. Başlıkta yıl yoksa kaynak metadata satırı zorunlu; yanlış/yok satır fallback ile tamamlanmaz. Dosyada yıl varsa yalnız kanonik seri/sezon yılları kabul edilir. Gerçek süre %90–110, ses/piksel/byte/container/hash kontrolleri korunur. TMDB resmi OpenAPI'de show_id ve runtime alanları incelendi. Canlı test sezon API yanıtı, bağımsız public TMDB sayfasından yıl/süre doğrulanmış fixed ref'tir; gerçek telefon key/taşıması sınanmadı.
+
+TVde aynı4route/2resolver içinde1080p,ilk4K,küçük720p ve varsa ikinci2160p ayrılır. İlk4K7.568GB info file_rate_limited_captcha_required döndü, indirme veya alternatif host denenmedi. Ayrı yayımlanan11.171GB4K dosya kontrol edildi. Native main24s/video3/sub4/EN1 ve kaynak10s korunur; yeni native süre garantisi yok.
+
+İki tam pipeline turunda S5E1/S5E2 her biri3 yeni dosya: E1 1224546340byte1920×960,508917660byte1280×640,11171197456byte3840×2160; E2 992820355byte1920×960,415290112byte1280×640,9031097416byte3840×2160.6gerçekMKV/hash,2yeni4K,hepsinde2–3hariciTR. EN+HI,4KlardaTA/TE de var; yeniTRdub0/anime0/film0. Eski1.8.6 aynı S5 örneklerinde indirme0 ve sonraki sezon MoviesDrive isteği yoktu. Kaynak/başlık/video pini eklenmedi. S3E1bir eski480p/S3E2sıfır; yeni MoviesDrive0, kapsam tamamlanmadı.
+
+Regresyon önce S1E2 3/Fury11/Hotel7/Dune7(24s)/Inception0/Flea0/YourName0. Son üçte farklı origin timeoutları vardı; tekrarda9/10/9 ve eski4Klar geri geldi. EskiFury/HotelTR korunur. İlk doğrulama işleri kısmen paraleldi; tüm kötü turlar ve tekrarlar coverage-187 içinde. Bunu fiziksel iPhone hızı/kararlılığı diye sunma. TR katalog taraması31çift-dilli kayıt ve iki4Ketiketli kayıt buldu; yeni doğrulanmışTRdub yok. StepDogs2013/2023 çelişkisi zorlanmadı.
+
+303check/QuickJS geçti; upstream0.6.5-beta/23blob drift0, lock değişmedi. Fiziksel cihaz/tam indirme/oynatma/offline/senkron/font sınanmadı. Yayın bekliyor; CI/Pages/yedi SHA kanıtı sonra eklenecek.
+
+
 ## 1.8.6 — eksik yıl ve kısmi bölüm yolu
 
 Archive HD sorgusuna aynı kanonik ad/yılın nokta veya tireyle kurulan identifier önekleri eklendi. Baştan joker yok; deneyde beş geniş joker sorgusu timeout oldu, üretime alınmadı. AND dalı OR'dan önce açık gruplanmalıdır: Archive canlı sorgusu gruplama olmadan farklı sonuç verdi. İki sorgu/12 metadata kotası aynı. Eksik yıl kabulü için metadata başlığı tam ad veya sınırlı dil etiketi olmalı; identifier ve her dosya aynı kanonik ad/yılı taşımalı; gerçek süre %90–110 zorunlu. Çelişen metadata IMDb/TMDB/yıl, farklı dosya ve tarih reddedilir. TV Archive davranışı değişmedi.

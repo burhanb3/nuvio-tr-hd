@@ -1,5 +1,12 @@
 # Tasarım kararları
 
+## 1.8.7 — sezon yılını ayrı doğrula
+
+- Seri ilk yılı ile sonraki sezonun yılı ayrı kanonik bilgilerdir. Seri year'ını değiştirme; yalnız aynı TMDB sezon yanıtındaki tam show_id/sezon/bölüm ve pozitif süre ile seasonReleaseYear/aday runtime bağla. Kaynak Released Year aynı olmalıdır. Eksik API/süre/etiket varsa sonraki sezon elenir.
+- Aynı4route kotasında ikinci yayımlanmış2160p sürümüne yer ayrılabilir. Kısıtlı ilk4K için body/başka host/hesap denenmez. Ayrı dosya aynı kısıtı aşan ayna olarak kullanılmaz; kendi public info ve gerçek medya kontrolleri geçmelidir.
+- Yeni6MKV/2gerçek4K,tek serinin iki bölüm örneğidir. EN/HI/TA/TE, TRdublaj değildir; yeniTRdub0. S3'ün başarısızlığı ve regresyondaki0/sonra9-10-9 birlikte tutulur. Sezon API'sinin fixed ref testi canlı kullanıcı key'i veya fiziksel cihaz testi değildir.
+
+
 ## 1.8.6 — dosya yılı ve ilk sezon bağı
 
 - Yıl alanı olmayan kaydı upload yılıyla eşleştirme. Aynı kanonik ad/yıl identifier öneğinde ve her dosyada bulunmalı, başlık yalnız tam ad veya sınırlı dil etiketi olmalı ve gerçek süre %90–110 geçmelidir. Baştan joker sorgu yok; AND/OR dalları açık gruplanır. Mevcut kimlik çelişkisi korumaları devam eder.

@@ -8,7 +8,7 @@
 | 4KHDHub / HubCloud | Film/dizi | FSL/Pixeldrain MP4/MKV; uygun kayıtlarda 1080p/4K |
 | Goojara | Film/dizi | Küçük MP4 alternatifleri; bölüm ve gerçek dosya kontrolü |
 | HDRezka | Film/dizi | Ücretsiz MP4 kaliteleri; özgün ses, IMDb ve bölüm kontrolü |
-| MoviesDrive / Pixeldrain | Film, anime filmi ve uygun ilk sezon bölümleri | Ek MP4/MKV; gerçek boyut, piksel, süre ve ses kontrolü |
+| MoviesDrive / Pixeldrain | Film, anime filmi ve doğrulanabilen dizi bölümleri | Ek MP4/MKV; gerçek boyut, piksel, süre ve ses kontrolü |
 | Waploaded | Film/dizi | MP4/MKV; son güncellenen kısmi katalog |
 | RareFilmm | Eski/az bulunan filmler | Küçük MP4 alternatifleri; bazı sürümlerde EN görüntüde |
 | PlayIMDb, VixSrc | Film/dizi | Online HLS |
@@ -52,7 +52,7 @@ Purstream aynı TMDB kimliği, tür, yıl ve resmi başlıkla eşleşir. Fransı
 
 Nuvio her scraper tamamlandığında sonuçlarını birleştirir. Eklenti içinde hazır adayların korunması, Nuvio'ya satır satır canlı sonuç callback'i eklendiği anlamına gelmez.
 
-MoviesDrive dizi desteği şimdilik ilk sezonla sınırlıdır. Arama ve sayfada aynı IMDb, kanonik seri adı ve ilk yayın yılı; arşivde istenen bölüm ve dosyada tam sezon/bölüm birlikte denetlenir. Sonraki sezon yılı ilk yayın yılı yerine kullanılmaz. ZIP paketleri sunulmaz. Kaynakta yalnız İngilizce/Hintçe varsa Türkçe dublaj etiketi verilmez; mevcut harici Türkçe altyazılar ayrıca eşleştirilir.
+MoviesDrive sonraki sezonlarda aynı TMDB kaydının sezon yılını ve istenen bölümün süresini ayrıca doğrular. Dizinin ilk yayın yılı korunur; kaynak sayfasının sezon yılı kanonik sezonla eşleşmelidir. Arama ve sayfada aynı IMDb/seri adı; arşivde istenen bölüm ve dosyada tam sezon/bölüm birlikte denetlenir. Eksik sezon metadata’sıyla sonuç eklenmez. Aynı sınırlı bağlantı planında ayrı bir ikinci 4K sürümü de kontrol edilebilir. ZIP paketleri sunulmaz. Kaynakta yalnız İngilizce/Hintçe varsa Türkçe dublaj etiketi verilmez; mevcut harici Türkçe altyazılar ayrıca eşleştirilir.
 
 ## Kapsam ve sınırlar
 

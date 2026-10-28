@@ -12,19 +12,18 @@ function titleMatches(value,target){
 }
 function cleanFilename(value){return decodeEntities(value).replace(/^(?:\[\[?\s*(?:www\.)?moviesdrives?\.[a-z]+\s*\]\]?\s*[-._ ]*)+/i,'').trim();}
 function seriesTitleMatches(value,target,requireYear=true){
-  // Initial TV support is deliberately limited to first-season pages that
-  // publish the canonical first-air year. A later season's year is not the
-  // series year and must not silently replace it.
-  if(target.type!=='tv'||target.season!==1)return false;
+  // Later seasons need their own canonical season year and episode runtime.
+  // The series' original year stays intact in the identity.
+  if(target.type!=='tv'||target.season!==1&&!Number.isInteger(target.seasonReleaseYear))return false;
   const m=text(value).match(/^(?:Download\s+)?(.+?)\s*\(Season\s+(\d{1,2})\)\s*(?:(\d{4})\b)?/i);
   return !!m&&Number(m[2])===target.season&&canonicalNames(target).includes(normalizeTitle(m[1]))&&
-    (!m[3]||Number(m[3])===target.year)&&(!requireYear||Number(m[3])===target.year);
+    (!m[3]||[target.year,target.seasonReleaseYear].includes(Number(m[3])))&&(!requireYear||target.season>1||Number(m[3])===target.year);
 }
 function fileMatches(value,target){
   const name=cleanFilename(value);
   return /\.(mkv|mp4)$/i.test(name)&&canonicalNames(target).some(title=>filenameIdentity(name,{...target,originalTitle:title},target.type!=='tv'))&&
     (target.type!=='tv'||canonicalNames(target).some(title=>normalizeTitle(name).startsWith(title+' ')&&/^(?:(?:19|20)\d{2} )?(?:s\d{1,3} ?e\d{1,3}|\d{1,2}x\d{1,3})\b/.test(normalizeTitle(name).slice(title.length+1))))&&
-    (target.type!=='tv'||matchesEpisode(name,target)&&!(normalizeTitle(name).match(/\b(?:19|20)\d{2}\b/g)||[]).some(y=>Number(y)!==target.year))&&
+    (target.type!=='tv'||matchesEpisode(name,target)&&!(normalizeTitle(name).match(/\b(?:19|20)\d{2}\b/g)||[]).some(y=>![target.year,target.seasonReleaseYear].includes(Number(y))))&&
     !/\b(sample|trailer|hdcam|camrip|hdtc|hdts|telesync)\b/i.test(normalizeTitle(name).slice(normalizeTitle(target.originalTitle).length));
 }
 function searchPages(data,target){
@@ -40,6 +39,10 @@ function releaseEntries(html,target){
   const ids=anchors(article,1000).map(a=>a.href.match(/^https?:\/\/(?:www\.)?imdb\.com\/title\/(tt\d+)(?:$|[/?#])/i)?.[1]).filter(Boolean);
   if(target.imdbId&&ids.some(id=>id!==target.imdbId))return [];
   if(target.type==='tv'&&(!target.imdbId||!ids.includes(target.imdbId)))return [];
+  if(target.type==='tv'&&target.season>1){
+    const years=[...text(article.replace(/<[^>]+>/g,' ')).matchAll(/\bReleased Year:\s*((?:19|20)\d{2})\b/gi)].map(m=>Number(m[1]));
+    if(!years.length||years.some(year=>year!==target.seasonReleaseYear))return [];
+  }
   let release=null;const rows=[];
   for(const m of article.matchAll(/<h[45]\b[^>]*>([\s\S]{0,5000}?)<\/h[45]>/gi)){
     const label=text(m[1]);
@@ -53,7 +56,8 @@ function releaseEntries(html,target){
     release=null;
   }
   const small=rows.slice().sort((a,b)=>a.size-b.size),high=rows.slice().sort((a,b)=>b.quality-a.quality||a.size-b.size),full=rows.filter(r=>r.quality===1080).sort((a,b)=>a.size-b.size);
-  const plan=target.type==='tv'?[full[0],high[0],small.find(r=>r.quality===720),small[0]]:[small[0],full[0],high[0],small[1]];
+  const secondHigh=high.find(r=>r.url!==high[0]?.url&&r.quality>=2160);
+  const plan=target.type==='tv'?[full[0],high[0],small.find(r=>r.quality===720)||small[0],secondHigh||small[0]]:[small[0],full[0],high[0],small[1]];
   return [...new Map(plan.filter(Boolean).map(r=>[r.url,r])).values()].slice(0,4);
 }
 function pixelFile(data,page,hubName,target){
@@ -86,7 +90,12 @@ function episodeHub(html,target){
   return null;
 }
 async function scanMoviesDrive(http,target,options={}){
-  if(target.type!=='movie'&&(target.type!=='tv'||target.season!==1||!target.imdbId))return [];
+  if(target.type!=='movie'&&(target.type!=='tv'||!target.imdbId))return [];
+  if(target.type==='tv'&&target.season>1){
+    const season=await options.loadSeason?.();
+    if(!Number.isInteger(season?.seasonReleaseYear)||season.seasonReleaseYear<target.year||!Number.isInteger(season.runtimeMinutes)||season.runtimeMinutes<=0)return [];
+    target={...target,seasonReleaseYear:season.seasonReleaseYear,runtimeMinutes:season.runtimeMinutes};
+  }
   const queries=[target.originalTitle,...(target.searchTitles||[])];if(/^the\s+/i.test(target.originalTitle))queries.splice(1,0,target.originalTitle.replace(/^the\s+/i,''));
   for(const query of [...new Set(queries)].slice(0,2)){
    if(http.expired())break;

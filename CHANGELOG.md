@@ -1,5 +1,13 @@
 # Sürüm notları
 
+## 1.8.7 — 28 Ekim 2026
+
+- MoviesDrive'da sonraki sezonlar için ek bölüm araması. Dizinin ilk yılı korunur; sezon yılı ve bölüm süresi aynı TMDB kaydından ayrıca doğrulanır. Kaynak sayfasındaki yıl, IMDb ve tam sezon/bölüm birlikte eşleşir.
+- Aynı dört bağlantı sınırında ikinci bir 4K sürümüne de yer ayrılır. Erişimi kısıtlı dosyalar atlanır; ayrı yayımlanmış uygun sürüm kontrol edilir.
+- Stranger Things S5E1/S5E2'de altı ek MKV: iki gerçek 4K (11,17/9,03 GB), iki 1080p (1,22 GB/993 MB) ve iki 720p (509/415 MB). Altısı da EN sesli ve mevcut Türkçe altyazı alternatifli; bu tur yeni Türkçe dublaj doğrulanmadı.
+- 303 fixture/QuickJS testi ve Nuvio 0.6.5-beta/23 kaynak dosyası kontrolü geçti. Önceki TR dublaj ve 4K örnekleri tekrar kontrol edildi. Bazı taramalar ağ nedeniyle boş döndü; fiziksel telefon, tam indirme/oynatma ve altyazı senkronu sınanmadı.
+
+
 ## 1.8.6 — 28 Ekim 2026
 
 - Archive, yıl alanı eksik kayıtları tam kanonik ad/yıl içeren arşiv kimliğinden de arar. Kayıt kimliği, gerçek dosya adı ve süre birlikte eşleşir; yanlış yıl, film ve koleksiyon kabul edilmez. Sorgu sayısı artırılmadı.
