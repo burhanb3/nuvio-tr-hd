@@ -12,7 +12,7 @@ Küçük Kardeşim1310002168byte1280×720/5075.859s, Ölüm Avı1640304149 ve167
 
 Regresyon S5E1 3/Fury11/Hotel6/Inception8/Flea10/YourName9; eski4K ve ölçülmüşFury/HotelTR korundu. Fury24s mantıksal sınıra geldi; hız artışı garantisi verme. Dune/Interstellar yeni yüksek kalite yolu çözülemedi; mevcutInception4K yeni katkı sayılmaz. Diğer TR arşiv kayıtları zaten desteklenen iki dilli dosya biçimini kullanıyordu, yeni sayılmadı. Beşroute genişletmesi veya yeni/pinli kaynak eklenmedi.
 
-312check/QuickJS geçti. Upstream anonimGitHubAPI403 yüzünden ilk kontrol tamamlanmadı; mevcutGitHub kimlik bilgisi yalnız bellekte kullanılarak tekrarlandı:0.6.5-beta/23blob drift0, lock değişmedi. Runtime eklentiye hesap/key/sunucu eklenmedi. Fiziksel cihaz/tam indirme/oynatma/offline/senkron/font sınanmadı. Yayın bekliyor; CI/Pages/yedi SHA kanıtı sonra eklenecek.
+312check/QuickJS geçti. Upstream anonimGitHubAPI403 yüzünden ilk kontrol tamamlanmadı; mevcutGitHub kimlik bilgisi yalnız bellekte kullanılarak tekrarlandı:0.6.5-beta/23blob drift0, lock değişmedi. Runtime eklentiye hesap/key/sunucu eklenmedi. Fiziksel cihaz/tam indirme/oynatma/offline/senkron/font sınanmadı. Yayımlandı: kaynak 4c824c1002600687eca10c88f92ce11fad15b38b; Windows/Linux testleri ve Pages başarılı. Yedi public dosya HTTP 200 döndü; SHA/byte yerel paketle aynı. Test https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40609766518; Pages https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40609766742. Kanıt compatibility/github-publication.json içinde.
 
 
 ## 1.8.7 — doğrulanmış sonraki sezonlar ve ikinci 4K
