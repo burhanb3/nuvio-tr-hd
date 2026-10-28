@@ -2,7 +2,7 @@
 
 ## 1.8.7 öncelik
 
-1. Hazır: sonraki sezonların kanonik yılı/süresiyle MoviesDrive; aynı4route içinde ikinci4K.6yeniMKV/2yeni4K,303test ve23upstream drift0. CI/Pages/yediHTTP200/SHA yayın kontrolünü tamamla.
+1. Hazır: sonraki sezonların kanonik yılı/süresiyle MoviesDrive; aynı4route içinde ikinci4K.6yeniMKV/2yeni4K,303test ve23upstream drift0. Yayımlandı: ffe3ee430254d2e9a6f19f622758dad7399854d6; Test40606575896/Pages40606575720 başarılı, yedi public HTTP200/SHA eşit.
 2. TRdublaj/film/anime ve farklı dizilerin indirme kapsamı açık. Bu tur yeniTRdub/film/anime0; yalnız ikiS5bölümü6yeni. S3MovieDrive0. Yeni kaynak aramasını bırakma; metadata etiketini gerçek dosya/ses kanıtı yerine koyma.
 3. Inception/Flea/YourName0 ağ turu ve9/10/9recovery saklandı. Native kotayı/toplam süreyi artırma veya iPhone fiziksel iptal garantisi verme. Sonraki sezonun TMDB yanıtı eksik/yanlışsa kimliği gevşetme; ilk yılı sezon yılına dönüştürme.
 4. Fiziksel iPhone/tam indirme/offline/senkron/font açık.7.568GB kısıtlı4K başka host/hesapla denenmez. Diğer11.171GB4K ayrı yayımlanmış dosyadır. TR4K başlıklı StepDogs kaydında2013/2023 çelişkisi var; tekrar zorlamaya girme.

@@ -29,4 +29,4 @@ Kaynak kontrolleri sabit kanonik metadata referanslarıyla gerçek public HTTP/R
 
 [Yayın doğrulaması](../compatibility/github-publication.json) · [Önceki uyumluluk kayıtları](arsiv/UYUMLULUK_GECMISI.md).
 
-1.8.7 yayın kontrolü bekleniyor.
+1.8.7 yayımlandı: [Windows/Linux testleri](https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40606575896) ve [Pages yayını](https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40606575720) başarılı. Manifest, beş sağlayıcı dosyası ve kurulum sayfası public HTTP 200 döndü; SHA/byte karşılaştırmaları yerel paketle aynı. Kaynak commit: ffe3ee430254d2e9a6f19f622758dad7399854d6.

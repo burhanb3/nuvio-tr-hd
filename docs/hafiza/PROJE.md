@@ -12,7 +12,7 @@ TVde aynı4route/2resolver içinde1080p,ilk4K,küçük720p ve varsa ikinci2160p 
 
 Regresyon önce S1E2 3/Fury11/Hotel7/Dune7(24s)/Inception0/Flea0/YourName0. Son üçte farklı origin timeoutları vardı; tekrarda9/10/9 ve eski4Klar geri geldi. EskiFury/HotelTR korunur. İlk doğrulama işleri kısmen paraleldi; tüm kötü turlar ve tekrarlar coverage-187 içinde. Bunu fiziksel iPhone hızı/kararlılığı diye sunma. TR katalog taraması31çift-dilli kayıt ve iki4Ketiketli kayıt buldu; yeni doğrulanmışTRdub yok. StepDogs2013/2023 çelişkisi zorlanmadı.
 
-303check/QuickJS geçti; upstream0.6.5-beta/23blob drift0, lock değişmedi. Fiziksel cihaz/tam indirme/oynatma/offline/senkron/font sınanmadı. Yayın bekliyor; CI/Pages/yedi SHA kanıtı sonra eklenecek.
+303check/QuickJS geçti; upstream0.6.5-beta/23blob drift0, lock değişmedi. Fiziksel cihaz/tam indirme/oynatma/offline/senkron/font sınanmadı. Yayımlandı: kaynak ffe3ee430254d2e9a6f19f622758dad7399854d6; Windows/Linux testleri ve Pages başarılı. Yedi public dosya HTTP 200 döndü; SHA/byte yerel paketle aynı. Test https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40606575896; Pages https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40606575720. Kanıt compatibility/github-publication.json içinde.
 
 
 ## 1.8.6 — eksik yıl ve kısmi bölüm yolu

@@ -1,15 +1,15 @@
 {
-  "checkedAt": "2026-10-27T23:50:50.562Z",
-  "version": "1.8.6",
+  "checkedAt": "2026-10-28T00:07:46.177Z",
+  "version": "1.8.7",
   "origin": "https://burhanb3.github.io/nuvio-tr-hd",
   "authenticated": false,
   "assetRequestsAuthenticated": false,
   "ciMetadataAuthenticated": true,
   "repository": "https://github.com/burhanb3/nuvio-tr-hd",
-  "sourceCommit": "2aa334fff0b90f9ef59a73de278ce5e010c84f07",
+  "sourceCommit": "ffe3ee430254d2e9a6f19f622758dad7399854d6",
   "branch": "codex/publish-nuvio-tr-hd",
   "actions": {
-    "tests": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40604773258",
+    "tests": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40606575896",
     "testsConclusion": "success",
     "jobs": [
       {
@@ -129,7 +129,7 @@
         ]
       }
     ],
-    "pages": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40604773251",
+    "pages": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40606575720",
     "pagesConclusion": "success"
   },
   "checks": [
@@ -138,47 +138,47 @@
       "status": 200,
       "type": "application/json; charset=utf-8",
       "bytes": 2630,
-      "sha256": "fe5c9f85eeffbef3138edb19452783c701f7c3fef6abd0ca9584aad2271897bc",
+      "sha256": "aa379bc32f7f9ffcac4c1c2f41031ab30f4be42a959c39ccd0bef8ba9f490ad1",
       "matchesLocal": true
     },
     {
-      "path": "/providers/nuvio-tr-hd.js?v=1.8.6",
+      "path": "/providers/nuvio-tr-hd.js?v=1.8.7",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 282614,
-      "sha256": "d313a52da9287d20816cb6f9a9f7b061242c03f4489e352741bc44af6cad4e63",
+      "bytes": 284861,
+      "sha256": "6c1623cd4723e65ce5e6d61099883167e75580edc6f0a372ce63ce28a835d338",
       "matchesLocal": true
     },
     {
-      "path": "/providers/nuvio-tr-hd-anime.js?v=1.8.6",
+      "path": "/providers/nuvio-tr-hd-anime.js?v=1.8.7",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 282615,
-      "sha256": "3a8432fa15b87197eb82c3bc5d9f49a7a737a4860aa8c8e9be86f550d891a771",
+      "bytes": 284862,
+      "sha256": "42c55969043fd71d0e670239f3146db1e3e896ed4d76c077904313039b53bf11",
       "matchesLocal": true
     },
     {
-      "path": "/providers/nuvio-tr-hd-extra-anime.js?v=1.8.6",
+      "path": "/providers/nuvio-tr-hd-extra-anime.js?v=1.8.7",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 282626,
-      "sha256": "41578690b16e232b08a6935d730321c123ba507460f3ffcc10d08a8982dc7cd2",
+      "bytes": 284873,
+      "sha256": "aad27ad2b2a81ae41ff4cd4640a53306510ae06609d77141adf40f2190350d17",
       "matchesLocal": true
     },
     {
-      "path": "/providers/nuvio-tr-hd-fast-online.js?v=1.8.6",
+      "path": "/providers/nuvio-tr-hd-fast-online.js?v=1.8.7",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 282626,
-      "sha256": "3ec62127a3f7301032bc305fad24bf07e2b5a55249d96e672d3c6abce2042448",
+      "bytes": 284873,
+      "sha256": "c81a964774aec02ff26856f9da4de5e31dc2edd2fe3d941c965688e7d507301a",
       "matchesLocal": true
     },
     {
       "path": "/providers/nuvio-tr-hd-online.js",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 282617,
-      "sha256": "eea218a47176a86cac5787d89f2bde73e1a897e3228b206fa014963fd0a15779",
+      "bytes": 284864,
+      "sha256": "d5f5dda768daacbb1d93d42b5264927b9e09d90503a42a09fc2774364ab54b04",
       "matchesLocal": true
     },
     {
@@ -186,32 +186,33 @@
       "status": 200,
       "type": "text/html; charset=utf-8",
       "bytes": 6253,
-      "sha256": "fc2da4d00ae843fdfff8002e409f0d0390e0c4f3dcc076081dfd493909212a3a",
+      "sha256": "6341d6d507d5fa229bf4553be8675be243b1c874aa550ef9e818757ad977435a",
       "matchesLocal": true
     }
   ],
   "tests": {
-    "local": 297,
+    "local": 303,
     "compiledQuickJs": true
   },
-  "upstreamEvidence": "compatibility/upstream-186-check.json",
-  "sourceEvidence": "compatibility/download-expansion-186.json",
-  "regressionEvidence": "compatibility/coverage-186.json",
+  "upstreamEvidence": "compatibility/upstream-187-check.json",
+  "sourceEvidence": "compatibility/download-expansion-187.json",
+  "regressionEvidence": "compatibility/coverage-187.json",
   "manifestIds": [
     "nuvio-tr-hd",
     "nuvio-tr-hd-anime",
     "nuvio-tr-hd-extra-anime",
     "nuvio-tr-hd-fast-online"
   ],
-  "newFiles": 5,
-  "newMkvFiles": 4,
-  "newMp4Files": 1,
-  "newMovieFiles": 2,
-  "newTvFiles": 3,
-  "newTurkishDubFiles": 1,
-  "new4kFiles": 0,
+  "newFiles": 6,
+  "newMkvFiles": 6,
+  "new4kFiles": 2,
+  "new1080pFiles": 2,
+  "new720pFiles": 2,
+  "newTvFiles": 6,
+  "newMovieFiles": 0,
+  "newTurkishDubFiles": 0,
   "newAnimeFiles": 0,
-  "titleExamples": 2,
+  "titleExamples": 1,
   "episodeExamples": 2,
   "allNewFilesHaveTurkishSubtitleAlternatives": true,
   "newBackend": 0,
@@ -220,67 +221,87 @@
   "newPerTitleVideoPin": 0,
   "newScraperIds": 0,
   "features": {
-    "archiveCanonicalIdentifierPrefixes": true,
-    "leadingIdentifierWildcard": false,
-    "missingYearRequiresIdentifierAndFilename": true,
-    "actualDurationTolerance": [
-      0.9,
-      1.1
-    ],
-    "archiveSearchJobs": 2,
-    "archiveMetadataLimit": 12,
-    "moviesdriveFirstSeasonTv": true,
-    "moviesdriveLaterSeasons": false,
-    "tvSearchAndPageImdbRequired": true,
-    "exactSeriesFirstYearAndEpisodeRequired": true,
-    "zipPacksExcluded": true,
+    "moviesdriveCanonicalLaterSeasonSupport": true,
+    "seasonYearSeparateFromSeriesYear": true,
+    "canonicalEpisodeRuntimeRequired": true,
+    "exactEpisodeShowIdRequired": true,
+    "sourceReleasedYearRequired": true,
+    "extraTmdbRequestsForLaterTv": 1,
+    "extraTmdbRequestsForMoviesOrFirstSeason": 0,
+    "seasonMetadataTimeoutMs": 3000,
     "sourceBudgetMs": 10000,
     "releaseRoutes": 4,
     "resolvers": 2,
+    "secondPublished4kRoute": true,
+    "restricted4kBodyNotRequested": true,
     "mainBudgetMs": 24000,
     "videoNativeSlots": 3,
     "subtitleNativeSlots": 4,
     "englishSubtitleNativeSlots": 1,
     "allFourScraperIdsPreserved": true,
-    "evidence": "compatibility/coverage-186.json",
-    "counts": [
+    "evidence": "compatibility/coverage-187.json",
+    "existingInception4k": true,
+    "existingFleabag4k": true,
+    "existingYourName4k": true,
+    "existingFuryTurkishDub": true,
+    "existingHotelTurkishDub": true,
+    "firstCounts": [
+      {
+        "key": "stranger-things-s1e2",
+        "files": 3,
+        "ms": 10793
+      },
+      {
+        "key": "fury",
+        "files": 11,
+        "ms": 11681
+      },
       {
         "key": "hotel-rwanda",
         "files": 7,
-        "ms": 13051
+        "ms": 7597
       },
       {
         "key": "dune",
-        "files": 8,
-        "ms": 10281
+        "files": 7,
+        "ms": 24015
       },
       {
         "key": "inception",
+        "files": 0,
+        "ms": 14474
+      },
+      {
+        "key": "fleabag-s1e1",
+        "files": 0,
+        "ms": 18097
+      },
+      {
+        "key": "your-name",
+        "files": 0,
+        "ms": 13528
+      }
+    ],
+    "recoveryCounts": [
+      {
+        "key": "inception",
         "files": 9,
-        "ms": 10022
+        "ms": 10511
       },
       {
         "key": "fleabag-s1e1",
         "files": 10,
-        "ms": 13024
-      },
-      {
-        "key": "death-note-s1e1",
-        "files": 4,
-        "ms": 12972
+        "ms": 8921
       },
       {
         "key": "your-name",
         "files": 9,
-        "ms": 12800
+        "ms": 10522
       }
     ],
-    "existingInception4kPreserved": true,
-    "existingYourName4kPreserved": true,
-    "existingFleabag4kPreserved": true,
-    "oldTurkishDubPreserved": true,
+    "note": "Inception/Fleabag/YourName initially0 with multiple independent source timeouts; recovered9/10/9. Dune retained7 at24s logical deadline. Failed passes retained. Initial validation jobs overlapped; no whole-catalogue or physical-device stability claim.",
     "onlinePathsRemoved": false,
-    "intermediateTvTimeoutFailuresRetained": true,
+    "failedRegressionPassesRetained": true,
     "upstreamFilesReviewed": 23,
     "upstreamLockChanged": false,
     "noNativePhysicalCancellationClaim": true
