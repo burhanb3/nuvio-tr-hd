@@ -1,13 +1,13 @@
 # Sürüm notları
 
-## 1.8.9 — geliştirme
+## 1.8.9 — 10 Kasım 2026
 
-- Masaüstü platformu dört sağlayıcıya eklendi; mevcut Android/iOS desteği korundu.
+- Masaüstü platformu dört sağlayıcıya eklendi; mevcut Android/iOS desteği korundu. Windows uygulamasında depo yenilemesi sonrası dört sağlayıcı göründü; yerleşik Matrix testi 10 sonuç verdi. İlk Dune araması boş kaldı, tekrar kararlılığı incelenmeli.
 - MoviesDrive adres değişiminde kaybolan arama sorgusu güvenli biçimde yeniden gönderilir; daha önce erişilemeyen mevcut dosyalar geri gelebilir.
 - FilmEkseni ve Anizone online HLS alternatifleri eklendi; indirme dosyası olarak işaretlenmez.
 - Dune için 567 MB, 948 MB ve 2,07 GB; Spider-Man: No Way Home için 904 MB, Into the Spider-Verse için 402 MB MKV seçenekleri örnek ağ testlerinde bulundu. İngilizce ses ve mevcut TR altyazı alternatifleri var; altyazı senkronu sınanmadı.
 - Fleabag ilk taramada boş, tekrarda sekiz dosya; Shameless örneğinde indirme yok. Yeni bağımsız indirme kaynağı veya doğrulanmış TR dublaj eklenmedi.
-- Kaynak kapsamı, eşleşme ve masaüstü platform testi ayrıntıları uyumluluk belgelerinde. Tam oynatma/indirme, offline ve fiziksel telefon testleri henüz yapılmadı.
+- 324 yerel test ve Windows/Linux CI geçti; kaynak kapsamı, eşleşme ve masaüstü platform testi ayrıntıları uyumluluk belgelerinde. Tam oynatma/indirme, offline ve fiziksel telefon testleri henüz yapılmadı.
 
 ## Araştırma notları
 

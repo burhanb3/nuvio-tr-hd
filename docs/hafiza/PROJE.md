@@ -2,6 +2,8 @@
 
 ## 1.8.9 — mevcut çalışma
 
+1.8.9 yayımlandı: bacb0f15723f2c080ad62f9f784ae907f1581f2c; Test 42894719311 ve Pages 42894717940 başarılı, yedi public dosya içerik kontrolü geçti (Windows CRLF metinler Git LF ile karşılaştırıldı). Windows uygulamasında repo yenilendi: 0 → 4 sağlayıcı, 1.8.9. Gerçek uygulama Matrix yerleşik sağlayıcı testi 10 sonuç döndürdü; ilk Dune uygulama araması boş kaldı. Kurulu Desktop JVM QuickJS ile ayrı işlemde Dune 10 sonuç, ancak bu arayüz testi değildir. compatibility/desktop-189-check.json içinde ayrıldı; tam oynatma/indirme sınanmadı.
+
 MoviesDrive new5 adresine taşınması aramada q/page kaybı yaratıyordu; yalnız aynı yayıncıya tek yeniden arama eklendi. Dune 567MB/948MB/2,07GB, No Way Home 904MB ve Spider-Verse 402MB örnekleri geri bulundu; bunlar yeni bağımsız sağlayıcı değildir. Fleabag ilk tur 0, tekrarda 8; Shameless dosya 0. FilmEkseni ve Anizone online HLS ekler, indirilemez. Entegre kanıtlar compatibility/coverage-189.json ve online-expansion-189.json. Masaüstü 1.1.35 kurulu; 1.8.8 deposunda 0 sağlayıcı görüntülendi. Desktop platform filtresi gerçek kurulu JAR ve upstream kaynakta doğrulandı; manifestte desktop eklendi. Fiziksel telefon/tam indirme/offline/senkron test edilmedi.
 
 

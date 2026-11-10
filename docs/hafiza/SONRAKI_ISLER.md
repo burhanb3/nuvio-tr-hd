@@ -2,7 +2,7 @@
 
 ## 1.8.9 öncelik
 
-1. Desktop 1.1.35 üzerinde depo yenileme ve gerçek sağlayıcı yürütmesini kontrol et; tam oynatma/indirme olmadıysa açık tut.
+1. Desktop 1.1.35 yenilemesi 0 → 4 ve gerçek uygulama Matrix sağlayıcı testi 10 sonuç; Dune ilk uygulama araması boş, kurulu JVM motoru ayrı işlemde 10 sonuç. Uygulamadaki Dune tekrarını ve boş arama/ayar/ağ nedenlerini incele; tam masaüstü oynatma/indirme açık. 1.8.9 yayını bacb0f15723f2c080ad62f9f784ae907f1581f2c, Test 42894719311/Pages 42894717940 başarılı.
 2. Shameless ve diğer eksik diziler için bağımsız ücretsiz ve kararlı dosya ailesi ara. Yeni TR dublaj veya anime indirme bu tur doğrulanmadı.
 3. İlk Fleabag 0 ve sonraki 8 dosya sonucu birlikte değerlendir; ağ değişkenliği ve telefon fiziksel süresi bilinmiyor. Fiziksel telefonda tam indirme/offline/senkron/font açık.
 

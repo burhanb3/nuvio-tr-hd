@@ -1,15 +1,15 @@
 {
-  "checkedAt": "2026-10-28T00:37:05.137Z",
-  "version": "1.8.8",
+  "checkedAt": "2026-11-10T20:24:27.679Z",
+  "version": "1.8.9",
   "origin": "https://burhanb3.github.io/nuvio-tr-hd",
   "authenticated": false,
   "assetRequestsAuthenticated": false,
   "ciMetadataAuthenticated": true,
   "repository": "https://github.com/burhanb3/nuvio-tr-hd",
-  "sourceCommit": "4c824c1002600687eca10c88f92ce11fad15b38b",
+  "sourceCommit": "bacb0f15723f2c080ad62f9f784ae907f1581f2c",
   "branch": "codex/publish-nuvio-tr-hd",
   "actions": {
-    "tests": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40609766518",
+    "tests": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/42894719311",
     "testsConclusion": "success",
     "jobs": [
       {
@@ -129,7 +129,7 @@
         ]
       }
     ],
-    "pages": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40609766742",
+    "pages": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/42894717940",
     "pagesConclusion": "success"
   },
   "checks": [
@@ -137,48 +137,48 @@
       "path": "/manifest.json",
       "status": 200,
       "type": "application/json; charset=utf-8",
-      "bytes": 2630,
-      "sha256": "eddba67efd2507410cf784b1c8441c55530e7f396bb591cf05533565a6bd5d0e",
+      "bytes": 2706,
+      "sha256": "a9f30c259b2a613c979111ebe06630861f04c63ec0847773b3c45109776e6bef",
       "matchesLocal": true
     },
     {
-      "path": "/providers/nuvio-tr-hd.js?v=1.8.8",
+      "path": "/providers/nuvio-tr-hd.js?v=1.8.9",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 287518,
-      "sha256": "4d41861021da91c1e52d45927dec67761f6a3643fac396b2e4f983ce90a17b9c",
+      "bytes": 300146,
+      "sha256": "8d4f3b4eb83f38c503e423cc6d8598be3e2f8c12b6b9d317ab58895937124ef3",
       "matchesLocal": true
     },
     {
-      "path": "/providers/nuvio-tr-hd-anime.js?v=1.8.8",
+      "path": "/providers/nuvio-tr-hd-anime.js?v=1.8.9",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 287519,
-      "sha256": "9573d1ae45ac996706179e1be63a218317ff6399de5b6c1d4cc91afa3fdda15e",
+      "bytes": 300147,
+      "sha256": "b92d79ff597c6875f90571231bf808a8f8bcc7b8d9177fe9edbe7e0dcb7a7fb7",
       "matchesLocal": true
     },
     {
-      "path": "/providers/nuvio-tr-hd-extra-anime.js?v=1.8.8",
+      "path": "/providers/nuvio-tr-hd-extra-anime.js?v=1.8.9",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 287530,
-      "sha256": "f33a84378311e0e8928a1e35f7a6b3c16d506221b16e4d67adeb859bee9bfca4",
+      "bytes": 300158,
+      "sha256": "5d8948108682796dcbc4c6dea0c1671aa5d27c650910834e91d365ed2d3ec2e8",
       "matchesLocal": true
     },
     {
-      "path": "/providers/nuvio-tr-hd-fast-online.js?v=1.8.8",
+      "path": "/providers/nuvio-tr-hd-fast-online.js?v=1.8.9",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 287530,
-      "sha256": "9c61bcdcd9234556396718d05a7aacfe9cb458f92e36c703d02a7f7afba258d2",
+      "bytes": 300158,
+      "sha256": "c99c6df956a1518be4b03a32f88f94adb3d90b475999d06c289e4d221a9941e2",
       "matchesLocal": true
     },
     {
       "path": "/providers/nuvio-tr-hd-online.js",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 287521,
-      "sha256": "8541e75ee15bc370679daf5b0037a96f61a6174c916af8a2b6f867c7fa5add6f",
+      "bytes": 300149,
+      "sha256": "fe77231315879d7ade8d79f36d94dc69ad9920a06e38fdc29843587253035c4e",
       "matchesLocal": true
     },
     {
@@ -186,108 +186,26 @@
       "status": 200,
       "type": "text/html; charset=utf-8",
       "bytes": 6253,
-      "sha256": "d59b54a64d0d03f783ec37c19c4da7de9562f219e0d92342776ee96e6e534c57",
+      "sha256": "da78a7cb3142cf99eec08ee6e2e6aca856fd13756140147183ca151d35810e75",
       "matchesLocal": true
     }
   ],
   "tests": {
-    "local": 312,
+    "local": 324,
     "compiledQuickJs": true
   },
-  "upstreamEvidence": "compatibility/upstream-188-check.json",
-  "sourceEvidence": "compatibility/download-expansion-188.json",
-  "regressionEvidence": "compatibility/coverage-188.json",
+  "upstreamEvidence": "compatibility/upstream-189-check.json",
+  "upstreamReview": "compatibility/upstream-189-review.json",
+  "sourceEvidence": "compatibility/download-expansion-189.json",
+  "regressionEvidence": "compatibility/coverage-189.json",
+  "onlineEvidence": "compatibility/online-expansion-189.json",
   "manifestIds": [
     "nuvio-tr-hd",
     "nuvio-tr-hd-anime",
     "nuvio-tr-hd-extra-anime",
     "nuvio-tr-hd-fast-online"
   ],
-  "newFiles": 6,
-  "newMkvFiles": 3,
-  "newMp4Files": 3,
-  "new4kFiles": 1,
-  "new720pFiles": 4,
-  "newMovieFiles": 6,
-  "newTvFiles": 0,
-  "newAnimeFiles": 0,
-  "newTurkishDubFiles": 0,
-  "newPublisherLabelledTurkishDubFiles": 3,
-  "titleExamples": 3,
-  "allNewFilesHaveTurkishSubtitleAlternatives": true,
-  "newBackend": 0,
-  "newAccount": 0,
-  "newFixedKey": 0,
-  "newPerTitleVideoPin": 0,
-  "newScraperIds": 0,
-  "features": {
-    "archiveOfficialTranslatedFilename": true,
-    "knownFilesDoNotSuppressLocalAlternatives": true,
-    "moviesdriveSameIdCanonicalAliases": true,
-    "franchiseHintAloneNotAccepted": true,
-    "maxExtraMetadataRequestsPerAdapter": 1,
-    "lookupTimeoutMs": 3000,
-    "noExtraCatalogueSearchJobs": true,
-    "wrongYearOrNonvideoSkipsLookup": true,
-    "archiveSearchJobs": 2,
-    "archiveMetadataLimit": 12,
-    "sourceBudgetMs": 10000,
-    "releaseRoutes": 4,
-    "resolvers": 2,
-    "mainBudgetMs": 24000,
-    "videoNativeSlots": 3,
-    "subtitleNativeSlots": 4,
-    "englishSubtitleNativeSlots": 1,
-    "allFourScraperIdsPreserved": true,
-    "evidence": "compatibility/coverage-188.json",
-    "oldInception4k": true,
-    "oldFleabag4k": true,
-    "oldYourName4k": true,
-    "oldStrangerThings5FourK": true,
-    "oldFuryTurkishDub": true,
-    "oldHotelTurkishDub": true,
-    "counts": [
-      {
-        "key": "stranger-things-s5e1",
-        "files": 3,
-        "ms": 10108
-      },
-      {
-        "key": "fury",
-        "files": 11,
-        "ms": 24023
-      },
-      {
-        "key": "hotel-rwanda",
-        "files": 6,
-        "ms": 22833
-      },
-      {
-        "key": "inception",
-        "files": 8,
-        "ms": 10742
-      },
-      {
-        "key": "fleabag-s1e1",
-        "files": 10,
-        "ms": 9035
-      },
-      {
-        "key": "your-name",
-        "files": 9,
-        "ms": 12278
-      }
-    ],
-    "note": "Fury reached24s logical deadline with11 files, Hotel6; no claim of latency improvement. Extra metadata calls only when names need resolving. Native physical/iPhone tests not run.",
-    "onlinePathsRemoved": false,
-    "unmeasuredPublisherLabelledAudioNotVerified": true,
-    "duplicateNotCounted": true,
-    "upstreamFilesReviewed": 23,
-    "upstreamLockChanged": false,
-    "noNativePhysicalCancellationClaim": true
-  },
-  "allSourceCriteriaMet": false,
-  "deviceTest": "not-run",
+  "phoneDeviceTest": "not-run",
   "fullPlayback": "not-run",
   "fullDownload": "not-run",
   "offline": "not-run",

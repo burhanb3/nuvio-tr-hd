@@ -13,7 +13,7 @@ Resmî release ve geliştirme dalındaki ilgili dosyaların SHA'ları `compatibi
 
 ## Güncel kontrol
 
-1.8.9: Android/iOS yanında Desktop platformu manifestte açıldı. Windows'ta kurulu Nuvio Desktop 1.1.35 depoyu 0 sağlayıcıyla gösteriyordu; kurulu programdaki platform etiketi ve kaynak kodundaki filtre incelendi. Desktop sürümünde gerçek uygulama sonucu ayrıca kontrol edilir; yalnız etiket ve QuickJS WASM testi tam masaüstü oynatım/indirme kanıtı değildir.
+1.8.9: Android/iOS yanında Desktop platformu manifestte açıldı. Windows'taki Nuvio Desktop 1.1.35 depoyu 0 sağlayıcıyla gösteriyordu; yayımdan sonra aynı depoyu yenileyince dört sağlayıcı göründü. Gerçek uygulamadaki sağlayıcı testinde Matrix için 10 sonuç döndü. İlk Dune araması uygulamada boş kaldı; kurulu Desktop QuickJS motorunu kullanan ayrı işlemde Dune için 10 sonuç geldi. Bu farklı sonuçlar ağ ve uygulama durumunun değişebileceğini gösterir, sorunun tümüyle çözüldüğünü veya tam oynatım/indirmeyi kanıtlamaz. Linux ve macOS masaüstü sınanmadı. [Masaüstü kontrolü](../compatibility/desktop-189-check.json).
 
 Nuvio Mobile 0.6.5-beta geliştirme dalında iki oynatıcı dosyasının değişikliği incelendi; eklenti ABI değişikliği saptanmadı. Ardından 23 kaynak dosyası kilidi tekrar kontrol edildi ve drift bulunmadı. [İnceleme](../compatibility/upstream-189-review.json), [kontrol](../compatibility/upstream-189-check.json), [örnek kapsam](../compatibility/coverage-189.json), [online kaynaklar](../compatibility/online-expansion-189.json).
 
@@ -34,3 +34,5 @@ Kaynak kontrolleri sabit kanonik metadata referanslarıyla gerçek public HTTP/R
 [Yayın doğrulaması](../compatibility/github-publication.json) · [Önceki uyumluluk kayıtları](arsiv/UYUMLULUK_GECMISI.md).
 
 1.8.8 yayımlandı: [Windows/Linux testleri](https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40609766518) ve [Pages yayını](https://github.com/burhanb3/nuvio-tr-hd/actions/runs/40609766742) başarılı. Manifest, beş sağlayıcı dosyası ve kurulum sayfası public HTTP 200 döndü; SHA/byte karşılaştırmaları yerel paketle aynı. Kaynak commit: 4c824c1002600687eca10c88f92ce11fad15b38b.
+
+1.8.9 yayımlandı: [Windows/Linux paket testleri](https://github.com/burhanb3/nuvio-tr-hd/actions/runs/42894719311) ve [Pages yayını](https://github.com/burhanb3/nuvio-tr-hd/actions/runs/42894717940) başarılı; yedi public dosya HTTP 200 ve yayındaki Git içerikleriyle eşleşti. Kaynak commit: bacb0f15723f2c080ad62f9f784ae907f1581f2c. Windows metin dosyalarındaki CRLF yalnız karşılaştırma için Git/Pages LF biçimine normalleştirildi.

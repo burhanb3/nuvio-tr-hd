@@ -1,0 +1,38 @@
+{
+  "checkedAt": "2026-11-10",
+  "application": "Nuvio Desktop",
+  "installedVersion": "1.1.35",
+  "platform": "Windows",
+  "installedComposeJarSha256": "c96931a3aac6572b45db5655738cfbd325cd718cf8438cfd20fe53e1787e7933",
+  "upstream": "https://github.com/NuvioMedia/NuvioDesktop",
+  "sourceRevision": "37ce07d351fc69e17d05a4640ef78d08deba20e2",
+  "platformTag": "desktop",
+  "verification": {
+    "oldRepositoryVersion": "1.8.8",
+    "beforeVisibleScrapers": 0,
+    "newRepositoryVersion": "1.8.9",
+    "afterVisibleScrapers": 4,
+    "actualApplicationTest": {
+      "media": "The Matrix",
+      "testMethod": "built-in provider test button, TMDB 603",
+      "resultCount": 10
+    },
+    "firstActualDuneSearch": "no results",
+    "installedRuntimeProbe": {
+      "media": "Dune 2021",
+      "tmdbId": "438631",
+      "method": "installed Desktop PluginRuntime JVM and QuickJS, current built provider, normal host bridges",
+      "resultCount": 10,
+      "notes": "Independent process; not the in-app results screen. Settings may differ. Network availability varies."
+    }
+  },
+  "notTested": [
+    "full desktop playback",
+    "full desktop download",
+    "offline subtitles",
+    "subtitle synchronization",
+    "iPhone",
+    "Android"
+  ],
+  "linuxMacDesktop": "not-tested"
+}
