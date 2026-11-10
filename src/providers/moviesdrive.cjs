@@ -4,7 +4,37 @@ const {anchors,decodeEntities,filenameIdentity}=require('./directory.cjs');
 const {canonicalNames}=require('./page-data.cjs');
 const {matchesEpisode}=require('../matching.cjs');
 const {pixelPage,publicFile}=require('./pixeldrain.cjs');
-const ORIGIN='https://new4.moviesdrive.beer',ARCHIVE='https://mdrive.lol';
+const ORIGIN='https://new5.moviesdrive.beer',ARCHIVE='https://mdrive.lol';
+function catalogueOrigin(value){
+  const url=safeUrl(value);if(!url)return null;
+  const u=new URL(url);
+  return u.protocol==='https:'&&/^new[1-9]\d{0,2}\.moviesdrive\.beer$/.test(u.hostname)&&!u.port?u.origin:null;
+}
+function matchesQuery(search,query){
+  const entries=String(search||'').replace(/^\?/,'').split('&').map(s=>s.split('='));
+  const values=key=>entries.filter(p=>p[0]===key).map(p=>p.slice(1).join('='));
+  const q=values('q'),page=values('page');
+  try{return q.length===1&&page.length===1&&decodeURIComponent(q[0].replace(/\+/g,' '))===query&&page[0]==='1';}catch{return false;}
+}
+async function searchCatalogue(http,origin,query){
+  // A publisher domain migration can drop q/page from Location. Read the
+  // final URL before using the JSON; an unfiltered latest-posts response is
+  // not a search result. Follow only an advertised same-publisher migration,
+  // with at most one reissue and within the existing source deadline.
+  const suffix='/search.php?q='+encodeURIComponent(query)+'&page=1';
+  for(let attempt=0;attempt<2&&!http.expired();attempt++){
+    const response=await http.text(origin+suffix,{headers:{Accept:'application/json'}});
+    if(!response)return null;
+    const next=catalogueOrigin(response.url),u=new URL(response.url);
+    if(!next||u.pathname!=='/search.php')return null;
+    if(next!==origin){
+      origin=next;
+      if(!matchesQuery(u.search,query))continue;
+    }else if(!matchesQuery(u.search,query))return null;
+    try{return{data:JSON.parse(response.text),origin};}catch{return null;}
+  }
+  return null;
+}
 function text(value){return decodeEntities(String(value||'').replace(/&nbsp;/gi,' ')).replace(/\u00a0/g,' ');}
 function titleMatches(value,target){
   const match=text(value).match(/^(?:Download\s+)?(.+?)\s*\((\d{4})\)(?=\s|$)/i);
@@ -111,14 +141,16 @@ async function scanMoviesDrive(http,target,options={}){
     }).catch(()=>target);
     return titleJob;
   };
+  let origin=ORIGIN;
   const queries=[target.originalTitle,...(target.searchTitles||[])];if(/^the\s+/i.test(target.originalTitle))queries.splice(1,0,target.originalTitle.replace(/^the\s+/i,''));
   for(const query of [...new Set(queries)].slice(0,2)){
    if(http.expired())break;
-   const search=await http.json(ORIGIN+'/search.php?q='+encodeURIComponent(query)+'&page=1');
+   const result=await searchCatalogue(http,origin,query);if(!result)continue;
+   const search=result.data;origin=result.origin;
    if(target.type==='movie'&&options.loadTitles&&!searchPages(search,target).length&&Array.isArray(search?.hits)&&search.hits.slice(0,30).some(h=>h?.document&&(!h.document.imdb_id||h.document.imdb_id===target.imdbId)&&titleLookupHint(h.document.post_title,target,!!target.imdbId&&h.document.imdb_id===target.imdbId)))await loadTarget();
    for(const row of searchPages(search,target)){
     if(http.expired())break;
-    const page=await http.text(ORIGIN+row.permalink);if(!page||new URL(page.url).origin!==ORIGIN)continue;
+    const page=await http.text(origin+row.permalink);if(!page||new URL(page.url).origin!==origin)continue;
     const entries=releaseEntries(page.text,target);if(!entries.length)continue;
     const found=[],seen=new Set();
     await mapLimit(entries,2,async entry=>{if(http.expired())return;const file=await resolveRelease(http,entry,target,{loadTarget:target.type==='movie'&&options.loadTitles?loadTarget:null});if(file&&!seen.has(file.url)){seen.add(file.url);found.push(file);if(options.onCandidates)await options.onCandidates([file]);}});

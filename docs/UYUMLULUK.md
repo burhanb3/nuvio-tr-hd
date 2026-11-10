@@ -13,6 +13,10 @@ Resmî release ve geliştirme dalındaki ilgili dosyaların SHA'ları `compatibi
 
 ## Güncel kontrol
 
+1.8.9: Android/iOS yanında Desktop platformu manifestte açıldı. Windows'ta kurulu Nuvio Desktop 1.1.35 depoyu 0 sağlayıcıyla gösteriyordu; kurulu programdaki platform etiketi ve kaynak kodundaki filtre incelendi. Desktop sürümünde gerçek uygulama sonucu ayrıca kontrol edilir; yalnız etiket ve QuickJS WASM testi tam masaüstü oynatım/indirme kanıtı değildir.
+
+Nuvio Mobile 0.6.5-beta geliştirme dalında iki oynatıcı dosyasının değişikliği incelendi; eklenti ABI değişikliği saptanmadı. Ardından 23 kaynak dosyası kilidi tekrar kontrol edildi ve drift bulunmadı. [İnceleme](../compatibility/upstream-189-review.json), [kontrol](../compatibility/upstream-189-check.json), [örnek kapsam](../compatibility/coverage-189.json), [online kaynaklar](../compatibility/online-expansion-189.json).
+
 1.8.8: 312 fixture/gerçek QuickJS testi. En son doğrulanan Nuvio sürümü **0.6.5-beta**; geliştirme dalı ilerlese de kilitli 23 dosyada drift yok. Kilit değiştirilmedi. [Upstream raporu](../compatibility/upstream-188-check.json), [yeni indirme dosyaları](../compatibility/download-expansion-188.json), [kapsam, baseline ve tekrarlar](../compatibility/coverage-188.json).
 
 Uzantısız MKV için önceki eleme kararı gözden geçirildi: Nuvio iOS dosya gövdesini doğrudan yazar ve dosyayı MPV `loadfile` yoluna iletir. Nuvio'nun `.mp4` kayıt adı, dosyayı MP4'e dönüştürmez. Boyut/format ve gerçek video/ses denetimi geçen kaynaklar bu yola sınırlı olarak alınır. Resmî MPV masaüstü CI derlemesinde 1080p ve 4K MKV örnekleri `.mp4` adıyla tanındı ve bir kare çözüldü. Bu, fiziksel Nuvio/iPhone oynatma veya tam indirme kanıtı değildir.

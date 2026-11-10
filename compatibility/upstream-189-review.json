@@ -1,0 +1,26 @@
+{
+  "reviewedAt": "2026-10-28",
+  "repository": "NuvioMedia/NuvioMobile",
+  "release": "0.6.5-beta",
+  "previousHead": "61658f366f985fc7758f0942a14c1754c69aca68",
+  "reviewedHead": "53869a0279c59abdef23da2962eb2a1c80e6caa5",
+  "initialCheck": {"trackedFiles":23,"changedFiles":2,"failedAbiAssertions":0},
+  "method": "Exact old/new GitHub source blobs fetched and static diffs reviewed before changing the lock. No Kotlin compilation, platform player execution, phone or offline test.",
+  "changes": [
+    {
+      "path": "composeApp/src/androidMain/kotlin/com/nuvio/app/features/player/PlayerEngine.android.kt",
+      "before": "c090dbda09d5c6d1681bc394e9bce6a6c159b42c",
+      "after": "4c5d12b369f49ffb4c3a4ffbaeab85db225e5436",
+      "review": "Android player changes: ASS render modes/effect selection/geometry/delay, subtitle-style and audio-track caches, local-file buffering and decoding, Dolby decoder selection, removal of runtime Exo-to-MPV error fallback. Plugin getStreams/result/subtitles/header contracts and the checked MPV loadfile entry remain unchanged. This is not playback certification."
+    },
+    {
+      "path": "composeApp/src/commonMain/kotlin/com/nuvio/app/features/player/PlayerScreenRuntimeTrackActions.kt",
+      "before": "f8e90c81a20cd0b82d3b7751d07c3cfe94bb619e",
+      "after": "a675540ba0f77920b4b5e2d3f2298453294f6580",
+      "review": "Pending engine-switch track preferences take priority over stored preferences and are reapplied after track refresh. Preferred-subtitle selection and external plugin subtitle data contract remain present."
+    }
+  ],
+  "pluginAbiChangeDetected": false,
+  "lockUpdatedAfterReview": true,
+  "deviceTest": "not-run"
+}

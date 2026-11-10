@@ -1,10 +1,10 @@
 {
-  "checkedAt": "2026-10-27",
+  "checkedAt": "2026-10-28",
   "repository": "NuvioMedia/NuvioMobile",
   "release": "0.6.5-beta",
   "releaseCommit": "af58a32b05741963beec861255f5b18f7ede69cf",
   "defaultBranch": "cmp-rewrite",
-  "defaultHead": "61658f366f985fc7758f0942a14c1754c69aca68",
+  "defaultHead": "53869a0279c59abdef23da2962eb2a1c80e6caa5",
   "sourceFiles": {
     "composeApp/src/commonMain/kotlin/com/nuvio/app/features/streams/StreamsRepository.kt": "58fd52c0006c9766778400be22ae9216ab1d91fd",
     "composeApp/src/commonMain/kotlin/com/nuvio/app/features/plugins/PluginModels.kt": "2dfe5fdab84a0f044c162b9fdf26a6ab2dfbc041",
@@ -17,7 +17,7 @@
     "composeApp/src/commonMain/kotlin/com/nuvio/app/features/downloads/DownloadsRepository.kt": "909e718364f693d5a5d612933f0c896c6b144340",
     "composeApp/src/iosMain/kotlin/com/nuvio/app/features/downloads/DownloadsPlatformDownloader.ios.kt": "22a996a312625b2879fa68ea7c65a2a8325eac95",
     "iosApp/iosApp/Player/MPVPlayerBridge.swift": "7fce2594115ae51b1dca34fffb5849c8d27b32ff",
-    "composeApp/src/androidMain/kotlin/com/nuvio/app/features/player/PlayerEngine.android.kt": "c090dbda09d5c6d1681bc394e9bce6a6c159b42c",
+    "composeApp/src/androidMain/kotlin/com/nuvio/app/features/player/PlayerEngine.android.kt": "4c5d12b369f49ffb4c3a4ffbaeab85db225e5436",
     "composeApp/src/commonMain/kotlin/com/nuvio/app/features/downloads/DownloadSubtitles.kt": "f804ee50379f088a5da0be9e52200da492e25da8",
     "composeApp/src/commonMain/kotlin/com/nuvio/app/features/addons/AddonPlatform.kt": "c0e30fcebfc3a1b473fa852c42f5e2c029ad6b6b",
     "composeApp/src/androidMain/kotlin/com/nuvio/app/features/addons/AddonPlatform.android.kt": "29d28f438d37d7ae6ab0f6a3a057496be16c3bfb",
@@ -26,7 +26,7 @@
     "composeApp/src/androidFull/kotlin/com/nuvio/app/features/plugins/runtime/PluginRuntime.android.kt": "9bfd84dabb56dab61896bd1d73a0db0051154cde",
     "composeApp/src/iosFull/kotlin/com/nuvio/app/features/plugins/runtime/PluginRuntime.ios.kt": "2945271f78bbbe5ded14a72c5106554cee5666f5",
     "composeApp/src/fullCommonMain/kotlin/com/nuvio/app/features/plugins/PluginSettingsDialog.kt": "a945815edd14df792319818dc2cbe8de740defdd",
-    "composeApp/src/commonMain/kotlin/com/nuvio/app/features/player/PlayerScreenRuntimeTrackActions.kt": "f8e90c81a20cd0b82d3b7751d07c3cfe94bb619e",
+    "composeApp/src/commonMain/kotlin/com/nuvio/app/features/player/PlayerScreenRuntimeTrackActions.kt": "a675540ba0f77920b4b5e2d3f2298453294f6580",
     "composeApp/src/commonMain/kotlin/com/nuvio/app/features/player/PlayerSubtitleMatching.kt": "b98bf8396df5265c2599e806be3e03e5176e15d7",
     "composeApp/src/commonMain/kotlin/com/nuvio/app/features/player/PlayerStartupSubtitles.kt": "42986ee37ae874a9b3a9202c28e4a5bd1efe92e6"
   },

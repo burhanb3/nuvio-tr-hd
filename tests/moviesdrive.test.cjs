@@ -4,7 +4,7 @@ const {scanMoviesDrive,titleMatches,fileMatches,searchPages,releaseEntries,pixel
 const {probe}=require('../src/media/probe.cjs'),{createHttp}=require('../src/http.cjs');
 const {fixtureFetch,ebml,mp4}=require('./helpers.cjs');
 const target={tmdbId:123456,type:'movie',originalTitle:'Example Movie',searchTitles:['Example Movie'],year:2020,imdbId:'tt1234567',runtimeMinutes:120};
-const origin='https://new4.moviesdrive.beer',archive='https://mdrive.lol/archive/123/',hub='https://hubcloud.ist/drive/example1',terminal='https://gamerxyt.com/hubcloud.php?id=example',pixel='https://pixeldrain.dev/u/Example1',file='https://pixeldrain.dev/api/file/Example1';
+const origin='https://new5.moviesdrive.beer',archive='https://mdrive.lol/archive/123/',hub='https://hubcloud.ist/drive/example1',terminal='https://gamerxyt.com/hubcloud.php?id=example',pixel='https://pixeldrain.dev/u/Example1',file='https://pixeldrain.dev/api/file/Example1';
 const filename='[[ moviesdrives.com ]] Example.Movie.2020.2160p.English.mkv';
 function media(width=3840,height=1600,language='eng'){
  const size=n=>[n>>8,n&255],duration=Buffer.alloc(8);duration.writeDoubleBE(7200000);
@@ -34,6 +34,35 @@ test('MoviesDrive: resmi alternatif başlık arama/sayfa/dosyada kullanılabilir
  for(const value of Object.values(f))if(typeof value.body==='string')value.body=value.body.replaceAll('Example Movie (2020)',alias+' (2020)').replaceAll('Example.Movie.','Franchise.Example.Movie.');
  f[file+'/info'].json.name=filename.replace('Example.Movie.','Franchise.Example.Movie.');let loads=0;
  const http=createHttp({fetchImpl:fixtureFetch(f)});try{const rows=await scanMoviesDrive(http,target,{loadTitles:async()=>{loads++;return[alias];}});assert.equal(rows.length,1);assert.equal(loads,1);assert.equal(rows[0].identity.originalTitle,target.originalTitle);assert.deepEqual((await probe(http,rows[0])).dimensions,{width:3840,height:1600});}finally{http.close();}
+});
+
+test('MoviesDrive: yayıncının yönlendirmesi q/page düşürürse yeni kökende aynı arama yalnız bir kez yeniden yapılır',async()=>{
+ const f=fixture(),next='https://new6.moviesdrive.beer',suffix='/search.php?q=Example%20Movie&page=1',search=f[origin+suffix],page=f[origin+'/example-movie-2020/'];
+ f[origin+suffix]={status:302,headers:{location:next+'/search.php'}};
+ // Even a plausible latest-posts result must not replace the requested query.
+ f[next+'/search.php']={json:{hits:[]}};f[next+suffix]=search;f[next+'/example-movie-2020/']=page;
+ const calls=[],http=createHttp({fetchImpl:fixtureFetch(f,calls)});try{
+  const rows=await scanMoviesDrive(http,target);assert.equal(rows.length,1);
+  assert.equal(calls.filter(c=>c.url===next+suffix).length,1);
+  assert.ok(calls.some(c=>c.url===next+'/example-movie-2020/'));
+  assert.deepEqual((await probe(http,rows[0])).dimensions,{width:3840,height:1600});
+ }finally{http.close();}
+});
+
+test('MoviesDrive: aramayı koruyan ilan edilmiş geçiş yeniden istek açmaz; yabancı köken ve geçiş döngüsü kabul edilmez',async()=>{
+ const suffix='/search.php?q=Example%20Movie&page=1',next='https://new6.moviesdrive.beer';
+ const f=fixture(),search=f[origin+suffix],page=f[origin+'/example-movie-2020/'];
+ f[origin+suffix]={status:302,headers:{location:next+suffix}};f[next+suffix]=search;f[next+'/example-movie-2020/']=page;
+ const calls=[],http=createHttp({fetchImpl:fixtureFetch(f,calls)});try{assert.equal((await scanMoviesDrive(http,target)).length,1);assert.equal(calls.filter(c=>c.url===next+suffix).length,1);}finally{http.close();}
+ for(const destination of['https://other.test/search.php','https://new6.moviesdrive.beer.other.test/search.php',next+'/search.php']){
+  const bad=fixture();bad[origin+suffix]={status:302,headers:{location:destination}};bad[destination]=search;
+  if(destination===next+'/search.php'){bad[next+suffix]={status:302,headers:{location:'https://new7.moviesdrive.beer/search.php'}};bad['https://new7.moviesdrive.beer/search.php']=search;}
+  const attempts=[],h=createHttp({fetchImpl:fixtureFetch(bad,attempts)});try{
+   assert.deepEqual(await scanMoviesDrive(h,target),[]);
+   assert.ok(!attempts.some(c=>/\/archive\/|hubcloud|pixeldrain/.test(c.url)));
+   assert.ok(!attempts.some(c=>c.url==='https://new7.moviesdrive.beer'+suffix));
+  }finally{h.close();}
+ }
 });
 test('MoviesDrive: alternatif başlık tahmin edilmez; yanlış yıl/IMDb veya bozuk hits kabul edilmez',async()=>{
  for(const mode of['noAlias','year','imdb','badHits']){const f=fixture();f[origin+'/search.php?q=Example%20Movie&page=1'].json.hits[0].document.post_title='Franchise Example Movie (2020)';if(mode==='year')f[origin+'/search.php?q=Example%20Movie&page=1'].json.hits[0].document.post_title='Franchise Example Movie (2021)';if(mode==='imdb')f[origin+'/search.php?q=Example%20Movie&page=1'].json.hits[0].document.imdb_id='tt9999999';if(mode==='badHits')f[origin+'/search.php?q=Example%20Movie&page=1'].json.hits={bad:true};let loads=0;

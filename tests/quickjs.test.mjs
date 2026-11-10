@@ -18,6 +18,36 @@ function aliasFeatureSample(language='eng',width=3840,height=2160){
  const e=helpers.ebml,duration=Buffer.alloc(8),size=n=>[n>>8,n&255];duration.writeDoubleBE(7200000);
  return Buffer.concat([e('1a45dfa3',e('4282',Buffer.from('matroska'))),e('18538067',Buffer.concat([e('1549a966',e('4489',duration)),e('1654ae6b',Buffer.concat([e('ae',Buffer.concat([e('83',[1]),e('e0',Buffer.concat([e('b0',size(width)),e('ba',size(height))]))])),e('ae',Buffer.concat([e('83',[2]),e('22b59c',Buffer.from(language))]))]))])),Buffer.alloc(1000000)]);
 }
+
+function pageJsonLiteral(data){return JSON.stringify(data).replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/"/g,'\\u0022');}
+test('QuickJS: FilmEkseni metadata/oynatıcı bağı ile TR+EN sesli HLS ve eşlenmiş VTT; kalite uydurulmaz',async()=>{
+ const root='https://filmekseni.vip',player='https://eksenload.top',id='a'.repeat(20),url='https://media.test/hls/'+id+'/session/aistream-legacy-master.m3u8';
+ const template=Buffer.from('<iframe data-src="//eksenload.top/eplayer/{url}"></iframe>').toString('base64');
+ const fixture={
+  'https://api.themoviedb.org/3/movie/603?api_key=test&append_to_response=external_ids,release_dates':{json:{...helpers.tmdb,runtime:136}},
+  [root+'/api/search?q=The%20Matrix']:{json:{data:[{title:'Matrix',slug:'example',releaseYear:'1999',contentableType:'App\\Models\\Movie'}]}},
+  [root+'/example/']:{body:'<h1>Matrix</h1><p>The Matrix</p><a href="'+root+'/yil/1999/">1999</a><a href="https://www.imdb.com/title/tt0133093">IMDb</a><div x-data="videoPlayerData(JSON.parse(\''+pageJsonLiteral({dual:[{service_slug:'vip',link:id,template,quality:'2160p'}]})+'\'))"></div>'},
+  [player+'/eplayer/'+id]:{body:'<title>Matrix1999DUAL-tt0133093</title><script>jwplayer().setup(JSON.parse(\''+pageJsonLiteral({file:url,type:'hls',tracks:[{file:url.replace('aistream-legacy-master.m3u8','sub_tur.vtt'),label:'Türkçe'}]})+'\'));</script>'},
+  [url]:{body:'#EXTM3U\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="a",NAME="Türkçe",LANGUAGE="tur",URI="tr.m3u8"\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="a",NAME="English",LANGUAGE="eng",URI="en.m3u8"\n#EXT-X-STREAM-INF:BANDWIDTH=4000000,RESOLUTION=1920x1080,AUDIO="a"\n1080.m3u8\n',mime:'application/vnd.apple.mpegurl'},
+  [url.replace('aistream-legacy-master.m3u8','sub_tur.vtt')]:{body:helpers.vtt,mime:'text/vtt'}
+ };
+ const rows=await runInQuickJs(fixture,{code:fastOnlineBundle,settings:{autoSubtitles:false,useDownloadBridge:false,hdfilmdelisiEnabled:false,dizibalEnabled:false,purstreamEnabled:false},nativeTimers:true});
+ assert.equal(rows.length,1);assert.equal(rows[0].type,'hls');assert.match(rows[0].quality,/1080p/);assert.match(rows[0].language,/Ses: TR\/EN/);assert.equal(rows[0].subtitles[0].language,'tr');
+});
+
+test('QuickJS: Anizone güvenli Unicode veri zarfını ve tam bölüm kimliğini çözer; HLS indirme sayılmaz',async()=>{
+ const root='https://anizone.to',slug='example1',url='https://fixture.vid-cdn.xyz/11111111-1111-4111-8111-111111111111/master.m3u8';
+ const row={slug,url:root+'/anime/'+slug,main_title:'Example Anime',title_list:{en:'Example Anime'},type:'TV Series',is_unsafe:false,start_year:2020,episode_count:12},snapshot=JSON.stringify({data:{anime_slug:slug,episode_slug:'2'}}).replace(/"/g,'&quot;');
+ const fixture={
+  'https://api.themoviedb.org/3/tv/123456?api_key=test&append_to_response=external_ids':{json:{id:123456,name:'Example Anime',original_name:'Example Anime',first_air_date:'2020-01-01',original_language:'ja',genres:[{id:16}],episode_run_time:[24]}},
+  [root+'/anime?search=Example%20Anime']:{body:"items:JSON.parse('"+pageJsonLiteral([row])+"')"},
+  [root+'/anime/'+slug+'/2']:{body:'<div wire:snapshot="'+snapshot+'" x-data="{anmTitles:JSON.parse(\''+pageJsonLiteral(row.title_list)+'\')}"></div><div x-data="vidstackPlayer(JSON.parse(\''+pageJsonLiteral({src:url})+'\'))"></div>'},
+  [url]:{body:'#EXTM3U\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="a",NAME="Japanese",LANGUAGE="ja",URI="ja.m3u8"\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="a",NAME="English",LANGUAGE="en",URI="en.m3u8"\n#EXT-X-STREAM-INF:BANDWIDTH=2300000,RESOLUTION=1280x720,AUDIO="a"\n720.m3u8\n',mime:'application/vnd.apple.mpegurl'}
+ };
+ const settings={autoSubtitles:false,useDownloadBridge:false,animecixEnabled:false,sonanimeEnabled:false},args=['123456','tv',1,2];
+ const rows=await runInQuickJs(fixture,{code:animeBundle,args,settings,nativeTimers:true});assert.equal(rows.length,1);assert.equal(rows[0].type,'hls');assert.match(rows[0].language,/Ses: EN\/JA/);
+ fixture[root+'/anime/'+slug+'/2'].body=fixture[root+'/anime/'+slug+'/2'].body.replace('&quot;episode_slug&quot;:&quot;2&quot;','&quot;episode_slug&quot;:&quot;3&quot;');assert.deepEqual(await runInQuickJs(fixture,{code:animeBundle,args,settings,nativeTimers:true}),[]);
+});
 test('QuickJS: resmi TR dosya adı tembel çeviriyle bulunur; başka TMDB çevirisi kabul edilmez',async()=>{
  const{archiveQuery}=require('../src/providers/archive.cjs'),wanted={...helpers.target,runtimeMinutes:120},name='Örnek Film (1999).mkv',url='https://archive.org/download/local-example/'+encodeURIComponent(name),translations='https://api.themoviedb.org/3/movie/603/translations?api_key=test';
  const fixture=makeFixture({extra:{
@@ -30,7 +60,7 @@ test('QuickJS: resmi TR dosya adı tembel çeviriyle bulunur; başka TMDB çevir
  fixture[translations].json.id=999999;assert.deepEqual(await runInQuickJs(fixture,{settings,nativeTimers:true}),[]);
 });
 test('QuickJS: resmi alternatif başlık ayrı film4K yolunu açar; orijinal TMDB kimliği korunur',async()=>{
- const origin='https://new4.moviesdrive.beer',archive='https://mdrive.lol/archive/123/',hub='https://hubcloud.ist/drive/Example1',terminal='https://gamerxyt.com/hubcloud.php?id=example',file='https://pixeldrain.dev/api/file/Example1',name='Franchise.The.Matrix.1999.2160p.mkv',body=aliasFeatureSample();
+ const origin='https://new5.moviesdrive.beer',archive='https://mdrive.lol/archive/123/',hub='https://hubcloud.ist/drive/Example1',terminal='https://gamerxyt.com/hubcloud.php?id=example',file='https://pixeldrain.dev/api/file/Example1',name='Franchise.The.Matrix.1999.2160p.mkv',body=aliasFeatureSample();
  const aliases='https://api.themoviedb.org/3/movie/603/alternative_titles?api_key=test';
  const fixture=makeFixture({extra:{
  ['https://api.themoviedb.org/3/movie/603?api_key=test&append_to_response=external_ids,release_dates']:{json:{...helpers.tmdb,runtime:120}},
@@ -45,7 +75,7 @@ test('QuickJS: resmi alternatif başlık ayrı film4K yolunu açar; orijinal TMD
 });
 
 test('QuickJS: MoviesDrive ilk/sonraki sezonun bölümünü ve kendi süresini bulur, IMDb çelişkisini reddeder',async()=>{
- const origin='https://new4.moviesdrive.beer',archive='https://mdrive.lol/archive/123/',hub='https://hubcloud.ist/drive/Example2',terminal='https://gamerxyt.com/hubcloud.php?id=example',file='https://pixeldrain.dev/api/file/Example2',name='Example.Series.S01E02.1080p.mkv';
+ const origin='https://new5.moviesdrive.beer',archive='https://mdrive.lol/archive/123/',hub='https://hubcloud.ist/drive/Example2',terminal='https://gamerxyt.com/hubcloud.php?id=example',file='https://pixeldrain.dev/api/file/Example2',name='Example.Series.S01E02.1080p.mkv';
  const e=helpers.ebml,duration=Buffer.alloc(8);duration.writeDoubleBE(1800000);const body=Buffer.concat([e('1a45dfa3',e('4282',Buffer.from('matroska'))),e('18538067',Buffer.concat([e('1549a966',e('4489',duration)),e('1654ae6b',Buffer.concat([e('ae',Buffer.concat([e('83',[1]),e('e0',Buffer.concat([e('b0',[7,128]),e('ba',[4,56])]))])),e('ae',Buffer.concat([e('83',[2]),e('22b59c',Buffer.from('eng'))]))]))])),Buffer.alloc(1000000)]);
  const fixture={
  'https://api.themoviedb.org/3/tv/123456?api_key=test&append_to_response=external_ids':{json:{id:123456,original_name:'Example Series',name:'Example Series',first_air_date:'2020-01-01',external_ids:{imdb_id:'tt1234567'},episode_run_time:[30]}},
@@ -131,7 +161,7 @@ test('QuickJS: iki adlı Archive kaydı özgün dosya/yıl/süreyle gerçek 4K v
 });
 
 test('QuickJS: uzantısız gerçek MKV/4K ve EN ses MPV yolunda korunur; kullanıcı kapatabilir',async()=>{
- const origin='https://new4.moviesdrive.beer',archive='https://mdrive.lol/archive/123/',hub='https://hubcloud.ist/drive/fixture1',terminal='https://gamerxyt.com/hubcloud.php?id=fixture',pixel='https://pixeldrain.dev/u/Fixture1',file='https://pixeldrain.dev/api/file/Fixture1';
+ const origin='https://new5.moviesdrive.beer',archive='https://mdrive.lol/archive/123/',hub='https://hubcloud.ist/drive/fixture1',terminal='https://gamerxyt.com/hubcloud.php?id=fixture',pixel='https://pixeldrain.dev/u/Fixture1',file='https://pixeldrain.dev/api/file/Fixture1';
  const name='[[ moviesdrives.com ]] The.Matrix.1999.2160p.English.mkv',duration=Buffer.alloc(8);duration.writeDoubleBE(7200000);
  const audio=helpers.ebml('ae',Buffer.concat([helpers.ebml('83',[2]),helpers.ebml('22b59c',Buffer.from('eng'))]));
  const video=helpers.ebml('ae',Buffer.concat([helpers.ebml('83',[1]),helpers.ebml('e0',Buffer.concat([helpers.ebml('b0',[15,0]),helpers.ebml('ba',[6,64])]))]));

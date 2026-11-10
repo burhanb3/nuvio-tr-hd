@@ -8,7 +8,7 @@ Nuvio için film, dizi ve anime kaynak sağlayıcısı. Farklı sağlayıcılard
 
 ## Kurulum
 
-Nuvio **Full** sürümünde **Pluginler → Depo ekle** bölümüne şu adresi yapıştırın:
+Nuvio Mobile **Full** veya Nuvio Desktop sürümünde **Pluginler → Depo ekle** bölümüne şu adresi yapıştırın:
 
 ```text
 https://burhanb3.github.io/nuvio-tr-hd/manifest.json
@@ -39,9 +39,9 @@ Piksel ve gerçek dosya boyutu varsa öncelikle bunlar kullanılır. Eksik bilgi
 
 | Alan | Sağlayıcılar |
 | --- | --- |
-| Film ve dizi dosyaları | Internet Archive, 4KHDHub/HubCloud, HDRezka, Goojara, Waploaded; filmlerde MoviesDrive/Pixeldrain ve RareFilmm |
-| Online film ve dizi | PlayIMDb, VixSrc, DiziYou, DiziBak, FilmModu, HDFilmDelisi, DiziBal, Purstream |
-| Anime dosyaları | Animecix, SonAnime, AniMOM, SeiCode/MP4Upload |
+| Film ve dizi dosyaları | Internet Archive, 4KHDHub/HubCloud, HDRezka, Goojara, Waploaded; MoviesDrive/Pixeldrain; filmlerde RareFilmm |
+| Online film ve dizi | PlayIMDb, VixSrc, DiziYou, DiziBak, FilmModu, HDFilmDelisi, DiziBal, Purstream, FilmEkseni |
+| Anime | Animecix, SonAnime, AniMOM, SeiCode/MP4Upload; online Anizone |
 | Harici altyazı | AltyazıDB, OpenSubtitles ve kaynakla eşlenmiş TR/EN dosyaları |
 
 Kapsam sağlayıcıya ve bölüme göre değişir. Her yapımın indirilebilir sürümü veya her çözünürlüğü bulunamayabilir. 4K yalnız kaynakta mevcutsa sunulur. Kaynak listesi bir erişilebilirlik garantisi değildir; bozuk bağlantılar elenir.

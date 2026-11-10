@@ -1,0 +1,130 @@
+{
+  "version": "1.8.9",
+  "cases": [
+    {
+      "key": "matrix",
+      "lane": "fastOnline",
+      "elapsedMs": 3761,
+      "totalStreams": 2,
+      "newSourcePairs": [
+        {
+          "source": "FilmEkseni",
+          "downloadable": false,
+          "container": "hls",
+          "resolutions": [
+            {
+              "width": 854,
+              "height": 480
+            },
+            {
+              "width": 1920,
+              "height": 1080
+            }
+          ],
+          "audio": [
+            "tur",
+            "eng"
+          ],
+          "subtitleCounts": {
+            "tr": 2,
+            "en": 1
+          }
+        }
+      ]
+    },
+    {
+      "key": "inception",
+      "lane": "fastOnline",
+      "elapsedMs": 2713,
+      "totalStreams": 3,
+      "newSourcePairs": [
+        {
+          "source": "FilmEkseni",
+          "downloadable": false,
+          "container": "hls",
+          "resolutions": [
+            {
+              "width": 854,
+              "height": 480
+            },
+            {
+              "width": 1920,
+              "height": 1080
+            }
+          ],
+          "audio": [
+            "tur",
+            "eng"
+          ],
+          "subtitleCounts": {
+            "tr": 2,
+            "en": 1
+          }
+        }
+      ]
+    },
+    {
+      "key": "dark-knight",
+      "lane": "fastOnline",
+      "elapsedMs": 8007,
+      "totalStreams": 2,
+      "newSourcePairs": [
+        {
+          "source": "FilmEkseni",
+          "downloadable": false,
+          "container": "hls",
+          "resolutions": [
+            {
+              "width": 854,
+              "height": 480
+            },
+            {
+              "width": 1920,
+              "height": 1080
+            }
+          ],
+          "audio": [
+            "tur",
+            "eng"
+          ],
+          "subtitleCounts": {
+            "tr": 1,
+            "en": 1
+          }
+        }
+      ]
+    },
+    {
+      "key": "death-note-s1e1",
+      "lane": "anime",
+      "elapsedMs": 18585,
+      "totalStreams": 5,
+      "newSourcePairs": [
+        {
+          "source": "Anizone",
+          "downloadable": false,
+          "container": "hls",
+          "resolutions": [
+            {
+              "width": 640,
+              "height": 360
+            },
+            {
+              "width": 1280,
+              "height": 720
+            }
+          ],
+          "audio": [
+            "ja",
+            "en"
+          ],
+          "subtitleCounts": {
+            "tr": 4,
+            "en": 1
+          }
+        }
+      ]
+    }
+  ],
+  "limits": "Node source checks; HLS online only, external subtitles not synchronization tested."
+}

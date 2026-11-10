@@ -1,0 +1,1485 @@
+{
+  "version": "1.8.9",
+  "checkedAt": "2026-10-28T15:38:18.978Z",
+  "metadata": "Fixed canonical references; actual HTTP/range checks in desktop Node; no phone TMDB key tested.",
+  "limits": "No full playback, download, offline or subtitle synchronization test; timing does not establish iPhone performance.",
+  "firstPass": [
+    {
+      "key": "hotel-rwanda",
+      "tmdbId": 205,
+      "title": "Hotel Rwanda",
+      "type": "movie",
+      "elapsedMs": 11844,
+      "onlineWithTr": true,
+      "downloadUrls": 7,
+      "estimatedDistinctFiles": 7,
+      "downloadQualities": [
+        "1280x544",
+        "852x362",
+        "428x182",
+        "1920x816",
+        "853x480",
+        "1129x480",
+        "640x272"
+      ],
+      "smallWithTr": true,
+      "gaps": [],
+      "files": [
+        {
+          "source": "HDRezka",
+          "container": "mp4",
+          "bytes": 2404062137,
+          "audioLanguages": [],
+          "dimensions": {
+            "width": 1280,
+            "height": 544
+          },
+          "quality": "1280x544",
+          "qualityGrade": "720p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [],
+          "externalTrackCount": 5,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 7311.263,
+          "hashAvailable": true
+        },
+        {
+          "source": "HDRezka",
+          "container": "mp4",
+          "bytes": 977803820,
+          "audioLanguages": [],
+          "dimensions": {
+            "width": 852,
+            "height": 362
+          },
+          "quality": "852x362",
+          "qualityGrade": "480p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [],
+          "externalTrackCount": 5,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 7311.263,
+          "hashAvailable": true
+        },
+        {
+          "source": "HDRezka",
+          "container": "mp4",
+          "bytes": 314468607,
+          "audioLanguages": [],
+          "dimensions": {
+            "width": 428,
+            "height": 182
+          },
+          "quality": "428x182",
+          "qualityGrade": "240p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [],
+          "externalTrackCount": 5,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 7311.263,
+          "hashAvailable": true
+        },
+        {
+          "source": "Internet Archive",
+          "container": "mkv",
+          "bytes": 2121243298,
+          "audioLanguages": [
+            "tr",
+            "en"
+          ],
+          "dimensions": {
+            "width": 1920,
+            "height": 816
+          },
+          "quality": "1920x816",
+          "qualityGrade": "1080p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [
+            "tr"
+          ],
+          "externalTrackCount": 8,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 7311.21,
+          "hashAvailable": true
+        },
+        {
+          "source": "Goojara",
+          "container": "mp4",
+          "bytes": 763181181,
+          "audioLanguages": [],
+          "dimensions": {
+            "width": 853,
+            "height": 480
+          },
+          "quality": "853x480",
+          "qualityGrade": "480p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [],
+          "externalTrackCount": 8,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 7311.19,
+          "hashAvailable": true
+        },
+        {
+          "source": "Internet Archive",
+          "container": "mp4",
+          "bytes": 717374464,
+          "audioLanguages": [],
+          "dimensions": {
+            "width": 1129,
+            "height": 480
+          },
+          "quality": "1129x480",
+          "qualityGrade": "480p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [],
+          "externalTrackCount": 8,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 7311.21,
+          "hashAvailable": true
+        },
+        {
+          "source": "HDRezka",
+          "container": "mp4",
+          "bytes": 536797796,
+          "audioLanguages": [],
+          "dimensions": {
+            "width": 640,
+            "height": 272
+          },
+          "quality": "640x272",
+          "qualityGrade": "360p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [],
+          "externalTrackCount": 5,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 7311.263,
+          "hashAvailable": true
+        }
+      ]
+    },
+    {
+      "key": "no-way-home",
+      "tmdbId": 634649,
+      "title": "Spider-Man: No Way Home",
+      "type": "movie",
+      "elapsedMs": 10134,
+      "onlineWithTr": true,
+      "downloadUrls": 6,
+      "estimatedDistinctFiles": 6,
+      "downloadQualities": [
+        "427x178",
+        "1282x534",
+        "854x356",
+        "1280x674",
+        "720x304",
+        "638x266"
+      ],
+      "smallWithTr": true,
+      "gaps": [],
+      "files": [
+        {
+          "source": "HDRezka",
+          "container": "mp4",
+          "bytes": 389561221,
+          "audioLanguages": [],
+          "dimensions": {
+            "width": 427,
+            "height": 178
+          },
+          "quality": "427x178",
+          "qualityGrade": "240p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [],
+          "externalTrackCount": 5,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 8889.903,
+          "hashAvailable": true
+        },
+        {
+          "source": "HDRezka",
+          "container": "mp4",
+          "bytes": 2920628815,
+          "audioLanguages": [],
+          "dimensions": {
+            "width": 1282,
+            "height": 534
+          },
+          "quality": "1282x534",
+          "qualityGrade": "720p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [],
+          "externalTrackCount": 5,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 8889.903,
+          "hashAvailable": true
+        },
+        {
+          "source": "HDRezka",
+          "container": "mp4",
+          "bytes": 1216525089,
+          "audioLanguages": [],
+          "dimensions": {
+            "width": 854,
+            "height": 356
+          },
+          "quality": "854x356",
+          "qualityGrade": "480p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [],
+          "externalTrackCount": 5,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 8889.903,
+          "hashAvailable": true
+        },
+        {
+          "source": "MoviesDrive / Pixeldrain",
+          "container": "mkv",
+          "bytes": 904073631,
+          "audioLanguages": [
+            "hi",
+            "en"
+          ],
+          "dimensions": {
+            "width": 1280,
+            "height": 674
+          },
+          "quality": "1280x674",
+          "qualityGrade": "720p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [
+            "en"
+          ],
+          "externalTrackCount": 6,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 8890.895,
+          "hashAvailable": true
+        },
+        {
+          "source": "Internet Archive",
+          "container": "mp4",
+          "bytes": 881009469,
+          "audioLanguages": [],
+          "dimensions": {
+            "width": 720,
+            "height": 304
+          },
+          "quality": "720x304",
+          "qualityGrade": "304p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [],
+          "externalTrackCount": 6,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 8889.931,
+          "hashAvailable": true
+        },
+        {
+          "source": "HDRezka",
+          "container": "mp4",
+          "bytes": 665878894,
+          "audioLanguages": [],
+          "dimensions": {
+            "width": 638,
+            "height": 266
+          },
+          "quality": "638x266",
+          "qualityGrade": "360p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [],
+          "externalTrackCount": 5,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 8889.903,
+          "hashAvailable": true
+        }
+      ]
+    },
+    {
+      "key": "spider-verse",
+      "tmdbId": 324857,
+      "title": "Spider-Man: Into the Spider-Verse",
+      "type": "movie",
+      "elapsedMs": 7895,
+      "onlineWithTr": true,
+      "downloadUrls": 5,
+      "estimatedDistinctFiles": 5,
+      "downloadQualities": [
+        "1920x800",
+        "1920x784",
+        "850x356",
+        "720x302",
+        "1280x536"
+      ],
+      "smallWithTr": true,
+      "gaps": [],
+      "files": [
+        {
+          "source": "Internet Archive",
+          "container": "mp4",
+          "bytes": 2016133619,
+          "audioLanguages": [],
+          "dimensions": {
+            "width": 1920,
+            "height": 800
+          },
+          "quality": "1920x800",
+          "qualityGrade": "1080p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [],
+          "externalTrackCount": 8,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 7010.059,
+          "hashAvailable": true
+        },
+        {
+          "source": "Internet Archive",
+          "container": "mp4",
+          "bytes": 2007245013,
+          "audioLanguages": [],
+          "dimensions": {
+            "width": 1920,
+            "height": 784
+          },
+          "quality": "1920x784",
+          "qualityGrade": "1080p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [],
+          "externalTrackCount": 8,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 7008.299,
+          "hashAvailable": true
+        },
+        {
+          "source": "Goojara",
+          "container": "mp4",
+          "bytes": 1178669652,
+          "audioLanguages": [],
+          "dimensions": {
+            "width": 850,
+            "height": 356
+          },
+          "quality": "850x356",
+          "qualityGrade": "480p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [],
+          "externalTrackCount": 8,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 7010.037,
+          "hashAvailable": true
+        },
+        {
+          "source": "MoviesDrive / Pixeldrain",
+          "container": "mkv",
+          "bytes": 401835837,
+          "audioLanguages": [
+            "hi",
+            "en"
+          ],
+          "dimensions": {
+            "width": 720,
+            "height": 302
+          },
+          "quality": "720x302",
+          "qualityGrade": "302p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [
+            "en"
+          ],
+          "externalTrackCount": 8,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 7010.639,
+          "hashAvailable": true
+        },
+        {
+          "source": "Internet Archive",
+          "container": "mp4",
+          "bytes": 1493804490,
+          "audioLanguages": [],
+          "dimensions": {
+            "width": 1280,
+            "height": 536
+          },
+          "quality": "1280x536",
+          "qualityGrade": "720p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [],
+          "externalTrackCount": 8,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 7010.04,
+          "hashAvailable": true
+        }
+      ]
+    },
+    {
+      "key": "dune",
+      "tmdbId": 438631,
+      "title": "Dune",
+      "type": "movie",
+      "elapsedMs": 12830,
+      "onlineWithTr": true,
+      "downloadUrls": 7,
+      "estimatedDistinctFiles": 7,
+      "downloadQualities": [
+        "1282x536",
+        "426x178",
+        "856x358",
+        "856x360",
+        "1280x536",
+        "1920x804",
+        "641x268"
+      ],
+      "smallWithTr": true,
+      "gaps": [],
+      "files": [
+        {
+          "source": "HDRezka",
+          "container": "mp4",
+          "bytes": 3066517972,
+          "audioLanguages": [],
+          "dimensions": {
+            "width": 1282,
+            "height": 536
+          },
+          "quality": "1282x536",
+          "qualityGrade": "720p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [],
+          "externalTrackCount": 5,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 9326.631,
+          "hashAvailable": true
+        },
+        {
+          "source": "HDRezka",
+          "container": "mp4",
+          "bytes": 408697275,
+          "audioLanguages": [],
+          "dimensions": {
+            "width": 426,
+            "height": 178
+          },
+          "quality": "426x178",
+          "qualityGrade": "240p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [],
+          "externalTrackCount": 5,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 9326.631,
+          "hashAvailable": true
+        },
+        {
+          "source": "HDRezka",
+          "container": "mp4",
+          "bytes": 1276563965,
+          "audioLanguages": [],
+          "dimensions": {
+            "width": 856,
+            "height": 358
+          },
+          "quality": "856x358",
+          "qualityGrade": "480p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [],
+          "externalTrackCount": 5,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 9326.631,
+          "hashAvailable": true
+        },
+        {
+          "source": "MoviesDrive / Pixeldrain",
+          "container": "mkv",
+          "bytes": 566912339,
+          "audioLanguages": [
+            "hi",
+            "en"
+          ],
+          "dimensions": {
+            "width": 856,
+            "height": 360
+          },
+          "quality": "856x360",
+          "qualityGrade": "480p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [
+            "en"
+          ],
+          "externalTrackCount": 8,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 9325.172,
+          "hashAvailable": true
+        },
+        {
+          "source": "MoviesDrive / Pixeldrain",
+          "container": "mkv",
+          "bytes": 948305346,
+          "audioLanguages": [
+            "hi",
+            "en"
+          ],
+          "dimensions": {
+            "width": 1280,
+            "height": 536
+          },
+          "quality": "1280x536",
+          "qualityGrade": "720p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [
+            "en"
+          ],
+          "externalTrackCount": 8,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 9325.135,
+          "hashAvailable": true
+        },
+        {
+          "source": "MoviesDrive / Pixeldrain",
+          "container": "mkv",
+          "bytes": 2071642223,
+          "audioLanguages": [
+            "hi",
+            "en"
+          ],
+          "dimensions": {
+            "width": 1920,
+            "height": 804
+          },
+          "quality": "1920x804",
+          "qualityGrade": "1080p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [
+            "en"
+          ],
+          "externalTrackCount": 8,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 9325.001,
+          "hashAvailable": true
+        },
+        {
+          "source": "HDRezka",
+          "container": "mp4",
+          "bytes": 698171132,
+          "audioLanguages": [],
+          "dimensions": {
+            "width": 641,
+            "height": 268
+          },
+          "quality": "641x268",
+          "qualityGrade": "360p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [],
+          "externalTrackCount": 5,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 9326.631,
+          "hashAvailable": true
+        }
+      ]
+    },
+    {
+      "key": "matrix",
+      "tmdbId": 603,
+      "title": "The Matrix",
+      "type": "movie",
+      "elapsedMs": 24011,
+      "onlineWithTr": true,
+      "downloadUrls": 5,
+      "estimatedDistinctFiles": 5,
+      "downloadQualities": [
+        "1280x720",
+        "427x240",
+        "853x480",
+        "850x360",
+        "640x360"
+      ],
+      "smallWithTr": true,
+      "gaps": [],
+      "files": [
+        {
+          "source": "HDRezka",
+          "container": "mp4",
+          "bytes": 2696070370,
+          "audioLanguages": [],
+          "dimensions": {
+            "width": 1280,
+            "height": 720
+          },
+          "quality": "1280x720",
+          "qualityGrade": "720p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [],
+          "externalTrackCount": 5,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 8201.652,
+          "hashAvailable": true
+        },
+        {
+          "source": "HDRezka",
+          "container": "mp4",
+          "bytes": 359158239,
+          "audioLanguages": [],
+          "dimensions": {
+            "width": 427,
+            "height": 240
+          },
+          "quality": "427x240",
+          "qualityGrade": "240p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [],
+          "externalTrackCount": 5,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 8201.652,
+          "hashAvailable": true
+        },
+        {
+          "source": "HDRezka",
+          "container": "mp4",
+          "bytes": 1122507349,
+          "audioLanguages": [],
+          "dimensions": {
+            "width": 853,
+            "height": 480
+          },
+          "quality": "853x480",
+          "qualityGrade": "480p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [],
+          "externalTrackCount": 5,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 8201.652,
+          "hashAvailable": true
+        },
+        {
+          "source": "Goojara",
+          "container": "mp4",
+          "bytes": 784642932,
+          "audioLanguages": [],
+          "dimensions": {
+            "width": 850,
+            "height": 360
+          },
+          "quality": "850x360",
+          "qualityGrade": "480p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [],
+          "externalTrackCount": 6,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 8177.846,
+          "hashAvailable": true
+        },
+        {
+          "source": "HDRezka",
+          "container": "mp4",
+          "bytes": 613854831,
+          "audioLanguages": [],
+          "dimensions": {
+            "width": 640,
+            "height": 360
+          },
+          "quality": "640x360",
+          "qualityGrade": "360p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [],
+          "externalTrackCount": 5,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 8201.652,
+          "hashAvailable": true
+        }
+      ]
+    },
+    {
+      "key": "inception",
+      "tmdbId": 27205,
+      "title": "Inception",
+      "type": "movie",
+      "elapsedMs": 10837,
+      "onlineWithTr": true,
+      "downloadUrls": 8,
+      "estimatedDistinctFiles": 8,
+      "downloadQualities": [
+        "1280x536",
+        "1282x534",
+        "427x178",
+        "854x356",
+        "3840x1598",
+        "1920x800",
+        "638x266"
+      ],
+      "smallWithTr": true,
+      "gaps": [],
+      "files": [
+        {
+          "source": "Internet Archive",
+          "container": "mp4",
+          "bytes": 869895874,
+          "audioLanguages": [],
+          "dimensions": {
+            "width": 1280,
+            "height": 536
+          },
+          "quality": "1280x536",
+          "qualityGrade": "720p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [],
+          "externalTrackCount": 8,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 8888.088,
+          "hashAvailable": true
+        },
+        {
+          "source": "Internet Archive",
+          "container": "mp4",
+          "bytes": 902428472,
+          "audioLanguages": [],
+          "dimensions": {
+            "width": 1280,
+            "height": 536
+          },
+          "quality": "1280x536",
+          "qualityGrade": "720p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [],
+          "externalTrackCount": 8,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 8888.086666666666,
+          "hashAvailable": true
+        },
+        {
+          "source": "HDRezka",
+          "container": "mp4",
+          "bytes": 2918591890,
+          "audioLanguages": [],
+          "dimensions": {
+            "width": 1282,
+            "height": 534
+          },
+          "quality": "1282x534",
+          "qualityGrade": "720p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [],
+          "externalTrackCount": 5,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 8888.319,
+          "hashAvailable": true
+        },
+        {
+          "source": "HDRezka",
+          "container": "mp4",
+          "bytes": 387674406,
+          "audioLanguages": [],
+          "dimensions": {
+            "width": 427,
+            "height": 178
+          },
+          "quality": "427x178",
+          "qualityGrade": "240p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [],
+          "externalTrackCount": 5,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 8888.319,
+          "hashAvailable": true
+        },
+        {
+          "source": "HDRezka",
+          "container": "mp4",
+          "bytes": 1210001304,
+          "audioLanguages": [],
+          "dimensions": {
+            "width": 854,
+            "height": 356
+          },
+          "quality": "854x356",
+          "qualityGrade": "480p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [],
+          "externalTrackCount": 5,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 8888.319,
+          "hashAvailable": true
+        },
+        {
+          "source": "MoviesDrive / Pixeldrain",
+          "container": "mkv",
+          "bytes": 7591975942,
+          "audioLanguages": [
+            "hi",
+            "en"
+          ],
+          "dimensions": {
+            "width": 3840,
+            "height": 1598
+          },
+          "quality": "3840x1598",
+          "qualityGrade": "2160p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [
+            "en"
+          ],
+          "externalTrackCount": 8,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 8888.341,
+          "hashAvailable": true
+        },
+        {
+          "source": "MoviesDrive / Pixeldrain",
+          "container": "mkv",
+          "bytes": 2495758260,
+          "audioLanguages": [
+            "hi",
+            "en"
+          ],
+          "dimensions": {
+            "width": 1920,
+            "height": 800
+          },
+          "quality": "1920x800",
+          "qualityGrade": "1080p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [
+            "en"
+          ],
+          "externalTrackCount": 8,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 8888.107,
+          "hashAvailable": true
+        },
+        {
+          "source": "HDRezka",
+          "container": "mp4",
+          "bytes": 661316643,
+          "audioLanguages": [],
+          "dimensions": {
+            "width": 638,
+            "height": 266
+          },
+          "quality": "638x266",
+          "qualityGrade": "360p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [],
+          "externalTrackCount": 5,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 8888.319,
+          "hashAvailable": true
+        }
+      ]
+    },
+    {
+      "key": "obsession",
+      "tmdbId": 1339713,
+      "title": "Obsession",
+      "type": "movie",
+      "elapsedMs": 22373,
+      "onlineWithTr": true,
+      "downloadUrls": 8,
+      "estimatedDistinctFiles": 8,
+      "downloadQualities": [
+        "1920x920",
+        "1002x480",
+        "1620x1080",
+        "1280x856",
+        "1150x720",
+        "1280x720",
+        "1280x854"
+      ],
+      "smallWithTr": true,
+      "gaps": [],
+      "files": [
+        {
+          "source": "Internet Archive",
+          "container": "mkv",
+          "bytes": 2011972441,
+          "audioLanguages": [],
+          "dimensions": {
+            "width": 1920,
+            "height": 920
+          },
+          "quality": "1920x920",
+          "qualityGrade": "1080p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [],
+          "externalTrackCount": 5,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 6329.6,
+          "hashAvailable": true
+        },
+        {
+          "source": "Internet Archive",
+          "container": "mp4",
+          "bytes": 611829303,
+          "audioLanguages": [],
+          "dimensions": {
+            "width": 1002,
+            "height": 480
+          },
+          "quality": "1002x480",
+          "qualityGrade": "480p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [],
+          "externalTrackCount": 5,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 6329.599,
+          "hashAvailable": true
+        },
+        {
+          "source": "Internet Archive",
+          "container": "mp4",
+          "bytes": 587309888,
+          "audioLanguages": [],
+          "dimensions": {
+            "width": 1620,
+            "height": 1080
+          },
+          "quality": "1620x1080",
+          "qualityGrade": "1080p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [],
+          "externalTrackCount": 5,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 6533.237,
+          "hashAvailable": true
+        },
+        {
+          "source": "Internet Archive",
+          "container": "mp4",
+          "bytes": 587309888,
+          "audioLanguages": [],
+          "dimensions": {
+            "width": 1620,
+            "height": 1080
+          },
+          "quality": "1620x1080",
+          "qualityGrade": "1080p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [],
+          "externalTrackCount": 5,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 6533.237,
+          "hashAvailable": true
+        },
+        {
+          "source": "Internet Archive",
+          "container": "mp4",
+          "bytes": 726913506,
+          "audioLanguages": [],
+          "dimensions": {
+            "width": 1280,
+            "height": 856
+          },
+          "quality": "1280x856",
+          "qualityGrade": "856p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [],
+          "externalTrackCount": 8,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 6589.846,
+          "hashAvailable": true
+        },
+        {
+          "source": "Internet Archive",
+          "container": "mp4",
+          "bytes": 348663622,
+          "audioLanguages": [],
+          "dimensions": {
+            "width": 1150,
+            "height": 720
+          },
+          "quality": "1150x720",
+          "qualityGrade": "720p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [],
+          "externalTrackCount": 8,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 6533.269333333334,
+          "hashAvailable": false
+        },
+        {
+          "source": "Internet Archive",
+          "container": "mkv",
+          "bytes": 199803298,
+          "audioLanguages": [
+            "eng"
+          ],
+          "dimensions": {
+            "width": 1280,
+            "height": 720
+          },
+          "quality": "1280x720",
+          "qualityGrade": "720p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [],
+          "externalTrackCount": 8,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 6533.237,
+          "hashAvailable": false
+        },
+        {
+          "source": "Internet Archive",
+          "container": "mp4",
+          "bytes": 643206348,
+          "audioLanguages": [],
+          "dimensions": {
+            "width": 1280,
+            "height": 854
+          },
+          "quality": "1280x854",
+          "qualityGrade": "854p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [],
+          "externalTrackCount": 8,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 6533.2,
+          "hashAvailable": true
+        }
+      ]
+    },
+    {
+      "key": "fleabag-s1e1",
+      "tmdbId": 67070,
+      "title": "Fleabag",
+      "type": "tv",
+      "season": 1,
+      "episode": 1,
+      "elapsedMs": 13536,
+      "onlineWithTr": false,
+      "downloadUrls": 0,
+      "estimatedDistinctFiles": 0,
+      "downloadQualities": [],
+      "smallWithTr": false,
+      "gaps": [
+        "online_with_tr_missing",
+        "download_missing",
+        "small_download_with_tr_missing",
+        "multiple_verified_download_qualities_missing"
+      ],
+      "files": []
+    },
+    {
+      "key": "shameless-s1e1",
+      "tmdbId": 34307,
+      "title": "Shameless",
+      "type": "tv",
+      "season": 1,
+      "episode": 1,
+      "elapsedMs": 13536,
+      "onlineWithTr": false,
+      "downloadUrls": 0,
+      "estimatedDistinctFiles": 0,
+      "downloadQualities": [],
+      "smallWithTr": false,
+      "gaps": [
+        "online_with_tr_missing",
+        "download_missing",
+        "small_download_with_tr_missing",
+        "multiple_verified_download_qualities_missing"
+      ],
+      "files": []
+    },
+    {
+      "key": "death-note-s1e1",
+      "tmdbId": 13916,
+      "title": "DEATH NOTE",
+      "type": "tv",
+      "season": 1,
+      "episode": 1,
+      "elapsedMs": 14491,
+      "onlineWithTr": true,
+      "downloadUrls": 5,
+      "estimatedDistinctFiles": 5,
+      "downloadQualities": [
+        "1280x720",
+        "852x480"
+      ],
+      "smallWithTr": true,
+      "gaps": [],
+      "files": [
+        {
+          "source": "SonAnime",
+          "container": "mp4",
+          "bytes": 240288551,
+          "audioLanguages": [],
+          "dimensions": {
+            "width": 1280,
+            "height": 720
+          },
+          "quality": "1280x720",
+          "qualityGrade": "720p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [],
+          "externalTrackCount": 4,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 1390.656,
+          "hashAvailable": true
+        },
+        {
+          "source": "SonAnime",
+          "container": "mp4",
+          "bytes": 108188435,
+          "audioLanguages": [],
+          "dimensions": {
+            "width": 852,
+            "height": 480
+          },
+          "quality": "852x480",
+          "qualityGrade": "480p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [],
+          "externalTrackCount": 4,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 1390.656,
+          "hashAvailable": true
+        },
+        {
+          "source": "Animecix",
+          "container": "mp4",
+          "bytes": 108188435,
+          "audioLanguages": [],
+          "dimensions": {
+            "width": 852,
+            "height": 480
+          },
+          "quality": "852x480",
+          "qualityGrade": "480p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [],
+          "externalTrackCount": 4,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 1390.656,
+          "hashAvailable": false
+        },
+        {
+          "source": "Animecix",
+          "container": "mp4",
+          "bytes": 240288551,
+          "audioLanguages": [],
+          "dimensions": {
+            "width": 1280,
+            "height": 720
+          },
+          "quality": "1280x720",
+          "qualityGrade": "720p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [],
+          "externalTrackCount": 4,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 1390.656,
+          "hashAvailable": false
+        },
+        {
+          "source": "Animecix",
+          "container": "mp4",
+          "bytes": 179688354,
+          "audioLanguages": [],
+          "dimensions": {
+            "width": 1280,
+            "height": 720
+          },
+          "quality": "1280x720",
+          "qualityGrade": "720p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [],
+          "externalTrackCount": 4,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 1376.201,
+          "hashAvailable": true
+        }
+      ]
+    }
+  ],
+  "recovery": [
+    {
+      "key": "fleabag-s1e1",
+      "tmdbId": 67070,
+      "title": "Fleabag",
+      "type": "tv",
+      "season": 1,
+      "episode": 1,
+      "elapsedMs": 9446,
+      "onlineWithTr": true,
+      "downloadUrls": 8,
+      "estimatedDistinctFiles": 8,
+      "downloadQualities": [
+        "426x178",
+        "1278x534",
+        "852x356",
+        "853x476",
+        "3840x1600",
+        "1920x800",
+        "642x268"
+      ],
+      "smallWithTr": true,
+      "gaps": [],
+      "files": [
+        {
+          "source": "HDRezka",
+          "container": "mp4",
+          "bytes": 58976791,
+          "audioLanguages": [],
+          "dimensions": {
+            "width": 426,
+            "height": 178
+          },
+          "quality": "426x178",
+          "qualityGrade": "240p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [],
+          "externalTrackCount": 5,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 1565.782,
+          "hashAvailable": true
+        },
+        {
+          "source": "HDRezka",
+          "container": "mp4",
+          "bytes": 225138395,
+          "audioLanguages": [],
+          "dimensions": {
+            "width": 1278,
+            "height": 534
+          },
+          "quality": "1278x534",
+          "qualityGrade": "720p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [],
+          "externalTrackCount": 5,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 1565.782,
+          "hashAvailable": true
+        },
+        {
+          "source": "HDRezka",
+          "container": "mp4",
+          "bytes": 123915344,
+          "audioLanguages": [],
+          "dimensions": {
+            "width": 852,
+            "height": 356
+          },
+          "quality": "852x356",
+          "qualityGrade": "480p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [],
+          "externalTrackCount": 5,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 1565.782,
+          "hashAvailable": true
+        },
+        {
+          "source": "Goojara",
+          "container": "mp4",
+          "bytes": 120769545,
+          "audioLanguages": [],
+          "dimensions": {
+            "width": 853,
+            "height": 476
+          },
+          "quality": "853x476",
+          "qualityGrade": "480p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [],
+          "externalTrackCount": 8,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 1564.885,
+          "hashAvailable": true
+        },
+        {
+          "source": "4KHDHub / Pixeldrain",
+          "container": "mkv",
+          "bytes": 2917567002,
+          "audioLanguages": [
+            "en-us"
+          ],
+          "dimensions": {
+            "width": 3840,
+            "height": 1600
+          },
+          "quality": "3840x1600",
+          "qualityGrade": "2160p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [
+            "en",
+            "tr"
+          ],
+          "externalTrackCount": 8,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 1611.92,
+          "hashAvailable": true
+        },
+        {
+          "source": "4KHDHub / Pixeldrain",
+          "container": "mkv",
+          "bytes": 3012099492,
+          "audioLanguages": [
+            "en-us"
+          ],
+          "dimensions": {
+            "width": 3840,
+            "height": 1600
+          },
+          "quality": "3840x1600",
+          "qualityGrade": "2160p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [
+            "en",
+            "tr"
+          ],
+          "externalTrackCount": 8,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 1611.92,
+          "hashAvailable": true
+        },
+        {
+          "source": "4KHDHub / Pixeldrain",
+          "container": "mkv",
+          "bytes": 1617536917,
+          "audioLanguages": [
+            "en-us"
+          ],
+          "dimensions": {
+            "width": 1920,
+            "height": 800
+          },
+          "quality": "1920x800",
+          "qualityGrade": "1080p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [
+            "en",
+            "tr"
+          ],
+          "externalTrackCount": 8,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 1611.92,
+          "hashAvailable": true
+        },
+        {
+          "source": "HDRezka",
+          "container": "mp4",
+          "bytes": 85117635,
+          "audioLanguages": [],
+          "dimensions": {
+            "width": 642,
+            "height": 268
+          },
+          "quality": "642x268",
+          "qualityGrade": "360p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [],
+          "externalTrackCount": 5,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 1565.782,
+          "hashAvailable": true
+        }
+      ]
+    },
+    {
+      "key": "shameless-s1e1",
+      "tmdbId": 34307,
+      "title": "Shameless",
+      "type": "tv",
+      "season": 1,
+      "episode": 1,
+      "elapsedMs": 6516,
+      "onlineWithTr": true,
+      "downloadUrls": 0,
+      "estimatedDistinctFiles": 0,
+      "downloadQualities": [],
+      "smallWithTr": false,
+      "gaps": [
+        "download_missing",
+        "small_download_with_tr_missing",
+        "multiple_verified_download_qualities_missing"
+      ],
+      "files": []
+    },
+    {
+      "key": "death-note-s1e1",
+      "tmdbId": 13916,
+      "title": "DEATH NOTE",
+      "type": "tv",
+      "season": 1,
+      "episode": 1,
+      "elapsedMs": 8335,
+      "onlineWithTr": true,
+      "downloadUrls": 6,
+      "estimatedDistinctFiles": 4,
+      "downloadQualities": [
+        "852x480",
+        "1280x720"
+      ],
+      "smallWithTr": true,
+      "gaps": [],
+      "files": [
+        {
+          "source": "SonAnime",
+          "container": "mp4",
+          "bytes": 108188435,
+          "audioLanguages": [],
+          "dimensions": {
+            "width": 852,
+            "height": 480
+          },
+          "quality": "852x480",
+          "qualityGrade": "480p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [],
+          "externalTrackCount": 5,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 1390.656,
+          "hashAvailable": true
+        },
+        {
+          "source": "SonAnime",
+          "container": "mp4",
+          "bytes": 240288551,
+          "audioLanguages": [],
+          "dimensions": {
+            "width": 1280,
+            "height": 720
+          },
+          "quality": "1280x720",
+          "qualityGrade": "720p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [],
+          "externalTrackCount": 5,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 1390.656,
+          "hashAvailable": true
+        },
+        {
+          "source": "Animecix",
+          "container": "mp4",
+          "bytes": 179688354,
+          "audioLanguages": [],
+          "dimensions": {
+            "width": 1280,
+            "height": 720
+          },
+          "quality": "1280x720",
+          "qualityGrade": "720p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [],
+          "externalTrackCount": 5,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 1376.201,
+          "hashAvailable": true
+        },
+        {
+          "source": "Animecix",
+          "container": "mp4",
+          "bytes": 94687213,
+          "audioLanguages": [],
+          "dimensions": {
+            "width": 852,
+            "height": 480
+          },
+          "quality": "852x480",
+          "qualityGrade": "480p",
+          "turkishSubtitle": true,
+          "embeddedSubtitleLanguages": [],
+          "externalTrackCount": 5,
+          "externalTurkishTracks": 4,
+          "actualDurationSeconds": 1376.201,
+          "hashAvailable": false
+        }
+      ]
+    }
+  ],
+  "allSourceCriteriaMet": false
+}

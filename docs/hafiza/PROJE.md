@@ -1,5 +1,16 @@
 # Proje hafızası
 
+## 1.8.9 — mevcut çalışma
+
+MoviesDrive new5 adresine taşınması aramada q/page kaybı yaratıyordu; yalnız aynı yayıncıya tek yeniden arama eklendi. Dune 567MB/948MB/2,07GB, No Way Home 904MB ve Spider-Verse 402MB örnekleri geri bulundu; bunlar yeni bağımsız sağlayıcı değildir. Fleabag ilk tur 0, tekrarda 8; Shameless dosya 0. FilmEkseni ve Anizone online HLS ekler, indirilemez. Entegre kanıtlar compatibility/coverage-189.json ve online-expansion-189.json. Masaüstü 1.1.35 kurulu; 1.8.8 deposunda 0 sağlayıcı görüntülendi. Desktop platform filtresi gerçek kurulu JAR ve upstream kaynakta doğrulandı; manifestte desktop eklendi. Fiziksel telefon/tam indirme/offline/senkron test edilmedi.
+
+
+## 28 Ekim 2026 — kapsam ve ekosistem değerlendirmesi
+
+Kullanıcının durum/karşılaştırma isteği için 21 erişilebilir manifest (466 girdi; bağımsız çalışan kaynak sayısı değildir), 11 seçili sağlayıcı dosyası ve test belgeleri statik olarak incelendi. Sonuç [DEGERLENDIRME.md](DEGERLENDIRME.md) içinde. Rakip kodu çalıştırılmadı/kopyalanmadı; eşit katalog canlı hız/başarı kıyası yapılmadı. Bu tur ürün sürümü ve sağlayıcı davranışı değiştirilmedi. Son npm run check 312/312 geçti; build üretilmiş dosyalarda fark oluşturmadı.
+
+Temel açıklar bağımsız dosya kaynağı, farklı dizi/anime bölümü, ölçülmüş TR ses ve iPhone tam indirme/offline deneyimidir. Son sürümlerde mevcut Archive/MoviesDrive/HDHub yollarının iyileşmesi, aynı sayıda bağımsız yeni kaynak eklenmesi değildir. 37 kanonik giriş 23 film/14 bölüm; dört Japonca/anime giriş bunlarla örtüşür. Genel katalog başarı yüzdesi yok. Kalıcı aramalar-arası cache ve bütünüyle köprüsüz mimari mevcutmuş gibi anlatılmamalı. Raporun çalışma sırası öneridir; uygulanmış değişiklik sayılmaz.
+
 ## 1.8.8 — resmî dosya adları ve film 4K
 
 Archive item kimliği/ad/yıl bağlandıktan sonra dosya adını yalnız İngilizce bilmek yeterli olmuyordu. Aynı TMDB kaydının resmî TR/EN çevirisi yalnız gerektiğinde tembel olarak istenir. İstenen yılı taşıyan, örnek olmayan ve bilinen süresi makul video adları kontrol edilir. İngilizce dosya mevcut olsa da farklı resmî Türkçe dosya kaçırılmaz. Ad tahmini yapılmaz; gerçek dosya yılı ve %90–110 süre zorunludur. Bir shared titleJob en fazla bir ek3s çeviri isteği açar; iki Archive sorgusu/12 metadata sınırı değişmez.

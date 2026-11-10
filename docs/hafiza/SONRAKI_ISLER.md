@@ -1,5 +1,19 @@
 # Sonraki işler
 
+## 1.8.9 öncelik
+
+1. Desktop 1.1.35 üzerinde depo yenileme ve gerçek sağlayıcı yürütmesini kontrol et; tam oynatma/indirme olmadıysa açık tut.
+2. Shameless ve diğer eksik diziler için bağımsız ücretsiz ve kararlı dosya ailesi ara. Yeni TR dublaj veya anime indirme bu tur doğrulanmadı.
+3. İlk Fleabag 0 ve sonraki 8 dosya sonucu birlikte değerlendir; ağ değişkenliği ve telefon fiziksel süresi bilinmiyor. Fiziksel telefonda tam indirme/offline/senkron/font açık.
+
+
+## 28 Ekim 2026 değerlendirmesinden önerilen öncelik
+
+1. [Kapsam ve karşılaştırma](DEGERLENDIRME.md): 21 manifest/11 seçili sağlayıcı dosyası incelendi; yeni sağlayıcı eklenmedi. Sonraki uygulama turunda mevcut 37 referansın tekrar sonuçlarını dengeli film/dizi/anime setinde karşılaştır; test sayısı veya tarihsel dosya toplamından kapsam yüzdesi çıkarma.
+2. Öncelik bağımsız MP4/MKV kaynak ailesi, gerçek TR dublaj ve bölüm devamlılığıdır. HLS katkısını indirme artışı sayma; aynı HubCloud/Pixel ailesini çoğaltmayı bağımsızlık sanma. Kısmi yararlı kaynak kabul edilebilir; yeni aday desteği canlı kanıt gerektirir.
+3. Süreyi uzatmak yerine bekleten origin/metadata/altyazı işlerini ölç. Arama içi cache var; ayrı VM/aramalar arasında kalıcı depolama doğrulanmadı. Satır satır native sonuç callback'i veya iPhone fiziksel timeout garantisi verme.
+4. Fiziksel iPhone küçükMP4/1080MKV/4KMKV, TRses ve hariciTR ile tam indirme/yeniden açma/uçakmodu/altyazı/ses seçimi hâlâ açık. Kodlama, font ve senkron sorunlarını birbirinden ayır. Bu maddeler öneri ve açık iştir; tamamlanmış sayılmaz.
+
 ## 1.8.8 öncelik
 
 1. Hazır: Archive resmî yerel dosya adı ve MoviesDrive resmî film aliası;6yeni dosya/3film/1yeni4K.312test ve23upstream drift0. Yayımlandı: 4c824c1002600687eca10c88f92ce11fad15b38b; Test40609766518/Pages40609766742 başarılı, yedi public HTTP200/SHA eşit.

@@ -1,5 +1,17 @@
 # Tasarım kararları
 
+## 1.8.9 — masaüstü ve kaynak sınırları
+
+- Desktop etiketi her dört scraperda, mobil platformların yanında bulunur. Desktop JVM QuickJS ayrıca gerçek uygulamada sınanmalıdır; tek başına manifest/QuickJS WASM testi cihazda oynatma kanıtı değildir.
+- Aynı yayıncının alan değişiminde eksik q/page bir kez yeniden gönderilir; farklı host ve döngü reddedilir. Eski kaynağın geri gelmesi yeni bağımsız kaynak sayılmaz. FilmEkseni/Anizone HLS sadece online; senkron ve TR dublaj iddiaları kanıtıyla sınırlıdır.
+
+
+## 28 Ekim 2026 — karşılaştırma kanıtının sınırı
+
+- Rakip manifest/README iddiası, statik kod davranışı, canlı kaynak kontrolü ve fiziksel oynatıcı testi ayrı tutulur. Manifest girdisi bağımsız çalışan kaynak değildir; dört mevcut scraper grubu 19 yerleşik bağlayıcıyla karıştırılmaz.
+- NiakVIO native laboratuvar yaklaşımı ve Streamline modüler test düzeni araştırma referansıdır; belgelerin varlığı bütün kaynakların başarılı olduğuna veya bizim daha üstün olduğumuza kanıt sayılmaz. Statik inceleme yeni sağlayıcı desteği olarak sunulmaz.
+- Önerilen kaynak genişletme/ölçüm planı [değerlendirmede](DEGERLENDIRME.md); bu tur yeni ürün kararı/özellik uygulanmadı. Mevcut ücretsiz/hesapsız, doğru kimlik ve gerçek dosya kontrolleri korunur.
+
 ## 1.8.8 — çeviri ve alternatif ad sınırı
 
 - Resmî yerel dosya adı yalnız aynı TMDB kaydından gelen çeviriyle kabul edilir; yıl/süre/IMDb/TMDB çelişkileri gevşetilmez. Bilinen İngilizce dosya, aynı item'daki resmî Türkçe alternatifini bastırmamalıdır. Her adapter lookup'u memoize eder; sırf başka başlık/yıl göründü diye ağ işi açılmaz.

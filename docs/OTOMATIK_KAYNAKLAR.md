@@ -16,6 +16,8 @@
 | FilmModu, HDFilmDelisi | Film | Dublaj/altyazılı online alternatifler |
 | DiziBal | Film/dizi/anime | Dublaj/altyazılı online HLS |
 | Purstream | Film/dizi | Ek online HLS; oynatma listesindeki sesler ve harici TR/EN altyazılar |
+| FilmEkseni | Film | Online HLS; kaynakla eşlenmiş TR/EN altyazı ve mevcut ses izleri |
+| Anizone | Anime film/ilk sezon | Online HLS; tam bölüm doğrulaması ve mevcut altyazı araması |
 | Animecix, SonAnime | Anime | Gerçek dosya seçenekleri |
 | AniMOM, SeiCode / MP4Upload | Anime bölümleri | Ek, kısmi MP4 kaynakları |
 
@@ -46,7 +48,7 @@ MoviesDrive'da tam film adı/yıl, varsa IMDb ve dosyanın kendi adı birlikte d
 
 Uzantısız MKV'lerde Nuvio'nun `.mp4` kayıt adı gerçek formatı değiştirmez. Dahili MPV içerikten tanır; sonuçtaki tür MKV olarak korunur. Bu istisna yalnız boyutu/formatı ayrıca kontrol edilen kaynak adaylarına açıktır. Genel katalog format kontrolleri ve HLS indirme yasağı korunur. Telefon dışında açarken dosyayı `.mkv` olarak yeniden adlandırmak gerekebilir. Yeni sunucu veya hesap gerekmez.
 
-Hızlı İzle, HDFilmDelisi, DiziBal ve Purstream kaynaklarını bağımsız tarar; ana sağlayıcıda aynı işler tekrarlanmaz. Eski üç sağlayıcının kimlikleri korunur. Ana sağlayıcıdaki PlayIMDb/VixSrc ve diğer online yollar çalışmaya devam eder; HDFilmDelisi Hızlı İzle grubundadır.
+Hızlı İzle, HDFilmDelisi, DiziBal, Purstream ve FilmEkseni kaynaklarını bağımsız tarar; ana sağlayıcıda aynı işler tekrarlanmaz. Eski üç sağlayıcının kimlikleri korunur. Ana sağlayıcıdaki PlayIMDb/VixSrc ve diğer online yollar çalışmaya devam eder; HDFilmDelisi Hızlı İzle grubundadır.
 
 Purstream aynı TMDB kimliği, tür, yıl ve resmi başlıkla eşleşir. Fransızca katalog adı gerekiyorsa aynı TMDB kaydının çevirileri kullanılır. Dizinin genel sayfasındaki karışık bölüm bağlantıları yerine istenen sezon/bölüm yanıtı ve video yolu birlikte kontrol edilir. Kaynağın 1080p/1440p etiketi kullanılmaz; gerçek HLS çözünürlüğü ve dil izleri esas alınır. Bu kaynak online alternatif sağlar; yeni indirme, Türkçe dublaj veya 4K garantisi değildir.
 
@@ -61,3 +63,5 @@ MoviesDrive sonraki sezonlarda aynı TMDB kaydının sezon yılını ve istenen 
 Yanlış film, yıl veya bölüm eşleşmesi kabul edilmez. Bir sağlayıcı bozulduğunda diğer geçerli sonuçlar korunur. Ücretsiz/hesapsız kaynaklar tercih edilir; torrent/magnet, ayrı ses birleştirme ve yeni kullanıcı sunucusu kurulumu bu projenin akışı değildir.
 
 Kaynak testi, fiziksel telefonun tam oynatma/indirme ve offline senkron testi yerine geçmez. [Doğrulama](UYUMLULUK.md) · [Geliştirme](GELISTIRME.md).
+
+FilmEkseni yalnız aynı film/yıl/IMDb ve oynatıcı bağı doğrulandığında HLS sunar. Anizone ilk sezonun tam bölümünü doğrular; sonraki sezonlarda mutlak bölüm numarası varsayılmaz. Her iki kaynak online izleme içindir, indirilebilir dosya olarak gösterilmez. MoviesDrive alan adı değişiminde arama sorgusu kaybolursa aynı yayıncının yeni adresine bir kez yeniden gönderilir.
