@@ -2,6 +2,8 @@
 
 ## 1.9.0 — Windows boş yayın araması
 
+Yayın eec49466efc32ff5db6aacde8e2164f9ae0e091d. 326 test, Windows/Linux CI ve Pages geçti. Yedi public dosya yayın paketiyle eşleşti. Windows 1.1.35'te depo 1.9.0'a yenilendi ve Dune normal yayın ekranı tek Nuvio TR HD başlığında bir TR altyazı etiketli HLS gösterdi. İndirilebilir satır görünmedi. Kurulu motor ayrı işlemde Dune 1, Fleabag S1E1 4 online sonuç verdi. [Kontrol](../../compatibility/desktop-190-check.json).
+
 Nuvio Desktop 1.1.35 normal Dune (2021) ekranı 1.8.9'da yüklenip boş döndü. Kurulu QuickJS motorundaki ayrı tanı işleminde Hızlı İzle TMDB yanıtını yaklaşık 7,98 saniyede aldı. Eski 8 saniyelik sınırda dört kaynak da boş kaldı. Ana aramada arşiv adaylarının Range istekleri ve başka kaynaklar zaman aşımına uğradı. Hızlı İzle 18 saniye toplam ve kimlikten sonra en çok 8 saniye ile çalışır. TMDB geçici ağ veya 5xx hatasında bir kez 3,5 saniyelik aynı kimlik isteği açar. 401/403/404/429 için tekrar yok. Nuvio'nun yerel ağ işleri mantıksal sınırdan uzun sürebilir.
 
 MoviesDrive new5.beer → new1.cyou → new2.cyou geçişi gözlendi. new2 Dune katalog sorgusu HTTP 200 döndürdü. Kaynak odaklı canlı Node taramasında ilk tur 567 MB, 948 MB ve 2,07 GB MKV, ikinci tur yalnız 948 MB MKV verdi. Tümünde dört harici TR seçeneği vardı. İkinci turda arşiv bağlantılarının zaman aşımları sürdü. HDFilmDelisi'nin yeni alanı ilk denemede doğrulanmış oynatma listesi üretmedi. Tam oynatma, indirme, çevrimdışı altyazı, senkron ve fiziksel telefon sınanmadı.

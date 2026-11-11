@@ -2,7 +2,7 @@
 
 ## 1.9.0 öncelik
 
-1. Windows yayın ekranında 1.9.0 sonrası Dune ve bir dizi bölümünü kontrol et. Boş sonuç tekrar ederse TMDB, kaynak keşfi ve Range kontrolünü ayrı ölç.
+1. Windows yayın ekranında 1.9.0 sonrası Dune bir online satır gösterdi. Fleabag S1E1 kurulu motorun ayrı işleminde dört online sonuç verdi. Windows'ta doğrulanmış indirme satırlarının niçin elendiğini kaynak keşfi ve Range adımlarında ayrı ölç.
 2. Dune MoviesDrive ilk canlı tur 3, tekrar 1 MKV. Bu eski sağlayıcının geri kazanımı. Dizi, TR dublaj ve 4K kapsamı açık.
 3. HDFilmDelisi yeni alanında geçerli oynatma listesi doğrulanmadan adres güncelleme. Fiziksel telefon, tam oynatma, indirme ve çevrimdışı altyazı açık.
 

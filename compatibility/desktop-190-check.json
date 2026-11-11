@@ -1,0 +1,36 @@
+{
+  "checkedAt": "2026-11-11",
+  "installedApplicationVersion": "1.1.35",
+  "pluginVersion": "1.9.0",
+  "windowsApplication": {
+    "title": "Dune (2021)",
+    "before": { "pluginVersion": "1.8.9", "visibleResults": 0 },
+    "afterRepositoryRefresh": {
+      "pluginVersion": "1.9.0",
+      "visibleResults": 1,
+      "onlineResults": 1,
+      "downloadableResults": 0,
+      "turkishSubtitleLabel": true,
+      "groupedUnderRepository": true
+    }
+  },
+  "installedQuickJsInSeparateProcess": [
+    { "title": "Dune (2021)", "pluginVersion": "1.8.9", "lane": "fastOnline", "sourceStartMs": 7975, "results": 0, "reason": "deadline" },
+    { "title": "Dune (2021)", "pluginVersion": "1.9.0", "onlineResults": 1, "downloadableResults": 0 },
+    { "title": "Fleabag S1E1", "pluginVersion": "1.9.0", "onlineResults": 4, "downloadableResults": 0 }
+  ],
+  "isolatedMoviesDriveSourceCheck": {
+    "method": "Node with fixed canonical TMDB metadata, live source HTTP range and subtitle checks",
+    "title": "Dune (2021)",
+    "firstPass": [
+      { "bytes": 566912339, "width": 856, "height": 360, "container": "mkv", "externalTurkishSubtitles": 4 },
+      { "bytes": 948305346, "width": 1280, "height": 536, "container": "mkv", "externalTurkishSubtitles": 4 },
+      { "bytes": 2071642223, "width": 1920, "height": 804, "container": "mkv", "externalTurkishSubtitles": 4 }
+    ],
+    "repeatPass": [{ "bytes": 948305346, "container": "mkv", "externalTurkishSubtitles": 4 }]
+  },
+  "fullPlayback": "not-run",
+  "fullDownload": "not-run",
+  "phoneDeviceTest": "not-run",
+  "offlineSubtitles": "not-run"
+}

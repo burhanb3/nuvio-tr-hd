@@ -13,6 +13,8 @@ Resmî release ve geliştirme dalındaki ilgili dosyaların SHA'ları `compatibi
 
 ## Güncel kontrol
 
+1.9.0, Windows Nuvio Desktop üzerinde mevcut depo yenilenerek sınandı. Dune (2021) 1.8.9'da boş döndü, 1.9.0 ile normal yayın listesinde Türkçe altyazı etiketli bir online sonuç çıktı. Kurulu motorun ayrı işlem testinde Fleabag S1E1 dört online sonuç verdi. Ayrı MoviesDrive kaynak testinde Dune MKV seçenekleri doğrulandı, Windows uygulama denemesinde indirilebilir satır görünmedi. Tam oynatma, indirme ve fiziksel telefon sınanmadı. [Masaüstü ve kaynak ölçümü](../compatibility/desktop-190-check.json).
+
 1.8.9: Android/iOS yanında Desktop platformu manifestte açıldı. Windows'taki Nuvio Desktop 1.1.35 depoyu 0 sağlayıcıyla gösteriyordu; yayımdan sonra aynı depoyu yenileyince dört sağlayıcı göründü. Gerçek uygulamadaki sağlayıcı testinde Matrix için 10 sonuç döndü. İlk Dune araması uygulamada boş kaldı; kurulu Desktop QuickJS motorunu kullanan ayrı işlemde Dune için 10 sonuç geldi. Bu farklı sonuçlar ağ ve uygulama durumunun değişebileceğini gösterir, sorunun tümüyle çözüldüğünü veya tam oynatım/indirmeyi kanıtlamaz. Linux ve macOS masaüstü sınanmadı. [Masaüstü kontrolü](../compatibility/desktop-189-check.json).
 
 Nuvio Mobile 0.6.5-beta geliştirme dalında iki oynatıcı dosyasının değişikliği incelendi; eklenti ABI değişikliği saptanmadı. Ardından 23 kaynak dosyası kilidi tekrar kontrol edildi ve drift bulunmadı. [İnceleme](../compatibility/upstream-189-review.json), [kontrol](../compatibility/upstream-189-check.json), [örnek kapsam](../compatibility/coverage-189.json), [online kaynaklar](../compatibility/online-expansion-189.json).
