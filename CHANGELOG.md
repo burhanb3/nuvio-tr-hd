@@ -1,5 +1,10 @@
 # Sürüm notları
 
+## Windows uygulama düzeltmesi — 11 Kasım 2026
+
+- Nuvio Desktop'ın ham video yanıtını metin üzerinden yeniden kodlarken bozduğu doğrulandı. Tam byte koruyan sınırlı HTTP düzeltmesi ve derleme kaynakları eklendi.
+- Eklenti sürümü 1.9.0. Masaüstündeki Nuvio TR HD kısayolu düzeltilmiş yerel Windows kopyasını açar.
+
 ## 1.9.0 — 11 Kasım 2026
 
 - Hızlı İzle, yavaş TMDB yanıtından sonra kaynakları denemek için sekiz saniyeye kadar süre ayırır. Toplam mantıksal sınır 18 saniyedir.

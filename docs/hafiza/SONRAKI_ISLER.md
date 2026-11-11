@@ -1,5 +1,11 @@
 # Sonraki işler
 
+## 11 Kasım 2026 — yerel Windows düzeltmesi
+
+1. Black Clover S1E17 normal kaynak ekranında 480/720/1080p üç indirilebilir satır görüldü. Bölüm16 ayrı native işlemde3MP4. Kullanıcı PC'yi kullandığından UI girişleri durduruldu; bir sonraki açılışta temiz final JAR seçili. Tam oynatma/indirme ve TR altyazı kapsamı açık.
+2. Masaüstündeki Nuvio TR HD kısayolu düzeltilmiş kopyayı açar. Eski Nuvio simgesi asıl kurulumu açar. Yerel kopya kurulu runtime/kütüphanelere bağlı olduğundan resmî güncelleme sonrası tekrar doğrula.
+3. Tam oynatma/indirme/offline/senkron ve telefon testleri açık. Sağlayıcıların ağ/kapsam eksikleri ayrıca devam eder.
+
 ## 1.9.0 öncelik
 
 1. Windows yayın ekranında 1.9.0 sonrası Dune bir online satır gösterdi. Fleabag S1E1 kurulu motorun ayrı işleminde dört online sonuç verdi. Windows'ta doğrulanmış indirme satırlarının niçin elendiğini kaynak keşfi ve Range adımlarında ayrı ölç.

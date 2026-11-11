@@ -13,6 +13,18 @@ Resmî release ve geliştirme dalındaki ilgili dosyaların SHA'ları `compatibi
 
 ## Güncel kontrol
 
+11 Kasım Windows incelemesinde kurulu uygulamanın ham video yanıtını metin
+üzerinden yeniden kodlarken bozduğu doğrulandı. Yerel native testte 131.072 byte
+yerine 262.144 byte alındı. Byte koruması ve raw HTTP için 10 saniyelik toplam
+çağrı sınırı sonrası kontrollü testler geçti. Black Clover S1E16 ayrı motor
+testinde üç MP4 döndürdü. Normal Windows ekranında S1E17 için 480p, 720p ve
+1080p indirilebilir satırlar göründü. Bu satırlarda EN altyazı vardı, TR etiketi
+yoktu. Masaüstündeki Nuvio TR HD kısayolu düzeltilmiş kullanıcı kopyasını açar.
+Sistem kurulumuna yazma izni alınamadı. Yerel kopya, mevcut kurulumun runtime ve
+kütüphanelerine bağlıdır. Tam oynatma/indirme ve fiziksel telefon sınanmadı.
+[Kontrol](../compatibility/windows-http-2026-11-11.json) ·
+[Düzeltme kaynakları](../patches/desktop-binary-response/README.md).
+
 1.9.0, Windows Nuvio Desktop üzerinde mevcut depo yenilenerek sınandı. Dune (2021) 1.8.9'da boş döndü, 1.9.0 ile normal yayın listesinde Türkçe altyazı etiketli bir online sonuç çıktı. Kurulu motorun ayrı işlem testinde Fleabag S1E1 dört online sonuç verdi. Ayrı MoviesDrive kaynak testinde Dune MKV seçenekleri doğrulandı, Windows uygulama denemesinde indirilebilir satır görünmedi. Tam oynatma, indirme ve fiziksel telefon sınanmadı. [Masaüstü ve kaynak ölçümü](../compatibility/desktop-190-check.json).
 
 1.8.9: Android/iOS yanında Desktop platformu manifestte açıldı. Windows'taki Nuvio Desktop 1.1.35 depoyu 0 sağlayıcıyla gösteriyordu; yayımdan sonra aynı depoyu yenileyince dört sağlayıcı göründü. Gerçek uygulamadaki sağlayıcı testinde Matrix için 10 sonuç döndü. İlk Dune araması uygulamada boş kaldı; kurulu Desktop QuickJS motorunu kullanan ayrı işlemde Dune için 10 sonuç geldi. Bu farklı sonuçlar ağ ve uygulama durumunun değişebileceğini gösterir, sorunun tümüyle çözüldüğünü veya tam oynatım/indirmeyi kanıtlamaz. Linux ve macOS masaüstü sınanmadı. [Masaüstü kontrolü](../compatibility/desktop-189-check.json).

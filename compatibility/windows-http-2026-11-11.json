@@ -1,0 +1,56 @@
+{
+  "checkedAt": "2026-11-11",
+  "applicationProductVersion": "1.1.35",
+  "applicationDisplayedVersion": "0.1.35-alpha (35)",
+  "pluginVersion": "1.9.0",
+  "originalApplicationJarSha256": "c96931a3aac6572b45db5655738cfbd325cd718cf8438cfd20fe53e1787e7933",
+  "fixedApplicationJarSha256": "0602c8471d075842341ac91ebbb417eb471c25240806fb62792b00679c0ad6cd",
+  "javaTargetVersion": 17,
+  "controlledNativeBinaryTest": {
+    "expectedBytes": 131072,
+    "before": { "receivedBytes": 262144, "differentBytePositions": 97536 },
+    "after": { "receivedBytes": 131072, "differentBytePositions": 0 }
+  },
+  "controlledNativeStalledResponseTest": {
+    "callTimeoutSeconds": 10,
+    "wholeJvmProcessElapsedMs": 11440,
+    "completed": true,
+    "responseStatus": 0
+  },
+  "sourceRuntimeTest": {
+    "title": "Black Clover",
+    "season": 1,
+    "episode": 16,
+    "before": { "sourceCandidates": 3, "results": 0, "rejected": "video_unavailable" },
+    "afterByteFixInSeparateProcess": { "results": 3, "types": { "mp4": 3 } },
+    "finalPackageRepeat": { "results": 3, "elapsedMs": 4663, "rejectedVideos": 0 }
+  },
+  "normalWindowsApplicationTest": {
+    "title": "Black Clover",
+    "season": 1,
+    "episode": 17,
+    "visibleDownloadableResults": 3,
+    "qualities": ["480p", "720p", "1080p"],
+    "displayedSizesGb": [0.13, 0.24, 0.42],
+    "turkishSubtitleLabel": false,
+    "englishSubtitleLabel": true,
+    "groupedUnder": "Nuvio TR HD",
+    "notes": "The user's continue-watching entry moved to episode 17 during the investigation. Episode 16 was tested separately in the installed runtime."
+  },
+  "installation": {
+    "method": "User-local launcher using the installed application's runtime and dependencies",
+    "shortcut": "Nuvio TR HD",
+    "originalSystemInstallationModified": false,
+    "finalPackageConfiguredForNextLaunch": true,
+    "notes": "A temporary local diagnostic copy remains in the already running process. The user was actively using the PC, so the app was not restarted again. Next launch uses the package without diagnostic hooks."
+  },
+  "checks": {
+    "npmRunCheck": { "passed": 326, "failed": 0 },
+    "binaryTextAndTruncationRegression": "passed",
+    "nativeCallLimitRegression": "passed"
+  },
+  "fullPlayback": "not-run",
+  "fullDownload": "not-run",
+  "offlineSubtitles": "not-run",
+  "phoneDeviceTest": "not-run"
+}

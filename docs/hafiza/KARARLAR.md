@@ -1,5 +1,11 @@
 # Tasarım kararları
 
+## 11 Kasım 2026 — Windows native yanıtı
+
+- Byte verisi UTF-8 String üzerinden geri oluşturulamaz. Kaybolmuş byte'ları kabul etmek yerine desktop raw HTTP yanıtında orijinal bodyBytes korunur. Bounded gövde ve kesilme işareti uygulanır.
+- Yerel Windows düzeltmesi yalnız incelenen JAR hash'ine uygulanır. Sistem kurulumuna erişim reddinde kullanıcı klasöründe kopya kullanılır. Gömülü Java17 uyumluluğu zorunlu.
+- Native raw HTTP çağrısının bütün IP tekrarları/gövdesi 10 saniyeyle sınırlanır. Bu değişiklik fiziksel iPhone süresi hakkında kanıt oluşturmaz.
+
 ## 1.9.0 — kaynak aramasına ayrı zaman
 
 - Hızlı İzle TMDB kimliğini doğruladıktan sonra en fazla 8 saniye arar ve toplamda 18 saniyelik mantıksal sınırı kullanır. Ana ve anime taramalarının mevcut toplam süreleri korunur.

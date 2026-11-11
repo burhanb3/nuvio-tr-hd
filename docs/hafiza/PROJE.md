@@ -1,5 +1,13 @@
 # Proje hafızası
 
+## 11 Kasım 2026 — Black Clover Windows ikili veri düzeltmesi
+
+Son normal Windows UI kontrolünde Black Clover S1E17 480p/0.13GB, 720p/0.24GB, 1080p/0.42GB indirilebilir Animecix satırları tek Nuvio TR HD altında göründü. EN altyazı etiketi var, TR yok. Kullanıcının devam kaydı inceleme sırasında 16'dan 17'ye geçti; bölüm16 native ayrı işlemde 3MP4. Geçici yerel args/boş sonuç tanısı ile doğru73223/tv/1/17 doğrulandı. Kullanıcı bilgisayarı kullandığını bildirdi; UI girişleri durduruldu. Çalışan tanı kopyası yeniden kapatılmadı, başlatıcı cfg bir sonraki açılışta tanı hook'u içermeyen final JAR'ına ayarlandı. FinalSHA0602c8471d075842341ac91ebbb417eb471c25240806fb62792b00679c0ad6cd. Özgün kurulumSHA aynı. compatibility/windows-http-2026-11-11.json. Eklenti326check geçti.
+
+Kullanıcı Black Clover S1E16 Friends ekranında Yayınlar yüklenemedi bildirdi. Kurulu motorun ayrı işleminde Animecix 3 aday buldu, üç 206 yanıtı da video_unavailable oldu. Gerçek kurulum JAR'ı C96931A3AAC6572B45DB5655738CFBD325CD718CF8438CFD20FE53E1787E7933. AddonPlatform.desktop httpRequestRaw body'yi String okuyor ve RawHttpResponse.bodyBytes varsayılanıyla tekrar UTF-8 kodluyordu. Kontrollü HTTP 131072 byte ->262144 byte ve 97536 farklı konum üretti. Düzeltilmiş aynı native test 131072/0 fark; Türkçe metin, boyut sınırı ve boş gövde testleri geçti. Uzun native connect IP tekrarları için yalnız raw HTTP Call.timeout 10s eklendi. Cevap vermeyen yerel sunucu testinde JVM başlangıcı dahil 11.44s sonra status0 döndü.
+
+Program Files yedek kopyasına erişim reddedildi, kurulum hash'i aynı. Kullanıcı LocalAppData/NuvioTRHD/DesktopFix-1.1.35 içinde aynı kurulumun runtime'ını ve kütüphanelerini kullanan düzeltilmiş başlatıcı oluşturuldu. Masaüstündeki Nuvio TR HD.lnk bu kopyayı açar. Resmî kurulum güncellemesinde yeniden incelenmeli. Yardımcı sınıflar --release17 ile derlenir; bilgisayardaki JDK21 varsayılanı gömülü Java17'de yüklenmez. Kaynak ve testler patches/desktop-binary-response içinde. Plugin sürümü 1.9.0.
+
 ## 1.9.0 — Windows boş yayın araması
 
 Yayın eec49466efc32ff5db6aacde8e2164f9ae0e091d. 326 test, Windows/Linux CI ve Pages geçti. Yedi public dosya yayın paketiyle eşleşti. Windows 1.1.35'te depo 1.9.0'a yenilendi ve Dune normal yayın ekranı tek Nuvio TR HD başlığında bir TR altyazı etiketli HLS gösterdi. İndirilebilir satır görünmedi. Kurulu motor ayrı işlemde Dune 1, Fleabag S1E1 4 online sonuç verdi. [Kontrol](../../compatibility/desktop-190-check.json).
