@@ -2,6 +2,8 @@
 
 ## Windows uygulama düzeltmesi — 11 Kasım 2026
 
+- Windows aramasında ayırt edilebilmesi için kullanıcı Başlat menüsüne ayrıca **Nuvio TR HD** adlı kontrollü açılış kısayolu eklendi.
+
 - Nuvio Desktop'ın ham video yanıtını metin üzerinden yeniden kodlarken bozduğu doğrulandı. Tam byte koruyan sınırlı HTTP düzeltmesi ve derleme kaynakları eklendi.
 - Eklenti sürümü 1.9.0. Masaüstündeki Nuvio TR HD kısayolu düzeltilmiş yerel Windows kopyasını açar.
 - 12 Kasım: kullanıcı Başlat menüsüne de düzeltilmiş kopyanın kısayolu eklendi. Ayrı motor testinde Black Clover 1×17 üç MP4 döndürdü; yeni açılışın kullanıcı arayüzü kontrolü bekleniyor.

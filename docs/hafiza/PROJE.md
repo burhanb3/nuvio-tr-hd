@@ -1,5 +1,7 @@
 # Proje hafızası
 
+- 12 Kasım ek bilgi: kullanıcı Windows Son aramalar listesindeki Nuvio girişinden açtığını ekran görüntüsüyle gösterdi. Bu önbellek girdisinin hedefi doğrudan okunmadı. Ayrı ve aranabilir `Programs/Nuvio TR HD.lnk` kullanıcı Başlat menüsüne eklendi; kontrollü başlatıcı argümanı yeniden okunarak doğrulandı. Kullanıcı aramada tam Nuvio TR HD adını veya masaüstü aynı adlı kısayolu seçmeli. Açık uygulamaya dokunulmadı.
+
 ## 12 Kasım 2026 — kontrollü Windows başlatıcısı
 
 Kullanıcı yeniden aynı hatayı bildirdi; çalışan iki Nuvio işlemi yine özgün Program Files yolundaydı. Önceki kısayolların hedefleri doğruydu; kullanıcının hangi girişten açtığı ve neden özgün kopyanın çalıştığı kesinleşmedi. Yerel exe/cfg Nuvio TR HD olarak ayrıca adlandırıldı. Start-NuvioTRHD.ps1 paket SHA/ilk classpath kontrolünden sonra başka Nuvio kopyası varsa kullanıcı onayıyla CloseMainWindow dener; zorla kapatma yapmaz, kapanmazsa açılışı durdurur. Masaüstü ve kullanıcı Başlat menüsü kısayolları bu başlatıcıya bağlandı. Kullanıcının açık penceresine dokunulmadı. CheckOnly eski iki işlemi saptadı; ayrı penceresiz jpackage probe özgün gömülü Java17.0.20.1 ile düzeltilmiş JAR'ın öncelikli ve helper'ın mevcut olduğunu doğruladı. Bu UI/kaynak ekranı testi değildir. Kullanıcının masaüstü kısayolunu yeniden denemesi bekleniyor.
