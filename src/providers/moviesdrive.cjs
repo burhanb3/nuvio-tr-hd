@@ -4,11 +4,11 @@ const {anchors,decodeEntities,filenameIdentity}=require('./directory.cjs');
 const {canonicalNames}=require('./page-data.cjs');
 const {matchesEpisode}=require('../matching.cjs');
 const {pixelPage,publicFile}=require('./pixeldrain.cjs');
-const ORIGIN='https://new5.moviesdrive.beer',ARCHIVE='https://mdrive.lol';
+const ORIGIN='https://new2.moviesdrive.cyou',ARCHIVE='https://mdrive.lol';
 function catalogueOrigin(value){
   const url=safeUrl(value);if(!url)return null;
   const u=new URL(url);
-  return u.protocol==='https:'&&/^new[1-9]\d{0,2}\.moviesdrive\.beer$/.test(u.hostname)&&!u.port?u.origin:null;
+  return /^https:\/\/new[1-9]\d{0,2}\.moviesdrive\.(?:beer|cyou)$/.test(u.origin)?u.origin:null;
 }
 function matchesQuery(search,query){
   const entries=String(search||'').replace(/^\?/,'').split('&').map(s=>s.split('='));
@@ -26,11 +26,12 @@ async function searchCatalogue(http,origin,query){
     const response=await http.text(origin+suffix,{headers:{Accept:'application/json'}});
     if(!response)return null;
     const next=catalogueOrigin(response.url),u=new URL(response.url);
-    if(!next||u.pathname!=='/search.php')return null;
+    if(!next)return null;
     if(next!==origin){
+      if(u.pathname!=='/search.php'&&u.pathname!=='/')return null;
       origin=next;
-      if(!matchesQuery(u.search,query))continue;
-    }else if(!matchesQuery(u.search,query))return null;
+      if(u.pathname!=='/search.php'||!matchesQuery(u.search,query))continue;
+    }else if(u.pathname!=='/search.php'||!matchesQuery(u.search,query))return null;
     try{return{data:JSON.parse(response.text),origin};}catch{return null;}
   }
   return null;

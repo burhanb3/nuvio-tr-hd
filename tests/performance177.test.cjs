@@ -29,6 +29,42 @@ test('the independent fast-online lane returns while main file discovery is stil
  finally{release();await work;}
 });
 
+test('fast online can validate HLS after TMDB consumes the old eight-second budget', async t => {
+  t.mock.timers.enable({ apis: ['Date', 'setTimeout'], now: 0 });
+  const master = 'https://video.test/stream.m3u8';
+  const fixture = makeFixture({ extra: {
+    [master]: { body: '#EXTM3U\n#EXT-X-STREAM-INF:BANDWIDTH=2000000,RESOLUTION=1280x720\n720.m3u8\n' }
+  } });
+  const fetcher = fixtureFetch(fixture);
+  let releaseMetadata, releaseMaster;
+  const metadata = new Promise(resolve => { releaseMetadata = resolve; });
+  const video = new Promise(resolve => { releaseMaster = resolve; });
+  const provider = createProvider({
+    lane: 'fastOnline',
+    tmdbKey: 'test',
+    settings: { autoSubtitles: false, hdfilmdelisiEnabled: false, dizibalEnabled: false,
+      purstreamEnabled: false, filmekseniEnabled: false },
+    sourceFactories: [{ name: 'Example', run: async () => [
+      { url: master, source: 'Example', headers: {}, subtitles: [], identity: target }
+    ] }],
+    fetchImpl: async (url, options) => {
+      await (url === master ? video : metadata);
+      return fetcher(url, options);
+    }
+  });
+  const streams = provider.getStreams(603, 'movie');
+  t.mock.timers.tick(7950);
+  releaseMetadata();
+  await new Promise(setImmediate);
+  t.mock.timers.tick(500);
+  releaseMaster();
+  const rows = await streams;
+  assert.equal(rows.length, 1);
+  assert.equal(rows[0].type, 'hls');
+  assert.match(rows[0].title, /İndirilemez/);
+  assert.equal(provider.getReport().reason, 'ok');
+});
+
 test('a source budget stops its next hop without stopping other sources or releasing a native lease',async()=>{
  let release,slowCalls=0;const gate=new Promise(r=>release=r),fetcher=fixtureFetch({'https://fast.test/meta':{json:{ok:true}},'https://slow.test/first':{body:'done'}});
  const http=createHttp({timeoutMs:1000,fetchImpl:async(url,options)=>{if(url.startsWith('https://slow.test/')){slowCalls++;await gate;}return fetcher(url,options);}}),scoped=http.scope(25);

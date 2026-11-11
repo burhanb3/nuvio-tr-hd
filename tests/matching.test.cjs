@@ -43,3 +43,27 @@ test('bozuk TMDB yanıtı ve geçersiz parametreler güvenle elenir', async () =
   assert.equal(await resolveIdentity(http, '603', 'tv', 0, 2, 'test'), null);
   assert.equal((await resolveIdentity(http, '603', 'movie', null, null, 'test')).originalTitle, 'The Matrix');
 });
+
+test('TMDB geçici ağ hatasında aynı film bir kez yeniden istenir, 401 ve yanlış kimlik elenir', async () => {
+  const primary = 'https://api.themoviedb.org/3/movie/603?api_key=test&append_to_response=external_ids,release_dates';
+  const retry = primary.replace(',release_dates', '');
+  const meta = makeFixture()[primary].json;
+  for (const scenario of [
+    { status: 503, retryId: 603, matches: true, attempts: 2 },
+    { status: 503, retryId: 604, matches: false, attempts: 2 },
+    { status: 401, retryId: 603, matches: false, attempts: 1 }
+  ]) {
+    const calls = [];
+    const http = createHttp({ fetchImpl: fixtureFetch({
+      [primary]: { status: scenario.status },
+      [retry]: { json: { ...meta, id: scenario.retryId } }
+    }, calls) });
+    try {
+      const result = await resolveIdentity(http, '603', 'movie', null, null, 'test');
+      assert.equal(result?.originalTitle ?? null, scenario.matches ? 'The Matrix' : null);
+      assert.equal(calls.length, scenario.attempts);
+    } finally {
+      http.close();
+    }
+  }
+});

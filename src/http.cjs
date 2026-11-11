@@ -142,6 +142,7 @@ function createHttp({ fetchImpl, allowHttp = false, timeoutMs = 4500, deadline =
       bytes:(url,headers,start,end,value)=>finished()?Promise.resolve(null):bytes(url,headers,start,end,options(value))};
   }
   return { request, json, text, bytes, expired, scope, note: emit, failureFor: url => failures.get(url),
+    shortenDeadline: end => { deadline = Math.min(deadline, end); },
     close: () => {
       closed = true;
       for (const controller of controllers) controller.abort();

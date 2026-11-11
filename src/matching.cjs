@@ -11,7 +11,18 @@ async function resolveIdentity(http, tmdbId, mediaType, season, episode, key) {
   if (type === 'tv' && (!positiveInt(season) || !positiveInt(episode))) return fail('missing_episode');
   http.note?.({ stage: 'identity', reason: 'request_started' });
   const append = type === 'movie' ? 'external_ids,release_dates' : 'external_ids';
-  const meta = await http.json(`https://api.themoviedb.org/3/${type}/${id}?api_key=${encodeURIComponent(key)}&append_to_response=${append}`, { timeoutMs: 10000 });
+  const endpoint = `https://api.themoviedb.org/3/${type}/${id}?api_key=${encodeURIComponent(key)}&append_to_response=`;
+  const address = endpoint + append;
+  let meta = await http.json(address, { timeoutMs: 10000 });
+  if (!meta) {
+    const failure = http.failureFor?.(address);
+    if (failure?.reason === 'timeout_or_network' || [0, 500, 502, 503, 504].includes(failure?.status)) {
+      http.note?.({ stage: 'identity', reason: 'retry_started' });
+      // Retry once using the same TMDB identity and only its external IDs.
+      // A movie retry uses the canonical release year without extra dates.
+      meta = await http.json(endpoint + 'external_ids', { timeoutMs: 3500 });
+    }
+  }
   if (!meta) return fail('tmdb_request_failed');
   if (meta.id !== id) return fail('tmdb_id_mismatch');
   const originalTitle = type === 'movie' ? meta.original_title : meta.original_name;

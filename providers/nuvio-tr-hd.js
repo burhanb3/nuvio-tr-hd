@@ -300,6 +300,9 @@ var require_http = __commonJS({
         scope,
         note: emit,
         failureFor: (url) => failures.get(url),
+        shortenDeadline: (end) => {
+          deadline = Math.min(deadline, end);
+        },
         close: () => {
           closed = true;
           for (const controller of controllers) controller.abort();
@@ -330,7 +333,16 @@ var require_matching = __commonJS({
       if (type === "tv" && (!positiveInt(season) || !positiveInt(episode))) return fail("missing_episode");
       http.note?.({ stage: "identity", reason: "request_started" });
       const append = type === "movie" ? "external_ids,release_dates" : "external_ids";
-      const meta = await http.json(`https://api.themoviedb.org/3/${type}/${id}?api_key=${encodeURIComponent(key)}&append_to_response=${append}`, { timeoutMs: 1e4 });
+      const endpoint = `https://api.themoviedb.org/3/${type}/${id}?api_key=${encodeURIComponent(key)}&append_to_response=`;
+      const address = endpoint + append;
+      let meta = await http.json(address, { timeoutMs: 1e4 });
+      if (!meta) {
+        const failure = http.failureFor?.(address);
+        if (failure?.reason === "timeout_or_network" || [0, 500, 502, 503, 504].includes(failure?.status)) {
+          http.note?.({ stage: "identity", reason: "retry_started" });
+          meta = await http.json(endpoint + "external_ids", { timeoutMs: 3500 });
+        }
+      }
       if (!meta) return fail("tmdb_request_failed");
       if (meta.id !== id) return fail("tmdb_id_mismatch");
       const originalTitle = type === "movie" ? meta.original_title : meta.original_name;
@@ -2155,13 +2167,13 @@ var require_moviesdrive = __commonJS({
     var { canonicalNames } = require_page_data();
     var { matchesEpisode } = require_matching();
     var { pixelPage, publicFile } = require_pixeldrain();
-    var ORIGIN = "https://new5.moviesdrive.beer";
+    var ORIGIN = "https://new2.moviesdrive.cyou";
     var ARCHIVE = "https://mdrive.lol";
     function catalogueOrigin(value) {
       const url = safeUrl(value);
       if (!url) return null;
       const u = new URL(url);
-      return u.protocol === "https:" && /^new[1-9]\d{0,2}\.moviesdrive\.beer$/.test(u.hostname) && !u.port ? u.origin : null;
+      return /^https:\/\/new[1-9]\d{0,2}\.moviesdrive\.(?:beer|cyou)$/.test(u.origin) ? u.origin : null;
     }
     function matchesQuery(search, query) {
       const entries = String(search || "").replace(/^\?/, "").split("&").map((s) => s.split("="));
@@ -2179,11 +2191,12 @@ var require_moviesdrive = __commonJS({
         const response = await http.text(origin + suffix, { headers: { Accept: "application/json" } });
         if (!response) return null;
         const next = catalogueOrigin(response.url), u = new URL(response.url);
-        if (!next || u.pathname !== "/search.php") return null;
+        if (!next) return null;
         if (next !== origin) {
+          if (u.pathname !== "/search.php" && u.pathname !== "/") return null;
           origin = next;
-          if (!matchesQuery(u.search, query)) continue;
-        } else if (!matchesQuery(u.search, query)) return null;
+          if (u.pathname !== "/search.php" || !matchesQuery(u.search, query)) continue;
+        } else if (u.pathname !== "/search.php" || !matchesQuery(u.search, query)) return null;
         try {
           return { data: JSON.parse(response.text), origin };
         } catch {
@@ -4162,7 +4175,7 @@ var require_ranking = __commonJS({
 var require_diagnostics = __commonJS({
   "src/diagnostics.cjs"(exports2, module2) {
     "use strict";
-    var VERSION = true ? "1.8.9" : "dev";
+    var VERSION = true ? "1.9.0" : "dev";
     function effectiveTmdbKey(settings, injectedKey) {
       return typeof settings.tmdbApiKey === "string" && settings.tmdbApiKey.trim() ? settings.tmdbApiKey.trim() : typeof injectedKey === "string" ? injectedKey.trim() : "";
     }
@@ -4248,6 +4261,8 @@ var require_index = __commonJS({
     var { cardFields, subtitleLabel } = require_presentation();
     var { profileAddress } = require_hls();
     var { configuration, configurationLabel, effectiveTmdbKey, writeDiagnostic } = require_diagnostics();
+    var FAST_ONLINE_BUDGET_MS = 18e3;
+    var FAST_ONLINE_AFTER_IDENTITY_MS = 8e3;
     function parseUrls(value, allowHttp) {
       if (typeof value !== "string") return [];
       return [...new Set(value.trim().split(/\s+/).map((url) => safeUrl(url, void 0, allowHttp)).filter(Boolean))].slice(0, 3);
@@ -4314,8 +4329,9 @@ var require_index = __commonJS({
         };
       });
     }
-    function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs = 24e3, requestTimeoutMs = 4500, onEvent = () => {
+    function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs, requestTimeoutMs = 4500, onEvent = () => {
     }, sourceFactories = [], lane = "all" } = {}) {
+      const totalBudgetMs = budgetMs ?? (lane === "fastOnline" ? FAST_ONLINE_BUDGET_MS : 24e3);
       let lastReport = null, lastPairs = [];
       return {
         getReport: () => lastReport,
@@ -4363,15 +4379,27 @@ var require_index = __commonJS({
           const reject = (reason) => {
             report.rejected[reason] = (report.rejected[reason] || 0) + 1;
           };
-          const http = createHttp({ fetchImpl, allowHttp, timeoutMs: requestTimeoutMs, deadline: started + budgetMs, scheduler, onEvent: emit });
+          const http = createHttp({ fetchImpl, allowHttp, timeoutMs: requestTimeoutMs, deadline: started + totalBudgetMs, scheduler, onEvent: emit });
           const completed = [];
           const rejectedAudioFamilies = /* @__PURE__ */ new Set();
           const availablePairs = () => completed.filter((pair) => !pair.candidate.mediaFamily || !rejectedAudioFamilies.has(pair.candidate.mediaFamily) || languageCodes(pair.video.audioLanguages).some((code) => code !== "hi"));
           const unique = /* @__PURE__ */ new Map(), waiting = [];
           let active = 0;
           let timer, target, discoverSubtitles;
+          let scheduleDeadline;
           let profileBridgeReady = false;
           const renderSettings = () => ({ ...settings, hlsProfileBridgeReady: profileBridgeReady });
+          const searchTimeout = new Promise((resolve) => {
+            scheduleDeadline = (end) => {
+              http.shortenDeadline(end);
+              scheduler.cancel(timer);
+              timer = scheduler.schedule(() => {
+                report.reason = "deadline";
+                resolve(target ? formatResults(availablePairs(), renderSettings(), target) : []);
+              }, end - Date.now());
+            };
+            scheduleDeadline(started + totalBudgetMs);
+          });
           const strictSubtitles = settings.subtitlePolicy === "require";
           async function withProbeSlot(job) {
             if (active >= (lane === "extraAnime" ? 1 : 3)) await new Promise((resolve) => waiting.push(resolve));
@@ -4496,6 +4524,9 @@ var require_index = __commonJS({
               if (!target) {
                 report.reason = "identity_unavailable";
                 return [];
+              }
+              if (lane === "fastOnline") {
+                scheduleDeadline(Math.min(started + totalBudgetMs, Date.now() + FAST_ONLINE_AFTER_IDENTITY_MS));
               }
               if (["anime", "extraAnime"].includes(lane) && !target.isAnime) {
                 report.reason = "not_anime";
@@ -4628,12 +4659,7 @@ var require_index = __commonJS({
             }
           };
           try {
-            const results = await Promise.race([run(), new Promise((resolve) => {
-              timer = scheduler.schedule(() => {
-                report.reason = "deadline";
-                resolve(target ? formatResults(availablePairs(), renderSettings(), target) : []);
-              }, budgetMs);
-            })]);
+            const results = await Promise.race([run(), searchTimeout]);
             report.results = results.length;
             if (report.reason === "searching") report.reason = http.expired() ? "deadline" : results.length ? "ok" : "no_eligible_sources";
             return results;
@@ -4769,7 +4795,8 @@ var require_index = __commonJS({
         async getStreams(...args) {
           const settings = typeof globalThis.SCRAPER_SETTINGS === "object" && globalThis.SCRAPER_SETTINGS || {};
           const tmdbKey = typeof globalThis.TMDB_API_KEY === "string" ? globalThis.TMDB_API_KEY : "";
-          return createProvider({ settings, tmdbKey, lane, budgetMs: lane === "fastOnline" ? 8e3 : ["main", "extraAnime"].includes(lane) ? 24e3 : lane === "online" ? 16e3 : lane === "anime" ? 2e4 : 28e3 }).getStreams(...args);
+          const budgetMs = { online: 16e3, anime: 2e4, all: 28e3 }[lane];
+          return createProvider({ settings, tmdbKey, lane, budgetMs }).getStreams(...args);
         },
         onSettings: () => [
           { type: "info", label: lane === "main" ? "Film/dizi araması online HLS ile gerçek MP4/MKV dosyalarını aynı listede sunar. Dosya araması boşsa online alternatifler korunur. Anime ayrı taramadır." : lane === "fastOnline" ? "Hızlı İzle, HDFilmDelisi, DiziBal, Purstream ve FilmEkseni online kaynaklarını bağımsız arar. Ana dosya aramasının bitmesini beklemez. HLS kaynakları izleme içindir; dosya indirmesi sunmaz." : lane === "extraAnime" ? "Kısmi kapsama sahip ek anime dosyaları bağımsız taranır. Her bölümde sonuç garantisi yoktur; boş sonuç diğer sağlayıcıların sonuçlarını silmez. Aynı anda tek dosya kontrol edilir." : `Bu ayarlar yalnız ${titles[lane]} taramasına aittir. En fazla kaynak sınırı bu tarama içindir.` },

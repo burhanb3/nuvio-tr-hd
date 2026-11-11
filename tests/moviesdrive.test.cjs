@@ -4,7 +4,7 @@ const {scanMoviesDrive,titleMatches,fileMatches,searchPages,releaseEntries,pixel
 const {probe}=require('../src/media/probe.cjs'),{createHttp}=require('../src/http.cjs');
 const {fixtureFetch,ebml,mp4}=require('./helpers.cjs');
 const target={tmdbId:123456,type:'movie',originalTitle:'Example Movie',searchTitles:['Example Movie'],year:2020,imdbId:'tt1234567',runtimeMinutes:120};
-const origin='https://new5.moviesdrive.beer',archive='https://mdrive.lol/archive/123/',hub='https://hubcloud.ist/drive/example1',terminal='https://gamerxyt.com/hubcloud.php?id=example',pixel='https://pixeldrain.dev/u/Example1',file='https://pixeldrain.dev/api/file/Example1';
+const origin='https://new2.moviesdrive.cyou',archive='https://mdrive.lol/archive/123/',hub='https://hubcloud.ist/drive/example1',terminal='https://gamerxyt.com/hubcloud.php?id=example',pixel='https://pixeldrain.dev/u/Example1',file='https://pixeldrain.dev/api/file/Example1';
 const filename='[[ moviesdrives.com ]] Example.Movie.2020.2160p.English.mkv';
 function media(width=3840,height=1600,language='eng'){
  const size=n=>[n>>8,n&255],duration=Buffer.alloc(8);duration.writeDoubleBE(7200000);
@@ -37,10 +37,10 @@ test('MoviesDrive: resmi alternatif başlık arama/sayfa/dosyada kullanılabilir
 });
 
 test('MoviesDrive: yayıncının yönlendirmesi q/page düşürürse yeni kökende aynı arama yalnız bir kez yeniden yapılır',async()=>{
- const f=fixture(),next='https://new6.moviesdrive.beer',suffix='/search.php?q=Example%20Movie&page=1',search=f[origin+suffix],page=f[origin+'/example-movie-2020/'];
- f[origin+suffix]={status:302,headers:{location:next+'/search.php'}};
- // Even a plausible latest-posts result must not replace the requested query.
- f[next+'/search.php']={json:{hits:[]}};f[next+suffix]=search;f[next+'/example-movie-2020/']=page;
+ const f=fixture(),next='https://new3.moviesdrive.cyou',suffix='/search.php?q=Example%20Movie&page=1',search=f[origin+suffix],page=f[origin+'/example-movie-2020/'];
+ f[origin+suffix]={status:302,headers:{location:next+'/'}};
+ // The publisher can send the search to its homepage during a move.
+ f[next+'/']={body:'<html>Moved</html>'};f[next+suffix]=search;f[next+'/example-movie-2020/']=page;
  const calls=[],http=createHttp({fetchImpl:fixtureFetch(f,calls)});try{
   const rows=await scanMoviesDrive(http,target);assert.equal(rows.length,1);
   assert.equal(calls.filter(c=>c.url===next+suffix).length,1);

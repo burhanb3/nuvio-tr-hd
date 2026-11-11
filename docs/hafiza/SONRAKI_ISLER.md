@@ -1,5 +1,11 @@
 # Sonraki işler
 
+## 1.9.0 öncelik
+
+1. Windows yayın ekranında 1.9.0 sonrası Dune ve bir dizi bölümünü kontrol et. Boş sonuç tekrar ederse TMDB, kaynak keşfi ve Range kontrolünü ayrı ölç.
+2. Dune MoviesDrive ilk canlı tur 3, tekrar 1 MKV. Bu eski sağlayıcının geri kazanımı. Dizi, TR dublaj ve 4K kapsamı açık.
+3. HDFilmDelisi yeni alanında geçerli oynatma listesi doğrulanmadan adres güncelleme. Fiziksel telefon, tam oynatma, indirme ve çevrimdışı altyazı açık.
+
 ## 1.8.9 öncelik
 
 1. Desktop 1.1.35 yenilemesi 0 → 4 ve gerçek uygulama Matrix sağlayıcı testi 10 sonuç; Dune ilk uygulama araması boş, kurulu JVM motoru ayrı işlemde 10 sonuç. Uygulamadaki Dune tekrarını ve boş arama/ayar/ağ nedenlerini incele; tam masaüstü oynatma/indirme açık. 1.8.9 yayını bacb0f15723f2c080ad62f9f784ae907f1581f2c, Test 42894719311/Pages 42894717940 başarılı.

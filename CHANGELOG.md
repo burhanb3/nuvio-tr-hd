@@ -1,5 +1,11 @@
 # Sürüm notları
 
+## 1.9.0 — 11 Kasım 2026
+
+- Hızlı İzle, yavaş TMDB yanıtından sonra kaynakları denemek için sekiz saniyeye kadar süre ayırır. Toplam mantıksal sınır 18 saniyedir.
+- TMDB geçici ağ hatasında aynı yapım bir kez daha istenir. Yıl, kimlik ve bölüm kontrolleri uygulanır.
+- MoviesDrive güncel kataloğa taşındı. Yayıncı aramayı yeni ana sayfasına yönlendirirse özgün sorgu bir kez yeniden gönderilir. Dune (2021) için iki kaynak testinde sırasıyla üç ve bir gerçek MKV bulundu.
+
 ## 1.8.9 — 10 Kasım 2026
 
 - Masaüstü platformu dört sağlayıcıya eklendi; mevcut Android/iOS desteği korundu. Windows uygulamasında depo yenilemesi sonrası dört sağlayıcı göründü; yerleşik Matrix testi 10 sonuç verdi. İlk Dune araması boş kaldı, tekrar kararlılığı incelenmeli.

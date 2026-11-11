@@ -25,7 +25,7 @@ for(const entry of titles){
   bytesRead+=size;const body=Buffer.concat(chunks);
   return{ok:response.ok,status:response.status,url:response.url,headers:response.headers,text:async()=>body.toString('utf8'),arrayBuffer:async()=>Uint8Array.from(body).buffer};
  };
- const started=Date.now(),providers=[createProvider({lane:'main',tmdbKey:'fixed-reference',fetchImpl:transport}),createProvider({lane:'fastOnline',budgetMs:8000,tmdbKey:'fixed-reference',fetchImpl:transport})];
+ const started=Date.now(),providers=[createProvider({lane:'main',tmdbKey:'fixed-reference',fetchImpl:transport}),createProvider({lane:'fastOnline',tmdbKey:'fixed-reference',fetchImpl:transport})];
  if(reference.original_language==='ja')providers.push(createProvider({lane:'anime',budgetMs:20000,tmdbKey:'fixed-reference',fetchImpl:transport}));
  await Promise.all(providers.map(p=>p.getStreams(reference.id,type,entry.season,entry.episode)));
  const result={key:entry.key,tmdbId:reference.id,title:reference.original_title||reference.original_name,type,

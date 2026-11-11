@@ -1,5 +1,11 @@
 # Proje hafızası
 
+## 1.9.0 — Windows boş yayın araması
+
+Nuvio Desktop 1.1.35 normal Dune (2021) ekranı 1.8.9'da yüklenip boş döndü. Kurulu QuickJS motorundaki ayrı tanı işleminde Hızlı İzle TMDB yanıtını yaklaşık 7,98 saniyede aldı. Eski 8 saniyelik sınırda dört kaynak da boş kaldı. Ana aramada arşiv adaylarının Range istekleri ve başka kaynaklar zaman aşımına uğradı. Hızlı İzle 18 saniye toplam ve kimlikten sonra en çok 8 saniye ile çalışır. TMDB geçici ağ veya 5xx hatasında bir kez 3,5 saniyelik aynı kimlik isteği açar. 401/403/404/429 için tekrar yok. Nuvio'nun yerel ağ işleri mantıksal sınırdan uzun sürebilir.
+
+MoviesDrive new5.beer → new1.cyou → new2.cyou geçişi gözlendi. new2 Dune katalog sorgusu HTTP 200 döndürdü. Kaynak odaklı canlı Node taramasında ilk tur 567 MB, 948 MB ve 2,07 GB MKV, ikinci tur yalnız 948 MB MKV verdi. Tümünde dört harici TR seçeneği vardı. İkinci turda arşiv bağlantılarının zaman aşımları sürdü. HDFilmDelisi'nin yeni alanı ilk denemede doğrulanmış oynatma listesi üretmedi. Tam oynatma, indirme, çevrimdışı altyazı, senkron ve fiziksel telefon sınanmadı.
+
 ## 1.8.9 — mevcut çalışma
 
 1.8.9 yayımlandı: bacb0f15723f2c080ad62f9f784ae907f1581f2c; Test 42894719311 ve Pages 42894717940 başarılı, yedi public dosya içerik kontrolü geçti (Windows CRLF metinler Git LF ile karşılaştırıldı). Windows uygulamasında repo yenilendi: 0 → 4 sağlayıcı, 1.8.9. Gerçek uygulama Matrix yerleşik sağlayıcı testi 10 sonuç döndürdü; ilk Dune uygulama araması boş kaldı. Kurulu Desktop JVM QuickJS ile ayrı işlemde Dune 10 sonuç, ancak bu arayüz testi değildir. compatibility/desktop-189-check.json içinde ayrıldı; tam oynatma/indirme sınanmadı.

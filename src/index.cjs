@@ -37,6 +37,9 @@ const { cardFields, subtitleLabel } = require('./media/presentation.cjs');
 const { profileAddress } = require('./media/hls.cjs');
 const { configuration, configurationLabel, effectiveTmdbKey, writeDiagnostic } = require('./diagnostics.cjs');
 
+const FAST_ONLINE_BUDGET_MS = 18000;
+const FAST_ONLINE_AFTER_IDENTITY_MS = 8000;
+
 function parseUrls(value, allowHttp) {
   if (typeof value !== 'string') return [];
   return [...new Set(value.trim().split(/\s+/).map(url => safeUrl(url, undefined, allowHttp)).filter(Boolean))].slice(0, 3);
@@ -88,7 +91,8 @@ function formatResults(completed, settings, target) {
   });
 }
 
-function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs = 24000, requestTimeoutMs = 4500, onEvent = () => {}, sourceFactories = [], lane = 'all' } = {}) {
+function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs, requestTimeoutMs = 4500, onEvent = () => {}, sourceFactories = [], lane = 'all' } = {}) {
+  const totalBudgetMs = budgetMs ?? (lane === 'fastOnline' ? FAST_ONLINE_BUDGET_MS : 24000);
   let lastReport = null, lastPairs = [];
   return {
     getReport: () => lastReport,
@@ -117,15 +121,27 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs = 24000, r
         try { onEvent(event); } catch {}
       };
       const reject = reason => { report.rejected[reason] = (report.rejected[reason] || 0) + 1; };
-      const http = createHttp({ fetchImpl, allowHttp, timeoutMs: requestTimeoutMs, deadline: started + budgetMs, scheduler, onEvent: emit });
+      const http = createHttp({ fetchImpl, allowHttp, timeoutMs: requestTimeoutMs, deadline: started + totalBudgetMs, scheduler, onEvent: emit });
       const completed = [];
       const rejectedAudioFamilies=new Set();
       const availablePairs=()=>completed.filter(pair=>!pair.candidate.mediaFamily||!rejectedAudioFamilies.has(pair.candidate.mediaFamily)||languageCodes(pair.video.audioLanguages).some(code=>code!=='hi'));
       const unique = new Map(), waiting = [];
       let active = 0;
       let timer, target, discoverSubtitles;
+      let scheduleDeadline;
       let profileBridgeReady = false;
       const renderSettings = () => ({ ...settings, hlsProfileBridgeReady: profileBridgeReady });
+      const searchTimeout = new Promise(resolve => {
+        scheduleDeadline = end => {
+          http.shortenDeadline(end);
+          scheduler.cancel(timer);
+          timer = scheduler.schedule(() => {
+            report.reason = 'deadline';
+            resolve(target ? formatResults(availablePairs(), renderSettings(), target) : []);
+          }, end - Date.now());
+        };
+        scheduleDeadline(started + totalBudgetMs);
+      });
       const strictSubtitles = settings.subtitlePolicy === 'require';
       async function withProbeSlot(job) {
         if (active >= (lane === 'extraAnime' ? 1 : 3)) await new Promise(resolve => waiting.push(resolve));
@@ -199,6 +215,10 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs = 24000, r
         try {
           target = await resolveIdentity(http, tmdbId, mediaType, season, episode, effectiveTmdbKey(settings, tmdbKey));
           if (!target) { report.reason = 'identity_unavailable'; return []; }
+          if (lane === 'fastOnline') {
+            // A slow TMDB response should leave time to fetch and check video.
+            scheduleDeadline(Math.min(started + totalBudgetMs, Date.now() + FAST_ONLINE_AFTER_IDENTITY_MS));
+          }
           if (['anime','extraAnime'].includes(lane) && !target.isAnime) { report.reason = 'not_anime'; return []; }
           if (lane === 'extraAnime' && target.type !== 'tv') { report.reason = 'unsupported_media_type'; return []; }
           discoverSubtitles = createSubtitleDiscovery(http, target, settings);
@@ -321,9 +341,7 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs = 24000, r
         } catch { report.reason = 'internal_error'; return target ? formatResults(availablePairs(), renderSettings(), target) : []; }
       };
       try {
-        const results = await Promise.race([run(), new Promise(resolve => {
-          timer = scheduler.schedule(() => { report.reason = 'deadline'; resolve(target ? formatResults(availablePairs(), renderSettings(), target) : []); }, budgetMs);
-        })]);
+        const results = await Promise.race([run(), searchTimeout]);
         report.results = results.length;
         // Request and search timers can expire in the same scheduler tick.
         // Even if the last request wins the promise race, the wall-clock
@@ -424,7 +442,8 @@ function createEntry(lane) {
     async getStreams(...args) {
       const settings = typeof globalThis.SCRAPER_SETTINGS === 'object' && globalThis.SCRAPER_SETTINGS || {};
       const tmdbKey = typeof globalThis.TMDB_API_KEY === 'string' ? globalThis.TMDB_API_KEY : '';
-      return createProvider({ settings, tmdbKey, lane, budgetMs: lane==='fastOnline'?8000:['main','extraAnime'].includes(lane) ? 24000 : lane === 'online' ? 16000 : lane === 'anime' ? 20000 : 28000 }).getStreams(...args);
+      const budgetMs = { online: 16000, anime: 20000, all: 28000 }[lane];
+      return createProvider({ settings, tmdbKey, lane, budgetMs }).getStreams(...args);
     },
     onSettings: () => [{ type: 'info', label: lane === 'main' ? 'Film/dizi araması online HLS ile gerçek MP4/MKV dosyalarını aynı listede sunar. Dosya araması boşsa online alternatifler korunur. Anime ayrı taramadır.' : lane==='fastOnline'?'Hızlı İzle, HDFilmDelisi, DiziBal, Purstream ve FilmEkseni online kaynaklarını bağımsız arar. Ana dosya aramasının bitmesini beklemez. HLS kaynakları izleme içindir; dosya indirmesi sunmaz.':lane==='extraAnime'?'Kısmi kapsama sahip ek anime dosyaları bağımsız taranır. Her bölümde sonuç garantisi yoktur; boş sonuç diğer sağlayıcıların sonuçlarını silmez. Aynı anda tek dosya kontrol edilir.':`Bu ayarlar yalnız ${titles[lane]} taramasına aittir. En fazla kaynak sınırı bu tarama içindir.` },
       ...onSettings().filter(field => (!sourceFields.includes(field.key) || only[lane].includes(field.key)) && (lane!=='extraAnime'||!['includeHls','useDownloadBridge','allowHttp','detailedHlsMetadata'].includes(field.key)))

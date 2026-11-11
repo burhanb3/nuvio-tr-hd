@@ -1,5 +1,11 @@
 # Tasarım kararları
 
+## 1.9.0 — kaynak aramasına ayrı zaman
+
+- Hızlı İzle TMDB kimliğini doğruladıktan sonra en fazla 8 saniye arar ve toplamda 18 saniyelik mantıksal sınırı kullanır. Ana ve anime taramalarının mevcut toplam süreleri korunur.
+- TMDB geçici ağ veya 5xx hatasında 3,5 saniyelik tek tekrar yapar. Film tekrarı aynı kimliğin daha küçük external_ids yanıtını ister. Ek vizyon tarihleri yoksa kanonik yıl kullanılır.
+- MoviesDrive doğrulanan .beer ve .cyou yayıncı kökenleriyle çalışır. Yayıncının başka kökendeki ana sayfasına düşen arama bir kez yeniden gönderilir.
+
 ## 1.8.9 — masaüstü ve kaynak sınırları
 
 - Desktop etiketi her dört scraperda, mobil platformların yanında bulunur. Desktop JVM QuickJS ayrıca gerçek uygulamada sınanmalıdır; tek başına manifest/QuickJS WASM testi cihazda oynatma kanıtı değildir.
