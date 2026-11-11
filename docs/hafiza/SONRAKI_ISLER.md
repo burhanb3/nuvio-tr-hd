@@ -1,5 +1,9 @@
 # Sonraki işler
 
+## 12 Kasım 2026 — yeniden açılış kontrolü
+
+Kullanıcının açık eski Nuvio'yu tamamen kapatıp masaüstü Nuvio TR HD ile Black Clover 1×17'yi sınaması bekleniyor. Son ayrı JVM turu 7651ms/3MP4. Masaüstü ve kullanıcı Başlat menüsü hedefleri doğrulandı; ortak kurulum ve sabitlenmiş bağlantılar değiştirilmedi. Kullanıcı bilgisayarı kullanırken UI testine devam etme.
+
 ## 11 Kasım 2026 — yerel Windows düzeltmesi
 
 1. Black Clover S1E17 normal kaynak ekranında 480/720/1080p üç indirilebilir satır görüldü. Bölüm16 ayrı native işlemde3MP4. Kullanıcı PC'yi kullandığından UI girişleri durduruldu; bir sonraki açılışta temiz final JAR seçili. Tam oynatma/indirme ve TR altyazı kapsamı açık.

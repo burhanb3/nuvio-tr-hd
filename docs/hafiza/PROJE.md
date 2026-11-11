@@ -1,5 +1,9 @@
 # Proje hafızası
 
+## 12 Kasım 2026 — Windows açılış kısayolları
+
+Kullanıcı S1E17'de yeniden boş ekran bildirdiğinde çalışan işlem özgün Program Files kurulumuydu. Kullanıcı bilgisayarı kullandığı için açık uygulama kapatılmadı veya UI girdisi gönderilmedi. Masaüstü Nuvio TR HD ve kullanıcı Başlat menüsü Programs/Nuvio/Nuvio kısayolları final düzeltilmiş yerel kopyaya yönlendirildi; hedefler yeniden okunarak doğrulandı. Ortak Başlat menüsü ve sabitlenmiş bağlantıların değiştiği iddia edilmemeli. Final paketle ayrı JVM testinde Black Clover S1E17 7651ms/3MP4/0ret döndü. Bu son tur normal UI testi değildir; kullanıcının açık eski uygulamayı tamamen kapatıp masaüstü Nuvio TR HD ile yeniden açması ve sınaması bekleniyor. Tam oynatma/indirme/offline testi yapılmadı.
+
 ## 11 Kasım 2026 — Black Clover Windows ikili veri düzeltmesi
 
 Son normal Windows UI kontrolünde Black Clover S1E17 480p/0.13GB, 720p/0.24GB, 1080p/0.42GB indirilebilir Animecix satırları tek Nuvio TR HD altında göründü. EN altyazı etiketi var, TR yok. Kullanıcının devam kaydı inceleme sırasında 16'dan 17'ye geçti; bölüm16 native ayrı işlemde 3MP4. Geçici yerel args/boş sonuç tanısı ile doğru73223/tv/1/17 doğrulandı. Kullanıcı bilgisayarı kullandığını bildirdi; UI girişleri durduruldu. Çalışan tanı kopyası yeniden kapatılmadı, başlatıcı cfg bir sonraki açılışta tanı hook'u içermeyen final JAR'ına ayarlandı. FinalSHA0602c8471d075842341ac91ebbb417eb471c25240806fb62792b00679c0ad6cd. Özgün kurulumSHA aynı. compatibility/windows-http-2026-11-11.json. Eklenti326check geçti.

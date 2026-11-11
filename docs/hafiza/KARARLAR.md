@@ -1,5 +1,9 @@
 # Tasarım kararları
 
+## 12 Kasım 2026 — çalışan eski Windows kurulumu
+
+Kullanıcı bilgisayarı kullanırken uygulama kapatılmaz veya yeniden başlatılmaz. Düzeltilmiş yerel kopyaya masaüstü ve kullanıcı Başlat menüsü kısayollarıyla ulaşılır. Kısayol değişikliği zaten açık özgün uygulamayı düzeltmez; kullanıcı tamamen kapatıp yeniden açmalıdır. Ayrı native süreç sonucu normal UI doğrulaması olarak sunulmaz.
+
 ## 11 Kasım 2026 — Windows native yanıtı
 
 - Byte verisi UTF-8 String üzerinden geri oluşturulamaz. Kaybolmuş byte'ları kabul etmek yerine desktop raw HTTP yanıtında orijinal bodyBytes korunur. Bounded gövde ve kesilme işareti uygulanır.

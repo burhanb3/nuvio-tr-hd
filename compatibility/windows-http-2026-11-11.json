@@ -49,6 +49,21 @@
     "binaryTextAndTruncationRegression": "passed",
     "nativeCallLimitRegression": "passed"
   },
+  "followUp20261112": {
+    "reportedEpisode": 17,
+    "observedRunningApplication": "original system installation",
+    "activeApplicationRestarted": false,
+    "reason": "User is using the computer and will test manually",
+    "verifiedShortcutTargets": ["user desktop Nuvio TR HD", "user Start Menu Nuvio"],
+    "commonStartMenuOrPinnedLinksModified": false,
+    "fixedPackageSeparateJvmRepeat": {
+      "results": 3,
+      "types": { "mp4": 3 },
+      "elapsedMs": 7651,
+      "rejectedVideos": 0
+    },
+    "newNormalUiTest": "pending user relaunch and test"
+  },
   "fullPlayback": "not-run",
   "fullDownload": "not-run",
   "offlineSubtitles": "not-run",

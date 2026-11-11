@@ -47,8 +47,11 @@ java --add-exports java.base/jdk.internal.org.objectweb.asm=ALL-UNNAMED --add-ex
 Çalışan uygulamanın JAR dosyası değiştirilmez. Bu bilgisayarda sistem kurulumuna
 yazma izni olmadığı için kullanıcı klasöründe düzeltilmiş başlatıcı hazırlandı.
 Masaüstündeki **Nuvio TR HD** kısayolu onu açar. Mevcut kurulumun runtime'ı,
-diğer kütüphaneleri ve kullanıcı ayarları kullanılır. Normal uygulama kısayolu
-asıl kurulumu açar. Resmî uygulama güncellenirse bu düzeltmenin uyumluluğu
+diğer kütüphaneleri ve kullanıcı ayarları kullanılır. Kullanıcı Başlat menüsüne
+de düzeltilmiş kopyayı açan Nuvio kısayolu eklendi. Ortak kurulumun veya önceden
+sabitlenmiş bağlantıların asıl uygulamayı açması mümkündür. Zaten açık eski
+uygulama tamamen kapatıldıktan sonra masaüstündeki **Nuvio TR HD** ile açılmalıdır.
+Resmî uygulama güncellenirse bu düzeltmenin uyumluluğu
 yeniden incelenmelidir.
 
 Tam bölüm oynatımı, tam indirme, çevrimdışı altyazı ve fiziksel telefon
