@@ -56,3 +56,19 @@ yeniden incelenmelidir.
 
 Tam bölüm oynatımı, tam indirme, çevrimdışı altyazı ve fiziksel telefon
 kontrolleri ayrıca yapılmalıdır.
+
+## Kontrollü yerel açılış
+
+`Start-NuvioTRHD.ps1` kullanıcı kopyasının köküne yerleştirilir. Aynı dizinde
+`Nuvio TR HD.exe`, `app/Nuvio TR HD.cfg` ve yukarıdaki düzeltilmiş JAR bulunur.
+Exe asıl başlatıcının kopyasıdır; cfg mevcut düzeltilmiş cfg'nin kopyasıdır.
+Betik yalnız belirtilen final JAR SHA'sını ve ilk classpath girdisini kabul eder.
+Başka Nuvio kopyası açıksa onay sorar ve normal pencere kapatma dener. Onay
+verilmezse veya eski işlem kapanmazsa yeni uygulama başlatılmaz; zorla kapatma
+yapılmaz. `-CheckOnly` uygulama açmadan paket/işlem kontrolü yapar.
+
+Bu bilgisayardaki masaüstü ve kullanıcı Başlat menüsü kısayolları bu betiğe
+yönlendirildi. Betik yerel süreç için RemoteSigned politikasıyla çalışır;
+kalıcı execution policy değiştirilmez. Ayrı penceresiz başlatıcı kontrolünde
+gömülü Java 17.0.20.1 düzeltilmiş JAR'ı ilk sıradan yükledi. Bu kontrol kaynak
+ekranının veya oynatmanın çalıştığı anlamına gelmez.

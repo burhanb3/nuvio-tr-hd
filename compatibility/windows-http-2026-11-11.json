@@ -64,6 +64,21 @@
     },
     "newNormalUiTest": "pending user relaunch and test"
   },
+  "checkedLauncherFollowUp": {
+    "observedRunningApplication": "original system installation again",
+    "whyOriginalWasLaunched": "not established",
+    "activeApplicationRestarted": false,
+    "localLauncher": "Start-NuvioTRHD.ps1",
+    "executableName": "Nuvio TR HD.exe",
+    "checkOnly": { "packageValid": true, "otherProcesses": 2, "startsApplication": false },
+    "separateWindowlessJpackageProbe": {
+      "exitCode": 0,
+      "javaVersion": "17.0.20.1",
+      "patchedJarFirst": true,
+      "byteHelperPresent": true
+    },
+    "normalUiRetest": "pending user test"
+  },
   "fullPlayback": "not-run",
   "fullDownload": "not-run",
   "offlineSubtitles": "not-run",

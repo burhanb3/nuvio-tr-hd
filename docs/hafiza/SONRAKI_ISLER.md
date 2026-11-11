@@ -1,5 +1,7 @@
 # Sonraki işler
 
+- Son durum: masaüstü Nuvio TR HD artık Start-NuvioTRHD.ps1 üzerinden açılır. Kullanıcı yeniden aynı hata bildirdiğinde özgün kurulum çalışıyordu; nedeni kesinleşmedi. CheckOnly ve gömülü Java17 penceresiz classpath probe geçti. Kullanıcı kontrollü başlatıcıyla deneyip hata sürerse çalışan yol ve gerçek kaynak raporu birlikte incelenmeli. Tekrar UI başarısı/tam indirme doğrulanmış sayılmamalı.
+
 ## 12 Kasım 2026 — yeniden açılış kontrolü
 
 Kullanıcının açık eski Nuvio'yu tamamen kapatıp masaüstü Nuvio TR HD ile Black Clover 1×17'yi sınaması bekleniyor. Son ayrı JVM turu 7651ms/3MP4. Masaüstü ve kullanıcı Başlat menüsü hedefleri doğrulandı; ortak kurulum ve sabitlenmiş bağlantılar değiştirilmedi. Kullanıcı bilgisayarı kullanırken UI testine devam etme.

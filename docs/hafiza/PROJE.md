@@ -1,5 +1,9 @@
 # Proje hafızası
 
+## 12 Kasım 2026 — kontrollü Windows başlatıcısı
+
+Kullanıcı yeniden aynı hatayı bildirdi; çalışan iki Nuvio işlemi yine özgün Program Files yolundaydı. Önceki kısayolların hedefleri doğruydu; kullanıcının hangi girişten açtığı ve neden özgün kopyanın çalıştığı kesinleşmedi. Yerel exe/cfg Nuvio TR HD olarak ayrıca adlandırıldı. Start-NuvioTRHD.ps1 paket SHA/ilk classpath kontrolünden sonra başka Nuvio kopyası varsa kullanıcı onayıyla CloseMainWindow dener; zorla kapatma yapmaz, kapanmazsa açılışı durdurur. Masaüstü ve kullanıcı Başlat menüsü kısayolları bu başlatıcıya bağlandı. Kullanıcının açık penceresine dokunulmadı. CheckOnly eski iki işlemi saptadı; ayrı penceresiz jpackage probe özgün gömülü Java17.0.20.1 ile düzeltilmiş JAR'ın öncelikli ve helper'ın mevcut olduğunu doğruladı. Bu UI/kaynak ekranı testi değildir. Kullanıcının masaüstü kısayolunu yeniden denemesi bekleniyor.
+
 ## 12 Kasım 2026 — Windows açılış kısayolları
 
 Kullanıcı S1E17'de yeniden boş ekran bildirdiğinde çalışan işlem özgün Program Files kurulumuydu. Kullanıcı bilgisayarı kullandığı için açık uygulama kapatılmadı veya UI girdisi gönderilmedi. Masaüstü Nuvio TR HD ve kullanıcı Başlat menüsü Programs/Nuvio/Nuvio kısayolları final düzeltilmiş yerel kopyaya yönlendirildi; hedefler yeniden okunarak doğrulandı. Ortak Başlat menüsü ve sabitlenmiş bağlantıların değiştiği iddia edilmemeli. Final paketle ayrı JVM testinde Black Clover S1E17 7651ms/3MP4/0ret döndü. Bu son tur normal UI testi değildir; kullanıcının açık eski uygulamayı tamamen kapatıp masaüstü Nuvio TR HD ile yeniden açması ve sınaması bekleniyor. Tam oynatma/indirme/offline testi yapılmadı.

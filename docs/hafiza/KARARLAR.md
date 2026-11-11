@@ -1,5 +1,7 @@
 # Tasarım kararları
 
+- Windows yerel düzeltme başlatıcısı başka Nuvio işlemini sessizce veya zorla kapatmaz. Kullanıcının kısayolu açması ve iletişim kutusunda onay vermesiyle normal pencere kapatma denenir. Açılış öncesi paket SHA ve classpath kontrolü zorunludur; yalnız kısayolun doğru olması uygulamanın doğru kopyada çalıştığı kanıtı değildir.
+
 ## 12 Kasım 2026 — çalışan eski Windows kurulumu
 
 Kullanıcı bilgisayarı kullanırken uygulama kapatılmaz veya yeniden başlatılmaz. Düzeltilmiş yerel kopyaya masaüstü ve kullanıcı Başlat menüsü kısayollarıyla ulaşılır. Kısayol değişikliği zaten açık özgün uygulamayı düzeltmez; kullanıcı tamamen kapatıp yeniden açmalıdır. Ayrı native süreç sonucu normal UI doğrulaması olarak sunulmaz.
