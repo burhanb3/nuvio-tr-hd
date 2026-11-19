@@ -9,13 +9,15 @@ Tüm ölçümler bu bilgisayardan (TR ISS). 339 test/QuickJS geçti. Telefon, ta
 - **MoviesDrive:**
   - `new2` kökü 302 ile `new4`'ün sorgusuz `/search.php` adresine gidiyordu; arama başına iki fazla istek. ORIGIN `new4` yapıldı.
   - Sürüm zinciri (archive → hub → gamerxyt → Pixeldrain info) 2 yerine 3 paralel çalışır.
-  - Dune keşfi 8,9 → 4,3 sn (3 MKV), Inception 5,4 sn (1080p 2,50 GB + 2160p 7,59 GB).
-  - TV: BB/GoT için yalnız çok sezonlu paket sayfaları var ("Season 1–5", "Season1 - 8") ve IMDb kimliği yok. Kimlik kuralı gevşetilmeden eklenemez; eklenmedi.
+  - Dune keşfi 8,9 → 4,3 sn (3 MKV), Inception 5,4 sn (1080p 2,50 GB + 2160p 7,59 GB). Her iki tarafta tek ölçüm, farklı saatlerde; kök ve eşzamanlılığın payı ayrı ölçülmedi.
+  - TV: BB/GoT için yalnız çok sezonlu paket sayfaları var ("Season 1–5", "Season1 - 8"). Arama satırında da sayfanın kendisinde de IMDb bağlantısı yok (BB sayfası kontrol edildi). Kimlik kuralı gevşetilmeden eklenemez; eklenmedi.
 - **`*.workers.dev` artık erişilebilir.** 1.9.1 kaydında SNI engelli görünüyordu; iki gözlem de aynı bilgisayardan, farklı günlerde/saatlerde.
   - 4KHDHub Worker aynaları Google Drive'ı vekil ediyor. 403 gövdesi "download quota for this file has been exceeded"; kota dosya başına ve zamanla değişiyor.
   - Yedi aynada 12'şer Range isteği (1,5 sn arayla): 9, 1, 8, 0, 7, 1, 12 başarı.
   - Inception 4KHDHub: 1080p 7,09 GB, 2160p 32,25 GB ve 70,82 GB MKV (HI/EN ses, TR/EN harici altyazı).
-- **GoT S1E1 (gerçek sezon verisiyle):** 9 sonuç; HDRezka 4 MP4 (240–720p), Goojara 720p, 4KHDHub 1080p 14,63 GB ve 2160p 23,14/28,80 GB, VixSrc online. Daha önceki HDRezka yokluğu izleme düzeneğinin sahte TMDB anahtarıyla sezon uç noktasından 401 almasıydı.
+- **GoT S1E1 (elle yazılmış sabit sezon fixture'ıyla, gerçek TMDB yanıtı değil):** iki turda 9 ve 10 sonuç; HDRezka 4 MP4 (240–720p), Goojara 720p, 4KHDHub 1080p 6,40/14,63 GB ve 2160p 23,14/28,80 GB, VixSrc online.
+  - 4KHDHub dosyalarının hepsi workers.dev hostlarından geldi. Aynı dosyada baş Range 206 iken kuyruk Range 403 görülebiliyor; tekrarlarda bir 1080p kota 403'üyle düştü.
+  - Önceki HDRezka yokluğu büyük olasılıkla izleme düzeneğinin sahte anahtarla sezon uç noktasından aldığı 401'di. Gerçek anahtarla/telefonda doğrulanmadı.
 - **Elenen aday kaynaklar (19 Kasım):**
   - DahmerMovies dosya hostu: Cloudflare challenge.
   - MovieBox: tüm uç noktalar 403 "invalid region" (TR bölge engeli).

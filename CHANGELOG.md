@@ -6,12 +6,12 @@
   - Eski `new2` kökü her aramayı 302 ile yeni kökün sorgusuz `/search.php` adresine yönlendiriyordu; bu her aramada iki fazla istek (≈1,5 sn) demekti. Arama artık doğrudan güncel `new4` kökünden başlar.
   - Kök yine değişirse mevcut davranış korunur: sorgusuz yanıttaki "son yazılar" listesi kullanılmaz, yeni kökte bir kez gerçek arama yapılır. Bu davranış için test eklendi.
   - Sürümler 2 yerine 3 paralel zincirle çözülür.
-  - Canlı ölçüm (aynı bilgisayar, TR ISS): Dune keşfi 8,9 sn'den 4,3 sn'ye indi (3 MKV, 480/720/1080p). Inception 5,4 sn (1080p 2,50 GB + 2160p 7,59 GB).
+  - Canlı ölçüm (aynı bilgisayar, TR ISS, her iki tarafta tek ölçüm, farklı saatlerde): Dune keşfi 8,9 sn'den 4,3 sn'ye indi (3 MKV, 480/720/1080p). Inception 5,4 sn (1080p 2,50 GB + 2160p 7,59 GB). Kök ve eşzamanlılık değişikliklerinin payı ayrı ölçülmedi.
 - **Ağ durumu değişti:** `*.workers.dev` bu bilgisayardan artık erişilebiliyor; 1.9.1 öncesinde SNI engelliydi. Kod değişmeden 4KHDHub'ın Worker aynaları sonuç vermeye başladı:
   - Inception: 1080p 7,09 GB, 2160p 32,25 GB ve 70,82 GB MKV.
-  - GoT S1E1: 1080p 14,63 GB, 2160p 23,14 GB ve 28,80 GB MKV.
+  - GoT S1E1: 1080p 6,40 GB ve 14,63 GB, 2160p 23,14 GB ve 28,80 GB MKV. Hepsi workers.dev hostlarından; tekrarlarda 1080p'lerden biri kota 403'üyle düşebiliyor.
   - Bu aynalar Google Drive kotasına bağlı. 12 denemelik ölçümde dosyaya göre 0/12 ile 12/12 arasında başarı görüldü. Listede görünen 4K dosyanın indirmesi kota yüzünden başlamayabilir.
-- **GoT S1E1 tam tarama:** sezon verisi doğru verilince 9 sonuç geldi: HDRezka 240/360/480/720p MP4, Goojara 720p, 4KHDHub 1080p/2160p ×2, VixSrc online. Önceki "HDRezka yok" gözlemi test düzeneğindeki sahte sezon 401'inden kaynaklanıyordu.
+- **GoT S1E1 tam tarama:** elle yazılmış sabit sezon verisiyle (gerçek TMDB yanıtı değil) iki turda 9 ve 10 sonuç geldi: HDRezka 240/360/480/720p MP4, Goojara 720p, 4KHDHub 1080p/2160p, VixSrc online. Önceki "HDRezka yok" gözlemi büyük olasılıkla test düzeneğindeki sahte anahtarın sezon uç noktasından aldığı 401'di. Gerçek anahtarla ve telefonda doğrulanmadı.
 - **Yeni kaynak araştırması:** bu tur kurallara uyan yeni bağımsız dosya kaynağı bulunamadı. Nedenleri hafızada (SONRAKI_ISLER) tarihli olarak kayıtlı.
 - 339 yerel test/QuickJS geçti. Fiziksel telefon, tam oynatma, indirme ve senkron testi yapılmadı.
 
