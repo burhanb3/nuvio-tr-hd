@@ -9,3 +9,4 @@ catalog.local.json
 *.zip
 plugin-host/
 download-bridge/
+.claude/settings.local.json

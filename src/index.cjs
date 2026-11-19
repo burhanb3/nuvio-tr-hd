@@ -156,9 +156,15 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs, requestTi
         unique.set(key, candidate);
         if (/\.m3u8(?:$|[?#])/i.test(candidate.url) && settings.includeHls === false) { reject('hls_disabled'); return; }
         const lightweightHls = ['PlayIMDb', 'VixSrc', 'DiziYou', 'DiziBak', 'FilmModu','HDFilmDelisi','DiziBal','Purstream'].includes(candidate.source) && settings.detailedHlsMetadata !== true;
+        let unwantedAudio = false;
         const video = await withProbeSlot(() => probe(http, candidate, settings.includeHls !== false, settings.autoSubtitles !== false,
-          { detailedHls: !lightweightHls,onUnwantedAudio:()=>{reject('hindi_only_audio');if(typeof candidate.mediaFamily==='string')rejectedAudioFamilies.add(candidate.mediaFamily);} }));
-        if (!video || http.expired()) { reject('video_unavailable'); return; }
+          { detailedHls: !lightweightHls,onUnwantedAudio:()=>{unwantedAudio=true;reject('hindi_only_audio');if(typeof candidate.mediaFamily==='string')rejectedAudioFamilies.add(candidate.mediaFamily);} }));
+        if (!video || http.expired()) {
+          // Count each rejected file once, under its most specific reason.
+          const failure = http.failureFor(candidate.url)?.reason;
+          if (!unwantedAudio) reject(['host_unreachable','server_unavailable'].includes(failure) ? failure : 'video_unavailable');
+          return;
+        }
         const minimum = Number(settings.minimumQuality ?? 0);
         if (video.dimensions && parseInt(qualityLabel(video.dimensions)) < minimum) { reject('quality'); return; }
         const pair = { candidate, video, subtitles: [] };
@@ -187,8 +193,12 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs, requestTi
           if (['tr','en'].every(language=>pair.subtitles.some(s=>s.language===language))) return;
         }
         const needed=['tr','en'].filter(language=>!pair.subtitles.some(s=>s.language===language));
-        const scheduled = new Set(), deferred=[],counts={tr:0,en:0},generalCount={tr:0,en:0},releaseReserved={tr:false,en:false},limits={tr:12,en:8};let totalCount=0;
-        const acceptBatch = async rows => {
+        const scheduled = new Set(), deferred=[],counts={tr:0,en:0},generalCount={tr:0,en:0},releaseReserved={tr:false,en:false},limits={tr:12,en:8},serviceCounts=new Map();let totalCount=0;
+        // A subtitle service may list rows while its body endpoint answers 5xx
+        // (AltyazıDB). Such fast server failures must not use up the load
+        // budget of a working service whose batch arrives later.
+        const failedFast=url=>{const failure=http.failureFor(url);return http.unavailable?.(url)===true||!!failure&&(failure.status>=500||['host_unreachable','server_unavailable'].includes(failure.reason));};
+        const acceptBatch = async (rows,finalPass=false) => {
           if(http.expired())return;
           const entries = rows.map(sub => {
           if (!sub || typeof sub !== 'object') return null;
@@ -197,18 +207,31 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs, requestTi
           }).filter(Boolean).sort((a,b)=>b._match.score-a._match.score).filter(sub=>{
             const url=safeUrl(sub.url,candidate.subtitleBase,allowHttp);
             const language=subtitleLanguage(sub.language||sub.lang||sub.lang_code),key=url+JSON.stringify(sub.headers||{}),strong=sub._match.score>=90;
-            if(!language||!needed.includes(language)||!url||scheduled.has(key)||counts[language]>=limits[language]||/\.(zip|ass|ssa|rar)(?:\/?$|[?#])/i.test(url))return false;
+            if(!language||!needed.includes(language)||!url||scheduled.has(key)||/\.(zip|ass|ssa|rar)(?:\/?$|[?#])/i.test(url)||failedFast(url))return false;
+            // Keep over-limit rows for the final pass; a refund may free room.
+            if(counts[language]>=limits[language]){if(!finalPass)deferred.push(sub);return false;}
             const generalLimit=video.videoHash&&!releaseReserved[language]?limits[language]-4:limits[language];
             if(!strong&&generalCount[language]>=generalLimit){deferred.push(sub);return false;}
+            // First pass: one body host cannot take the whole budget before
+            // another service's batch has arrived.
+            const service=language+' '+new URL(url).origin;
+            if(!strong&&!finalPass&&(serviceCounts.get(service)||0)>=4){deferred.push(sub);return false;}
             const existing=pair.subtitles.filter(s=>s.language===language);
             if(existing.length===4&&sub._match.score<=(existing[3]._score||0))return false;
-            scheduled.add(key);totalCount++;counts[language]++;if(!strong)generalCount[language]++;return true;
+            scheduled.add(key);totalCount++;counts[language]++;if(!strong)generalCount[language]++;serviceCounts.set(service,(serviceCounts.get(service)||0)+1);return true;
           });
-          if(entries.length)await loadSubtitles(http,{...candidate,subtitles:entries},target,allowHttp,
-            {keepScore:true,onTrack:acceptTrack,videoDuration:video.durationSource==='tmdb'?undefined:video.duration});
+          if(entries.length){
+            await loadSubtitles(http,{...candidate,subtitles:entries},target,allowHttp,
+              {keepScore:true,onTrack:acceptTrack,videoDuration:video.durationSource==='tmdb'?undefined:video.duration});
+            // Refund only answered 5xx/breaker skips, never slow timeouts.
+            for(const sub of entries){
+              if(!failedFast(safeUrl(sub.url,candidate.subtitleBase,allowHttp)))continue;
+              const language=subtitleLanguage(sub.language||sub.lang||sub.lang_code);counts[language]--;if(sub._match.score<90)generalCount[language]--;
+            }
+          }
         };
         await discoverSubtitles(candidate,video,{onBatch:acceptBatch,languages:needed});
-        if(!http.expired()&&deferred.length){for(const language of needed)releaseReserved[language]=true;await acceptBatch(deferred.slice());}
+        if(!http.expired()&&deferred.length){for(const language of needed)releaseReserved[language]=true;await acceptBatch(deferred.splice(0),true);}
         if(!http.expired()&&!pair.subtitles.length)reject(totalCount?'subtitle_unavailable':'subtitle_no_match');
       };
       const run = async () => {

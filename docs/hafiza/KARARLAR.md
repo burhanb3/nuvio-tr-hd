@@ -2,6 +2,19 @@
 
 - Windows yerel düzeltme başlatıcısı başka Nuvio işlemini sessizce veya zorla kapatmaz. Kullanıcının kısayolu açması ve iletişim kutusunda onay vermesiyle normal pencere kapatma denenir. Açılış öncesi paket SHA ve classpath kontrolü zorunludur; yalnız kısayolun doğru olması uygulamanın doğru kopyada çalıştığı kanıtı değildir.
 
+## 1.9.1 — altyazı hakkı, devre kesici ve ölü yayınlar
+
+- **Devre kesici:** origin anahtarına ek olarak ilk yol segmenti (`p:origin/segment`) için de tutulur. Üç 5xx yanıtı gelmiş ve hiç başarılı yanıt yoksa o yol arama süresince atlanır. Böylece çalışan katalog yolu bozuk indirme yolunu kurtarmaz. Zaman aşımı devre kesiciye sayılmaz; yalnız taşıma hatası (`network:true`) sayılır. `timeout_or_network` neden metni AniMOM tekrarları için değişmez.
+- **Altyazı hakkı:** ilk turda servis başına 4 aday alınır, kalanlar son tura ertelenir. 5xx veya devre kesiciyle düşen adayın hakkı iade edilir, zaman aşımında edilmez. Böylece yavaş servisin hakkı sonsuz döngüye girmez.
+- **Altyazı eşleşmesi:**
+  - Forced/foreign-parts-only altyazı tam film altyazısı değildir. Hedefin kendi adında "forced" geçmiyorsa reddedilir.
+  - AltyazıDB ve stremio.homes satırları yalnız sürüm etiketi içerdiğinde (yıl/başlık yok) önlerine başlık.yıl eklenir. Bu, "tam sürüm" iddiası için gerçek ad kanıtı yerine geçmez.
+- **HLS denetimleri:**
+  - Bitmiş listenin süresi TMDB süresinin 0,7–1,35 katı dışındaysa, MP4/MKV'deki gibi elenir.
+  - Tek parçalı listede yalnız ilk segment için bir HEAD yapılır. Yalnız DNS/TLS/bağlantı hatası eler; 403/404/405 ve yavaş CDN kalır.
+  - Alt liste denetimi kaynak bazında isteğe bağlıdır (`verifyFirstVariant`) ve şimdilik yalnız HDFilmDelisi'de açıktır. 4 sn içinde gelen 5xx, taşıma hatası veya HTML yanıtı eler; zaman aşımı elemez. Sınır, canlıda 0,4–3,7 sn'de gelen 502'leri yakalamak için 2,5 sn'den 4 sn'ye çıkarıldı. Diğer hafif HLS kaynaklarına kanıt olmadan genişletilmez; her kaynağa bir istek ekler.
+- **HDFilmDelisi kimliği** arama satırından değil sayfadan alınır: JSON-LD `sameAs` tam olarak `imdb.com/title/<imdb>/` olmalı ve yıl tutmalı. Oynatıcı `videoId` aynı IMDb olmalı. Erişim kapısı açıkça `public` + `requireAuthForWatch:false` olmalı; alan yoksa kapalı sayılır. Oynatıcı kodu yalnız çözülür, `new Function` çalıştırılmaz. `?format=.m3u8` işareti native indiricinin HLS'yi dosya sanmaması için korunur.
+
 ## 12 Kasım 2026 — çalışan eski Windows kurulumu
 
 Kullanıcı bilgisayarı kullanırken uygulama kapatılmaz veya yeniden başlatılmaz. Düzeltilmiş yerel kopyaya masaüstü ve kullanıcı Başlat menüsü kısayollarıyla ulaşılır. Kısayol değişikliği zaten açık özgün uygulamayı düzeltmez; kullanıcı tamamen kapatıp yeniden açmalıdır. Ayrı native süreç sonucu normal UI doğrulaması olarak sunulmaz.

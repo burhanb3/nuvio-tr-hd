@@ -41,6 +41,13 @@ test('HDHub Pixel: başka bölüm, yıl, yapım/poster ve metadata dosya adı ka
   const http=createHttp({fetchImpl:fixtureFetch(f)});try{assert.deepEqual(await scanHdHub(http,target),[],change);}finally{http.close();}
  }
 });
+test('HDHub Pixel film: başlık ile yıl arasındaki alt başlık kabul, başka yıl/başlık/örnek reddedilir',()=>{
+ const movie={tmdbId:438631,type:'movie',originalTitle:'Dune',year:2021,releaseYears:[2021]};
+ assert.equal(pixelFilename('Dune - Part One (2021) 1080p BluRay 10bit HEVC [Hindi DDP 5.1 + English DDP 7.1] x265 (DarQ-LUMiX) 4KHDHub.com.mkv',movie),true);
+ assert.equal(pixelFilename('Dune.2021.2160p.WEB-DL.mkv',movie),true);
+ for(const name of ['Dune Part Two (2024) 1080p.mkv','Dune (2021) 1984 Edition 1080p.mkv','Dune.2021.1080p.Sample.mkv','Dune.2021.Featurette.1080p.mkv','Dune Messiah 1080p.mkv','Dunes.2021.1080p.mkv','Dune.2021.1080p.zip'])
+  assert.equal(pixelFilename(name,movie),false,name);
+});
 test('HDHub Pixel: kaynak kalite etiketi ölçülen pikseli geçmez; HI-only ve kısa/yanlış boyutlu medya elenir',async()=>{
  for(const kind of ['low','hi','short','size']){const f=fixture();f[file].body=media(kind==='low'?{width:1280,height:720}:kind==='hi'?{language:'hin'}:kind==='short'?{seconds:60}:{});f[file+'/info'].json.size=f[file].body.length+(kind==='size'?1:0);
   const http=createHttp({fetchImpl:fixtureFetch(f)});try{const rows=await scanHdHub(http,target),v=await probe(http,rows[0]);if(kind==='low')assert.deepEqual(v.dimensions,{width:1280,height:720});else assert.equal(v,null,kind);}finally{http.close();}

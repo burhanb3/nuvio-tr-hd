@@ -96,9 +96,39 @@ async function sampledBytes(http, media, headers, totalDuration, base) {
   return { bytes: Math.round(valid.reduce((sum, s) => sum + s.bytes, 0) / valid.reduce((sum, s) => sum + s.duration, 0) * totalDuration), samples: valid.length };
 }
 
+// Same tolerance as a probed MP4/MKV. A finished playlist 1.5-2x the title's
+// runtime is a concatenated/broken encode, not this film.
+function outsideRuntime(seconds, candidate) {
+  const expected = Number(candidate.identity?.runtimeMinutes) * 60;
+  return seconds > 0 && expected > 0 && (seconds < expected * 0.7 || seconds > expected * 1.35);
+}
 async function inspectHls(http, text, url, candidate, options = {}) {
   const master = inspectPlaylist(text, url);
   if (!master?.valid) return null;
+  if (outsideRuntime(master.duration, candidate)) return null;
+  // A direct media playlist can be served while its segment host no longer
+  // exists (FilmModu: NXDOMAIN on every resolver). One HEAD of the first
+  // segment rejects it only on a transport error; a slow, 403/404/405 or
+  // HEAD-less CDN is left as it was. The breaker skips the same dead host
+  // for the next alternatives without another request.
+  if (!master.variants.length && master.segments.length && !master.live && !http.expired()) {
+    const first = master.segments[0].url;
+    const result = await http.request(first, { method: 'HEAD', headers: requestHeaders(candidate, url, first), timeoutMs: 1600, nativeGroup: 'media-probe' });
+    const failure = !result && http.failureFor?.(first);
+    if (failure && (failure.network === true || failure.reason === 'host_unreachable')) return null;
+  }
+  // Opt-in for a source whose master generator answers while its segment
+  // store is down (HDFilmDelisi/vixolity, 2026-11: master 200, every child
+  // 502). One GET of the first variant; only an answered 5xx, a transport
+  // error or a non-playlist body rejects. A slow child is kept. Its origin
+  // answers that 502 after 0.4-3.7 s, so the limit sits above that.
+  if (candidate.verifyFirstVariant === true && master.variants.length && !http.expired()) {
+    const first = master.variants[0].url;
+    const child = await http.text(first, { headers: requestHeaders(candidate, url, first), timeoutMs: 4000, nativeGroup: 'media-probe' });
+    if (child && !child.text.replace(/^﻿/, '').trimStart().startsWith('#EXTM3U')) return null;
+    const failure = !child && http.failureFor?.(first);
+    if (failure && (failure.status >= 500 || failure.network === true || ['host_unreachable', 'server_unavailable'].includes(failure.reason))) return null;
+  }
   const groups = new Set(master.variants.map(v => v.audioGroup).filter(Boolean));
   const audioLanguages = [...new Set(master.media.filter(m => m.type === 'AUDIO' && groups.has(m.group) && m.language).map(m => m.language))];
   const subtitleGroups=new Set(master.variants.map(v=>v.subtitlesGroup).filter(Boolean));
@@ -141,6 +171,7 @@ async function inspectHls(http, text, url, candidate, options = {}) {
     firstMedia = media; firstUrl = lowest.url;
     if (media?.live) live = true;
     if (media?.duration) { duration = media.duration; durationSource = 'playlist'; }
+    if (outsideRuntime(media?.duration, candidate)) return null;
   }
   if (!duration && !live && Number(candidate.identity?.runtimeMinutes) > 0) {
     duration = Number(candidate.identity.runtimeMinutes) * 60;

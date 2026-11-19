@@ -7,6 +7,25 @@ function createHttp({ fetchImpl, allowHttp = false, timeoutMs = 4500, deadline =
   const clock = scheduler || createScheduler();
   const failures = new Map(), rateLimited = new Map(), denied = new Set();
   const controllers = new Set();
+  // Per-search circuit breaker. Some networks refuse a whole shared-hosting
+  // suffix (e.g. *.workers.dev via SNI) with an immediate transport error, and
+  // some origins answer every request with 5xx. Without any successful
+  // response in this search, stop sending further requests there. A slow
+  // timeout is not counted: it may be the overall network, not the host.
+  const health = new Map();
+  const familyOf = host => { const shared = host.match(/\.(workers\.dev|pages\.dev|r2\.dev)$/); return shared ? '*.' + shared[1] : host; };
+  const stats = key => { let value = health.get(key); if (!value) health.set(key, value = { ok: 0, network: 0, server: 0 }); return value; };
+  // A service can answer its catalogue path and fail every download path
+  // (e.g. /subtitles/... 200, /subtitle/... 502), so 5xx is also tracked
+  // per first path segment, beside the whole origin.
+  const serverKeys = target => { const parsed = new URL(target); return ['o:' + parsed.origin, 'p:' + parsed.origin + '/' + parsed.pathname.split('/')[1]]; };
+  const blockedReason = target => {
+    const host = new URL(target).hostname, family = health.get('f:' + familyOf(host));
+    if (family && family.ok === 0 && family.network >= 2) return 'host_unreachable';
+    if (serverKeys(target).some(key => { const value = health.get(key); return value && value.ok === 0 && value.server >= 3; })) return 'server_unavailable';
+    return null;
+  };
+  const unavailable = target => { try { const url = safeUrl(target, undefined, allowHttp); return !!url && !!blockedReason(url); } catch { return false; } };
   let closed = false;
   const expired = () => closed || Date.now() >= deadline;
   const networkPools = { 'subtitle-body': { limit:4, active:0, waiting:[] }, 'subtitle-body-en': { limit:1, active:0, waiting:[] }, 'media-probe': { limit:3, active:0, waiting:[] } };
@@ -40,12 +59,24 @@ function createHttp({ fetchImpl, allowHttp = false, timeoutMs = 4500, deadline =
     const end = Math.min(deadline, started + requestedTimeout);
     const controller = typeof AbortController === 'function' ? new AbortController() : null;
     if (controller) controllers.add(controller);
+    let skipped = null, transportError = false;
     const work = (async () => {
       for (let redirects = 0; redirects <= 3; redirects++) {
         if (expired() || Date.now() >= end || (rateLimited.get(new URL(url).origin) || 0) > Date.now()) return null;
-        const response = await fetchNetwork(url, { ...fetchOptions, ...(controller ? { signal: controller.signal } : {}), redirect: 'manual' }, nativeGroup, end);
+        if ((skipped = blockedReason(url))) return null;
+        let response;
+        try {
+          response = await fetchNetwork(url, { ...fetchOptions, ...(controller ? { signal: controller.signal } : {}), redirect: 'manual' }, nativeGroup, end);
+        } catch (error) {
+          // Our own abort (deadline/close) is not evidence against the host.
+          if (!controller?.signal.aborted && !expired()) { stats('f:' + familyOf(new URL(url).hostname)).network++; transportError = true; }
+          throw error;
+        }
         if (!response) return null;
-        emit({ stage: 'http', host: new URL(url).hostname, status: response.status, method: options.method || 'GET' });
+        const host = new URL(url).hostname;
+        stats('f:' + familyOf(host)).ok++;
+        for (const key of serverKeys(url)) if (response.status >= 500) stats(key).server++; else stats(key).ok++;
+        emit({ stage: 'http', host, status: response.status, method: options.method || 'GET' });
         if ([301, 302, 303, 307, 308].includes(response.status)) {
           const next = safeUrl(response.headers.get('location'), url, allowHttp);
           if (!next || redirects === 3) return null;
@@ -80,8 +111,11 @@ function createHttp({ fetchImpl, allowHttp = false, timeoutMs = 4500, deadline =
     })();
     const result = await bounded(work, end, controller);
     if (!result && !failures.has(rawUrl)) {
-      failures.set(rawUrl,{reason:'timeout_or_network'});
-      emit({ stage: 'http', host: new URL(rawUrl).hostname, reason: 'timeout_or_network' });
+      const reason = skipped || 'timeout_or_network';
+      // `network` marks a transport error (DNS/TLS/refused) as opposed to a
+      // slow answer; the reason string itself stays as callers expect.
+      failures.set(rawUrl,transportError ? {reason,network:true} : {reason});
+      emit({ stage: 'http', host: new URL(skipped ? url : rawUrl).hostname, reason });
     }
     return result;
   }
@@ -135,13 +169,13 @@ function createHttp({ fetchImpl, allowHttp = false, timeoutMs = 4500, deadline =
     // Share the actual network pools and failure state. A provider's budget
     // prevents starting its next hop; it never releases an unfinished native
     // request or changes the deadline for another provider.
-    return {expired:finished,note:emit,failureFor:url=>failures.get(url),
+    return {expired:finished,note:emit,failureFor:url=>failures.get(url),unavailable,
       request:(url,value)=>finished()?Promise.resolve(null):request(url,options(value)),
       json:(url,value)=>finished()?Promise.resolve(null):json(url,options(value)),
       text:(url,value)=>finished()?Promise.resolve(null):text(url,options(value)),
       bytes:(url,headers,start,end,value)=>finished()?Promise.resolve(null):bytes(url,headers,start,end,options(value))};
   }
-  return { request, json, text, bytes, expired, scope, note: emit, failureFor: url => failures.get(url),
+  return { request, json, text, bytes, expired, scope, note: emit, failureFor: url => failures.get(url), unavailable,
     shortenDeadline: end => { deadline = Math.min(deadline, end); },
     close: () => {
       closed = true;

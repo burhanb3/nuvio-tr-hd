@@ -2,6 +2,31 @@
 
 - 12 Kasım ek bilgi: kullanıcı Windows Son aramalar listesindeki Nuvio girişinden açtığını ekran görüntüsüyle gösterdi. Bu önbellek girdisinin hedefi doğrudan okunmadı. Ayrı ve aranabilir `Programs/Nuvio TR HD.lnk` kullanıcı Başlat menüsüne eklendi; kontrollü başlatıcı argümanı yeniden okunarak doğrulandı. Kullanıcı aramada tam Nuvio TR HD adını veya masaüstü aynı adlı kısayolu seçmeli. Açık uygulamaya dokunulmadı.
 
+## 1.9.1 — 19 Kasım 2026: altyazı bütçesi, ölü yayınlar, HDFilmDelisi yapısı
+
+Kod incelemesi ve canlı kaynak testleri yalnız bu bilgisayardan (TR ISS) yapıldı. Kullanıcı isteğiyle 1.9.1 olarak codex/publish-nuvio-tr-hd dalına gönderildi. 338 test/QuickJS geçti; CI/Pages sonucu ve public dosya kontrolü yayın kaydına ayrıca yazılır.
+
+- **TR altyazı:**
+  - Kök neden: AltyazıDB listesi çalışıyor, fakat `/subtitle/<base64>` indirme yolu her istekte 502 veriyor. Kaynağının API'si `X-API-Key` istiyor (401), anahtarsız onarılamaz.
+  - Bu 502'ler aday başına 12 TR hakkını dolduruyordu. Dune indirme dosyalarında TR 0'dı.
+  - Düzeltme: yol bazlı devre kesici, 5xx iadesi, servis başına ilk tur 4 sınırı ve ertelenen adaylar için ikinci tur.
+  - Canlı sonuç: Dune'un Pixeldrain, MoviesDrive 480/720/1080, Archive ve Goojara dosyalarının hepsinde TR var. Inception'da tüm dosyalarda TR, GoT S1E1 Goojara'da 7 TR var. AltyazıDB yalnız 3 istek alıyor.
+- **FilmModu:** segment sunucusu `sx1.ytenconline.xyz` her çözücüde NXDOMAIN. Bazı dublaj listeleri film süresinin 1,5–2 katı. İkisi de artık eleniyor. Inception taraması 24 sn → 18,7 sn, 13 yayın, hepsi TR altyazılı.
+- **HDFilmDelisi:**
+  - Yeni yapı:
+    - Arama satırlarında imdbId/accessLevel yok.
+    - Film sayfası hdfilmdelisi1.com'a 301 ile yönleniyor.
+    - Kimlik JSON-LD Movie `sameAs` alanındaki IMDb adresinde, erişim kapısı Next RSC verisindeki `accessLevel/requireAuthForWatch` alanında, oynatıcı adresi `sources[].url` alanında.
+    - Oynatıcı literali hex→ters→base64→anahtar çıkarma→base64→UTF-8 ile çözülüyor ve `AYAR.kaynak`/`videoId` içeriyor.
+  - Ayrıştırıcı bu yapıya göre onarıldı. Canlı keşif Inception ve Interstellar'da doğru `ha.vixolity.com/vs/<imdb>` adresini yaklaşık 1,7 sn'de buldu.
+  - Medya sunucusu 502 veriyor (Cloudflare "Host Error", cf-cache DYNAMIC). Bu bir istek biçimi sorunu değil: sitenin kendi oynatıcısı tarayıcıda "Bağlantı yeniden kuruluyor" gösterdi.
+  - Oynatma/TR dublaj doğrulanmadı.
+- **Ağ gözlemleri (bu bilgisayar):**
+  - `*.workers.dev` SNI engelli.
+  - DiziYou ECONNRESET ve FilmEkseni sahte sertifika hatası 80–160 ms içinde düşüyor, yani aramayı geciktirmiyor.
+  - Purstream API yeniden çalışıyor: Inception/GoT için 720p FR/EN; Dune sayfası Fransızca başlıkla, TMDB alternatif adlarına bağlı.
+- Fiziksel telefon, tam film oynatma, indirme ve senkron testi yapılmadı.
+
 ## 12 Kasım 2026 — kontrollü Windows başlatıcısı
 
 Kullanıcı yeniden aynı hatayı bildirdi; çalışan iki Nuvio işlemi yine özgün Program Files yolundaydı. Önceki kısayolların hedefleri doğruydu; kullanıcının hangi girişten açtığı ve neden özgün kopyanın çalıştığı kesinleşmedi. Yerel exe/cfg Nuvio TR HD olarak ayrıca adlandırıldı. Start-NuvioTRHD.ps1 paket SHA/ilk classpath kontrolünden sonra başka Nuvio kopyası varsa kullanıcı onayıyla CloseMainWindow dener; zorla kapatma yapmaz, kapanmazsa açılışı durdurur. Masaüstü ve kullanıcı Başlat menüsü kısayolları bu başlatıcıya bağlandı. Kullanıcının açık penceresine dokunulmadı. CheckOnly eski iki işlemi saptadı; ayrı penceresiz jpackage probe özgün gömülü Java17.0.20.1 ile düzeltilmiş JAR'ın öncelikli ve helper'ın mevcut olduğunu doğruladı. Bu UI/kaynak ekranı testi değildir. Kullanıcının masaüstü kısayolunu yeniden denemesi bekleniyor.

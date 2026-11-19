@@ -263,13 +263,17 @@ test('QuickJS: DiziBal public player keeps dubbed audio and 4K online while resp
 });
 
 test('QuickJS: public Turkish dub source keeps TR/EN audio, real HLS and clean p/pixel cards',async()=>{
- const origin='https://hdfilmdelisi.one',embed='https://pl.vixolity.com/PublicExample',raw='https://ha.vixolity.com/vs/tt0133093';
- const shifted=Buffer.from(Array.from(`player({file:'${raw}'});`,c=>c.charCodeAt(0)+7)),hex=Buffer.from(shifted.toString('base64').split('').reverse().join('')).toString('hex');
+ const origin='https://hdfilmdelisi1.com',embed='https://pl.vixolity.com/PublicExample',raw='https://ha.vixolity.com/vs/tt0133093';
+ // 2026 player: shifted text is base64 of the UTF-8 script that holds AYAR.
+ const code=Buffer.from(`var AYAR = ${JSON.stringify({kaynak:raw,videoId:'tt0133093',baslik:'Matrix Türkçe'})};`,'utf8').toString('base64');
+ const shifted=Buffer.from(Array.from(code,c=>c.charCodeAt(0)+12)),hex=Buffer.from(shifted.toString('base64').split('').reverse().join('')).toString('hex');
+ const gate=JSON.stringify({accessLevel:'public',requireAuthForWatch:false,children:['$','$L75',null,{sources:[{key:'main',title:'Delicore(VIP)',url:embed}]}]});
  const fixture=makeFixture({extra:{
-  [origin+'/api/search?q=The%20Matrix']:{json:{results:[{orijinalBaslik:'The Matrix',baslik:'Matrix',yayinYili:1999,imdbId:'tt0133093',slug:'matrix',accessLevel:'public'}]}},
-  [origin+'/film/matrix']:{body:'<script type="application/ld+json">{"@type":"Movie","name":"Matrix","datePublished":1999}</script><script>self.__next_f.push([1,'+JSON.stringify('x:{"videoUrl":"'+embed+'","requireAuthForWatch":false}')+'])</script>'},
-  [embed]:{body:`})('${hex}',7);`},
-  [raw+'?format=.m3u8']:{body:'#EXTM3U\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="a",LANGUAGE="tr",URI="tr.m3u8"\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="a",LANGUAGE="en",URI="en.m3u8"\n#EXT-X-STREAM-INF:BANDWIDTH=3000000,RESOLUTION=1920x804,AUDIO="a"\nvideo.m3u8\n'}
+  [origin+'/api/search?q=The%20Matrix']:{json:{results:[{id:'68a9',orijinalBaslik:'The Matrix',baslik:'Matrix',yayinYili:1999,slug:'matrix'}],series:[],kisiler:[]}},
+  [origin+'/film/matrix']:{body:'<script id="jsonld-movie" type="application/ld+json">{"@type":"Movie","name":"Matrix","datePublished":1999,"sameAs":"https://www.imdb.com/title/tt0133093/"}</script><script>self.__next_f.push([1,'+JSON.stringify('6a:["$","$L74",null,'+gate+']')+'])</script>'},
+  [embed]:{body:`<script>(function(a,b){})('${hex}',12);</script>`},
+  [raw+'?format=.m3u8']:{body:'#EXTM3U\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="a",LANGUAGE="tr",URI="tr.m3u8"\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="a",LANGUAGE="en",URI="en.m3u8"\n#EXT-X-STREAM-INF:BANDWIDTH=3000000,RESOLUTION=1920x804,AUDIO="a"\nvideo.m3u8\n'},
+  ['https://ha.vixolity.com/vs/video.m3u8']:{body:'#EXTM3U\n#EXT-X-TARGETDURATION:6\n#EXTINF:6,\nseg0.ts\n#EXT-X-ENDLIST\n'}
  }});
  const settings={autoSubtitles:false,archiveEnabled:false,hdhubEnabled:false,playImdbEnabled:false,vixsrcEnabled:false,filmmoduEnabled:false,waploadedEnabled:false,useDownloadBridge:false};
  const streams=await runInQuickJs(fixture,{code:fastOnlineBundle,settings});assert.equal(streams.length,1);assert.equal(streams[0].type,'hls');assert.equal(streams[0].quality,'1080p · 1920×804');assert.match(streams[0].language,/Ses: TR\/EN/);

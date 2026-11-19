@@ -2,6 +2,20 @@
 
 - Son durum: masaüstü Nuvio TR HD artık Start-NuvioTRHD.ps1 üzerinden açılır. Kullanıcı yeniden aynı hata bildirdiğinde özgün kurulum çalışıyordu; nedeni kesinleşmedi. CheckOnly ve gömülü Java17 penceresiz classpath probe geçti. Kullanıcı kontrollü başlatıcıyla deneyip hata sürerse çalışan yol ve gerçek kaynak raporu birlikte incelenmeli. Tekrar UI başarısı/tam indirme doğrulanmış sayılmamalı.
 
+## 1.9.1 — 19 Kasım 2026 kaynak/altyazı düzeltmeleri
+
+1. 1.9.1 kullanıcı isteğiyle yayına gönderildi; ABI değişmedi. Telefonda depo yenilenip sağlayıcı sürümünün 1.9.1 göründüğü ve Dune/Inception dosyalarında TR altyazı çıktığı kontrol edilmeli. Yayın/CI sonucu PROJE ve compatibility/github-publication.json içinde.
+2. HDFilmDelisi: işaretsiz `ha.vixolity.com/vs/<imdb>`, işaretli `?format=.m3u8` ve ilk `/mm/` alt listesini birlikte tekrar kontrol et.
+   - 19 Kasım'da işaretsiz Inception ana listesi 200 (cf-cache DYNAMIC), işaretli olanı ve tüm alt listeler 502 idi. Başka filmlerin işaretsiz listeleri de 502 idi.
+   - Oynatıcı modülü işaretsiz `kaynak` adresini yüklüyor. İşaretsiz ana ve alt listeler 200 olurken işaretli liste hâlâ 5xx ise sorun kesinti değil, işaretin reddedilmesidir. O durumda native indiricinin HLS'yi dosya sanmasını başka yolla önle; işaretsiz adresi doğrudan indirilebilir etiketleme.
+   - Hepsi 200 olursa uçtan uca canlı tarama ve gerçek oynatma dene. Kimlik ve erişim kontrollerini gevşetme.
+   - Film sayfası 807.666 karakter; `http.text` üst sınırı sabit 1.000.000. Sayfa bunu aşarsa sağlayıcı sessizce boş döner; o zaman sınırlı/kısmi okuma gerekir.
+3. AltyazıDB indirme kaynağı anahtar istiyor. Anahtar kopyalama veya üçüncü taraf proxy ekleme; liste yolu çalışsa da indirme sayılmaz.
+4. MoviesDrive keşfi 8–10 sn sürüyor. Canlı izlemede hangi adımın beklettiğini ölç; bütçeyi büyütmeden azalt.
+5. GoT'ta yalnız VixSrc ve Goojara geldi. HDRezka yokluğu izleme düzeneğindeki sahte sezon 401'inden kaynaklanabilir; gerçek TMDB ile tekrar ölç. 4KHDHub sonuçları bu ağda `workers.dev` engeline takılıyor.
+6. Yeni kaynak araştırmasında TR'de erişilebilen Range destekli hostlar (Pixeldrain gibi) öncelikli olmalı. dizibox.live aday; canlı dosya/kimlik kanıtı olmadan ekleme.
+7. Fiziksel telefon, tam oynatma, indirme, çevrimdışı altyazı ve senkron hâlâ açık.
+
 ## 12 Kasım 2026 — yeniden açılış kontrolü
 
 Kullanıcının açık eski Nuvio'yu tamamen kapatıp masaüstü Nuvio TR HD ile Black Clover 1×17'yi sınaması bekleniyor. Son ayrı JVM turu 7651ms/3MP4. Masaüstü ve kullanıcı Başlat menüsü hedefleri doğrulandı; ortak kurulum ve sabitlenmiş bağlantılar değiştirilmedi. Kullanıcı bilgisayarı kullanırken UI testine devam etme.

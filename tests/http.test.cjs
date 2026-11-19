@@ -66,3 +66,68 @@ test('429 sonrası aynı kökene tekrar yüklenmez, diğer kaynak etkilenmez', a
   assert.equal(calls.length, 2);
   http.close();
 });
+
+test('ağın reddettiği paylaşımlı alan adı ailesi ve sürekli 5xx veren köken aynı aramada tekrar denenmez', async () => {
+  const calls = [], events = [];
+  const fixture = { 'https://good.test/a.json': { json: { ok: true } }, 'https://down.test/1': { status: 502 }, 'https://down.test/2': { status: 502 },
+    'https://down.test/3': { status: 502 }, 'https://down.test/4': { json: { ok: true } } };
+  const base = fixtureFetch(fixture, calls);
+  const fetchImpl = async (url, options) => {
+    if (new URL(url).hostname.endsWith('.workers.dev')) { calls.push({ url }); throw new TypeError('fetch failed'); }
+    return base(url, options);
+  };
+  const http = createHttp({ fetchImpl, onEvent: e => events.push(e) });
+  try {
+    assert.equal(await http.request('https://one.alpha.workers.dev/a.mkv'), null);
+    assert.equal(await http.request('https://two.beta.workers.dev/b.mkv'), null);
+    // Third Worker host: skipped without a network request.
+    assert.equal(await http.request('https://three.gamma.workers.dev/c.mkv'), null);
+    assert.equal(calls.filter(c => c.url.includes('workers.dev')).length, 2);
+    assert.equal(http.failureFor('https://three.gamma.workers.dev/c.mkv').reason, 'host_unreachable');
+    assert.equal(http.failureFor('https://one.alpha.workers.dev/a.mkv').reason, 'timeout_or_network');
+    assert.ok(events.some(e => e.reason === 'host_unreachable'));
+    // Unrelated hosts are unaffected.
+    assert.deepEqual(await http.json('https://good.test/a.json'), { ok: true });
+    for (const n of [1, 2, 3]) assert.equal(await http.request('https://down.test/' + n), null);
+    assert.equal(await http.json('https://down.test/4'), null);
+    assert.equal(calls.filter(c => c.url.startsWith('https://down.test/')).length, 3);
+    assert.equal(http.failureFor('https://down.test/4').reason, 'server_unavailable');
+  } finally { http.close(); }
+});
+
+test('katalog yolu çalışırken sürekli 5xx veren indirme yolu ayrıca kesilir; kardeş yol etkilenmez', async () => {
+  const calls = [];
+  const fixture = { 'https://subs.test/subtitles/movie/tt1.json': { json: { ok: true } }, 'https://subs.test/subtitles/movie/tt2.json': { json: { ok: true } } };
+  for (const n of [1, 2, 3, 4]) fixture['https://subs.test/subtitle/' + n] = { status: 502 };
+  const http = createHttp({ fetchImpl: fixtureFetch(fixture, calls) });
+  try {
+    assert.deepEqual(await http.json('https://subs.test/subtitles/movie/tt1.json'), { ok: true });
+    for (const n of [1, 2, 3]) assert.equal(await http.request('https://subs.test/subtitle/' + n), null);
+    assert.equal(http.unavailable('https://subs.test/subtitle/4'), true);
+    assert.equal(http.scope(1000).unavailable('https://subs.test/subtitle/5'), true);
+    assert.equal(await http.request('https://subs.test/subtitle/4'), null);
+    assert.equal(http.failureFor('https://subs.test/subtitle/4').reason, 'server_unavailable');
+    assert.equal(calls.filter(c => c.url.includes('/subtitle/')).length, 3);
+    assert.equal(http.unavailable('https://subs.test/subtitles/movie/tt2.json'), false);
+    assert.deepEqual(await http.json('https://subs.test/subtitles/movie/tt2.json'), { ok: true });
+  } finally { http.close(); }
+});
+
+test('tek ağ hatası veya başarılı yanıtı olan köken devre kesiciyi açmaz', async () => {
+  let failOnce = true;
+  const calls = [];
+  const fetchImpl = async (url, options) => {
+    calls.push(url);
+    if (url.includes('flaky') && failOnce) { failOnce = false; throw new TypeError('fetch failed'); }
+    if (url.includes('mixed') && url.includes('/bad')) throw new TypeError('fetch failed');
+    return fixtureFetch({ [url]: { json: { ok: true } } })(url, options);
+  };
+  const http = createHttp({ fetchImpl });
+  try {
+    assert.equal(await http.json('https://flaky.test/a'), null);
+    assert.deepEqual(await http.json('https://flaky.test/b'), { ok: true });
+    assert.deepEqual(await http.json('https://mixed.test/ok'), { ok: true });
+    for (const n of [1, 2, 3]) assert.equal(await http.json('https://mixed.test/bad?' + n), null);
+    assert.deepEqual(await http.json('https://mixed.test/ok?again'), { ok: true });
+  } finally { http.close(); }
+});

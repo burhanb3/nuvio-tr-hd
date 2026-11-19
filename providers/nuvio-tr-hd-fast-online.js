@@ -142,6 +142,37 @@ var require_http = __commonJS({
       const clock = scheduler || createScheduler();
       const failures = /* @__PURE__ */ new Map(), rateLimited = /* @__PURE__ */ new Map(), denied = /* @__PURE__ */ new Set();
       const controllers = /* @__PURE__ */ new Set();
+      const health = /* @__PURE__ */ new Map();
+      const familyOf = (host) => {
+        const shared = host.match(/\.(workers\.dev|pages\.dev|r2\.dev)$/);
+        return shared ? "*." + shared[1] : host;
+      };
+      const stats = (key) => {
+        let value = health.get(key);
+        if (!value) health.set(key, value = { ok: 0, network: 0, server: 0 });
+        return value;
+      };
+      const serverKeys = (target) => {
+        const parsed = new URL(target);
+        return ["o:" + parsed.origin, "p:" + parsed.origin + "/" + parsed.pathname.split("/")[1]];
+      };
+      const blockedReason = (target) => {
+        const host = new URL(target).hostname, family = health.get("f:" + familyOf(host));
+        if (family && family.ok === 0 && family.network >= 2) return "host_unreachable";
+        if (serverKeys(target).some((key) => {
+          const value = health.get(key);
+          return value && value.ok === 0 && value.server >= 3;
+        })) return "server_unavailable";
+        return null;
+      };
+      const unavailable = (target) => {
+        try {
+          const url = safeUrl(target, void 0, allowHttp);
+          return !!url && !!blockedReason(url);
+        } catch {
+          return false;
+        }
+      };
       let closed = false;
       const expired = () => closed || Date.now() >= deadline;
       const networkPools = { "subtitle-body": { limit: 4, active: 0, waiting: [] }, "subtitle-body-en": { limit: 1, active: 0, waiting: [] }, "media-probe": { limit: 3, active: 0, waiting: [] } };
@@ -189,12 +220,27 @@ var require_http = __commonJS({
         const end = Math.min(deadline, started + requestedTimeout);
         const controller = typeof AbortController === "function" ? new AbortController() : null;
         if (controller) controllers.add(controller);
+        let skipped = null, transportError = false;
         const work = (async () => {
           for (let redirects = 0; redirects <= 3; redirects++) {
             if (expired() || Date.now() >= end || (rateLimited.get(new URL(url).origin) || 0) > Date.now()) return null;
-            const response = await fetchNetwork(url, { ...fetchOptions, ...controller ? { signal: controller.signal } : {}, redirect: "manual" }, nativeGroup, end);
+            if (skipped = blockedReason(url)) return null;
+            let response;
+            try {
+              response = await fetchNetwork(url, { ...fetchOptions, ...controller ? { signal: controller.signal } : {}, redirect: "manual" }, nativeGroup, end);
+            } catch (error) {
+              if (!controller?.signal.aborted && !expired()) {
+                stats("f:" + familyOf(new URL(url).hostname)).network++;
+                transportError = true;
+              }
+              throw error;
+            }
             if (!response) return null;
-            emit({ stage: "http", host: new URL(url).hostname, status: response.status, method: options.method || "GET" });
+            const host = new URL(url).hostname;
+            stats("f:" + familyOf(host)).ok++;
+            for (const key of serverKeys(url)) if (response.status >= 500) stats(key).server++;
+            else stats(key).ok++;
+            emit({ stage: "http", host, status: response.status, method: options.method || "GET" });
             if ([301, 302, 303, 307, 308].includes(response.status)) {
               const next = safeUrl(response.headers.get("location"), url, allowHttp);
               if (!next || redirects === 3) return null;
@@ -229,8 +275,9 @@ var require_http = __commonJS({
         })();
         const result = await bounded(work, end, controller);
         if (!result && !failures.has(rawUrl)) {
-          failures.set(rawUrl, { reason: "timeout_or_network" });
-          emit({ stage: "http", host: new URL(rawUrl).hostname, reason: "timeout_or_network" });
+          const reason = skipped || "timeout_or_network";
+          failures.set(rawUrl, transportError ? { reason, network: true } : { reason });
+          emit({ stage: "http", host: new URL(skipped ? url : rawUrl).hostname, reason });
         }
         return result;
       }
@@ -285,6 +332,7 @@ var require_http = __commonJS({
           expired: finished,
           note: emit,
           failureFor: (url) => failures.get(url),
+          unavailable,
           request: (url, value) => finished() ? Promise.resolve(null) : request(url, options(value)),
           json: (url, value) => finished() ? Promise.resolve(null) : json(url, options(value)),
           text: (url, value) => finished() ? Promise.resolve(null) : text(url, options(value)),
@@ -300,6 +348,7 @@ var require_http = __commonJS({
         scope,
         note: emit,
         failureFor: (url) => failures.get(url),
+        unavailable,
         shortenDeadline: (end) => {
           deadline = Math.min(deadline, end);
         },
@@ -1390,10 +1439,11 @@ var require_hdhub = __commonJS({
     function pixelFilename(value, target) {
       if (typeof value !== "string" || !/\.(mp4|mkv)$/i.test(value)) return false;
       const name = normalizeTitle(value), title = normalizeTitle(target.originalTitle), suffix = name.startsWith(title + " ") ? name.slice(title.length + 1) : null;
-      if (!suffix || /\b(sample|trailer|fanedit|workprint|hdcam|camrip|hdtc|hdts|telesync)\b/.test(suffix)) return false;
+      if (!suffix || /\b(sample|trailer|featurette|fanedit|workprint|hdcam|camrip|hdtc|hdts|telesync)\b/.test(suffix)) return false;
       const years = target.type === "movie" ? [target.year, ...target.releaseYears || []] : [target.year];
       if ((suffix.match(/\b(?:19|20)\d{2}\b/g) || []).some((y) => !years.includes(Number(y)))) return false;
-      return target.type === "tv" ? matchesEpisode(value, target) : years.some((year) => filenameIdentity(value, { ...target, year }));
+      if (target.type === "tv") return matchesEpisode(value, target);
+      return years.some((year) => filenameIdentity(value, { ...target, year }) || (" " + suffix + " ").includes(" " + year + " "));
     }
     async function resolveRelease(http, entry, target, allowExtensionless, onCandidates) {
       const redirect = await http.text(entry.url);
@@ -1437,8 +1487,9 @@ var require_hdhub = __commonJS({
           if (onCandidates) await onCandidates([file]);
         }
       })();
-      await Promise.all([pixelWork, direct.length && onCandidates ? onCandidates(direct) : Promise.resolve()]);
-      return [...direct, ...extra];
+      const feedDirect = () => direct.length && onCandidates ? onCandidates(direct) : Promise.resolve();
+      await (pixel ? pixelWork.then(feedDirect) : Promise.all([pixelWork, feedDirect()]));
+      return [...extra, ...direct];
     }
     async function scanHdHub(http, target, options = {}) {
       const search = await http.text(HDHUB_ORIGIN + "/?s=" + encodeURIComponent(target.originalTitle));
@@ -1456,13 +1507,11 @@ var require_hdhub = __commonJS({
       const entries = releasePlan(releaseEntries(page.text, target));
       const resolved = [];
       const maximum = 12;
-      for (let offset = 0; offset < Math.min(maximum, entries.length) && !http.expired(); offset += 2) {
-        if (offset > 0 && !options.onCandidates && resolved.length >= 3) break;
-        await mapLimit(entries.slice(offset, offset + 2), 2, async (entry) => {
-          const found = await resolveRelease(http, entry, target, options.allowExtensionless === true, options.onCandidates);
-          resolved.push(...found);
-        });
-      }
+      await mapLimit(entries.slice(0, maximum), 3, async (entry, index) => {
+        if (http.expired() || index >= 2 && !options.onCandidates && resolved.length >= 3) return;
+        const found = await resolveRelease(http, entry, target, options.allowExtensionless === true, options.onCandidates);
+        resolved.push(...found);
+      });
       return options.onCandidates ? resolved : resolved.slice(0, 6);
     }
     module2.exports = { scanHdHub, shortlinkTarget, pageMatches, releaseEntries, releasePlan, pixelFilename, HDHUB_ORIGIN };
@@ -2744,57 +2793,88 @@ var require_hdfilmdelisi = __commonJS({
     var { safeUrl, normalizeTitle } = require_util();
     var { jsonLd, syntheticFilename } = require_page_data();
     var { base64Bytes } = require_base64();
-    var ORIGIN = "https://hdfilmdelisi.one";
+    var ORIGINS = ["https://hdfilmdelisi1.com", "https://hdfilmdelisi.one"];
     var PLAYER = "https://pl.vixolity.com";
     var MEDIA = "https://ha.vixolity.com";
     function filmMatches(row, target) {
-      return row && row.accessLevel === "public" && row.imdbId === target.imdbId && Number(row.yayinYili) === target.year && normalizeTitle(row.orijinalBaslik) === normalizeTitle(target.originalTitle) && /^[a-z0-9-]{1,180}$/.test(row.slug || "");
+      return !!row && Number(row.yayinYili) === target.year && normalizeTitle(row.orijinalBaslik) === normalizeTitle(target.originalTitle) && /^[a-z0-9-]{1,180}$/.test(row.slug || "") && (row.imdbId === void 0 || row.imdbId === target.imdbId) && (row.accessLevel === void 0 || row.accessLevel === "public");
+    }
+    function pageIdentity(html, target) {
+      const imdb = new RegExp("^https://(?:www\\.|m\\.)?imdb\\.com/title/" + target.imdbId + "/?$");
+      return jsonLd(html).some((r) => r && r["@type"] === "Movie" && Number(String(r.datePublished).slice(0, 4)) === target.year && [].concat(r.sameAs || []).some((value) => typeof value === "string" && imdb.test(value)));
     }
     function playerLinks(html) {
       const links = [];
+      let open = false;
+      const add = (value) => {
+        const url = typeof value === "string" && safeUrl(value);
+        if (url && new URL(url).origin === PLAYER && !links.includes(url)) links.push(url);
+      };
       for (const m of String(html).matchAll(/self\.__next_f\.push\(\[1,("(?:\\.|[^"\\])*")\]\)/g)) try {
         const data = JSON.parse(m[1]);
-        if (/"requireAuthForWatch"\s*:\s*true/.test(data)) return [];
-        for (const value of data.matchAll(/"videoUrl"\s*:\s*"([^"\n]{1,2000})"/g)) {
-          const url = safeUrl(value[1]);
-          if (url && new URL(url).origin === PLAYER && !links.includes(url)) links.push(url);
+        if (/"requireAuthForWatch"\s*:\s*true/.test(data) || /"accessLevel"\s*:\s*"(?!public")[^"]*"\s*,\s*"requireAuthForWatch"/.test(data)) return [];
+        if (/"accessLevel"\s*:\s*"public"\s*,\s*"requireAuthForWatch"\s*:\s*false/.test(data)) open = true;
+        for (const list of data.matchAll(/"sources"\s*:\s*(\[[^\]]{1,6000}\])/g)) try {
+          const rows = JSON.parse(list[1]);
+          for (const row of Array.isArray(rows) ? rows : []) add(row && row.url);
+        } catch {
         }
+        for (const value of data.matchAll(/"videoUrl"\s*:\s*"([^"\n]{1,2000})"/g)) add(value[1]);
       } catch {
       }
-      return links.slice(0, 2);
+      return open ? links.slice(0, 2) : [];
+    }
+    function decodedPlayer(hex, key) {
+      if (hex.length % 2 || key > 255) return "";
+      let base = "";
+      for (let i = 0; i < hex.length; i += 2) base += String.fromCharCode(parseInt(hex.slice(i, i + 2), 16));
+      const bytes = base64Bytes(base.split("").reverse().join(""));
+      if (!bytes) return "";
+      let text = Array.from(bytes, (b) => String.fromCharCode((b - key + 256) % 256)).join("");
+      if (/^[A-Za-z0-9+/=\s]{16,}$/.test(text)) {
+        const inner = base64Bytes(text.replace(/\s+/g, ""));
+        if (inner) text = Array.from(inner, (b) => String.fromCharCode(b)).join("");
+      }
+      return text.replace(/\\x([a-f0-9]{2})/gi, (_, x) => String.fromCharCode(parseInt(x, 16)));
     }
     function mediaLinks(html, target) {
       const links = [];
-      for (const m of String(html).matchAll(/\}\)\(\s*['"]([a-f0-9]{20,40000})['"]\s*,\s*(\d{1,3})\s*\)/gi)) {
-        if (m[1].length % 2 || Number(m[2]) > 255) continue;
-        let base = "";
-        for (let i = 0; i < m[1].length; i += 2) base += String.fromCharCode(parseInt(m[1].slice(i, i + 2), 16));
-        const bytes = base64Bytes(base.split("").reverse().join(""));
-        if (!bytes) continue;
-        const decoded = Array.from(bytes, (b) => String.fromCharCode((b - Number(m[2]) + 256) % 256)).join("").replace(/\\x([a-f0-9]{2})/gi, (_, x) => String.fromCharCode(parseInt(x, 16)));
-        for (const file of decoded.matchAll(/\bfile\s*:\s*['"]([^'"]{1,2000})['"]/g)) {
-          const url = safeUrl(file[1]);
-          if (!url) continue;
-          const parsed = new URL(url);
-          if (parsed.origin !== MEDIA || parsed.pathname !== "/vs/" + target.imdbId || parsed.search) continue;
-          const tagged = url + "?format=.m3u8";
-          if (!links.includes(tagged)) links.push(tagged);
-        }
+      const add = (value) => {
+        const url = safeUrl(String(value).replace(/\\\//g, "/"));
+        if (!url) return;
+        const parsed = new URL(url);
+        if (parsed.origin !== MEDIA || parsed.pathname !== "/vs/" + target.imdbId || parsed.search) return;
+        const tagged = url + "?format=.m3u8";
+        if (!links.includes(tagged)) links.push(tagged);
+      };
+      for (const m of String(html).matchAll(/\}\)\(\s*['"]([a-f0-9]{20,120000})['"]\s*,\s*(\d{1,3})\s*\)/gi)) {
+        const decoded = decodedPlayer(m[1], Number(m[2]));
+        for (const file of decoded.matchAll(/\bfile\s*:\s*['"]([^'"]{1,2000})['"]/g)) add(file[1]);
+        const videoId = decoded.match(/"videoId"\s*:\s*"([^"]{1,40})"/)?.[1];
+        if (videoId === target.imdbId) for (const source of decoded.matchAll(/"kaynak"\s*:\s*"([^"]{1,2000})"/g)) add(source[1]);
       }
       return links.slice(0, 2);
     }
     async function scanHdFilmDelisi(http, target) {
       if (target.type !== "movie" || target.isAnime || !/^tt\d+$/.test(target.imdbId || "")) return [];
-      const data = await http.json(ORIGIN + "/api/search?q=" + encodeURIComponent(target.originalTitle));
-      const row = Array.isArray(data?.results) && data.results.slice(0, 40).find((r) => filmMatches(r, target));
+      let data = null, origin = null;
+      for (const base of ORIGINS) {
+        if (http.expired()) return [];
+        data = await http.json(base + "/api/search?q=" + encodeURIComponent(target.originalTitle));
+        if (Array.isArray(data?.results)) {
+          origin = base;
+          break;
+        }
+      }
+      const row = origin && data.results.slice(0, 40).find((r) => filmMatches(r, target));
       if (!row) return [];
-      const page = await http.text(ORIGIN + "/film/" + row.slug, { maxChars: 95e4 });
-      if (!page || new URL(page.url).origin !== ORIGIN || new URL(page.url).pathname !== "/film/" + row.slug) return [];
-      if (!jsonLd(page.text).some((r) => r["@type"] === "Movie" && normalizeTitle(r.name) === normalizeTitle(row.baslik) && Number(String(r.datePublished).slice(0, 4)) === target.year)) return [];
+      const page = await http.text(origin + "/film/" + row.slug, { maxChars: 1e6 });
+      if (!page || !ORIGINS.includes(new URL(page.url).origin) || new URL(page.url).pathname !== "/film/" + row.slug) return [];
+      if (!pageIdentity(page.text, target)) return [];
       const out = [];
       for (const embed of playerLinks(page.text)) {
         if (http.expired()) break;
-        const player = await http.text(embed, { headers: { Referer: page.url }, maxChars: 6e4 });
+        const player = await http.text(embed, { headers: { Referer: new URL(page.url).origin + "/" }, maxChars: 12e4 });
         if (!player) continue;
         for (const url of mediaLinks(player.text, target)) out.push({
           url,
@@ -2804,12 +2884,15 @@ var require_hdfilmdelisi = __commonJS({
           filenameSynthetic: true,
           identity: target,
           identityConfidence: 100,
-          subtitles: []
+          subtitles: [],
+          // Its master generator answers while the segment store can be down
+          // (seen 2026-11: master 200, every child 502); check one child.
+          verifyFirstVariant: true
         });
       }
       return out;
     }
-    module2.exports = { scanHdFilmDelisi, filmMatches, playerLinks, mediaLinks };
+    module2.exports = { scanHdFilmDelisi, filmMatches, pageIdentity, playerLinks, mediaLinks };
   }
 });
 
@@ -3590,9 +3673,27 @@ var require_hls = __commonJS({
       if (valid.length < Math.min(2, indices.length)) return null;
       return { bytes: Math.round(valid.reduce((sum, s) => sum + s.bytes, 0) / valid.reduce((sum, s) => sum + s.duration, 0) * totalDuration), samples: valid.length };
     }
+    function outsideRuntime(seconds, candidate) {
+      const expected = Number(candidate.identity?.runtimeMinutes) * 60;
+      return seconds > 0 && expected > 0 && (seconds < expected * 0.7 || seconds > expected * 1.35);
+    }
     async function inspectHls(http, text, url, candidate, options = {}) {
       const master = inspectPlaylist(text, url);
       if (!master?.valid) return null;
+      if (outsideRuntime(master.duration, candidate)) return null;
+      if (!master.variants.length && master.segments.length && !master.live && !http.expired()) {
+        const first = master.segments[0].url;
+        const result = await http.request(first, { method: "HEAD", headers: requestHeaders(candidate, url, first), timeoutMs: 1600, nativeGroup: "media-probe" });
+        const failure = !result && http.failureFor?.(first);
+        if (failure && (failure.network === true || failure.reason === "host_unreachable")) return null;
+      }
+      if (candidate.verifyFirstVariant === true && master.variants.length && !http.expired()) {
+        const first = master.variants[0].url;
+        const child = await http.text(first, { headers: requestHeaders(candidate, url, first), timeoutMs: 4e3, nativeGroup: "media-probe" });
+        if (child && !child.text.replace(/^﻿/, "").trimStart().startsWith("#EXTM3U")) return null;
+        const failure = !child && http.failureFor?.(first);
+        if (failure && (failure.status >= 500 || failure.network === true || ["host_unreachable", "server_unavailable"].includes(failure.reason))) return null;
+      }
       const groups = new Set(master.variants.map((v) => v.audioGroup).filter(Boolean));
       const audioLanguages = [...new Set(master.media.filter((m) => m.type === "AUDIO" && groups.has(m.group) && m.language).map((m) => m.language))];
       const subtitleGroups = new Set(master.variants.map((v) => v.subtitlesGroup).filter(Boolean));
@@ -3655,6 +3756,7 @@ var require_hls = __commonJS({
           duration = media.duration;
           durationSource = "playlist";
         }
+        if (outsideRuntime(media?.duration, candidate)) return null;
       }
       if (!duration && !live && Number(candidate.identity?.runtimeMinutes) > 0) {
         duration = Number(candidate.identity.runtimeMinutes) * 60;
@@ -3874,6 +3976,12 @@ var require_subtitle_discovery = __commonJS({
     ];
     var TURKISH_SUBTITLE_SERVICES = ["https://altyazidb.online"];
     var ENGLISH_SUBTITLE_SERVICES = ["https://opensubtitles.stremio.homes/en/ai-translated=false%7Cfrom=all%7Cauto-adjustment=false"];
+    var RELEASE_TAG = /^(?:(?:2160|1080|720|576|480)p|4k|uhd|blu ?ray|bd ?(?:rip|remux)|br ?rip|remux|web ?(?:dl|rip)|hdtv|hdrip|dvd ?rip|x26[45]|h 26[45]|hevc|amzn|nf|dsnp|hmax|atvp)\b/;
+    function forcedSubtitle(sub, target) {
+      if (sub.foreign_parts_only === true || sub.forced === true || sub.forced === "true") return true;
+      const names = [sub.releaseName, sub.movieReleaseName, sub.title, sub.subtitleFileName, sub.name, sub.label].map((v) => normalizeTitle(String(v || ""))).join(" ");
+      return /\b(?:forced|foreign parts?(?: only)?)\b/.test(names) && !/\bforced\b/.test(normalizeTitle(target.originalTitle || ""));
+    }
     function releaseKey(value) {
       return normalizeTitle(String(value || "").split("/").pop().replace(/\.(mkv|mp4|srt|vtt)$/i, "").replace(/[._ -](tr|tur|turkish|en|eng|english|sdh|forced|cc)$/i, ""));
     }
@@ -3898,7 +4006,7 @@ var require_subtitle_discovery = __commonJS({
       return alias ? title + key.slice(alias.length) : key;
     }
     function scoreSubtitle(sub, candidate, video, target, allowLoose = false) {
-      if (!subtitleLanguage(sub.language || sub.lang || sub.lang_code) || sub.ai_translated === true || sub.ai_translated === "true") return null;
+      if (!subtitleLanguage(sub.language || sub.lang || sub.lang_code) || sub.ai_translated === true || sub.ai_translated === "true" || forcedSubtitle(sub, target)) return null;
       if ((sub.imdbId || sub.imdb_id) && (sub.imdbId || sub.imdb_id) !== target.imdbId) return null;
       if (sub.tmdbId != null && Number(sub.tmdbId) !== target.tmdbId) return null;
       if (target.type === "tv" && (Number(sub.season) > 0 && Number(sub.season) !== target.season || Number(sub.episode) > 0 && Number(sub.episode) !== target.episode)) return null;
@@ -3955,8 +4063,9 @@ var require_subtitle_discovery = __commonJS({
           return language && counts[language]++ < 100;
         }).map((s) => {
           const release = String(s.releaseName || s.title || s.name || s.label || "");
-          const title = normalizeTitle(target.originalTitle);
-          const named = base === "https://altyazidb.online" && !normalizeTitle(release).startsWith(title + " ") ? `${target.originalTitle}.${target.year}.${release}` : release;
+          const title = normalizeTitle(target.originalTitle), key = normalizeTitle(release);
+          const notesOnly = !key.startsWith(title + " ") && !/\b(?:19|20)\d{2}\b/.test(key) && (base === "https://altyazidb.online" || /^https:\/\/opensubtitles\.stremio\.homes\//.test(base) && RELEASE_TAG.test(key));
+          const named = notesOnly ? `${target.originalTitle}.${target.year}.${release}` : release;
           return {
             ...s,
             language: subtitleLanguage(s.lang || s.language || s.lang_code),
@@ -4175,7 +4284,7 @@ var require_ranking = __commonJS({
 var require_diagnostics = __commonJS({
   "src/diagnostics.cjs"(exports2, module2) {
     "use strict";
-    var VERSION = true ? "1.9.0" : "dev";
+    var VERSION = true ? "1.9.1" : "dev";
     function effectiveTmdbKey(settings, injectedKey) {
       return typeof settings.tmdbApiKey === "string" && settings.tmdbApiKey.trim() ? settings.tmdbApiKey.trim() : typeof injectedKey === "string" ? injectedKey.trim() : "";
     }
@@ -4427,18 +4536,21 @@ var require_index = __commonJS({
               return;
             }
             const lightweightHls = ["PlayIMDb", "VixSrc", "DiziYou", "DiziBak", "FilmModu", "HDFilmDelisi", "DiziBal", "Purstream"].includes(candidate.source) && settings.detailedHlsMetadata !== true;
+            let unwantedAudio = false;
             const video = await withProbeSlot(() => probe(
               http,
               candidate,
               settings.includeHls !== false,
               settings.autoSubtitles !== false,
               { detailedHls: !lightweightHls, onUnwantedAudio: () => {
+                unwantedAudio = true;
                 reject("hindi_only_audio");
                 if (typeof candidate.mediaFamily === "string") rejectedAudioFamilies.add(candidate.mediaFamily);
               } }
             ));
             if (!video || http.expired()) {
-              reject("video_unavailable");
+              const failure = http.failureFor(candidate.url)?.reason;
+              if (!unwantedAudio) reject(["host_unreachable", "server_unavailable"].includes(failure) ? failure : "video_unavailable");
               return;
             }
             const minimum = Number(settings.minimumQuality ?? 0);
@@ -4478,9 +4590,13 @@ var require_index = __commonJS({
               if (["tr", "en"].every((language) => pair.subtitles.some((s) => s.language === language))) return;
             }
             const needed = ["tr", "en"].filter((language) => !pair.subtitles.some((s) => s.language === language));
-            const scheduled = /* @__PURE__ */ new Set(), deferred = [], counts = { tr: 0, en: 0 }, generalCount = { tr: 0, en: 0 }, releaseReserved = { tr: false, en: false }, limits = { tr: 12, en: 8 };
+            const scheduled = /* @__PURE__ */ new Set(), deferred = [], counts = { tr: 0, en: 0 }, generalCount = { tr: 0, en: 0 }, releaseReserved = { tr: false, en: false }, limits = { tr: 12, en: 8 }, serviceCounts = /* @__PURE__ */ new Map();
             let totalCount = 0;
-            const acceptBatch = async (rows) => {
+            const failedFast = (url) => {
+              const failure = http.failureFor(url);
+              return http.unavailable?.(url) === true || !!failure && (failure.status >= 500 || ["host_unreachable", "server_unavailable"].includes(failure.reason));
+            };
+            const acceptBatch = async (rows, finalPass = false) => {
               if (http.expired()) return;
               const entries = rows.map((sub) => {
                 if (!sub || typeof sub !== "object") return null;
@@ -4489,9 +4605,18 @@ var require_index = __commonJS({
               }).filter(Boolean).sort((a, b) => b._match.score - a._match.score).filter((sub) => {
                 const url = safeUrl(sub.url, candidate.subtitleBase, allowHttp);
                 const language = subtitleLanguage(sub.language || sub.lang || sub.lang_code), key2 = url + JSON.stringify(sub.headers || {}), strong = sub._match.score >= 90;
-                if (!language || !needed.includes(language) || !url || scheduled.has(key2) || counts[language] >= limits[language] || /\.(zip|ass|ssa|rar)(?:\/?$|[?#])/i.test(url)) return false;
+                if (!language || !needed.includes(language) || !url || scheduled.has(key2) || /\.(zip|ass|ssa|rar)(?:\/?$|[?#])/i.test(url) || failedFast(url)) return false;
+                if (counts[language] >= limits[language]) {
+                  if (!finalPass) deferred.push(sub);
+                  return false;
+                }
                 const generalLimit = video.videoHash && !releaseReserved[language] ? limits[language] - 4 : limits[language];
                 if (!strong && generalCount[language] >= generalLimit) {
+                  deferred.push(sub);
+                  return false;
+                }
+                const service = language + " " + new URL(url).origin;
+                if (!strong && !finalPass && (serviceCounts.get(service) || 0) >= 4) {
                   deferred.push(sub);
                   return false;
                 }
@@ -4501,20 +4626,29 @@ var require_index = __commonJS({
                 totalCount++;
                 counts[language]++;
                 if (!strong) generalCount[language]++;
+                serviceCounts.set(service, (serviceCounts.get(service) || 0) + 1);
                 return true;
               });
-              if (entries.length) await loadSubtitles(
-                http,
-                { ...candidate, subtitles: entries },
-                target,
-                allowHttp,
-                { keepScore: true, onTrack: acceptTrack, videoDuration: video.durationSource === "tmdb" ? void 0 : video.duration }
-              );
+              if (entries.length) {
+                await loadSubtitles(
+                  http,
+                  { ...candidate, subtitles: entries },
+                  target,
+                  allowHttp,
+                  { keepScore: true, onTrack: acceptTrack, videoDuration: video.durationSource === "tmdb" ? void 0 : video.duration }
+                );
+                for (const sub of entries) {
+                  if (!failedFast(safeUrl(sub.url, candidate.subtitleBase, allowHttp))) continue;
+                  const language = subtitleLanguage(sub.language || sub.lang || sub.lang_code);
+                  counts[language]--;
+                  if (sub._match.score < 90) generalCount[language]--;
+                }
+              }
             };
             await discoverSubtitles(candidate, video, { onBatch: acceptBatch, languages: needed });
             if (!http.expired() && deferred.length) {
               for (const language of needed) releaseReserved[language] = true;
-              await acceptBatch(deferred.slice());
+              await acceptBatch(deferred.splice(0), true);
             }
             if (!http.expired() && !pair.subtitles.length) reject(totalCount ? "subtitle_unavailable" : "subtitle_no_match");
           };

@@ -86,10 +86,14 @@ function releasePlan(entries,maximum=12) {
 function pixelFilename(value,target){
   if(typeof value!=='string'||!/\.(mp4|mkv)$/i.test(value))return false;
   const name=normalizeTitle(value),title=normalizeTitle(target.originalTitle),suffix=name.startsWith(title+' ')?name.slice(title.length+1):null;
-  if(!suffix||/\b(sample|trailer|fanedit|workprint|hdcam|camrip|hdtc|hdts|telesync)\b/.test(suffix))return false;
+  if(!suffix||/\b(sample|trailer|featurette|fanedit|workprint|hdcam|camrip|hdtc|hdts|telesync)\b/.test(suffix))return false;
   const years=target.type==='movie'?[target.year,...(target.releaseYears||[])]:[target.year];
   if((suffix.match(/\b(?:19|20)\d{2}\b/g)||[]).some(y=>!years.includes(Number(y))))return false;
-  return target.type==='tv'?matchesEpisode(value,target):years.some(year=>filenameIdentity(value,{...target,year}));
+  if(target.type==='tv')return matchesEpisode(value,target);
+  // Same rule as releaseEntries on the TMDB-ID-bound page: a subtitle such
+  // as "Dune - Part One (2021)" may sit between title and year. Any other
+  // year is already refused above; exact size/duration are checked by probe.
+  return years.some(year=>filenameIdentity(value,{...target,year})||(' '+suffix+' ').includes(' '+year+' '));
 }
 async function resolveRelease(http, entry, target, allowExtensionless,onCandidates) {
   const redirect = await http.text(entry.url);
@@ -131,8 +135,13 @@ async function resolveRelease(http, entry, target, allowExtensionless,onCandidat
     const file=publicFile(data,pixel,decodeEntities(hubName),target,{source:'4KHDHub / Pixeldrain',matchesName:pixelFilename});
     if(file){extra.push(file);if(onCandidates)await onCandidates([file]);}
   })();
-  await Promise.all([pixelWork,direct.length&&onCandidates?onCandidates(direct):Promise.resolve()]);
-  return [...direct,...extra];
+  // Queue the Pixeldrain file before legacy Worker mirrors. Some networks
+  // refuse *.workers.dev; those probes must not hold the first probe slots.
+  // A slow Pixel info call still never delays the legacy mirrors by more
+  // than its own bounded request.
+  const feedDirect=()=>direct.length&&onCandidates?onCandidates(direct):Promise.resolve();
+  await (pixel?pixelWork.then(feedDirect):Promise.all([pixelWork,feedDirect()]));
+  return [...extra,...direct];
 }
 async function scanHdHub(http, target, options = {}) {
   const search = await http.text(HDHUB_ORIGIN + '/?s=' + encodeURIComponent(target.originalTitle));
@@ -153,13 +162,14 @@ async function scanHdHub(http, target, options = {}) {
   // pipeline as soon as it resolves; dead small mirrors must not consume the
   // entire quota or make every other release wait for one batch to finish.
   const maximum = 12;
-  for (let offset = 0; offset < Math.min(maximum, entries.length) && !http.expired(); offset += 2) {
-    if (offset > 0 && !options.onCandidates && resolved.length >= 3) break;
-    await mapLimit(entries.slice(offset, offset + 2), 2, async entry => {
-      const found = await resolveRelease(http, entry, target, options.allowExtensionless === true,options.onCandidates);
-      resolved.push(...found);
-    });
-  }
+  // A rolling pool (no batch barrier): one slow shortlink/terminal hop no
+  // longer stalls the next release. Each release still makes the same bounded
+  // sequence of requests inside the caller's scope.
+  await mapLimit(entries.slice(0, maximum), 3, async (entry, index) => {
+    if (http.expired() || (index >= 2 && !options.onCandidates && resolved.length >= 3)) return;
+    const found = await resolveRelease(http, entry, target, options.allowExtensionless === true,options.onCandidates);
+    resolved.push(...found);
+  });
   return options.onCandidates ? resolved : resolved.slice(0, 6);
 }
 module.exports = { scanHdHub, shortlinkTarget, pageMatches, releaseEntries, releasePlan,pixelFilename, HDHUB_ORIGIN };

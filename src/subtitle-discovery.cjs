@@ -9,6 +9,15 @@ const SUBTITLE_SERVICES = [
 ];
 const TURKISH_SUBTITLE_SERVICES = ['https://altyazidb.online'];
 const ENGLISH_SUBTITLE_SERVICES = ['https://opensubtitles.stremio.homes/en/ai-translated=false%7Cfrom=all%7Cauto-adjustment=false'];
+// A normalized name that starts with a release tag makes no title claim.
+const RELEASE_TAG = /^(?:(?:2160|1080|720|576|480)p|4k|uhd|blu ?ray|bd ?(?:rip|remux)|br ?rip|remux|web ?(?:dl|rip)|hdtv|hdrip|dvd ?rip|x26[45]|h 26[45]|hevc|amzn|nf|dsnp|hmax|atvp)\b/;
+// Forced/foreign-parts tracks translate only a few lines; never offer them as
+// the Turkish subtitle of a full film.
+function forcedSubtitle(sub, target) {
+  if (sub.foreign_parts_only === true || sub.forced === true || sub.forced === 'true') return true;
+  const names = [sub.releaseName, sub.movieReleaseName, sub.title, sub.subtitleFileName, sub.name, sub.label].map(v => normalizeTitle(String(v || ''))).join(' ');
+  return /\b(?:forced|foreign parts?(?: only)?)\b/.test(names) && !/\bforced\b/.test(normalizeTitle(target.originalTitle || ''));
+}
 function releaseKey(value) {
   return normalizeTitle(String(value || '').split('/').pop().replace(/\.(mkv|mp4|srt|vtt)$/i, '')
     .replace(/[._ -](tr|tur|turkish|en|eng|english|sdh|forced|cc)$/i, ''));
@@ -34,7 +43,7 @@ function canonicalRelease(value,target,allowAliases) {
   return alias ? title+key.slice(alias.length) : key;
 }
 function scoreSubtitle(sub, candidate, video, target, allowLoose = false) {
-  if (!subtitleLanguage(sub.language || sub.lang || sub.lang_code) || sub.ai_translated === true || sub.ai_translated === 'true') return null;
+  if (!subtitleLanguage(sub.language || sub.lang || sub.lang_code) || sub.ai_translated === true || sub.ai_translated === 'true' || forcedSubtitle(sub, target)) return null;
   if ((sub.imdbId || sub.imdb_id) && (sub.imdbId || sub.imdb_id) !== target.imdbId) return null;
   if (sub.tmdbId != null && Number(sub.tmdbId) !== target.tmdbId) return null;
   if (target.type === 'tv' && ((Number(sub.season) > 0 && Number(sub.season) !== target.season) ||
@@ -97,11 +106,15 @@ function createSubtitleDiscovery(http, target, settings) {
     })
       .map(s => {
         const release = String(s.releaseName || s.title || s.name || s.label || '');
-        const title = normalizeTitle(target.originalTitle);
-        // AltyaziDB returns release notes without a movie title. Its exact
-        // IMDb+episode route supplies identity, never a full release/hash match.
-        const named = base === 'https://altyazidb.online' && !normalizeTitle(release).startsWith(title + ' ') ?
-          `${target.originalTitle}.${target.year}.${release}` : release;
+        const title = normalizeTitle(target.originalTitle), key = normalizeTitle(release);
+        // AltyaziDB returns release notes without a movie title; OpenSubtitles
+        // (stremio.homes) sometimes lists only a release tag such as
+        // "Blu-ray.Remux.1080p...". The exact IMDb(+episode) route supplies
+        // identity, never a full release/hash match. A note naming any year
+        // may name another film, so it is not given this title.
+        const notesOnly = !key.startsWith(title + ' ') && !/\b(?:19|20)\d{2}\b/.test(key) &&
+          (base === 'https://altyazidb.online' || (/^https:\/\/opensubtitles\.stremio\.homes\//.test(base) && RELEASE_TAG.test(key)));
+        const named = notesOnly ? `${target.originalTitle}.${target.year}.${release}` : release;
         return { ...s, language: subtitleLanguage(s.lang || s.language || s.lang_code), releaseName: named, _scope: 'title',
           _identityBound: true, _releaseNotesOnly: named !== release,
           _subtitleProvider: base === 'https://altyazidb.online' ? 'AltyazıDB' : 'OpenSubtitles', identity: target };

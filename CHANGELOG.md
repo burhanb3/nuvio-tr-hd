@@ -1,5 +1,31 @@
 # Sürüm notları
 
+## 1.9.1 — 19 Kasım 2026
+
+- **Türkçe altyazı:** AltyazıDB indirme yolu sürekli 502 döndüğü için dosya başına 12 TR altyazı hakkı bozuk adaylarla doluyordu. Artık:
+  - Aynı yoldaki üç 5xx yanıtından sonra o yol arama süresince atlanır; kardeş yollar etkilenmez.
+  - 5xx ile düşen adayın hakkı iade edilir.
+  - İlk turda her altyazı servisi en fazla 4 aday alır; kalanlar ikinci turda denenir.
+  - Kaynak odaklı canlı testte Dune'un indirilebilir dosyaları (Pixeldrain, MoviesDrive 480/720/1080, Archive, Goojara) 0 yerine TR altyazı aldı. Inception ve GoT S1E1'de de dosyalar TR altyazılı.
+  - AltyazıDB'nin kendi kaynağı API anahtarı istediği için onarılamadı.
+- **Yanlış altyazıya karşı:**
+  - Yalnız yabancı konuşmaları çeviren ("forced/foreign parts only") altyazılar elenir.
+  - Yalnız sürüm notu içeren satırlar "tam sürüm eşleşmesi" sayılmaz.
+- **Bozuk online yayınlar:**
+  - Oynatma listesi süresi TMDB süresinin 0,7–1,35 katı dışındaysa elenir.
+  - Tek parçalı listede ilk segment sunucusu DNS/TLS hatası verirse liste elenir. FilmModu'nun segment sunucusu artık yok (NXDOMAIN); bu yüzden listelenmez.
+- **4KHDHub:**
+  - Pixeldrain dosyası Worker aynalarından önce denenir.
+  - "Dune - Part One (2021)" gibi alt başlıklı dosya adları kabul edilir. Featurette, örnek ve başka yıl reddedilir.
+  - Sürümler üçlü kayan havuzla çözülür.
+- **HDFilmDelisi** yeni hdfilmdelisi1.com yapısına uyarlandı:
+  - Kimlik sayfadaki IMDb bağlantısı ve oynatıcıdaki videoId ile doğrulanır.
+  - Erişim kapısı açıkça herkese açık ve oturumsuz olmalıdır.
+  - Yeni oynatıcı verisi yalnız çözülür, çalıştırılmaz.
+  - 19 Kasım canlı kontrolünde keşif iki filmde doğru medya adresini buldu. Ancak medya sunucusu (ha.vixolity.com) 502 veriyordu ve sitenin kendi oynatıcısı da bağlanamadı, bu yüzden yayın listelenmedi. TR dublajın geri geldiği doğrulanmadı.
+  - Ana liste açılsa bile ilk alt listesi 4 sn içinde 5xx veya HTML dönerse yayın listelenmez. Canlı denemede bu 502'ler 0,4–3,7 sn'de geldi; daha yavaş yanıt veren alt liste yayını eletmez.
+- 338 yerel test/QuickJS geçti. Fiziksel telefon, tam oynatma, indirme ve senkron testi yapılmadı.
+
 ## Windows uygulama düzeltmesi — 11 Kasım 2026
 
 - Windows aramasında ayırt edilebilmesi için kullanıcı Başlat menüsüne ayrıca **Nuvio TR HD** adlı kontrollü açılış kısayolu eklendi.
