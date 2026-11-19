@@ -1,6 +1,6 @@
 # Sürüm notları
 
-## Yayımlanmamış — 19 Kasım 2026 (1.9.1 sonrası)
+## 1.9.2 — 19 Kasım 2026
 
 - **MoviesDrive daha hızlı:**
   - Eski `new2` kökü her aramayı 302 ile yeni kökün sorgusuz `/search.php` adresine yönlendiriyordu; bu her aramada iki fazla istek (≈1,5 sn) demekti. Arama artık doğrudan güncel `new4` kökünden başlar.

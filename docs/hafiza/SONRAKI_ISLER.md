@@ -2,7 +2,7 @@
 
 - Son durum: masaüstü Nuvio TR HD artık Start-NuvioTRHD.ps1 üzerinden açılır. Kullanıcı yeniden aynı hata bildirdiğinde özgün kurulum çalışıyordu; nedeni kesinleşmedi. CheckOnly ve gömülü Java17 penceresiz classpath probe geçti. Kullanıcı kontrollü başlatıcıyla deneyip hata sürerse çalışan yol ve gerçek kaynak raporu birlikte incelenmeli. Tekrar UI başarısı/tam indirme doğrulanmış sayılmamalı.
 
-## 1.9.1 — 19 Kasım 2026 kaynak/altyazı düzeltmeleri
+## 1.9.1–1.9.2 — 19 Kasım 2026 kaynak/altyazı düzeltmeleri ve MoviesDrive hızı
 
 1. 1.9.1 kullanıcı isteğiyle yayımlandı; ABI değişmedi, CI/Pages başarılı ve public 7 dosya SHA eşleşti. Telefonda depo yenilenip sağlayıcı sürümünün 1.9.1 göründüğü ve Dune/Inception dosyalarında TR altyazı çıktığı kontrol edilmeli. Yayın/CI sonucu PROJE ve compatibility/github-publication.json içinde.
 2. HDFilmDelisi: işaretsiz `ha.vixolity.com/vs/<imdb>`, işaretli `?format=.m3u8` ve ilk `/mm/` alt listesini birlikte tekrar kontrol et.
@@ -11,7 +11,7 @@
    - Hepsi 200 olursa uçtan uca canlı tarama ve gerçek oynatma dene. Kimlik ve erişim kontrollerini gevşetme.
    - Film sayfası 807.666 karakter; `http.text` üst sınırı sabit 1.000.000. Sayfa bunu aşarsa sağlayıcı sessizce boş döner; o zaman sınırlı/kısmi okuma gerekir.
 3. AltyazıDB indirme kaynağı anahtar istiyor. Anahtar kopyalama veya üçüncü taraf proxy ekleme; liste yolu çalışsa da indirme sayılmaz.
-4. **Yapıldı (yayımlanmadı):** MoviesDrive keşfi Dune'da 8,9 → 4,3 sn (tek ölçüm). Değişiklikler: eski kökün yönlendirmesi kaldırıldı, zincir 2'den 3'e çıktı; payları ayrı ölçülmedi. 3'lü eşzamanlılık cihazda denenmedi. Bu commit sürüm yükseltmeden gönderilmemeli: derlenmiş sağlayıcılar değişti, ama adresleri hâlâ `?v=1.9.1`. Yayın için 1.9.2'ye yükselt, "Yayımlanmamış" başlığını adlandır, build/check, gönder, yayın kontrolü ve github-publication.json.
+4. **1.9.2 ile yayımlandı:** MoviesDrive keşfi Dune'da 8,9 → 4,3 sn (tek ölçüm). Değişiklikler: eski kökün yönlendirmesi kaldırıldı, zincir 2'den 3'e çıktı; payları ayrı ölçülmedi. 3'lü eşzamanlılık cihazda denenmedi. Telefonda depo yenilenince sağlayıcı sürümü 1.9.2 görünmeli.
 5. **Büyük olasılıkla açıklandı:** GoT'ta HDRezka yokluğu izleme düzeneğinin sezon 401'iydi. Elle yazılmış sabit sezon verisiyle GoT S1E1'de 9–10 sonuç (HDRezka 4, Goojara 1, 4KHDHub 3–4, VixSrc 1). Gerçek TMDB anahtarıyla ve telefonda tekrar bakılmalı. `workers.dev` artık erişilebilir; 4KHDHub film/dizi 1080p/4K dosyaları geliyor. Worker aynaları Google Drive kotasına bağlı; telefonda indirme başlangıcı kota hatası verebilir. Telefonda bir 4KHDHub 4K indirmesinin başlayıp başlamadığı kontrol edilmeli.
 6. Yeni kaynak araştırması (19 Kasım) sonuçsuz; nedenler PROJE'de. Yeni durum (alan adı, challenge kalkması, bölge açılması) olmadan aynı adayları tekrar deneme: DahmerMovies, MovieBox, XDMovies içerik sayfası, Bollyflix, GDFlix, dizibox.live, Cinevood, NiakVIO. TR'den erişilebilen, Range destekli, kimliği doğrulanabilen hostlar öncelikli kalır.
 7. MoviesDrive TV yalnız çok sezonlu paket sayfası veriyor (BB/GoT). Arama satırında da sayfada da IMDb bağlantısı yok; IMDb veya eşdeğer kimlik kanıtı olmadan eşleme yapma.

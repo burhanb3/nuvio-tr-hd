@@ -2,9 +2,9 @@
 
 - 12 Kasım ek bilgi: kullanıcı Windows Son aramalar listesindeki Nuvio girişinden açtığını ekran görüntüsüyle gösterdi. Bu önbellek girdisinin hedefi doğrudan okunmadı. Ayrı ve aranabilir `Programs/Nuvio TR HD.lnk` kullanıcı Başlat menüsüne eklendi; kontrollü başlatıcı argümanı yeniden okunarak doğrulandı. Kullanıcı aramada tam Nuvio TR HD adını veya masaüstü aynı adlı kısayolu seçmeli. Açık uygulamaya dokunulmadı.
 
-## 19 Kasım 2026 (1.9.1 sonrası, yayımlanmadı): MoviesDrive hızı ve kaynak taraması
+## 1.9.2 — 19 Kasım 2026: MoviesDrive hızı ve kaynak taraması
 
-Tüm ölçümler bu bilgisayardan (TR ISS). 339 test/QuickJS geçti. Telefon, tam film ve indirme testi yapılmadı.
+Tüm ölçümler bu bilgisayardan (TR ISS). 339 test/QuickJS geçti. Kullanıcı isteğiyle 1.9.2 olarak codex/publish-nuvio-tr-hd dalına gönderildi; ABI değişmedi. CI/Pages ve public SHA sonucu yayın sonrası kayıt commit'inde. Telefon, tam film ve indirme testi yapılmadı.
 
 - **MoviesDrive:**
   - `new2` kökü 302 ile `new4`'ün sorgusuz `/search.php` adresine gidiyordu; arama başına iki fazla istek. ORIGIN `new4` yapıldı.

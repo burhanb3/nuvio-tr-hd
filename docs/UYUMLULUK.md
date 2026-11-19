@@ -13,6 +13,8 @@ Resmî release ve geliştirme dalındaki ilgili dosyaların SHA'ları `compatibi
 
 ## Güncel kontrol
 
+1.9.2 (19 Kasım) yalnız MoviesDrive arama kökünü ve sürüm eşzamanlılığını değiştirir; plugin ABI'sine dokunmaz. 339 fixture/QuickJS testi geçti. Yayın kontrolü sonucu PROJE ve compatibility/github-publication.json içindedir. Windows Desktop, fiziksel telefon, tam oynatma ve indirme testi yapılmadı.
+
 1.9.1 (19 Kasım) plugin ABI'sine dokunmaz; 338 fixture/QuickJS testi geçti ve GitHub CI/Pages sonrası yayındaki dosyalar yerel derlemeyle aynı çıktı. Bu sürüm için Windows Desktop, fiziksel telefon, tam oynatma ve indirme testi yapılmadı; aşağıdaki masaüstü kayıtları 1.9.0 ve öncesine aittir.
 
 11 Kasım Windows incelemesinde kurulu uygulamanın ham video yanıtını metin

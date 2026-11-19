@@ -4284,7 +4284,7 @@ var require_ranking = __commonJS({
 var require_diagnostics = __commonJS({
   "src/diagnostics.cjs"(exports2, module2) {
     "use strict";
-    var VERSION = true ? "1.9.1" : "dev";
+    var VERSION = true ? "1.9.2" : "dev";
     function effectiveTmdbKey(settings, injectedKey) {
       return typeof settings.tmdbApiKey === "string" && settings.tmdbApiKey.trim() ? settings.tmdbApiKey.trim() : typeof injectedKey === "string" ? injectedKey.trim() : "";
     }
