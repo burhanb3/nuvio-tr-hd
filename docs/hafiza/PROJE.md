@@ -4,7 +4,7 @@
 
 ## 1.9.2 — 19 Kasım 2026: MoviesDrive hızı ve kaynak taraması
 
-Tüm ölçümler bu bilgisayardan (TR ISS). 339 test/QuickJS geçti. Kullanıcı isteğiyle 1.9.2 olarak codex/publish-nuvio-tr-hd dalına gönderildi; ABI değişmedi. CI/Pages ve public SHA sonucu yayın sonrası kayıt commit'inde. Telefon, tam film ve indirme testi yapılmadı.
+Tüm ölçümler bu bilgisayardan (TR ISS). 339 test/QuickJS geçti. Kullanıcı isteğiyle 1.9.2 olarak codex/publish-nuvio-tr-hd dalına gönderildi; ABI değişmedi. Kaynak commit 745b3ae: Test ve paket 44599273308 (ubuntu+windows) başarılı, Pages 44599273347 başarılı; manifest, dört `?v=1.9.2` sağlayıcı, sabit online adı ve ana sayfa public HTTP 200 ve SHA-256 yerel dist ile aynı (compatibility/github-publication.json, anonim GitHub API). Telefon, tam film ve indirme testi yapılmadı.
 
 - **MoviesDrive:**
   - `new2` kökü 302 ile `new4`'ün sorgusuz `/search.php` adresine gidiyordu; arama başına iki fazla istek. ORIGIN `new4` yapıldı.
