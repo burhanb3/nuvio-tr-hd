@@ -2216,7 +2216,7 @@ var require_moviesdrive = __commonJS({
     var { canonicalNames } = require_page_data();
     var { matchesEpisode } = require_matching();
     var { pixelPage, publicFile } = require_pixeldrain();
-    var ORIGIN = "https://new2.moviesdrive.cyou";
+    var ORIGIN = "https://new4.moviesdrive.cyou";
     var ARCHIVE = "https://mdrive.lol";
     function catalogueOrigin(value) {
       const url = safeUrl(value);
@@ -2395,7 +2395,7 @@ var require_moviesdrive = __commonJS({
           const entries = releaseEntries(page.text, target);
           if (!entries.length) continue;
           const found = [], seen = /* @__PURE__ */ new Set();
-          await mapLimit(entries, 2, async (entry) => {
+          await mapLimit(entries, 3, async (entry) => {
             if (http.expired()) return;
             const file = await resolveRelease(http, entry, target, { loadTarget: target.type === "movie" && options.loadTitles ? loadTarget : null });
             if (file && !seen.has(file.url)) {

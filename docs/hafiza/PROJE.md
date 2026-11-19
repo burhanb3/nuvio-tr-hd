@@ -2,6 +2,30 @@
 
 - 12 Kasım ek bilgi: kullanıcı Windows Son aramalar listesindeki Nuvio girişinden açtığını ekran görüntüsüyle gösterdi. Bu önbellek girdisinin hedefi doğrudan okunmadı. Ayrı ve aranabilir `Programs/Nuvio TR HD.lnk` kullanıcı Başlat menüsüne eklendi; kontrollü başlatıcı argümanı yeniden okunarak doğrulandı. Kullanıcı aramada tam Nuvio TR HD adını veya masaüstü aynı adlı kısayolu seçmeli. Açık uygulamaya dokunulmadı.
 
+## 19 Kasım 2026 (1.9.1 sonrası, yayımlanmadı): MoviesDrive hızı ve kaynak taraması
+
+Tüm ölçümler bu bilgisayardan (TR ISS). 339 test/QuickJS geçti. Telefon, tam film ve indirme testi yapılmadı.
+
+- **MoviesDrive:**
+  - `new2` kökü 302 ile `new4`'ün sorgusuz `/search.php` adresine gidiyordu; arama başına iki fazla istek. ORIGIN `new4` yapıldı.
+  - Sürüm zinciri (archive → hub → gamerxyt → Pixeldrain info) 2 yerine 3 paralel çalışır.
+  - Dune keşfi 8,9 → 4,3 sn (3 MKV), Inception 5,4 sn (1080p 2,50 GB + 2160p 7,59 GB).
+  - TV: BB/GoT için yalnız çok sezonlu paket sayfaları var ("Season 1–5", "Season1 - 8") ve IMDb kimliği yok. Kimlik kuralı gevşetilmeden eklenemez; eklenmedi.
+- **`*.workers.dev` artık erişilebilir.** 1.9.1 kaydında SNI engelli görünüyordu; iki gözlem de aynı bilgisayardan, farklı günlerde/saatlerde.
+  - 4KHDHub Worker aynaları Google Drive'ı vekil ediyor. 403 gövdesi "download quota for this file has been exceeded"; kota dosya başına ve zamanla değişiyor.
+  - Yedi aynada 12'şer Range isteği (1,5 sn arayla): 9, 1, 8, 0, 7, 1, 12 başarı.
+  - Inception 4KHDHub: 1080p 7,09 GB, 2160p 32,25 GB ve 70,82 GB MKV (HI/EN ses, TR/EN harici altyazı).
+- **GoT S1E1 (gerçek sezon verisiyle):** 9 sonuç; HDRezka 4 MP4 (240–720p), Goojara 720p, 4KHDHub 1080p 14,63 GB ve 2160p 23,14/28,80 GB, VixSrc online. Daha önceki HDRezka yokluğu izleme düzeneğinin sahte TMDB anahtarıyla sezon uç noktasından 401 almasıydı.
+- **Elenen aday kaynaklar (19 Kasım):**
+  - DahmerMovies dosya hostu: Cloudflare challenge.
+  - MovieBox: tüm uç noktalar 403 "invalid region" (TR bölge engeli).
+  - XDMovies: arama API'si sayfadaki herkese açık belirteçle TMDB id'ye göre çalışıyor, fakat içerik sayfaları Cloudflare challenge.
+  - Bollyflix: alan adının süresi dolmuş.
+  - GDFlix, dizibox.live: Cloudflare challenge.
+  - Cinevood: boş dizin.
+  - NiakVIO: 47 kayıt tek genel HLS paketinde; kimlik/dosya kanıtı yok.
+  - HDFilmDelisi medya sunucusu hâlâ 502.
+
 ## 1.9.1 — 19 Kasım 2026: altyazı bütçesi, ölü yayınlar, HDFilmDelisi yapısı
 
 Kod incelemesi ve canlı kaynak testleri yalnız bu bilgisayardan (TR ISS) yapıldı. Kullanıcı isteğiyle 1.9.1 olarak codex/publish-nuvio-tr-hd dalına gönderildi. 338 test/QuickJS geçti. Kaynak commit a6f26df: Test ve paket 44592718363 (ubuntu+windows) başarılı, Pages 44592717789 başarılı; manifest, dört `?v=1.9.1` sağlayıcı, sabit online adı ve ana sayfa public HTTP 200 ve SHA-256 yerel dist ile aynı (compatibility/github-publication.json, anonim GitHub API). Telefon/tam film/indirme testi yapılmadı.

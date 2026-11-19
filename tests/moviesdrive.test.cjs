@@ -4,7 +4,7 @@ const {scanMoviesDrive,titleMatches,fileMatches,searchPages,releaseEntries,pixel
 const {probe}=require('../src/media/probe.cjs'),{createHttp}=require('../src/http.cjs');
 const {fixtureFetch,ebml,mp4}=require('./helpers.cjs');
 const target={tmdbId:123456,type:'movie',originalTitle:'Example Movie',searchTitles:['Example Movie'],year:2020,imdbId:'tt1234567',runtimeMinutes:120};
-const origin='https://new2.moviesdrive.cyou',archive='https://mdrive.lol/archive/123/',hub='https://hubcloud.ist/drive/example1',terminal='https://gamerxyt.com/hubcloud.php?id=example',pixel='https://pixeldrain.dev/u/Example1',file='https://pixeldrain.dev/api/file/Example1';
+const origin='https://new4.moviesdrive.cyou',archive='https://mdrive.lol/archive/123/',hub='https://hubcloud.ist/drive/example1',terminal='https://gamerxyt.com/hubcloud.php?id=example',pixel='https://pixeldrain.dev/u/Example1',file='https://pixeldrain.dev/api/file/Example1';
 const filename='[[ moviesdrives.com ]] Example.Movie.2020.2160p.English.mkv';
 function media(width=3840,height=1600,language='eng'){
  const size=n=>[n>>8,n&255],duration=Buffer.alloc(8);duration.writeDoubleBE(7200000);
@@ -46,6 +46,19 @@ test('MoviesDrive: yayıncının yönlendirmesi q/page düşürürse yeni köken
   assert.equal(calls.filter(c=>c.url===next+suffix).length,1);
   assert.ok(calls.some(c=>c.url===next+'/example-movie-2020/'));
   assert.deepEqual((await probe(http,rows[0])).dimensions,{width:3840,height:1600});
+ }finally{http.close();}
+});
+
+test('MoviesDrive: sorgusuz /search.php yönlendirmesindeki son yazılar JSON’u kullanılmaz; yeni kökende tek yeniden arama yapılır',async()=>{
+ // 19 Kasım 2026 canlı davranışı: eski kök 302 ile yeni kökün çıplak /search.php adresine gider.
+ const f=fixture(),next='https://new5.moviesdrive.cyou',suffix='/search.php?q=Example%20Movie&page=1',search=f[origin+suffix],page=f[origin+'/example-movie-2020/'];
+ f[origin+suffix]={status:302,headers:{location:next+'/search.php'}};
+ f[next+'/search.php']={headers:{'content-type':'application/json'},body:JSON.stringify({hits:[{document:{post_title:'Other Movie (2020)',permalink:'/other-movie-2020/'}}]})};
+ f[next+suffix]=search;f[next+'/example-movie-2020/']=page;
+ const calls=[],http=createHttp({fetchImpl:fixtureFetch(f,calls)});try{
+  const rows=await scanMoviesDrive(http,target);assert.equal(rows.length,1);
+  assert.equal(calls.filter(c=>c.url===next+suffix).length,1);
+  assert.ok(!calls.some(c=>c.url.endsWith('/other-movie-2020/')));
  }finally{http.close();}
 });
 

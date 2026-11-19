@@ -1,5 +1,20 @@
 # Sürüm notları
 
+## Yayımlanmamış — 19 Kasım 2026 (1.9.1 sonrası)
+
+- **MoviesDrive daha hızlı:**
+  - Eski `new2` kökü her aramayı 302 ile yeni kökün sorgusuz `/search.php` adresine yönlendiriyordu; bu her aramada iki fazla istek (≈1,5 sn) demekti. Arama artık doğrudan güncel `new4` kökünden başlar.
+  - Kök yine değişirse mevcut davranış korunur: sorgusuz yanıttaki "son yazılar" listesi kullanılmaz, yeni kökte bir kez gerçek arama yapılır. Bu davranış için test eklendi.
+  - Sürümler 2 yerine 3 paralel zincirle çözülür.
+  - Canlı ölçüm (aynı bilgisayar, TR ISS): Dune keşfi 8,9 sn'den 4,3 sn'ye indi (3 MKV, 480/720/1080p). Inception 5,4 sn (1080p 2,50 GB + 2160p 7,59 GB).
+- **Ağ durumu değişti:** `*.workers.dev` bu bilgisayardan artık erişilebiliyor; 1.9.1 öncesinde SNI engelliydi. Kod değişmeden 4KHDHub'ın Worker aynaları sonuç vermeye başladı:
+  - Inception: 1080p 7,09 GB, 2160p 32,25 GB ve 70,82 GB MKV.
+  - GoT S1E1: 1080p 14,63 GB, 2160p 23,14 GB ve 28,80 GB MKV.
+  - Bu aynalar Google Drive kotasına bağlı. 12 denemelik ölçümde dosyaya göre 0/12 ile 12/12 arasında başarı görüldü. Listede görünen 4K dosyanın indirmesi kota yüzünden başlamayabilir.
+- **GoT S1E1 tam tarama:** sezon verisi doğru verilince 9 sonuç geldi: HDRezka 240/360/480/720p MP4, Goojara 720p, 4KHDHub 1080p/2160p ×2, VixSrc online. Önceki "HDRezka yok" gözlemi test düzeneğindeki sahte sezon 401'inden kaynaklanıyordu.
+- **Yeni kaynak araştırması:** bu tur kurallara uyan yeni bağımsız dosya kaynağı bulunamadı. Nedenleri hafızada (SONRAKI_ISLER) tarihli olarak kayıtlı.
+- 339 yerel test/QuickJS geçti. Fiziksel telefon, tam oynatma, indirme ve senkron testi yapılmadı.
+
 ## 1.9.1 — 19 Kasım 2026
 
 - **Türkçe altyazı:** AltyazıDB indirme yolu sürekli 502 döndüğü için dosya başına 12 TR altyazı hakkı bozuk adaylarla doluyordu. Artık:

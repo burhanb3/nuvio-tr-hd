@@ -2,6 +2,13 @@
 
 - Windows yerel düzeltme başlatıcısı başka Nuvio işlemini sessizce veya zorla kapatmaz. Kullanıcının kısayolu açması ve iletişim kutusunda onay vermesiyle normal pencere kapatma denenir. Açılış öncesi paket SHA ve classpath kontrolü zorunludur; yalnız kısayolun doğru olması uygulamanın doğru kopyada çalıştığı kanıtı değildir.
 
+## 19 Kasım 2026 — MoviesDrive kökü, eşzamanlılık ve Worker kotası
+
+- **MoviesDrive kökü** yayıncının güncel alanıdır (`new4`). Kök değişirse mevcut kural geçerli kalır: sorgusuz `/search.php` yanıtı (son yazılar) kimlik kanıtı sayılmaz, yeni kökte bir kez gerçek arama yapılır.
+- **MoviesDrive sürüm eşzamanlılığı 3.** 4KHDHub ile aynıdır. Genel fetch'ler havuzsuz olduğu için daha yükseğe çıkarılmaz.
+- **Worker aynalarına yeniden deneme eklenmedi.** Kota hatası dosyaya ve zamana göre değişiyor (0/12–12/12). Yeniden deneme listelemeyi kurtarsa bile telefondaki indirme başlangıcı aynı kotaya takılabilir; listeyi olduğundan güvenilir gösterir. Pixeldrain önce denenmeye devam eder.
+- **MoviesDrive TV paket sayfaları** (çok sezonlu, IMDb kimliksiz) eşlenmez. Sezon/bölüm kimliği kanıtı yoksa sonuç sayısı için kural gevşetilmez.
+
 ## 1.9.1 — altyazı hakkı, devre kesici ve ölü yayınlar
 
 - **Devre kesici:** origin anahtarına ek olarak ilk yol segmenti (`p:origin/segment`) için de tutulur. Üç 5xx yanıtı gelmiş ve hiç başarılı yanıt yoksa o yol arama süresince atlanır. Böylece çalışan katalog yolu bozuk indirme yolunu kurtarmaz. Zaman aşımı devre kesiciye sayılmaz; yalnız taşıma hatası (`network:true`) sayılır. `timeout_or_network` neden metni AniMOM tekrarları için değişmez.

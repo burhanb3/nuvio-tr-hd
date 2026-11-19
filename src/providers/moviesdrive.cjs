@@ -4,7 +4,9 @@ const {anchors,decodeEntities,filenameIdentity}=require('./directory.cjs');
 const {canonicalNames}=require('./page-data.cjs');
 const {matchesEpisode}=require('../matching.cjs');
 const {pixelPage,publicFile}=require('./pixeldrain.cjs');
-const ORIGIN='https://new2.moviesdrive.cyou',ARCHIVE='https://mdrive.lol';
+// new2 now answers 302 to a bare new4 /search.php (query dropped), which costs
+// two extra requests per search; start at the current publisher host.
+const ORIGIN='https://new4.moviesdrive.cyou',ARCHIVE='https://mdrive.lol';
 function catalogueOrigin(value){
   const url=safeUrl(value);if(!url)return null;
   const u=new URL(url);
@@ -154,7 +156,10 @@ async function scanMoviesDrive(http,target,options={}){
     const page=await http.text(origin+row.permalink);if(!page||new URL(page.url).origin!==origin)continue;
     const entries=releaseEntries(page.text,target);if(!entries.length)continue;
     const found=[],seen=new Set();
-    await mapLimit(entries,2,async entry=>{if(http.expired())return;const file=await resolveRelease(http,entry,target,{loadTarget:target.type==='movie'&&options.loadTitles?loadTarget:null});if(file&&!seen.has(file.url)){seen.add(file.url);found.push(file);if(options.onCandidates)await options.onCandidates([file]);}});
+    // Each release is a serial 4–5 hop chain (archive, hub, terminal, Pixeldrain
+    // info). Three lanes, as in 4KHDHub, keep the last release from waiting a
+    // whole extra chain; general fetches stay unpooled, so do not go higher.
+    await mapLimit(entries,3,async entry=>{if(http.expired())return;const file=await resolveRelease(http,entry,target,{loadTarget:target.type==='movie'&&options.loadTitles?loadTarget:null});if(file&&!seen.has(file.url)){seen.add(file.url);found.push(file);if(options.onCandidates)await options.onCandidates([file]);}});
     return found;
    }
   }

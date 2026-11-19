@@ -11,10 +11,11 @@
    - Hepsi 200 olursa uçtan uca canlı tarama ve gerçek oynatma dene. Kimlik ve erişim kontrollerini gevşetme.
    - Film sayfası 807.666 karakter; `http.text` üst sınırı sabit 1.000.000. Sayfa bunu aşarsa sağlayıcı sessizce boş döner; o zaman sınırlı/kısmi okuma gerekir.
 3. AltyazıDB indirme kaynağı anahtar istiyor. Anahtar kopyalama veya üçüncü taraf proxy ekleme; liste yolu çalışsa da indirme sayılmaz.
-4. MoviesDrive keşfi 8–10 sn sürüyor. Canlı izlemede hangi adımın beklettiğini ölç; bütçeyi büyütmeden azalt.
-5. GoT'ta yalnız VixSrc ve Goojara geldi. HDRezka yokluğu izleme düzeneğindeki sahte sezon 401'inden kaynaklanabilir; gerçek TMDB ile tekrar ölç. 4KHDHub sonuçları bu ağda `workers.dev` engeline takılıyor.
-6. Yeni kaynak araştırmasında TR'de erişilebilen Range destekli hostlar (Pixeldrain gibi) öncelikli olmalı. dizibox.live aday; canlı dosya/kimlik kanıtı olmadan ekleme.
-7. Fiziksel telefon, tam oynatma, indirme, çevrimdışı altyazı ve senkron hâlâ açık.
+4. **Yapıldı (yayımlanmadı):** MoviesDrive keşfi Dune'da 8,9 → 4,3 sn. Neden eski kökün yönlendirmesi ve 2'li zincirdi. Bir sonraki sürümle yayımlanabilir.
+5. **Açıklandı:** GoT'ta HDRezka yokluğu izleme düzeneğinin sezon 401'iydi. Sezon verisiyle GoT S1E1'de 9 sonuç (HDRezka 4, Goojara 1, 4KHDHub 3, VixSrc 1). `workers.dev` artık erişilebilir; 4KHDHub film/dizi 1080p/4K dosyaları geliyor. Worker aynaları Google Drive kotasına bağlı; telefonda indirme başlangıcı kota hatası verebilir. Telefonda bir 4KHDHub 4K indirmesinin başlayıp başlamadığı kontrol edilmeli.
+6. Yeni kaynak araştırması (19 Kasım) sonuçsuz; nedenler PROJE'de. Yeni durum (alan adı, challenge kalkması, bölge açılması) olmadan aynı adayları tekrar deneme: DahmerMovies, MovieBox, XDMovies içerik sayfası, Bollyflix, GDFlix, dizibox.live, Cinevood, NiakVIO. TR'den erişilebilen, Range destekli, kimliği doğrulanabilen hostlar öncelikli kalır.
+7. MoviesDrive TV yalnız çok sezonlu paket sayfası veriyor (BB/GoT); IMDb kimliği olmadan eşleme yapma.
+8. Fiziksel telefon, tam oynatma, indirme, çevrimdışı altyazı ve senkron hâlâ açık.
 
 ## 12 Kasım 2026 — yeniden açılış kontrolü
 
