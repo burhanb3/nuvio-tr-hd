@@ -4,7 +4,7 @@
 
 ## 1.9.1 — 19 Kasım 2026: altyazı bütçesi, ölü yayınlar, HDFilmDelisi yapısı
 
-Kod incelemesi ve canlı kaynak testleri yalnız bu bilgisayardan (TR ISS) yapıldı. Kullanıcı isteğiyle 1.9.1 olarak codex/publish-nuvio-tr-hd dalına gönderildi. 338 test/QuickJS geçti; CI/Pages sonucu ve public dosya kontrolü yayın kaydına ayrıca yazılır.
+Kod incelemesi ve canlı kaynak testleri yalnız bu bilgisayardan (TR ISS) yapıldı. Kullanıcı isteğiyle 1.9.1 olarak codex/publish-nuvio-tr-hd dalına gönderildi. 338 test/QuickJS geçti. Kaynak commit a6f26df: Test ve paket 44592718363 (ubuntu+windows) başarılı, Pages 44592717789 başarılı; manifest, dört `?v=1.9.1` sağlayıcı, sabit online adı ve ana sayfa public HTTP 200 ve SHA-256 yerel dist ile aynı (compatibility/github-publication.json, anonim GitHub API). Telefon/tam film/indirme testi yapılmadı.
 
 - **TR altyazı:**
   - Kök neden: AltyazıDB listesi çalışıyor, fakat `/subtitle/<base64>` indirme yolu her istekte 502 veriyor. Kaynağının API'si `X-API-Key` istiyor (401), anahtarsız onarılamaz.

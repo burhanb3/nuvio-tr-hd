@@ -4,7 +4,7 @@
 
 ## 1.9.1 — 19 Kasım 2026 kaynak/altyazı düzeltmeleri
 
-1. 1.9.1 kullanıcı isteğiyle yayına gönderildi; ABI değişmedi. Telefonda depo yenilenip sağlayıcı sürümünün 1.9.1 göründüğü ve Dune/Inception dosyalarında TR altyazı çıktığı kontrol edilmeli. Yayın/CI sonucu PROJE ve compatibility/github-publication.json içinde.
+1. 1.9.1 kullanıcı isteğiyle yayımlandı; ABI değişmedi, CI/Pages başarılı ve public 7 dosya SHA eşleşti. Telefonda depo yenilenip sağlayıcı sürümünün 1.9.1 göründüğü ve Dune/Inception dosyalarında TR altyazı çıktığı kontrol edilmeli. Yayın/CI sonucu PROJE ve compatibility/github-publication.json içinde.
 2. HDFilmDelisi: işaretsiz `ha.vixolity.com/vs/<imdb>`, işaretli `?format=.m3u8` ve ilk `/mm/` alt listesini birlikte tekrar kontrol et.
    - 19 Kasım'da işaretsiz Inception ana listesi 200 (cf-cache DYNAMIC), işaretli olanı ve tüm alt listeler 502 idi. Başka filmlerin işaretsiz listeleri de 502 idi.
    - Oynatıcı modülü işaretsiz `kaynak` adresini yüklüyor. İşaretsiz ana ve alt listeler 200 olurken işaretli liste hâlâ 5xx ise sorun kesinti değil, işaretin reddedilmesidir. O durumda native indiricinin HLS'yi dosya sanmasını başka yolla önle; işaretsiz adresi doğrudan indirilebilir etiketleme.
