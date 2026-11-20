@@ -8,12 +8,19 @@
 2. FzTvSeries indirme bağlantıları kaynağa göre ~12 saat geçerli. Uzun bekleyen indirme kuyruğunda süre dolabilir; telefonda tam indirme denenmedi.
 3. FzTvSeries kapsamı küçük örnekle ölçüldü (8 dizi). Eski dizilerin (Breaking Bad) sunucuları bu bilgisayardan kapalı. Daha geniş örnek (20+ dizi, eski/yeni karışık) ve telefonda gözlem gerekli. Kesme işaretli adlarda (Grey's Anatomy) yalnız birim testi var, canlı bakılmadı.
 4. Sonraki aday kaynaklar: FzMovies (`fzmovies.live`, filmler; aynı işletmeci olabilir) ve todaytvseries. Önce kimlik bağı ve Range desteği ölçülmeli.
-5. HubCloud 10Gbps (`pixel.hubcloud.mov` → `*.workers.dev`): kullanıcı telefonda LTE ve Wi-Fi'de `workers.dev` açılıyor mu bildirirse destek kararı verilir. Bu hattan doğrulanamaz; doğrulanmadan aday yapılmaz.
+5. HubCloud 10Gbps (`pixel.hubcloud.mov` → `*.workers.dev`):
+   - 20 Kasım: kullanıcının telefonunda mobil veride `https://workers.dev` açıldı (ekran görüntüsü). Yalnız kök adres denendi; dosya alt alanları ve Wi-Fi denenmedi. Bu bilgisayardan aynı adres TLS hatası veriyor (curl çıkış 35).
+   - The 100 S1E1 HubCloud sayfasında yalnız Pixeldrain, 10Gbps ve Telegram düğmesi var; FSL yok. 4KHDHub'ın bu bölümdeki tek Pixeldrain dışı yolu 10Gbps.
+   - Zincirin yalnız ilk adımı görüldü: `pixel.hubcloud.mov/?id=…` → 302 → `pixel.<ad>.workers.dev/?id=…` (yalnız `id` parametresi). Sonrası bu hattan görülemiyor. Public bir eklentideki (`link=` parametresini bekleyen) kod bu biçime uymuyor; ondan uydurma yapılmamalı.
+   - Engeller: adres uzantısız; köprü kapalıyken uzantısız MKV yalnız kesin bayt boyutuyla kabul ediliyor, sayfadaki boyut yaklaşık. Token ömrü, tek kullanımlık olup olmadığı, son host ve Range desteği bilinmiyor. iOS yönlendirmeleri kendisi izliyor; her probe aralığı zinciri yeniden yürür.
+   - Yapılacaksa: keşfe istek eklemeden, Pixeldrain'den sonra aday; doğrulama yalnız telefondaki probe. Belgede uçtan uca hiç çekilmediği yazılmalı.
 6. Önerilen sıralamada FzTvSeries 360p bazen Goojara 480p'nin üstünde (altyazı puanı baskın; kimlik puanı ikisinde de 90). Kullanıcı yüksek kaliteyi üstte isterse sıralama ayarı önerilmeli.
 7. Filmlerde 4KHDHub hâlâ geç başlıyor (Inception benzetiminde 12,6 sn). Dizideki "en uzun zincir önce" ilkesi filmlerde de denenebilir; önce `workers.dev` dışı adayı olan bir filmde açık/kapalı ardışık ölçüm gerekir.
 8. Dizi sırası değişikliği yalnız benzetimle ölçüldü. Telefonda The 100 S2E1 veya Stranger Things S5E1'de 4KHDHub satırının hâlâ çıktığı kontrol edilmeli.
 9. FzTvSeries açıkken ana yoldaki DiziBak online satırı Stranger Things S5E1 benzetiminde 24 sn bütçesine yetişmedi (iki çalıştırmanın ikisinde). Seçenekler ölçülmeli: DiziBak'ı dizilerde daha erken başlatmak (MoviesDrive'ı geciktirir) veya Hızlı İzle'ye almak. Hızlı İzle'ye almak "online yollar ana yolda korunur, DiziBal/HDFilmDelisi tek kez" kararına dokunur, karar birlikte güncellenmeli.
 10. Benzetimdeki dizi bölüm sürelerinin boş olması MoviesDrive'ı sessizce devre dışı bırakıyor. Sonraki sezon ölçümlerinde süreler TMDB'den alınmalı.
+11. Kullanıcı 1.9.4 sonrası telefonda The 100'de yine yeni kaynak görmediğini bildirdi (20 Kasım). Önce eklenti ayarlarındaki `Tanı · <sürüm>` satırı ile 1.9.4'ün yüklendiği ve mobil veride `https://tvseries.in` açılıp açılmadığı öğrenilmeli. Telefonda neden çıkmadığı bilinmiyor.
+12. Elenen açıklama: iOS'ta yerel çerez deposu FzTvSeries/Goojara oturumunu bozuyor olabilir mi? Nuvio iOS eklenti fetch'i Ktor Darwin istemcisi; Ktor 3.4.1 `DarwinSession` `setHTTPCookieStorage(null)` yapıyor ve Nuvio çerez eklentisi kurmuyor (kilitli commit ve 20 Kasım `cmp-rewrite` başı). Çerez deposu yok; bu yüzden değişiklik yapılmadı. Yerel öykünmede çerez deposu olsaydı FzTvSeries 0, Goojara oturumsuz kalırdı; tvseries.in ve Goojara çerez gönderilince yenisini vermiyor.
 
 ## 1.9.3 — 20 Kasım 2026
 

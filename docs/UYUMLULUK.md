@@ -49,7 +49,7 @@ Uzantısız MKV için önceki eleme kararı gözden geçirildi: Nuvio iOS dosya 
 
 Üretilmiş JavaScript QuickJS WASM motorunda, Nuvio'nun API yüzeyine benzeyen köprüyle çalıştırılır. Bu test quickjs-kt JNI/Native köprüsünü veya fiziksel iPhone taşımasını çalıştırmaz. Fiziksel iPhone/Android, Kotlin derlemesi, tam film oynatma/indirme, offline altyazı ve sahne senkronu henüz sınanmadı.
 
-Goojara için anonim public katalog çerezi yalnız kaynak keşfinde kullanılır. JavaScript elle yönlendirme yolunda farklı kökene geçmeden silinir; iOS otomatik yönlendirmesinin fiziksel başlık aktarımı sınanmadı. Video sonuçları katalog oturumu taşımaz.
+Goojara için anonim public katalog çerezi yalnız kaynak keşfinde kullanılır. JavaScript elle yönlendirme yolunda farklı kökene geçmeden silinir; iOS otomatik yönlendirmesinin fiziksel başlık aktarımı sınanmadı. Video sonuçları katalog oturumu taşımaz. Kaynak incelemesi (20 Kasım, cihazda sınanmadı): iOS `httpRequestRaw` Ktor Darwin istemcisini kullanır, `followRedirects` bağımsız değişkenini uygulamaz (Ktor varsayılanı yönlendirmeyi izler) ve Ktor 3.4.1 oturumu `HTTPCookieStorage` olmadan kurar; yerel çerez deposu yoktur, yanıt `set-cookie` başlığı okunur.
 
 FzTvSeries'in anonim `PHPSESSID` oturumu yalnız aynı kökendeki indirme sayfası isteğine eklenir; dosya adresi oturum veya Referer taşımaz.
 
