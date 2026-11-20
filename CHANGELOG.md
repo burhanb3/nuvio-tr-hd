@@ -1,5 +1,30 @@
 # Sürüm notları
 
+## 1.9.4 — 20 Kasım 2026
+
+- **Dizilere ikinci bağımsız dosya kaynağı: FzTvSeries.**
+  - Sorun: The 100 gibi dizilerde indirilebilir olarak çoğu zaman yalnız Goojara çıkıyordu; Goojara'nın düğümü düştüğünde hiç dosya kalmıyordu.
+  - Neden 4KHDHub görünmüyordu: The 100'ün Pixeldrain dosyalarının çoğu "captcha gerekli" sınırında. 20 Kasım'da S1E1, S1E3, S1E10 ve S3E5 sınırlıydı; S2E1 ve S4E2 açıktı (gün içinde değişiyor). Diğer HubCloud sunucuları `workers.dev` üzerinde. Captcha çözülmez.
+  - FzTvSeries ana sağlayıcıda ve Dosyalar'da dizi bölümleri için varsayılan açık. Bağlantı zinciri:
+    - Arama kartındaki ad, ardından dizi sayfasında tek IMDb kimliği.
+    - Sezon bağlantısı ve tam SxxEyy bölüm kartı.
+    - Bölüm sayfasının anonim oturumuyla indirme sayfası; buradan dosya adresi kurulur.
+    - Dosya adında bölüm denetimi. Süre ±%10 olmalı; piksel dosyadan okunur.
+  - Site aynı dosyayı iki sunucuda listeler. İlki açılmazsa (bu bilgisayarda süresi dolmuş sertifika) aynı yol ve aynı alan adındaki ikincisi denenir.
+  - Kalite çoğunlukla 360p. The 100 S1E1, S1E10 ve S3E5 bu bilgisayarda probe ile 640×360 doğrulandı (~0,12 GB).
+  - Breaking Bad S1E1'de iki sunucu da bu bilgisayardan açılmadı; aday doğru şekilde elendi.
+- **Dizilerde uzun kaynak zincirleri önce başlar.** 4KHDHub (7 adım) ve FzTvSeries (5 adım) artık Archive ve Goojara'nın hemen ardından başlıyor; HDRezka, MoviesDrive ve online kaynaklar sonra. Filmlerde sıra değişmedi.
+  - Neden: FzTvSeries ilk denemede öne konunca 4KHDHub geç başladı, ilk biten kaynakların probe/altyazı yoğunluğuna denk geldi ve 8 sn sınırını aştı. The 100 S2E1'deki 1080p ve Stranger Things S5E1'deki 2160p satırı kayboldu. FzTvSeries sona alınınca bu kez kendisi geç kaldı.
+- **Telefon benzetimi** (bu bilgisayar, istek başına 600 ms ek gecikme, en fazla 6 eşzamanlı istek, ardışık çalıştırma; gerçek telefon değil), son sırayla:
+  - The 100 S2E1: FzTvSeries 360p + Goojara 480p + 4KHDHub 1080p.
+  - Stranger Things S5E1: FzTvSeries 480p + Goojara 480p + 4KHDHub 2160p.
+  - The 100 S1E1: FzTvSeries 360p + Goojara 480p. 4KHDHub yok (Pixeldrain captcha).
+  - Game of Thrones S1E1: FzTvSeries kapalıyken 2, açıkken 4 indirilebilir satır. 4KHDHub adaylarının hepsi `workers.dev` üzerinde (bu hatta engelli).
+  - Breaking Bad S1E1: sonuç değişmedi (Archive 480p/720p + VixSrc).
+- Gecikmesiz canlı çalıştırmada The 100 S3E5'te Goojara iki denemede de zaman aşımına uğradı; FzTvSeries tek dosya olarak kaldı.
+- **Probe:** ikinci sunucu yalnız FzTvSeries ve Internet Archive için, yalnız aynı yol/sorgu ve aynı ana alan adındaysa denenir.
+- 349 yerel test geçti; FzTvSeries zinciri ve ikinci ayna QuickJS paketinde de sınandı (oturum çerezinin kapsamı yalnız Node testinde). Fiziksel telefon, tam oynatma ve indirme testi yapılmadı. Altyazı senkronu bu dosyalar için ayrıca sınanmadı.
+
 ## 1.9.3 — 20 Kasım 2026
 
 - **4KHDHub dizileri daha sık bağlanır:**

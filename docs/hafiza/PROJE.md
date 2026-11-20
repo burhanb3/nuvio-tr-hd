@@ -2,6 +2,38 @@
 
 - 12 Kasım ek bilgi: kullanıcı Windows Son aramalar listesindeki Nuvio girişinden açtığını ekran görüntüsüyle gösterdi. Bu önbellek girdisinin hedefi doğrudan okunmadı. Ayrı ve aranabilir `Programs/Nuvio TR HD.lnk` kullanıcı Başlat menüsüne eklendi; kontrollü başlatıcı argümanı yeniden okunarak doğrulandı. Kullanıcı aramada tam Nuvio TR HD adını veya masaüstü aynı adlı kısayolu seçmeli. Açık uygulamaya dokunulmadı.
 
+## 1.9.4 — 20 Kasım 2026: FzTvSeries dizi kaynağı
+
+Tüm ölçümler bu bilgisayardan (TR ISS). 349 test geçti (FzTvSeries için bir QuickJS paket testi dahil). ABI değişmedi. Yayın kontrolü sonucu aşağıya eklenecek.
+
+- **Tetik:** kullanıcının LTE ekran görüntüleri. The 100 S1E1 ve S1E10'da yalnız Goojara 480p, VixSrc, DiziBak ve DiziBal; 4KHDHub yok.
+  - LTE olduğu için ev hattındaki `workers.dev` engeli bunu açıklamıyor.
+- **4KHDHub/Pixeldrain nedeni:** HubCloud `var pxl` kimliğinin `/info` sonucu (20 Kasım):
+  - S1E1 (dün doğrulanmıştı), S1E3, S1E10 ve S3E5: `file_rate_limited_captcha_required`.
+  - S2E1 ve S4E2: açık.
+  - Durum gün içinde değişiyor. Diğer sunucu (10Gbps) `pixel.hubcloud.mov` → `*.rohitkiskk.workers.dev`; `direct` filtresi bunu kabul etmiyor ve bu hattan doğrulanamıyor.
+- **HDRezka The 100:** yalnız RU/UA sesli; özgün ses seçeneği yok.
+- **FzTvSeries (`tvseries.in`) zinciri:**
+  1. `search.php?search=<ad>&by=series`. Yalnız `<main class='site-content'>` içindeki `series-card-title` kartları okunur; tam ad önce, en fazla 3 kart. Adlardan kesme işareti atılır.
+  2. Dizi sayfası: tek `imdb.com/title/tt…` kimliği hedefle aynı olmalı.
+  3. Sezon bağlantısı: `class='season-pill'` ve `title='Season N'` (NCIS gibi sıkışık listelerde metin yalnız sayı). Slug büyük/küçük harf duyarsız aynı olmalı.
+  4. Sezon sayfası sayfalanmıyor (NCIS S3: 24 bölüm, 182 KB). Tam bir `ep-card-badge` SxxEyy kartı, `ftype=2` (High MP4).
+  5. Bölüm sayfası: `Set-Cookie: PHPSESSID` ve `downloadmp4.php?fileid=…&dkey=<32 hex>`. Anahtar oturuma bağlı; oturum olmadan "Download key expired".
+  6. İndirme sayfası: `filelink.php?sn=<host>&id=<yol>&ep=<fileid>`. Ara sayfaya gidilmez; `https://<sn><id>` kurulur.
+  7. Dosya adı dizi adı + SxxEyy ile denetlenir.
+  - Sunucular: `*.y9a8ua48mhss5ye.cyou`. 20 Kasım'da `6sde7d2l80` sertifikası süresi dolmuş, `mf894kn11o` 206 veriyor. Breaking Bad için `9ubmmwl6kv` (ECONNREFUSED) ve `uf3qp40g0f` (sertifika) ikisi de açılmadı.
+  - Kapsam örneği (8 dizi): The 100, Fleabag, GoT, Severance, Stranger Things, TLOU ve Wednesday'de dosya 206; Breaking Bad'de sunucular kapalı. Shameless "Shameless US/UK" adıyla listeli, IMDb ile ayrılıyor (canlı sağlayıcıda S2E1 bulundu).
+  - Kalite: High MP4 640×360 (The 100 S1E1 2518 sn, 116 MB). Bazı dizilerde 480p olabilir; doğrulanmadı.
+  - Canlı süre (bu bilgisayar): keşif ~4 sn (5 istek), probe ~2,7 sn.
+- **İş sırası (telefon benzetimi `LAT=600 CAP=6`, ardışık; gerçek cihaz değil):**
+  - İlk sürüm: FzTvSeries Goojara'nın ardında, 4KHDHub 10. sırada. The 100 S2E1 ve Stranger Things S5E1'de 4KHDHub 8 sn sınırına takıldı, 0 aday. Kapalıyken aynı bölümlerde 1080p (3,30 GB) ve 2160p (7,57 GB) vardı.
+  - Neden: 4KHDHub zinciri 7 ardışık istek, gecikmeyle tek başına ~7,2 sn. Geç başlayınca ilk biten kaynakların probe/altyazı isteklerine denk geliyor; bir istekte ~400 ms bekleme, birinde ~800 ms yavaşlama sınırı aşırıyor. Kapsam iş başlangıcından sayılıyor; gecikmenin kendisi değil, denk gelinen yoğunluk sorun.
+  - İkinci deneme: FzTvSeries 4KHDHub'ın ardına. 4KHDHub kurtuldu ama FzTvSeries ~9 sn'de başladı: S2E1'de keşif 12 sn sınırında 0, Stranger Things'te probe 24 sn bütçesinden sonra bitti.
+  - Son: dizilerde 4KHDHub ve FzTvSeries Archive/Goojara'nın hemen ardından (en uzun zincir önce). Sonuçlar: The 100 S2E1 FzTvSeries 360p + Goojara 480p + 4KHDHub 1080p; Stranger Things S5E1 FzTvSeries 480p + Goojara 480p + 4KHDHub 2160p; The 100 S1E1 FzTvSeries + Goojara; GoT S1E1 4 indirilebilir satır (kapalıyken 2); Breaking Bad değişmedi.
+  - Filmlerde sıra değişmedi. Inception benzetiminde 4KHDHub 12,6 sn'de başlıyor (mevcut durum, bu sürümde ölçülmedi).
+  - S3E5 (gecikmesiz canlı): Goojara iki denemede de zaman aşımı; FzTvSeries kaldı.
+- **Sıralama puanı:** `identityConfidence` 90 (Goojara TV ve MoviesDrive ile aynı). 95 verilseydi 5000 puan farkı pikselin (en çok 2160) önüne geçer, 360p dosya MoviesDrive 1080p'nin üstüne çıkardı. Önerilen sırada altyazı puanı yine baskın; The 100'de FzTvSeries 360p bu yüzden Goojara 480p'nin üstünde görünebiliyor.
+
 ## 1.9.3 — 20 Kasım 2026: 4KHDHub dizi posteri, Goojara düğüm tekrarı, ağ engeli
 
 Tüm ölçümler bu bilgisayardan (TR ISS). 342 test/QuickJS geçti. ABI değişmedi. Kullanıcının önceden verdiği yayın izniyle codex/publish-nuvio-tr-hd dalına gönderildi. Kaynak commit 5692a9c: Test ve paket 44643809819 (ubuntu+windows) başarılı, Pages 44643809837 başarılı; manifest, dört `?v=1.9.3` sağlayıcı, sabit online adı ve ana sayfa public HTTP 200 ve SHA-256 yerel dist ile aynı (compatibility/github-publication.json, anonim GitHub API). Telefon, tam film ve indirme testi yapılmadı. Kullanıcı şikâyeti: The 100'de yalnız Goojara çıkıyordu, o da bazen.

@@ -7,6 +7,7 @@
 | Internet Archive | Film/dizi | MP4/MKV; kimlik ve dosya kontrolüne bağlı |
 | 4KHDHub / HubCloud | Film/dizi | FSL/Pixeldrain MP4/MKV; uygun kayıtlarda 1080p/4K |
 | Goojara | Film/dizi | Küçük MP4 alternatifleri; bölüm ve gerçek dosya kontrolü |
+| FzTvSeries | Dizi | Küçük MP4 bölümler (çoğunlukla 360p–480p); IMDb, tam bölüm ve gerçek dosya kontrolü |
 | HDRezka | Film/dizi | Ücretsiz MP4 kaliteleri; özgün ses, IMDb ve bölüm kontrolü |
 | MoviesDrive / Pixeldrain | Film, anime filmi ve doğrulanabilen dizi bölümleri | Ek MP4/MKV; gerçek boyut, piksel, süre ve ses kontrolü |
 | Waploaded | Film/dizi | MP4/MKV; son güncellenen kısmi katalog |
@@ -41,6 +42,8 @@ Internet Archive, aynı TMDB film kaydındaki özgün ve gösterim adlarını bi
 RareFilmm bütün film kataloğunu kapsamaz. Genel aramada tam başlık/yıl, makale içindeki oynatıcı, oynatıcının kendi film kimliği/başlığı ve süre denetlenir. Kalite başına gerçek MP4 boyutu ve pikseli okunur. EN görüntüde etiketi, silinemeyen İngilizce altyazı bulunduğunu belirtir; mevcut harici TR/EN dosyaları ayrıca sunulur. Yeni bir sunucu veya hesap gerekmez.
 
 Goojara, ana sağlayıcıda film ve bölüm dosyaları arar. Tam başlık/yıl, filmlerde IMDb, dizilerde seçilen sezon listesi ve bölüm sayfası birlikte denetlenir. Dosya adındaki 720p/1080p etiketi ölçülen pikselin yerine geçmez. Kaynak bir dosyayı HCSubs gibi sabit altyazı işaretiyle sunuyorsa kartta Sabit altyazı yazılır; dili bilinmeden EN/TR diye etiketlenmez. Sunucuya ve bölüme göre erişim değişebilir; her yapım veya 4K garantisi değildir.
+
+FzTvSeries yalnız dizi bölümleri arar. Arama kartındaki ad, dizi sayfasındaki tek IMDb kimliği, sezon bağlantısı, tam SxxEyy bölüm kartı ve dosya adındaki bölüm birlikte tutmalıdır. Bölüm sayfasının verdiği anonim oturum yalnız aynı sitedeki indirme sayfasında kullanılır; video adresi oturum taşımaz. Site aynı dosyayı iki sunucuda listeler; ilki açılmazsa aynı yol ve aynı alan adındaki ikincisi denenir. İndirme bağlantıları kaynağa göre yaklaşık 12 saat geçerlidir. Çözünürlük dosyadan okunur; eski bölümlerin sunucuları kapalı olabilir. Her dizi veya bölüm garantisi değildir.
 
 HDRezka'da aynı IMDb, kanonik başlık ve yıl birlikte aranır. Farklı başlık gerekiyorsa yalnız aynı TMDB kaydının alternatif başlıkları kabul edilir. Dizilerde seçilen ses sürümünün kendi bölüm listesinde tam sezon ve bölüm bulunmalıdır. Hesap, kullanıcı çerezi veya yeni sunucu gerekmez. Ücretli işaretli kalite ve kısa örnek videolar atlanır; ücretsiz 4K bulunduğu varsayılmaz. Mevcut TR/EN altyazı araması dosya bazında devam eder.
 

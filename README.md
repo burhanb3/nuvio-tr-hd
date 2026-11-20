@@ -39,7 +39,7 @@ Piksel ve gerçek dosya boyutu varsa öncelikle bunlar kullanılır. Eksik bilgi
 
 | Alan | Sağlayıcılar |
 | --- | --- |
-| Film ve dizi dosyaları | Internet Archive, 4KHDHub/HubCloud, HDRezka, Goojara, Waploaded; MoviesDrive/Pixeldrain; filmlerde RareFilmm |
+| Film ve dizi dosyaları | Internet Archive, 4KHDHub/HubCloud, HDRezka, Goojara, Waploaded; dizilerde FzTvSeries; MoviesDrive/Pixeldrain; filmlerde RareFilmm |
 | Online film ve dizi | PlayIMDb, VixSrc, DiziYou, DiziBak, FilmModu, HDFilmDelisi, DiziBal, Purstream, FilmEkseni |
 | Anime | Animecix, SonAnime, AniMOM, SeiCode/MP4Upload; online Anizone |
 | Harici altyazı | AltyazıDB, OpenSubtitles ve kaynakla eşlenmiş TR/EN dosyaları |

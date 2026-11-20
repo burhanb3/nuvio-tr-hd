@@ -13,6 +13,7 @@ function configuration(settings = {}, injectedKey) {
     waploadedEnabled: settings.waploadedEnabled !== false,
     rarefilmmEnabled: settings.rarefilmmEnabled !== false,
     goojaraEnabled: settings.goojaraEnabled !== false,
+    fztvseriesEnabled: settings.fztvseriesEnabled !== false,
     hdrezkaEnabled: settings.hdrezkaEnabled !== false,
     hdfilmdelisiEnabled:settings.hdfilmdelisiEnabled!==false,
     dizibalEnabled:settings.dizibalEnabled!==false,

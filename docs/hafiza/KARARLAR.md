@@ -2,6 +2,15 @@
 
 - Windows yerel düzeltme başlatıcısı başka Nuvio işlemini sessizce veya zorla kapatmaz. Kullanıcının kısayolu açması ve iletişim kutusunda onay vermesiyle normal pencere kapatma denenir. Açılış öncesi paket SHA ve classpath kontrolü zorunludur; yalnız kısayolun doğru olması uygulamanın doğru kopyada çalıştığı kanıtı değildir.
 
+## 20 Kasım 2026 — FzTvSeries
+
+- **FzTvSeries eklendi (yalnız dizi, anime değil).** Kimlik IMDb'ye bağlı: arama kartı adı yalnız aday seçer; dizi sayfasında tek ve aynı IMDb kimliği, sezon sayfasında varsa yine aynı kimlik gerekir. `identityConfidence` 90: sıralamada pikselin önüne geçmemesi için Goojara TV ve MoviesDrive ile aynı.
+- **`filelink.php` ara sayfasına gidilmez.** Dosya adresi `sn` + `id` parametrelerinden kurulur. Koşullar: host 3–5 etiketli bir alan adı, `tvseries.in` değil; yol `.mp4` ile biter, `..` içermez; `ep` istenen `fileid` ile aynı. En fazla iki ayna; ikisi aynı yolda ve aynı ana alan adında olmalı.
+- **Oturum çerezi yalnız indirme sayfasına gider.** Bölüm sayfasının anonim `PHPSESSID`'i yalnız `downloadmp4.php` isteğine eklenir. Aday başlıkları boştur (`index.cjs` çerezli adayı özel işler).
+- **Probe yedek adresi FzTvSeries'e açıldı.** Archive'daki gibi en fazla bir yedek; aynı yol ve sorgu, aynı ana alan adı, farklı host. 401/403/429 sonrası denenmez. Başka alan adına geçilmez.
+- **Dizilerde en uzun zincir önce.** 4KHDHub (7 adım, 8 sn kapsam) ve FzTvSeries (5 adım, 12 sn) Archive/Goojara'nın hemen ardından başlar. Geç başlayan uzun zincir, ilk biten kaynakların probe/altyazı yoğunluğuna denk gelip kapsamını aşıyor. Filmlerde sıra ayrı ölçülmeden değiştirilmez.
+- **Kaynak eşzamanlılığı 4'te kaldı.** Telefon ölçümü olmadan artırılmaz. 4KHDHub kapsamı da 8 sn'de kaldı; sıra değişikliği yetti.
+
 ## 20 Kasım 2026 — dizi poster listesi, dönen yönlendirme, HDHub4u
 
 - **4KHDHub dizi bağı aynı TMDB kaydının poster listesine genişletildi.** Bu, KARARLAR'daki "başka TV posteri için gevşetme" kuralıyla çelişmez: yalnız aynı kimliğin (dizi yanıtının `id`'si hedefle aynı) posterleri sayılır, poster uydurulmaz. Liste yalnız sayfanın türü, tam adı ve yılı tuttuğunda, ana poster tutmadığında yüklenir. Okunan sezonlar istenen sezon ve son sezondur; tüm sezonlar taranmaz.

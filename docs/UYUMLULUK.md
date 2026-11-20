@@ -13,6 +13,8 @@ Resmî release ve geliştirme dalındaki ilgili dosyaların SHA'ları `compatibi
 
 ## Güncel kontrol
 
+1.9.4 (20 Kasım) yeni FzTvSeries dizi kaynağını ve bu kaynağın aynı alan adındaki ikinci sunucusuna probe geçişini ekler; plugin ABI'sine dokunmaz. Dizilerde 4KHDHub ve FzTvSeries işleri öne alındı. 349 fixture/QuickJS testi geçti. Yayın kontrolü sonucu PROJE ve compatibility/github-publication.json içindedir. Windows Desktop, fiziksel telefon, tam oynatma ve indirme testi yapılmadı.
+
 1.9.3 (20 Kasım) 4KHDHub dizi poster bağını ve Goojara'nın tek yeniden denemesini değiştirir; plugin ABI'sine dokunmaz. 342 fixture/QuickJS testi geçti. Yayın kontrolü sonucu PROJE ve compatibility/github-publication.json içindedir. Windows Desktop, fiziksel telefon, tam oynatma ve indirme testi yapılmadı.
 
 1.9.2 (19 Kasım) yalnız MoviesDrive arama kökünü ve sürüm eşzamanlılığını değiştirir; plugin ABI'sine dokunmaz. 339 fixture/QuickJS testi geçti. Yayın kontrolü sonucu PROJE ve compatibility/github-publication.json içindedir. Windows Desktop, fiziksel telefon, tam oynatma ve indirme testi yapılmadı.
@@ -48,6 +50,8 @@ Uzantısız MKV için önceki eleme kararı gözden geçirildi: Nuvio iOS dosya 
 Üretilmiş JavaScript QuickJS WASM motorunda, Nuvio'nun API yüzeyine benzeyen köprüyle çalıştırılır. Bu test quickjs-kt JNI/Native köprüsünü veya fiziksel iPhone taşımasını çalıştırmaz. Fiziksel iPhone/Android, Kotlin derlemesi, tam film oynatma/indirme, offline altyazı ve sahne senkronu henüz sınanmadı.
 
 Goojara için anonim public katalog çerezi yalnız kaynak keşfinde kullanılır. JavaScript elle yönlendirme yolunda farklı kökene geçmeden silinir; iOS otomatik yönlendirmesinin fiziksel başlık aktarımı sınanmadı. Video sonuçları katalog oturumu taşımaz.
+
+FzTvSeries'in anonim `PHPSESSID` oturumu yalnız aynı kökendeki indirme sayfası isteğine eklenir; dosya adresi oturum veya Referer taşımaz.
 
 Kaynak kontrolleri sabit kanonik metadata referanslarıyla gerçek public HTTP/Range ve altyazı yanıtlarını sınar; telefonun TMDB API anahtarı bu yöntemle sınanmaz. Tam katalog veya her kalitede dosya başarısı iddiası değildir.
 

@@ -13,6 +13,7 @@ const { scanHdHub } = require('./providers/hdhub.cjs');
 const { scanWaploaded } = require('./providers/waploaded.cjs');
 const { scanRareFilmm } = require('./providers/rarefilmm.cjs');
 const { scanGoojara } = require('./providers/goojara.cjs');
+const { scanFzTvSeries } = require('./providers/fztvseries.cjs');
 const { scanHdRezka } = require('./providers/hdrezka.cjs');
 const { scanMoviesDrive } = require('./providers/moviesdrive.cjs');
 const { scanAnimecix } = require('./providers/animecix.cjs');
@@ -290,6 +291,23 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs, requestTi
             if (filesLane && settings.archiveEnabled !== false) sourceJobs.push({ name: 'Internet Archive', run: () => scanArchive(http, target, { onCandidates: acceptArchive,
               loadTitles:()=>resolveTranslatedTitles(http,target,effectiveTmdbKey(settings,tmdbKey)) }) });
             if (filesLane && settings.goojaraEnabled !== false) sourceJobs.push({name:'Goojara',run:()=>scanGoojara(http.scope(12000),target)});
+            const pushHdHub = () => {
+              if (filesLane && settings.hdhubEnabled !== false && !sourceFactories.some(s => s.name === '4KHDHub / HubCloud')) sourceJobs.push({ name: '4KHDHub / HubCloud', run: async () => {
+                const sourceHttp = http.scope(8000);
+                return scanHdHub(sourceHttp, target, { allowExtensionless: settings.useDownloadBridge !== false, onCandidates: candidates => acceptCandidates(candidates, true),
+                  loadPosters: () => resolvePosterPaths(sourceHttp, target, effectiveTmdbKey(settings, tmdbKey)) });
+              } });
+            };
+            // TV: start the long sequential file chains (4KHDHub 7 hops,
+            // FzTvSeries 5) before the short ones. Started later, they ran
+            // inside the probe/subtitle burst of the first finished sources
+            // and missed their scopes (20 Nov sim, 600 ms latency, 6 native
+            // requests): either 4KHDHub's 1080p/2160p or FzTvSeries was lost.
+            if (target.type === 'tv') {
+              pushHdHub();
+              if (filesLane && settings.fztvseriesEnabled !== false && !target.isAnime)
+                sourceJobs.push({name:'FzTvSeries',run:()=>scanFzTvSeries(http.scope(12000),target)});
+            }
             if (filesLane && settings.hdrezkaEnabled !== false) sourceJobs.push({name:'HDRezka',run:()=>{
               const sourceHttp=http.scope(10000);
               return scanHdRezka(sourceHttp,target,{loadTitles:()=>resolveAlternativeTitles(sourceHttp,target,effectiveTmdbKey(settings,tmdbKey))});
@@ -330,11 +348,7 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs, requestTi
               }});
             if(['all','online','fastOnline'].includes(lane)&&settings.includeHls!==false&&settings.filmekseniEnabled!==false&&target.type==='movie')
               sourceJobs.push({name:'FilmEkseni',run:()=>scanFilmEkseni(http.scope(6000),target)});
-            if (filesLane && settings.hdhubEnabled !== false && !sourceFactories.some(s => s.name === '4KHDHub / HubCloud')) sourceJobs.push({ name: '4KHDHub / HubCloud', run: async () => {
-              const sourceHttp = http.scope(8000);
-              return scanHdHub(sourceHttp, target, { allowExtensionless: settings.useDownloadBridge !== false, onCandidates: candidates => acceptCandidates(candidates, true),
-                loadPosters: () => resolvePosterPaths(sourceHttp, target, effectiveTmdbKey(settings, tmdbKey)) });
-            } });
+            if (target.type !== 'tv') pushHdHub();
             if (filesLane && settings.waploadedEnabled !== false && !target.isAnime) sourceJobs.push({ name: 'Waploaded', run: () => scanWaploaded(http, target) });
             if (filesLane && settings.rarefilmmEnabled !== false && target.type === 'movie' && !target.isAnime)
               sourceJobs.push({name:'RareFilmm',run:()=>scanRareFilmm(http.scope(8000),target)});
@@ -413,6 +427,7 @@ function onSettings() {
     { type: 'toggle', key: 'hdhubEnabled', label: '4KHDHub / HubCloud doğrudan dosya araması', defaultValue: true, description: 'Ek film/bölüm indirmeleri ve uygun kayıtlarda 4K. FSL/Pixeldrain dosyalarının gerçek boyutu ve pikseli okunur; TR/EN altyazı aranır.' },
     { type: 'toggle', key: 'rarefilmmEnabled', label: 'RareFilmm ek film arşivi', defaultValue: true, description: 'Eski ve az bulunan filmlerde küçük MP4 seçenekleri. Bazılarında İngilizce altyazı görüntüye işlenmiştir; 4K veya TR dublaj garantisi yoktur.' },
     { type: 'toggle', key: 'goojaraEnabled', label: 'Goojara film ve bölüm dosyaları', defaultValue: true, description: 'Küçük MP4 alternatifleri; tam başlık/yıl/film IMDb ve bölüm kontrolü. Eksik veya yanlış yıl eşleşmeleri atlanır. Mevcut TR/EN altyazı araması uygulanır.' },
+    { type: 'toggle', key: 'fztvseriesEnabled', label: 'FzTvSeries dizi bölüm dosyaları', defaultValue: true, description: 'Küçük MP4 bölümler (çoğunlukla 360p–480p). Dizi sayfasındaki IMDb kimliği, tam sezon/bölüm ve dosya adı denetlenir; çözünürlük dosyadan okunur. Film aramaz.' },
     { type: 'toggle', key: 'hdrezkaEnabled', label: 'HDRezka farklı boyutlarda film/dizi dosyaları', defaultValue: true, description: 'Ücretsiz özgün sesli MP4 seçenekleri ve mevcut TR/EN altyazılar. IMDb, başlık/yıl ve tam bölüm denetlenir; ücretli kalite ve örnek videolar eklenmez.' },
     {type:'toggle',key:'hdfilmdelisiEnabled',label:'HDFilmDelisi Türkçe dublaj ve çoklu ses',defaultValue:true,description:'Public film kataloğu ve gerçek HLS listesi. Ses/altyazı dilleri yayıncıdan okunur; bu kaynak online izleme içindir.'},
     {type:'toggle',key:'dizibalEnabled',label:'DiziBal film, dizi ve anime',defaultValue:true,description:'Türkçe dublaj ve altyazılı online alternatifler. Özgün veya TMDB çeviri adı, yıl ve tam bölüm denetlenir.'},
@@ -460,7 +475,7 @@ async function getStreams(tmdbId, mediaType, season, episode) {
 }
 function createEntry(lane) {
   const titles = { main: 'Film/dizi · online ve dosyalar', files: 'Dosyalar', online: 'Hızlı kaynaklar', anime: 'Anime', extraAnime:'Ek Anime',fastOnline:'Hızlı İzle' };
-  const only = { files: ['hdhubEnabled','directoryEnabled','archiveEnabled','waploadedEnabled','rarefilmmEnabled','goojaraEnabled','hdrezkaEnabled','moviesdriveEnabled','catalogUrls','addonUrls'], online: ['playImdbEnabled','vixsrcEnabled','diziyouEnabled','dizibakEnabled','filmmoduEnabled','hdfilmdelisiEnabled','purstreamEnabled','filmekseniEnabled','hlsView'], anime: ['animecixEnabled','sonanimeEnabled','anizoneEnabled'],extraAnime:['animomEnabled','seicodeEnabled'],fastOnline:['hdfilmdelisiEnabled','dizibalEnabled','purstreamEnabled','filmekseniEnabled','hlsView'] };
+  const only = { files: ['hdhubEnabled','directoryEnabled','archiveEnabled','waploadedEnabled','rarefilmmEnabled','goojaraEnabled','fztvseriesEnabled','hdrezkaEnabled','moviesdriveEnabled','catalogUrls','addonUrls'], online: ['playImdbEnabled','vixsrcEnabled','diziyouEnabled','dizibakEnabled','filmmoduEnabled','hdfilmdelisiEnabled','purstreamEnabled','filmekseniEnabled','hlsView'], anime: ['animecixEnabled','sonanimeEnabled','anizoneEnabled'],extraAnime:['animomEnabled','seicodeEnabled'],fastOnline:['hdfilmdelisiEnabled','dizibalEnabled','purstreamEnabled','filmekseniEnabled','hlsView'] };
   only.main = [...only.files, ...only.online.filter(key=>!['hdfilmdelisiEnabled','purstreamEnabled','filmekseniEnabled'].includes(key))];
   const sourceFields = Object.values(only).flat();
   return {

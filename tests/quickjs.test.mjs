@@ -96,6 +96,27 @@ test('QuickJS: MoviesDrive ilk/sonraki sezonun bölümünü ve kendi süresini b
  assert.deepEqual(await runInQuickJs(fixture,{args:['123456','tv',3,2],settings,nativeTimers:true}),[]);
 });
 
+test('QuickJS: FzTvSeries IMDb/bölüm zincirini, oturumlu indirme sayfasını ve ikinci aynayı paket içinde çalıştırır',async()=>{
+ const root='https://tvseries.in',dkey='0123456789abcdef0123456789abcdef',path='/rlink_t/fixture/Example_Series_-_S01E02_-_Name_fixture.mp4';
+ const first='https://srv1.files.test'+path,second='https://srv2.files.test'+path,show=root+'/subfolder-Example%20Series.htm',season=root+'/files-Example%20Series--77.htm';
+ const episode=root+'/episode.php?fileid=501&ftype=2',download=root+'/downloadmp4.php?fileid=501&dkey='+dkey;
+ const mvhd=Buffer.alloc(20);mvhd.writeUInt32BE(1000,12);mvhd.writeUInt32BE(1800000,16);
+ const body=Buffer.concat([helpers.box('ftyp',Buffer.from('isom\0\0\0\0isommp42','binary')),helpers.box('moov',helpers.box('mvhd',mvhd),helpers.moov(640,360).subarray(8)),helpers.box('mdat',Buffer.alloc(32))]);
+ const link=host=>"<a href='filelink.php?sn="+host+'&id='+path+"&ep=501'>Download</a>";
+ const fixture={
+ 'https://api.themoviedb.org/3/tv/123456?api_key=test&append_to_response=external_ids':{json:{id:123456,original_name:'Example Series',name:'Example Series',first_air_date:'2020-01-01',external_ids:{imdb_id:'tt1234567'},episode_run_time:[30]}},
+ [root+'/search.php?search=Example%20Series&beginsearch=Search&vsearch=&by=series']:{body:"<main class='site-content'><article class='series-card'><h3 class='series-card-title'><a href='"+show+"' itemprop='name'>Example Series</a></h3></article></main>"},
+ [show]:{body:"<a href='https://www.imdb.com/title/tt1234567/'>IMDb</a><a class='season-pill' itemprop='url' href='"+season+"' title='Season 1'><span>Season 1</span></a>"},
+ [season]:{body:"<div class='ep-card'><span class='ep-card-badge'>S01E02</span><a class='ep-card-fmt' href='"+episode+"'>High MP4</a></div>"},
+ [episode]:{body:"<a href='"+root+'/downloadmp4.php?fileid=501&amp;dkey='+dkey+"'>MP4</a>",headers:{'set-cookie':'PHPSESSID=fixtureSession01; path=/; HttpOnly'}},
+ [download]:{body:link('srv1.files.test')+link('srv2.files.test')},[first]:{status:503},[second]:{body,mime:'video/mp4'}};
+ const settings={autoSubtitles:false,useDownloadBridge:false,archiveEnabled:false,hdhubEnabled:false,goojaraEnabled:false,hdrezkaEnabled:false,waploadedEnabled:false,rarefilmmEnabled:false,moviesdriveEnabled:false,playImdbEnabled:false,vixsrcEnabled:false,diziyouEnabled:false,dizibakEnabled:false};
+ const rows=await runInQuickJs(fixture,{args:['123456','tv',1,2],settings,nativeTimers:true});
+ assert.equal(rows.length,1);assert.equal(rows[0].url,second);assert.equal(rows[0].quality,'360p · 640×360');assert.deepEqual(rows[0].headers||{},{});
+ assert.deepEqual(await runInQuickJs(fixture,{args:['123456','tv',1,2],settings:{...settings,fztvseriesEnabled:false},nativeTimers:true}),[]);
+ fixture[show].body=fixture[show].body.replace('tt1234567','tt9999999');assert.deepEqual(await runInQuickJs(fixture,{args:['123456','tv',1,2],settings,nativeTimers:true}),[]);
+});
+
 test('QuickJS: yıl alanı olmayan dublaj kaydı tam kimlik/dosya yılı ve gerçek ses/süreyle bulunur',async()=>{
  const{archiveQuery}=require('../src/providers/archive.cjs'),wanted={...helpers.target,runtimeMinutes:120},id='the.matrix.1999.1080p.tr.eng',name='The.Matrix.1999.1080p.TR.ENG.mkv',url='https://archive.org/download/'+id+'/'+name;
  const e=helpers.ebml,duration=Buffer.alloc(8);duration.writeDoubleBE(7200000);

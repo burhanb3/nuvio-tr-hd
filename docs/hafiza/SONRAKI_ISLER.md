@@ -2,6 +2,17 @@
 
 - Son durum: masaüstü Nuvio TR HD artık Start-NuvioTRHD.ps1 üzerinden açılır. Kullanıcı yeniden aynı hata bildirdiğinde özgün kurulum çalışıyordu; nedeni kesinleşmedi. CheckOnly ve gömülü Java17 penceresiz classpath probe geçti. Kullanıcı kontrollü başlatıcıyla deneyip hata sürerse çalışan yol ve gerçek kaynak raporu birlikte incelenmeli. Tekrar UI başarısı/tam indirme doğrulanmış sayılmamalı.
 
+## 1.9.4 — 20 Kasım 2026
+
+1. Telefonda depo yenilenip sağlayıcı sürümü 1.9.4 görünmeli. The 100 S1E1, S1E10 ve S3E5'te FzTvSeries 360p, Goojara'nın yanında veya Goojara yokken çıkmalı. LTE ve Wi-Fi ayrı denenmeli. Telefonda doğrulanmadı.
+2. FzTvSeries indirme bağlantıları kaynağa göre ~12 saat geçerli. Uzun bekleyen indirme kuyruğunda süre dolabilir; telefonda tam indirme denenmedi.
+3. FzTvSeries kapsamı küçük örnekle ölçüldü (8 dizi). Eski dizilerin (Breaking Bad) sunucuları bu bilgisayardan kapalı. Daha geniş örnek (20+ dizi, eski/yeni karışık) ve telefonda gözlem gerekli. Kesme işaretli adlarda (Grey's Anatomy) yalnız birim testi var, canlı bakılmadı.
+4. Sonraki aday kaynaklar: FzMovies (`fzmovies.live`, filmler; aynı işletmeci olabilir) ve todaytvseries. Önce kimlik bağı ve Range desteği ölçülmeli.
+5. HubCloud 10Gbps (`pixel.hubcloud.mov` → `*.workers.dev`): kullanıcı telefonda LTE ve Wi-Fi'de `workers.dev` açılıyor mu bildirirse destek kararı verilir. Bu hattan doğrulanamaz; doğrulanmadan aday yapılmaz.
+6. Önerilen sıralamada FzTvSeries 360p bazen Goojara 480p'nin üstünde (altyazı puanı baskın; kimlik puanı ikisinde de 90). Kullanıcı yüksek kaliteyi üstte isterse sıralama ayarı önerilmeli.
+7. Filmlerde 4KHDHub hâlâ geç başlıyor (Inception benzetiminde 12,6 sn). Dizideki "en uzun zincir önce" ilkesi filmlerde de denenebilir; önce `workers.dev` dışı adayı olan bir filmde açık/kapalı ardışık ölçüm gerekir.
+8. Dizi sırası değişikliği yalnız benzetimle ölçüldü. Telefonda The 100 S2E1 veya Stranger Things S5E1'de 4KHDHub satırının hâlâ çıktığı kontrol edilmeli.
+
 ## 1.9.3 — 20 Kasım 2026
 
 1. Telefonda depo yenilenip sağlayıcı sürümü 1.9.3 görünmeli. The 100 S1E1'de Goojara'nın yanında 4KHDHub/Pixeldrain 1080p, Stranger Things S5E1'de 4KHDHub/Pixeldrain 1080p ve 2160p çıkmalı. Aynı bölümü birkaç kez açıp Goojara'nın kaç kez çıktığına bakılmalı.
@@ -12,8 +23,10 @@
    - Directory (`a.111477.xyz`) DahmerMovies'tir ve varsayılan kapalıdır; dosya hostu challenge veriyor (19 Kasım).
    - Archive: The 100 için bakılmadı.
 5. Pixeldrain'de captcha sınırına giren dosyalar (The 100 S3E5) beklenir; captcha çözülmez, başka host aranır.
-6. Goojara tekrarının etkisi küçük örnekle ölçüldü (10/12 ve 8/12). Daha fazla ölçüm veya telefonda gözlem olmadan "çözüldü" denmemeli.
-7. Fiziksel telefon, tam oynatma, indirme, çevrimdışı altyazı ve senkron hâlâ açık.
+6. The 100 4KHDHub keşfi (20 Kasım, poster listesi elle yazılmış sabit veri): ilk bakışta S1E3, S2E1, S2E5, S3E1, S4E2, S5E3, S6E4 ve S7E5'te `availability` boş Pixeldrain 1080p adayı vardı. Aynı gün sonra S1E1, S1E3, S1E10 ve S3E5 `file_rate_limited_captcha_required` oldu; S2E1 ve S4E2 açık kaldı. Pixeldrain durumu saatler içinde değişiyor; bölüm bazında kalıcı sayılmamalı. Shameless ve Severance yeniden izlenmedi.
+   - Kapsam karşılaştırması (`.cache/coverage-192-baseline.json`) yapılmadı. Bu temel, `workers.dev` erişilebilirken alındı; bugünkü engelli hatla yapılacak fark poster/Goojara değişikliğinin etkisini ağ değişiminden ayıramaz. Ya aynı ağ durumunda yeni temel al ya da farkı ağ etkisiyle birlikte yorumla.
+7. Goojara tekrarının etkisi küçük örnekle ölçüldü (10/12 ve 8/12). Daha fazla ölçüm veya telefonda gözlem olmadan "çözüldü" denmemeli.
+8. Fiziksel telefon, tam oynatma, indirme, çevrimdışı altyazı ve senkron hâlâ açık.
 
 ## 1.9.1–1.9.2 — 19 Kasım 2026 kaynak/altyazı düzeltmeleri ve MoviesDrive hızı
 
