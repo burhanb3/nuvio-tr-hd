@@ -4,7 +4,7 @@
 
 ## 1.9.3 — 20 Kasım 2026: 4KHDHub dizi posteri, Goojara düğüm tekrarı, ağ engeli
 
-Tüm ölçümler bu bilgisayardan (TR ISS). 342 test/QuickJS geçti. ABI değişmedi. Telefon, tam film ve indirme testi yapılmadı. Kullanıcı şikâyeti: The 100'de yalnız Goojara çıkıyordu, o da bazen.
+Tüm ölçümler bu bilgisayardan (TR ISS). 342 test/QuickJS geçti. ABI değişmedi. Kullanıcının önceden verdiği yayın izniyle codex/publish-nuvio-tr-hd dalına gönderildi. Kaynak commit 5692a9c: Test ve paket 44643809819 (ubuntu+windows) başarılı, Pages 44643809837 başarılı; manifest, dört `?v=1.9.3` sağlayıcı, sabit online adı ve ana sayfa public HTTP 200 ve SHA-256 yerel dist ile aynı (compatibility/github-publication.json, anonim GitHub API). Telefon, tam film ve indirme testi yapılmadı. Kullanıcı şikâyeti: The 100'de yalnız Goojara çıkıyordu, o da bazen.
 
 - **4KHDHub dizi bağı:**
   - Kök neden: dizi sayfaları LD JSON `image` alanında TMDB'nin ana olmayan bir posterini gösterebiliyor; katı ana poster kuralı sayfayı düşürüyordu.
