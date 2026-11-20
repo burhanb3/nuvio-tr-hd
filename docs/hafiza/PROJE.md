@@ -32,6 +32,11 @@ Tüm ölçümler bu bilgisayardan (TR ISS). 349 test geçti (FzTvSeries için bi
   - Son: dizilerde 4KHDHub ve FzTvSeries Archive/Goojara'nın hemen ardından (en uzun zincir önce). Sonuçlar: The 100 S2E1 FzTvSeries 360p + Goojara 480p + 4KHDHub 1080p; Stranger Things S5E1 FzTvSeries 480p + Goojara 480p + 4KHDHub 2160p; The 100 S1E1 FzTvSeries + Goojara; GoT S1E1 4 indirilebilir satır (kapalıyken 2); Breaking Bad değişmedi.
   - Filmlerde sıra değişmedi. Inception benzetiminde 4KHDHub 12,6 sn'de başlıyor (mevcut durum, bu sürümde ölçülmedi).
   - S3E5 (gecikmesiz canlı): Goojara iki denemede de zaman aşımı; FzTvSeries kaldı.
+  - **Yayın sonrası ölçüm (20 Kasım), geride kalan işler:** Stranger Things S5E1, 1.9.3 kodu (`a97fbfd`) ile 1.9.4 (FzTvSeries açık/kapalı), `LAT=600 CAP=6`, ardışık. S5 bölüm süreleri (E1–E5) TMDB'nin public sezon sayfasından benzetime eklendi; önceki benzetimlerde süre boş olduğu için MoviesDrive bu bölümü hiç aramıyordu.
+    - MoviesDrive: 1.9.4'te 7,4–8,6 sn'de başlıyor (1.9.3'te 0,6 sn), üç 1.9.4 çalıştırmasının üçünde de 720p/1080p/2160p satırları çıktı. 1.9.3 çalıştırmalarında 0 ve 2 satır (ağ dalgalanması). Bu örnekte kayıp görülmedi.
+    - HDRezka: Stranger Things'te her çalıştırmada 0 aday, bu bölümde ölçülemedi. GoT'ta açık/kapalı ikisinde de satır var; kalite farkı (240p/480p ve 360p) zamanlamadan mı kaynaktan mı ayrılmadı.
+    - DiziBak (ana yoldaki online HLS satırı): FzTvSeries açıkken iki çalıştırmada da 12,5 sn'de başladı ve probe'u 24 sn bütçesinin sonuna kaldı, satır çıkmadı. Kapalıyken ve 1.9.3'te çıktı. The 100 S2E1'de açıkken çıkmıştı. İndirilebilir değil; VixSrc satırı korunuyor. Bilinen kayıp.
+    - 4KHDHub bu ölçümde dört çalıştırmanın üçünde 8 sn sınırına takıldı, 0,6 sn'de başladığı halde. 1.9.3 sırasında 10–11 sn'de başladı ve hiç aday vermedi. Sıra değişikliği 4KHDHub'ı garanti etmiyor. Çıktığı tek çalıştırmadaki 2160p dosya MoviesDrive'ın 7,57 GB Pixeldrain dosyasıyla aynı.
 - **Sıralama puanı:** `identityConfidence` 90 (Goojara TV ve MoviesDrive ile aynı). 95 verilseydi 5000 puan farkı pikselin (en çok 2160) önüne geçer, 360p dosya MoviesDrive 1080p'nin üstüne çıkardı. Önerilen sırada altyazı puanı yine baskın; The 100'de FzTvSeries 360p bu yüzden Goojara 480p'nin üstünde görünebiliyor.
 
 ## 1.9.3 — 20 Kasım 2026: 4KHDHub dizi posteri, Goojara düğüm tekrarı, ağ engeli

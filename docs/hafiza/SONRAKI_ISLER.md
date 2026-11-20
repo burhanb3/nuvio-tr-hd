@@ -12,6 +12,8 @@
 6. Önerilen sıralamada FzTvSeries 360p bazen Goojara 480p'nin üstünde (altyazı puanı baskın; kimlik puanı ikisinde de 90). Kullanıcı yüksek kaliteyi üstte isterse sıralama ayarı önerilmeli.
 7. Filmlerde 4KHDHub hâlâ geç başlıyor (Inception benzetiminde 12,6 sn). Dizideki "en uzun zincir önce" ilkesi filmlerde de denenebilir; önce `workers.dev` dışı adayı olan bir filmde açık/kapalı ardışık ölçüm gerekir.
 8. Dizi sırası değişikliği yalnız benzetimle ölçüldü. Telefonda The 100 S2E1 veya Stranger Things S5E1'de 4KHDHub satırının hâlâ çıktığı kontrol edilmeli.
+9. FzTvSeries açıkken ana yoldaki DiziBak online satırı Stranger Things S5E1 benzetiminde 24 sn bütçesine yetişmedi (iki çalıştırmanın ikisinde). Seçenekler ölçülmeli: DiziBak'ı dizilerde daha erken başlatmak (MoviesDrive'ı geciktirir) veya Hızlı İzle'ye almak. Hızlı İzle'ye almak "online yollar ana yolda korunur, DiziBal/HDFilmDelisi tek kez" kararına dokunur, karar birlikte güncellenmeli.
+10. Benzetimdeki dizi bölüm sürelerinin boş olması MoviesDrive'ı sessizce devre dışı bırakıyor. Sonraki sezon ölçümlerinde süreler TMDB'den alınmalı.
 
 ## 1.9.3 — 20 Kasım 2026
 

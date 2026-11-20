@@ -22,6 +22,7 @@
   - Game of Thrones S1E1: FzTvSeries kapalıyken 2, açıkken 4 indirilebilir satır. 4KHDHub adaylarının hepsi `workers.dev` üzerinde (bu hatta engelli).
   - Breaking Bad S1E1: sonuç değişmedi (Archive 480p/720p + VixSrc).
 - Gecikmesiz canlı çalıştırmada The 100 S3E5'te Goojara iki denemede de zaman aşımına uğradı; FzTvSeries tek dosya olarak kaldı.
+- **Bilinen kayıp (yayın sonrası ölçüm):** Stranger Things S5E1 benzetiminde FzTvSeries açıkken ana listedeki DiziBak online satırı 24 sn sınırına yetişmedi (2/2). Kapalıyken çıktı. MoviesDrive'ın 720p/1080p/2160p satırları üç çalıştırmada da kaldı. 4KHDHub aynı ölçümde dörtte üç kez kendi 8 sn sınırına takıldı; sıra değişikliği onu garanti etmiyor.
 - **Probe:** ikinci sunucu yalnız FzTvSeries ve Internet Archive için, yalnız aynı yol/sorgu ve aynı ana alan adındaysa denenir.
 - 349 yerel test geçti; FzTvSeries zinciri ve ikinci ayna QuickJS paketinde de sınandı (oturum çerezinin kapsamı yalnız Node testinde). Fiziksel telefon, tam oynatma ve indirme testi yapılmadı. Altyazı senkronu bu dosyalar için ayrıca sınanmadı.
 
