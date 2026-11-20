@@ -2,6 +2,16 @@
 
 - Son durum: masaüstü Nuvio TR HD artık Start-NuvioTRHD.ps1 üzerinden açılır. Kullanıcı yeniden aynı hata bildirdiğinde özgün kurulum çalışıyordu; nedeni kesinleşmedi. CheckOnly ve gömülü Java17 penceresiz classpath probe geçti. Kullanıcı kontrollü başlatıcıyla deneyip hata sürerse çalışan yol ve gerçek kaynak raporu birlikte incelenmeli. Tekrar UI başarısı/tam indirme doğrulanmış sayılmamalı.
 
+## 1.9.3 — 20 Kasım 2026
+
+1. Telefonda depo yenilenip sağlayıcı sürümü 1.9.3 görünmeli. The 100 S1E1'de Goojara'nın yanında 4KHDHub/Pixeldrain 1080p, Stranger Things S5E1'de 4KHDHub/Pixeldrain 1080p ve 2160p çıkmalı. Aynı bölümü birkaç kez açıp Goojara'nın kaç kez çıktığına bakılmalı.
+2. Telefonun hangi ağda olduğu önemli. Ev Wi-Fi'si bu bilgisayarla aynı hatsa `workers.dev` engeli telefonda da geçerli olabilir; mobil veride farklı olabilir. İkisi ayrı denenmeli. Telefonda doğrulanmadı.
+3. `workers.dev` yeniden açılırsa: Stranger Things/The 100 ve Inception ile 4KHDHub Worker aynalarını tekrar ölç; ardından HDHub4u kontrolünü yap. HDHub4u için beş başlık (biri bölüm bazlı dizi), her terminalde Pixeldrain var mı ve `/info` `availability` boş mu, say. Karar koşulu KARARLAR'da.
+4. Erişilebilir hostlardaki eksikleri incele: The 100'de directory (a.111477.xyz), Waploaded ve Archive neden 0 aday veriyor? Yeni sağlayıcıdan önce bu ucuz.
+5. Pixeldrain'de captcha sınırına giren dosyalar (The 100 S3E5) beklenir; captcha çözülmez, başka host aranır.
+6. Goojara tekrarının etkisi küçük örnekle ölçüldü (10/12 ve 8/12). Daha fazla ölçüm veya telefonda gözlem olmadan "çözüldü" denmemeli.
+7. Fiziksel telefon, tam oynatma, indirme, çevrimdışı altyazı ve senkron hâlâ açık.
+
 ## 1.9.1–1.9.2 — 19 Kasım 2026 kaynak/altyazı düzeltmeleri ve MoviesDrive hızı
 
 1. 1.9.1 kullanıcı isteğiyle yayımlandı; ABI değişmedi, CI/Pages başarılı ve public 7 dosya SHA eşleşti. Telefonda depo yenilenip sağlayıcı sürümünün 1.9.1 göründüğü ve Dune/Inception dosyalarında TR altyazı çıktığı kontrol edilmeli. Yayın/CI sonucu PROJE ve compatibility/github-publication.json içinde.

@@ -23,7 +23,22 @@ function shortlinkTarget(html) {
     return url && /^hubcloud\.[a-z.]+$/i.test(new URL(url).hostname) ? url : null;
   } catch { return null; }
 }
-function pageMatches(html, target) {
+// TMDB image path shown by a series page whose type, exact title and year
+// match, whatever poster it is. Used only to decide whether the same TMDB
+// record's poster list is worth loading; never a binding by itself.
+function seriesPagePoster(html, target) {
+  if (target.type !== 'tv') return null;
+  for (const block of html.matchAll(/<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)) {
+    try {
+      const data = JSON.parse(block[1]), image = new URL(data.image);
+      if (data['@type'] === 'TVSeries' && normalizeTitle(data.name) === normalizeTitle(target.originalTitle) &&
+        Number(String(data.startDate).slice(0, 4)) === target.year && image.hostname === 'image.tmdb.org' &&
+        /^\/t\/p\/[a-z0-9_]+\/[A-Za-z0-9]+\.(?:jpg|png)$/i.test(image.pathname)) return image.pathname.slice(image.pathname.lastIndexOf('/'));
+    } catch {}
+  }
+  return null;
+}
+function pageMatches(html, target, posterPaths = []) {
   const id = html.match(/\bdefaultVideoId\s*=\s*['"](\d+)['"]/)?.[1];
   if (target.type === 'movie' && Number(id) !== target.tmdbId) return false;
   for (const block of html.matchAll(/<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)) {
@@ -32,9 +47,11 @@ function pageMatches(html, target) {
       const type = target.type === 'tv' ? 'TVSeries' : 'Movie';
       const year = Number(String(target.type === 'tv' ? data.startDate : data.datePublished).slice(0, 4));
       // The series page exposes no numeric TMDB ID. Bind its exact title/year
-      // AND TMDB poster path from canonical metadata, not an arbitrary first hit.
-      const bound = target.type === 'movie' || (target.posterPath && typeof data.image === 'string' &&
-        new URL(data.image).hostname === 'image.tmdb.org' && new URL(data.image).pathname.endsWith(target.posterPath));
+      // AND a TMDB poster of the same TMDB record (primary, or one listed for
+      // it by TMDB's own image endpoints), not an arbitrary first hit.
+      const posters = [target.posterPath, ...posterPaths].filter(Boolean);
+      const bound = target.type === 'movie' || (posters.length && typeof data.image === 'string' &&
+        new URL(data.image).hostname === 'image.tmdb.org' && posters.some(p => new URL(data.image).pathname.endsWith(p)));
       // Some movie pages append a collection label to the original title.
       // Strip only this explicit label; the exact TMDB ID, year and release
       // filenames still have to match. Never accept fuzzy/substring titles.
@@ -155,7 +172,14 @@ async function scanHdHub(http, target, options = {}) {
   const pageUrl = result && safeUrl(result.href, search.url);
   if (!pageUrl || new URL(pageUrl).origin !== HDHUB_ORIGIN) return [];
   const page = await http.text(pageUrl, { maxChars: target.type === 'tv' ? 1000000 : 700000 });
-  if (!page || !pageMatches(page.text, target)) return [];
+  if (!page) return [];
+  let bound = pageMatches(page.text, target);
+  // Many series pages show a non-primary (other language or season) poster.
+  // Only then, and only after type/title/year already matched, ask TMDB for
+  // the posters of this exact record.
+  if (!bound && options.loadPosters && seriesPagePoster(page.text, target) && !http.expired())
+    bound = pageMatches(page.text, target, await options.loadPosters());
+  if (!bound) return [];
   const entries = releasePlan(releaseEntries(page.text, target));
   const resolved = [];
   // A terminal URL is not yet a working file. Feed each release to the probe
@@ -172,4 +196,4 @@ async function scanHdHub(http, target, options = {}) {
   });
   return options.onCandidates ? resolved : resolved.slice(0, 6);
 }
-module.exports = { scanHdHub, shortlinkTarget, pageMatches, releaseEntries, releasePlan,pixelFilename, HDHUB_ORIGIN };
+module.exports = { scanHdHub, shortlinkTarget, pageMatches, seriesPagePoster, releaseEntries, releasePlan,pixelFilename, HDHUB_ORIGIN };

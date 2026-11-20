@@ -42,6 +42,7 @@ async function resolveIdentity(http, tmdbId, mediaType, season, episode, key) {
     searchTitles: [...new Set([meta.title || meta.name, originalTitle].filter(v => typeof v === 'string' && v.trim()))].slice(0, 2),
     isAnime: meta.genres?.some(g => g.id === 16) === true && (meta.original_language === 'ja' || meta.origin_country?.includes('JP') === true),
     ...(typeof meta.poster_path === 'string' && /^\/[A-Za-z0-9]+\.(jpg|png)$/i.test(meta.poster_path) ? { posterPath: meta.poster_path } : {}),
+    ...(type === 'tv' && positiveInt(meta.number_of_seasons) && meta.number_of_seasons <= 200 ? { seasonCount: Number(meta.number_of_seasons) } : {}),
     episode: type === 'tv' ? Number(episode) : null, imdbId: meta.imdb_id || meta.external_ids?.imdb_id || null,
     runtimeMinutes: type === 'movie' && Number(meta.runtime) > 0 ? Number(meta.runtime) :
       type === 'tv' && Number(meta.episode_run_time?.[0]) > 0 ? Number(meta.episode_run_time[0]) : null };
@@ -120,4 +121,25 @@ async function resolveSeasonEpisode(http,target,key){
     !Number.isInteger(episode.runtime)||episode.runtime<=0||episode.runtime>1000||year<target.year||year>2099)return null;
   return{seasonReleaseYear:year,runtimeMinutes:episode.runtime};
 }
-module.exports = { resolveIdentity, resolveTranslatedTitles, resolveAlternativeTitles, resolveSeasonEpisode, matchesIdentity, matchesAddonMeta, matchesStreamFilename, matchesEpisode };
+// Every poster TMDB holds for this exact series (no language filter, so all
+// languages), plus the requested and latest season's posters. A source page
+// may show any of them instead of the primary poster. This only widens which
+// image of the SAME TMDB record binds a page; type, title and year still have
+// to match exactly. Loaded lazily, never as part of the identity request.
+const POSTER_PATH=/^\/[A-Za-z0-9]+\.(?:jpg|png)$/i;
+async function resolvePosterPaths(http,target,key){
+  if(!key||target.type!=='tv'||http.expired())return [];
+  const base=`https://api.themoviedb.org/3/tv/${target.tmdbId}`,query=`?api_key=${encodeURIComponent(key)}`;
+  const seasons=[...new Set([target.season,target.seasonCount].filter(s=>positiveInt(s)))];
+  const lists=await Promise.all([http.json(`${base}/images${query}`,{timeoutMs:3000}),
+    ...seasons.map(s=>http.json(`${base}/season/${s}/images${query}`,{timeoutMs:3000}))]);
+  const paths=new Set();
+  lists.forEach((data,index)=>{
+    // A season response carries the season's own id; only the series list
+    // can be checked against the show id. Both URLs name the exact show.
+    if(!data||!Array.isArray(data.posters)||index===0&&data.id!==target.tmdbId)return;
+    for(const p of data.posters.slice(0,600))if(typeof p?.file_path==='string'&&POSTER_PATH.test(p.file_path))paths.add(p.file_path);
+  });
+  return [...paths];
+}
+module.exports = { resolveIdentity, resolveTranslatedTitles, resolveAlternativeTitles, resolveSeasonEpisode, resolvePosterPaths, matchesIdentity, matchesAddonMeta, matchesStreamFilename, matchesEpisode };

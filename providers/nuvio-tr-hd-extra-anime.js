@@ -415,6 +415,7 @@ var require_matching = __commonJS({
         searchTitles: [...new Set([meta.title || meta.name, originalTitle].filter((v) => typeof v === "string" && v.trim()))].slice(0, 2),
         isAnime: meta.genres?.some((g) => g.id === 16) === true && (meta.original_language === "ja" || meta.origin_country?.includes("JP") === true),
         ...typeof meta.poster_path === "string" && /^\/[A-Za-z0-9]+\.(jpg|png)$/i.test(meta.poster_path) ? { posterPath: meta.poster_path } : {},
+        ...type === "tv" && positiveInt(meta.number_of_seasons) && meta.number_of_seasons <= 200 ? { seasonCount: Number(meta.number_of_seasons) } : {},
         episode: type === "tv" ? Number(episode) : null,
         imdbId: meta.imdb_id || meta.external_ids?.imdb_id || null,
         runtimeMinutes: type === "movie" && Number(meta.runtime) > 0 ? Number(meta.runtime) : type === "tv" && Number(meta.episode_run_time?.[0]) > 0 ? Number(meta.episode_run_time[0]) : null
@@ -482,7 +483,23 @@ var require_matching = __commonJS({
       if (episodes.length !== 1 || episode.show_id !== target.tmdbId || episode.season_number !== target.season || !Number.isInteger(episode.runtime) || episode.runtime <= 0 || episode.runtime > 1e3 || year < target.year || year > 2099) return null;
       return { seasonReleaseYear: year, runtimeMinutes: episode.runtime };
     }
-    module2.exports = { resolveIdentity, resolveTranslatedTitles, resolveAlternativeTitles, resolveSeasonEpisode, matchesIdentity, matchesAddonMeta, matchesStreamFilename, matchesEpisode };
+    var POSTER_PATH = /^\/[A-Za-z0-9]+\.(?:jpg|png)$/i;
+    async function resolvePosterPaths(http, target, key) {
+      if (!key || target.type !== "tv" || http.expired()) return [];
+      const base = `https://api.themoviedb.org/3/tv/${target.tmdbId}`, query = `?api_key=${encodeURIComponent(key)}`;
+      const seasons = [...new Set([target.season, target.seasonCount].filter((s) => positiveInt(s)))];
+      const lists = await Promise.all([
+        http.json(`${base}/images${query}`, { timeoutMs: 3e3 }),
+        ...seasons.map((s) => http.json(`${base}/season/${s}/images${query}`, { timeoutMs: 3e3 }))
+      ]);
+      const paths = /* @__PURE__ */ new Set();
+      lists.forEach((data, index) => {
+        if (!data || !Array.isArray(data.posters) || index === 0 && data.id !== target.tmdbId) return;
+        for (const p of data.posters.slice(0, 600)) if (typeof p?.file_path === "string" && POSTER_PATH.test(p.file_path)) paths.add(p.file_path);
+      });
+      return [...paths];
+    }
+    module2.exports = { resolveIdentity, resolveTranslatedTitles, resolveAlternativeTitles, resolveSeasonEpisode, resolvePosterPaths, matchesIdentity, matchesAddonMeta, matchesStreamFilename, matchesEpisode };
   }
 });
 
@@ -1382,7 +1399,18 @@ var require_hdhub = __commonJS({
         return null;
       }
     }
-    function pageMatches(html, target) {
+    function seriesPagePoster(html, target) {
+      if (target.type !== "tv") return null;
+      for (const block of html.matchAll(/<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)) {
+        try {
+          const data = JSON.parse(block[1]), image = new URL(data.image);
+          if (data["@type"] === "TVSeries" && normalizeTitle(data.name) === normalizeTitle(target.originalTitle) && Number(String(data.startDate).slice(0, 4)) === target.year && image.hostname === "image.tmdb.org" && /^\/t\/p\/[a-z0-9_]+\/[A-Za-z0-9]+\.(?:jpg|png)$/i.test(image.pathname)) return image.pathname.slice(image.pathname.lastIndexOf("/"));
+        } catch {
+        }
+      }
+      return null;
+    }
+    function pageMatches(html, target, posterPaths = []) {
       const id = html.match(/\bdefaultVideoId\s*=\s*['"](\d+)['"]/)?.[1];
       if (target.type === "movie" && Number(id) !== target.tmdbId) return false;
       for (const block of html.matchAll(/<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)) {
@@ -1390,7 +1418,8 @@ var require_hdhub = __commonJS({
           const data = JSON.parse(block[1]);
           const type = target.type === "tv" ? "TVSeries" : "Movie";
           const year = Number(String(target.type === "tv" ? data.startDate : data.datePublished).slice(0, 4));
-          const bound = target.type === "movie" || target.posterPath && typeof data.image === "string" && new URL(data.image).hostname === "image.tmdb.org" && new URL(data.image).pathname.endsWith(target.posterPath);
+          const posters = [target.posterPath, ...posterPaths].filter(Boolean);
+          const bound = target.type === "movie" || posters.length && typeof data.image === "string" && new URL(data.image).hostname === "image.tmdb.org" && posters.some((p) => new URL(data.image).pathname.endsWith(p));
           const pageTitle = normalizeTitle(data.name).replace(/ marvel phase [1-6]$/, "");
           const years = target.type === "movie" && Number(id) === target.tmdbId ? [target.year, ...target.releaseYears || []] : [target.year];
           if (data["@type"] === type && bound && pageTitle === normalizeTitle(target.originalTitle) && years.includes(year)) return true;
@@ -1503,7 +1532,11 @@ var require_hdhub = __commonJS({
       const pageUrl = result && safeUrl(result.href, search.url);
       if (!pageUrl || new URL(pageUrl).origin !== HDHUB_ORIGIN) return [];
       const page = await http.text(pageUrl, { maxChars: target.type === "tv" ? 1e6 : 7e5 });
-      if (!page || !pageMatches(page.text, target)) return [];
+      if (!page) return [];
+      let bound = pageMatches(page.text, target);
+      if (!bound && options.loadPosters && seriesPagePoster(page.text, target) && !http.expired())
+        bound = pageMatches(page.text, target, await options.loadPosters());
+      if (!bound) return [];
       const entries = releasePlan(releaseEntries(page.text, target));
       const resolved = [];
       const maximum = 12;
@@ -1514,7 +1547,7 @@ var require_hdhub = __commonJS({
       });
       return options.onCandidates ? resolved : resolved.slice(0, 6);
     }
-    module2.exports = { scanHdHub, shortlinkTarget, pageMatches, releaseEntries, releasePlan, pixelFilename, HDHUB_ORIGIN };
+    module2.exports = { scanHdHub, shortlinkTarget, pageMatches, seriesPagePoster, releaseEntries, releasePlan, pixelFilename, HDHUB_ORIGIN };
   }
 });
 
@@ -3948,14 +3981,15 @@ var require_probe = __commonJS({
           return false;
         }
       }).slice(0, 1) : [];
-      const attempts = candidate.source === "AniMOM" ? [candidate.url, candidate.url] : [.../* @__PURE__ */ new Set([candidate.url, ...replicas])];
+      const rotating = ["AniMOM", "Goojara"].includes(candidate.source);
+      const attempts = rotating ? [candidate.url, candidate.url] : [.../* @__PURE__ */ new Set([candidate.url, ...replicas])];
       for (const [index, url] of attempts.entries()) {
         if (http.expired()) return null;
         const video = await probeOne(http, { ...candidate, url }, includeHls, hashEnabled, attemptOptions);
         if (video) return video;
         if (unwantedAudio) return null;
         if ([401, 403, 429].includes(http.failureFor?.(url)?.status)) return null;
-        if (candidate.source === "AniMOM" && index === 0 && http.failureFor?.(url)?.reason !== "timeout_or_network") return null;
+        if (rotating && index === 0 && http.failureFor?.(url)?.reason !== "timeout_or_network") return null;
       }
       return null;
     }
@@ -4284,7 +4318,7 @@ var require_ranking = __commonJS({
 var require_diagnostics = __commonJS({
   "src/diagnostics.cjs"(exports2, module2) {
     "use strict";
-    var VERSION = true ? "1.9.2" : "dev";
+    var VERSION = true ? "1.9.3" : "dev";
     function effectiveTmdbKey(settings, injectedKey) {
       return typeof settings.tmdbApiKey === "string" && settings.tmdbApiKey.trim() ? settings.tmdbApiKey.trim() : typeof injectedKey === "string" ? injectedKey.trim() : "";
     }
@@ -4336,7 +4370,7 @@ var require_index = __commonJS({
     var { createHttp } = require_http();
     var { createScheduler } = require_scheduler();
     var { loadHosted, registerDownloads, SERVICE_ORIGIN } = require_hosted();
-    var { resolveIdentity, resolveTranslatedTitles, resolveAlternativeTitles, resolveSeasonEpisode } = require_matching();
+    var { resolveIdentity, resolveTranslatedTitles, resolveAlternativeTitles, resolveSeasonEpisode, resolvePosterPaths } = require_matching();
     var { loadCatalog } = require_catalog();
     var { loadAddon } = require_stremio();
     var { scanDirectory } = require_directory();
@@ -4757,7 +4791,12 @@ var require_index = __commonJS({
                 if (["all", "online", "fastOnline"].includes(lane) && settings.includeHls !== false && settings.filmekseniEnabled !== false && target.type === "movie")
                   sourceJobs.push({ name: "FilmEkseni", run: () => scanFilmEkseni(http.scope(6e3), target) });
                 if (filesLane && settings.hdhubEnabled !== false && !sourceFactories.some((s) => s.name === "4KHDHub / HubCloud")) sourceJobs.push({ name: "4KHDHub / HubCloud", run: async () => {
-                  return scanHdHub(http.scope(8e3), target, { allowExtensionless: settings.useDownloadBridge !== false, onCandidates: (candidates) => acceptCandidates(candidates, true) });
+                  const sourceHttp = http.scope(8e3);
+                  return scanHdHub(sourceHttp, target, {
+                    allowExtensionless: settings.useDownloadBridge !== false,
+                    onCandidates: (candidates) => acceptCandidates(candidates, true),
+                    loadPosters: () => resolvePosterPaths(sourceHttp, target, effectiveTmdbKey(settings, tmdbKey))
+                  });
                 } });
                 if (filesLane && settings.waploadedEnabled !== false && !target.isAnime) sourceJobs.push({ name: "Waploaded", run: () => scanWaploaded(http, target) });
                 if (filesLane && settings.rarefilmmEnabled !== false && target.type === "movie" && !target.isAnime)

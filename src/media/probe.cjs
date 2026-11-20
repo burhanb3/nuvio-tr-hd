@@ -123,16 +123,22 @@ async function probe(http, candidate, includeHls = false, hashEnabled = false, o
   const replicas = canUseReplicas && Array.isArray(candidate.alternateUrls) ? candidate.alternateUrls.filter(url => {
     try { const u=new URL(url),original=new URL(candidate.url);return u.protocol==='https:' && /^[a-z]{2}\d{4,8}\.(?:us|eu|ca)\.archive\.org$/.test(u.hostname) && u.pathname===original.pathname && u.search===original.search; } catch { return false; }
   }).slice(0,1) : [];
-  const attempts = candidate.source === 'AniMOM' ? [candidate.url,candidate.url] : [...new Set([candidate.url,...replicas])];
+  // The official YourUpload redirect (AniMOM) and Goojara's public wootly
+  // /source redirect pick a CDN node per request. Some nodes may be
+  // unreachable from one network while the next request lands on another
+  // (wootly, 20 Nov, this PC: connect timeout / refused on some nodes).
+  const rotating = ['AniMOM','Goojara'].includes(candidate.source);
+  const attempts = rotating ? [candidate.url,candidate.url] : [...new Set([candidate.url,...replicas])];
   for (const [index,url] of attempts.entries()) {
     if (http.expired()) return null;
     const video = await probeOne(http, { ...candidate, url }, includeHls, hashEnabled, attemptOptions);
     if (video) return video;
     if(unwantedAudio)return null;
     if ([401,403,429].includes(http.failureFor?.(url)?.status)) return null;
-    // The official YourUpload redirect rotates CDN nodes. Refresh it once only
-    // after a network failure, within the same deadline and physical quota.
-    if (candidate.source === 'AniMOM' && index === 0 && http.failureFor?.(url)?.reason !== 'timeout_or_network') return null;
+    // Refresh a rotating redirect once only after a network failure or
+    // timeout (never after an HTTP answer or a file mismatch), within the
+    // same deadline and physical quota.
+    if (rotating && index === 0 && http.failureFor?.(url)?.reason !== 'timeout_or_network') return null;
   }
   return null;
 }

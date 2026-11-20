@@ -2,6 +2,36 @@
 
 - 12 Kasım ek bilgi: kullanıcı Windows Son aramalar listesindeki Nuvio girişinden açtığını ekran görüntüsüyle gösterdi. Bu önbellek girdisinin hedefi doğrudan okunmadı. Ayrı ve aranabilir `Programs/Nuvio TR HD.lnk` kullanıcı Başlat menüsüne eklendi; kontrollü başlatıcı argümanı yeniden okunarak doğrulandı. Kullanıcı aramada tam Nuvio TR HD adını veya masaüstü aynı adlı kısayolu seçmeli. Açık uygulamaya dokunulmadı.
 
+## 1.9.3 — 20 Kasım 2026: 4KHDHub dizi posteri, Goojara düğüm tekrarı, ağ engeli
+
+Tüm ölçümler bu bilgisayardan (TR ISS). 342 test/QuickJS geçti. ABI değişmedi. Telefon, tam film ve indirme testi yapılmadı. Kullanıcı şikâyeti: The 100'de yalnız Goojara çıkıyordu, o da bazen.
+
+- **4KHDHub dizi bağı:**
+  - Kök neden: dizi sayfaları LD JSON `image` alanında TMDB'nin ana olmayan bir posterini gösterebiliyor; katı ana poster kuralı sayfayı düşürüyordu.
+  - The 100: sayfada `/wcaDIAG1QdXQLRaj4vC1EFdBT2.jpg` (ana `/wHIMM…`). Stranger Things: sezon 5 posteri `/vzPjV6m9IH8GChvskv8ZYGBzwDT.jpg`.
+  - Düzeltme: `resolvePosterPaths` yalnız tür/ad/yıl tuttuktan sonra `/3/tv/{id}/images` (dil parametresiz, tüm diller) ile istenen ve son sezonun `/season/{n}/images` listelerini okur. Dizi yanıtında `id` hedef kimlikle aynı olmalı; sezon yanıtının `id` alanı sezon kimliğidir, o yüzden onda aranmaz.
+  - Kanıt: canlı izlemede TMDB yanıtları elle yazılmış sabit veri (poster yolları TMDB'nin herkese açık poster sayfalarından kısmen kontrol edildi; site Node'a 403 veriyor). Gerçek anahtarla telefonda doğrulanmadı.
+  - Sonuç: The 100 S1E1'de +4KHDHub/Pixeldrain 1080p 3,07 GB. Stranger Things S5E1'de probe ile doğrulanmış 2 dosya (1080p 3,95 GB, 2160p 7,57 GB), önce 0. Keşifte 5 aday vardı, 3'ü `workers.dev` olduğu için düştü.
+  - The 100 S3E5: Pixeldrain info `availability: file_rate_limited_captcha_required` (doğru reddediliyor). Terminalde yalnız PixelServer, 10Gbps ve Telegram var; bu dosya şu an alınamıyor.
+- **Goojara/wootly:**
+  - Kök neden: `web.wootly.ch/source` her istekte 302 ile farklı bir düğüme gidiyor (`*.nebula.to`, `*.jabroni.mov`). `nara`, `wakiki`, `johor`, `wind`, `ibex`, `vigo` gibi düğümler bağlantı zaman aşımı/ECONNREFUSED veya 4,5 sn aşımı verdi. Yeni istek çoğu zaman başka düğüme düşüyor; aynı ölü düğüm art arda da gelebiliyor.
+  - Soğuk ilk istek toplam süreleri: 1,3 / 1,8 / 4,3 / 4,4 / 8,2 sn, bir 15 sn zaman aşımı ve iki ağ hatası. Sıcak istekler ~0,5–1 sn.
+  - Düzeltme: probe'daki AniMOM kuralı Goojara'ya genişletildi (yalnız `timeout_or_network` sonrası bir kez). Probe çalışan düğümün son adresini döndürdüğü için oynatma/indirme o düğümle başlar.
+  - Ölçüm: 24 farklı bölüm, dönüşümlü; tekrarlı 10/12, tekrarsız 8/12. Üç tekrarın biri kurtardı. Küçük örnek.
+- **Ağ (20 Kasım):**
+  - `*.workers.dev`, `workers.dev` ve `*.r2.dev` engelli: ara kutu düz HTTP 307 ile ISS'nin özel ağdaki uyarı sayfasına yönlendiriyor (ISS filtre uyarısı). DNS ve DoH aynı Cloudflare IP'leri.
+  - 1.9.1 kaydında engelli, 1.9.2 kaydında erişilebilir, şimdi yine engelli; nedeni bilinmiyor.
+  - `pixel.hubcloud.mov`/`gpdl.hubcloud.mov` 302 ile `*.rohitkiskk.workers.dev`'e gidiyor; yani HubCloud 10Gbps de bu engelin içinde.
+  - Erişilebilir hostlar (HTTPS 2xx/3xx): 4khdhub.one, hubcloud.mov, gamerxyt.com, greenmotors.club/.cc, pixeldrain.dev/.com, goojara, wootly, moviesdrive, archive.org, rezka.ag, a.111477.xyz, waploaded, meetdownload, vixsrc, new15.hdhub4u.cl, ok.ru, strem.io, altyazidb.
+  - `www.diziyou.one` kendinden imzalı sertifika, `hubcdn.fans` sertifika zinciri hatası verdi.
+  - `<rastgele>.r2.cloudflarestorage.com` denemesi farklı bir el sıkışma hatası verdi; ad uydurma olduğu için sonuç belirsiz, engelli sayılmamalı.
+- **HDHub4u (park edildi):**
+  - Arama: typesense `search.pingora.fyi`, `query_by=imdb_id`, Referer zorunlu. Kalıcı bağlantılar eski hostlu; yol `new15.hdhub4u.cl` köküne taşınmalı. Sayfa ~350 KB, imdb bağlantısı içeriyor.
+  - Inception: 480p `hubcdn.wiki`, 720p/1080p `greenmotors` → `hblinks.lol/archives/N` (ara sayfa: hubcdn, hubcloud, hubdrive, gofile), 4K `hubdrive.blog` → hubcloud.
+  - Dosyalar 4KHDHub'dan farklı (1,0/1,4/2,3/3,3/7 GB). Ancak HubCloud terminallerinde Pixeldrain yok, aynalar `workers.dev`.
+  - `hubcdn` → `inventoryidea.com?r=<base64>` → `hubcdn.club/dl/?link=` → `video-downloads.googleusercontent.com`: gerçek MKV, Content-Length var, fakat Range yok sayılıyor (200).
+- **Pixeldrain:** bazı dosyalar `file_rate_limited_captcha_required`; captcha çözülmez.
+
 ## 1.9.2 — 19 Kasım 2026: MoviesDrive hızı ve kaynak taraması
 
 Tüm ölçümler bu bilgisayardan (TR ISS). 339 test/QuickJS geçti. Kullanıcı isteğiyle 1.9.2 olarak codex/publish-nuvio-tr-hd dalına gönderildi; ABI değişmedi. Kaynak commit 745b3ae: Test ve paket 44599273308 (ubuntu+windows) başarılı, Pages 44599273347 başarılı; manifest, dört `?v=1.9.2` sağlayıcı, sabit online adı ve ana sayfa public HTTP 200 ve SHA-256 yerel dist ile aynı (compatibility/github-publication.json, anonim GitHub API). Telefon, tam film ve indirme testi yapılmadı.
@@ -11,7 +41,7 @@ Tüm ölçümler bu bilgisayardan (TR ISS). 339 test/QuickJS geçti. Kullanıcı
   - Sürüm zinciri (archive → hub → gamerxyt → Pixeldrain info) 2 yerine 3 paralel çalışır.
   - Dune keşfi 8,9 → 4,3 sn (3 MKV), Inception 5,4 sn (1080p 2,50 GB + 2160p 7,59 GB). Her iki tarafta tek ölçüm, farklı saatlerde; kök ve eşzamanlılığın payı ayrı ölçülmedi.
   - TV: BB/GoT için yalnız çok sezonlu paket sayfaları var ("Season 1–5", "Season1 - 8"). Arama satırında da sayfanın kendisinde de IMDb bağlantısı yok (BB sayfası kontrol edildi). Kimlik kuralı gevşetilmeden eklenemez; eklenmedi.
-- **`*.workers.dev` artık erişilebilir.** 1.9.1 kaydında SNI engelli görünüyordu; iki gözlem de aynı bilgisayardan, farklı günlerde/saatlerde.
+- **`*.workers.dev` 19 Kasım'da erişilebilirdi** (20 Kasım'da yeniden engelli; bkz. 1.9.3). 1.9.1 kaydında SNI engelli görünüyordu; gözlemlerin hepsi aynı bilgisayardan, farklı günlerde/saatlerde.
   - 4KHDHub Worker aynaları Google Drive'ı vekil ediyor. 403 gövdesi "download quota for this file has been exceeded"; kota dosya başına ve zamanla değişiyor.
   - Yedi aynada 12'şer Range isteği (1,5 sn arayla): 9, 1, 8, 0, 7, 1, 12 başarı.
   - Inception 4KHDHub: 1080p 7,09 GB, 2160p 32,25 GB ve 70,82 GB MKV (HI/EN ses, TR/EN harici altyazı).

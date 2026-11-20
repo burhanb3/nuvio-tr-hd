@@ -2,6 +2,15 @@
 
 - Windows yerel düzeltme başlatıcısı başka Nuvio işlemini sessizce veya zorla kapatmaz. Kullanıcının kısayolu açması ve iletişim kutusunda onay vermesiyle normal pencere kapatma denenir. Açılış öncesi paket SHA ve classpath kontrolü zorunludur; yalnız kısayolun doğru olması uygulamanın doğru kopyada çalıştığı kanıtı değildir.
 
+## 20 Kasım 2026 — dizi poster listesi, dönen yönlendirme, HDHub4u
+
+- **4KHDHub dizi bağı aynı TMDB kaydının poster listesine genişletildi.** Bu, KARARLAR'daki "başka TV posteri için gevşetme" kuralıyla çelişmez: yalnız aynı kimliğin (dizi yanıtının `id`'si hedefle aynı) posterleri sayılır, poster uydurulmaz. Liste yalnız sayfanın türü, tam adı ve yılı tuttuğunda, ana poster tutmadığında yüklenir. Okunan sezonlar istenen sezon ve son sezondur; tüm sezonlar taranmaz.
+- **Dönen yönlendirmede tek tekrar (AniMOM, Goojara).** Yalnız ilk Range isteği, yalnız `timeout_or_network` sonrası, en fazla bir kez. HTTP 4xx/5xx, HTML/yanlış dosya ve süre uyuşmazlığı tekrarlanmaz. Bu, Worker aynalarına tekrar eklememe kararıyla çelişmez: orada hata dosyanın kotasıydı ve tekrar telefondaki indirmeyi kurtarmazdı. Burada her istek farklı düğüme gidiyor ve probe çalışan düğümün adresini döndürüyor. Süre sınırı 4,5 sn'de kaldı; ölü düğüme uzun süre tanımak bir şey kazandırmaz.
+- **Ağ engelini eklenti aşmaz.** `workers.dev`/`r2.dev` engelinde vekil, DoH veya başka host üzerinden yönlendirme yapılmaz. Hattın filtre ayarı kullanıcının kararıdır. Pixeldrain önce denenmeye ve devre kesici aynı ailedeki istekleri kesmeye devam eder.
+- **Range desteklemeyen doğrudan dosya (hubcdn → Google) aday yapılmaz.** `http.bytes` 200 + büyük Content-Length'i reddeder. Bunu gevşetmek telefonda iptal edilemeyen çok GB'lık gövde okuması demektir.
+- **Gofile eklenmez**: misafir hesap anahtarı ister (hesap/anahtar kuralı).
+- **HDHub4u park edildi.** Yeniden deneme koşulu: `workers.dev` bu hattan erişilebilir olduğunda veya beş başlıkta (biri bölüm bazlı dizi) HubCloud terminallerinin anlamlı bir kısmında `availability` alanı boş Pixeldrain bulunduğunda. Eklenirse `hblinks.lol/archives/N` ara adımı gerekir; `shortlinkTarget` yalnız hubcloud hostunu kabul eder ve bu korunmalıdır.
+
 ## 19 Kasım 2026 — MoviesDrive kökü, eşzamanlılık ve Worker kotası
 
 - **MoviesDrive kökü** yayıncının güncel alanıdır (`new4`). Kök değişirse mevcut kural geçerli kalır: sorgusuz `/search.php` yanıtı (son yazılar) kimlik kanıtı sayılmaz, yeni kökte bir kez gerçek arama yapılır.

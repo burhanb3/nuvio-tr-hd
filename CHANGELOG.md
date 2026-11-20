@@ -1,5 +1,31 @@
 # Sürüm notları
 
+## 1.9.3 — 20 Kasım 2026
+
+- **4KHDHub dizileri daha sık bağlanır:**
+  - Sorun: dizi sayfası TMDB'nin ana posteri yerine başka bir dil veya sezon posteri gösterdiğinde sayfa hiç bağlanmıyordu (The 100, Stranger Things).
+  - Artık tür, tam ad ve yıl tuttuğunda aynı TMDB kaydının poster listesi okunur: dizinin tüm dilleri, istenen sezon ve son sezon. Sayfadaki poster bu listedeyse sayfa bağlanır.
+  - Başka bir kaydın posteri, başka ad veya yıl yine bağlanmaz. Liste yalnız ana poster tutmadığında yüklenir.
+  - Canlı ölçüm (bu bilgisayar; TMDB verisi elle yazılmış sabit veri, gerçek TMDB yanıtı değil):
+    - The 100 S1E1: Goojara'ya ek olarak 4KHDHub/Pixeldrain 1080p 3,07 GB.
+    - Stranger Things S5E1: önce 0, şimdi probe ile doğrulanmış 4KHDHub/Pixeldrain 1080p 3,95 GB ve 2160p 7,57 GB.
+    - The 100 S3E5: sonuç yok. Pixeldrain bu dosyayı "captcha gerekli" sınırına almış, diğer aynalar `workers.dev` üzerinde.
+- **Goojara daha kararlı:**
+  - Sorun: wootly'nin `/source` yönlendirmesi her istekte farklı bir CDN düğümü seçiyor. Bazı düğümler bu ağdan bağlantı zaman aşımı veya ret veriyor, bu yüzden aynı bölüm bazen çıkıp bazen çıkmıyordu.
+  - Artık ilk Range isteği ağ hatası veya zaman aşımıyla düşerse aynı adres bir kez daha istenir (AniMOM'daki kuralın aynısı). HTTP yanıtı veya dosya uyuşmazlığı tekrarlanmaz. En kötü durumda probe 4,5 sn uzar.
+  - Küçük ölçüm (bu bilgisayar, The 100'ün 24 farklı bölümü, sırayla biri tekrarlı biri tekrarsız): tekrarlı 10/12, tekrarsız 8/12. Üç tekrarın biri dosyayı kurtardı, ikisinde iki düğüm de ölüydü. Kesin çözüm değil; telefonda ölçülmedi.
+- **Ağ gözlemi (20 Kasım, bu bilgisayar, TR ISS hattı):**
+  - `*.workers.dev`, `workers.dev` ve `*.r2.dev` yeniden engelli.
+  - Belirtiler: DNS (DoH dahil) aynı Cloudflare adreslerini veriyor. TLS isteğine ara kutu düz HTTP 307 ile ISS'nin özel ağdaki uyarı sayfasına yönlendiriyor; istemci `ERR_SSL_PACKET_LENGTH_TOO_LONG` görüyor.
+  - 19 Kasım'da erişilebiliyordu; değişimin nedeni bilinmiyor.
+  - HubCloud'da Pixeldrain dışındaki tüm sunucular (10Gbps, ZipDisk, "Download File") bu hostlarda. Bu hatta 4KHDHub ve MoviesDrive yalnız Pixeldrain dosyalarıyla sonuç verebilir.
+- **HDHub4u incelendi, eklenmedi.** IMDb kimliğiyle kesin bağlanıyor ve 4KHDHub'dan farklı dosyalar sunuyor. Ancak:
+  - Dosyaları aynı HubCloud altyapısında. İncelenen Inception dosyalarında Pixeldrain yok, aynaların hepsi `workers.dev`.
+  - `hubcdn` bağlantıları Google'ın doğrudan dosyasına çıkıyor, fakat sunucu Range desteklemiyor (570 MB'lık tam yanıt). Güvenli probe yapılamıyor.
+  - Gofile bir misafir hesap anahtarı istiyor.
+  - Bu hatta uçtan uca doğrulanamadı; yeniden deneme koşulu hafızada.
+- 342 yerel test/QuickJS geçti. Fiziksel telefon, tam oynatma ve indirme testi yapılmadı.
+
 ## 1.9.2 — 19 Kasım 2026
 
 - **MoviesDrive daha hızlı:**

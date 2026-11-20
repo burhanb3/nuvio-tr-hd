@@ -5,8 +5,8 @@ const {createProvider}=require('../src/index.cjs');
 const {createHttp}=require('../src/http.cjs');
 const {scanPlayImdb,PLAY_API}=require('../src/providers/playimdb.cjs');
 const {scanVixDirect}=require('../src/providers/vixsrc.cjs');
-const {pageMatches,releaseEntries}=require('../src/providers/hdhub.cjs');
-const {matchesEpisode}=require('../src/matching.cjs');
+const {pageMatches,releaseEntries,seriesPagePoster,scanHdHub,HDHUB_ORIGIN}=require('../src/providers/hdhub.cjs');
+const {matchesEpisode,resolvePosterPaths}=require('../src/matching.cjs');
 const {scoreSubtitle}=require('../src/subtitle-discovery.cjs');
 const {fixtureFetch,mp4}=require('./helpers.cjs');
 const target={tmdbId:67070,type:'tv',originalTitle:'Fleabag',year:2016,season:1,episode:1,imdbId:'tt5687612',posterPath:'/Poster.jpg',runtimeMinutes:26};
@@ -60,6 +60,48 @@ test('HDHub dizi kimliği TMDB posteri, özgün ad/yıl ve tam bölümle bağlan
  assert.equal(pageMatches(html,target),true);assert.equal(pageMatches(html,{...target,posterPath:'/Wrong.jpg'}),false);
  assert.equal(pageMatches(html,{...target,year:2019}),false);
  assert.equal(releaseEntries(html,target).length,1);
+});
+test('HDHub dizi sayfası aynı TMDB kaydının ana olmayan posteriyle bağlanır; başka poster/ad/yıl bağlanmaz',async()=>{
+ const show={...target,tmdbId:48866,originalTitle:'The 100',year:2014,imdbId:'tt2661044',season:3,episode:5,seasonCount:7,posterPath:'/Primary.jpg',runtimeMinutes:43};
+ const head=image=>`<script type="application/ld+json">{"@type":"TVSeries","name":"The 100","startDate":"2014","image":"https://image.tmdb.org/t/p/w500${image}"}</script>`;
+ const entry=file=>`<div class="episode-download-item"><div class="episode-file-title">${file}</div><span>300 MB</span><a href="https://greenmotors.club/ep">Download HubCloud</a></div>`;
+ const html=head('/EnglishPoster.jpg')+entry('The.100.S03E05.720p.WEB-DL.mkv');
+ assert.equal(pageMatches(html,show),false);
+ assert.equal(pageMatches(html,show,['/Other.jpg','/EnglishPoster.jpg']),true);
+ assert.equal(pageMatches(html,show,['/Other.jpg']),false);
+ assert.equal(seriesPagePoster(html,show),'/EnglishPoster.jpg');
+ assert.equal(seriesPagePoster(html.replace('"The 100"','"The 1000"'),show),null);
+ assert.equal(seriesPagePoster(html.replace('"2014"','"2015"'),show),null);
+ assert.equal(seriesPagePoster(html.replace('image.tmdb.org','images.example.test'),show),null);
+ // Lazy loading: only an exact type/title/year page asks TMDB for the poster list.
+ const search={[HDHUB_ORIGIN+'/?s=The%20100']:{body:`<a href="${HDHUB_ORIGIN}/the-100-series-1/">The 100 (2014) Complete Series</a>`}};
+ for(const [page,expected,loads] of [[html,1,1],[html.replace('"The 100"','"The 1000"'),0,0],[head('/Primary.jpg')+entry('The.100.S03E05.720p.WEB-DL.mkv'),1,0]]){
+  let loaded=0;const requests=[],fixture={...search,[HDHUB_ORIGIN+'/the-100-series-1/']:{body:page}};
+  const http=createHttp({fetchImpl:fixtureFetch(fixture,requests)});
+  try{
+   await scanHdHub(http,show,{loadPosters:async()=>{loaded++;return ['/EnglishPoster.jpg'];},onCandidates:async()=>{}});
+   assert.equal(loaded,loads);
+   // The release chain itself is not in this fixture; only a bound page reaches it.
+   assert.equal(requests.filter(c=>c.url==='https://greenmotors.club/ep').length,expected);
+  }finally{http.close();}
+ }
+});
+test('TMDB poster listesi dizinin tüm dillerini ve istenen/son sezonu okur; başka kimlik ve bozuk yol elenir',async()=>{
+ const show={tmdbId:48866,type:'tv',season:3,seasonCount:7};
+ const base='https://api.themoviedb.org/3/tv/48866';
+ const fixture={[base+'/images?api_key=k']:{json:{id:48866,posters:[{file_path:'/En.jpg',iso_639_1:'en'},{file_path:'/Ru.jpg',iso_639_1:'ru'},{file_path:'../bad.jpg'},{file_path:7}]}},
+  [base+'/season/3/images?api_key=k']:{json:{id:1111,posters:[{file_path:'/S3.jpg'}]}},
+  [base+'/season/7/images?api_key=k']:{json:{id:2222,posters:[{file_path:'/S7.png'}]}}};
+ const calls=[],http=createHttp({fetchImpl:fixtureFetch(fixture,calls)});
+ try{
+  assert.deepEqual((await resolvePosterPaths(http,show,'k')).sort(),['/En.jpg','/Ru.jpg','/S3.jpg','/S7.png']);
+  // No language parameter: a language filter would hide other-language posters.
+  assert.ok(calls.every(c=>!/[?&]language=/.test(c.url)));
+  fixture[base+'/images?api_key=k'].json.id=999;
+  assert.deepEqual((await resolvePosterPaths(http,show,'k')).sort(),['/S3.jpg','/S7.png']);
+  assert.deepEqual(await resolvePosterPaths(http,{...show,type:'movie'},'k'),[]);
+  assert.deepEqual(await resolvePosterPaths(http,show,''),[]);
+ }finally{http.close();}
 });
 test('AltyazıDB yıl içermeyen sürüm notu tam sürüm iddiasına dönüşmez; Türkçe bölüm dosyası döner',async()=>{
  const fixture={

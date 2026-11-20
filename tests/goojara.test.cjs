@@ -76,6 +76,24 @@ test('Goojara: dizinin seçilmiş sezon listesi ve tam bölüm zinciri gerçek M
  }finally{http.close();}
 });
 
+test('Goojara: dönen wootly yönlendirmesi yalnız ağ hatasında bir kez yenilenir; çalışan düğüm döner, HTTP yanıtı ve başka kaynak tekrar edilmez',async()=>{
+ const live='https://live.cdn.test/movie.mp4',dead='https://dead.cdn.test/movie.mp4',denied='https://denied.cdn.test/movie.mp4',html='https://html.cdn.test/movie.mp4';
+ const candidate={url:source,headers:{Referer:'https://web.wootly.ch/'},source:'Goojara',identity:target,filename:'The.Matrix.1999.720p.WEB-DL.mp4',requireDuration:true,durationTolerance:0.1,subtitles:[]};
+ const run=async(nodes,value=candidate)=>{
+  const calls=[];let turn=0;
+  const http=createHttp({fetchImpl:async(url,options={})=>{
+   if(url===source){calls.push(url);return fixtureFetch({[source]:{status:302,headers:{location:nodes[Math.min(turn++,nodes.length-1)]}}})(url,options);}
+   if(url===dead)throw Error('CDN node unreachable');
+   return fixtureFetch({[live]:{body:media(),mime:'video/mp4'},[denied]:{status:403},[html]:{body:'<html>Error</html>',mime:'text/html'}})(url,options);}});
+  try{return{video:await probe(http,value),sourceRequests:calls.length};}finally{http.close();}
+ };
+ const rerolled=await run([dead,live]);assert.equal(rerolled.video.downloadable,true);assert.equal(rerolled.video.url,live);assert.equal(rerolled.sourceRequests,2);
+ assert.deepEqual(await run([dead,dead]),{video:null,sourceRequests:2});
+ assert.deepEqual(await run([denied,live]),{video:null,sourceRequests:1});
+ assert.deepEqual(await run([html,live]),{video:null,sourceRequests:1});
+ assert.deepEqual(await run([dead,live],{...candidate,source:'Other'}),{video:null,sourceRequests:1});
+});
+
 test('Goojara: HCSubs sürüm işareti gizlenmez, bilinmeyen sabit altyazıya dil uydurulmaz',async()=>{
  const f=fixture();f[wrapper].body=f[wrapper].body.replace('WEB-DL.mp4','WEB-DL.HCSubs.mp4');const http=createHttp({fetchImpl:fixtureFetch(f)});
  try{const [candidate]=await scanGoojara(http,target);assert.equal(candidate.burnedSubtitleLanguage,'und');assert.equal(candidate.burnedSubtitleBasis,'release-name');

@@ -2,7 +2,7 @@
 const { createHttp } = require('./http.cjs');
 const { createScheduler } = require('./scheduler.cjs');
 const { loadHosted, registerDownloads, SERVICE_ORIGIN } = require('./hosted.cjs');
-const { resolveIdentity,resolveTranslatedTitles,resolveAlternativeTitles,resolveSeasonEpisode } = require('./matching.cjs');
+const { resolveIdentity,resolveTranslatedTitles,resolveAlternativeTitles,resolveSeasonEpisode,resolvePosterPaths } = require('./matching.cjs');
 const { loadCatalog } = require('./providers/catalog.cjs');
 const { loadAddon } = require('./providers/stremio.cjs');
 const { scanDirectory } = require('./providers/directory.cjs');
@@ -331,7 +331,9 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs, requestTi
             if(['all','online','fastOnline'].includes(lane)&&settings.includeHls!==false&&settings.filmekseniEnabled!==false&&target.type==='movie')
               sourceJobs.push({name:'FilmEkseni',run:()=>scanFilmEkseni(http.scope(6000),target)});
             if (filesLane && settings.hdhubEnabled !== false && !sourceFactories.some(s => s.name === '4KHDHub / HubCloud')) sourceJobs.push({ name: '4KHDHub / HubCloud', run: async () => {
-              return scanHdHub(http.scope(8000), target, { allowExtensionless: settings.useDownloadBridge !== false, onCandidates: candidates => acceptCandidates(candidates, true) });
+              const sourceHttp = http.scope(8000);
+              return scanHdHub(sourceHttp, target, { allowExtensionless: settings.useDownloadBridge !== false, onCandidates: candidates => acceptCandidates(candidates, true),
+                loadPosters: () => resolvePosterPaths(sourceHttp, target, effectiveTmdbKey(settings, tmdbKey)) });
             } });
             if (filesLane && settings.waploadedEnabled !== false && !target.isAnime) sourceJobs.push({ name: 'Waploaded', run: () => scanWaploaded(http, target) });
             if (filesLane && settings.rarefilmmEnabled !== false && target.type === 'movie' && !target.isAnime)
