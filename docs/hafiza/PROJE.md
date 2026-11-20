@@ -4,7 +4,7 @@
 
 ## 1.9.4 — 20 Kasım 2026: FzTvSeries dizi kaynağı
 
-Tüm ölçümler bu bilgisayardan (TR ISS). 349 test geçti (FzTvSeries için bir QuickJS paket testi dahil). ABI değişmedi. Yayın kontrolü sonucu aşağıya eklenecek.
+Tüm ölçümler bu bilgisayardan (TR ISS). 349 test geçti (FzTvSeries için bir QuickJS paket testi dahil). ABI değişmedi. Kullanıcının önceden verdiği yayın izniyle codex/publish-nuvio-tr-hd dalına gönderildi. Kaynak commit 11f9212: Test ve paket 44704295963 (ubuntu+windows) başarılı, Pages 44704295451 başarılı; manifest, dört `?v=1.9.4` sağlayıcı, sabit online adı ve ana sayfa public HTTP 200 ve SHA-256 yerel dist ile aynı (compatibility/github-publication.json, anonim GitHub API). Telefon, tam oynatma ve indirme testi yapılmadı.
 
 - **Tetik:** kullanıcının LTE ekran görüntüleri. The 100 S1E1 ve S1E10'da yalnız Goojara 480p, VixSrc, DiziBak ve DiziBal; 4KHDHub yok.
   - LTE olduğu için ev hattındaki `workers.dev` engeli bunu açıklamıyor.
