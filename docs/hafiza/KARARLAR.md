@@ -2,6 +2,12 @@
 
 - Windows yerel düzeltme başlatıcısı başka Nuvio işlemini sessizce veya zorla kapatmaz. Kullanıcının kısayolu açması ve iletişim kutusunda onay vermesiyle normal pencere kapatma denenir. Açılış öncesi paket SHA ve classpath kontrolü zorunludur; yalnız kısayolun doğru olması uygulamanın doğru kopyada çalıştığı kanıtı değildir.
 
+## 20 Kasım 2026 — HubCloud 10Gbps eklenmez
+
+- **HubCloud 10Gbps aday yapılmaz.** Terminal sayfası bu sunucu için sürdürmenin desteklenmediğini yazıyor. Range yoksa probe hiç geçmez. Üstelik iOS istemcisi her denemede gövdeyi okumaya devam edebilir; JS bunu iptal edemez ve mobil veri harcanır. Adres tek kullanımlıksa probe onu tüketir ve indirme kırılır. İki durum da bu bilgisayardan ölçülemiyor.
+- **Yeniden açma koşulu:** son hosttan ölçülmüş 206 ve aynı adresin ikinci istekte de çalıştığı gösterilmeli. Ara adımlar (worker sayfaları) kodlanmaz.
+- Uzantısız yönlendirme adresini köprüsüz kabul etmek gerekirse yalnız son adresin uzantısı gerçek kapla aynıysa kabul edilir; uzantısız son adres için gevşetme yapılmaz.
+
 ## 20 Kasım 2026 — FzTvSeries
 
 - **FzTvSeries eklendi (yalnız dizi, anime değil).** Kimlik IMDb'ye bağlı: arama kartı adı yalnız aday seçer; dizi sayfasında tek ve aynı IMDb kimliği, sezon sayfasında varsa yine aynı kimlik gerekir. `identityConfidence` 90: sıralamada pikselin önüne geçmemesi için Goojara TV ve MoviesDrive ile aynı.

@@ -21,14 +21,14 @@
           "entry": "480p",
           "firstHost": "pixel.hubcloud.ist",
           "firstStatus": 302,
-          "nextHost": "pixel.rohitkiskk.workers.dev",
+          "nextHost": "pixel.<worker>.workers.dev",
           "error": "ERR_SSL_PACKET_LENGTH_TOO_LONG"
         },
         {
           "entry": "720p10bit",
           "firstHost": "gpdl.hubcloud.ist",
           "firstStatus": 302,
-          "nextHost": "gpdl.rohitkiskk.workers.dev",
+          "nextHost": "gpdl.<worker>.workers.dev",
           "error": "ERR_SSL_PACKET_LENGTH_TOO_LONG"
         }
       ],

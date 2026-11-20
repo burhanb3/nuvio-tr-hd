@@ -11,7 +11,7 @@ Tüm ölçümler bu bilgisayardan (TR ISS). 349 test geçti (FzTvSeries için bi
 - **4KHDHub/Pixeldrain nedeni:** HubCloud `var pxl` kimliğinin `/info` sonucu (20 Kasım):
   - S1E1 (dün doğrulanmıştı), S1E3, S1E10 ve S3E5: `file_rate_limited_captcha_required`.
   - S2E1 ve S4E2: açık.
-  - Durum gün içinde değişiyor. Diğer sunucu (10Gbps) `pixel.hubcloud.mov` → `*.rohitkiskk.workers.dev`; `direct` filtresi bunu kabul etmiyor ve bu hattan doğrulanamıyor.
+  - Durum gün içinde değişiyor. Diğer sunucu (10Gbps) `pixel.hubcloud.mov` → `*.<worker>.workers.dev`; `direct` filtresi bunu kabul etmiyor ve bu hattan doğrulanamıyor.
 - **HDRezka The 100:** yalnız RU/UA sesli; özgün ses seçeneği yok.
 - **FzTvSeries (`tvseries.in`) zinciri:**
   1. `search.php?search=<ad>&by=series`. Yalnız `<main class='site-content'>` içindeki `series-card-title` kartları okunur; tam ad önce, en fazla 3 kart. Adlardan kesme işareti atılır.
@@ -21,7 +21,7 @@ Tüm ölçümler bu bilgisayardan (TR ISS). 349 test geçti (FzTvSeries için bi
   5. Bölüm sayfası: `Set-Cookie: PHPSESSID` ve `downloadmp4.php?fileid=…&dkey=<32 hex>`. Anahtar oturuma bağlı; oturum olmadan "Download key expired".
   6. İndirme sayfası: `filelink.php?sn=<host>&id=<yol>&ep=<fileid>`. Ara sayfaya gidilmez; `https://<sn><id>` kurulur.
   7. Dosya adı dizi adı + SxxEyy ile denetlenir.
-  - Sunucular: `*.y9a8ua48mhss5ye.cyou`. 20 Kasım'da `6sde7d2l80` sertifikası süresi dolmuş, `mf894kn11o` 206 veriyor. Breaking Bad için `9ubmmwl6kv` (ECONNREFUSED) ve `uf3qp40g0f` (sertifika) ikisi de açılmadı.
+  - Sunucular: `*.<dosya-alanı>.cyou` altında rastgele adlı hostlar. 20 Kasım'da The 100 için A sunucusunun sertifikası süresi dolmuş, B 206 veriyor. Breaking Bad için C (ECONNREFUSED) ve D (sertifika) ikisi de açılmadı.
   - Kapsam örneği (8 dizi): The 100, Fleabag, GoT, Severance, Stranger Things, TLOU ve Wednesday'de dosya 206; Breaking Bad'de sunucular kapalı. Shameless "Shameless US/UK" adıyla listeli, IMDb ile ayrılıyor (canlı sağlayıcıda S2E1 bulundu).
   - Kalite: High MP4 640×360 (The 100 S1E1 2518 sn, 116 MB). Bazı dizilerde 480p olabilir; doğrulanmadı.
   - Canlı süre (bu bilgisayar): keşif ~4 sn (5 istek), probe ~2,7 sn.
@@ -38,6 +38,14 @@ Tüm ölçümler bu bilgisayardan (TR ISS). 349 test geçti (FzTvSeries için bi
     - DiziBak (ana yoldaki online HLS satırı): FzTvSeries açıkken iki çalıştırmada da 12,5 sn'de başladı ve probe'u 24 sn bütçesinin sonuna kaldı, satır çıkmadı. Kapalıyken ve 1.9.3'te çıktı. The 100 S2E1'de açıkken çıkmıştı. İndirilebilir değil; VixSrc satırı korunuyor. Bilinen kayıp.
     - 4KHDHub bu ölçümde dört çalıştırmanın üçünde 8 sn sınırına takıldı, 0,6 sn'de başladığı halde. 1.9.3 sırasında 10–11 sn'de başladı ve hiç aday vermedi. Sıra değişikliği 4KHDHub'ı garanti etmiyor. Çıktığı tek çalıştırmadaki 2160p dosya MoviesDrive'ın 7,57 GB Pixeldrain dosyasıyla aynı.
 - **Sıralama puanı:** `identityConfidence` 90 (Goojara TV ve MoviesDrive ile aynı). 95 verilseydi 5000 puan farkı pikselin (en çok 2160) önüne geçer, 360p dosya MoviesDrive 1080p'nin üstüne çıkardı. Önerilen sırada altyazı puanı yine baskın; The 100'de FzTvSeries 360p bu yüzden Goojara 480p'nin üstünde görünebiliyor.
+- **HubCloud 10Gbps denemesi (20 Kasım, yayınlanmadı):**
+  - Tetik: kullanıcı 1.9.4 ile telefonda (LTE) "FzTvSeries göründü, diğerleri yok" dedi.
+  - Yerel taslak: terminal sayfasındaki `[Server : 10Gbps]` bağlantısı Pixeldrain'den sonra aday olacak, yönlendirmeyi telefondaki probe izleyecek, son adresin uzantısı gerçek kapla aynı değilse satır elenecekti. Birim ve QuickJS fixture testleri geçti.
+  - Gerçek sayfa (The 100 S1E1, bu bilgisayar) 0 aday verdi. Bağlantının `id` değeri `<değer>::<32 hex>` biçiminde; taslağın `[A-Za-z0-9_-]` deseni bunu kabul etmiyordu. Fixture'lar gerçek işaretlemeyi değil varsayımı sınıyordu.
+  - Aynı sayfada düğmenin altında "Resume Not Supported in 10Gbps" notu var. Sayfa sürdürmenin desteklenmediğini söylüyor; Range ölçülmedi (`workers.dev` bu bilgisayardan açılmıyor).
+  - Karar: eklenmedi, sürüm yükseltilmedi (KARARLAR). Taslak commit'i yayınlanmadan geri alındı.
+  - Ek bulgu: taslağın ilk QuickJS hatası (`searchParams.keys()`) yalnız test köprüsündendi. Kilitli `JsBindings.kt`'de `URLSearchParams.prototype.keys` var; test köprüsü yalnız `get` sunuyor.
+  - Aynı gün tekrar ölçüm (bu bilgisayar, yalnız 4KHDHub açık): The 100 S2E1 Pixeldrain 1080p (3,30 GB) probe ile doğrulandı; S1E1'de 0 aday (Pixeldrain captcha).
 
 ## 1.9.3 — 20 Kasım 2026: 4KHDHub dizi posteri, Goojara düğüm tekrarı, ağ engeli
 
@@ -58,7 +66,7 @@ Tüm ölçümler bu bilgisayardan (TR ISS). 342 test/QuickJS geçti. ABI değiş
 - **Ağ (20 Kasım):**
   - `*.workers.dev`, `workers.dev` ve `*.r2.dev` engelli: ara kutu düz HTTP 307 ile ISS'nin özel ağdaki uyarı sayfasına yönlendiriyor (ISS filtre uyarısı). DNS ve DoH aynı Cloudflare IP'leri.
   - 1.9.1 kaydında engelli, 1.9.2 kaydında erişilebilir, şimdi yine engelli; nedeni bilinmiyor.
-  - `pixel.hubcloud.mov`/`gpdl.hubcloud.mov` 302 ile `*.rohitkiskk.workers.dev`'e gidiyor; yani HubCloud 10Gbps de bu engelin içinde.
+  - `pixel.hubcloud.mov`/`gpdl.hubcloud.mov` 302 ile `*.<worker>.workers.dev`'e gidiyor; yani HubCloud 10Gbps de bu engelin içinde.
   - Erişilebilir hostlar (HTTPS 2xx/3xx): 4khdhub.one, hubcloud.mov, gamerxyt.com, greenmotors.club/.cc, pixeldrain.dev/.com, goojara, wootly, moviesdrive, archive.org, rezka.ag, a.111477.xyz, waploaded, meetdownload, vixsrc, new15.hdhub4u.cl, ok.ru, strem.io, altyazidb.
   - `www.diziyou.one` kendinden imzalı sertifika, `hubcdn.fans` sertifika zinciri hatası verdi.
   - `<rastgele>.r2.cloudflarestorage.com` denemesi farklı bir el sıkışma hatası verdi; ad uydurma olduğu için sonuç belirsiz, engelli sayılmamalı.
@@ -473,7 +481,7 @@ Shameless ABD34307/tt1586680 API filename Shameless.US.S01.../untouchables-shame
 
 Archive rows12/popularity/bariz fragman önfiltre; en küçük3+HD3; eksik metadata süresi varsa candidate.requireDuration ile gerçek konteyner süresi şart. MP4 tail moov boyut+duration, audio-only tail reddi; IMDb tam token, prefix değil. Büyük HDHub dosyalarına boyut tavanı yok. Yeni küçük Dune dosyası **henüz doğrulanmadı**.
 
-MoviesDrive title araması Dune2021 kaydını bulur (IMDb alanı boş);550MB/900MB/1,3GB/1,9GB/3,8GB sayfaları ve HubCloud pointer’ları incelendi. İlk iki10Gbps zinciri rohitkiskk.workers.dev uçlarında ERR_SSL_PACKET_LENGTH_TOO_LONG; diğerleri aynı terminal aileleri, gerçek dosya probe yok. Sayfa iddiaları verified byte/piksel değildir. Archive Dune yanlış2004yılı ve fragman kayıtları reddedildi. MovieBox v1 boş, v2 invalid token; eklenmedi. Sites get_site yineNOT_FOUND, yeniden create/checkout düzenleme/hesap değiştirme sorusu yok.
+MoviesDrive title araması Dune2021 kaydını bulur (IMDb alanı boş);550MB/900MB/1,3GB/1,9GB/3,8GB sayfaları ve HubCloud pointer’ları incelendi. İlk iki10Gbps zinciri <worker>.workers.dev uçlarında ERR_SSL_PACKET_LENGTH_TOO_LONG; diğerleri aynı terminal aileleri, gerçek dosya probe yok. Sayfa iddiaları verified byte/piksel değildir. Archive Dune yanlış2004yılı ve fragman kayıtları reddedildi. MovieBox v1 boş, v2 invalid token; eklenmedi. Sites get_site yineNOT_FOUND, yeniden create/checkout düzenleme/hesap değiştirme sorusu yok.
 
 Canlı ana arama: Dune: 10 online/TR ~6s, Fleabag S01E01: 10 online/TR ~4s, Shameless (ABD) S01E01: 7 online/TR ~5s. Metadata sabit kanonik referans; gerçek kaynak/altyazı sorguları; fiziksel cihaz değil. Night of Living Dead 318/388 MiB gerçek MP4+TR verdi; bu Dune küçük dosyası bulundu diye sunulamaz. Yerel 107 test/QuickJS ve Windows/Linux CI başarılı; authenticated upstream tekrar 20 dosyada drift bulmadı (ilk oturumsuz 403 rate-limit raporu değil, başarılı yeni rapor saklandı). GitHub yayını/HTTP/SHA kontrolü tamamlandı. Son ek Fleabag kontrolünde gerçek HLS playlist süresi PlayIMDb 1566s, VixSrc 1612s ile 26 dakikalık referansa yakındı; bu tam oynatma/sahne senkronu testi değildir.
 
