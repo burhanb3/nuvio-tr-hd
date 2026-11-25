@@ -2,6 +2,19 @@
 
 - Son durum: masaüstü Nuvio TR HD artık Start-NuvioTRHD.ps1 üzerinden açılır. Kullanıcı yeniden aynı hata bildirdiğinde özgün kurulum çalışıyordu; nedeni kesinleşmedi. CheckOnly ve gömülü Java17 penceresiz classpath probe geçti. Kullanıcı kontrollü başlatıcıyla deneyip hata sürerse çalışan yol ve gerçek kaynak raporu birlikte incelenmeli. Tekrar UI başarısı/tam indirme doğrulanmış sayılmamalı.
 
+## 1.9.9 — 26 Kasım 2026
+
+1. **Yayın:** Yayın kontrolü sonucu PROJE ve `compatibility/github-publication.json` içine yazılacak.
+2. **Telefonda (Wi-Fi ve LTE ayrı):**
+   - Depo yenilenmeli; `Tanı · 1.9.9` görünmeli.
+   - Inception'da `Hızlı İzle` altında iki KultFilmler satırı gelmeli: 1080p altyazılı ve `Ses: TR` dublaj.
+   - Her iki satır oynatılmalı. HLS parçaları `.html` adlıdır; iPhone oynatıcısının bunları açtığı doğrulanmalı.
+   - Altyazılı satırda TR altyazı görünmeli ve senkron olmalı.
+   - Oynatma bağlantısı yaklaşık 2 saat geçerli. Liste uzun süre açık kaldıktan sonra oynatma denenip hata alınırsa not edilmeli.
+3. **HDRezka:** Kullanıcı Interstellar, Inception, Fury'de Wi-Fi ve mobil veride ayrı denemeli. İki ağda farklı sonuç çıkarsa düğüm kısıtlaması ağa bağlıdır.
+4. **Sonraki kaynak turu:** DiziBox (dizi). King oynatıcısında AES çözümü için gereken parola sayfadan geliyor; ayrıca sabit bir çerez var. Önce bu çerezin koruma sabiti olup olmadığına bakılmalı; koruma sabitiyse eklenmez. Ardından CizgiMax ve BelgeselX değerlendirilmeli.
+5. **1.9.8 maddeleri** (aşağıda) hâlâ açık.
+
 ## 1.9.8 — 25 Kasım 2026
 
 1. **Yayımlandı (`55b732d`):** Test ve paket `45692600060` ve Pages `45692600154` başarılı; 9 public dosya HTTP 200 ve SHA-256 yerel `dist/` ile aynı (`compatibility/github-publication.json`).

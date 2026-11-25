@@ -35,4 +35,24 @@ function quotedJson(value){
   }
   try{return JSON.parse(decoded);}catch{return null;}
 }
-module.exports = { jsonLd, tagAttributes, canonicalNames, sameName, syntheticFilename, sameOrigin,quotedJson };
+function packedKey(n,base){
+  // Mirrors the p,a,c,k,e,d encoder: digits, a-z, then A-Z above 35.
+  const tail=n%base,digit=tail>35?String.fromCharCode(tail+29):tail.toString(36);
+  return(n<base?'':packedKey(Math.floor(n/base),base))+digit;
+}
+function unpackPacked(html,{maxPayload=60000,maxWords=1500}={}){
+  // Static dictionary substitution of a packed player script. Nothing is
+  // evaluated; an oversized, unknown-base or malformed script is ignored.
+  const at=String(html||'').indexOf("eval(function(p,a,c,k,e,");if(at<0)return null;
+  const part=html.slice(at,at+maxPayload+maxWords*48+400);
+  const m=part.match(/\}\('((?:\\.|[^'\\])*)',\s*(\d+),\s*(\d+),\s*'((?:\\.|[^'\\])*)'\.split\('\|'\)/);
+  if(!m||m[1].length>maxPayload)return null;
+  const base=Number(m[2]),count=Number(m[3]);
+  if(!Number.isInteger(base)||base<2||base>62||!Number.isInteger(count)||count>maxWords)return null;
+  const literal=s=>s.replace(/\\(.)/g,(raw,c)=>c==='n'?'\n':c==='r'?'\r':c==='t'?'\t':"\\'\"/".includes(c)?c:raw);
+  const words=literal(m[4]).split('|');if(words.length>count+1)return null;
+  const dictionary=new Map();
+  for(let i=0;i<count;i++){const key=packedKey(i,base);dictionary.set(key,words[i]||key);}
+  return literal(m[1]).replace(/\b\w+\b/g,w=>dictionary.has(w)?dictionary.get(w):w);
+}
+module.exports = { jsonLd, tagAttributes, canonicalNames, sameName, syntheticFilename, sameOrigin,quotedJson,unpackPacked };

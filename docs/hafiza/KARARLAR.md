@@ -2,6 +2,16 @@
 
 - Windows yerel düzeltme başlatıcısı başka Nuvio işlemini sessizce veya zorla kapatmaz. Kullanıcının kısayolu açması ve iletişim kutusunda onay vermesiyle normal pencere kapatma denenir. Açılış öncesi paket SHA ve classpath kontrolü zorunludur; yalnız kısayolun doğru olması uygulamanın doğru kopyada çalıştığı kanıtı değildir.
 
+## 26 Kasım 2026 — 1.9.9 KultFilmler
+
+- **Yalnız Hızlı İzle ve online paket.** Ana `Nuvio TR HD` taramasına eklenmedi. Yeni bir host iPhone'da askı yaparsa yalnız Hızlı İzle etkilenir. 6 sn kaynak bütçesi var; yalnız filmlerde çalışır.
+- **Kimlik bağı:** Kartta ad + yıl, sayfada başlık, oynatıcıda IMDb kimliği. Oynatıcı kimliği bağlayıcıdır; kart ve sayfa yalnız aday seçer.
+- **Dublaj beyanı:** Sayfa etiketi ve oynatıcıdaki dublaj işareti birlikte gerekir; çelişen satır atılır. Tek ses izi olduğu için `claimedAudioLanguages` kullanılır (FilmModu deseni). Bu bilgi ölçülmüş ses dili değildir ve sıralamada ölçülmüş ses gibi sayılmaz.
+- **Paketli betik:** `unpackPacked` yalnız sözlük yerine koyma yapar. Betik çalıştırılmaz. Taban, yük ve kelime sayısı sınırlıdır. Oynatıcıdaki lisans/anahtar alanları okunmaz ve test verisine yazılmaz.
+- **İkinci arama:** Yalnız özgün adla sonuç çıkmazsa TMDB'deki ikinci ad (İngilizce) ile aranır. Eşleşme yine kanonik adlarla yapılır.
+- **Reddedilen adaylar:** İstemci başlığı veya çerez sınaması isteyen siteler (OpenAnime, UgurFilm) eklenmez. Bu ağdan yanıt vermeyen siteler için yönlendirme veya aracı kullanılmaz.
+- **Tur kuralı:** Turda tek kaynak eklenir ve yayınlanır; DiziBox sonraki turdur.
+
 ## 25 Kasım 2026 — 1.9.8 askı izolasyonu (HDRezka, Anizone, AniMOM) ve kaynak onarımları
 
 - **HDRezka 6. bağımsız scraper (`nuvio-tr-hd-hdrezka`).** Giriş hostu her dosyayı sabit bir CDN düğümüne 302 ile yönlendirir. iOS yönlendirmeyi kendisi izler ve iptal edilemez; yanıtsız düğümü önceden ayıklamak mümkün değil. Bu yüzden Goojara deseni uygulandı. Varsayılan açık kalır: kapsam taramalarında 18–22/37 başlıkta aday verdi; doğrulanmış dosya 21–22/37 başlıktan (gün başı) 12/37 ve 8/18 başlığa (akşam) düştü. Ana pakette `scanHdRezka` hiç paketlenmez; kayıtlı `hdrezkaEnabled` ana paketi etkilemez. Bağımsız şeritler `ISOLATED_LANES` listesinde toplanır: altyazı ön-sorgusu dosya doğrulandıktan sonra başlar, HLS/köprü/HTTP ayarları gösterilmez.

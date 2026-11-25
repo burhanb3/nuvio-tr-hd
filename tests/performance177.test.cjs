@@ -25,7 +25,7 @@ test('the independent fast-online lane returns while main file discovery is stil
  const main=createProvider({lane:'main',tmdbKey:'test',fetchImpl,settings:{autoDiscover:false,autoSubtitles:false,catalogUrls:'https://library.test/catalog.json'},sourceFactories:[{name:'Blocked',run:async()=>{await gate;return [];}}]});
  const fast=createProvider({lane:'fastOnline',tmdbKey:'test',fetchImpl,settings:{autoSubtitles:false,hdfilmdelisiEnabled:false}});
  const work=main.getStreams(603,'movie').then(r=>{mainDone=true;return r;});
- try{const streams=await fast.getStreams(603,'movie');assert.equal(streams.length,1);assert.match(streams[0].name,/DiziBal/);assert.equal(mainDone,false);assert.deepEqual(fast.getReport().sources.map(s=>s.name).sort(),['DiziBal','FilmEkseni','Purstream']);}
+ try{const streams=await fast.getStreams(603,'movie');assert.equal(streams.length,1);assert.match(streams[0].name,/DiziBal/);assert.equal(mainDone,false);assert.deepEqual(fast.getReport().sources.map(s=>s.name).sort(),['DiziBal','FilmEkseni','KultFilmler','Purstream']);}
  finally{release();await work;}
 });
 
@@ -43,7 +43,7 @@ test('fast online can validate HLS after TMDB consumes the old eight-second budg
     lane: 'fastOnline',
     tmdbKey: 'test',
     settings: { autoSubtitles: false, hdfilmdelisiEnabled: false, dizibalEnabled: false,
-      purstreamEnabled: false, filmekseniEnabled: false },
+      purstreamEnabled: false, filmekseniEnabled: false, kultfilmlerEnabled: false },
     sourceFactories: [{ name: 'Example', run: async () => [
       { url: master, source: 'Example', headers: {}, subtitles: [], identity: target }
     ] }],

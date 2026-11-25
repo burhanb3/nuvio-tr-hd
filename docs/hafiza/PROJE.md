@@ -2,6 +2,33 @@
 
 - 12 Kasım ek bilgi: kullanıcı Windows Son aramalar listesindeki Nuvio girişinden açtığını ekran görüntüsüyle gösterdi. Bu önbellek girdisinin hedefi doğrudan okunmadı. Ayrı ve aranabilir `Programs/Nuvio TR HD.lnk` kullanıcı Başlat menüsüne eklendi; kontrollü başlatıcı argümanı yeniden okunarak doğrulandı. Kullanıcı aramada tam Nuvio TR HD adını veya masaüstü aynı adlı kısayolu seçmeli. Açık uygulamaya dokunulmadı.
 
+## 1.9.9 — 26 Kasım 2026: KultFilmler online film kaynağı
+
+Kullanıcı 1.9.8 ölçümlerinin kendi deneyimiyle uyuştuğunu söyledi ve kaynak genişletme turlarının sürmesini istedi. Bu turda tek kaynak eklendi: KultFilmler.
+
+- **Kaynak zinciri:**
+  1. WordPress araması: `a.mcard` kartları; ad "Özgün – Türkçe" biçiminde, yıl `.pyear`da.
+  2. Film sayfası: `kf-srcdata` JSON'unda oynatıcı iframe'leri ve "Altyazılı" / "Türkçe Dublaj" etiketleri.
+  3. Oynatıcı sayfası: paketli (taban 62) FirePlayer çağrısı. İçinde IMDb kimliği (`tt… dublaj` biçiminde dublaj işareti) ve TR SRT izi var.
+  4. `getVideo` POST: yaklaşık 2 saat geçerli, imzalı HLS master bağlantısı. Master'da tek varyant ve ses grubu yok.
+- **Uygulama:**
+  - `src/providers/kultfilmler.cjs` yazıldı.
+  - `page-data.cjs` içine `unpackPacked` eklendi. Taban 2–62 desteklenir; yük 60.000 karakter, sözlük 1.500 kelimeyle sınırlı; betik çalıştırılmaz. DiziBak'ın taban 10 çözücüsü değişmedi.
+  - Kaynak Hızlı İzle ve sabit online pakette çalışır, `all` hattında da vardır. Ana tarama dışındadır.
+  - Hafif HLS listesine alındı: master yerelde okunur, parça isteği yapılmaz.
+  - Altyazı yolu, akışla aynı yükleme kimliğini taşımalıdır.
+- **Canlı ölçüm (Node, bu bilgisayar):**
+  - 2 akış: Inception, Fight Club, The Godfather, Parasite.
+  - 1 akış: Matrix, Interstellar, Oppenheimer.
+  - 0 akış: Dune 2021 (sitede yok).
+  - Bu filmlerde tek kaynak taraması 0,6–2,9 sn sürdü.
+- **iOS kurallı simülasyon (Hızlı İzle, sırayla, önce 1.9.8 → sonra):**
+  - Inception: 3 → 5 satır; 8,7 → 6,5 sn.
+  - Matrix: 2 → 3 satır; 5,1 → 4,4 sn.
+  - KultFilmler satırları: Inception altyazılı 1920×800 ve dublaj 1280×720; Matrix altyazılı 1920×800. 60 sn askı görülmedi.
+  - Parasite simülasyonda `identity_unavailable` döndü; simülasyonun TMDB referansında bu kayıt yok.
+- **Yapılmayanlar:** Fiziksel telefon, tam film oynatımı ve indirme testi yapılmadı. `.html` adlı HLS parçalarının iPhone'da oynatılması doğrulanmadı.
+
 ## 1.9.8 — 25 Kasım 2026: anime geri geldi, düşen kaynaklar onarıldı, HDRezka bağımsız scraper
 
 Kullanıcı Gemini ile 1.9.7'yi yayımlamış; bu oturumda Gemini işi incelendi. 1.9.7 yayın kaydı anonim GitHub API ile yeniden doğrulandı: `ea01076` üzerinde Test ve paket `45683585388` ve Pages `45683585479` başarılı. 1.9.6/1.9.7 yapısı (lane bazlı paketler, Goojara ayrımı, JetFilmizle) sağlam bulundu.

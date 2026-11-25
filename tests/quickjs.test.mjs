@@ -33,8 +33,38 @@ test('QuickJS: FilmEkseni metadata/oynatıcı bağı ile TR+EN sesli HLS ve eşl
   [url]:{body:'#EXTM3U\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="a",NAME="Türkçe",LANGUAGE="tur",URI="tr.m3u8"\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="a",NAME="English",LANGUAGE="eng",URI="en.m3u8"\n#EXT-X-STREAM-INF:BANDWIDTH=4000000,RESOLUTION=1920x1080,AUDIO="a"\n1080.m3u8\n',mime:'application/vnd.apple.mpegurl'},
   [url.replace('aistream-legacy-master.m3u8','sub_tur.vtt')]:{body:helpers.vtt,mime:'text/vtt'}
  };
- const rows=await runInQuickJs(fixture,{code:fastOnlineBundle,settings:{autoSubtitles:false,useDownloadBridge:false,hdfilmdelisiEnabled:false,dizibalEnabled:false,purstreamEnabled:false},nativeTimers:true});
+ const rows=await runInQuickJs(fixture,{code:fastOnlineBundle,settings:{autoSubtitles:false,useDownloadBridge:false,hdfilmdelisiEnabled:false,dizibalEnabled:false,purstreamEnabled:false,kultfilmlerEnabled:false},nativeTimers:true});
  assert.equal(rows.length,1);assert.equal(rows[0].type,'hls');assert.match(rows[0].quality,/1080p/);assert.match(rows[0].language,/Ses: TR\/EN/);assert.equal(rows[0].subtitles[0].language,'tr');
+});
+function packScript(source){
+ // Test-only p,a,c,k,e,d encoder; the provider decodes it statically.
+ const key=n=>{const t=n%62,d=t>35?String.fromCharCode(t+29):t.toString(36);return(n<62?'':key(Math.floor(n/62)))+d;};
+ const words=[],index=new Map(),quote=s=>s.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+ const payload=source.replace(/\b\w+\b/g,w=>{if(!index.has(w)){index.set(w,words.length);words.push(w);}return key(index.get(w));});
+ return "eval(function(p,a,c,k,e,d){return p}('"+quote(payload)+"',62,"+words.length+",'"+quote(words.join('|'))+"'.split('|'),0,{}))";
+}
+test('QuickJS: KultFilmler kart ad/yıl ve oynatıcı IMDb bağıyla altyazılı + dublaj HLS; dublaj beyan, indirme yok',async()=>{
+ const root='https://kultfilmler.net',player='https://vidpapi.xyz',sub='a'.repeat(32),dub='b'.repeat(32),video='c'.repeat(32),track='e'.repeat(32);
+ const iframe=h=>'<iframe src="'+player+'/video/'+h+'" allowfullscreen></iframe>',secured=id=>player+'/cdn/hls/'+id+'/master.m3u8?md5=token&expires=1';
+ const page=(h,config)=>'<title>FirePlayer</title><script>'+packScript('function fireload(source=null){FirePlayer("'+h+'",'+JSON.stringify(config).replace(/\//g,'\\/')+',false,source)}')+'</script>';
+ const master={body:'#EXTM3U\n#EXT-X-STREAM-INF:BANDWIDTH=1792000,RESOLUTION=1920x800,NAME="800p",CODECS="avc1.4D401D,mp4a.40.2"\nhttps://cdn.test/800p.m3u8\n',mime:'application/vnd.apple.mpegurl'};
+ const subUrl='https://cdn.test/cdn/down/'+video+'/Subtitle/'+track+'.srt';
+ const fixture={
+  'https://api.themoviedb.org/3/movie/603?api_key=test&append_to_response=external_ids,release_dates':{json:{...helpers.tmdb,runtime:136}},
+  [root+'/?s=The%20Matrix']:{body:'<a class="mcard" href="'+root+'/the-matrix-izle/"><div class="pfoot"><span class="plang">Dublaj/Altyazı</span><span class="pyear">1999</span></div><div class="mtx"><h3>The Matrix &#8211; Matrix</h3></div></a>',mime:'text/html'},
+  [root+'/the-matrix-izle/']:{body:'<h1 class="vtitle">The Matrix – Matrix</h1><script id="kf-srcdata" type="application/json">'+JSON.stringify([{name:'KULT',langLabel:'Altyazılı',html:iframe(sub)},{name:'KULT',langLabel:'Türkçe Dublaj',html:iframe(dub)}]).replace(/</g,'\\u003C')+'</script>',mime:'text/html'},
+  [player+'/video/'+sub]:{body:page(sub,{tracks:[{kind:'captions',file:subUrl,label:'Türkçe'}],title:'tt0133093'}),mime:'text/html'},
+  [player+'/video/'+dub]:{body:page(dub,{tracks:[],title:'tt0133093 dublaj'}),mime:'text/html'},
+  [player+'/player/index.php?data='+sub+'&do=getVideo']:{body:JSON.stringify({hls:true,securedLink:secured(video)}),mime:'text/html'},
+  [player+'/player/index.php?data='+dub+'&do=getVideo']:{body:JSON.stringify({hls:true,securedLink:secured('d'.repeat(32))}),mime:'text/html'},
+  [secured(video)]:master,[secured('d'.repeat(32))]:master,[subUrl]:{body:helpers.srt,mime:'text/plain'}
+ };
+ const settings={useDownloadBridge:false,hdfilmdelisiEnabled:false,dizibalEnabled:false,purstreamEnabled:false,filmekseniEnabled:false,subtitleUrls:'https://subs.invalid/manifest.json'};
+ const rows=await runInQuickJs(fixture,{code:fastOnlineBundle,settings,nativeTimers:true});
+ assert.equal(rows.length,2);assert.ok(rows.every(r=>r.type==='hls'&&/İndirilemez/.test(r.title)));
+ const dubbed=rows.find(r=>/Ses: TR/.test(r.language)),original=rows.find(r=>!/Ses: TR/.test(r.language));
+ assert.ok(dubbed&&original);assert.equal(original.subtitles[0].language,'tr');
+ assert.deepEqual(await runInQuickJs(fixture,{code:fastOnlineBundle,settings:{...settings,kultfilmlerEnabled:false},nativeTimers:true}),[]);
 });
 
 test('QuickJS: Anizone (Ek Anime, opt-in) güvenli Unicode veri zarfını ve tam bölüm kimliğini çözer; HLS indirme sayılmaz',async()=>{

@@ -20,6 +20,7 @@ const ALL_ADAPTERS = {
   scanSonAnime: require('./providers/sonanime.cjs').scanSonAnime,
   scanAnizone: require('./providers/anizone.cjs').scanAnizone,
   scanFilmEkseni: require('./providers/filmekseni.cjs').scanFilmEkseni,
+  scanKultFilmler: require('./providers/kultfilmler.cjs').scanKultFilmler,
   scanDiziYou: require('./providers/diziyou.cjs').scanDiziYou,
   scanFilmModu: require('./providers/filmmodu.cjs').scanFilmModu,
   scanHdFilmDelisi: require('./providers/hdfilmdelisi.cjs').scanHdFilmDelisi,

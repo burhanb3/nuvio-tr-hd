@@ -8,5 +8,6 @@ module.exports = createEntry('online', {
   scanFilmModu: require('./providers/filmmodu.cjs').scanFilmModu,
   scanHdFilmDelisi: require('./providers/hdfilmdelisi.cjs').scanHdFilmDelisi,
   scanPurstream: require('./providers/purstream.cjs').scanPurstream,
-  scanFilmEkseni: require('./providers/filmekseni.cjs').scanFilmEkseni
+  scanFilmEkseni: require('./providers/filmekseni.cjs').scanFilmEkseni,
+  scanKultFilmler: require('./providers/kultfilmler.cjs').scanKultFilmler
 });

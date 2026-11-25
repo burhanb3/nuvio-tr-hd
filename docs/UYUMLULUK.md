@@ -13,6 +13,8 @@ Resmî release ve geliştirme dalındaki ilgili dosyaların SHA'ları `compatibi
 
 ## Güncel kontrol
 
+1.9.9 (26 Kasım) KultFilmler online film kaynağını Hızlı İzle ve sabit online pakete ekler. Kimlik oynatıcının IMDb kimliğine bağlıdır. Dublaj sitenin beyanıdır. Paketli oynatıcı betiği çalıştırılmadan, sınırlı sözlükle çözülür (`unpackPacked`). Plugin ABI'sine dokunmaz. 370 fixture/QuickJS testi geçti. Yayın kontrolü yayından sonra yazılacak. Windows Desktop, fiziksel telefon, tam oynatma ve indirme testi yapılmadı.
+
 1.9.8 (25 Kasım) HDRezka'yı 6. bağımsız scraper (`nuvio-tr-hd-hdrezka`) yapar. Anizone ve AniMOM'u yeni opt-in anahtarlarıyla varsayılan kapatıp Anime taramasından çıkarır. SonAnime, SeiCode (tau-video), VixSrc (FHD 403), FilmEkseni (alan adı) ve PlayIMDb (`cast_urls`) değişikliklerine uyar; kesme işaretli adları `%27` ile gönderir. Plugin ABI'sine dokunmaz. 365 fixture/QuickJS testi geçti. `55b732d` yayını: Test ve paket `45692600060`, Pages `45692600154` başarılı; 9 public dosya SHA-256 eşleşti. Windows Desktop, fiziksel telefon, tam oynatma ve indirme testi yapılmadı.
 
 1.9.7 (25 Kasım) JetFilmizle film MP4 kaynağını (HEAD Range 206 ön kontrolüyle), opt-in büyük `moov` MP4 ses izi okumasını (`readAudioTracks`), başarısız ayna host önceliğini, `4KHDHub` film sırasını, altyazı `v3` önceliği + 429 hash korumasını ve lane bazlı minified paketlemeyi (5 aktif scraper toplamı 1.650 KB → 583 KB) getirir; plugin ABI'sine dokunmaz. 363 fixture/QuickJS testi geçti (`URLSearchParams` test köprüsü kilitli `JsBindings.kt`'deki `has/keys/values/entries` ile hizalandı). Yayın kontrolü sonucu PROJE ve compatibility/github-publication.json içindedir. Windows Desktop, fiziksel telefon, tam oynatma ve indirme testi yapılmadı.

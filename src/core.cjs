@@ -135,7 +135,7 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs, requestTi
         if (unique.size >= 40) { reject('candidate_limit'); return; }
         unique.set(key, candidate);
         if (/\.m3u8(?:$|[?#])/i.test(candidate.url) && settings.includeHls === false) { reject('hls_disabled'); return; }
-        const lightweightHls = ['PlayIMDb', 'VixSrc', 'DiziYou', 'DiziBak', 'FilmModu','HDFilmDelisi','DiziBal','Purstream'].includes(candidate.source) && settings.detailedHlsMetadata !== true;
+        const lightweightHls = ['PlayIMDb', 'VixSrc', 'DiziYou', 'DiziBak', 'FilmModu','HDFilmDelisi','DiziBal','Purstream','KultFilmler'].includes(candidate.source) && settings.detailedHlsMetadata !== true;
         let unwantedAudio = false;
         const video = await withProbeSlot(() => probe(http, candidate, settings.includeHls !== false, settings.autoSubtitles !== false,
           { detailedHls: !lightweightHls,onUnwantedAudio:()=>{unwantedAudio=true;reject('hindi_only_audio');if(typeof candidate.mediaFamily==='string')rejectedAudioFamilies.add(candidate.mediaFamily);} }));
@@ -347,6 +347,8 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs, requestTi
               }});
             if(['all','online','fastOnline'].includes(lane)&&adapters.scanFilmEkseni&&settings.includeHls!==false&&settings.filmekseniEnabled!==false&&target.type==='movie')
               sourceJobs.push({name:'FilmEkseni',run:()=>adapters.scanFilmEkseni(http.scope(5000),target)});
+            if(['all','online','fastOnline'].includes(lane)&&adapters.scanKultFilmler&&settings.includeHls!==false&&settings.kultfilmlerEnabled!==false&&target.type==='movie')
+              sourceJobs.push({name:'KultFilmler',run:()=>adapters.scanKultFilmler(http.scope(6000),target)});
             if (filesLane && adapters.scanWaploaded && settings.waploadedEnabled !== false && !target.isAnime) sourceJobs.push({ name: 'Waploaded', run: () => adapters.scanWaploaded(http, target) });
             if (filesLane && adapters.scanRareFilmm && settings.rarefilmmEnabled !== false && target.type === 'movie' && !target.isAnime)
               sourceJobs.push({name:'RareFilmm',run:()=>adapters.scanRareFilmm(http.scope(5000),target)});
@@ -432,6 +434,7 @@ function onSettings() {
     { type: 'toggle', key: 'filmmoduEnabled', label: 'FilmModu online film ve kaynak ses seçenekleri', defaultValue: true },
     { type: 'toggle', key: 'purstreamEnabled', label: 'Purstream ek online film ve dizi seçenekleri', defaultValue: true },
     {type:'toggle',key:'filmekseniEnabled',label:'FilmEkseni Türkçe dublaj ve altyazılı online film',defaultValue:true,description:'Özgün başlık/yıl ve IMDb birlikte doğrulanır. Sesler gerçek HLS listesinden, eşlenmiş TR/EN altyazılar oynatıcıdan okunur. Dosya indirmesi sunmaz.'},
+    {type:'toggle',key:'kultfilmlerEnabled',label:'KultFilmler Türkçe dublaj ve altyazılı online film',defaultValue:true,description:'Özgün başlık/yıl eşleşir ve oynatıcının bildirdiği IMDb kimliği doğrulanır. Dublaj sitenin beyanıdır (tek ses izi). Eşlenmiş TR altyazı oynatıcıdan okunur. Dosya indirmesi sunmaz.'},
     { type: 'toggle', key: 'moviesdriveEnabled', label: 'MoviesDrive ek film ve bölüm indirmeleri', defaultValue: true, description: 'Film/anime filmi ve bölüm dosyaları aranır. Sonraki sezonların yılı ve bölüm süresi aynı TMDB kaydından doğrulanır; ad, IMDb, bölüm ve gerçek medya denetlenir. Uzantısız MKV dosyaları Nuvio’da .mp4 adıyla kaydedilebilir; dahili MPV gerçek formatı içerikten okur. Harici oynatıcıda .mkv olarak yeniden adlandırmak gerekebilir.' },
     { type: 'info', label: 'Ses kodları: EN İngilizce, TR Türkçe, JA Japonca, HI Hintçe. EN/ES görüntüde, görüntüye işlenmiş altyazıdır; ses dili değildir.' },
     { type: 'toggle', key: 'autoSubtitles', label: 'TR ve EN altyazıları otomatik ara', defaultValue: true },
@@ -461,8 +464,8 @@ function onSettings() {
 
 function createEntry(lane, adapters = {}) {
   const titles = { main: 'Film/dizi · online ve dosyalar', files: 'Dosyalar', online: 'Hızlı kaynaklar', anime: 'Anime', extraAnime:'Ek Anime',fastOnline:'Hızlı İzle',goojara:'Goojara',hdrezka:'HDRezka' };
-  const only = { files: ['hdhubEnabled','directoryEnabled','archiveEnabled','waploadedEnabled','rarefilmmEnabled','fzmoviesEnabled','jetfilmizleEnabled','fztvseriesEnabled','moviesdriveEnabled','catalogUrls','addonUrls'], hdrezka:['hdrezkaEnabled'], online: ['playImdbEnabled','vixsrcEnabled','diziyouOptInEnabled','dizibakEnabled','filmmoduEnabled','hdfilmdelisiEnabled','purstreamEnabled','filmekseniEnabled','hlsView'], anime: ['animecixEnabled','sonanimeEnabled'],extraAnime:['seicodeEnabled','animomOptInEnabled','anizoneOptInEnabled'],fastOnline:['hdfilmdelisiEnabled','dizibalEnabled','purstreamEnabled','filmekseniEnabled','hlsView'],goojara:['goojaraEnabled'] };
-  only.main = [...only.files, ...only.online.filter(key=>!['hdfilmdelisiEnabled','purstreamEnabled','filmekseniEnabled'].includes(key))];
+  const only = { files: ['hdhubEnabled','directoryEnabled','archiveEnabled','waploadedEnabled','rarefilmmEnabled','fzmoviesEnabled','jetfilmizleEnabled','fztvseriesEnabled','moviesdriveEnabled','catalogUrls','addonUrls'], hdrezka:['hdrezkaEnabled'], online: ['playImdbEnabled','vixsrcEnabled','diziyouOptInEnabled','dizibakEnabled','filmmoduEnabled','hdfilmdelisiEnabled','purstreamEnabled','filmekseniEnabled','kultfilmlerEnabled','hlsView'], anime: ['animecixEnabled','sonanimeEnabled'],extraAnime:['seicodeEnabled','animomOptInEnabled','anizoneOptInEnabled'],fastOnline:['hdfilmdelisiEnabled','dizibalEnabled','purstreamEnabled','filmekseniEnabled','kultfilmlerEnabled','hlsView'],goojara:['goojaraEnabled'] };
+  only.main = [...only.files, ...only.online.filter(key=>!['hdfilmdelisiEnabled','purstreamEnabled','filmekseniEnabled','kultfilmlerEnabled'].includes(key))];
   const sourceFields = Object.values(only).flat();
   return {
     async getStreams(...args) {
@@ -471,7 +474,7 @@ function createEntry(lane, adapters = {}) {
       const budgetMs = { online: 16000, anime: 20000, all: 28000 }[lane];
       return createProvider({ settings, tmdbKey, lane, budgetMs, adapters }).getStreams(...args);
     },
-    onSettings: () => [{ type: 'info', label: lane === 'main' ? 'Film/dizi araması online HLS ile gerçek MP4/MKV dosyalarını aynı listede sunar. Dosya araması boşsa online alternatifler korunur. Goojara, HDRezka ve Anime ayrı taramalardır.' : lane==='fastOnline'?'Hızlı İzle, HDFilmDelisi, DiziBal, Purstream ve FilmEkseni online kaynaklarını bağımsız arar. Ana dosya aramasının bitmesini beklemez. HLS kaynakları izleme içindir; dosya indirmesi sunmaz.':lane==='goojara'?'Goojara dönen CDN düğümleri yüzünden ana listeden ayrı taranır. Bir düğüm yanıt vermezse yalnız bu tarama zaman aşımına uğrar; ana Nuvio TR HD sonuçları korunur.':lane==='hdrezka'?'HDRezka her dosyayı sabit bir CDN düğümüne yönlendirir; bazı düğümler bağlantıya yanıt vermez. Bu yüzden ana listeden ayrı taranır. Bir düğüm yanıt vermezse bu taramanın sonuçları gelmeyebilir; ana Nuvio TR HD sonuçları korunur.':lane==='extraAnime'?'Kısmi kapsama sahip ek anime dosyaları bağımsız taranır. Her bölümde sonuç garantisi yoktur; boş sonuç diğer sağlayıcıların sonuçlarını silmez. Aynı anda tek dosya kontrol edilir.':`Bu ayarlar yalnız ${titles[lane]} taramasına aittir. En fazla kaynak sınırı bu tarama içindir.` },
+    onSettings: () => [{ type: 'info', label: lane === 'main' ? 'Film/dizi araması online HLS ile gerçek MP4/MKV dosyalarını aynı listede sunar. Dosya araması boşsa online alternatifler korunur. Goojara, HDRezka ve Anime ayrı taramalardır.' : lane==='fastOnline'?'Hızlı İzle, HDFilmDelisi, DiziBal, Purstream, FilmEkseni ve KultFilmler online kaynaklarını bağımsız arar. Ana dosya aramasının bitmesini beklemez. HLS kaynakları izleme içindir; dosya indirmesi sunmaz.':lane==='goojara'?'Goojara dönen CDN düğümleri yüzünden ana listeden ayrı taranır. Bir düğüm yanıt vermezse yalnız bu tarama zaman aşımına uğrar; ana Nuvio TR HD sonuçları korunur.':lane==='hdrezka'?'HDRezka her dosyayı sabit bir CDN düğümüne yönlendirir; bazı düğümler bağlantıya yanıt vermez. Bu yüzden ana listeden ayrı taranır. Bir düğüm yanıt vermezse bu taramanın sonuçları gelmeyebilir; ana Nuvio TR HD sonuçları korunur.':lane==='extraAnime'?'Kısmi kapsama sahip ek anime dosyaları bağımsız taranır. Her bölümde sonuç garantisi yoktur; boş sonuç diğer sağlayıcıların sonuçlarını silmez. Aynı anda tek dosya kontrol edilir.':`Bu ayarlar yalnız ${titles[lane]} taramasına aittir. En fazla kaynak sınırı bu tarama içindir.` },
       ...onSettings().filter(field => (!sourceFields.includes(field.key) || only[lane].includes(field.key)) && (!ISOLATED_LANES.includes(lane)||!['includeHls','useDownloadBridge','allowHttp','detailedHlsMetadata'].includes(field.key)))
         .map(field=>ISOLATED_LANES.includes(lane)&&field.type==='info'&&field.label.startsWith('Tanı ·')?{...field,label:field.label.split(' · ').slice(0,3).join(' · ')+' · Bağımsız '+titles[lane]}:field)]
   };

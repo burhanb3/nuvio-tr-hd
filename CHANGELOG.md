@@ -1,5 +1,29 @@
 # Sürüm notları
 
+## 1.9.9 — 26 Kasım 2026
+
+- **Yeni online film kaynağı: KultFilmler (Hızlı İzle ve sabit online paket).**
+  - **Ne verir:** Altyazılı sürüm ve ayrıca Türkçe dublaj sürümü. Altyazılı sürümde oynatıcının verdiği TR SRT dosyası doğrudan eşlenir. Akış HLS'dir; indirilebilir dosya olarak gösterilmez.
+  - **Kimlik:** Arama kartındaki özgün ad ve yıl eşleşmelidir. Oynatıcının bildirdiği IMDb kimliği de aynı olmalıdır. Film sayfasının başlığı kartla aynı olmalıdır. Başka sitenin oynatıcısı (iframe) kabul edilmez.
+  - **Dublaj:** Yalnız sayfadaki "Türkçe Dublaj" etiketi ile oynatıcıdaki dublaj işareti birlikte varsa `Ses: TR` yazılır. İkisi çelişirse satır atılır. Akışta tek ses izi olduğu için bu bilgi sitenin beyanıdır; ses izinden ölçülmüş değildir.
+  - **Kalite:** Oynatma listesindeki gerçek çözünürlük gösterilir (örnek: Inception altyazılı 1920×800, dublaj 1280×720). Sitenin etiketi kullanılmaz.
+  - **İngilizce olmayan filmler:** Site bu filmleri İngilizce adla listeler. Özgün adla sonuç çıkmazsa TMDB'deki İngilizce adla bir kez daha aranır (Parasite: 2 akış).
+  - **Oynatıcı betiği:** Paketli (p,a,c,k,e,d) betik çalıştırılmaz. Yalnız boyutu sınırlı bir sözlükle metin olarak çözülür. Hesap, çerez, anahtar veya sabit koruma değeri kullanılmaz.
+  - **Ayar:** `kultfilmlerEnabled`, varsayılan açık. Yalnız filmlerde, 6 sn kaynak bütçesiyle çalışır. Ana `Nuvio TR HD` taramasında çalışmaz.
+  - **Canlı ölçüm (bu bilgisayar, Node, telefon değil):** Inception 2 akış, Fight Club 2, The Godfather 2, Parasite 2, Matrix 1, Interstellar 1, Oppenheimer 1. Dune (2021) sitede yok; boş döndü.
+  - **iOS kurallı simülasyon (sırayla, Hızlı İzle):**
+    - Inception: önce 3 satır, 8,7 sn; sonra 5 satır, 6,5 sn.
+    - Matrix: önce 2 satır, 5,1 sn; sonra 3 satır, 4,4 sn.
+    - 60 sn askı görülmedi. Bu ölçüm fiziksel iPhone dönüş süresi garantisi değildir.
+  - **Bilinmeyen:** HLS parçaları `.html` uzantılı adlarla gelir (içerik gerçek MPEG-TS). Bilgisayarda çözüldü; iPhone oynatıcısında denenmedi. Oynatma bağlantısı yaklaşık 2 saat geçerlidir; liste uzun süre açık kaldıysa yeniden arayın.
+- **Bu turda incelenip eklenmeyen kaynaklar:**
+  - **Koruma değeri veya istemci başlığı gerektiren:** OpenAnime (sitenin istemci başlığı olmadan 401). UgurFilm çerez sınaması istiyor. İkisi de kopyalanmadı veya aşılmadı.
+  - **HTTP hata kodu verenler:** HDFilmCehennemi, AllAnime API, Anizm ve Sibnet 403 verdi; DiziKorea 526 verdi.
+  - **Bu ağdan yanıt vermeyenler:** Dizilla, SelcukFlix, SetFilm, SezonlukDizi, SinemaCX, SuperFilmGeldi, TurkAnime, WebteIzle, Watch2Movies, DiziPal, FilmMakinesi, FullHDFilmizlesene, DiziMom, KoreanTurk ve FullHDFilm. Neden ayrıştırılmadı.
+  - **Erişilebilir, sonraki tura bırakılan:** DiziBox, CizgiMax ve BelgeselX.
+- 370 yerel birim ve QuickJS paket testi geçti (`npm run check`). Plugin ABI'si değişmedi.
+- Fiziksel telefon, tam film oynatımı, indirme, çevrimdışı altyazı ve senkron testi yapılmadı.
+
 ## 1.9.8 — 25 Kasım 2026
 
 - **HDRezka 6. bağımsız scraper oldu (`nuvio-tr-hd-hdrezka`).**
