@@ -4,7 +4,7 @@
 
 ## 1.9.9 — 26 Kasım 2026
 
-1. **Yayın:** Yayın kontrolü sonucu PROJE ve `compatibility/github-publication.json` içine yazılacak.
+1. **Yayımlandı (`b653608`):** Test ve paket `45701344984` ve Pages `45701345092` başarılı; 9 public dosya HTTP 200 ve SHA-256 yerel `dist/` ile aynı (`compatibility/github-publication.json`).
 2. **Telefonda (Wi-Fi ve LTE ayrı):**
    - Depo yenilenmeli; `Tanı · 1.9.9` görünmeli.
    - Inception'da `Hızlı İzle` altında iki KultFilmler satırı gelmeli: 1080p altyazılı ve `Ses: TR` dublaj.

@@ -27,6 +27,7 @@ Kullanıcı 1.9.8 ölçümlerinin kendi deneyimiyle uyuştuğunu söyledi ve kay
   - Matrix: 2 → 3 satır; 5,1 → 4,4 sn.
   - KultFilmler satırları: Inception altyazılı 1920×800 ve dublaj 1280×720; Matrix altyazılı 1920×800. 60 sn askı görülmedi.
   - Parasite simülasyonda `identity_unavailable` döndü; simülasyonun TMDB referansında bu kayıt yok.
+- **Testler ve yayın:** 370/370 yerel birim + QuickJS paket testi geçti (`npm run check`). ABI değişmedi. Yayın `580c575` (sürüm) + `b653608` (site sayfası satırı). `b653608` için Test ve paket `45701344984` (ubuntu+windows) başarılı, Pages `45701345092` başarılı. Manifest, altı `?v=1.9.9` sağlayıcı, sabit online adı ve ana sayfa (9 dosya) public HTTP 200 döndü; SHA-256 yerel `dist/` ile aynı (`compatibility/github-publication.json`, anonim GitHub API).
 - **Yapılmayanlar:** Fiziksel telefon, tam film oynatımı ve indirme testi yapılmadı. `.html` adlı HLS parçalarının iPhone'da oynatılması doğrulanmadı.
 
 ## 1.9.8 — 25 Kasım 2026: anime geri geldi, düşen kaynaklar onarıldı, HDRezka bağımsız scraper
