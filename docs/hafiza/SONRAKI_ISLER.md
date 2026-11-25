@@ -12,6 +12,7 @@
 6. todaytvseries hâlâ incelenmedi.
 7. Oppenheimer HDRezka benzetimde FzMovies açıkken daha seyrek (1/3, kapalı 3/3, farklı saatte). voidboost zaman aşımları gürültülü; ayrı ölçülmedi.
 8. Kullanıcıya hâlâ sorulacak: The 100 S2E1'de telefonda 4KHDHub satırı çıkıyor mu (1.9.4 madde 11).
+9. `*.workers.dev` 25 Kasım'da bu bilgisayardan erişilebilirdi (kapsam raporlarında Worker aynaları 206/403). 1.9.3 madde 3'teki yeniden ölçümler (4KHDHub Worker aynaları, HDHub4u koşulu) yapılabilir. Matrix, Dune ve Fury'nin 4K Worker aynalarındaki 403'lerin kota mı kalıcı mı olduğu ayrılmalı.
 
 ## 1.9.4 — 20 Kasım 2026
 
