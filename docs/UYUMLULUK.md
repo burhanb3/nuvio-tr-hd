@@ -1,6 +1,6 @@
 # Nuvio uyumluluğu
 
-Nuvio TR HD, Nuvio Mobile'ın Kotlin Multiplatform **Full** sürümündeki JavaScript plugin arayüzünü kullanır. Manifestte dört scraper vardır; önceki kimlikler güncellemelerde korunur.
+Nuvio TR HD, Nuvio Mobile'ın Kotlin Multiplatform **Full** sürümündeki JavaScript plugin arayüzünü kullanır. Manifestte beş scraper vardır; önceki kimlikler güncellemelerde korunur.
 
 ## Doğrulanan sözleşme
 
@@ -12,6 +12,8 @@ Nuvio TR HD, Nuvio Mobile'ın Kotlin Multiplatform **Full** sürümündeki JavaS
 Resmî release ve geliştirme dalındaki ilgili dosyaların SHA'ları `compatibility/upstream-lock.json` içinde tutulur. `npm run verify:upstream` bunları ve kritik ABI parçalarını karşılaştırır. Fark varsa kilit otomatik yenilenmez; değişiklik incelenir.
 
 ## Güncel kontrol
+
+1.9.6 (25 Kasım, yerel) iOS'ta 60 sn native askı riski taşıyan DiziYou'yu yeni `diziyouOptInEnabled` anahtarıyla varsayılan kapatır, Goojara'yı ana taramadan ayırıp 5. bağımsız scraper (`nuvio-tr-hd-goojara`) yapar ve Goojara'nın sessiz timeout sonrası ikinci native isteğini durdurur; plugin ABI'sine dokunmaz. 357 fixture/QuickJS testi geçti. Yayın, Windows Desktop, fiziksel telefon, tam oynatma ve indirme testi yapılmadı.
 
 1.9.5 (25 Kasım) yeni FzMovies film kaynağını, bu kaynak için aynı alan adındaki iki yedek sunucuya probe geçişini ve filmlerde FzMovies işinin MoviesDrive ardına eklenmesini getirir; plugin ABI'sine dokunmaz. 356 fixture/QuickJS testi geçti. Yayın kontrolü sonucu PROJE ve compatibility/github-publication.json içindedir. Windows Desktop, fiziksel telefon, tam oynatma ve indirme testi yapılmadı.
 

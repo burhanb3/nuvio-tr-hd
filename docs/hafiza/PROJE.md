@@ -2,6 +2,19 @@
 
 - 12 Kasım ek bilgi: kullanıcı Windows Son aramalar listesindeki Nuvio girişinden açtığını ekran görüntüsüyle gösterdi. Bu önbellek girdisinin hedefi doğrudan okunmadı. Ayrı ve aranabilir `Programs/Nuvio TR HD.lnk` kullanıcı Başlat menüsüne eklendi; kontrollü başlatıcı argümanı yeniden okunarak doğrulandı. Kullanıcı aramada tam Nuvio TR HD adını veya masaüstü aynı adlı kısayolu seçmeli. Açık uygulamaya dokunulmadı.
 
+## 1.9.6 — 25 Kasım 2026 (yerel, henüz yayımlanmadı): iOS 60 sn askı koruması (DiziYou kapalı, Goojara bağımsız)
+
+357/357 yerel birim + QuickJS WASM paket testi geçti (`npm run check`). ABI değişmedi. Henüz commit/push/GitHub Pages yayını yapılmadı; fiziksel telefon, canlı ağ testi, tam oynatma ve indirme testi yapılmadı. Çalışma dizinindeki yarım JetFilmizle taslağı (`src/providers/jetfilmizle.cjs` ile opt-in MP4 `readAudioTracks` değişikliği) ana listeye bağlanmadan korundu.
+
+- **Tetik:** kullanıcı 1.9.5'te The 100 S5E5 ve ilk sezon bölümünde ana eklentiden hiç satır görmediğini, Fury'de (film) sonuç çıktığını bildirdi.
+- **Kök neden (önceki ölçüm + upstream kaynak):** Nuvio her scraper'ı `PLUGIN_TIMEOUT_MS = 60_000` ile sarar; iOS Ktor Darwin 60 sn timeout kullanır, `AbortSignal` ve `redirect: 'manual'` yok sayılır; `quickjs-kt` tüm aktif native işler bitmeden dönmez. Ana taramada (`nuvio-tr-hd`) tek bir sessiz SYN-drop isteği tüm satırları siler. Ev ağında iki kaynak buna yol açıyordu:
+  1. `www.diziyou.one` (yalnız dizi): İSS engel sunucusu bağlantıyı bazen yanıtsız bırakıyor; 0 isabet.
+  2. `Goojara` (`web.wootly.ch/source` → `nara.nebula.to`): The 100 S5E5'te 16 yönlendirmenin 11'i yanıt vermeyen ölü düğüme gitti.
+- **Düzeltme:**
+  - **DiziYou:** ana/online yolda varsayılan kapalı yapıldı. Daha önce ayar kaydeden kullanıcılarda eski `diziyouEnabled: true` değeri yeni varsayılanı ezmesin diye yeni `diziyouOptInEnabled` (`defaultValue: false`) anahtarına geçildi; eski `diziyouEnabled` anahtarı yok sayılır.
+  - **Goojara bağımsız scraper (`nuvio-tr-hd-goojara`):** Goojara ana `nuvio-tr-hd` taramasından çıkarıldı (eski kayıtlı `goojaraEnabled: true` ana taramada etkili değil) ve manifestte 5. bağımsız scraper (`providers/nuvio-tr-hd-goojara.js?v=1.9.6`) olarak ayrıldı. Kendi 60 sn VM'inde çalışır; ölü CDN düğümü askıda kalsa bile ana `nuvio-tr-hd` (FzTvSeries, 4KHDHub, MoviesDrive, HDRezka, Archive, FzMovies, DiziBak, FilmModu) sonuçları etkilenmez. Ayrıca `extraAnime` gibi dosya doğrulanmadan altyazı ön-sorgusu açmaz.
+  - **Probe yeniden deneme koruması (`src/media/probe.cjs`):** Goojara'da dönen yönlendirme yalnız anlık taşıma hatasında (`failure.network === true`, ör. ECONNREFUSED/TLS) bir kez yenilenir; sessiz zaman aşımında (`network !== true`) ikinci native askı açılmaz.
+
 ## 1.9.5 — 25 Kasım 2026: FzMovies film kaynağı
 
 Tüm ölçümler bu bilgisayardan (TR ISS). 356 test geçti (FzMovies için bir QuickJS paket testi dahil). ABI değişmedi. Kullanıcının önceden verdiği yayın izniyle codex/publish-nuvio-tr-hd dalına gönderildi. Kaynak commit 87cd2ea: Test ve paket 45623009512 (ubuntu+windows) başarılı, Pages 45623009898 başarılı; manifest, dört `?v=1.9.5` sağlayıcı, sabit online adı ve ana sayfa public HTTP 200 ve SHA-256 yerel dist ile aynı (compatibility/github-publication.json, anonim GitHub API). Telefon, tam oynatma ve indirme testi yapılmadı.

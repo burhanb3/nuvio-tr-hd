@@ -13,6 +13,7 @@ const onlineBundle = await readFile(new URL('../providers/nuvio-tr-hd-online.js'
 const animeBundle = await readFile(new URL('../providers/nuvio-tr-hd-anime.js', import.meta.url), 'utf8');
 const extraAnimeBundle = await readFile(new URL('../providers/nuvio-tr-hd-extra-anime.js', import.meta.url), 'utf8');
 const fastOnlineBundle = await readFile(new URL('../providers/nuvio-tr-hd-fast-online.js', import.meta.url), 'utf8');
+const goojaraBundle = await readFile(new URL('../providers/nuvio-tr-hd-goojara.js', import.meta.url), 'utf8');
 
 function aliasFeatureSample(language='eng',width=3840,height=2160){
  const e=helpers.ebml,duration=Buffer.alloc(8),size=n=>[n>>8,n&255];duration.writeDoubleBE(7200000);
@@ -252,7 +253,7 @@ test('QuickJS: HDRezka public HTML-JSON yanıtı gerçek MP4 verir, ücretli kal
  base[page].body=base[page].body.replace('tt0133093','tt9999999');assert.deepEqual(await runInQuickJs(fixture,{settings}),[]);
 });
 
-test('QuickJS: Goojara anonymous session, public player form and real MP4 stay native compatible',async()=>{
+test('QuickJS: Goojara bağımsız pakette çalışır; ana paket eski goojaraEnabled kaydıyla bile Goojara çağırmaz',async()=>{
  const root='https://ww1.goojara.to',wrapper='https://www.wootly.ch/?v=fixture',embed='https://web.wootly.ch/e/publicFixture',source='https://web.wootly.ch/source?id=fixture',file='https://cdn.test/movie.mp4';
  const mvhd=Buffer.alloc(20);mvhd.writeUInt32BE(1000,12);mvhd.writeUInt32BE(8160000,16);
  const body=Buffer.concat([helpers.box('ftyp',Buffer.from('isom\0\0\0\0isommp42','binary')),helpers.box('moov',helpers.box('mvhd',mvhd),helpers.moov(1280,720).subarray(8)),helpers.box('mdat',Buffer.alloc(32))]);
@@ -266,8 +267,15 @@ test('QuickJS: Goojara anonymous session, public player form and real MP4 stay n
   ['https://web.wootly.ch/grabm?t=fixtureTicket&id=fixtureVideo']:{body:source},[source]:{status:302,headers:{location:file}},[file]:{body,mime:'video/mp4'}
  }});
  const settings={autoSubtitles:false,includeHls:false,archiveEnabled:false,hdhubEnabled:false,waploadedEnabled:false,rarefilmmEnabled:false,playImdbEnabled:false,vixsrcEnabled:false,filmmoduEnabled:false,useDownloadBridge:false};
- const calls=[],streams=await runInQuickJs(fixture,{settings,fetchCalls:calls});assert.equal(streams.length,1,JSON.stringify(calls));assert.equal(streams[0].url,file);assert.equal(streams[0].type,'mp4');assert.equal(streams[0].quality,'720p · 1280×720');assert.match(streams[0].name,/İndirilebilir · Goojara/);
- assert.deepEqual(await runInQuickJs(fixture,{settings:{...settings,goojaraEnabled:false}}),[]);
+ const calls=[],streams=await runInQuickJs(fixture,{code:goojaraBundle,settings,fetchCalls:calls});assert.equal(streams.length,1,JSON.stringify(calls));assert.equal(streams[0].url,file);assert.equal(streams[0].type,'mp4');assert.equal(streams[0].quality,'720p · 1280×720');assert.match(streams[0].name,/İndirilebilir · Goojara/);
+ assert.deepEqual(await runInQuickJs(fixture,{code:goojaraBundle,settings:{...settings,goojaraEnabled:false}}),[]);
+ const mainCalls=[];assert.deepEqual(await runInQuickJs(fixture,{settings:{...settings,goojaraEnabled:true},fetchCalls:mainCalls}),[]);
+ assert.ok(!mainCalls.some(u=>u.includes('goojara.to')||u.includes('wootly.ch')));
+ const goojaraSettings=await runInQuickJs({},{code:goojaraBundle,invokeSettings:true});
+ assert.equal(goojaraSettings.find(f=>f.key==='goojaraEnabled')?.defaultValue,true);
+ assert.ok(goojaraSettings.some(f=>f.type==='info'&&f.label.includes('Bağımsız Goojara')));
+ const mainSettings=await runInQuickJs({},{invokeSettings:true});
+ assert.ok(!mainSettings.some(f=>f.key==='goojaraEnabled'));
 });
 
 test('QuickJS: ek film arşivi public metadata ile gerçek MP4/altyazı ve 4K pikseli korur',async()=>{
@@ -569,7 +577,7 @@ test('QuickJS SonAnime: Japonca özgün adın kanonik İngilizce karşılığı,
  assert.equal(streams.length,1);assert.match(streams[0].name,/SonAnime/);assert.equal(streams[0].quality,'480p · 852×480');assert.equal(streams[0].type,'mp4');
 });
 
-test('QuickJS DiziYou: yeni kaynaktan online HLS + eşlenmiş TR, yanlış üç kalite tek Auto',async()=>{
+test('QuickJS DiziYou: varsayılan ve eski kayıtlı ayarla kapalıdır; açıkça seçilince online HLS + TR döner',async()=>{
  const ld=data=>'<script type="application/ld+json">'+JSON.stringify(data)+'</script>';
  const fixture={
   'https://api.themoviedb.org/3/tv/67070?api_key=test&append_to_response=external_ids':{json:{id:67070,original_name:'Fleabag',first_air_date:'2016-07-21',original_language:'en'}},
@@ -579,7 +587,10 @@ test('QuickJS DiziYou: yeni kaynaktan online HLS + eşlenmiş TR, yanlış üç 
   'https://stream.test/master.m3u8':{body:'#EXTM3U\n#EXT-X-STREAM-INF:BANDWIDTH=1000000,RESOLUTION=854x480\nsame.m3u8\n#EXT-X-STREAM-INF:BANDWIDTH=2000000,RESOLUTION=1280x720\nsame.m3u8\n'},
   'https://subs.test/tr.vtt':{body:helpers.vtt}
  };
- const streams=await runInQuickJs(fixture,{args:['67070','tv',1,1],settings:{autoSubtitles:false}});
+ const offCalls=[];
+ assert.deepEqual(await runInQuickJs(fixture,{args:['67070','tv',1,1],settings:{autoSubtitles:false,diziyouEnabled:true},fetchCalls:offCalls}),[]);
+ assert.ok(!offCalls.some(u=>u.includes('diziyou.one')));
+ const streams=await runInQuickJs(fixture,{args:['67070','tv',1,1],settings:{autoSubtitles:false,diziyouOptInEnabled:true}});
  assert.equal(streams.length,1);assert.match(streams[0].name,/DiziYou/);assert.equal(streams[0].subtitles[0].language,'tr');assert.equal(streams[0].type,'hls');assert.match(streams[0].language,/Ses: EN/);
  assert.doesNotMatch(streams[0].quality,/1080|720|480/);
 });

@@ -141,10 +141,11 @@ async function probe(http, candidate, includeHls = false, hashEnabled = false, o
     if (video) return video;
     if(unwantedAudio)return null;
     if ([401,403,429].includes(http.failureFor?.(url)?.status)) return null;
-    // Refresh a rotating redirect once only after a network failure or
-    // timeout (never after an HTTP answer or a file mismatch), within the
-    // same deadline and physical quota.
-    if (rotating && index === 0 && http.failureFor?.(url)?.reason !== 'timeout_or_network') return null;
+    // Refresh a rotating redirect once only after a network failure (for
+    // Goojara, only an immediate transport error — never a silent hang timeout
+    // that stays stuck natively on iOS), within the same deadline and quota.
+    const failure = http.failureFor?.(url);
+    if (rotating && index === 0 && (failure?.reason !== 'timeout_or_network' || (candidate.source === 'Goojara' && failure?.network !== true))) return null;
   }
   return null;
 }

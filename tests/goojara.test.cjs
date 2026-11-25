@@ -92,6 +92,14 @@ test('Goojara: dönen wootly yönlendirmesi yalnız ağ hatasında bir kez yenil
  assert.deepEqual(await run([denied,live]),{video:null,sourceRequests:1});
  assert.deepEqual(await run([html,live]),{video:null,sourceRequests:1});
  assert.deepEqual(await run([dead,live],{...candidate,source:'Other'}),{video:null,sourceRequests:1});
+ // A silent hang timeout (no immediate transport error) must NOT spawn a second
+ // native request on iOS, because the first one is already stuck for 60 s.
+ let hangCalls=0;
+ const hangHttp=createHttp({timeoutMs:30,fetchImpl:async url=>{
+  if(url===source){hangCalls++;return fixtureFetch({[source]:{status:302,headers:{location:dead}}})(url);}
+  return new Promise(()=>{});
+ }});
+ try{assert.equal(await probe(hangHttp,candidate),null);assert.equal(hangCalls,1);}finally{hangHttp.close();}
 });
 
 test('Goojara: HCSubs sürüm işareti gizlenmez, bilinmeyen sabit altyazıya dil uydurulmaz',async()=>{

@@ -2,6 +2,13 @@
 
 - Son durum: masaüstü Nuvio TR HD artık Start-NuvioTRHD.ps1 üzerinden açılır. Kullanıcı yeniden aynı hata bildirdiğinde özgün kurulum çalışıyordu; nedeni kesinleşmedi. CheckOnly ve gömülü Java17 penceresiz classpath probe geçti. Kullanıcı kontrollü başlatıcıyla deneyip hata sürerse çalışan yol ve gerçek kaynak raporu birlikte incelenmeli. Tekrar UI başarısı/tam indirme doğrulanmış sayılmamalı.
 
+## 1.9.6 — 25 Kasım 2026 (yerel hazır, yayına ve telefon testine hazır)
+
+1. **Hazır (yerel):** DiziYou `diziyouOptInEnabled` ile varsayılan kapalı (eski `diziyouEnabled: true` yok sayılır); Goojara 5. bağımsız scraper (`nuvio-tr-hd-goojara`) olarak ana taramadan ayrıldı ve sessiz timeout sonrası yeniden denemesi kapatıldı. `npm run check` 357/357 geçti (QuickJS dahil).
+2. **Yayın öncesi/sonrası:** Kullanıcı onayıyla `1.9.6` commit + push (`codex/publish-nuvio-tr-hd`) edilip GitHub Actions + Pages doğrulanmalı (çalışma dizinindeki yarım `jetfilmizle.cjs` ve geçici `hang-nara.txt`/`hh.txt` dosyaları 1.9.6 commit'ine karıştırılmamalı).
+3. **Telefonda doğrulama (Wi-Fi ve LTE ayrı):** Depo yenilenip `Tanı · 1.9.6` ve yeni **Nuvio TR HD · Goojara** satırının görünmesi/etkinliği kontrol edilmeli. The 100 S5E5 ve S1E3/S2E4'te ana `Nuvio TR HD` sonuçlarının (FzTvSeries, varsa 4KHDHub) artık boş dönmediği doğrulanmalı.
+4. **Sıradaki geliştirme:** Yarım kalan `JetFilmizle` (TR dublajlı MP4 indirme + MP4 büyük `moov` `readAudioTracks` testleri) tamamlanmalı; ardından hız/sıralama/bundle yol haritasına geçilmeli.
+
 ## 1.9.5 — 25 Kasım 2026
 
 1. Telefonda depo yenilenip `Tanı · 1.9.5` görünmeli. Inception, Dune ve Fury gibi filmlerde FzMovies 360p/720p satırları çıkmalı. LTE ve Wi-Fi ayrı denenmeli. Sitenin telefona Cloudflare sınaması gösterip göstermediği bilinmiyor. Telefonda doğrulanmadı.
@@ -13,6 +20,7 @@
 7. Oppenheimer HDRezka benzetimde FzMovies açıkken daha seyrek (1/3, kapalı 3/3, farklı saatte). voidboost zaman aşımları gürültülü; ayrı ölçülmedi.
 8. Kullanıcıya hâlâ sorulacak: The 100 S2E1'de telefonda 4KHDHub satırı çıkıyor mu (1.9.4 madde 11).
 9. `*.workers.dev` 25 Kasım'da bu bilgisayardan erişilebilirdi (kapsam raporlarında Worker aynaları 206/403). 1.9.3 madde 3'teki yeniden ölçümler (4KHDHub Worker aynaları, HDHub4u koşulu) yapılabilir. Matrix, Dune ve Fury'nin 4K Worker aynalarındaki 403'lerin kota mı kalıcı mı olduğu ayrılmalı.
+10. **Telefon bildirimi (25 Kasım, kullanıcı):** 1.9.5 yüklendi; bir 4KHDHub satırı çıktı; Fury'de FzMovies ve MoviesDrive birlikte göründü. 4KHDHub satırının hangi başlıkta çıktığı ve ağ (LTE/Wi-Fi) söylenmedi; sorulmalı. Tek liste gözlemi; oynatma veya indirme testi değil. Madde 2'deki MoviesDrive maliyetini kapatmaz (tek gözlem).
 
 ## 1.9.4 — 20 Kasım 2026
 
@@ -314,3 +322,16 @@ Son güncelleme: 25 Ekim 2026. Yalnız ücretsiz/hesapsız kapsam geçerli; burh
 Bu notlar otomasyon veya başka göreve mesaj yetkisi değildir.
 
 **1.4.0 son canlı kanıt:** public köprü kayıt → HEAD 200 / 2.830.708.974 byte → GET Range 206 / gerçek 1920×800 MKV; tekrar üç kayıt başarılı. Source discovery bilgisayardan, köprü üretimden sınandı. Tam Spider-Man sağlayıcı akışı yaklaşık 13,25 saniyede 10 alternatif ve Türkçe VTT verdi. Raporlar compatibility/download-bridge-live-140.json ve pipeline-spider-man-140.json. Bunlar iPhone/tam film indirme testi değildir.
+
+## The 100 telefonda boş (25 Kasım, kök neden adayı)
+
+Kullanıcı 1.9.5'te The 100 S5E5 ve bir ilk sezon bölümünde ana eklentiden hiç satır görmedi; Fury (film) çalıştı. Telefonda doğrulanmadı; aşağıdakiler kaynak kodu ve bu bilgisayar ölçümüdür.
+
+1. Mekanizma (upstream kaynak, kilitli commit): Nuvio `PLUGIN_TIMEOUT_MS = 60_000` ile tüm eklentiyi sarar; iOS Ktor istemcisi 60 sn request/connect/socket timeout kullanır; quickjs-kt 1.0.15 kök `evaluate` etkin async iş kalmayana kadar döner. Sonuç 24 sn'de yakalansa bile, yanıt vermeyen (SYN düşen) tek bir native istek dönüşü 60 sn'nin ötesine iter ve `runCatching` ile eklentinin **tüm satırları** düşer. JS AbortSignal native isteği iptal etmez; yakalanmamış reddetme yolu da istisna fırlatır (çözüm değil). Eklentiye kalıcı depolama host fonksiyonu yok (aramalar arası "ölü host" hafızası kurulamaz).
+2. Bu ağda iki tehlike:
+   - DiziYou alan adı İSS engel sunucusuna çözülüyor; bağlantı bazen hemen kesiliyor, bazen hiç kurulmuyor (Windows 21 sn sınırı). Yalnız dizilerde çalışır; bütün benzetimlerde 0 aday; 20 Kasım LTE ekranlarında da DiziYou satırı yoktu.
+   - Goojara wootly yönlendirmesi bir CDN düğümüne (düğüm A) gidiyor; düğüm A bu ağdan hiç yanıt vermiyor. The 100 S5E5 dosyası için 16 yönlendirmenin 11'i düğüm A, 3'ü B, 2'si C (B ve C açık).
+3. Benzetim (`IOS=1`: abort yok sayılır, connect timeout 60 sn'ye uzatılır, LAT=600 CAP=6): The 100 S5E5, S1E3, S2E4 üçü de ~72 sn'de bitiyor → Nuvio tüm satırları düşürür. Fury, Matrix, Inception 20–30 sn içinde. Gecikmesiz PC benzetiminde The 100'de FzTvSeries 360p (+ bazen 4KHDHub 1080p / Goojara 480p) çıkıyor.
+4. Yapılacak (1.9.6 adayı): DiziYou varsayılan kapalı veya ana/online yoldan çıkarılmalı (kayıtlı `diziyouEnabled: true` değeri eski varsayılanı korur mu, Nuvio ayar kaydı incelenmeli; gerekirse yeni anahtar). Goojara için: düğüm sağlığı bilinmeden ilk bağlantı engellenemez; seçenekler ölçülmeli (yönlendirmeyi birkaç kez isteyip aynı aramada çoğunluk düğümünü atlamak bir çözüm değildir; aday olarak sunmak yerine kapatmak/ayarla sınırlamak, ya da yalnız Range yanıtı hızla gelen düğümü kabul etmek native askıyı önlemez). Önce telefonda DiziYou ve Goojara kapalıyken The 100'ün döndüğü doğrulanmalı.
+5. DiziBal dublaj kayması: The 100 bölümlerinde tek muxlu HLS (ayrı ses listesi yok), toplam süre DiziBak ile aynı (S5E5 2494 sn). Kayma yayıncının dosyasında; liste düzeyinde ölçülemez, eklenti düzeltemez.
+

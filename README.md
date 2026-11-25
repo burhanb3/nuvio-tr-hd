@@ -14,7 +14,7 @@ Nuvio Mobile **Full** veya Nuvio Desktop sürümünde **Pluginler → Depo ekle*
 https://burhanb3.github.io/nuvio-tr-hd/manifest.json
 ```
 
-**Nuvio TR HD**, **Hızlı İzle**, **Anime** ve **Ek Anime** sağlayıcılarını etkinleştirin. Anime bölümlerinde ek sağlayıcılar birlikte kullanılabilir. Güncellemek için mevcut depoyu yenileyin; yeni Hızlı İzle satırının da açık olduğunu kontrol edin.
+**Nuvio TR HD**, **Hızlı İzle**, **Goojara**, **Anime** ve **Ek Anime** sağlayıcılarını etkinleştirin. Goojara dönen CDN düğümleri ana aramayı etkilemesin diye bağımsız çalışır; anime bölümlerinde ek sağlayıcılar birlikte kullanılabilir. Güncellemek için mevcut depoyu yenileyin; yeni satırların da açık olduğunu kontrol edin.
 
 Başlangıç için önerilen ayarlar: **Tüm çözünürlükler · 20 alternatif · HLS açık**. Nuvio'nun altyazı tercihini Türkçe seçin.
 

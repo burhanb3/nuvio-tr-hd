@@ -4273,7 +4273,8 @@ var require_probe = __commonJS({
         if (video) return video;
         if (unwantedAudio) return null;
         if ([401, 403, 429].includes(http.failureFor?.(url)?.status)) return null;
-        if (rotating && index === 0 && http.failureFor?.(url)?.reason !== "timeout_or_network") return null;
+        const failure = http.failureFor?.(url);
+        if (rotating && index === 0 && (failure?.reason !== "timeout_or_network" || candidate.source === "Goojara" && failure?.network !== true)) return null;
       }
       return null;
     }
@@ -4602,7 +4603,7 @@ var require_ranking = __commonJS({
 var require_diagnostics = __commonJS({
   "src/diagnostics.cjs"(exports2, module2) {
     "use strict";
-    var VERSION = true ? "1.9.5" : "dev";
+    var VERSION = true ? "1.9.6" : "dev";
     function effectiveTmdbKey(settings, injectedKey) {
       return typeof settings.tmdbApiKey === "string" && settings.tmdbApiKey.trim() ? settings.tmdbApiKey.trim() : typeof injectedKey === "string" ? injectedKey.trim() : "";
     }
@@ -4619,6 +4620,7 @@ var require_diagnostics = __commonJS({
         waploadedEnabled: settings.waploadedEnabled !== false,
         rarefilmmEnabled: settings.rarefilmmEnabled !== false,
         goojaraEnabled: settings.goojaraEnabled !== false,
+        diziyouOptInEnabled: settings.diziyouOptInEnabled === true,
         fzmoviesEnabled: settings.fzmoviesEnabled !== false,
         fztvseriesEnabled: settings.fztvseriesEnabled !== false,
         hdrezkaEnabled: settings.hdrezkaEnabled !== false,
@@ -4881,7 +4883,7 @@ var require_index = __commonJS({
               return;
             }
             const pair = { candidate, video, subtitles: [] };
-            if (lane === "extraAnime") void discoverSubtitles.prefetch();
+            if (["extraAnime", "goojara"].includes(lane)) void discoverSubtitles.prefetch();
             const embedded = embeddedSubtitleLanguages(video, candidate).includes("tr");
             let published = !strictSubtitles || embedded;
             if (published) completed.push(pair);
@@ -5037,7 +5039,8 @@ var require_index = __commonJS({
                   onCandidates: acceptArchive,
                   loadTitles: () => resolveTranslatedTitles(http, target, effectiveTmdbKey(settings, tmdbKey))
                 }) });
-                if (filesLane && settings.goojaraEnabled !== false) sourceJobs.push({ name: "Goojara", run: () => scanGoojara(http.scope(12e3), target) });
+                if (lane === "goojara" && settings.goojaraEnabled !== false || lane === "all" && settings.goojaraEnabled === true)
+                  sourceJobs.push({ name: "Goojara", run: () => scanGoojara(http.scope(12e3), target) });
                 const pushHdHub = () => {
                   if (filesLane && settings.hdhubEnabled !== false && !sourceFactories.some((s) => s.name === "4KHDHub / HubCloud")) sourceJobs.push({ name: "4KHDHub / HubCloud", run: async () => {
                     const sourceHttp = http.scope(8e3);
@@ -5075,7 +5078,7 @@ var require_index = __commonJS({
                   sourceJobs.push({ name: "AniMOM", run: () => scanAniMom(http, target) });
                 if ((lane === "extraAnime" && settings.seicodeEnabled !== false || lane === "all" && settings.seicodeEnabled === true) && target.isAnime)
                   sourceJobs.push({ name: "SeiCode", run: () => scanSeiCode(http, target) });
-                if (onlineLane && settings.diziyouEnabled !== false && target.type === "tv" && !target.isAnime)
+                if (onlineLane && settings.diziyouOptInEnabled === true && target.type === "tv" && !target.isAnime)
                   sourceJobs.push({ name: "DiziYou", run: () => scanDiziYou(http, target) });
                 if (onlineLane && settings.includeHls !== false && settings.dizibakEnabled !== false && target.type === "tv" && !target.isAnime)
                   sourceJobs.push({ name: "DiziBak", run: () => scanDiziBak(http, target) });
@@ -5115,7 +5118,7 @@ var require_index = __commonJS({
                 emit({ stage: "source", source: job.name, candidates: candidates.length, ...timing });
                 if (!candidates.length || http.expired()) return;
                 if (["4KHDHub / HubCloud", "Internet Archive", "MoviesDrive / Pixeldrain"].includes(job.name) && !sourceFactories.some((s) => s.name === job.name)) return;
-                if (lane !== "extraAnime") void discoverSubtitles.prefetch();
+                if (!["extraAnime", "goojara"].includes(lane)) void discoverSubtitles.prefetch();
                 pending.push(mapLimit(
                   candidates.slice(0, quota),
                   lane === "extraAnime" ? 1 : 3,
@@ -5195,7 +5198,7 @@ var require_index = __commonJS({
         { type: "toggle", key: "vixsrcEnabled", label: "VixSrc çevrimiçi alternatifleri", defaultValue: true },
         { type: "toggle", key: "hdhubEnabled", label: "4KHDHub / HubCloud doğrudan dosya araması", defaultValue: true, description: "Ek film/bölüm indirmeleri ve uygun kayıtlarda 4K. FSL/Pixeldrain dosyalarının gerçek boyutu ve pikseli okunur; TR/EN altyazı aranır." },
         { type: "toggle", key: "rarefilmmEnabled", label: "RareFilmm ek film arşivi", defaultValue: true, description: "Eski ve az bulunan filmlerde küçük MP4 seçenekleri. Bazılarında İngilizce altyazı görüntüye işlenmiştir; 4K veya TR dublaj garantisi yoktur." },
-        { type: "toggle", key: "goojaraEnabled", label: "Goojara film ve bölüm dosyaları", defaultValue: true, description: "Küçük MP4 alternatifleri; tam başlık/yıl/film IMDb ve bölüm kontrolü. Eksik veya yanlış yıl eşleşmeleri atlanır. Mevcut TR/EN altyazı araması uygulanır." },
+        { type: "toggle", key: "goojaraEnabled", label: "Goojara film ve bölüm dosyaları", defaultValue: true, description: "Bağımsız tarama: küçük MP4 alternatifleri; tam başlık/yıl/film IMDb ve bölüm kontrolü. Dönen CDN düğümü yanıt vermezse ana sağlayıcıdaki diğer sonuçlar etkilenmez." },
         { type: "toggle", key: "fzmoviesEnabled", label: "FzMovies film dosyaları", defaultValue: true, description: "Küçük film dosyaları (genelde 360p MP4 ve 720p MKV). Film sayfasındaki IMDb kimliği ve dosya adı/yıl denetlenir; çözünürlük ve süre dosyadan okunur. Dizi aramaz." },
         { type: "toggle", key: "fztvseriesEnabled", label: "FzTvSeries dizi bölüm dosyaları", defaultValue: true, description: "Küçük MP4 bölümler (çoğunlukla 360p–480p). Dizi sayfasındaki IMDb kimliği, tam sezon/bölüm ve dosya adı denetlenir; çözünürlük dosyadan okunur. Film aramaz." },
         { type: "toggle", key: "hdrezkaEnabled", label: "HDRezka farklı boyutlarda film/dizi dosyaları", defaultValue: true, description: "Ücretsiz özgün sesli MP4 seçenekleri ve mevcut TR/EN altyazılar. IMDb, başlık/yıl ve tam bölüm denetlenir; ücretli kalite ve örnek videolar eklenmez." },
@@ -5208,7 +5211,7 @@ var require_index = __commonJS({
         { type: "toggle", key: "animecixEnabled", label: "Animecix anime MP4 araması", defaultValue: true, description: "TMDB kimliği, özgün başlık, yıl ve tam sezon/bölüm doğrulanır. TR kaynak bilgisi tek başına altyazı kanıtı değildir." },
         { type: "toggle", key: "sonanimeEnabled", label: "SonAnime anime dosyası araması", defaultValue: true, description: "Tam TMDB/yıl/bölüm bağı ve gerçek dosya kontrolü. Aynı dosyanın aynası ek kalite sayılmaz." },
         { type: "toggle", key: "anizoneEnabled", label: "Anizone çok sesli online anime", defaultValue: true, description: "Tam başlık/yıl ve bölüm bağı. Film ve ilk sezon için ek HLS; mevcut TR/EN altyazılar aranır. Dosya indirmesi sunmaz." },
-        { type: "toggle", key: "diziyouEnabled", label: "DiziYou dizi ve eşlenmiş TR altyazılar", defaultValue: true },
+        { type: "toggle", key: "diziyouOptInEnabled", label: "DiziYou dizi alternatifi (deneysel · varsayılan kapalı)", defaultValue: false, description: "Bazı TR İSS ağlarında alan adı yanıt vermeyip iPhone’da 60 sn sınırıyla tüm dizi sonuçlarını düşürebildiği için varsayılan kapalıdır. Yalnız erişilebilir ağlarda açın." },
         { type: "toggle", key: "dizibakEnabled", label: "DiziBak dizi alternatifi", defaultValue: true, description: "Küçük public metadata yanıtları kullanılır. İlk bölüm tarihi ve dizi kategorisi uyuşmazsa sonuç eklenmez." },
         { type: "toggle", key: "filmmoduEnabled", label: "FilmModu online film ve kaynak ses seçenekleri", defaultValue: true },
         { type: "toggle", key: "purstreamEnabled", label: "Purstream ek online film ve dizi seçenekleri", defaultValue: true },
@@ -5260,8 +5263,8 @@ var require_index = __commonJS({
       return createProvider({ settings, tmdbKey }).getStreams(tmdbId, mediaType, season, episode);
     }
     function createEntry(lane) {
-      const titles = { main: "Film/dizi · online ve dosyalar", files: "Dosyalar", online: "Hızlı kaynaklar", anime: "Anime", extraAnime: "Ek Anime", fastOnline: "Hızlı İzle" };
-      const only = { files: ["hdhubEnabled", "directoryEnabled", "archiveEnabled", "waploadedEnabled", "rarefilmmEnabled", "goojaraEnabled", "fzmoviesEnabled", "fztvseriesEnabled", "hdrezkaEnabled", "moviesdriveEnabled", "catalogUrls", "addonUrls"], online: ["playImdbEnabled", "vixsrcEnabled", "diziyouEnabled", "dizibakEnabled", "filmmoduEnabled", "hdfilmdelisiEnabled", "purstreamEnabled", "filmekseniEnabled", "hlsView"], anime: ["animecixEnabled", "sonanimeEnabled", "anizoneEnabled"], extraAnime: ["animomEnabled", "seicodeEnabled"], fastOnline: ["hdfilmdelisiEnabled", "dizibalEnabled", "purstreamEnabled", "filmekseniEnabled", "hlsView"] };
+      const titles = { main: "Film/dizi · online ve dosyalar", files: "Dosyalar", online: "Hızlı kaynaklar", anime: "Anime", extraAnime: "Ek Anime", fastOnline: "Hızlı İzle", goojara: "Goojara" };
+      const only = { files: ["hdhubEnabled", "directoryEnabled", "archiveEnabled", "waploadedEnabled", "rarefilmmEnabled", "fzmoviesEnabled", "fztvseriesEnabled", "hdrezkaEnabled", "moviesdriveEnabled", "catalogUrls", "addonUrls"], online: ["playImdbEnabled", "vixsrcEnabled", "diziyouOptInEnabled", "dizibakEnabled", "filmmoduEnabled", "hdfilmdelisiEnabled", "purstreamEnabled", "filmekseniEnabled", "hlsView"], anime: ["animecixEnabled", "sonanimeEnabled", "anizoneEnabled"], extraAnime: ["animomEnabled", "seicodeEnabled"], fastOnline: ["hdfilmdelisiEnabled", "dizibalEnabled", "purstreamEnabled", "filmekseniEnabled", "hlsView"], goojara: ["goojaraEnabled"] };
       only.main = [...only.files, ...only.online.filter((key) => !["hdfilmdelisiEnabled", "purstreamEnabled", "filmekseniEnabled"].includes(key))];
       const sourceFields = Object.values(only).flat();
       return {
@@ -5272,8 +5275,8 @@ var require_index = __commonJS({
           return createProvider({ settings, tmdbKey, lane, budgetMs }).getStreams(...args);
         },
         onSettings: () => [
-          { type: "info", label: lane === "main" ? "Film/dizi araması online HLS ile gerçek MP4/MKV dosyalarını aynı listede sunar. Dosya araması boşsa online alternatifler korunur. Anime ayrı taramadır." : lane === "fastOnline" ? "Hızlı İzle, HDFilmDelisi, DiziBal, Purstream ve FilmEkseni online kaynaklarını bağımsız arar. Ana dosya aramasının bitmesini beklemez. HLS kaynakları izleme içindir; dosya indirmesi sunmaz." : lane === "extraAnime" ? "Kısmi kapsama sahip ek anime dosyaları bağımsız taranır. Her bölümde sonuç garantisi yoktur; boş sonuç diğer sağlayıcıların sonuçlarını silmez. Aynı anda tek dosya kontrol edilir." : `Bu ayarlar yalnız ${titles[lane]} taramasına aittir. En fazla kaynak sınırı bu tarama içindir.` },
-          ...onSettings().filter((field) => (!sourceFields.includes(field.key) || only[lane].includes(field.key)) && (lane !== "extraAnime" || !["includeHls", "useDownloadBridge", "allowHttp", "detailedHlsMetadata"].includes(field.key))).map((field) => lane === "extraAnime" && field.key === "animomEnabled" ? { ...field, label: "AniMOM ek anime dosyaları", defaultValue: true, description: "Kısmi katalog: tam ad/yıl/bölüm ve gerçek MP4 kontrolü gerekir. Çalışmayan bölüm atlanır; diğer sonuçlar korunur." } : lane === "extraAnime" && field.type === "info" && field.label.startsWith("Tanı ·") ? { ...field, label: field.label.split(" · ").slice(0, 3).join(" · ") + " · Bağımsız Ek Anime" } : field)
+          { type: "info", label: lane === "main" ? "Film/dizi araması online HLS ile gerçek MP4/MKV dosyalarını aynı listede sunar. Dosya araması boşsa online alternatifler korunur. Goojara ve Anime ayrı taramalardır." : lane === "fastOnline" ? "Hızlı İzle, HDFilmDelisi, DiziBal, Purstream ve FilmEkseni online kaynaklarını bağımsız arar. Ana dosya aramasının bitmesini beklemez. HLS kaynakları izleme içindir; dosya indirmesi sunmaz." : lane === "goojara" ? "Goojara dönen CDN düğümleri yüzünden ana listeden ayrı taranır. Bir düğüm yanıt vermezse yalnız bu tarama zaman aşımına uğrar; ana Nuvio TR HD sonuçları korunur." : lane === "extraAnime" ? "Kısmi kapsama sahip ek anime dosyaları bağımsız taranır. Her bölümde sonuç garantisi yoktur; boş sonuç diğer sağlayıcıların sonuçlarını silmez. Aynı anda tek dosya kontrol edilir." : `Bu ayarlar yalnız ${titles[lane]} taramasına aittir. En fazla kaynak sınırı bu tarama içindir.` },
+          ...onSettings().filter((field) => (!sourceFields.includes(field.key) || only[lane].includes(field.key)) && (!["extraAnime", "goojara"].includes(lane) || !["includeHls", "useDownloadBridge", "allowHttp", "detailedHlsMetadata"].includes(field.key))).map((field) => lane === "extraAnime" && field.key === "animomEnabled" ? { ...field, label: "AniMOM ek anime dosyaları", defaultValue: true, description: "Kısmi katalog: tam ad/yıl/bölüm ve gerçek MP4 kontrolü gerekir. Çalışmayan bölüm atlanır; diğer sonuçlar korunur." } : lane === "extraAnime" && field.type === "info" && field.label.startsWith("Tanı ·") ? { ...field, label: field.label.split(" · ").slice(0, 3).join(" · ") + " · Bağımsız Ek Anime" } : lane === "goojara" && field.type === "info" && field.label.startsWith("Tanı ·") ? { ...field, label: field.label.split(" · ").slice(0, 3).join(" · ") + " · Bağımsız Goojara" } : field)
         ]
       };
     }

@@ -34,9 +34,31 @@ test('HLS kapalıyken DiziYou içindeki gerçek MP4 ve Türkçe altyazı yine bu
   [origin+'/player/123.html']:{body:'<video id="ad"><source src="https://ad.test/ad.mp4"></video><video id="diziyou"><source src="https://media.test/a.mp4"><source src="https://media.test/hls.m3u8"><track srclang="tr" src="https://subs.test/tr.srt"></video>'},
   'https://media.test/a.mp4':{body:mp4(),mime:'video/mp4'},'https://subs.test/tr.srt':{body:srt,mime:'text/plain'}
  };
- const provider=createProvider({lane:'main',tmdbKey:'test',fetchImpl:fixtureFetch(f,calls),settings:{includeHls:false,autoSubtitles:false,archiveEnabled:false,hdhubEnabled:false,playImdbEnabled:false,vixsrcEnabled:false,dizibakEnabled:false}});
+ const baseSettings={includeHls:false,autoSubtitles:false,archiveEnabled:false,hdhubEnabled:false,playImdbEnabled:false,vixsrcEnabled:false,dizibakEnabled:false};
+ const offCalls=[],legacyProvider=createProvider({lane:'main',tmdbKey:'test',fetchImpl:fixtureFetch(f,offCalls),settings:{...baseSettings,diziyouEnabled:true,goojaraEnabled:true}});
+ assert.deepEqual(await legacyProvider.getStreams(67070,'tv',1,1),[]);
+ assert.ok(!offCalls.some(c=>/diziyou\.one|goojara\.to|wootly\.ch/.test(c.url)),'Eski kayıtlı ayarlar ana taramada DiziYou veya Goojara açmamalı');
+ const provider=createProvider({lane:'main',tmdbKey:'test',fetchImpl:fixtureFetch(f,calls),settings:{...baseSettings,diziyouOptInEnabled:true}});
  const rows=await provider.getStreams(67070,'tv',1,1);assert.equal(rows.length,1);assert.equal(rows[0].type,'mp4');assert.equal(rows[0].subtitles[0].language,'tr');
  assert.ok(!calls.some(c=>/ad\.test|hls\.m3u8/.test(c.url)));
+});
+test('Goojara askıda kalan düğüme takılsa bile ana tarama etkilenmez; Goojara boşken altyazı ön-sorgusu açmaz',{timeout:2000},async()=>{
+ let release,goojaraDone=false;
+ const tv={id:48866,original_name:'The 100',first_air_date:'2014-03-19',external_ids:{imdb_id:'tt2661044'},episode_run_time:[43]};
+ const tvMeta='https://api.themoviedb.org/3/tv/48866?api_key=test&append_to_response=external_ids';
+ const f={[tvMeta]:{json:tv},'https://media.test/ep.mp4':{body:mp4(),mime:'video/mp4'},'https://subs.test/tr.srt':{body:srt,mime:'text/plain'}};
+ const goojaraCalls=[];
+ const goojara=createProvider({lane:'goojara',tmdbKey:'test',settings:{goojaraEnabled:false},fetchImpl:fixtureFetch(f,goojaraCalls),
+  sourceFactories:[{name:'HangingGoojara',run:()=>new Promise(r=>{release=r;})}]});
+ const goojaraJob=goojara.getStreams(48866,'tv',5,5).then(r=>{goojaraDone=true;return r;});
+ const mainCalls=[];
+ const main=createProvider({lane:'main',tmdbKey:'test',settings:{autoSubtitles:false,archiveEnabled:false,hdhubEnabled:false,fztvseriesEnabled:false,hdrezkaEnabled:false,moviesdriveEnabled:false,playImdbEnabled:false,vixsrcEnabled:false,dizibakEnabled:false,waploadedEnabled:false,diziyouEnabled:true,goojaraEnabled:true},
+  fetchImpl:fixtureFetch(f,mainCalls),sourceFactories:[{name:'FastTV',run:async()=>[{url:'https://media.test/ep.mp4',source:'FzTvSeries',headers:{},subtitles:[{url:'https://subs.test/tr.srt',language:'tr',identity:{tmdbId:48866,originalTitle:'The 100',year:2014,type:'tv',season:5,episode:5},_scope:'paired'}],identity:{tmdbId:48866,originalTitle:'The 100',year:2014,type:'tv',season:5,episode:5},filename:'The.100.S05E05.mp4'}]}]});
+ const rows=await main.getStreams(48866,'tv',5,5);
+ assert.equal(rows.length,1);assert.equal(goojaraDone,false);
+ assert.ok(!mainCalls.some(c=>/diziyou\.one|goojara\.to|wootly\.ch/.test(c.url)));
+ assert.ok(!goojaraCalls.some(c=>/opensubtitles|altyazidb/.test(c.url)));
+ release([]);assert.deepEqual(await goojaraJob,[]);
 });
 test('Boş/bozuk kısmi kaynak için altyazı servisine gereksiz istek açılmaz',async()=>{
  const calls=[],provider=createProvider({lane:'extraAnime',tmdbKey:'test',fetchImpl:fixtureFetch({[request]:{json:meta}},calls),settings:{animomEnabled:false},sourceFactories:[{name:'Missing',run:async()=>[candidate('https://media.test/missing.mp4')]}]});

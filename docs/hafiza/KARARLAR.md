@@ -2,6 +2,14 @@
 
 - Windows yerel düzeltme başlatıcısı başka Nuvio işlemini sessizce veya zorla kapatmaz. Kullanıcının kısayolu açması ve iletişim kutusunda onay vermesiyle normal pencere kapatma denenir. Açılış öncesi paket SHA ve classpath kontrolü zorunludur; yalnız kısayolun doğru olması uygulamanın doğru kopyada çalıştığı kanıtı değildir.
 
+## 25 Kasım 2026 — 1.9.6 iOS 60 sn askı izolasyonu (DiziYou + Goojara)
+
+- **DiziYou varsayılan kapalı, yeni opt-in anahtarıyla (`diziyouOptInEnabled`).** Mevcut kullanıcıların kayıtlı `diziyouEnabled: true` tercihi, İSS engel sunucusunda 60 sn asılı kalıp tüm dizi satırlarını silebildiği için yeni varsayılanı ezemez. Eski anahtar yok sayılır; yalnız erişilebilir ağda kullanıcı açıkça isterse `diziyouOptInEnabled` ile açabilir.
+- **Goojara ana taramadan çıkarılıp 5. bağımsız scraper (`nuvio-tr-hd-goojara`) yapıldı.** iOS Ktor `followRedirects: 'manual'` ve `AbortSignal` desteklemediğinden dönen `wootly.ch/source` yönlendirmesinde ölü düğüme (`nara.nebula.to`) ilk bağlantıyı engellemek mümkün değil; aramalar arası kalıcı depolama da yok. `extraAnime` ve `fastOnline` desenindeki gibi ayrı scraper'a alınarak ana `nuvio-tr-hd` taraması 60 sn askısından tamamen yalıtıldı, çalışan düğümlerde Goojara katkısı da korundu.
+- **Goojara sessiz zaman aşımında ikinci kez yenilenmez.** `probe.cjs` Goojara için yalnız anlık taşıma hatasında (`failure.network === true`) bir kez yeniden dener; 4,5 sn sessiz timeout sonrası ikinci istek iOS'ta ikinci bir 60 sn native askı oluşturacağından açılmaz.
+- **Goojara boş/askıdayken altyazı ön-sorgusu açmaz.** `extraAnime` ile aynı ilke: gerçek medya byte'ları probe'u geçtikten sonra altyazı keşfi başlar.
+- **Eski dört scraper kimliği ve ayarları korunur.** Yalnız yeni 5. kimlik `nuvio-tr-hd-goojara` eklenir.
+
 ## 25 Kasım 2026 — FzMovies
 
 - **FzMovies eklendi (yalnız film).** Kimlik IMDb'ye bağlı: kart adı yalnız aday seçer; film sayfasında tek ve aynı IMDb kimliği gerekir. Dublajlı sayfalar açılmaz; ses dosyadan okunmadan dublaj iddiası yapılmaz. `identityConfidence` 90 (FzTvSeries, Goojara TV ve MoviesDrive ile aynı); süre ±%10 ve piksel dosyadan zorunlu.

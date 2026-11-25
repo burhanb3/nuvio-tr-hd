@@ -1,5 +1,14 @@
 # Sürüm notları
 
+## 1.9.6 — 25 Kasım 2026
+
+- **iPhone'da 60 sn askı nedeniyle tüm dizi sonuçlarının düşmesine karşı düzeltme:**
+  - **Kök neden:** Nuvio eklentiyi 60 sn'de keser; iOS ağ katmanı `AbortSignal` ve `redirect: 'manual'` desteklemez ve yanıt vermeyen (SYN düşen) tek bir bağlantı 60 sn bekleyerek aynı scraper içindeki tüm sonuçları silebilir. TR ev ağında iki kaynak bu riski üretiyordu: `www.diziyou.one` (İSS engel sunucusu, yalnız dizilerde) ve `Goojara` (`web.wootly.ch/source` → yanıt vermeyen ölü CDN düğümü, The 100 S5E5'te 16 denemenin 11'i).
+  - **DiziYou varsayılan kapalı:** Yeni `diziyouOptInEnabled` anahtarıyla varsayılan kapalı hale getirildi; önceden kaydedilmiş `diziyouEnabled: true` ayarı yeni varsayılanı ezmez. Yalnız erişilebilir ağlarda elle açılabilir.
+  - **Goojara 5. bağımsız scraper (`nuvio-tr-hd-goojara`):** Goojara ana `Nuvio TR HD` taramasından çıkarılıp kendi bağımsız tarayıcısına alındı. Dönen CDN düğümü yanıt vermezse yalnız Goojara zaman aşımına uğrar; ana listedeki FzTvSeries, 4KHDHub, MoviesDrive, HDRezka, Archive, FzMovies ve diğer sonuçlar etkilenmez. Dosya doğrulanmadan altyazı ön-sorgusu da başlatmaz.
+  - **Goojara yeniden deneme koruması:** Probe artık Goojara için yalnız anlık taşıma hatalarında (`network: true`) bir kez yeniden dener; sessiz zaman aşımında ikinci bir 60 sn native askı oluşturmaz.
+- 357 yerel birim ve QuickJS paket testi geçti (`npm run check`). Fiziksel telefon, tam oynatma, indirme ve çevrimdışı altyazı testi yapılmadı.
+
 ## 1.9.5 — 25 Kasım 2026
 
 - **Filmlere yeni dosya kaynağı: FzMovies.**
