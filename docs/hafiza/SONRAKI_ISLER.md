@@ -4,7 +4,7 @@
 
 ## 1.9.8 — 25 Kasım 2026
 
-1. **Yayın:** `1.9.8` commit + push sonrası Actions + Pages + public SHA-256 (artık 9 dosya, `nuvio-tr-hd-hdrezka.js` dahil) doğrulanmalı. Kayıt `compatibility/github-publication.json`.
+1. **Yayımlandı (`55b732d`):** Test ve paket `45692600060` ve Pages `45692600154` başarılı; 9 public dosya HTTP 200 ve SHA-256 yerel `dist/` ile aynı (`compatibility/github-publication.json`).
 2. **Telefonda (Wi-Fi ve LTE ayrı):**
    - Depo yenilenmeli, `Tanı · 1.9.8` ve yeni **Nuvio TR HD · HDRezka** satırı görünmeli ve açık olmalı.
    - Inception, Dune ve The 100 S5E5'te ana `Nuvio TR HD` listesi boş dönmemeli.

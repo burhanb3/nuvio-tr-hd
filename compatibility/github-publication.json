@@ -1,55 +1,135 @@
 {
-  "checkedAt": "2026-11-25T19:18:16.846Z",
-  "version": "1.9.7",
+  "checkedAt": "2026-11-25T20:13:53.703Z",
+  "version": "1.9.8",
   "origin": "https://burhanb3.github.io/nuvio-tr-hd",
   "authenticated": false,
   "assetRequestsAuthenticated": false,
   "ciMetadataAuthenticated": false,
   "repository": "https://github.com/burhanb3/nuvio-tr-hd",
-  "sourceCommit": "ea01076916e664a1e6b45480968f1bc4679afcd1",
+  "sourceCommit": "55b732dbf97ea06082427fd1e3ba8db75482993a",
   "branch": "codex/publish-nuvio-tr-hd",
   "actions": {
-    "tests": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/45683585388",
+    "tests": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/45692600060",
     "testsConclusion": "success",
     "jobs": [
-      {
-        "name": "verify (windows-latest)",
-        "status": "completed",
-        "conclusion": "success",
-        "requiredStepsPassed": true,
-        "steps": [
-          { "name": "Set up job", "status": "completed", "conclusion": "success" },
-          { "name": "Run actions/checkout@v7.0.1", "status": "completed", "conclusion": "success" },
-          { "name": "Run actions/setup-node@v7.1.0", "status": "completed", "conclusion": "success" },
-          { "name": "Run npm ci --ignore-scripts", "status": "completed", "conclusion": "success" },
-          { "name": "Run npm run check", "status": "completed", "conclusion": "success" },
-          { "name": "Üretilmiş sağlayıcı güncel mi", "status": "completed", "conclusion": "success" },
-          { "name": "Run actions/upload-artifact@v7.0.2", "status": "completed", "conclusion": "skipped" },
-          { "name": "Post Run actions/setup-node@v7.1.0", "status": "completed", "conclusion": "success" },
-          { "name": "Post Run actions/checkout@v7.0.1", "status": "completed", "conclusion": "success" },
-          { "name": "Complete job", "status": "completed", "conclusion": "success" }
-        ]
-      },
       {
         "name": "verify (ubuntu-latest)",
         "status": "completed",
         "conclusion": "success",
         "requiredStepsPassed": true,
         "steps": [
-          { "name": "Set up job", "status": "completed", "conclusion": "success" },
-          { "name": "Run actions/checkout@v7.0.1", "status": "completed", "conclusion": "success" },
-          { "name": "Run actions/setup-node@v7.1.0", "status": "completed", "conclusion": "success" },
-          { "name": "Run npm ci --ignore-scripts", "status": "completed", "conclusion": "success" },
-          { "name": "Run npm run check", "status": "completed", "conclusion": "success" },
-          { "name": "Üretilmiş sağlayıcı güncel mi", "status": "completed", "conclusion": "success" },
-          { "name": "Run actions/upload-artifact@v7.0.2", "status": "completed", "conclusion": "success" },
-          { "name": "Post Run actions/setup-node@v7.1.0", "status": "completed", "conclusion": "success" },
-          { "name": "Post Run actions/checkout@v7.0.1", "status": "completed", "conclusion": "success" },
-          { "name": "Complete job", "status": "completed", "conclusion": "success" }
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@v7.0.1",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/setup-node@v7.1.0",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm ci --ignore-scripts",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm run check",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Üretilmiş sağlayıcı güncel mi",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/upload-artifact@v7.0.2",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/setup-node@v7.1.0",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/checkout@v7.0.1",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success"
+          }
+        ]
+      },
+      {
+        "name": "verify (windows-latest)",
+        "status": "completed",
+        "conclusion": "success",
+        "requiredStepsPassed": true,
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@v7.0.1",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/setup-node@v7.1.0",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm ci --ignore-scripts",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm run check",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Üretilmiş sağlayıcı güncel mi",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/upload-artifact@v7.0.2",
+            "status": "completed",
+            "conclusion": "skipped"
+          },
+          {
+            "name": "Post Run actions/setup-node@v7.1.0",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/checkout@v7.0.1",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success"
+          }
         ]
       }
     ],
-    "pages": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/45683585479",
+    "pages": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/45692600154",
     "pagesConclusion": "success"
   },
   "checks": [
@@ -57,69 +137,77 @@
       "path": "/manifest.json",
       "status": 200,
       "type": "application/json; charset=utf-8",
-      "bytes": 3356,
-      "sha256": "fd5d57fdee0be94fe676ab954fb495f27d3ab76b0917ad1b70b601099e23184c",
+      "bytes": 4046,
+      "sha256": "a4db9fd9074887c30482801cecb866fd8c218649683c2ea951785025b9fee38f",
       "matchesLocal": true
     },
     {
-      "path": "/providers/nuvio-tr-hd.js?v=1.9.7",
+      "path": "/providers/nuvio-tr-hd.js?v=1.9.8",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 168601,
-      "sha256": "163cf750c2f54acfc8021c56b41e299ee9c2d9231b8424d1adf2f4ee1a7194d9",
+      "bytes": 163379,
+      "sha256": "8feaacccd5a45292618a1b7ad85e4939306bacca8c734bbf54664ae8f7143eb8",
       "matchesLocal": true
     },
     {
-      "path": "/providers/nuvio-tr-hd-anime.js?v=1.9.7",
+      "path": "/providers/nuvio-tr-hd-anime.js?v=1.9.8",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 102678,
-      "sha256": "ec698ecc87671cb295f1e9171e766ad51f14d24274a8d5be6c3757f35f731c38",
+      "bytes": 98773,
+      "sha256": "486c27c01e70ce2619be7eef91cb150c402b45d3d1ccd1d0e883e0f5c334473d",
       "matchesLocal": true
     },
     {
-      "path": "/providers/nuvio-tr-hd-extra-anime.js?v=1.9.7",
+      "path": "/providers/nuvio-tr-hd-extra-anime.js?v=1.9.8",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 102065,
-      "sha256": "b5351229f472505f175cc96fa01fbb2aeaa104a019689517af71a3dbe4fbbc79",
+      "bytes": 105702,
+      "sha256": "3b8d478af9dfd7ac9bed31b6da93948595a9105f03c216f6b944f4634224f3e8",
       "matchesLocal": true
     },
     {
-      "path": "/providers/nuvio-tr-hd-fast-online.js?v=1.9.7",
+      "path": "/providers/nuvio-tr-hd-fast-online.js?v=1.9.8",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 109337,
-      "sha256": "10c97fc71213144dc0ed5ec40948f692ade8f4ac9f60c4d1a3e56d8990fdf699",
+      "bytes": 109740,
+      "sha256": "8f1242bca39ea545fed8e8a7d136f66672e07c62192bfa281a65d9e741d6d255",
       "matchesLocal": true
     },
     {
-      "path": "/providers/nuvio-tr-hd-goojara.js?v=1.9.7",
+      "path": "/providers/nuvio-tr-hd-goojara.js?v=1.9.8",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 101544,
-      "sha256": "817bdbb28eb1c9a9856770a751776c23ba300335a8cb0efdb0171c2db1572247",
+      "bytes": 101947,
+      "sha256": "2be013715319687305bae6aca06b50c3d55caa98cc28775e8f3a66f2dae86000",
+      "matchesLocal": true
+    },
+    {
+      "path": "/providers/nuvio-tr-hd-hdrezka.js?v=1.9.8",
+      "status": 200,
+      "type": "application/javascript; charset=utf-8",
+      "bytes": 102648,
+      "sha256": "1ebb9fde35f9cb31f173d9f369b5ce3685f92d8c48d09ae5309604b49316682a",
       "matchesLocal": true
     },
     {
       "path": "/providers/nuvio-tr-hd-online.js",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 117871,
-      "sha256": "ffc0c66e4c60fe16042e3ffebaeb75682741121af4b7cabfeecbed93d165121c",
+      "bytes": 118402,
+      "sha256": "8ca5a4d8d475258cd109c92dd38b335a7731d256b5d3299a0955fefec38d23d3",
       "matchesLocal": true
     },
     {
       "path": "/",
       "status": 200,
       "type": "text/html; charset=utf-8",
-      "bytes": 6374,
-      "sha256": "d2040c203cb9e68587ec129e8b6f643fc399f563961fdef9b697a7b60c1190ea",
+      "bytes": 6422,
+      "sha256": "6d394fde3b5b312bba05d063569f32feb192970532e375d7d418742e95a9b718",
       "matchesLocal": true
     }
   ],
   "tests": {
-    "local": 363,
+    "local": 365,
     "compiledQuickJs": true
   },
   "upstreamEvidence": "compatibility/upstream-189-check.json",
@@ -131,7 +219,8 @@
     "nuvio-tr-hd-anime",
     "nuvio-tr-hd-extra-anime",
     "nuvio-tr-hd-fast-online",
-    "nuvio-tr-hd-goojara"
+    "nuvio-tr-hd-goojara",
+    "nuvio-tr-hd-hdrezka"
   ],
   "phoneDeviceTest": "not-run",
   "fullPlayback": "not-run",
