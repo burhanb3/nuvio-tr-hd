@@ -4,7 +4,7 @@
 
 ## 1.9.5 — 25 Kasım 2026: FzMovies film kaynağı
 
-Tüm ölçümler bu bilgisayardan (TR ISS). 356 test geçti (FzMovies için bir QuickJS paket testi dahil). ABI değişmedi. Telefon, tam oynatma ve indirme testi yapılmadı.
+Tüm ölçümler bu bilgisayardan (TR ISS). 356 test geçti (FzMovies için bir QuickJS paket testi dahil). ABI değişmedi. Kullanıcının önceden verdiği yayın izniyle codex/publish-nuvio-tr-hd dalına gönderildi. Kaynak commit 87cd2ea: Test ve paket 45623009512 (ubuntu+windows) başarılı, Pages 45623009898 başarılı; manifest, dört `?v=1.9.5` sağlayıcı, sabit online adı ve ana sayfa public HTTP 200 ve SHA-256 yerel dist ile aynı (compatibility/github-publication.json, anonim GitHub API). Telefon, tam oynatma ve indirme testi yapılmadı.
 
 - **Tetik:** kullanıcı filmlerde tek kaynağın yetmediğini, birden fazla kararlı indirilebilir kaynak istediğini söyledi. Aday 1.9.4 SONRAKI_ISLER madde 4'teydi.
 - **Kapsam temeli (1.9.4 kodu, 25 Kasım, gecikmesiz):** `.cache/coverage-194-nov25.json`, 37 durumun 35'i ölçütü sağladı; eksikler severance-s1e1 ve shameless-s1e1.
