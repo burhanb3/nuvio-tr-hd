@@ -63,24 +63,47 @@ function mp4Duration(bytes) {
   return null;
 }
 
+function mdhdLanguage(bytes, mdhd) {
+  const version = bytes[mdhd.data], at = mdhd.data + (version === 0 ? 20 : version === 1 ? 32 : 1000000);
+  if (at + 2 > mdhd.end) return null;
+  const code = bytes[at] * 256 + bytes[at + 1];
+  const language = [10,5,0].map(shift => String.fromCharCode(((code >> shift) & 31) + 96)).join('');
+  return /^[a-z]{3}$/.test(language) && !['und','mis','zxx'].includes(language) ? language : null;
+}
+function trackMedia(bytes, track) {
+  const media = boxes(bytes, track.data, Math.min(track.end, bytes.length)).find(x => x.type === 'mdia');
+  if (!media) return null;
+  const children = boxes(bytes, media.data, Math.min(media.end, bytes.length));
+  const handler = children.find(x => x.type === 'hdlr' && x.complete);
+  const mdhd = children.find(x => x.type === 'mdhd' && x.complete);
+  return handler && mdhd ? { kind: ascii(bytes, handler.data + 8, 4), language: mdhdLanguage(bytes, mdhd) } : null;
+}
 function mp4AudioLanguages(bytes) {
   const languages = new Set();
   for (const movie of boxes(bytes).filter(x => x.type === 'moov')) {
     for (const track of boxes(bytes, movie.data, Math.min(movie.end, bytes.length)).filter(x => x.type === 'trak')) {
-      const media = boxes(bytes, track.data, Math.min(track.end, bytes.length)).find(x => x.type === 'mdia');
-      if (!media) continue;
-      const children = boxes(bytes, media.data, Math.min(media.end, bytes.length));
-      const handler = children.find(x => x.type === 'hdlr' && x.complete);
-      const mdhd = children.find(x => x.type === 'mdhd' && x.complete);
-      if (!handler || ascii(bytes, handler.data + 8, 4) !== 'soun' || !mdhd) continue;
-      const version = bytes[mdhd.data], at = mdhd.data + (version === 0 ? 20 : version === 1 ? 32 : 1000000);
-      if (at + 2 > mdhd.end) continue;
-      const code = bytes[at] * 256 + bytes[at + 1];
-      const language = [10,5,0].map(shift => String.fromCharCode(((code >> shift) & 31) + 96)).join('');
-      if (/^[a-z]{3}$/.test(language) && !['und','mis','zxx'].includes(language)) languages.add(language);
+      const media = trackMedia(bytes, track);
+      if (media?.kind === 'soun' && media.language) languages.add(media.language);
     }
   }
   return [...languages];
+}
+// A long video sample table can push the next trak past the bytes read at
+// the start of moov (5-8 MB moov, 20-25 Nov). Use only the declared size of
+// the last, incomplete trak to find where its next sibling begins.
+function mp4NextTrackOffset(bytes, base = 0) {
+  const movie = boxes(bytes).find(x => x.type === 'moov');
+  if (!movie || movie.complete) return null;
+  const children = boxes(bytes, movie.data, bytes.length), last = children[children.length - 1];
+  if (!last || last.complete || last.type !== 'trak' || last.end + 8 > movie.end) return null;
+  return { offset: base + last.end, moovEnd: base + movie.end };
+}
+// One trak box that starts at byte zero of a separate range.
+function mp4TrackAt(bytes) {
+  const track = boxes(bytes)[0];
+  if (!track || track.type !== 'trak') return null;
+  const media = trackMedia(bytes, track);
+  return media ? { ...media, size: track.end - track.start } : null;
 }
 
 function mp4HasVideo(bytes, movie) {
@@ -240,4 +263,4 @@ function mp4MetadataInfo(bytes, remaining) {
   return { dimensions, duration, ...(audioLanguages.length ? { audioLanguages } : {}) };
 }
 function inspectContainer(bytes) { return mp4Info(bytes) || mkvInfo(bytes); }
-module.exports = { inspectContainer, mp4Dimensions, mp4Duration, mp4TailDimensions, mp4TailInfo, mp4MetadataOffset, mp4MetadataInfo, ascii };
+module.exports = { inspectContainer, mp4Dimensions, mp4Duration, mp4TailDimensions, mp4TailInfo, mp4MetadataOffset, mp4MetadataInfo, mp4NextTrackOffset, mp4TrackAt, ascii };

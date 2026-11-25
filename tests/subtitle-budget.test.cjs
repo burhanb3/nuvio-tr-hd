@@ -75,3 +75,19 @@ test('yalnız sürüm etiketi taşıyan OpenSubtitles satırı film adını alı
   assert.equal(scoreSubtitle({ lang: 'tr', title: 'The.Matrix.1999.1080p.BluRay.x264-GROUP', foreign_parts_only: true }, exact, {}, target, true), null);
   assert.equal(scoreSubtitle({ lang: 'tr', title: 'The.Matrix.1999.1080p.BluRay.x264-GROUP', _scope: 'title', _identityBound: true }, exact, {}, target, true).score, 95);
 });
+
+test('429 alan altyazı servisi için gereksiz hash sorgusu açılmaz; v3 kataloğu yine çalışır', async () => {
+  const calls = [];
+  const fixture = {
+    [HOMES_LIST]: { status: 429, headers: { 'retry-after': '30' } },
+    [V3_LIST]: { json: { subtitles: [{ lang: 'tur', movieReleaseName: 'The.Matrix.1999.1080p.BluRay', url: 'https://subs.test/v3.srt' }] } }
+  };
+  const http = createHttp({ fetchImpl: fixtureFetch(fixture, calls) });
+  try {
+    const discover = createSubtitleDiscovery(http, target, {});
+    const rows = await discover({ filename: 'The.Matrix.1999.1080p.BluRay.mkv', url: 'https://media.test/m.mkv' }, { videoHash: '0123456789abcdef', size: 123456 }, { languages: ['tr'] });
+    assert.ok(rows.some(r => r.url === 'https://subs.test/v3.srt'));
+    assert.equal(http.isRateLimited(SUBTITLE_SERVICES[0]), true);
+    assert.equal(calls.filter(c => c.url.includes('videoHash=')).length, 0);
+  } finally { http.close(); }
+});

@@ -1,5 +1,20 @@
 # Sürüm notları
 
+## 1.9.7 — 25 Kasım 2026
+
+- **Filmlere yeni MP4 indirme kaynağı: JetFilmizle (Gold / Türkçe dublaj sekmesi).**
+  - Tek IMDb kimliği doğrulaması, `HEAD Range: bytes=0-15` ile `206` ön kontrolü (Range yok sayan 200-stream varyantlar GET açılmadan elenir), gerçek süre ±%10 ve piksel doğrulaması. Yalnız filmlerde çalışır (`jetfilmizleEnabled`, varsayılan açık).
+  - **Büyük `moov` MP4 ses izi ölçümü (`readAudioTracks`):** ilk 128–256 KiB dışında kalan `soun` track'inin kendi `mdhd` dilini en fazla 2×64 KiB Range okumasıyla doğrular; `und` veya okunamayan alan ölçülmüş TR dublaj diye uydurulmaz.
+- **Hız, sıralama ve altyazı optimizasyonları:**
+  - Filmlerde `4KHDHub / HubCloud` online kaynakların önüne alındı ve 10 sn kapsam verildi (canlı ölçümde başlangıç 3,6–4,7 sn'den 1,15–1,25 sn'ye düştü). `VixSrc` (5 sn), `PlayIMDb` (4 sn) ve `RareFilmm` (5 sn) süre kapsamlarıyla sınırlandı.
+  - Aynı aramada taşıma hatası veren ayna sunucusu (`hostFailed`) sonraki dosyalarda deneme listesinin sonuna itilir.
+  - TMDB `/translations` ve `/alternative_titles` istekleri arama başına tekilleştirildi.
+  - Altyazı keşfinde `opensubtitles-v3.strem.io` öne alındı; `429` alan origin için gereksiz hash sorgusu kapatıldı ve hash zaman aşımı 3 sn yapıldı.
+- **Lane bazlı paketleme + minify (QuickJS hafifletme):**
+  - Her scraper artık yalnız kendi hattının sağlayıcılarını içerir ve `esbuild` ile küçültülür. 5 aktif paketin toplam boyutu **1.650 KB → 583 KB (-%65)** düştü.
+- **Canlı aday taraması:** `todaytvseries.one` (IMDb/MP4 indirme kanıtı yok) ve `HDHub4u` (5 başlık Pixeldrain koşulu sağlanmadı) eklenmedi.
+- 363 yerel birim ve QuickJS paket testi geçti (`npm run check`). Fiziksel telefon, tam oynatma, indirme, çevrimdışı altyazı ve senkron testi yapılmadı.
+
 ## 1.9.6 — 25 Kasım 2026
 
 - **iPhone'da 60 sn askı nedeniyle tüm dizi sonuçlarının düşmesine karşı düzeltme:**

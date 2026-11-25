@@ -486,7 +486,7 @@ async function runInQuickJs(fixture, { settings, args = ['603', 'movie'], invoke
       globalThis.TMDB_API_KEY = 'test';
       globalThis.setTimeout = (fn, ms) => __set_timer(fn, ms);
       globalThis.clearTimeout = id => __clear_timer(id);
-      globalThis.URL = function(url) { Object.assign(this, JSON.parse(__fixture_parse_url(url))); this.searchParams = {get: key => this.params[key] ?? null}; };
+      globalThis.URL = function(url) { Object.assign(this, JSON.parse(__fixture_parse_url(url))); var p = this.params || {}; this.searchParams = { get: key => p[key] ?? null, has: key => Object.prototype.hasOwnProperty.call(p, key), keys: () => Object.keys(p)[Symbol.iterator](), values: () => Object.values(p)[Symbol.iterator](), entries: () => Object.entries(p)[Symbol.iterator]() }; };
       // These read-only fields/base64 operations also exist in Nuvio's locked
       // JsBindings.kt. No Node or browser object is exposed to plugin code.
       globalThis.atob = value => __fixture_atob(value);
@@ -651,4 +651,35 @@ test('QuickJS otomatik dizin taraması, BigInt dosya hash’i ve Türkçe eşlem
   assert.equal(streams.length, 1);
   assert.equal(streams[0].quality, '1080p · 1920×1080');
   assert.equal(streams[0].subtitles[0].language, 'tr');
+});
+
+test('QuickJS: JetFilmizle Gold MP4, HEAD 206 ön kontrolü ve büyük moov TR ses izi paket içinde çalışır; lane paketleri yalıtılmıştır', async () => {
+  const origin = 'https://jetfilmizle.app', player = 'https://videopark.top/go/?id=30179', workerBase = 'https://dl-a.fixture.workers.dev';
+  const fileUrl = workerBase + '/v/30179?q=360';
+  const mvhd = Buffer.alloc(20); mvhd.writeUInt32BE(1000, 12); mvhd.writeUInt32BE(8160000, 16);
+  const hdlr = Buffer.alloc(16); hdlr.write('soun', 8, 'ascii');
+  const mdhd = Buffer.alloc(24); const code = ((('t'.charCodeAt(0)-96)<<10)|(('u'.charCodeAt(0)-96)<<5)|('r'.charCodeAt(0)-96)); mdhd[20]=(code>>8)&255; mdhd[21]=code&255;
+  const audioTrak = helpers.box('trak', helpers.box('mdia', helpers.box('hdlr', hdlr), helpers.box('mdhd', mdhd)));
+  const paddedVideo = helpers.box('trak', helpers.moov(1280, 534).subarray(16), helpers.box('free', Buffer.alloc(140000)));
+  const body = Buffer.concat([helpers.box('ftyp', Buffer.from('isom\0\0\0\0isommp42', 'binary')), helpers.box('moov', helpers.box('mvhd', mvhd), paddedVideo, audioTrak), helpers.box('mdat', Buffer.alloc(16384))]);
+  const fixture = makeFixture({ extra: {
+    [origin + '/arama?q=The%20Matrix']: { body: `<div class="film-card"><a href="${origin}/film/matrix"><h3 class="fc-title">Matrix</h3><span class="fc-orig">The Matrix</span><span class="fc-year">1999</span></a></div>` },
+    [origin + '/film/matrix']: { body: `<input name="film_id" value="100"><a href="https://www.imdb.com/title/tt0133093/">IMDb</a><button data-source-index="2" data-player-type="dublaj">Gold</button>` },
+    [origin + '/jetplayer']: { body: `<iframe src="${player}"></iframe>` },
+    [player]: { body: `var WORKER_BASE = "${workerBase}"; var VIDEO_ID = 30179;` },
+    [workerBase + '/v/30179/info']: { json: { id: 30179, qualities: [360] } },
+    [fileUrl]: { body, mime: 'video/mp4' }
+  } });
+  const settings = { autoSubtitles: false, useDownloadBridge: false, archiveEnabled: false, hdhubEnabled: false, hdrezkaEnabled: false, moviesdriveEnabled: false, fzmoviesEnabled: false, waploadedEnabled: false, rarefilmmEnabled: false, playImdbEnabled: false, vixsrcEnabled: false, filmmoduEnabled: false };
+  const rows = await runInQuickJs(fixture, { settings, nativeTimers: true });
+  assert.equal(rows.length, 1);
+  assert.equal(rows[0].url, fileUrl);
+  assert.equal(rows[0].type, 'mp4');
+  assert.equal(rows[0].quality, '720p · 1280×534');
+  assert.match(rows[0].language, /Ses: TR/);
+  assert.deepEqual(await runInQuickJs(fixture, { settings: { ...settings, jetfilmizleEnabled: false }, nativeTimers: true }), []);
+  // Per-lane tree-shaking + minify checks: each bundle carries only its own lane.
+  assert.ok(!goojaraBundle.includes('jetfilmizle.app') && !goojaraBundle.includes('fzmovies.live'));
+  assert.ok(!fastOnlineBundle.includes('archive.org') && !extraAnimeBundle.includes('dizibal.org'));
+  assert.ok(goojaraBundle.length < 120000 && fastOnlineBundle.length < 130000);
 });

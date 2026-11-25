@@ -1,2 +1,5 @@
 'use strict';
-module.exports = require('./index.cjs').createEntry('goojara');
+const { createEntry } = require('./core.cjs');
+module.exports = createEntry('goojara', {
+  scanGoojara: require('./providers/goojara.cjs').scanGoojara
+});

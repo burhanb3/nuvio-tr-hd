@@ -64,8 +64,15 @@ function responseFor(fixture, url, options = {}) {
   if (item.status && item.status !== 200) return { status: item.status, url, headers: item.headers || {}, body: [] };
   const full = item.json !== undefined ? Buffer.from(JSON.stringify(item.json)) : Buffer.from(item.body || '');
   const headers = { 'content-type': item.mime || (item.json !== undefined ? 'application/json' : 'application/octet-stream'), 'content-length': String(full.length), ...item.headers };
-  if (options.method === 'HEAD') return { status: item.headStatus || 200, url, headers, body: [] };
   const range = options.headers?.Range?.match(/^bytes=(\d+)-(\d+)$/);
+  if (options.method === 'HEAD') {
+    if (range && !item.ignoreRange && item.headStatus === undefined) {
+      const start = Number(range[1]), end = Math.min(Number(range[2]), full.length - 1);
+      if (start > end) return { status: 416, url, headers, body: [] };
+      return { status: 206, url, headers: { ...headers, 'content-length': String(end - start + 1), 'content-range': `bytes ${start}-${end}/${full.length}` }, body: [] };
+    }
+    return { status: item.headStatus || 200, url, headers, body: [] };
+  }
   if (range && !item.ignoreRange) {
     const start = Number(range[1]), end = Math.min(Number(range[2]), full.length - 1);
     if (start > end) return { status: 416, url, headers, body: [] };

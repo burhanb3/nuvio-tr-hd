@@ -5,7 +5,7 @@ const { createScheduler } = require('./scheduler.cjs');
 function createHttp({ fetchImpl, allowHttp = false, timeoutMs = 4500, deadline = Date.now() + 30000, scheduler, onEvent = () => {} }) {
   const fetcher = fetchImpl || globalThis.fetch;
   const clock = scheduler || createScheduler();
-  const failures = new Map(), rateLimited = new Map(), denied = new Set();
+  const failures = new Map(), rateLimited = new Map(), denied = new Set(), failedHosts = new Set();
   const controllers = new Set();
   // Per-search circuit breaker. Some networks refuse a whole shared-hosting
   // suffix (e.g. *.workers.dev via SNI) with an immediate transport error, and
@@ -26,6 +26,8 @@ function createHttp({ fetchImpl, allowHttp = false, timeoutMs = 4500, deadline =
     return null;
   };
   const unavailable = target => { try { const url = safeUrl(target, undefined, allowHttp); return !!url && !!blockedReason(url); } catch { return false; } };
+  const hostFailed = target => { try { return failedHosts.has(new URL(target).hostname); } catch { return false; } };
+  const isRateLimited = target => { try { return (rateLimited.get(new URL(target).origin) || 0) > Date.now(); } catch { return false; } };
   let closed = false;
   const expired = () => closed || Date.now() >= deadline;
   const networkPools = { 'subtitle-body': { limit:4, active:0, waiting:[] }, 'subtitle-body-en': { limit:1, active:0, waiting:[] }, 'media-probe': { limit:3, active:0, waiting:[] } };
@@ -69,7 +71,7 @@ function createHttp({ fetchImpl, allowHttp = false, timeoutMs = 4500, deadline =
           response = await fetchNetwork(url, { ...fetchOptions, ...(controller ? { signal: controller.signal } : {}), redirect: 'manual' }, nativeGroup, end);
         } catch (error) {
           // Our own abort (deadline/close) is not evidence against the host.
-          if (!controller?.signal.aborted && !expired()) { stats('f:' + familyOf(new URL(url).hostname)).network++; transportError = true; }
+          if (!controller?.signal.aborted && !expired()) { const host = new URL(url).hostname; stats('f:' + familyOf(host)).network++; failedHosts.add(host); transportError = true; }
           throw error;
         }
         if (!response) return null;
@@ -169,13 +171,13 @@ function createHttp({ fetchImpl, allowHttp = false, timeoutMs = 4500, deadline =
     // Share the actual network pools and failure state. A provider's budget
     // prevents starting its next hop; it never releases an unfinished native
     // request or changes the deadline for another provider.
-    return {expired:finished,note:emit,failureFor:url=>failures.get(url),unavailable,
+    return {expired:finished,note:emit,failureFor:url=>failures.get(url),unavailable,hostFailed,isRateLimited,
       request:(url,value)=>finished()?Promise.resolve(null):request(url,options(value)),
       json:(url,value)=>finished()?Promise.resolve(null):json(url,options(value)),
       text:(url,value)=>finished()?Promise.resolve(null):text(url,options(value)),
       bytes:(url,headers,start,end,value)=>finished()?Promise.resolve(null):bytes(url,headers,start,end,options(value))};
   }
-  return { request, json, text, bytes, expired, scope, note: emit, failureFor: url => failures.get(url), unavailable,
+  return { request, json, text, bytes, expired, scope, note: emit, failureFor: url => failures.get(url), unavailable, hostFailed, isRateLimited,
     shortenDeadline: end => { deadline = Math.min(deadline, end); },
     close: () => {
       closed = true;

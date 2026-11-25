@@ -1,5 +1,5 @@
 'use strict';
-const { inspectContainer, mp4TailInfo, mp4MetadataOffset, mp4MetadataInfo, ascii } = require('./containers.cjs');
+const { inspectContainer, mp4TailInfo, mp4MetadataOffset, mp4MetadataInfo, mp4NextTrackOffset, mp4TrackAt, ascii } = require('./containers.cjs');
 const { opensubtitlesHash } = require('./hash.cjs');
 const { inspectHls } = require('./hls.cjs');
 const { languageCode } = require('./languages.cjs');
@@ -70,12 +70,14 @@ async function probeOne(http, candidate, includeHls = false, hashEnabled = false
   if (info.container === 'mkv' && /\.mp4$/i.test(sample.url.split(/[?#]/)[0])) return null;
   let tailSample = null;
   let optionalMetadataFailed = false;
+  let moovChunk = { bytes: sample.bytes, base: 0 };
   if (info.container === 'mp4' && (!info.dimensions || candidate.requireDuration && !info.duration) && !http.expired()) {
     const offset = mp4MetadataOffset(sample.bytes, sample.total);
     if (offset !== null) {
       const metadata = await bytes(offset, Math.min(sample.total - 1, offset + 262143),3000);
       if (supplemental && !metadata) optionalMetadataFailed = true;
       if (sameFile(sample, metadata)) {
+        moovChunk = { bytes: metadata.bytes, base: offset };
         const extra = mp4MetadataInfo(metadata.bytes, sample.total - offset);
         if (extra?.invalidVideo) return null;
         if (extra?.dimensions) info.dimensions = extra.dimensions;
@@ -96,6 +98,21 @@ async function probeOne(http, candidate, includeHls = false, hashEnabled = false
       if (extra?.duration && !info.duration) info.duration = extra.duration;
       if (extra?.audioLanguages?.length && !info.audioLanguages?.length) info.audioLanguages = extra.audioLanguages;
     }
+  }
+  // Opt-in only: up to two 64 KiB reads at declared trak boundaries. The
+  // audio trak's own mdhd is the evidence; a source's dub label is not.
+  if (candidate.readAudioTracks === true && info.container === 'mp4' && !info.audioLanguages?.length && !optionalMetadataFailed) {
+    let next = mp4NextTrackOffset(moovChunk.bytes, moovChunk.base);
+    const found = [];
+    for (let reads = 0; next && reads < 2 && next.offset + 8 <= next.moovEnd && next.offset < sample.total && !http.expired(); reads++) {
+      const part = await bytes(next.offset, Math.min(sample.total - 1, next.offset + 65535), 3000);
+      if (!sameFile(sample, part)) break;
+      const track = mp4TrackAt(part.bytes);
+      if (!track || !(track.size >= 8)) break;
+      if (track.kind === 'soun' && track.language && !found.includes(track.language)) found.push(track.language);
+      next = { offset: next.offset + track.size, moovEnd: next.moovEnd };
+    }
+    if (found.length) info.audioLanguages = found;
   }
   if (candidate.requireDuration && !info.duration) return null;
   if (candidate.requireVideoDimensions && !info.dimensions) return null;
@@ -134,7 +151,12 @@ async function probe(http, candidate, includeHls = false, hashEnabled = false, o
   // unreachable from one network while the next request lands on another
   // (wootly, 20 Nov, this PC: connect timeout / refused on some nodes).
   const rotating = ['AniMOM','Goojara'].includes(candidate.source);
-  const attempts = rotating ? [candidate.url,candidate.url] : [...new Set([candidate.url,...replicas])];
+  const replicaUrls = [...new Set([candidate.url,...replicas])];
+  // Prefer sibling replica hosts that have not already failed a transport error
+  // in this search (e.g. FzMovies Server A TLS failure on file 1 -> start with
+  // Server B on file 2), while keeping failed hosts as a last fallback.
+  const orderedReplicas = http.hostFailed ? [...replicaUrls.filter(u => !http.hostFailed(u)), ...replicaUrls.filter(u => http.hostFailed(u))] : replicaUrls;
+  const attempts = rotating ? [candidate.url,candidate.url] : orderedReplicas;
   for (const [index,url] of attempts.entries()) {
     if (http.expired()) return null;
     const video = await probeOne(http, { ...candidate, url }, includeHls, hashEnabled, attemptOptions);

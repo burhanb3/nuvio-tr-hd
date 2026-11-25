@@ -1,2 +1,6 @@
 'use strict';
-module.exports = require('./index.cjs').createEntry('extraAnime');
+const { createEntry } = require('./core.cjs');
+module.exports = createEntry('extraAnime', {
+  scanAniMom: require('./providers/animom.cjs').scanAniMom,
+  scanSeiCode: require('./providers/seicode.cjs').scanSeiCode
+});

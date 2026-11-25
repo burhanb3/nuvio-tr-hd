@@ -92,11 +92,11 @@ function createSubtitleDiscovery(http, target, settings) {
   const hashRequests = {tr:0,en:0};
   const bases = settings.subtitleUrls ? String(settings.subtitleUrls).split(/\s+/)
     .map(url => safeUrl(url, undefined, settings.allowHttp === true)?.replace(/\/manifest\.json(?:\?.*)?$/, '').replace(/\/$/, '')).filter(Boolean).slice(0, 3) :
-    [...TURKISH_SUBTITLE_SERVICES, ...SUBTITLE_SERVICES, ...ENGLISH_SUBTITLE_SERVICES];
+    [...TURKISH_SUBTITLE_SERVICES, SUBTITLE_SERVICES[1], SUBTITLE_SERVICES[0], ...ENGLISH_SUBTITLE_SERVICES];
   const type = target.type === 'tv' ? 'series' : 'movie';
   const id = target.imdbId + (target.type === 'tv' ? `:${target.season}:${target.episode}` : '');
-  function lookup(url) {
-    if (!cache.has(url)) cache.set(url, http.json(url, { timeoutMs: 4500 }));
+  function lookup(url, timeoutMs = 4500) {
+    if (!cache.has(url)) cache.set(url, http.json(url, { timeoutMs }));
     return cache.get(url);
   }
   function normalize(data, base) {
@@ -146,10 +146,10 @@ function createSubtitleDiscovery(http, target, settings) {
       // Avoid a burst of one hash query per mirror/quality. The shared title
       // lookup still covers every file; cached hash results remain reusable.
       hashResults.push(lookup(`${hashBase}/subtitles/${type}/${encodeURIComponent(id)}.json`).then(async titleData=>{
-        if(!Array.isArray(titleData?.subtitles)||http.expired())return [];
+        if(!Array.isArray(titleData?.subtitles)||http.expired()||http.isRateLimited?.(hashBase))return [];
         if(!cache.has(hashUrl)&&hashRequests[language]>=3)return [];
         if(!cache.has(hashUrl))hashRequests[language]++;
-        return normalize(await lookup(hashUrl),hashBase);
+        return normalize(await lookup(hashUrl,3000),hashBase);
       }));
     }}
     const groups = await Promise.all([...titleResults,...hashResults].map(async job=>{

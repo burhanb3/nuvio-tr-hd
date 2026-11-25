@@ -2,6 +2,31 @@
 
 - 12 Kasım ek bilgi: kullanıcı Windows Son aramalar listesindeki Nuvio girişinden açtığını ekran görüntüsüyle gösterdi. Bu önbellek girdisinin hedefi doğrudan okunmadı. Ayrı ve aranabilir `Programs/Nuvio TR HD.lnk` kullanıcı Başlat menüsüne eklendi; kontrollü başlatıcı argümanı yeniden okunarak doğrulandı. Kullanıcı aramada tam Nuvio TR HD adını veya masaüstü aynı adlı kısayolu seçmeli. Açık uygulamaya dokunulmadı.
 
+## 1.9.7 — 25 Kasım 2026 (yerel, henüz yayımlanmadı): JetFilmizle TR dublaj MP4, büyük moov ses izi, hız/sıralama ve lane bazlı hafif paketler
+
+363/363 yerel birim + QuickJS WASM paket testi geçti (`npm run check`, 11,8 sn). ABI değişmedi. Henüz commit/push/Pages yayını yapılmadı; fiziksel telefon, tam oynatma, indirme, çevrimdışı altyazı ve sahne senkronu testi yapılmadı. Kök dizindeki geçici `hang-nara.txt` ve `hh.txt` temizlendi.
+
+- **Faz 1 — JetFilmizle (yalnız film, Gold MP4) + MP4 büyük `moov` ses izi:**
+  - `src/providers/jetfilmizle.cjs` tamamlanıp `main` hattına bağlandı (`jetfilmizleEnabled`, varsayılan açık, 10 sn kapsam).
+  - `POST /jetplayer` isteği Node'un varsayılan UA'sıyla 403 veriyordu; standart tarayıcı `User-Agent` ve `Origin` ile HTTP 200 döndü. `subtitles: []` ve `syntheticFilename` eksikliği giderildi; 404/boş aramada gereksiz TMDB `/translations` çağrısı engellendi.
+  - Çok kaliteli kayıtlarda (`[1080, 720, 360]`) bazı üst varyantlar Range yok sayıp 200 akış veriyor; `HEAD Range: bytes=0-15` ön kontrolü yalnız gerçek `206` yanıtı verenleri probe'a geçirir ve `variantUrls` hem en küçük (206 olasılığı yüksek) hem en yüksek varyantları 4'lü kota içine alır.
+  - Canlı tekil kontrol (bu bilgisayar, 6 film): Inception (640×266, 0,37 GB, 8888 sn), Fury (640×272, 0,61 GB, 8078 sn), Matrix (640×266, 0,51 GB, 8179 sn) ve John Wick (640×360, 0,25 GB, 6073 sn) 206 MP4 doğrulandı; Dark Knight ve Avatar tüm varyantlarda 206 vermediği için GET açılmadan elendi. İncelenen canlı dosyalarda MP4 `mdhd` dili `und` geldiğinden ölçülmüş ses uydurulmadı; `claimedAudioLanguages: ['tr']` yalnız kaynak iddiası olarak kalır.
+  - `src/media/containers.cjs` (`mp4NextTrackOffset`, `mp4TrackAt`) ve `src/media/probe.cjs` (`readAudioTracks: true`): 5–8 MB `moov` içinde ilk 128–256 KiB dışında kalan `soun` track'ini en fazla 2×64 KiB Range okumasıyla gerçek konteynerden okur; birim ve QuickJS testleriyle doğrulandı.
+- **Faz 2 — Hız, sıralama, ayna önceliği ve altyazı optimizasyonu:**
+  - `src/http.cjs` + `src/media/probe.cjs`: aynı aramada taşıma hatası veren ayna hostu (`hostFailed`) sonraki dosyalarda deneme listesinin sonuna itilir (`dune` ve `inception` canlı ölçümünde FzMovies bozuk ayna hatası 2→1 düştü).
+  - `src/core.cjs`: TMDB `/translations` ve `/alternative_titles` çağrıları arama başına tekilleştirildi. Filmlerde `4KHDHub / HubCloud`, `FzMovies`'in hemen ardına (online kaynakların önüne) alındı ve 10 sn kapsam verildi (dizilerde 8 sn korundu); `VixSrc` 5 sn, `PlayIMDb` 4 sn, `RareFilmm` 5 sn kapsamla sınırlandı.
+  - `src/subtitle-discovery.cjs`: varsayılan listede `opensubtitles-v3.strem.io`, `opensubtitles.stremio.homes` önüne alındı; `429` almış origin için (`isRateLimited`) gereksiz hash sorgusu kapatıldı ve hash sorgusu 3 sn ile sınırlandı.
+- **Faz 3 — Lane bazlı paket ayrımı + minify + QuickJS köprü hizalaması:**
+  - Çekirdek `src/core.cjs` olarak ayrıldı (`src/index.cjs` tüm adaptörlerle geriye dönük tam uyumlu). Her `src/entry-*.cjs` yalnız kendi hattının sağlayıcılarını paketler; `scripts/build.mjs` `minify: true` ile derler.
+  - Paket boyutları (5 aktif scraper toplamı **1.650 KB → 583 KB, -%65**): `nuvio-tr-hd.js` 330→168 KB, `fast-online` 330→109 KB, `anime` 330→103 KB, `extra-anime` 330→102 KB, `goojara` 330→101 KB.
+  - `tests/quickjs.test.mjs` `URL.searchParams` köprüsüne kilitli `JsBindings.kt` ile uyumlu `has`/`keys`/`values`/`entries` eklendi.
+- **Faz 4 — Canlı aday taraması (bu bilgisayar):**
+  - `todaytvseries.one` (`/tvshows/the-100/`) IMDb kimliği ve bölüm/MP4 indirme bağlantısı içermiyor; `todaytvseries2.com` araması 0 sonuç verdi. Eklenmedi.
+  - `HDHub4u` (`search.pingora.fyi`): The 100 (`tt2661044`) aramasında ilgisiz film döndürdü; 20 Kasım karar koşulu (5 başlıkta Pixeldrain) hâlâ sağlanmadı. Parkta kaldı.
+  - `VixSrc` canlı 200 döndü (aktif korundu); `PlayIMDb` 404, `FilmEkseni` sertifika hatası (`UNABLE_TO_VERIFY_LEAF_SIGNATURE`, <1 sn) verdi.
+- **Canlı 6 başlık kıyası (`.cache/coverage-197-sample.json` + `.cache/coverage-197-got.json`, bu bilgisayar, 1.9.5 baseline ile):**
+  - `stranger-things-s5e1` (12,96→12,52 sn, 4→4 dosya), `fury` (20,13→22,32 sn, 17→19 dosya, JF +1), `dune` (14,88→14,56 sn, 12→13 dosya), `matrix` (17,67→22,92 sn, 9→8 dosya, JF +1), `inception` (20,08→24,02 sn, 15→13 dosya, JF +1) — 5/5 ölçüt sağlandı. `4KHDHub` film başlangıcı 3,6–4,7 sn'den **1,15–1,25 sn**'ye düştü. `opensubtitles.stremio.homes` timeout/429 sayısı **0** oldu. `fastOnline` 4/5 başlıkta 4,2–7,0 sn'de `ok` döndü. `got-s1e1` ayrı koşumda geçici toplu ağ zaman aşımıyla 0 döndü (saklandı).
+
 ## 1.9.6 — 25 Kasım 2026: iOS 60 sn askı koruması (DiziYou kapalı, Goojara bağımsız)
 
 357/357 yerel birim + QuickJS WASM paket testi geçti (`npm run check`). ABI değişmedi. Kullanıcı onayıyla `codex/publish-nuvio-tr-hd` dalına gönderildi. Kaynak commit `f2263d1`: Test ve paket `45637051671` (ubuntu+windows) başarılı, Pages `45637051709` başarılı; manifest, beş `?v=1.9.6` sağlayıcı, sabit online adı ve ana sayfa public HTTP 200 ve SHA-256 yerel `dist/` ile aynı (`compatibility/github-publication.json`, anonim GitHub API). Fiziksel telefon, tam oynatma ve indirme testi yapılmadı. Yarım kalan JetFilmizle taslağı bu sürüme katılmadan çalışma dizininde korundu.

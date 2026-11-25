@@ -2,6 +2,15 @@
 
 - Windows yerel düzeltme başlatıcısı başka Nuvio işlemini sessizce veya zorla kapatmaz. Kullanıcının kısayolu açması ve iletişim kutusunda onay vermesiyle normal pencere kapatma denenir. Açılış öncesi paket SHA ve classpath kontrolü zorunludur; yalnız kısayolun doğru olması uygulamanın doğru kopyada çalıştığı kanıtı değildir.
 
+## 25 Kasım 2026 — 1.9.7 JetFilmizle, MP4 ses izi, hız ve lane paketleri
+
+- **JetFilmizle eklendi (yalnız film, Gold MP4).** Kimlik tek IMDb bağlantısıyla doğrulanır; 200-stream veren varyantlar Nuvio'nun gövde tampon riski nedeniyle `HEAD Range: bytes=0-15` ile `206` vermeden GET probe'a geçirilmez. `POST /jetplayer` için standart tarayıcı `User-Agent` + `Origin` kullanılır; 404/boş aramada gereksiz TMDB `/translations` açılmaz. `*.workers.dev` engeli olan ağlarda `http.cjs` devre kesicisi 2 taşıma hatasında temiz keser.
+- **MP4 büyük `moov` ses izi (`readAudioTracks: true`).** Yalnız opt-in kaynaklar için, ilk 128–256 KiB dışında kalan `soun` track'inin kendi `mdhd` dili en fazla 2×64 KiB Range okumasıyla ölçülür. `und` veya okunamayan alan ölçülmüş TR dublaj diye uydurulmaz; yayıncı sekme iddiası ayrı tutulur.
+- **Ayna önceliği ve altyazı bütçesi.** Aynı aramada taşıma hatası veren ayna hostu (`hostFailed`) sonraki dosyalarda deneme listesinin sonuna itilir; başarısız host tamamen silinmez, yedek olarak kalır. Altyazı keşfinde `opensubtitles-v3.strem.io` öne alınır ve `429` alan origin için gereksiz hash sorgusu açılmaz.
+- **Filmlerde `4KHDHub` sırası ve kapsamı.** Goojara'nın ayrı scraper'a çıkmasıyla açılan slotla `4KHDHub` filmlerde `FzMovies` ardına (online kaynakların önüne) alındı ve 10 sn kapsam verildi; `PlayIMDb` (4 sn), `VixSrc` (5 sn) ve `RareFilmm` (5 sn) kapsamlarıyla sınırlandı.
+- **Lane bazlı paketleme + minify.** `src/core.cjs` üzerinden her scraper yalnız kendi sağlayıcılarını paketler ve `esbuild` `minify: true` ile derler; `src/index.cjs` geriye dönük tam uyumludur.
+- **`todaytvseries` ve `HDHub4u` eklenmedi.** `todaytvseries.one` IMDb/MP4 indirme kanıtı vermedi; `HDHub4u` 5 başlık Pixeldrain koşulunu sağlamadı. Yeni kanıt olmadan tekrarlanmaz.
+
 ## 25 Kasım 2026 — 1.9.6 iOS 60 sn askı izolasyonu (DiziYou + Goojara)
 
 - **DiziYou varsayılan kapalı, yeni opt-in anahtarıyla (`diziyouOptInEnabled`).** Mevcut kullanıcıların kayıtlı `diziyouEnabled: true` tercihi, İSS engel sunucusunda 60 sn asılı kalıp tüm dizi satırlarını silebildiği için yeni varsayılanı ezemez. Eski anahtar yok sayılır; yalnız erişilebilir ağda kullanıcı açıkça isterse `diziyouOptInEnabled` ile açabilir.

@@ -15,6 +15,7 @@ function configuration(settings = {}, injectedKey) {
     goojaraEnabled: settings.goojaraEnabled !== false,
     diziyouOptInEnabled: settings.diziyouOptInEnabled === true,
     fzmoviesEnabled: settings.fzmoviesEnabled !== false,
+    jetfilmizleEnabled: settings.jetfilmizleEnabled !== false,
     fztvseriesEnabled: settings.fztvseriesEnabled !== false,
     hdrezkaEnabled: settings.hdrezkaEnabled !== false,
     hdfilmdelisiEnabled:settings.hdfilmdelisiEnabled!==false,
