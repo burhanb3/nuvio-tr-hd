@@ -1,5 +1,34 @@
 # Sürüm notları
 
+## 1.9.5 — 25 Kasım 2026
+
+- **Filmlere yeni dosya kaynağı: FzMovies.**
+  - Sorun: filmlerde çoğu zaman tek indirilebilir kaynak kalıyordu; o da yavaşladığında seçenek yoktu.
+  - Bağlantı zinciri:
+    - Ad araması. Kart adı başlıkla veya "başlık (yıl)" ile tam tutmalı; yılı tutan kart önce, en fazla 3 film sayfası açılır.
+    - Film sayfasında tek IMDb kimliği hedefle aynı olmalı. Dublajlı sayfalar (ör. "Hindi Dubbed") açılmaz.
+    - Sayfanın anonim oturumu yalnız sitenin iki indirme sayfasına gönderilir; video adresi oturum taşımaz.
+    - Dosya adında başlığın hemen ardından yıl gelmeli. "Inception_The_Cobol_Job_(2010)" gibi aynı adla başlayan başka yapımlar elenir.
+  - Kalite: "high" MP4 genelde 640×360 (0,24–0,50 GB), 720p MKV 0,7–1,19 GB. Çözünürlük ve süre dosyadan okunur; süre ±%10 tutmalı. Dosya adındaki 720p etiketi doğrulama sayılmaz.
+  - Site aynı dosyayı üç sunucuda listeler. 25 Kasım'da bu bilgisayardan ilk sunucu her filmde TLS hatası verdi. Probe FzMovies için aynı yol ve aynı alan adındaki iki yedeği dener; 401/403/429 sonrası denemez.
+  - Bazı dosya adlarında ham boşluk var ("BluRay v2"). Adres artık `%20` ile gönderilir; bu olmadan The Dark Knight ve Spider-Verse 0 satır veriyordu.
+  - Yalnız filmler; dizi aramaz. Ayarlarda "FzMovies film dosyaları" anahtarı, varsayılan açık.
+- **Kapsam (gecikmesiz, bu bilgisayar, yalnız FzMovies açık):** doğrulama listesindeki 23 filmin 19'unda probe ile doğrulanmış satır, çoğunda iki dosya (360p MP4 + 720p MKV).
+  - Sonuç yok: Totoro ve Your Name (benzetimde yalnız Japonca özgün ad var) ve 2026 yapımı Obsession.
+  - Bridge at Remagen'de tek sunucu listelenmiş ve 403 veriyor; doğru elendi.
+- **Filmlerde iş sırası:** FzMovies, MoviesDrive'ın hemen ardından başlar (10 sn kapsam). Dizilerde sıra değişmedi.
+  - Telefon benzetimi: bu bilgisayar, istek başına 600 ms ek gecikme, en fazla 6 eşzamanlı istek, ardışık çalıştırma. Gerçek telefon değil.
+  - Goojara'nın ardında FzMovies satırı 18 çalıştırmanın 13'ünde çıktı, ama Matrix'te HDRezka 720p 0/3 oldu (kapalıyken 3/3).
+  - 4KHDHub'ın ardında 9'da 1. Goojara ardında 7,5 sn kapsamla 9'da 3.
+  - Seçilen sırada 12'de 8: Matrix 1/3, Fury 2/3, Spider-Verse 2/3, Oppenheimer 3/3. Matrix HDRezka 720p 3/3.
+- **Bilinen maliyetler (aynı benzetim, telefonda ölçülmedi):**
+  - MoviesDrive: Fury ve Spider-Verse'te seçilen sırada 0/6. Aynı turlarda FzMovies kapalıyken 4/6, sonradan alınan iki kapalı turda 1/4. MoviesDrive keşfi kapalıyken de 10 sn sınırında (9,4–10 sn). Site dalgalanması ile çekişme payı ayrılamadı.
+  - Oppenheimer HDRezka: seçilen sırada 1/3 (kapalıyken 3/3, farklı saatte).
+  - 4KHDHub film zinciri medyanda 1,6–3,1 sn geç başlıyor. Bu benzetimde 4KHDHub, FzMovies kapalıyken de hiçbir filmde satır vermedi.
+- Bağlantılar kaynağa göre yaklaşık 12 saat geçerli. 25 dakikalık bağlantı çalıştı; daha uzun ömür ölçülmedi. Sitenin telefona Cloudflare sınaması gösterip göstermediği denenmedi.
+- **Kapsam (1.9.5, 25 Kasım, gecikmesiz, bu bilgisayar):** 37 durumun 34'ü ölçütü sağladı (aynı gün 1.9.4: 35). Değişen tek durum Stranger Things S3E2: Goojara adayı dosya kontrolünde `video_unavailable` ile düştü, yalnız FzTvSeries kaldı; FzMovies dizilerde çalışmaz. Doğrulanmış dosya 304'ten 326'ya çıktı; FzMovies 23 filmin 19'unda 37 dosya verdi. Filmlerde MoviesDrive 16→16, HDRezka 64→60 (The Dark Knight 4→0), Goojara 15→12. Goojara dizilerde de 9→6 düştü; bu kısım FzMovies'e bağlanamaz (Goojara düğüm dalgalanması).
+- 356 yerel test geçti. FzMovies zinciri ve ikinci ayna QuickJS paketinde de sınandı; oturum çerezinin kapsamı yalnız Node testinde. Fiziksel telefon, tam oynatma ve indirme testi yapılmadı. Altyazı senkronu bu dosyalar için ayrıca sınanmadı.
+
 ## 1.9.4 — 20 Kasım 2026
 
 - **Dizilere ikinci bağımsız dosya kaynağı: FzTvSeries.**

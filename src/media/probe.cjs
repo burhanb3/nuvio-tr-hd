@@ -119,16 +119,16 @@ async function probeOne(http, candidate, includeHls = false, hashEnabled = false
 async function probe(http, candidate, includeHls = false, hashEnabled = false, options = {}) {
   let unwantedAudio=false;
   const attemptOptions={...options,onUnwantedAudio:()=>{unwantedAudio=true;options.onUnwantedAudio?.();}};
-  const canUseReplicas = ['Internet Archive','FzTvSeries'].includes(candidate.source) && !Object.keys(candidate.headers || {}).some(k => /^(authorization|cookie)$/i.test(k));
-  // FzTvSeries lists the same file on sibling servers of one domain; one of
-  // them may present an expired certificate (20 Nov, this PC).
+  const canUseReplicas = ['Internet Archive','FzTvSeries','FzMovies'].includes(candidate.source) && !Object.keys(candidate.headers || {}).some(k => /^(authorization|cookie)$/i.test(k));
+  // FzTvSeries/FzMovies list the same file on sibling servers of one domain;
+  // one of them may present a bad certificate (20 and 25 Nov, this PC).
   const parentDomain = host => host.split('.').slice(1).join('.');
   const replicas = canUseReplicas && Array.isArray(candidate.alternateUrls) ? candidate.alternateUrls.filter(url => {
     try { const u=new URL(url),original=new URL(candidate.url);
       const sameHostFamily = candidate.source === 'Internet Archive' ? /^[a-z]{2}\d{4,8}\.(?:us|eu|ca)\.archive\.org$/.test(u.hostname) :
         u.hostname !== original.hostname && parentDomain(u.hostname).includes('.') && parentDomain(u.hostname) === parentDomain(original.hostname);
       return u.protocol==='https:' && sameHostFamily && u.pathname===original.pathname && u.search===original.search; } catch { return false; }
-  }).slice(0,1) : [];
+  }).slice(0,candidate.source==='FzMovies'?2:1) : [];
   // The official YourUpload redirect (AniMOM) and Goojara's public wootly
   // /source redirect pick a CDN node per request. Some nodes may be
   // unreachable from one network while the next request lands on another

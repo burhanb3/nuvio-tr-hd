@@ -2,6 +2,40 @@
 
 - 12 Kasım ek bilgi: kullanıcı Windows Son aramalar listesindeki Nuvio girişinden açtığını ekran görüntüsüyle gösterdi. Bu önbellek girdisinin hedefi doğrudan okunmadı. Ayrı ve aranabilir `Programs/Nuvio TR HD.lnk` kullanıcı Başlat menüsüne eklendi; kontrollü başlatıcı argümanı yeniden okunarak doğrulandı. Kullanıcı aramada tam Nuvio TR HD adını veya masaüstü aynı adlı kısayolu seçmeli. Açık uygulamaya dokunulmadı.
 
+## 1.9.5 — 25 Kasım 2026: FzMovies film kaynağı
+
+Tüm ölçümler bu bilgisayardan (TR ISS). 356 test geçti (FzMovies için bir QuickJS paket testi dahil). ABI değişmedi. Telefon, tam oynatma ve indirme testi yapılmadı.
+
+- **Tetik:** kullanıcı filmlerde tek kaynağın yetmediğini, birden fazla kararlı indirilebilir kaynak istediğini söyledi. Aday 1.9.4 SONRAKI_ISLER madde 4'teydi.
+- **Kapsam temeli (1.9.4 kodu, 25 Kasım, gecikmesiz):** `.cache/coverage-194-nov25.json`, 37 durumun 35'i ölçütü sağladı; eksikler severance-s1e1 ve shameless-s1e1.
+  - **Kapsam (1.9.5, 25 Kasım, gecikmesiz, bu bilgisayar):** 37 durumun 34'ü ölçütü sağladı (aynı gün 1.9.4: 35). Değişen tek durum Stranger Things S3E2: Goojara adayı dosya kontrolünde `video_unavailable` ile düştü, yalnız FzTvSeries kaldı; FzMovies dizilerde çalışmaz. Doğrulanmış dosya 304'ten 326'ya çıktı; FzMovies 23 filmin 19'unda 37 dosya verdi. Filmlerde MoviesDrive 16→16, HDRezka 64→60 (The Dark Knight 4→0), Goojara 15→12. Goojara dizilerde de 9→6 düştü; bu kısım FzMovies'e bağlanamaz (Goojara düğüm dalgalanması).
+- **FzMovies (`fzmovies.live`) zinciri:**
+  1. `csearch.php?searchname=<ad>&searchby=Name&category=All`. Kart adı başlıkla veya "başlık (yıl)" ile tam tutmalı; yılı tutan kart önce, en fazla 3 film sayfası.
+  2. Film sayfası: tek `imdb.com/title/tt…` kimliği hedefle aynı. Dublajlı sayfa yolları reddedilir.
+  3. Sayfa `Set-Cookie: PHPSESSID` verir. Seçenek anahtarı `download1.php?downloadoptionskey=<sayısal önek><anahtar>`; önek korunmalı, başka seçeneğin anahtarı kabul edilmez.
+  4. `download1.php` ardından `download.php`, ikisi de aynı oturumla. Oturumsuz istekte süre dolmuş sayfa geliyor.
+  5. `download.php`: üç salt okunur `<input value='https://<srv>.<dosya-alanı>/res/<32 hex>/<32 hex>/<Ad>_(<yıl>)_BluRay_(high|720p)_(fzmovies.net)_<hash>.(mp4|mkv)?fromwebsite'>`. `dlink.php` ara sayfasına gidilmez.
+  6. Dosya adında başlık (veya sayfa adı) ve hemen ardından yıl.
+  - Sunucular: aynı alan adı altında rastgele adlı üç host. 25 Kasım'da A her filmde TLS hatası verdi, B 206 veriyor. Probe FzMovies için iki yedeğe kadar dener.
+  - Ham boşluk: bazı adlarda "BluRay v2". `safeUrl` boşluğu reddettiği için The Dark Knight ve Spider-Verse 0 satırdı; `%20` ile B sunucusu 206 verdi.
+  - Kalite: "high" MP4 çoğunlukla 640×360 (0,24–0,50 GB); 720p MKV 0,7–1,19 GB. Night of the Living Dead 640×466 ve 1280×932.
+  - Bağlantı ömrü: kaynak ~12 saat diyor; 25 dakikalık bağlantı çalıştı, uzun ömür ölçülmedi.
+  - Genişlik (gecikmesiz, yalnız FzMovies açık): doğrulama listesindeki 23 filmin 19'unda doğrulanmış satır, çoğunda 2. Totoro ve Your Name'de benzetimdeki kimlikte yalnız Japonca özgün ad var. Obsession (2026) yok. Bridge at Remagen: tek sunucu, 403; doğru elendi.
+  - Toplu döngüde geçici sıfırlar (John Wick, Dark Knight, Avatar) tekrarda düzeldi. FzMovies istek zamanlamasında hem site duraklaması (kuyruk beklemesiz, ~4,5 sn'lik ilk istek zaman aşımı) hem kuyruk beklemesi görüldü; kod hatası bulunmadı.
+- **Sıra ölçümü (benzetim `LAT=600 CAP=6`, ardışık; gerçek telefon değil).** A, B ve C Inception/Oppenheimer/Dune ile; A, D ve E Matrix/Fury/Spider-Verse/Oppenheimer ile ölçüldü. Kapalı çalıştırmalar aynı turlarda sırayla alındı.
+
+  | Seçenek | FzMovies satırı | Not |
+  | --- | --- | --- |
+  | A: Goojara'nın ardı | 13/18 | Matrix HDRezka 720p 0/3 (kapalı 3/3); 4KHDHub başlangıcı +2,5–4,6 sn |
+  | B: A + 7,5 sn kapsam | 3/9 | Sağlıklı keşif 6,2–7,4 sn; 7,5 sn bunları kesiyor |
+  | C: 4KHDHub'ın ardı | 1/9 | FzMovies ~13 sn'de başlıyor |
+  | D: MoviesDrive'ın ardı, 10 sn (seçilen) | 8/12 | Matrix 1/3, Fury 2/3, Spider-Verse 2/3, Oppenheimer 3/3; Matrix HDRezka 720p 3/3 |
+  | E: D + MoviesDrive 12 sn | 7/12 | MoviesDrive Fury 1/3, Spider-Verse 1/3; sonuçsuz, alınmadı |
+
+  - **MoviesDrive (Fury, Spider-Verse):** aynı turlarda kapalı 4/6, A 0/6, D 0/6, E 2/6; sonradan iki kapalı turda 1/4. Kapalıyken de keşif 9,4–10 sn, 10 sn kapsamının sınırında. Site dalgalanması ile çekişme payı ayrılamadı; bilinen olası maliyet.
+  - **HDRezka Oppenheimer:** kapalı 3/3 (A/B/C turlarında), D 1/3. Açık kollarda 480p (1,48 GB) yerine sık 360p (0,81 GB). voidboost zaman aşımları gürültülü.
+  - **4KHDHub filmlerde:** hiçbir benzetimde (kapalı dahil) film satırı yok; keşif neredeyse her çalıştırmada 8 sn kapsamına takılıyor. D'de başlangıç medyanda 1,6–3,1 sn gecikiyor. FzMovies'ten bağımsız ayrı iş.
+
 ## 1.9.4 — 20 Kasım 2026: FzTvSeries dizi kaynağı
 
 Tüm ölçümler bu bilgisayardan (TR ISS). 349 test geçti (FzTvSeries için bir QuickJS paket testi dahil). ABI değişmedi. Kullanıcının önceden verdiği yayın izniyle codex/publish-nuvio-tr-hd dalına gönderildi. Kaynak commit 11f9212: Test ve paket 44704295963 (ubuntu+windows) başarılı, Pages 44704295451 başarılı; manifest, dört `?v=1.9.4` sağlayıcı, sabit online adı ve ana sayfa public HTTP 200 ve SHA-256 yerel dist ile aynı (compatibility/github-publication.json, anonim GitHub API). Telefon, tam oynatma ve indirme testi yapılmadı.

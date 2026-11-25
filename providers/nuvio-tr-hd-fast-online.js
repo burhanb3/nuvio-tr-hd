@@ -2253,6 +2253,139 @@ var require_fztvseries = __commonJS({
   }
 });
 
+// src/providers/fzmovies.cjs
+var require_fzmovies = __commonJS({
+  "src/providers/fzmovies.cjs"(exports2, module2) {
+    "use strict";
+    var { safeUrl, normalizeTitle } = require_util();
+    var { decodeEntities } = require_directory();
+    var ORIGIN = "https://fzmovies.live";
+    var key = (value) => normalizeTitle(decodeEntities(String(value || "")).replace(/['’`]/g, ""));
+    function names(target) {
+      return [...new Set([target.originalTitle, ...target.searchTitles || []].map(key).filter(Boolean))];
+    }
+    function years(target) {
+      return [...new Set([target.year, ...target.releaseYears || []].filter(Number.isInteger))];
+    }
+    function pageUrl(slug) {
+      let raw;
+      try {
+        raw = decodeURIComponent(decodeEntities(String(slug)));
+      } catch {
+        return null;
+      }
+      if (!/^movie-[^-/\\?#<>'"][^/\\?#<>'"]{0,200}--hmp4\.htm$/.test(raw)) return null;
+      return safeUrl(ORIGIN + "/" + encodeURIComponent(raw));
+    }
+    function searchCards(html, target) {
+      const wanted = names(target), ys = years(target), rows = [];
+      for (const m of String(html).matchAll(/<a\b[^>]*\bhref='(movie-[^'<>]{1,200}--hmp4\.htm)'[^>]*>\s*<small>\s*<b>([^<]{1,200})<\/b>\s*<\/small>\s*<\/a>\s*<small>\((\d{4})\)<\/small>/gi)) {
+        const name = key(m[2]), year = Number(m[3]);
+        if (!wanted.some((w) => name === w || ys.some((y) => name === w + " " + y))) continue;
+        const href = pageUrl(m[1]);
+        if (!href || rows.some((r) => r.href === href)) continue;
+        rows.push({ href, name: decodeEntities(m[2]).trim(), yearMatch: ys.includes(year) });
+      }
+      return [...rows.filter((r) => r.yearMatch), ...rows.filter((r) => !r.yearMatch)].slice(0, 3);
+    }
+    function imdbIds(html) {
+      return [...new Set([...String(html).matchAll(/imdb\.com\/title\/(tt\d{5,10})/g)].map((m) => m[1]))];
+    }
+    function optionKeys(html) {
+      return [...new Set([...String(html).matchAll(/\bdownload1\.php\?downloadoptionskey=(\d{1,3}-\d{1,10}-[a-f0-9]{32})(?![A-Za-z0-9])/g)].map((m) => m[1]))].slice(0, 2);
+    }
+    function downloadKey(html, option) {
+      const prefix = option.split("-").slice(0, 2).join("-") + "-";
+      const found = [...new Set([...String(html).matchAll(/\bdownload\.php\?downloadkey=(\d{1,3}-\d{1,10}-[a-f0-9]{32})(?![A-Za-z0-9])/g)].map((m) => m[1]))];
+      return found.length === 1 && found[0].startsWith(prefix) ? found[0] : null;
+    }
+    function mirrors(html) {
+      const rows = [];
+      for (const m of String(html).matchAll(/<input\b[^>]*\bvalue='(https:\/\/[^'<>\t\r\n]{1,800})'/g)) {
+        const url = safeUrl(decodeEntities(m[1]).replace(/ /g, "%20"));
+        if (!url) continue;
+        const u = new URL(url);
+        if (!/^(?:[a-z0-9-]{1,63}\.){2,4}[a-z]{2,24}$/.test(u.hostname) || /(^|\.)fzmovies\./.test(u.hostname)) continue;
+        if (!/^\/res\/[a-f0-9]{32}\/[a-f0-9]{32}\/[A-Za-z0-9_.()%-]{1,300}\.(?:mp4|mkv)$/i.test(u.pathname) || !["", "?fromwebsite"].includes(u.search)) continue;
+        if (!rows.includes(url)) rows.push(url);
+      }
+      if (!rows.length) return [];
+      const first = new URL(rows[0]), parent = (h) => h.split(".").slice(1).join(".");
+      return rows.filter((url) => {
+        const u = new URL(url);
+        return u.pathname === first.pathname && u.search === first.search && parent(u.hostname) === parent(first.hostname);
+      }).slice(0, 3);
+    }
+    function fileMatches(name, pageName, target) {
+      const file = key(String(name).replace(/\.(?:mp4|mkv)$/i, ""));
+      if (/\b(sample|trailer|hindi|tamil|telugu|dubbed|dual audio|hdcam|camrip|hdts|telesync)\b/.test(file)) return false;
+      const prefixes = [...new Set([key(pageName), ...names(target)].filter(Boolean))];
+      return prefixes.some((p) => years(target).some((y) => (file + " ").startsWith(p + " " + y + " ")));
+    }
+    async function scanFzMovies(http, target) {
+      if (target.type !== "movie" || !target.imdbId) return [];
+      const page = async (url, options2 = {}) => {
+        const r = await http.request(url, options2);
+        if (!r || new URL(r.url).origin !== ORIGIN) return null;
+        const text = await r.response.text();
+        return text && text.length <= 6e5 && !text.endsWith("...[truncated]") ? { text, url: r.url, response: r.response } : null;
+      };
+      let movie = null, moviePage = null;
+      const queries = [...new Set([target.originalTitle, ...target.searchTitles || []].map((v) => decodeEntities(String(v || "")).replace(/['’`:]/g, "").replace(/\s+/g, " ").trim()).filter(Boolean))].slice(0, 2);
+      for (const query of queries) {
+        const search = await page(ORIGIN + "/csearch.php?searchname=" + encodeURIComponent(query) + "&searchby=Name&category=All&vsearch=");
+        for (const row of search ? searchCards(search.text, target) : []) {
+          if (http.expired()) return [];
+          const detail = await page(row.href);
+          const ids = detail ? imdbIds(detail.text) : [];
+          if (ids.length === 1 && ids[0] === target.imdbId) {
+            movie = row;
+            moviePage = detail;
+            break;
+          }
+        }
+        if (movie || http.expired()) break;
+      }
+      if (!movie) return [];
+      const session = (moviePage.response.headers.get("set-cookie") || "").match(/(?:^|[,;]\s*)(PHPSESSID=[A-Za-z0-9,-]{8,128})(?:[;,]|$)/)?.[1];
+      const options = optionKeys(moviePage.text);
+      if (!session || !options.length) return [];
+      const rows = await Promise.all(options.map(async (option) => {
+        const optionUrl = ORIGIN + "/download1.php?downloadoptionskey=" + option;
+        const chooser = await page(optionUrl, { headers: { Referer: moviePage.url, Cookie: session } });
+        const dkey = chooser && downloadKey(chooser.text, option);
+        if (!dkey || http.expired()) return null;
+        const download = await page(ORIGIN + "/download.php?downloadkey=" + dkey, { headers: { Referer: optionUrl, Cookie: session } });
+        const urls = download ? mirrors(download.text) : [];
+        if (!urls.length) return null;
+        let filename;
+        try {
+          filename = decodeURIComponent(new URL(urls[0]).pathname.split("/").pop());
+        } catch {
+          return null;
+        }
+        if (!fileMatches(filename, movie.name, target)) return null;
+        return {
+          url: urls[0],
+          alternateUrls: urls.slice(1),
+          filename,
+          source: "FzMovies",
+          headers: {},
+          subtitles: [],
+          identity: target,
+          identityConfidence: 90,
+          requireDuration: true,
+          durationTolerance: 0.1,
+          requireVideoDimensions: true
+        };
+      }));
+      const seen = /* @__PURE__ */ new Set();
+      return rows.filter((row) => row && !seen.has(new URL(row.url).pathname) && seen.add(new URL(row.url).pathname));
+    }
+    module2.exports = { scanFzMovies, searchCards, pageUrl, optionKeys, downloadKey, mirrors, fileMatches, ORIGIN };
+  }
+});
+
 // src/providers/hdrezka.cjs
 var require_hdrezka = __commonJS({
   "src/providers/hdrezka.cjs"(exports2, module2) {
@@ -4121,7 +4254,7 @@ var require_probe = __commonJS({
         unwantedAudio = true;
         options.onUnwantedAudio?.();
       } };
-      const canUseReplicas = ["Internet Archive", "FzTvSeries"].includes(candidate.source) && !Object.keys(candidate.headers || {}).some((k) => /^(authorization|cookie)$/i.test(k));
+      const canUseReplicas = ["Internet Archive", "FzTvSeries", "FzMovies"].includes(candidate.source) && !Object.keys(candidate.headers || {}).some((k) => /^(authorization|cookie)$/i.test(k));
       const parentDomain = (host) => host.split(".").slice(1).join(".");
       const replicas = canUseReplicas && Array.isArray(candidate.alternateUrls) ? candidate.alternateUrls.filter((url) => {
         try {
@@ -4131,7 +4264,7 @@ var require_probe = __commonJS({
         } catch {
           return false;
         }
-      }).slice(0, 1) : [];
+      }).slice(0, candidate.source === "FzMovies" ? 2 : 1) : [];
       const rotating = ["AniMOM", "Goojara"].includes(candidate.source);
       const attempts = rotating ? [candidate.url, candidate.url] : [.../* @__PURE__ */ new Set([candidate.url, ...replicas])];
       for (const [index, url] of attempts.entries()) {
@@ -4469,7 +4602,7 @@ var require_ranking = __commonJS({
 var require_diagnostics = __commonJS({
   "src/diagnostics.cjs"(exports2, module2) {
     "use strict";
-    var VERSION = true ? "1.9.4" : "dev";
+    var VERSION = true ? "1.9.5" : "dev";
     function effectiveTmdbKey(settings, injectedKey) {
       return typeof settings.tmdbApiKey === "string" && settings.tmdbApiKey.trim() ? settings.tmdbApiKey.trim() : typeof injectedKey === "string" ? injectedKey.trim() : "";
     }
@@ -4486,6 +4619,7 @@ var require_diagnostics = __commonJS({
         waploadedEnabled: settings.waploadedEnabled !== false,
         rarefilmmEnabled: settings.rarefilmmEnabled !== false,
         goojaraEnabled: settings.goojaraEnabled !== false,
+        fzmoviesEnabled: settings.fzmoviesEnabled !== false,
         fztvseriesEnabled: settings.fztvseriesEnabled !== false,
         hdrezkaEnabled: settings.hdrezkaEnabled !== false,
         hdfilmdelisiEnabled: settings.hdfilmdelisiEnabled !== false,
@@ -4534,6 +4668,7 @@ var require_index = __commonJS({
     var { scanRareFilmm } = require_rarefilmm();
     var { scanGoojara } = require_goojara();
     var { scanFzTvSeries } = require_fztvseries();
+    var { scanFzMovies } = require_fzmovies();
     var { scanHdRezka } = require_hdrezka();
     var { scanMoviesDrive } = require_moviesdrive();
     var { scanAnimecix } = require_animecix();
@@ -4927,6 +5062,8 @@ var require_index = __commonJS({
                     const sourceHttp = http.scope(1e4);
                     return scanMoviesDrive(sourceHttp, target, { onCandidates: acceptCandidates, loadSeason: () => resolveSeasonEpisode(sourceHttp, target, effectiveTmdbKey(settings, tmdbKey)), loadTitles: () => resolveAlternativeTitles(sourceHttp, target, effectiveTmdbKey(settings, tmdbKey)) });
                   } });
+                if (filesLane && settings.fzmoviesEnabled !== false && target.type === "movie")
+                  sourceJobs.push({ name: "FzMovies", run: () => scanFzMovies(http.scope(1e4), target) });
                 if (onlineLane && settings.playImdbEnabled !== false) sourceJobs.push({ name: "PlayIMDb", run: () => scanPlayImdb(http, target) });
                 if (onlineLane && settings.vixsrcEnabled !== false && settings.includeHls !== false && !sourceFactories.some((s) => s.name === "VixSrc"))
                   sourceJobs.push({ name: "VixSrc", run: () => scanVixDirect(http, target) });
@@ -5059,6 +5196,7 @@ var require_index = __commonJS({
         { type: "toggle", key: "hdhubEnabled", label: "4KHDHub / HubCloud doğrudan dosya araması", defaultValue: true, description: "Ek film/bölüm indirmeleri ve uygun kayıtlarda 4K. FSL/Pixeldrain dosyalarının gerçek boyutu ve pikseli okunur; TR/EN altyazı aranır." },
         { type: "toggle", key: "rarefilmmEnabled", label: "RareFilmm ek film arşivi", defaultValue: true, description: "Eski ve az bulunan filmlerde küçük MP4 seçenekleri. Bazılarında İngilizce altyazı görüntüye işlenmiştir; 4K veya TR dublaj garantisi yoktur." },
         { type: "toggle", key: "goojaraEnabled", label: "Goojara film ve bölüm dosyaları", defaultValue: true, description: "Küçük MP4 alternatifleri; tam başlık/yıl/film IMDb ve bölüm kontrolü. Eksik veya yanlış yıl eşleşmeleri atlanır. Mevcut TR/EN altyazı araması uygulanır." },
+        { type: "toggle", key: "fzmoviesEnabled", label: "FzMovies film dosyaları", defaultValue: true, description: "Küçük film dosyaları (genelde 360p MP4 ve 720p MKV). Film sayfasındaki IMDb kimliği ve dosya adı/yıl denetlenir; çözünürlük ve süre dosyadan okunur. Dizi aramaz." },
         { type: "toggle", key: "fztvseriesEnabled", label: "FzTvSeries dizi bölüm dosyaları", defaultValue: true, description: "Küçük MP4 bölümler (çoğunlukla 360p–480p). Dizi sayfasındaki IMDb kimliği, tam sezon/bölüm ve dosya adı denetlenir; çözünürlük dosyadan okunur. Film aramaz." },
         { type: "toggle", key: "hdrezkaEnabled", label: "HDRezka farklı boyutlarda film/dizi dosyaları", defaultValue: true, description: "Ücretsiz özgün sesli MP4 seçenekleri ve mevcut TR/EN altyazılar. IMDb, başlık/yıl ve tam bölüm denetlenir; ücretli kalite ve örnek videolar eklenmez." },
         { type: "toggle", key: "hdfilmdelisiEnabled", label: "HDFilmDelisi Türkçe dublaj ve çoklu ses", defaultValue: true, description: "Public film kataloğu ve gerçek HLS listesi. Ses/altyazı dilleri yayıncıdan okunur; bu kaynak online izleme içindir." },
@@ -5123,7 +5261,7 @@ var require_index = __commonJS({
     }
     function createEntry(lane) {
       const titles = { main: "Film/dizi · online ve dosyalar", files: "Dosyalar", online: "Hızlı kaynaklar", anime: "Anime", extraAnime: "Ek Anime", fastOnline: "Hızlı İzle" };
-      const only = { files: ["hdhubEnabled", "directoryEnabled", "archiveEnabled", "waploadedEnabled", "rarefilmmEnabled", "goojaraEnabled", "fztvseriesEnabled", "hdrezkaEnabled", "moviesdriveEnabled", "catalogUrls", "addonUrls"], online: ["playImdbEnabled", "vixsrcEnabled", "diziyouEnabled", "dizibakEnabled", "filmmoduEnabled", "hdfilmdelisiEnabled", "purstreamEnabled", "filmekseniEnabled", "hlsView"], anime: ["animecixEnabled", "sonanimeEnabled", "anizoneEnabled"], extraAnime: ["animomEnabled", "seicodeEnabled"], fastOnline: ["hdfilmdelisiEnabled", "dizibalEnabled", "purstreamEnabled", "filmekseniEnabled", "hlsView"] };
+      const only = { files: ["hdhubEnabled", "directoryEnabled", "archiveEnabled", "waploadedEnabled", "rarefilmmEnabled", "goojaraEnabled", "fzmoviesEnabled", "fztvseriesEnabled", "hdrezkaEnabled", "moviesdriveEnabled", "catalogUrls", "addonUrls"], online: ["playImdbEnabled", "vixsrcEnabled", "diziyouEnabled", "dizibakEnabled", "filmmoduEnabled", "hdfilmdelisiEnabled", "purstreamEnabled", "filmekseniEnabled", "hlsView"], anime: ["animecixEnabled", "sonanimeEnabled", "anizoneEnabled"], extraAnime: ["animomEnabled", "seicodeEnabled"], fastOnline: ["hdfilmdelisiEnabled", "dizibalEnabled", "purstreamEnabled", "filmekseniEnabled", "hlsView"] };
       only.main = [...only.files, ...only.online.filter((key) => !["hdfilmdelisiEnabled", "purstreamEnabled", "filmekseniEnabled"].includes(key))];
       const sourceFields = Object.values(only).flat();
       return {

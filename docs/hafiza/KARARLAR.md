@@ -2,6 +2,15 @@
 
 - Windows yerel düzeltme başlatıcısı başka Nuvio işlemini sessizce veya zorla kapatmaz. Kullanıcının kısayolu açması ve iletişim kutusunda onay vermesiyle normal pencere kapatma denenir. Açılış öncesi paket SHA ve classpath kontrolü zorunludur; yalnız kısayolun doğru olması uygulamanın doğru kopyada çalıştığı kanıtı değildir.
 
+## 25 Kasım 2026 — FzMovies
+
+- **FzMovies eklendi (yalnız film).** Kimlik IMDb'ye bağlı: kart adı yalnız aday seçer; film sayfasında tek ve aynı IMDb kimliği gerekir. Dublajlı sayfalar açılmaz; ses dosyadan okunmadan dublaj iddiası yapılmaz. `identityConfidence` 90 (FzTvSeries, Goojara TV ve MoviesDrive ile aynı); süre ±%10 ve piksel dosyadan zorunlu.
+- **Dosya adında yıl başlığın hemen ardında olmalı.** Aynı adla başlayan başka yapımlar (Inception_The_Cobol_Job_(2010)) böylece elenir.
+- **Oturum çerezi yalnız `download1.php` ve `download.php` isteklerine gider.** Video adresi çerez veya Referer taşımaz. `dlink.php` ara sayfasına gidilmez; adres sayfadaki salt okunur alanlardan alınır. Kabul koşulları: aynı alan adı altında HTTPS host, `/res/<32 hex>/<32 hex>/` yolu, `.mp4`/`.mkv` uzantısı, sorgu boş ya da yalnız `fromwebsite`. Ham boşluk `%20` yapılır; başka dönüşüm yapılmaz.
+- **Probe yedeği FzMovies'te iki.** Üç sunucudan biri bu hattan TLS hatası veriyor. Aynı yol ve sorgu, aynı ana alan adı, farklı host; 401/403/429 sonrası denenmez. Diğer kaynaklarda en fazla bir yedek kalır.
+- **Filmlerde FzMovies MoviesDrive'ın hemen ardında, 10 sn kapsamla.** Goojara ardı HDRezka'nın Matrix 720p satırını düşürdü (0/3). 4KHDHub ardı FzMovies'i geç başlattı (1/9). 7,5 sn kapsam sağlıklı keşifleri kesti (3/9). MoviesDrive kapsamı 10 sn'de kaldı (12 sn denemesi sonuçsuz). Seçilen sırada MoviesDrive'ın Fury/Spider-Verse satırları daha seyrek çıktı; bu bilinen maliyettir ve telefonda gözlenmeli. Dizi sırası değişmedi.
+- **Alternatif başlıkla arama yapılmadı.** Japonca özgün adlı filmler (Totoro, Your Name) için İngilizce adla arama, sitede gerçekten listelendiği ölçülmeden eklenmez.
+
 ## 20 Kasım 2026 — HubCloud 10Gbps eklenmez
 
 - **HubCloud 10Gbps aday yapılmaz.** Terminal sayfası bu sunucu için sürdürmenin desteklenmediğini yazıyor. Range yoksa probe hiç geçmez. Üstelik iOS istemcisi her denemede gövdeyi okumaya devam edebilir; JS bunu iptal edemez ve mobil veri harcanır. Adres tek kullanımlıksa probe onu tüketir ve indirme kırılır. İki durum da bu bilgisayardan ölçülemiyor.

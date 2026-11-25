@@ -14,6 +14,7 @@ const { scanWaploaded } = require('./providers/waploaded.cjs');
 const { scanRareFilmm } = require('./providers/rarefilmm.cjs');
 const { scanGoojara } = require('./providers/goojara.cjs');
 const { scanFzTvSeries } = require('./providers/fztvseries.cjs');
+const { scanFzMovies } = require('./providers/fzmovies.cjs');
 const { scanHdRezka } = require('./providers/hdrezka.cjs');
 const { scanMoviesDrive } = require('./providers/moviesdrive.cjs');
 const { scanAnimecix } = require('./providers/animecix.cjs');
@@ -317,6 +318,12 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs, requestTi
                 const sourceHttp=http.scope(10000);
                 return scanMoviesDrive(sourceHttp,target,{onCandidates:acceptCandidates,loadSeason:()=>resolveSeasonEpisode(sourceHttp,target,effectiveTmdbKey(settings,tmdbKey)),loadTitles:()=>resolveAlternativeTitles(sourceHttp,target,effectiveTmdbKey(settings,tmdbKey))});
               }});
+            // Films: FzMovies (4–6 sequential pages) right after MoviesDrive,
+            // so HDRezka and MoviesDrive start as before. In the first slot
+            // group it cost HDRezka 720p (Matrix, 0/3 runs); placed after
+            // 4KHDHub it started at ~13 s and finished 1 of 9 runs (25 Nov sim).
+            if (filesLane && settings.fzmoviesEnabled !== false && target.type === 'movie')
+              sourceJobs.push({name:'FzMovies',run:()=>scanFzMovies(http.scope(10000),target)});
             if (onlineLane && settings.playImdbEnabled !== false) sourceJobs.push({ name: 'PlayIMDb', run: () => scanPlayImdb(http, target) });
             if (onlineLane && settings.vixsrcEnabled !== false && settings.includeHls !== false && !sourceFactories.some(s => s.name === 'VixSrc'))
               sourceJobs.push({ name: 'VixSrc', run: () => scanVixDirect(http, target) });
@@ -427,6 +434,7 @@ function onSettings() {
     { type: 'toggle', key: 'hdhubEnabled', label: '4KHDHub / HubCloud doğrudan dosya araması', defaultValue: true, description: 'Ek film/bölüm indirmeleri ve uygun kayıtlarda 4K. FSL/Pixeldrain dosyalarının gerçek boyutu ve pikseli okunur; TR/EN altyazı aranır.' },
     { type: 'toggle', key: 'rarefilmmEnabled', label: 'RareFilmm ek film arşivi', defaultValue: true, description: 'Eski ve az bulunan filmlerde küçük MP4 seçenekleri. Bazılarında İngilizce altyazı görüntüye işlenmiştir; 4K veya TR dublaj garantisi yoktur.' },
     { type: 'toggle', key: 'goojaraEnabled', label: 'Goojara film ve bölüm dosyaları', defaultValue: true, description: 'Küçük MP4 alternatifleri; tam başlık/yıl/film IMDb ve bölüm kontrolü. Eksik veya yanlış yıl eşleşmeleri atlanır. Mevcut TR/EN altyazı araması uygulanır.' },
+    { type: 'toggle', key: 'fzmoviesEnabled', label: 'FzMovies film dosyaları', defaultValue: true, description: 'Küçük film dosyaları (genelde 360p MP4 ve 720p MKV). Film sayfasındaki IMDb kimliği ve dosya adı/yıl denetlenir; çözünürlük ve süre dosyadan okunur. Dizi aramaz.' },
     { type: 'toggle', key: 'fztvseriesEnabled', label: 'FzTvSeries dizi bölüm dosyaları', defaultValue: true, description: 'Küçük MP4 bölümler (çoğunlukla 360p–480p). Dizi sayfasındaki IMDb kimliği, tam sezon/bölüm ve dosya adı denetlenir; çözünürlük dosyadan okunur. Film aramaz.' },
     { type: 'toggle', key: 'hdrezkaEnabled', label: 'HDRezka farklı boyutlarda film/dizi dosyaları', defaultValue: true, description: 'Ücretsiz özgün sesli MP4 seçenekleri ve mevcut TR/EN altyazılar. IMDb, başlık/yıl ve tam bölüm denetlenir; ücretli kalite ve örnek videolar eklenmez.' },
     {type:'toggle',key:'hdfilmdelisiEnabled',label:'HDFilmDelisi Türkçe dublaj ve çoklu ses',defaultValue:true,description:'Public film kataloğu ve gerçek HLS listesi. Ses/altyazı dilleri yayıncıdan okunur; bu kaynak online izleme içindir.'},
@@ -475,7 +483,7 @@ async function getStreams(tmdbId, mediaType, season, episode) {
 }
 function createEntry(lane) {
   const titles = { main: 'Film/dizi · online ve dosyalar', files: 'Dosyalar', online: 'Hızlı kaynaklar', anime: 'Anime', extraAnime:'Ek Anime',fastOnline:'Hızlı İzle' };
-  const only = { files: ['hdhubEnabled','directoryEnabled','archiveEnabled','waploadedEnabled','rarefilmmEnabled','goojaraEnabled','fztvseriesEnabled','hdrezkaEnabled','moviesdriveEnabled','catalogUrls','addonUrls'], online: ['playImdbEnabled','vixsrcEnabled','diziyouEnabled','dizibakEnabled','filmmoduEnabled','hdfilmdelisiEnabled','purstreamEnabled','filmekseniEnabled','hlsView'], anime: ['animecixEnabled','sonanimeEnabled','anizoneEnabled'],extraAnime:['animomEnabled','seicodeEnabled'],fastOnline:['hdfilmdelisiEnabled','dizibalEnabled','purstreamEnabled','filmekseniEnabled','hlsView'] };
+  const only = { files: ['hdhubEnabled','directoryEnabled','archiveEnabled','waploadedEnabled','rarefilmmEnabled','goojaraEnabled','fzmoviesEnabled','fztvseriesEnabled','hdrezkaEnabled','moviesdriveEnabled','catalogUrls','addonUrls'], online: ['playImdbEnabled','vixsrcEnabled','diziyouEnabled','dizibakEnabled','filmmoduEnabled','hdfilmdelisiEnabled','purstreamEnabled','filmekseniEnabled','hlsView'], anime: ['animecixEnabled','sonanimeEnabled','anizoneEnabled'],extraAnime:['animomEnabled','seicodeEnabled'],fastOnline:['hdfilmdelisiEnabled','dizibalEnabled','purstreamEnabled','filmekseniEnabled','hlsView'] };
   only.main = [...only.files, ...only.online.filter(key=>!['hdfilmdelisiEnabled','purstreamEnabled','filmekseniEnabled'].includes(key))];
   const sourceFields = Object.values(only).flat();
   return {

@@ -2,12 +2,23 @@
 
 - Son durum: masaüstü Nuvio TR HD artık Start-NuvioTRHD.ps1 üzerinden açılır. Kullanıcı yeniden aynı hata bildirdiğinde özgün kurulum çalışıyordu; nedeni kesinleşmedi. CheckOnly ve gömülü Java17 penceresiz classpath probe geçti. Kullanıcı kontrollü başlatıcıyla deneyip hata sürerse çalışan yol ve gerçek kaynak raporu birlikte incelenmeli. Tekrar UI başarısı/tam indirme doğrulanmış sayılmamalı.
 
+## 1.9.5 — 25 Kasım 2026
+
+1. Telefonda depo yenilenip `Tanı · 1.9.5` görünmeli. Inception, Dune ve Fury gibi filmlerde FzMovies 360p/720p satırları çıkmalı. LTE ve Wi-Fi ayrı denenmeli. Sitenin telefona Cloudflare sınaması gösterip göstermediği bilinmiyor. Telefonda doğrulanmadı.
+2. MoviesDrive: benzetimde FzMovies açıkken Fury ve Spider-Verse satırları daha seyrek (seçilen sırada 0/6; aynı turlarda kapalı 4/6, sonra kapalı 1/4). Telefonda Fury'de MoviesDrive satırları FzMovies açık ve kapalı karşılaştırılmalı. Kayıp doğrulanırsa seçenekler: FzMovies'i MoviesDrive keşfi bittikten sonra başlatmak ya da MoviesDrive keşfini kısaltmak (kapalıyken de 9,4–10 sn).
+3. 4KHDHub filmlerde benzetimde hiç satır vermedi, FzMovies kapalıyken de (keşif 8 sn sınırında). 1.9.4 madde 7'nin yerine geçer: önce film keşfinin hangi adımda zaman harcadığı ve `workers.dev` dışı aday oranı ölçülmeli.
+4. FzMovies bağlantı ömrü: 25 dakika doğrulandı; ~12 saat ölçülmedi. Uzun indirme kuyruğunda süre dolabilir.
+5. Totoro ve Your Name'de FzMovies sonuç vermiyor; benzetimdeki kimlikte yalnız Japonca özgün ad var. Telefonda TMDB başka ad döndürürse sonuç değişebilir. İngilizce adla arama ancak sitede listelendiği ölçüldükten sonra eklenmeli.
+6. todaytvseries hâlâ incelenmedi.
+7. Oppenheimer HDRezka benzetimde FzMovies açıkken daha seyrek (1/3, kapalı 3/3, farklı saatte). voidboost zaman aşımları gürültülü; ayrı ölçülmedi.
+8. Kullanıcıya hâlâ sorulacak: The 100 S2E1'de telefonda 4KHDHub satırı çıkıyor mu (1.9.4 madde 11).
+
 ## 1.9.4 — 20 Kasım 2026
 
 1. Telefonda depo yenilenip sağlayıcı sürümü 1.9.4 görünmeli. The 100 S1E1, S1E10 ve S3E5'te FzTvSeries 360p, Goojara'nın yanında veya Goojara yokken çıkmalı. LTE ve Wi-Fi ayrı denenmeli. Telefonda doğrulanmadı.
 2. FzTvSeries indirme bağlantıları kaynağa göre ~12 saat geçerli. Uzun bekleyen indirme kuyruğunda süre dolabilir; telefonda tam indirme denenmedi.
 3. FzTvSeries kapsamı küçük örnekle ölçüldü (8 dizi). Eski dizilerin (Breaking Bad) sunucuları bu bilgisayardan kapalı. Daha geniş örnek (20+ dizi, eski/yeni karışık) ve telefonda gözlem gerekli. Kesme işaretli adlarda (Grey's Anatomy) yalnız birim testi var, canlı bakılmadı.
-4. Sonraki aday kaynaklar: FzMovies (`fzmovies.live`, filmler; aynı işletmeci olabilir) ve todaytvseries. Önce kimlik bağı ve Range desteği ölçülmeli.
+4. Sonraki aday kaynaklar: FzMovies (`fzmovies.live`, filmler; aynı işletmeci olabilir) ve todaytvseries. Önce kimlik bağı ve Range desteği ölçülmeli. FzMovies 1.9.5'te eklendi; todaytvseries açık.
 5. HubCloud 10Gbps (`pixel.hubcloud.mov` → `*.workers.dev`):
    - 20 Kasım: kullanıcının telefonunda mobil veride `https://workers.dev` açıldı (ekran görüntüsü). Yalnız kök adres denendi; dosya alt alanları ve Wi-Fi denenmedi. Bu bilgisayardan aynı adres TLS hatası veriyor (curl çıkış 35).
    - The 100 S1E1 HubCloud sayfasında yalnız Pixeldrain, 10Gbps ve Telegram düğmesi var; FSL yok. 4KHDHub'ın bu bölümdeki tek Pixeldrain dışı yolu 10Gbps.

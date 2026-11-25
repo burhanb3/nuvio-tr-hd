@@ -117,6 +117,26 @@ test('QuickJS: FzTvSeries IMDb/bölüm zincirini, oturumlu indirme sayfasını v
  fixture[show].body=fixture[show].body.replace('tt1234567','tt9999999');assert.deepEqual(await runInQuickJs(fixture,{args:['123456','tv',1,2],settings,nativeTimers:true}),[]);
 });
 
+test('QuickJS: FzMovies IMDb bağlı film sayfasını, oturumlu indirme sayfasını ve ikinci aynayı paket içinde çalıştırır',async()=>{
+ const root='https://fzmovies.live',hex=c=>c.repeat(32),option='3-501-'+hex('a'),dkey='3-501-'+hex('b'),movie=root+'/movie-The%20Matrix--hmp4.htm';
+ const name='The_Matrix_(1999)_BluRay_480p_(fzmovies.net)_'+hex('c')+'.mp4',file=host=>'https://'+host+'/res/'+hex('1')+'/'+hex('2')+'/'+name+'?fromwebsite';
+ const mvhd=Buffer.alloc(20);mvhd.writeUInt32BE(1000,12);mvhd.writeUInt32BE(8160000,16);
+ const body=Buffer.concat([helpers.box('ftyp',Buffer.from('isom\0\0\0\0isommp42','binary')),helpers.box('moov',helpers.box('mvhd',mvhd),helpers.moov(852,356).subarray(8)),helpers.box('mdat',Buffer.alloc(32))]);
+ const input=host=>"<input type='text' name='download1' value='"+file(host)+"' readonly>";
+ const fixture=makeFixture({extra:{
+  [root+'/csearch.php?searchname=The%20Matrix&searchby=Name&category=All&vsearch=']:{body:"<a id='t' href='movie-The Matrix--hmp4.htm'><small><b>The Matrix</b></small></a> <small>(1999)</small>"},
+  [movie]:{body:"<a href='https://www.imdb.com/title/tt0133093/'>IMDb</a><a href='download1.php?downloadoptionskey="+option+"'>The Matrix BluRay 480p.mp4</a>",headers:{'set-cookie':'PHPSESSID=fixtureSession01; path=/'}},
+  [root+'/download1.php?downloadoptionskey='+option]:{body:"<a id='downloadlink' href='download.php?downloadkey="+dkey+"'>Download</a>"},
+  [root+'/download.php?downloadkey='+dkey]:{body:input('srv1.files.test')+input('srv2.files.test')},
+  [file('srv1.files.test')]:{status:503},[file('srv2.files.test')]:{body,mime:'video/mp4'}}});
+ const settings={autoSubtitles:false,useDownloadBridge:false,archiveEnabled:false,hdhubEnabled:false,goojaraEnabled:false,hdrezkaEnabled:false,waploadedEnabled:false,rarefilmmEnabled:false,moviesdriveEnabled:false,playImdbEnabled:false,vixsrcEnabled:false};
+ const fetchCalls=[],rows=await runInQuickJs(fixture,{settings,nativeTimers:true,fetchCalls});
+ assert.equal(rows.length,1);assert.equal(rows[0].url,file('srv2.files.test'));assert.equal(rows[0].quality,'480p · 852×356');assert.deepEqual(rows[0].headers||{},{});
+ assert.ok(fetchCalls.includes(root+'/download.php?downloadkey='+dkey));assert.ok(!fetchCalls.some(u=>u.includes('dlink.php')));
+ assert.deepEqual(await runInQuickJs(fixture,{settings:{...settings,fzmoviesEnabled:false},nativeTimers:true}),[]);
+ fixture[movie].body=fixture[movie].body.replace('tt0133093','tt9999999');assert.deepEqual(await runInQuickJs(fixture,{settings,nativeTimers:true}),[]);
+});
+
 test('QuickJS: yıl alanı olmayan dublaj kaydı tam kimlik/dosya yılı ve gerçek ses/süreyle bulunur',async()=>{
  const{archiveQuery}=require('../src/providers/archive.cjs'),wanted={...helpers.target,runtimeMinutes:120},id='the.matrix.1999.1080p.tr.eng',name='The.Matrix.1999.1080p.TR.ENG.mkv',url='https://archive.org/download/'+id+'/'+name;
  const e=helpers.ebml,duration=Buffer.alloc(8);duration.writeDoubleBE(7200000);

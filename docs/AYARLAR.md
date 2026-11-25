@@ -30,6 +30,8 @@ Goojara film ve bölüm dosyaları da ana sağlayıcıda varsayılan açıktır.
 
 FzTvSeries dizi bölüm dosyaları ana sağlayıcıda varsayılan açıktır. Küçük MP4 bölümler (çoğunlukla 360p–480p) sunar; IMDb ve tam bölüm tutmazsa sonuç eklenmez. Film aramaz.
 
+FzMovies film dosyaları ana sağlayıcıda varsayılan açıktır. Küçük film dosyaları (genelde 360p MP4 ve 720p MKV) sunar; IMDb kimliği veya dosya adındaki yıl tutmazsa sonuç eklenmez. Dizi aramaz. Telefon benzetiminde açıkken MoviesDrive satırları daha seyrek çıktı; MoviesDrive'ın büyük dosyaları görünmüyorsa bu anahtar kapatılıp aynı film yeniden denenebilir.
+
 HDRezka, farklı boyutlarda ücretsiz MP4 seçenekleri için varsayılan açıktır. Özgün ses veya açıkça Türkçe olarak belirtilen sürümler seçilir; diğer dublajlar TR diye etiketlenmez. Kaynağın ücretli kalite seçenekleri eklenmez. Dosyadaki gerçek piksel, oynatıcının kalite etiketinden önce gelir.
 
 4KHDHub ayarı FSL ve Pixeldrain film/bölüm aramalarını birlikte yönetir. Uygun kayıtlarda 1080p/4K dosyalar ve gömülü Türkçe altyazılar bulunabilir. Pixeldrain dosyaları, MKV dosya köprüsü kapalıyken de doğrudan değerlendirilir; Nuvio'nun kayıt adı için aşağıdaki uzantısız MKV notu geçerlidir.

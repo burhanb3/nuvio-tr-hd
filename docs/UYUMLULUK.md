@@ -13,6 +13,8 @@ Resmî release ve geliştirme dalındaki ilgili dosyaların SHA'ları `compatibi
 
 ## Güncel kontrol
 
+1.9.5 (25 Kasım) yeni FzMovies film kaynağını, bu kaynak için aynı alan adındaki iki yedek sunucuya probe geçişini ve filmlerde FzMovies işinin MoviesDrive ardına eklenmesini getirir; plugin ABI'sine dokunmaz. 356 fixture/QuickJS testi geçti. Yayın kontrolü sonucu PROJE ve compatibility/github-publication.json içindedir. Windows Desktop, fiziksel telefon, tam oynatma ve indirme testi yapılmadı.
+
 1.9.4 (20 Kasım) yeni FzTvSeries dizi kaynağını ve bu kaynağın aynı alan adındaki ikinci sunucusuna probe geçişini ekler; plugin ABI'sine dokunmaz. Dizilerde 4KHDHub ve FzTvSeries işleri öne alındı. 349 fixture/QuickJS testi geçti. Yayın kontrolü sonucu PROJE ve compatibility/github-publication.json içindedir. Windows Desktop, fiziksel telefon, tam oynatma ve indirme testi yapılmadı.
 
 1.9.3 (20 Kasım) 4KHDHub dizi poster bağını ve Goojara'nın tek yeniden denemesini değiştirir; plugin ABI'sine dokunmaz. 342 fixture/QuickJS testi geçti. Yayın kontrolü sonucu PROJE ve compatibility/github-publication.json içindedir. Windows Desktop, fiziksel telefon, tam oynatma ve indirme testi yapılmadı.
@@ -51,7 +53,7 @@ Uzantısız MKV için önceki eleme kararı gözden geçirildi: Nuvio iOS dosya 
 
 Goojara için anonim public katalog çerezi yalnız kaynak keşfinde kullanılır. JavaScript elle yönlendirme yolunda farklı kökene geçmeden silinir; iOS otomatik yönlendirmesinin fiziksel başlık aktarımı sınanmadı. Video sonuçları katalog oturumu taşımaz. Kaynak incelemesi (20 Kasım, cihazda sınanmadı): iOS `httpRequestRaw` Ktor Darwin istemcisini kullanır, `followRedirects` bağımsız değişkenini uygulamaz (Ktor varsayılanı yönlendirmeyi izler) ve Ktor 3.4.1 oturumu `HTTPCookieStorage` olmadan kurar; yerel çerez deposu yoktur, yanıt `set-cookie` başlığı okunur. Ktor 3.4.1 `KtorNSURLSessionDelegate` yerel yönlendirmeyi `completionHandler(null)` ile kapatır; Nuvio yanıt adresini `response.call.request.url` olarak döndürür (Ktor `HttpRedirect` kodu okunmadı). Kilitli `JsBindings.kt`'deki `URLSearchParams` `keys`/`values`/`entries` içerir; QuickJS test köprüsü yalnız `searchParams.get` sunar, bu yüzden testler daha dardır.
 
-FzTvSeries'in anonim `PHPSESSID` oturumu yalnız aynı kökendeki indirme sayfası isteğine eklenir; dosya adresi oturum veya Referer taşımaz.
+FzTvSeries'in anonim `PHPSESSID` oturumu yalnız aynı kökendeki indirme sayfası isteğine eklenir; dosya adresi oturum veya Referer taşımaz. FzMovies'te film sayfasının oturumu yalnız `download1.php` ve `download.php` isteklerine eklenir; kural aynıdır.
 
 Kaynak kontrolleri sabit kanonik metadata referanslarıyla gerçek public HTTP/Range ve altyazı yanıtlarını sınar; telefonun TMDB API anahtarı bu yöntemle sınanmaz. Tam katalog veya her kalitede dosya başarısı iddiası değildir.
 
