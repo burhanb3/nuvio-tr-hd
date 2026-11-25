@@ -2,12 +2,11 @@
 
 - Son durum: masaüstü Nuvio TR HD artık Start-NuvioTRHD.ps1 üzerinden açılır. Kullanıcı yeniden aynı hata bildirdiğinde özgün kurulum çalışıyordu; nedeni kesinleşmedi. CheckOnly ve gömülü Java17 penceresiz classpath probe geçti. Kullanıcı kontrollü başlatıcıyla deneyip hata sürerse çalışan yol ve gerçek kaynak raporu birlikte incelenmeli. Tekrar UI başarısı/tam indirme doğrulanmış sayılmamalı.
 
-## 1.9.6 — 25 Kasım 2026 (yerel hazır, yayına ve telefon testine hazır)
+## 1.9.6 — 25 Kasım 2026
 
-1. **Hazır (yerel):** DiziYou `diziyouOptInEnabled` ile varsayılan kapalı (eski `diziyouEnabled: true` yok sayılır); Goojara 5. bağımsız scraper (`nuvio-tr-hd-goojara`) olarak ana taramadan ayrıldı ve sessiz timeout sonrası yeniden denemesi kapatıldı. `npm run check` 357/357 geçti (QuickJS dahil).
-2. **Yayın öncesi/sonrası:** Kullanıcı onayıyla `1.9.6` commit + push (`codex/publish-nuvio-tr-hd`) edilip GitHub Actions + Pages doğrulanmalı (çalışma dizinindeki yarım `jetfilmizle.cjs` ve geçici `hang-nara.txt`/`hh.txt` dosyaları 1.9.6 commit'ine karıştırılmamalı).
-3. **Telefonda doğrulama (Wi-Fi ve LTE ayrı):** Depo yenilenip `Tanı · 1.9.6` ve yeni **Nuvio TR HD · Goojara** satırının görünmesi/etkinliği kontrol edilmeli. The 100 S5E5 ve S1E3/S2E4'te ana `Nuvio TR HD` sonuçlarının (FzTvSeries, varsa 4KHDHub) artık boş dönmediği doğrulanmalı.
-4. **Sıradaki geliştirme:** Yarım kalan `JetFilmizle` (TR dublajlı MP4 indirme + MP4 büyük `moov` `readAudioTracks` testleri) tamamlanmalı; ardından hız/sıralama/bundle yol haritasına geçilmeli.
+1. **Yayımlandı (`f2263d1`):** Test ve paket `45637051671` (ubuntu+windows) ve Pages `45637051709` başarılı; 8 public dosya HTTP 200 ve SHA-256 yerel `dist/` ile aynı (`compatibility/github-publication.json`). DiziYou `diziyouOptInEnabled` ile varsayılan kapalı (eski `diziyouEnabled: true` yok sayılır); Goojara 5. bağımsız scraper (`nuvio-tr-hd-goojara`) olarak ana taramadan ayrıldı ve sessiz timeout sonrası yeniden denemesi kapatıldı. `npm run check` 357/357 geçti (QuickJS dahil).
+2. **Telefonda doğrulama (Wi-Fi ve LTE ayrı):** Depo yenilenip `Tanı · 1.9.6` ve yeni **Nuvio TR HD · Goojara** satırının görünmesi/etkinliği kontrol edilmeli. The 100 S5E5 ve S1E3/S2E4'te ana `Nuvio TR HD` sonuçlarının (FzTvSeries, varsa 4KHDHub) artık boş dönmediği doğrulanmalı.
+3. **Sıradaki geliştirme:** Yarım kalan `JetFilmizle` (TR dublajlı MP4 indirme + MP4 büyük `moov` `readAudioTracks` testleri) tamamlanmalı; ardından hız/sıralama/bundle yol haritasına geçilmeli.
 
 ## 1.9.5 — 25 Kasım 2026
 

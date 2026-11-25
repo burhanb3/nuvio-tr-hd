@@ -2,9 +2,9 @@
 
 - 12 Kasım ek bilgi: kullanıcı Windows Son aramalar listesindeki Nuvio girişinden açtığını ekran görüntüsüyle gösterdi. Bu önbellek girdisinin hedefi doğrudan okunmadı. Ayrı ve aranabilir `Programs/Nuvio TR HD.lnk` kullanıcı Başlat menüsüne eklendi; kontrollü başlatıcı argümanı yeniden okunarak doğrulandı. Kullanıcı aramada tam Nuvio TR HD adını veya masaüstü aynı adlı kısayolu seçmeli. Açık uygulamaya dokunulmadı.
 
-## 1.9.6 — 25 Kasım 2026 (yerel, henüz yayımlanmadı): iOS 60 sn askı koruması (DiziYou kapalı, Goojara bağımsız)
+## 1.9.6 — 25 Kasım 2026: iOS 60 sn askı koruması (DiziYou kapalı, Goojara bağımsız)
 
-357/357 yerel birim + QuickJS WASM paket testi geçti (`npm run check`). ABI değişmedi. Henüz commit/push/GitHub Pages yayını yapılmadı; fiziksel telefon, canlı ağ testi, tam oynatma ve indirme testi yapılmadı. Çalışma dizinindeki yarım JetFilmizle taslağı (`src/providers/jetfilmizle.cjs` ile opt-in MP4 `readAudioTracks` değişikliği) ana listeye bağlanmadan korundu.
+357/357 yerel birim + QuickJS WASM paket testi geçti (`npm run check`). ABI değişmedi. Kullanıcı onayıyla `codex/publish-nuvio-tr-hd` dalına gönderildi. Kaynak commit `f2263d1`: Test ve paket `45637051671` (ubuntu+windows) başarılı, Pages `45637051709` başarılı; manifest, beş `?v=1.9.6` sağlayıcı, sabit online adı ve ana sayfa public HTTP 200 ve SHA-256 yerel `dist/` ile aynı (`compatibility/github-publication.json`, anonim GitHub API). Fiziksel telefon, tam oynatma ve indirme testi yapılmadı. Yarım kalan JetFilmizle taslağı bu sürüme katılmadan çalışma dizininde korundu.
 
 - **Tetik:** kullanıcı 1.9.5'te The 100 S5E5 ve ilk sezon bölümünde ana eklentiden hiç satır görmediğini, Fury'de (film) sonuç çıktığını bildirdi.
 - **Kök neden (önceki ölçüm + upstream kaynak):** Nuvio her scraper'ı `PLUGIN_TIMEOUT_MS = 60_000` ile sarar; iOS Ktor Darwin 60 sn timeout kullanır, `AbortSignal` ve `redirect: 'manual'` yok sayılır; `quickjs-kt` tüm aktif native işler bitmeden dönmez. Ana taramada (`nuvio-tr-hd`) tek bir sessiz SYN-drop isteği tüm satırları siler. Ev ağında iki kaynak buna yol açıyordu:
