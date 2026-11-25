@@ -10,7 +10,7 @@
    - Inception, Dune ve The 100 S5E5'te ana `Nuvio TR HD` listesi boş dönmemeli.
    - Anime: Death Note, Frieren, JJK ve Solo Leveling'de `Anime` satırları gelmeli. Solo Leveling S2'de `Ek Anime` SeiCode MP4 satırı gelmeli.
 3. **Kullanıcıya sorulacak:** Hangi anime adlarında ve hangi ağda (Wi-Fi/LTE) boş sonuç gördü? Önceden gelip artık gelmeyen kaynak adları neler?
-4. **voidboost nedeni:** Ertesi gün, tam tarama yapmadan, tek başlıkla yanıtsız düğüm oranı yeniden ölçülmeli. Oran 0'a dönerse kısıtlama taramalardan kaynaklanıyordu.
+4. **voidboost nedeni:** Ertesi gün, tam tarama yapmadan, tek başlıkla (`hdrezka` hattı, Interstellar/Inception) yanıtsız ve yavaş düğüm oranı yeniden ölçülmeli. Oran 0'a dönerse kısıtlama taramalardan kaynaklanıyordu. Yayın sonrası ölçümde 4,5 sn prob süresi dolmuştu. Yalnız bağımsız `hdrezka` hattında prob süresini uzatmak geç yanıt veren düğümleri kurtarabilir, ancak bağlantıyı tamamen düşüren düğümün 60 sn askısını çözmez. Önce ölçülmeli.
 5. **Ağ gürültüsüyle boş kalan başlıklar:** Avatar, Oppenheimer, Crow ve Breaking Bad S1E1 tek tek, sessiz ağda yeniden denenmeli.
 6. **Waploaded:** Arama yolu bulunmazsa yalnız yeni yüklemeler kapsanır. RareFilmm hâlâ incelenmedi.
 7. **Fiziksel cihaz kabul testi (Faz 5):** 1.9.7 maddesindeki çevrimdışı uçtan uca test hâlâ açık.
