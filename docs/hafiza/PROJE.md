@@ -2,6 +2,36 @@
 
 - 12 Kasım ek bilgi: kullanıcı Windows Son aramalar listesindeki Nuvio girişinden açtığını ekran görüntüsüyle gösterdi. Bu önbellek girdisinin hedefi doğrudan okunmadı. Ayrı ve aranabilir `Programs/Nuvio TR HD.lnk` kullanıcı Başlat menüsüne eklendi; kontrollü başlatıcı argümanı yeniden okunarak doğrulandı. Kullanıcı aramada tam Nuvio TR HD adını veya masaüstü aynı adlı kısayolu seçmeli. Açık uygulamaya dokunulmadı.
 
+## 1.9.8 — 25 Kasım 2026: anime geri geldi, düşen kaynaklar onarıldı, HDRezka bağımsız scraper
+
+Kullanıcı Gemini ile 1.9.7'yi yayımlamış; bu oturumda Gemini işi incelendi. 1.9.7 yayın kaydı anonim GitHub API ile yeniden doğrulandı: `ea01076` üzerinde Test ve paket `45683585388` ve Pages `45683585479` başarılı. 1.9.6/1.9.7 yapısı (lane bazlı paketler, Goojara ayrımı, JetFilmizle) sağlam bulundu.
+
+- **Anime neden çıkmıyordu (kullanıcı şikâyeti):**
+  - Anizone sunucusu aramayı yanıtsız bekletiyordu. iOS kurallı simülasyonda Death Note `Anime` dönüşü 64,6 sn oldu; Nuvio 60 sn'de keser ve aynı taramadaki tüm satırları düşürür. AniMOM `Ek Anime`de aynı etkiyi yaptı (64,7 sn).
+  - SonAnime API'si arama listesinden `tmdb_id` alanını kaldırdı ve bağlantı süresini epoch saniye olarak vermeye başladı; tüm satırlar eleniyordu.
+  - SeiCode'un MP4Upload bağlantıları çoğu bölümde kalkmıştı.
+  - Kesme işaretli adlar (`Frieren: Beyond Journey's End`) `safeUrl` tarafından reddediliyordu.
+  - Animecix bu IP'ye bir süre Cloudflare 403/502/503 verdi (dış neden); sonraki ölçümde yeniden çalıştı.
+- **Anime düzeltmeleri:** Anizone ve AniMOM `Anime`den çıkarıldı. Yalnız `Ek Anime`de, yeni `anizoneOptInEnabled` / `animomOptInEnabled` anahtarlarıyla, varsayılan kapalı olarak duruyorlar. SonAnime adayı ad/yıl/türle seçilir; TMDB kimliği ayrıntı kaydında zorunludur. SeiCode'a aynı bölümün tau-video MP4 dosyaları eklendi. `'` artık `%27` olarak kodlanır.
+- **iOS kurallı simülasyon sonrası (sırayla):**
+  - Death Note `Anime`: 4 akış, 3,3 sn.
+  - Frieren `Anime`: 7 akış, 15,3 sn.
+  - JJK `Anime`: 9 akış, 11,4 sn.
+  - Solo Leveling `Anime`: 9 akış, 10,0 sn.
+  - Solo Leveling S2 `Ek Anime`: 3 MP4, 18,3 sn.
+- **Düşen kaynaklar:**
+  - **VixSrc:** 0/37'ye düşmüştü; `h=1` artık yalnız `canPlayFHD = true` olan sayfada istenir.
+  - **FilmEkseni:** Alan adı taşındı.
+  - **PlayIMDb:** `stream_urls` → `cast_urls` değişikliğine uyuldu.
+  - **Yeniden tarama (18 başlık):** VixSrc 14/18, PlayIMDb 13/18, FilmEkseni 6/12.
+  - **Kapsam dışı kalan boş başlıklar:** Avatar, Oppenheimer, Crow ve Breaking Bad S1E1'de ilgisiz hostlar eşzamanlı zaman aşımına düştü (yerel ağ gürültüsü; regresyon ayrıca ölçülmedi).
+- **HDRezka askısı:** `stream.voidboost.one` her dosyayı sabit bir düğüme 302 ile yönlendirir. Bu bilgisayardan bazı düğümler TCP bağlantısını sessizce düşürdü. Sessiz Inception koşusunda tek bir yanıtsız düğüm ana listeyi 61,9 sn'ye taşıdı. Yanıtsız düğüm sayıları: ilk tarama 0/37, sonra 10/37, sonra 7/18; her seferinde farklı düğümler. Neden (CDN'in IP kısıtlaması mı, düğüm arızası mı) ayrıştırılmadı. Telefon aynı Wi-Fi'de aynı IP'yi kullanıyorsa ana listenin iPhone'da boş dönmesini bu açıklayabilir. HDRezka 6. bağımsız scraper oldu.
+  - **Sonrası (iOS kurallı, sırayla):** Inception ana 25,0 sn; Dune 31,5 sn, 7 akış; Interstellar 24,2 sn, 4 akış. Hiçbirinde askı yok.
+- **Waploaded ve RareFilmm:** Waploaded site haritası yalnız son 50 filmi listeliyor; düz arama yalnız forum yazısı döndürdü, türlü arama 4 denemenin 3'ünde yanıt vermedi. Sonuçsuz, düzeltilmedi. RareFilmm incelenmedi.
+- **Testler:** 365/365 yerel birim + QuickJS paket testi geçti (`npm run check`). ABI değişmedi.
+- **Yapılmayanlar:** Fiziksel telefon, tam oynatma, indirme, çevrimdışı altyazı ve senkron testi yapılmadı. Ölçümler bu bilgisayardandır; telefon dönüş süresi garantisi değildir.
+- **Dikkat:** Bu IP'den gün içinde çok sayıda tam kapsam taraması yapıldı. Animecix ve voidboost kısıtlaması bununla ilişkili olabilir. Aynı gün yeni tam tarama yapılmamalı; tek başlık simülasyonları yeterli.
+
 ## 1.9.7 — 25 Kasım 2026: JetFilmizle TR dublaj MP4, büyük moov ses izi, hız/sıralama ve lane bazlı hafif paketler
 
 363/363 yerel birim + QuickJS WASM paket testi geçti (`npm run check`, 11,8 sn). ABI değişmedi. Kullanıcı onayıyla `codex/publish-nuvio-tr-hd` dalına gönderildi. Kaynak commit `ea01076`: Test ve paket `45683585388` (ubuntu+windows) başarılı, Pages `45683585479` başarılı; manifest, beş `?v=1.9.7` sağlayıcı, sabit online adı ve ana sayfa public HTTP 200 ve SHA-256 yerel `dist/` ile aynı (`compatibility/github-publication.json`, anonim GitHub API). Fiziksel telefon, tam oynatma, indirme, çevrimdışı altyazı ve sahne senkronu testi yapılmadı. Kök dizindeki geçici `hang-nara.txt` ve `hh.txt` temizlendi.

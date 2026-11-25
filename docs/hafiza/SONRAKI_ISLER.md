@@ -2,6 +2,19 @@
 
 - Son durum: masaüstü Nuvio TR HD artık Start-NuvioTRHD.ps1 üzerinden açılır. Kullanıcı yeniden aynı hata bildirdiğinde özgün kurulum çalışıyordu; nedeni kesinleşmedi. CheckOnly ve gömülü Java17 penceresiz classpath probe geçti. Kullanıcı kontrollü başlatıcıyla deneyip hata sürerse çalışan yol ve gerçek kaynak raporu birlikte incelenmeli. Tekrar UI başarısı/tam indirme doğrulanmış sayılmamalı.
 
+## 1.9.8 — 25 Kasım 2026
+
+1. **Yayın:** `1.9.8` commit + push sonrası Actions + Pages + public SHA-256 (artık 9 dosya, `nuvio-tr-hd-hdrezka.js` dahil) doğrulanmalı. Kayıt `compatibility/github-publication.json`.
+2. **Telefonda (Wi-Fi ve LTE ayrı):**
+   - Depo yenilenmeli, `Tanı · 1.9.8` ve yeni **Nuvio TR HD · HDRezka** satırı görünmeli ve açık olmalı.
+   - Inception, Dune ve The 100 S5E5'te ana `Nuvio TR HD` listesi boş dönmemeli.
+   - Anime: Death Note, Frieren, JJK ve Solo Leveling'de `Anime` satırları gelmeli. Solo Leveling S2'de `Ek Anime` SeiCode MP4 satırı gelmeli.
+3. **Kullanıcıya sorulacak:** Hangi anime adlarında ve hangi ağda (Wi-Fi/LTE) boş sonuç gördü? Önceden gelip artık gelmeyen kaynak adları neler?
+4. **voidboost nedeni:** Ertesi gün, tam tarama yapmadan, tek başlıkla yanıtsız düğüm oranı yeniden ölçülmeli. Oran 0'a dönerse kısıtlama taramalardan kaynaklanıyordu.
+5. **Ağ gürültüsüyle boş kalan başlıklar:** Avatar, Oppenheimer, Crow ve Breaking Bad S1E1 tek tek, sessiz ağda yeniden denenmeli.
+6. **Waploaded:** Arama yolu bulunmazsa yalnız yeni yüklemeler kapsanır. RareFilmm hâlâ incelenmedi.
+7. **Fiziksel cihaz kabul testi (Faz 5):** 1.9.7 maddesindeki çevrimdışı uçtan uca test hâlâ açık.
+
 ## 1.9.7 — 25 Kasım 2026
 
 1. **Yayımlandı (`ea01076`):** Test ve paket `45683585388` (ubuntu+windows) ve Pages `45683585479` başarılı; 8 public dosya HTTP 200 ve SHA-256 yerel `dist/` ile aynı (`compatibility/github-publication.json`). JetFilmizle Gold MP4 + büyük `moov` MP4 `readAudioTracks`, başarısız ayna host önceliği, `4KHDHub` film sırası/10 sn kapsamı, `opensubtitles-v3` önceliği + 429 hash koruması, lane bazlı minified paketleme (`1.650 KB → 583 KB`) yayında. `npm run check` **363/363** geçti (QuickJS dahil). `todaytvseries` ve `HDHub4u` canlı ölçümde elendi.

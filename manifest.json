@@ -131,6 +131,31 @@
       ],
       "enabled": true,
       "hasSettings": true
+    },
+    {
+      "id": "nuvio-tr-hd-hdrezka",
+      "name": "Nuvio TR HD · HDRezka",
+      "version": "1.9.8",
+      "description": "Film ve diziler için bağımsız HDRezka MP4 taraması (farklı boyutlar, mevcut TR/EN altyazılar). Bir CDN düğümü yanıt vermezse ana sağlayıcıdaki sonuçlar etkilenmez.",
+      "filename": "providers/nuvio-tr-hd-hdrezka.js?v=1.9.8",
+      "supportedTypes": [
+        "movie",
+        "tv"
+      ],
+      "supportedPlatforms": [
+        "android",
+        "ios",
+        "desktop"
+      ],
+      "contentLanguage": [
+        "tr",
+        "en"
+      ],
+      "formats": [
+        "mp4"
+      ],
+      "enabled": true,
+      "hasSettings": true
     }
   ]
 }

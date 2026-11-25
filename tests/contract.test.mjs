@@ -21,7 +21,9 @@ test('manifest KMP scrapers şeması, yayın yolu ve sürümleri tutarlı', asyn
   assert.equal(fast?.enabled,true);assert.deepEqual(fast?.formats,['hls']);
   const goojara=manifest.scrapers.find(s=>s.id==='nuvio-tr-hd-goojara');
   assert.equal(goojara?.enabled,true);assert.deepEqual(goojara?.formats,['mp4']);
-  assert.equal(manifest.scrapers.length,5);
+  const hdrezka=manifest.scrapers.find(s=>s.id==='nuvio-tr-hd-hdrezka');
+  assert.equal(hdrezka?.enabled,true);assert.deepEqual(hdrezka?.formats,['mp4']);
+  assert.equal(manifest.scrapers.length,6);
   assert.ok(!manifest.scrapers.some(s=>s.id==='nuvio-tr-hd-online'),'Film/dizi araması yeni online scraper kurulmasına bağımlı olmamalı');
   for (const scraper of manifest.scrapers) {
     for (const key of ['id', 'name', 'version', 'filename']) assert.equal(typeof scraper[key], 'string');

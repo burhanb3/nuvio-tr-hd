@@ -2,6 +2,16 @@
 
 - Windows yerel düzeltme başlatıcısı başka Nuvio işlemini sessizce veya zorla kapatmaz. Kullanıcının kısayolu açması ve iletişim kutusunda onay vermesiyle normal pencere kapatma denenir. Açılış öncesi paket SHA ve classpath kontrolü zorunludur; yalnız kısayolun doğru olması uygulamanın doğru kopyada çalıştığı kanıtı değildir.
 
+## 25 Kasım 2026 — 1.9.8 askı izolasyonu (HDRezka, Anizone, AniMOM) ve kaynak onarımları
+
+- **HDRezka 6. bağımsız scraper (`nuvio-tr-hd-hdrezka`).** Giriş hostu her dosyayı sabit bir CDN düğümüne 302 ile yönlendirir. iOS yönlendirmeyi kendisi izler ve iptal edilemez; yanıtsız düğümü önceden ayıklamak mümkün değil. Bu yüzden Goojara deseni uygulandı. Varsayılan açık kalır (18–21/37 başlıkta aday verir). Ana pakette `scanHdRezka` hiç paketlenmez; kayıtlı `hdrezkaEnabled` ana paketi etkilemez. Bağımsız şeritler `ISOLATED_LANES` listesinde toplanır: altyazı ön-sorgusu dosya doğrulandıktan sonra başlar, HLS/köprü/HTTP ayarları gösterilmez.
+- **Anizone ve AniMOM yeni anahtarlarla varsayılan kapalı ve yalnız Ek Anime'de.** Eski `anizoneEnabled` / `animomEnabled: true` kayıtları yeniden açmaz (DiziYou deseni). Anime taraması yalnız Animecix ve SonAnime içerir.
+- **SonAnime:** Arama listesi kimlik taşımadığı için yalnız aday seçimi ad/yıl/türle yapılır; bağlayıcı kimlik ayrıntı kaydındaki birebir TMDB kimliğidir. Kimliksiz ayrıntı veya süresi geçmiş bağlantı boş döner.
+- **SeiCode tau-video:** Yalnız aynı kaydın `_id`, sezon ve bölümü birebir tutan https `.mp4` dosyaları; en fazla 4. Dosya adındaki kalite etiketi `claimedQuality`dir, doğrulanmış kalite değildir.
+- **`safeUrl` kesme işareti:** `'` tarayıcı gibi `%27` olarak kodlanır; diğer tırnak/köşeli karakterler reddedilmeye devam eder.
+- **VixSrc FHD:** `h=1` yalnız sayfa `canPlayFHD = true` dediğinde istenir; aksi halde 403 aldığı için bütün satırlar düşüyordu.
+- **Tam kapsam taramaları aynı gün tekrarlanmaz.** Telefon aynı IP'yi paylaşabilir; Animecix ve voidboost kısıtlaması taramalarla ilişkili olabilir. Tek başlık iOS simülasyonu tercih edilir.
+
 ## 25 Kasım 2026 — 1.9.7 JetFilmizle, MP4 ses izi, hız ve lane paketleri
 
 - **JetFilmizle eklendi (yalnız film, Gold MP4).** Kimlik tek IMDb bağlantısıyla doğrulanır; 200-stream veren varyantlar Nuvio'nun gövde tampon riski nedeniyle `HEAD Range: bytes=0-15` ile `206` vermeden GET probe'a geçirilmez. `POST /jetplayer` için standart tarayıcı `User-Agent` + `Origin` kullanılır; 404/boş aramada gereksiz TMDB `/translations` açılmaz. `*.workers.dev` engeli olan ağlarda `http.cjs` devre kesicisi 2 taşıma hatasında temiz keser.

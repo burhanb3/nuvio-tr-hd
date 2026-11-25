@@ -14,6 +14,7 @@ const animeBundle = await readFile(new URL('../providers/nuvio-tr-hd-anime.js', 
 const extraAnimeBundle = await readFile(new URL('../providers/nuvio-tr-hd-extra-anime.js', import.meta.url), 'utf8');
 const fastOnlineBundle = await readFile(new URL('../providers/nuvio-tr-hd-fast-online.js', import.meta.url), 'utf8');
 const goojaraBundle = await readFile(new URL('../providers/nuvio-tr-hd-goojara.js', import.meta.url), 'utf8');
+const hdrezkaBundle = await readFile(new URL('../providers/nuvio-tr-hd-hdrezka.js', import.meta.url), 'utf8');
 
 function aliasFeatureSample(language='eng',width=3840,height=2160){
  const e=helpers.ebml,duration=Buffer.alloc(8),size=n=>[n>>8,n&255];duration.writeDoubleBE(7200000);
@@ -240,7 +241,7 @@ test('QuickJS: Purstream aynı kimliği online sunar, source kalite etiketini ku
  assert.ok(!(await runInQuickJs({},{invokeSettings:true})).some(f=>f.key==='purstreamEnabled'));
 });
 
-test('QuickJS: HDRezka public HTML-JSON yanıtı gerçek MP4 verir, ücretli kaliteyi ve yanlış IMDb başlığını atlar',async()=>{
+test('QuickJS: HDRezka bağımsız pakette gerçek MP4 verir, ücretli kaliteyi ve yanlış IMDb başlığını atlar; ana paket kayıtlı hdrezkaEnabled ile bile HDRezka çağırmaz',async()=>{
  const root='https://rezka.ag',page=root+'/films/fiction/100-the-matrix-1999.html',file='https://stream.voidboost.one/full.mp4';
  const mvhd=Buffer.alloc(20);mvhd.writeUInt32BE(1000,12);mvhd.writeUInt32BE(8160000,16);
  const body=Buffer.concat([helpers.box('ftyp',Buffer.from('isom\0\0\0\0isommp42','binary')),helpers.box('moov',helpers.box('mvhd',mvhd),helpers.moov(1280,720).subarray(8)),helpers.box('mdat',Buffer.alloc(32))]);
@@ -251,9 +252,17 @@ test('QuickJS: HDRezka public HTML-JSON yanıtı gerçek MP4 verir, ücretli kal
   [file]:{body,mime:'video/mp4'}
  }}),fixture=new Proxy(base,{get:(t,k)=>typeof k==='string'&&k.startsWith(root+'/ajax/get_cdn_series/?')?ajax:t[k]});
  const settings={autoSubtitles:false,includeHls:false,archiveEnabled:false,goojaraEnabled:false,hdhubEnabled:false,waploadedEnabled:false,rarefilmmEnabled:false,playImdbEnabled:false,vixsrcEnabled:false,filmmoduEnabled:false,useDownloadBridge:false};
- const streams=await runInQuickJs(fixture,{settings});assert.equal(streams.length,1);assert.equal(streams[0].url,file);assert.equal(streams[0].quality,'720p · 1280×720');assert.match(streams[0].name,/İndirilebilir · HDRezka/);
- assert.deepEqual(await runInQuickJs(fixture,{settings:{...settings,hdrezkaEnabled:false}}),[]);
- base[page].body=base[page].body.replace('tt0133093','tt9999999');assert.deepEqual(await runInQuickJs(fixture,{settings}),[]);
+ const streams=await runInQuickJs(fixture,{code:hdrezkaBundle,settings});assert.equal(streams.length,1);assert.equal(streams[0].url,file);assert.equal(streams[0].quality,'720p · 1280×720');assert.match(streams[0].name,/İndirilebilir · HDRezka/);
+ assert.deepEqual(await runInQuickJs(fixture,{code:hdrezkaBundle,settings:{...settings,hdrezkaEnabled:false}}),[]);
+ // A CDN node can hang a native request for 60 s on iOS; the main list must never wait on it.
+ const mainCalls=[];assert.deepEqual(await runInQuickJs(fixture,{settings:{...settings,hdrezkaEnabled:true},fetchCalls:mainCalls}),[]);
+ assert.ok(!mainCalls.some(u=>u.includes('rezka.ag')||u.includes('voidboost')));
+ const rezkaSettings=await runInQuickJs({},{code:hdrezkaBundle,invokeSettings:true});
+ assert.equal(rezkaSettings.find(f=>f.key==='hdrezkaEnabled')?.defaultValue,true);
+ assert.ok(rezkaSettings.some(f=>f.type==='info'&&f.label.includes('Bağımsız HDRezka')));
+ assert.ok(!rezkaSettings.some(f=>['includeHls','useDownloadBridge','goojaraEnabled','archiveEnabled'].includes(f.key)));
+ assert.ok(!(await runInQuickJs({},{invokeSettings:true})).some(f=>f.key==='hdrezkaEnabled'));
+ base[page].body=base[page].body.replace('tt0133093','tt9999999');assert.deepEqual(await runInQuickJs(fixture,{code:hdrezkaBundle,settings}),[]);
 });
 
 test('QuickJS: Goojara bağımsız pakette çalışır; ana paket eski goojaraEnabled kaydıyla bile Goojara çağırmaz',async()=>{

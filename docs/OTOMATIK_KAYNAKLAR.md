@@ -6,10 +6,10 @@
 | --- | --- | --- |
 | Internet Archive | Film/dizi | MP4/MKV; kimlik ve dosya kontrolüne bağlı |
 | 4KHDHub / HubCloud | Film/dizi | FSL/Pixeldrain MP4/MKV; uygun kayıtlarda 1080p/4K |
-| Goojara | Film/dizi | Küçük MP4 alternatifleri; bölüm ve gerçek dosya kontrolü |
+| Goojara (bağımsız sağlayıcı) | Film/dizi | Küçük MP4 alternatifleri; bölüm ve gerçek dosya kontrolü |
 | FzTvSeries | Dizi | Küçük MP4 bölümler (çoğunlukla 360p–480p); IMDb, tam bölüm ve gerçek dosya kontrolü |
 | FzMovies | Film | Küçük MP4 (çoğunlukla 360p) ve 720p MKV; IMDb, dosya adı/yıl ve gerçek dosya kontrolü |
-| HDRezka | Film/dizi | Ücretsiz MP4 kaliteleri; özgün ses, IMDb ve bölüm kontrolü |
+| HDRezka (bağımsız sağlayıcı) | Film/dizi | Ücretsiz MP4 kaliteleri; özgün ses, IMDb ve bölüm kontrolü |
 | MoviesDrive / Pixeldrain | Film, anime filmi ve doğrulanabilen dizi bölümleri | Ek MP4/MKV; gerçek boyut, piksel, süre ve ses kontrolü |
 | Waploaded | Film/dizi | MP4/MKV; son güncellenen kısmi katalog |
 | RareFilmm | Eski/az bulunan filmler | Küçük MP4 alternatifleri; bazı sürümlerde EN görüntüde |
@@ -19,9 +19,9 @@
 | DiziBal | Film/dizi/anime | Dublaj/altyazılı online HLS |
 | Purstream | Film/dizi | Ek online HLS; oynatma listesindeki sesler ve harici TR/EN altyazılar |
 | FilmEkseni | Film | Online HLS; kaynakla eşlenmiş TR/EN altyazı ve mevcut ses izleri |
-| Anizone | Anime film/ilk sezon | Online HLS; tam bölüm doğrulaması ve mevcut altyazı araması |
+| Anizone (Ek Anime, isteğe bağlı, varsayılan kapalı) | Anime dizilerinin ilk sezonu | Online HLS; tam bölüm doğrulaması ve mevcut altyazı araması |
 | Animecix, SonAnime | Anime | Gerçek dosya seçenekleri |
-| AniMOM, SeiCode / MP4Upload | Anime bölümleri | Ek, kısmi MP4 kaynakları |
+| SeiCode (tau-video / MP4Upload); AniMOM isteğe bağlı, varsayılan kapalı | Anime bölümleri (Ek Anime) | Ek, kısmi MP4 kaynakları; SeiCode çoğunlukla son sezonları taşır |
 
 Liste çalışan bütün katalog garantisi değildir. Kaynağın bir bölümde çalışması diğer bölümde çalışacağını göstermez. Yalnız embed sayfası, HTML hata yanıtı veya HLS bulunan sonuç yeni bir indirme dosyası sayılmaz.
 
@@ -42,13 +42,13 @@ Internet Archive, aynı TMDB film kaydındaki özgün ve gösterim adlarını bi
 
 RareFilmm bütün film kataloğunu kapsamaz. Genel aramada tam başlık/yıl, makale içindeki oynatıcı, oynatıcının kendi film kimliği/başlığı ve süre denetlenir. Kalite başına gerçek MP4 boyutu ve pikseli okunur. EN görüntüde etiketi, silinemeyen İngilizce altyazı bulunduğunu belirtir; mevcut harici TR/EN dosyaları ayrıca sunulur. Yeni bir sunucu veya hesap gerekmez.
 
-Goojara, ana sağlayıcıda film ve bölüm dosyaları arar. Tam başlık/yıl, filmlerde IMDb, dizilerde seçilen sezon listesi ve bölüm sayfası birlikte denetlenir. Dosya adındaki 720p/1080p etiketi ölçülen pikselin yerine geçmez. Kaynak bir dosyayı HCSubs gibi sabit altyazı işaretiyle sunuyorsa kartta Sabit altyazı yazılır; dili bilinmeden EN/TR diye etiketlenmez. Sunucuya ve bölüme göre erişim değişebilir; her yapım veya 4K garantisi değildir.
+Goojara, kendi bağımsız sağlayıcısında film ve bölüm dosyaları arar. Tam başlık/yıl, filmlerde IMDb, dizilerde seçilen sezon listesi ve bölüm sayfası birlikte denetlenir. Dosya adındaki 720p/1080p etiketi ölçülen pikselin yerine geçmez. Kaynak bir dosyayı HCSubs gibi sabit altyazı işaretiyle sunuyorsa kartta Sabit altyazı yazılır; dili bilinmeden EN/TR diye etiketlenmez. Sunucuya ve bölüme göre erişim değişebilir; her yapım veya 4K garantisi değildir.
 
 FzTvSeries yalnız dizi bölümleri arar. Arama kartındaki ad, dizi sayfasındaki tek IMDb kimliği, sezon bağlantısı, tam SxxEyy bölüm kartı ve dosya adındaki bölüm birlikte tutmalıdır. Bölüm sayfasının verdiği anonim oturum yalnız aynı sitedeki indirme sayfasında kullanılır; video adresi oturum taşımaz. Site aynı dosyayı iki sunucuda listeler; ilki açılmazsa aynı yol ve aynı alan adındaki ikincisi denenir. İndirme bağlantıları kaynağa göre yaklaşık 12 saat geçerlidir. Çözünürlük dosyadan okunur; eski bölümlerin sunucuları kapalı olabilir. Her dizi veya bölüm garantisi değildir.
 
 FzMovies yalnız filmler için arar. Arama kartındaki ad yalnız aday seçer; film sayfasındaki tek IMDb kimliği hedefle aynı olmalı ve dosya adında başlığın hemen ardından aynı yıl gelmelidir. Dublajlı sayfalar açılmaz. Sayfanın anonim oturumu yalnız aynı sitedeki indirme sayfalarında kullanılır; video adresi oturum taşımaz. Site aynı dosyayı üç sunucuda listeler; ilki açılmazsa aynı yol ve aynı alan adındaki diğerleri denenir. Çözünürlük ve süre dosyadan okunur; dosya adındaki 720p etiketi doğrulama sayılmaz. İndirme bağlantıları kaynağa göre yaklaşık 12 saat geçerlidir. Her film garantisi değildir.
 
-HDRezka'da aynı IMDb, kanonik başlık ve yıl birlikte aranır. Farklı başlık gerekiyorsa yalnız aynı TMDB kaydının alternatif başlıkları kabul edilir. Dizilerde seçilen ses sürümünün kendi bölüm listesinde tam sezon ve bölüm bulunmalıdır. Hesap, kullanıcı çerezi veya yeni sunucu gerekmez. Ücretli işaretli kalite ve kısa örnek videolar atlanır; ücretsiz 4K bulunduğu varsayılmaz. Mevcut TR/EN altyazı araması dosya bazında devam eder.
+HDRezka'da aynı IMDb, kanonik başlık ve yıl birlikte aranır. Farklı başlık gerekiyorsa yalnız aynı TMDB kaydının alternatif başlıkları kabul edilir. Dizilerde seçilen ses sürümünün kendi bölüm listesinde tam sezon ve bölüm bulunmalıdır. Hesap, kullanıcı çerezi veya yeni sunucu gerekmez. Ücretli işaretli kalite ve kısa örnek videolar atlanır; ücretsiz 4K bulunduğu varsayılmaz. Mevcut TR/EN altyazı araması dosya bazında devam eder. HDRezka 1.9.8'den beri ayrı sağlayıcıdır: dosyanın yönlendirildiği CDN düğümü yanıt vermezse iPhone isteği 60 sn bekler ve yalnız bu sağlayıcının satırları düşer.
 
 MoviesDrive'da tam film adı/yıl, varsa IMDb ve dosyanın kendi adı birlikte denetlenir. Gerektiğinde aynı TMDB kaydının resmî alternatif başlıkları kullanılır; franchise öneki veya benzer başlık tek başına eşleşme sayılmaz. Yayımlanmış indirme bağlantısından Pixeldrain'in public dosya bilgisine gidilir; erişim kısıtlıysa sonuç atlanır. Gerçek byte boyutu, video pikseli, süre ve ses parçaları okunur. Sadece HI sesi bulunan dosyalar eklenmez; TR/EN veya yapımın Hintçe dışındaki özgün sesi aranır. Dört sürüm için küçük, 1080p ve yüksek kalite dengesi kullanılır; kaynak etiketleri doğrulanmış kalite sayılmaz.
 

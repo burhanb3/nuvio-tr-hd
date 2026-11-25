@@ -9,7 +9,6 @@ module.exports = createEntry('main', {
   scanArchive: require('./providers/archive.cjs').scanArchive,
   scanHdHub: require('./providers/hdhub.cjs').scanHdHub,
   scanFzTvSeries: require('./providers/fztvseries.cjs').scanFzTvSeries,
-  scanHdRezka: require('./providers/hdrezka.cjs').scanHdRezka,
   scanMoviesDrive: require('./providers/moviesdrive.cjs').scanMoviesDrive,
   scanFzMovies: require('./providers/fzmovies.cjs').scanFzMovies,
   scanJetFilmizle: require('./providers/jetfilmizle.cjs').scanJetFilmizle,

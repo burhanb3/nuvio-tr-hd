@@ -15,6 +15,10 @@ const { configuration, configurationLabel, effectiveTmdbKey, writeDiagnostic } =
 
 const FAST_ONLINE_BUDGET_MS = 18000;
 const FAST_ONLINE_AFTER_IDENTITY_MS = 8000;
+// Scrapers split off because one of their hosts can hang a native request for
+// 60 s on iOS. Subtitle traffic starts only after media bytes pass the probe,
+// and HLS/bridge/HTTP settings do not apply.
+const ISOLATED_LANES = ['extraAnime', 'goojara', 'hdrezka'];
 
 function parseUrls(value, allowHttp) {
   if (typeof value !== 'string') return [];
@@ -143,7 +147,7 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs, requestTi
         const minimum = Number(settings.minimumQuality ?? 0);
         if (video.dimensions && parseInt(qualityLabel(video.dimensions)) < minimum) { reject('quality'); return; }
         const pair = { candidate, video, subtitles: [] };
-        if (['extraAnime','goojara'].includes(lane)) void discoverSubtitles.prefetch();
+        if (ISOLATED_LANES.includes(lane)) void discoverSubtitles.prefetch();
         const embedded = embeddedSubtitleLanguages(video,candidate).includes('tr');
         let published = !strictSubtitles || embedded;
         if (published) completed.push(pair);
@@ -282,7 +286,11 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs, requestTi
               if (filesLane && adapters.scanFzTvSeries && settings.fztvseriesEnabled !== false && !target.isAnime)
                 sourceJobs.push({name:'FzTvSeries',run:()=>adapters.scanFzTvSeries(http.scope(12000),target)});
             }
-            if (filesLane && adapters.scanHdRezka && settings.hdrezkaEnabled !== false) sourceJobs.push({name:'HDRezka',run:()=>{
+            // HDRezka's entry host 302s each file to a fixed CDN node. Some nodes
+            // drop the TCP connect silently; iOS follows the redirect natively
+            // and waits 60 s, which used to cut every row of the main scraper.
+            // It runs in its own scraper; a saved hdrezkaEnabled in main is ignored.
+            if (adapters.scanHdRezka && ['hdrezka','all'].includes(lane) && settings.hdrezkaEnabled !== false) sourceJobs.push({name:'HDRezka',run:()=>{
               const sourceHttp=http.scope(10000);
               return adapters.scanHdRezka(sourceHttp,target,{loadTitles:()=>loadAltTitles(sourceHttp)});
             }});
@@ -354,7 +362,7 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs, requestTi
             emit({ stage: 'source', source: job.name, candidates: candidates.length, ...timing });
             if (!candidates.length || http.expired()) return;
             if (['4KHDHub / HubCloud','Internet Archive','MoviesDrive / Pixeldrain'].includes(job.name) && !sourceFactories.some(s => s.name === job.name)) return;
-            if (!['extraAnime','goojara'].includes(lane)) void discoverSubtitles.prefetch();
+            if (!ISOLATED_LANES.includes(lane)) void discoverSubtitles.prefetch();
             pending.push(mapLimit(candidates.slice(0, quota), lane === 'extraAnime' ? 1 : 3,
               candidate => processCandidate(candidate).catch(() => reject('candidate_error'))));
           });
@@ -410,7 +418,7 @@ function onSettings() {
     { type: 'toggle', key: 'fzmoviesEnabled', label: 'FzMovies film dosyaları', defaultValue: true, description: 'Küçük film dosyaları (genelde 360p MP4 ve 720p MKV). Film sayfasındaki IMDb kimliği ve dosya adı/yıl denetlenir; çözünürlük ve süre dosyadan okunur. Dizi aramaz.' },
     { type: 'toggle', key: 'jetfilmizleEnabled', label: 'JetFilmizle Türkçe dublajlı film dosyaları', defaultValue: true, description: 'Yalnız filmler (Gold MP4). Film sayfasındaki IMDb kimliği ve Range 206 ön kontrolü gerekir; çözünürlük, süre ve okunabilen ses dili dosyadan doğrulanır.' },
     { type: 'toggle', key: 'fztvseriesEnabled', label: 'FzTvSeries dizi bölüm dosyaları', defaultValue: true, description: 'Küçük MP4 bölümler (çoğunlukla 360p–480p). Dizi sayfasındaki IMDb kimliği, tam sezon/bölüm ve dosya adı denetlenir; çözünürlük dosyadan okunur. Film aramaz.' },
-    { type: 'toggle', key: 'hdrezkaEnabled', label: 'HDRezka farklı boyutlarda film/dizi dosyaları', defaultValue: true, description: 'Ücretsiz özgün sesli MP4 seçenekleri ve mevcut TR/EN altyazılar. IMDb, başlık/yıl ve tam bölüm denetlenir; ücretli kalite ve örnek videolar eklenmez.' },
+    { type: 'toggle', key: 'hdrezkaEnabled', label: 'HDRezka farklı boyutlarda film/dizi dosyaları', defaultValue: true, description: 'Bağımsız tarama: ücretsiz özgün sesli MP4 seçenekleri ve mevcut TR/EN altyazılar. IMDb, başlık/yıl ve tam bölüm denetlenir; ücretli kalite ve örnek videolar eklenmez. Bir CDN düğümü yanıt vermezse ana sağlayıcıdaki sonuçlar etkilenmez.' },
     {type:'toggle',key:'hdfilmdelisiEnabled',label:'HDFilmDelisi Türkçe dublaj ve çoklu ses',defaultValue:true,description:'Public film kataloğu ve gerçek HLS listesi. Ses/altyazı dilleri yayıncıdan okunur; bu kaynak online izleme içindir.'},
     {type:'toggle',key:'dizibalEnabled',label:'DiziBal film, dizi ve anime',defaultValue:true,description:'Türkçe dublaj ve altyazılı online alternatifler. Özgün veya TMDB çeviri adı, yıl ve tam bölüm denetlenir.'},
     { type: 'toggle', key: 'waploadedEnabled', label: 'Waploaded güncel film/dizi dosyaları', defaultValue: true, description: 'Kısmi kapsam: kaynağın son güncellenen listesi taranır; tüm arşivi kapsamaz. Gerçek dosya, yıl ve bölüm doğrulanır. Mevcut TR/EN araması uygulanır.' },
@@ -452,8 +460,8 @@ function onSettings() {
 }
 
 function createEntry(lane, adapters = {}) {
-  const titles = { main: 'Film/dizi · online ve dosyalar', files: 'Dosyalar', online: 'Hızlı kaynaklar', anime: 'Anime', extraAnime:'Ek Anime',fastOnline:'Hızlı İzle',goojara:'Goojara' };
-  const only = { files: ['hdhubEnabled','directoryEnabled','archiveEnabled','waploadedEnabled','rarefilmmEnabled','fzmoviesEnabled','jetfilmizleEnabled','fztvseriesEnabled','hdrezkaEnabled','moviesdriveEnabled','catalogUrls','addonUrls'], online: ['playImdbEnabled','vixsrcEnabled','diziyouOptInEnabled','dizibakEnabled','filmmoduEnabled','hdfilmdelisiEnabled','purstreamEnabled','filmekseniEnabled','hlsView'], anime: ['animecixEnabled','sonanimeEnabled'],extraAnime:['seicodeEnabled','animomOptInEnabled','anizoneOptInEnabled'],fastOnline:['hdfilmdelisiEnabled','dizibalEnabled','purstreamEnabled','filmekseniEnabled','hlsView'],goojara:['goojaraEnabled'] };
+  const titles = { main: 'Film/dizi · online ve dosyalar', files: 'Dosyalar', online: 'Hızlı kaynaklar', anime: 'Anime', extraAnime:'Ek Anime',fastOnline:'Hızlı İzle',goojara:'Goojara',hdrezka:'HDRezka' };
+  const only = { files: ['hdhubEnabled','directoryEnabled','archiveEnabled','waploadedEnabled','rarefilmmEnabled','fzmoviesEnabled','jetfilmizleEnabled','fztvseriesEnabled','moviesdriveEnabled','catalogUrls','addonUrls'], hdrezka:['hdrezkaEnabled'], online: ['playImdbEnabled','vixsrcEnabled','diziyouOptInEnabled','dizibakEnabled','filmmoduEnabled','hdfilmdelisiEnabled','purstreamEnabled','filmekseniEnabled','hlsView'], anime: ['animecixEnabled','sonanimeEnabled'],extraAnime:['seicodeEnabled','animomOptInEnabled','anizoneOptInEnabled'],fastOnline:['hdfilmdelisiEnabled','dizibalEnabled','purstreamEnabled','filmekseniEnabled','hlsView'],goojara:['goojaraEnabled'] };
   only.main = [...only.files, ...only.online.filter(key=>!['hdfilmdelisiEnabled','purstreamEnabled','filmekseniEnabled'].includes(key))];
   const sourceFields = Object.values(only).flat();
   return {
@@ -463,10 +471,9 @@ function createEntry(lane, adapters = {}) {
       const budgetMs = { online: 16000, anime: 20000, all: 28000 }[lane];
       return createProvider({ settings, tmdbKey, lane, budgetMs, adapters }).getStreams(...args);
     },
-    onSettings: () => [{ type: 'info', label: lane === 'main' ? 'Film/dizi araması online HLS ile gerçek MP4/MKV dosyalarını aynı listede sunar. Dosya araması boşsa online alternatifler korunur. Goojara ve Anime ayrı taramalardır.' : lane==='fastOnline'?'Hızlı İzle, HDFilmDelisi, DiziBal, Purstream ve FilmEkseni online kaynaklarını bağımsız arar. Ana dosya aramasının bitmesini beklemez. HLS kaynakları izleme içindir; dosya indirmesi sunmaz.':lane==='goojara'?'Goojara dönen CDN düğümleri yüzünden ana listeden ayrı taranır. Bir düğüm yanıt vermezse yalnız bu tarama zaman aşımına uğrar; ana Nuvio TR HD sonuçları korunur.':lane==='extraAnime'?'Kısmi kapsama sahip ek anime dosyaları bağımsız taranır. Her bölümde sonuç garantisi yoktur; boş sonuç diğer sağlayıcıların sonuçlarını silmez. Aynı anda tek dosya kontrol edilir.':`Bu ayarlar yalnız ${titles[lane]} taramasına aittir. En fazla kaynak sınırı bu tarama içindir.` },
-      ...onSettings().filter(field => (!sourceFields.includes(field.key) || only[lane].includes(field.key)) && (!['extraAnime','goojara'].includes(lane)||!['includeHls','useDownloadBridge','allowHttp','detailedHlsMetadata'].includes(field.key)))
-        .map(field=>lane==='extraAnime'&&field.type==='info'&&field.label.startsWith('Tanı ·')?{...field,label:field.label.split(' · ').slice(0,3).join(' · ')+' · Bağımsız Ek Anime'}:
-          lane==='goojara'&&field.type==='info'&&field.label.startsWith('Tanı ·')?{...field,label:field.label.split(' · ').slice(0,3).join(' · ')+' · Bağımsız Goojara'}:field)]
+    onSettings: () => [{ type: 'info', label: lane === 'main' ? 'Film/dizi araması online HLS ile gerçek MP4/MKV dosyalarını aynı listede sunar. Dosya araması boşsa online alternatifler korunur. Goojara, HDRezka ve Anime ayrı taramalardır.' : lane==='fastOnline'?'Hızlı İzle, HDFilmDelisi, DiziBal, Purstream ve FilmEkseni online kaynaklarını bağımsız arar. Ana dosya aramasının bitmesini beklemez. HLS kaynakları izleme içindir; dosya indirmesi sunmaz.':lane==='goojara'?'Goojara dönen CDN düğümleri yüzünden ana listeden ayrı taranır. Bir düğüm yanıt vermezse yalnız bu tarama zaman aşımına uğrar; ana Nuvio TR HD sonuçları korunur.':lane==='hdrezka'?'HDRezka her dosyayı sabit bir CDN düğümüne yönlendirir; bazı düğümler bağlantıya yanıt vermez. Bu yüzden ana listeden ayrı taranır. Bir düğüm yanıt vermezse bu taramanın sonuçları gelmeyebilir; ana Nuvio TR HD sonuçları korunur.':lane==='extraAnime'?'Kısmi kapsama sahip ek anime dosyaları bağımsız taranır. Her bölümde sonuç garantisi yoktur; boş sonuç diğer sağlayıcıların sonuçlarını silmez. Aynı anda tek dosya kontrol edilir.':`Bu ayarlar yalnız ${titles[lane]} taramasına aittir. En fazla kaynak sınırı bu tarama içindir.` },
+      ...onSettings().filter(field => (!sourceFields.includes(field.key) || only[lane].includes(field.key)) && (!ISOLATED_LANES.includes(lane)||!['includeHls','useDownloadBridge','allowHttp','detailedHlsMetadata'].includes(field.key)))
+        .map(field=>ISOLATED_LANES.includes(lane)&&field.type==='info'&&field.label.startsWith('Tanı ·')?{...field,label:field.label.split(' · ').slice(0,3).join(' · ')+' · Bağımsız '+titles[lane]}:field)]
   };
 }
 module.exports = { createProvider, formatResults, onSettings, createEntry };
