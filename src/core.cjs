@@ -305,9 +305,15 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs, requestTi
               sourceJobs.push({ name: 'VixSrc', run: () => adapters.scanVixDirect(http.scope(5000), target) });
             if (animeLane && adapters.scanAnimecix && settings.animecixEnabled !== false && target.isAnime) sourceJobs.push({ name: 'Animecix', run: () => adapters.scanAnimecix(http, target) });
             if (animeLane && adapters.scanSonAnime && settings.sonanimeEnabled !== false && target.isAnime) sourceJobs.push({ name: 'SonAnime', run: () => adapters.scanSonAnime(http, target) });
-            if(animeLane&&adapters.scanAnizone&&settings.includeHls!==false&&settings.anizoneEnabled!==false&&target.isAnime)
+            // Anizone's origin can accept a request and never answer, and
+            // AniMOM's hosts can drop the connection silently (Nov 2026). On
+            // iOS such a native request runs to the 60 s plugin limit and
+            // drops every row of its scraper, so both are opt-in (new keys:
+            // a saved old `true` must not re-enable them) and never run in
+            // the Anime scraper that carries Animecix/SonAnime files.
+            if(adapters.scanAnizone&&['extraAnime','all'].includes(lane)&&settings.includeHls!==false&&settings.anizoneOptInEnabled===true&&target.isAnime)
               sourceJobs.push({name:'Anizone',run:()=>adapters.scanAnizone(http.scope(6500),target)});
-            if (adapters.scanAniMom && (lane === 'extraAnime' && settings.animomEnabled !== false || lane === 'all' && settings.animomEnabled === true) && target.isAnime)
+            if (adapters.scanAniMom && ['extraAnime','all'].includes(lane) && settings.animomOptInEnabled === true && target.isAnime)
               sourceJobs.push({ name: 'AniMOM', run: () => adapters.scanAniMom(http, target) });
             if (adapters.scanSeiCode && (lane === 'extraAnime' && settings.seicodeEnabled !== false || lane === 'all' && settings.seicodeEnabled === true) && target.isAnime)
               sourceJobs.push({ name: 'SeiCode', run: () => adapters.scanSeiCode(http, target) });
@@ -413,7 +419,6 @@ function onSettings() {
     { type: 'toggle', key: 'playImdbEnabled', label: 'PlayIMDb API araması', defaultValue: true, description: 'Bazı sonuçlar HLS olabilir; dosya indirmesi olarak gösterilmez.' },
     { type: 'toggle', key: 'animecixEnabled', label: 'Animecix anime MP4 araması', defaultValue: true, description: 'TMDB kimliği, özgün başlık, yıl ve tam sezon/bölüm doğrulanır. TR kaynak bilgisi tek başına altyazı kanıtı değildir.' },
     { type: 'toggle', key: 'sonanimeEnabled', label: 'SonAnime anime dosyası araması', defaultValue: true, description: 'Tam TMDB/yıl/bölüm bağı ve gerçek dosya kontrolü. Aynı dosyanın aynası ek kalite sayılmaz.' },
-    {type:'toggle',key:'anizoneEnabled',label:'Anizone çok sesli online anime',defaultValue:true,description:'Tam başlık/yıl ve bölüm bağı. Film ve ilk sezon için ek HLS; mevcut TR/EN altyazılar aranır. Dosya indirmesi sunmaz.'},
     { type: 'toggle', key: 'diziyouOptInEnabled', label: 'DiziYou dizi alternatifi (deneysel · varsayılan kapalı)', defaultValue: false, description: 'Bazı TR İSS ağlarında alan adı yanıt vermeyip iPhone’da 60 sn sınırıyla tüm dizi sonuçlarını düşürebildiği için varsayılan kapalıdır. Yalnız erişilebilir ağlarda açın.' },
     { type: 'toggle', key: 'dizibakEnabled', label: 'DiziBak dizi alternatifi', defaultValue: true, description: 'Küçük public metadata yanıtları kullanılır. İlk bölüm tarihi ve dizi kategorisi uyuşmazsa sonuç eklenmez.' },
     { type: 'toggle', key: 'filmmoduEnabled', label: 'FilmModu online film ve kaynak ses seçenekleri', defaultValue: true },
@@ -422,8 +427,9 @@ function onSettings() {
     { type: 'toggle', key: 'moviesdriveEnabled', label: 'MoviesDrive ek film ve bölüm indirmeleri', defaultValue: true, description: 'Film/anime filmi ve bölüm dosyaları aranır. Sonraki sezonların yılı ve bölüm süresi aynı TMDB kaydından doğrulanır; ad, IMDb, bölüm ve gerçek medya denetlenir. Uzantısız MKV dosyaları Nuvio’da .mp4 adıyla kaydedilebilir; dahili MPV gerçek formatı içerikten okur. Harici oynatıcıda .mkv olarak yeniden adlandırmak gerekebilir.' },
     { type: 'info', label: 'Ses kodları: EN İngilizce, TR Türkçe, JA Japonca, HI Hintçe. EN/ES görüntüde, görüntüye işlenmiş altyazıdır; ses dili değildir.' },
     { type: 'toggle', key: 'autoSubtitles', label: 'TR ve EN altyazıları otomatik ara', defaultValue: true },
-    { type: 'toggle', key: 'animomEnabled', label: 'Deneysel AniMOM anime dosyaları', defaultValue: false, description: 'Varsayılan kapalı: tekil MP4/TR doğrulandı, birleşik arama ve bazı bölümlerde CDN kararsız. Tam ad/yıl/bölüm gerekir; düz bölüm numarası başka sezona taşınmaz.' },
-    { type: 'toggle', key: 'seicodeEnabled', label: 'SeiCode / MP4Upload ek anime dosyaları', defaultValue: true, description: 'Kısmi katalog: tam TMDB/ad/yıl ve açık sezon/bölüm bağı gerekir. Yalnız gerçek MP4Upload dosyası sunulur; eksik bölümde başka bölüm seçilmez.' },
+    { type: 'toggle', key: 'seicodeEnabled', label: 'SeiCode ek anime dosyaları', defaultValue: true, description: 'Kısmi katalog (çoğunlukla son sezonlar): tam TMDB/ad/yıl ve açık sezon/bölüm bağı gerekir. Yalnız oynatıcının aynı sezon/bölüm olarak bildirdiği gerçek MP4 dosyası sunulur; eksik bölümde başka bölüm seçilmez.' },
+    { type: 'toggle', key: 'animomOptInEnabled', label: 'AniMOM anime dosyaları (deneysel · varsayılan kapalı)', defaultValue: false, description: 'Bazı ağlarda sunucu bağlantıya hiç yanıt vermiyor; iPhone’da 60 sn sınırıyla Ek Anime sonuçlarının tamamı düşebildiği için varsayılan kapalıdır. Yalnız erişilebilir ağlarda açın.' },
+    { type: 'toggle', key: 'anizoneOptInEnabled', label: 'Anizone çok sesli online anime (deneysel · varsayılan kapalı)', defaultValue: false, description: 'Sunucu bazı aramaları yanıtsız bekletiyor; iPhone’da 60 sn sınırıyla Ek Anime sonuçlarının tamamı düşebildiği için varsayılan kapalıdır. Yalnız dizilerin ilk sezonu; HLS, dosya indirmesi sunmaz.' },
     { type: 'select', key: 'subtitlePolicy', label: 'Türkçe altyazı bulunamazsa', defaultValue: 'prefer', options: [
       { value: 'prefer', label: 'Videoyu göster; TR altyazı yok bilgisini yaz' }, { value: 'require', label: 'Videoyu gizle' }] },
     { type: 'select', key: 'subtitleMatchMode', label: 'Altyazı eşleştirme', defaultValue: 'balanced', options: [
@@ -447,7 +453,7 @@ function onSettings() {
 
 function createEntry(lane, adapters = {}) {
   const titles = { main: 'Film/dizi · online ve dosyalar', files: 'Dosyalar', online: 'Hızlı kaynaklar', anime: 'Anime', extraAnime:'Ek Anime',fastOnline:'Hızlı İzle',goojara:'Goojara' };
-  const only = { files: ['hdhubEnabled','directoryEnabled','archiveEnabled','waploadedEnabled','rarefilmmEnabled','fzmoviesEnabled','jetfilmizleEnabled','fztvseriesEnabled','hdrezkaEnabled','moviesdriveEnabled','catalogUrls','addonUrls'], online: ['playImdbEnabled','vixsrcEnabled','diziyouOptInEnabled','dizibakEnabled','filmmoduEnabled','hdfilmdelisiEnabled','purstreamEnabled','filmekseniEnabled','hlsView'], anime: ['animecixEnabled','sonanimeEnabled','anizoneEnabled'],extraAnime:['animomEnabled','seicodeEnabled'],fastOnline:['hdfilmdelisiEnabled','dizibalEnabled','purstreamEnabled','filmekseniEnabled','hlsView'],goojara:['goojaraEnabled'] };
+  const only = { files: ['hdhubEnabled','directoryEnabled','archiveEnabled','waploadedEnabled','rarefilmmEnabled','fzmoviesEnabled','jetfilmizleEnabled','fztvseriesEnabled','hdrezkaEnabled','moviesdriveEnabled','catalogUrls','addonUrls'], online: ['playImdbEnabled','vixsrcEnabled','diziyouOptInEnabled','dizibakEnabled','filmmoduEnabled','hdfilmdelisiEnabled','purstreamEnabled','filmekseniEnabled','hlsView'], anime: ['animecixEnabled','sonanimeEnabled'],extraAnime:['seicodeEnabled','animomOptInEnabled','anizoneOptInEnabled'],fastOnline:['hdfilmdelisiEnabled','dizibalEnabled','purstreamEnabled','filmekseniEnabled','hlsView'],goojara:['goojaraEnabled'] };
   only.main = [...only.files, ...only.online.filter(key=>!['hdfilmdelisiEnabled','purstreamEnabled','filmekseniEnabled'].includes(key))];
   const sourceFields = Object.values(only).flat();
   return {
@@ -459,8 +465,7 @@ function createEntry(lane, adapters = {}) {
     },
     onSettings: () => [{ type: 'info', label: lane === 'main' ? 'Film/dizi araması online HLS ile gerçek MP4/MKV dosyalarını aynı listede sunar. Dosya araması boşsa online alternatifler korunur. Goojara ve Anime ayrı taramalardır.' : lane==='fastOnline'?'Hızlı İzle, HDFilmDelisi, DiziBal, Purstream ve FilmEkseni online kaynaklarını bağımsız arar. Ana dosya aramasının bitmesini beklemez. HLS kaynakları izleme içindir; dosya indirmesi sunmaz.':lane==='goojara'?'Goojara dönen CDN düğümleri yüzünden ana listeden ayrı taranır. Bir düğüm yanıt vermezse yalnız bu tarama zaman aşımına uğrar; ana Nuvio TR HD sonuçları korunur.':lane==='extraAnime'?'Kısmi kapsama sahip ek anime dosyaları bağımsız taranır. Her bölümde sonuç garantisi yoktur; boş sonuç diğer sağlayıcıların sonuçlarını silmez. Aynı anda tek dosya kontrol edilir.':`Bu ayarlar yalnız ${titles[lane]} taramasına aittir. En fazla kaynak sınırı bu tarama içindir.` },
       ...onSettings().filter(field => (!sourceFields.includes(field.key) || only[lane].includes(field.key)) && (!['extraAnime','goojara'].includes(lane)||!['includeHls','useDownloadBridge','allowHttp','detailedHlsMetadata'].includes(field.key)))
-        .map(field=>lane==='extraAnime'&&field.key==='animomEnabled'?{...field,label:'AniMOM ek anime dosyaları',defaultValue:true,description:'Kısmi katalog: tam ad/yıl/bölüm ve gerçek MP4 kontrolü gerekir. Çalışmayan bölüm atlanır; diğer sonuçlar korunur.'}:
-          lane==='extraAnime'&&field.type==='info'&&field.label.startsWith('Tanı ·')?{...field,label:field.label.split(' · ').slice(0,3).join(' · ')+' · Bağımsız Ek Anime'}:
+        .map(field=>lane==='extraAnime'&&field.type==='info'&&field.label.startsWith('Tanı ·')?{...field,label:field.label.split(' · ').slice(0,3).join(' · ')+' · Bağımsız Ek Anime'}:
           lane==='goojara'&&field.type==='info'&&field.label.startsWith('Tanı ·')?{...field,label:field.label.split(' · ').slice(0,3).join(' · ')+' · Bağımsız Goojara'}:field)]
   };
 }

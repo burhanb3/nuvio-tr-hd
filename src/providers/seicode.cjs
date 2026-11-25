@@ -2,7 +2,7 @@
 const {safeUrl,mapLimit}=require('../util.cjs');
 const {sameName,syntheticFilename}=require('./page-data.cjs');
 const {decodeEntities}=require('./directory.cjs');
-const API='https://next.seicode.net',ORIGIN='https://seicode.net/';
+const API='https://next.seicode.net',ORIGIN='https://seicode.net/',TAU='https://tau-video.xyz';
 function matchesSeiCode(detail,target){
   return detail && detail.type==='tv' && Number(detail.tmdbID)===target.tmdbId &&
     Number(String(detail.firstAirDate||'').slice(0,4))===target.year &&
@@ -15,6 +15,27 @@ function mp4UploadEmbed(value){
   const parsed=new URL(url);if(!/^(?:www\.)?mp4upload\.com$/i.test(parsed.hostname))return null;
   const id=parsed.pathname.match(/^\/(?:embed-)?([a-z0-9]{8,32})(?:\.html)?\/?$/i)?.[1];
   return id?'https://www.mp4upload.com/embed-'+id+'.html':null;
+}
+// SeiCode now mostly lists tau-video players (Nov 2026; MP4Upload links are
+// gone). Values can carry leading spaces. Only an exact /embed/<24 hex> id.
+function tauVideoId(value){
+  const url=safeUrl(typeof value==='string'?value.trim():'');if(!url)return null;
+  const parsed=new URL(url);
+  return parsed.origin===TAU?parsed.pathname.match(/^\/embed\/([a-f0-9]{24})\/?$/i)?.[1]||null:null;
+}
+// The player API must name the same embed and the exact requested season and
+// episode; a different numbering is rejected instead of mapped.
+function tauVideoCandidates(video,id,target){
+  if(!video||video._id!==id||Number(video.season_number)!==target.season||Number(video.episode_number)!==target.episode||!Array.isArray(video.urls))return [];
+  const seen=new Set();
+  return video.urls.slice(0,4).map(entry=>{
+    const url=safeUrl(entry?.url);
+    if(!url||!url.startsWith('https://')||!/\.mp4(?:$|[?#])/i.test(url)||seen.has(url))return null;
+    seen.add(url);
+    const label=String(entry.label||'').match(/^(\d{3,4})p$/i)?.[1];
+    return{url,source:'SeiCode',identity:target,identityConfidence:100,headers:{Referer:TAU+'/',Origin:TAU},
+      filename:syntheticFilename(target)+'.mp4',filenameSynthetic:true,...(label?{claimedQuality:label+'p'}:{}),subtitles:[]};
+  }).filter(Boolean);
 }
 function mp4UploadVideo(html){
   // Only the actual Video.js source block; scripts and ad URLs are not run.
@@ -39,11 +60,18 @@ async function scanSeiCode(http,target){
   const season=detail?.seasons?.find(s=>Number(s.season_number)===target.season);
   const episode=season?.episodes?.find(e=>Number(e.episode_number)===target.episode);
   if(!episode||!episode.video_links||http.expired())return [];
-  const embeds=[...new Set(Object.values(episode.video_links).slice(0,40).map(mp4UploadEmbed).filter(Boolean))].slice(0,2);
-  return mapLimit(embeds,2,async embed=>{
-    const page=await http.text(embed,{headers:{Referer:ORIGIN}}),url=page&&mp4UploadVideo(page.text);
-    return url?{url,source:'SeiCode',identity:target,identityConfidence:100,headers:{Referer:'https://www.mp4upload.com/'},
-      filename:syntheticFilename(target)+'.mp4',filenameSynthetic:true,subtitles:[]}:null;
-  });
+  const links=Object.values(episode.video_links).slice(0,40);
+  const embeds=[...new Set(links.map(mp4UploadEmbed).filter(Boolean))].slice(0,2);
+  const tauIds=[...new Set(links.map(tauVideoId).filter(Boolean))].slice(0,1);
+  const jobs=[...tauIds.map(id=>({tau:id})),...embeds.map(embed=>({embed}))];
+  return (await mapLimit(jobs,2,async job=>{
+    if(job.tau){
+      const video=await http.json(TAU+'/api/video/'+job.tau,{headers:{Referer:TAU+'/',Origin:TAU}});
+      return tauVideoCandidates(video,job.tau,target);
+    }
+    const page=await http.text(job.embed,{headers:{Referer:ORIGIN}}),url=page&&mp4UploadVideo(page.text);
+    return url?[{url,source:'SeiCode',identity:target,identityConfidence:100,headers:{Referer:'https://www.mp4upload.com/'},
+      filename:syntheticFilename(target)+'.mp4',filenameSynthetic:true,subtitles:[]}]:[];
+  })).flat();
 }
-module.exports={scanSeiCode,matchesSeiCode,mp4UploadEmbed,mp4UploadVideo};
+module.exports={scanSeiCode,matchesSeiCode,mp4UploadEmbed,mp4UploadVideo,tauVideoId,tauVideoCandidates};

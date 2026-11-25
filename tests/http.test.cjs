@@ -8,6 +8,9 @@ test('güvenli URL çözümü, göreli yollar ve HTTP tercihi', () => {
   assert.equal(safeUrl('../film.mp4', 'https://media.test/a/b/catalog.json'), 'https://media.test/a/film.mp4');
   for (const url of ['file:///c:/a.mp4', 'javascript:alert(1)', 'https://user:pass@media.test/a.mp4', 'https://media.test/a\n.mp4', 'http://media.test/a.mp4']) assert.equal(safeUrl(url), null);
   assert.equal(safeUrl('http://192.168.1.2/a.mp4', undefined, true), 'http://192.168.1.2/a.mp4');
+  // A title with an apostrophe must not silently drop the search request.
+  assert.equal(safeUrl("https://media.test/search/Ocean's-Eleven?q=" + encodeURIComponent("Journey's End")), 'https://media.test/search/Ocean%27s-Eleven?q=Journey%27s%20End');
+  for (const url of ['https://media.test/a"b', 'https://media.test/<a>', 'https://media.test/a`b']) assert.equal(safeUrl(url), null);
 });
 test('kullanıcı Range/Host ve CRLF başlıkları aktarılmaz', () => {
   assert.deepEqual(cleanHeaders({ Range: 'bytes=2-3', Host: 'bad', Referer: 'https://player.test/', Cookie: 'a\r\nb' }), { Referer: 'https://player.test/' });

@@ -2,9 +2,9 @@
 
 - 12 Kasım ek bilgi: kullanıcı Windows Son aramalar listesindeki Nuvio girişinden açtığını ekran görüntüsüyle gösterdi. Bu önbellek girdisinin hedefi doğrudan okunmadı. Ayrı ve aranabilir `Programs/Nuvio TR HD.lnk` kullanıcı Başlat menüsüne eklendi; kontrollü başlatıcı argümanı yeniden okunarak doğrulandı. Kullanıcı aramada tam Nuvio TR HD adını veya masaüstü aynı adlı kısayolu seçmeli. Açık uygulamaya dokunulmadı.
 
-## 1.9.7 — 25 Kasım 2026 (yerel, henüz yayımlanmadı): JetFilmizle TR dublaj MP4, büyük moov ses izi, hız/sıralama ve lane bazlı hafif paketler
+## 1.9.7 — 25 Kasım 2026: JetFilmizle TR dublaj MP4, büyük moov ses izi, hız/sıralama ve lane bazlı hafif paketler
 
-363/363 yerel birim + QuickJS WASM paket testi geçti (`npm run check`, 11,8 sn). ABI değişmedi. Henüz commit/push/Pages yayını yapılmadı; fiziksel telefon, tam oynatma, indirme, çevrimdışı altyazı ve sahne senkronu testi yapılmadı. Kök dizindeki geçici `hang-nara.txt` ve `hh.txt` temizlendi.
+363/363 yerel birim + QuickJS WASM paket testi geçti (`npm run check`, 11,8 sn). ABI değişmedi. Kullanıcı onayıyla `codex/publish-nuvio-tr-hd` dalına gönderildi. Kaynak commit `ea01076`: Test ve paket `45683585388` (ubuntu+windows) başarılı, Pages `45683585479` başarılı; manifest, beş `?v=1.9.7` sağlayıcı, sabit online adı ve ana sayfa public HTTP 200 ve SHA-256 yerel `dist/` ile aynı (`compatibility/github-publication.json`, anonim GitHub API). Fiziksel telefon, tam oynatma, indirme, çevrimdışı altyazı ve sahne senkronu testi yapılmadı. Kök dizindeki geçici `hang-nara.txt` ve `hh.txt` temizlendi.
 
 - **Faz 1 — JetFilmizle (yalnız film, Gold MP4) + MP4 büyük `moov` ses izi:**
   - `src/providers/jetfilmizle.cjs` tamamlanıp `main` hattına bağlandı (`jetfilmizleEnabled`, varsayılan açık, 10 sn kapsam).

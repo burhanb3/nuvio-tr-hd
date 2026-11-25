@@ -41,15 +41,17 @@ test('Dizi adındaki Trailer/Sample sözcükleri bölümün fragman olduğu anla
  const http=createHttp({fetchImpl:fixtureFetch(fixture)});
  try{assert.equal((await scanPlayImdb(http,{...target,originalTitle:'Trailer Park Boys'})).length,1);}finally{http.close();}
 });
-test('VixSrc film yerine tam dizi/bölüm yolunu sorgular; farklı başlık reddedilir',async()=>{
+test('VixSrc film yerine tam dizi/bölüm yolunu sorgular; FHD izni yoksa h=1 istenmez; farklı başlık reddedilir',async()=>{
  const calls=[],expires=String(Math.floor(Date.now()/1000)+3600),base='https://vixsrc.to';
  const fixture={
   [base+'/api/tv/67070/1/1']:{json:{src:'/embed/7?t=RmxlYWJhZw%3D%3D'}},
-  [base+'/embed/7?t=RmxlYWJhZw%3D%3D']:{body:`window.masterPlaylist = {\nparams: {'token':'public','expires':'${expires}'},\nurl: '${base}/playlist/7',\n}`},
-  [base+`/playlist/7?token=public&expires=${expires}&h=1`]:{body:'#EXTM3U\n#EXT-X-STREAM-INF:BANDWIDTH=1000000,RESOLUTION=1280x720\nhttps://cdn.test/720.m3u8'}
+  [base+'/embed/7?t=RmxlYWJhZw%3D%3D']:{body:`window.masterPlaylist = {\nparams: {'token':'public','expires':'${expires}'},\nurl: '${base}/playlist/7',\n}\nwindow.canPlayFHD = false`},
+  // The live playlist answers 403 to h=1 when canPlayFHD is false.
+  [base+`/playlist/7?token=public&expires=${expires}&h=1`]:{status:403},
+  [base+`/playlist/7?token=public&expires=${expires}`]:{body:'#EXTM3U\n#EXT-X-STREAM-INF:BANDWIDTH=1000000,RESOLUTION=1280x720\nhttps://cdn.test/720.m3u8'}
  };
  const http=createHttp({fetchImpl:fixtureFetch(fixture,calls)});
- try{assert.equal((await scanVixDirect(http,target)).length,1);assert.ok(calls.some(c=>c.url.includes('/api/tv/67070/1/1')));
+ try{assert.equal((await scanVixDirect(http,target)).length,1);assert.ok(calls.some(c=>c.url.includes('/api/tv/67070/1/1')));assert.ok(!calls.some(c=>c.url.includes('&h=1')));
   assert.deepEqual(await scanVixDirect(http,{...target,originalTitle:'Wrong Show'}),[]);
  }finally{http.close();}
 });

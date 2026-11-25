@@ -9,7 +9,7 @@ test('doğrudan VixSrc: gerçek HLS gövdesi ve native indirme filtresi birlikte
  const master=`${base}/playlist/77?token=public-token&expires=${expires}&h=1`;
  const fixture={
   [base+'/api/movie/603']:{json:{src:'/embed/77?t=VGhlIE1hdHJpeA%3D%3D'}},
-  [base+'/embed/77?t=VGhlIE1hdHJpeA%3D%3D']:{body:`window.masterPlaylist = {\n params: {'token':'public-token','expires':'${expires}'},\n url: '${base}/playlist/77',\n }`,mime:'text/html'},
+  [base+'/embed/77?t=VGhlIE1hdHJpeA%3D%3D']:{body:`window.masterPlaylist = {\n params: {'token':'public-token','expires':'${expires}'},\n url: '${base}/playlist/77',\n }\n window.canPlayFHD = true`,mime:'text/html'},
   [master]:{body:'#EXTM3U\n#EXT-X-STREAM-INF:BANDWIDTH=1,RESOLUTION=1280x720\nhttps://vixsrc.to/playlist/77?type=video',mime:'application/vnd.apple.mpegurl'},
   [master+'&nuvio_format=master.m3u8']:{body:'#EXTM3U\n#EXT-X-STREAM-INF:BANDWIDTH=1,RESOLUTION=1280x720\nhttps://vixsrc.to/playlist/77?type=video',mime:'application/vnd.apple.mpegurl'}
  };

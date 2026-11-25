@@ -2,11 +2,10 @@
 
 - Son durum: masaüstü Nuvio TR HD artık Start-NuvioTRHD.ps1 üzerinden açılır. Kullanıcı yeniden aynı hata bildirdiğinde özgün kurulum çalışıyordu; nedeni kesinleşmedi. CheckOnly ve gömülü Java17 penceresiz classpath probe geçti. Kullanıcı kontrollü başlatıcıyla deneyip hata sürerse çalışan yol ve gerçek kaynak raporu birlikte incelenmeli. Tekrar UI başarısı/tam indirme doğrulanmış sayılmamalı.
 
-## 1.9.7 — 25 Kasım 2026 (yerel hazır, yayına ve fiziksel cihaz testine hazır)
+## 1.9.7 — 25 Kasım 2026
 
-1. **Hazır (yerel):** JetFilmizle Gold MP4 + büyük `moov` MP4 `readAudioTracks` testleri, başarısız ayna host önceliği, `4KHDHub` film sırası/10 sn kapsamı, `opensubtitles-v3` önceliği + 429 hash koruması, lane bazlı hafif/minified paketleme (`1.650 KB → 583 KB`) tamamlandı. `npm run check` **363/363** geçti (QuickJS dahil). `todaytvseries` ve `HDHub4u` canlı ölçümde elendi.
-2. **Yayın:** Kullanıcı onayıyla `1.9.7` commit + push (`codex/publish-nuvio-tr-hd`) edilip GitHub Actions + Pages + public SHA-256 doğrulanmalı.
-3. **Fiziksel cihaz kabul testi (Faz 5, hâlâ açık):**
+1. **Yayımlandı (`ea01076`):** Test ve paket `45683585388` (ubuntu+windows) ve Pages `45683585479` başarılı; 8 public dosya HTTP 200 ve SHA-256 yerel `dist/` ile aynı (`compatibility/github-publication.json`). JetFilmizle Gold MP4 + büyük `moov` MP4 `readAudioTracks`, başarısız ayna host önceliği, `4KHDHub` film sırası/10 sn kapsamı, `opensubtitles-v3` önceliği + 429 hash koruması, lane bazlı minified paketleme (`1.650 KB → 583 KB`) yayında. `npm run check` **363/363** geçti (QuickJS dahil). `todaytvseries` ve `HDHub4u` canlı ölçümde elendi.
+2. **Fiziksel cihaz kabul testi (Faz 5, hâlâ açık):**
    - **Wi-Fi ve LTE ayrı:** Depo yenilenip `Tanı · 1.9.7` görülmeli; `Nuvio TR HD`, `Hızlı İzle`, `Goojara`, `Anime`, `Ek Anime` açık olmalı.
    - **Dizi askı kontrolü:** The 100 S5E5 ve S1E3/S2E1'de ana listeden FzTvSeries / varsa 4KHDHub'ın düşmeden geldiği doğrulanmalı.
    - **Film TR dublaj + indirme:** Fury, Inception ve Matrix'te `JetFilmizle` (360p/720p MP4, `workers.dev` açık ağda) ve `4KHDHub` 1080p/4K satırları kontrol edilmeli.

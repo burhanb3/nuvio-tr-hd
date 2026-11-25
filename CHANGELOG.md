@@ -1,5 +1,26 @@
 # Sürüm notları
 
+## 1.9.8 — 25 Kasım 2026
+
+- **Anime yeniden çıkıyor.**
+  - **Kök neden 1, iPhone 60 sn kuralı:** `Anime` taramasındaki Anizone sunucusu yanıt vermeyince Nuvio scraper'ı 60 sn'de kesiyor ve aynı taramadaki Animecix/SonAnime satırları da düşüyordu (iOS kurallı simülasyonda Death Note dönüşü 64,6 sn). `Ek Anime`deki AniMOM'da da aynı durum vardı (64,7 sn).
+  - **Çözüm:** Anizone ve AniMOM `Anime` taramasından çıkarıldı. Yalnız `Ek Anime`de, yeni `anizoneOptInEnabled` / `animomOptInEnabled` anahtarlarıyla ve varsayılan kapalı olarak duruyorlar. Önceden kaydedilmiş `anizoneEnabled` / `animomEnabled: true` ayarı bunları yeniden açmaz. `Anime` artık yalnız Animecix ve SonAnime içerir.
+  - **Kök neden 2, SonAnime API değişikliği:** Arama listesi artık `tmdb_id` taşımıyor ve bağlantı süresi epoch saniye olarak geliyor; her iki değişiklik de tüm satırları eliyordu. Aday arama listesinden ad, yıl ve türle seçilir; TMDB kimliği ayrıntı kaydında zorunlu olarak doğrulanır. Süresi geçmiş bağlantı yine elenir.
+  - **SeiCode:** MP4Upload bağlantıları çoğu bölümde kalktı. Aynı bölüm kaydındaki `tau-video.xyz` MP4 dosyaları (kimlik, sezon ve bölüm birebir tutmalı, en fazla 4) eklendi. SeiCode çoğunlukla yalnız son sezonları taşır.
+  - **Kesme işaretli adlar:** `Frieren: Beyond Journey's End`, `Ocean's Eleven` gibi adlarda istek hiç gönderilmiyordu. `'` artık tarayıcılar gibi `%27` olarak kodlanır; diğer tırnak ve köşeli karakterler yine reddedilir.
+  - **iOS kurallı simülasyon (bu bilgisayar, 60 sn native askı modeli):**
+    - Death Note: `Anime` 4 akış, 3,3 sn.
+    - Frieren: `Anime` 7 akış, 15,3 sn.
+    - JJK: `Anime` 9 akış, 11,4 sn.
+    - Solo Leveling: `Anime` 9 akış, 10,0 sn; S2 için `Ek Anime` 3 MP4, 18,3 sn.
+    - Bu ölçüm fiziksel iPhone dönüş süresi garantisi değildir.
+- **Önceden çalışıp düşen kaynaklar:**
+  - **VixSrc (0/37):** Oynatma listesi Kasım 2026'dan beri `h=1` (FHD) isteğine, gömülü sayfa `canPlayFHD = true` demedikçe 403 veriyor. FHD artık yalnız sayfa izin verdiğinde istenir; aksi halde 720p/480p varyantlı ana liste gelir.
+  - **FilmEkseni:** `filmekseni.vip` çözülmüyor; site `filmekseni.pro`ya taşındı. Köken ve yıl bağlantısı denetimi yeni adrese alındı (Inception: TR/EN altyazılı HLS).
+  - **PlayIMDb:** API `stream_urls` alanını `cast_urls` olarak yeniden adlandırdı; iki ad da okunur. Bu ağdan akış sunucuları Cloudflare 403 döndürdüğü için satır gelmeyebilir.
+- **Değişmeyen sıfırlar (sonuçsuz, düzeltilmedi):** Waploaded'ın okunan site haritası yalnız son 50 filmi listeliyor. Sitedeki düz arama denenen adlarda yalnız forum yazısı döndürdü; türlü arama 4 denemenin 3'ünde yanıt vermedi. Başka bir arama yolu kanıtlanmadı. RareFilmm incelenmedi.
+- Fiziksel telefon, tam oynatma, indirme, çevrimdışı altyazı ve senkron testi yapılmadı.
+
 ## 1.9.7 — 25 Kasım 2026
 
 - **Filmlere yeni MP4 indirme kaynağı: JetFilmizle (Gold / Türkçe dublaj sekmesi).**

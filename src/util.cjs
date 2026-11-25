@@ -17,7 +17,10 @@ function normalizeTitle(value) {
 // Resolve paths here; use its read-only parser only for scheme/host validation.
 function safeUrl(value, base, allowHttp = false) {
   if (typeof value !== 'string' || !value.trim() || /[\s\\\x00-\x1f]/.test(value)) return null;
-  let url = value.trim();
+  // encodeURIComponent leaves an apostrophe as is (e.g. "Journey's", "Ocean's").
+  // Percent-encode it the way browsers send it instead of dropping the whole
+  // request; the other quote/bracket characters below stay rejected.
+  let url = value.trim().replace(/'/g, '%27');
   if (!/^https?:\/\//i.test(url) && base) {
     const m = base.match(/^(https?:)\/\/([^/]+)(\/[^?#]*)?/i);
     if (!m) return null;

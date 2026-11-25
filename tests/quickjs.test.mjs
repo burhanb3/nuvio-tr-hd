@@ -22,7 +22,7 @@ function aliasFeatureSample(language='eng',width=3840,height=2160){
 
 function pageJsonLiteral(data){return JSON.stringify(data).replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/"/g,'\\u0022');}
 test('QuickJS: FilmEkseni metadata/oynatıcı bağı ile TR+EN sesli HLS ve eşlenmiş VTT; kalite uydurulmaz',async()=>{
- const root='https://filmekseni.vip',player='https://eksenload.top',id='a'.repeat(20),url='https://media.test/hls/'+id+'/session/aistream-legacy-master.m3u8';
+ const root='https://filmekseni.pro',player='https://eksenload.top',id='a'.repeat(20),url='https://media.test/hls/'+id+'/session/aistream-legacy-master.m3u8';
  const template=Buffer.from('<iframe data-src="//eksenload.top/eplayer/{url}"></iframe>').toString('base64');
  const fixture={
   'https://api.themoviedb.org/3/movie/603?api_key=test&append_to_response=external_ids,release_dates':{json:{...helpers.tmdb,runtime:136}},
@@ -36,7 +36,7 @@ test('QuickJS: FilmEkseni metadata/oynatıcı bağı ile TR+EN sesli HLS ve eşl
  assert.equal(rows.length,1);assert.equal(rows[0].type,'hls');assert.match(rows[0].quality,/1080p/);assert.match(rows[0].language,/Ses: TR\/EN/);assert.equal(rows[0].subtitles[0].language,'tr');
 });
 
-test('QuickJS: Anizone güvenli Unicode veri zarfını ve tam bölüm kimliğini çözer; HLS indirme sayılmaz',async()=>{
+test('QuickJS: Anizone (Ek Anime, opt-in) güvenli Unicode veri zarfını ve tam bölüm kimliğini çözer; HLS indirme sayılmaz',async()=>{
  const root='https://anizone.to',slug='example1',url='https://fixture.vid-cdn.xyz/11111111-1111-4111-8111-111111111111/master.m3u8';
  const row={slug,url:root+'/anime/'+slug,main_title:'Example Anime',title_list:{en:'Example Anime'},type:'TV Series',is_unsafe:false,start_year:2020,episode_count:12},snapshot=JSON.stringify({data:{anime_slug:slug,episode_slug:'2'}}).replace(/"/g,'&quot;');
  const fixture={
@@ -45,9 +45,12 @@ test('QuickJS: Anizone güvenli Unicode veri zarfını ve tam bölüm kimliğini
   [root+'/anime/'+slug+'/2']:{body:'<div wire:snapshot="'+snapshot+'" x-data="{anmTitles:JSON.parse(\''+pageJsonLiteral(row.title_list)+'\')}"></div><div x-data="vidstackPlayer(JSON.parse(\''+pageJsonLiteral({src:url})+'\'))"></div>'},
   [url]:{body:'#EXTM3U\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="a",NAME="Japanese",LANGUAGE="ja",URI="ja.m3u8"\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="a",NAME="English",LANGUAGE="en",URI="en.m3u8"\n#EXT-X-STREAM-INF:BANDWIDTH=2300000,RESOLUTION=1280x720,AUDIO="a"\n720.m3u8\n',mime:'application/vnd.apple.mpegurl'}
  };
- const settings={autoSubtitles:false,useDownloadBridge:false,animecixEnabled:false,sonanimeEnabled:false},args=['123456','tv',1,2];
- const rows=await runInQuickJs(fixture,{code:animeBundle,args,settings,nativeTimers:true});assert.equal(rows.length,1);assert.equal(rows[0].type,'hls');assert.match(rows[0].language,/Ses: EN\/JA/);
- fixture[root+'/anime/'+slug+'/2'].body=fixture[root+'/anime/'+slug+'/2'].body.replace('&quot;episode_slug&quot;:&quot;2&quot;','&quot;episode_slug&quot;:&quot;3&quot;');assert.deepEqual(await runInQuickJs(fixture,{code:animeBundle,args,settings,nativeTimers:true}),[]);
+ const settings={autoSubtitles:false,seicodeEnabled:false,anizoneOptInEnabled:true},args=['123456','tv',1,2];
+ // Default off (its origin can hang a request) and never in the Anime scraper.
+ assert.deepEqual(await runInQuickJs(fixture,{code:extraAnimeBundle,args,settings:{...settings,anizoneOptInEnabled:undefined,anizoneEnabled:true},nativeTimers:true}),[]);
+ assert.deepEqual(await runInQuickJs(fixture,{code:animeBundle,args,settings:{autoSubtitles:false,animecixEnabled:false,sonanimeEnabled:false,anizoneOptInEnabled:true},nativeTimers:true}),[]);
+ const rows=await runInQuickJs(fixture,{code:extraAnimeBundle,args,settings,nativeTimers:true});assert.equal(rows.length,1);assert.equal(rows[0].type,'hls');assert.match(rows[0].language,/Ses: EN\/JA/);
+ fixture[root+'/anime/'+slug+'/2'].body=fixture[root+'/anime/'+slug+'/2'].body.replace('&quot;episode_slug&quot;:&quot;2&quot;','&quot;episode_slug&quot;:&quot;3&quot;');assert.deepEqual(await runInQuickJs(fixture,{code:extraAnimeBundle,args,settings,nativeTimers:true}),[]);
 });
 test('QuickJS: resmi TR dosya adı tembel çeviriyle bulunur; başka TMDB çevirisi kabul edilmez',async()=>{
  const{archiveQuery}=require('../src/providers/archive.cjs'),wanted={...helpers.target,runtimeMinutes:120},name='Örnek Film (1999).mkv',url='https://archive.org/download/local-example/'+encodeURIComponent(name),translations='https://api.themoviedb.org/3/movie/603/translations?api_key=test';
@@ -364,20 +367,25 @@ test('QuickJS AniMOM: generic title/year/episode lookup and large-moov metadata 
   [root+'-1-bolum']:{body:`<h1><a href="${root}">Example Anime</a> 1. Bölüm</h1><button data-frame="${embed}">YourUpload</button>`},
   [embed]:{body:`<meta property="og:video" content="${url}"><script>file:'${url}'</script>`},[url]:{body,mime:'video/mp4'}
  };
- const result=await runInQuickJs(fixture,{code:extraAnimeBundle,args:['123456','tv',1,1],settings:{autoSubtitles:false}});
+ // A saved old `animomEnabled: true` does not re-enable it; only the new key does.
+ assert.deepEqual(await runInQuickJs(fixture,{code:extraAnimeBundle,args:['123456','tv',1,1],settings:{autoSubtitles:false,animomEnabled:true}}),[]);
+ const result=await runInQuickJs(fixture,{code:extraAnimeBundle,args:['123456','tv',1,1],settings:{autoSubtitles:false,animomOptInEnabled:true}});
  assert.equal(result.length,1);assert.match(result[0].name,/AniMOM/);assert.equal(result[0].quality,'720p · 1280×720');
  fixture[root].body=fixture[root].body.replaceAll('2020','2021');
- assert.deepEqual(await runInQuickJs(fixture,{code:extraAnimeBundle,args:['123456','tv',1,1],settings:{autoSubtitles:false}}),[]);
+ assert.deepEqual(await runInQuickJs(fixture,{code:extraAnimeBundle,args:['123456','tv',1,1],settings:{autoSubtitles:false,animomOptInEnabled:true}}),[]);
  const fileFixture=makeFixture({files:{'https://media.test/movie.mp4':{body,mime:'video/mp4'}}});
  const streams=await runInQuickJs(fileFixture,{settings:{autoDiscover:false,autoSubtitles:false,catalogUrls:'https://library.test/catalog.json'}});
  assert.equal(streams[0].quality,'720p · 1280×720');assert.equal(streams[0].type,'mp4');
 });
-test('QuickJS Ek Anime ayarları kısmi kaynağı varsayılan açar; ana/anime kaynak ayarlarına karışmaz',async()=>{
+test('QuickJS Ek Anime ayarları SeiCode kaynağını açar, askı riskli AniMOM/Anizone kaynağını yeni anahtarla kapalı tutar; ana/anime ayarlarına karışmaz',async()=>{
  const layout=await runInQuickJs({},{code:extraAnimeBundle,invokeSettings:true});
- assert.equal(layout.find(f=>f.key==='animomEnabled')?.defaultValue,true);
  assert.equal(layout.find(f=>f.key==='seicodeEnabled')?.defaultValue,true);
- assert.ok(!layout.some(f=>['animecixEnabled','archiveEnabled','hdhubEnabled','useDownloadBridge'].includes(f.key)));
- const old=await runInQuickJs({},{code:animeBundle,invokeSettings:true});assert.ok(!old.some(f=>f.key==='animomEnabled'));
+ assert.equal(layout.find(f=>f.key==='animomOptInEnabled')?.defaultValue,false);
+ assert.equal(layout.find(f=>f.key==='anizoneOptInEnabled')?.defaultValue,false);
+ assert.ok(!layout.some(f=>['animomEnabled','anizoneEnabled','animecixEnabled','archiveEnabled','hdhubEnabled','useDownloadBridge'].includes(f.key)));
+ const old=await runInQuickJs({},{code:animeBundle,invokeSettings:true});
+ assert.ok(!old.some(f=>['animomEnabled','animomOptInEnabled','anizoneEnabled','anizoneOptInEnabled'].includes(f.key)));
+ assert.ok(['animecixEnabled','sonanimeEnabled'].every(key=>old.some(f=>f.key===key)));
 });
 test('QuickJS Ek Anime: kısmi SeiCode bölümü varsayılan bulunur; eksik bölümde başka bölüm seçilmez',async()=>{
  const embed='https://www.mp4upload.com/embed-example12345.html',file='https://a4.mp4upload.com:183/example/video.mp4';
@@ -566,11 +574,11 @@ test('QuickJS anime paketi: doğru kanonik bölüm, gerçek 720p MP4 ve eşlenmi
 });
 
 test('QuickJS SonAnime: Japonca özgün adın kanonik İngilizce karşılığı, tam bölüm ve gerçek MP4',async()=>{
- const row={anime_id:20,tmdb_id:13916,anime_name:'Death Note',anime_year:2006,anime_type:'anime',anime_link:'death-note'};
+ const row={anime_id:20,anime_name:'Death Note',anime_year:'2006',anime_type:'anime',anime_link:'death-note'};
  const fixture={
   'https://api.themoviedb.org/3/tv/13916?api_key=test&append_to_response=external_ids':{json:{id:13916,name:'Death Note',original_name:'デスノート',first_air_date:'2006-10-04',genres:[{id:16}],original_language:'ja'}},
   'https://api.sonanime.com/api/anime/search?q=Death%20Note':{json:[row]},
-  'https://api.sonanime.com/api/anime/link/death-note':{json:{...row,episodes:[{anime_id:20,anime_season:1,episode_number:1,episode_link_480:'https://video.konununuzmani.com/video/fixture'}]}},
+  'https://api.sonanime.com/api/anime/link/death-note':{json:{...row,tmdb_id:13916,episodes:[{anime_id:20,anime_season:1,episode_number:1,episode_link_480:'https://video.konununuzmani.com/video/fixture'}]}},
   'https://video.konununuzmani.com/video/fixture':{body:helpers.mp4({width:852,height:480})}
  };
  const streams=await runInQuickJs(fixture,{code:animeBundle,args:['13916','tv',1,1],settings:{autoSubtitles:false}});

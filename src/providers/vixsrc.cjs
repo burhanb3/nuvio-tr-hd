@@ -36,7 +36,11 @@ async function loadVixBundle(http, tmdbId, target) {
   const expires = block?.match(/['"]expires['"]\s*:\s*['"](\d+)['"]/)?.[1];
   const path = page.text.match(/url:\s*['"](https:\/\/vixsrc\.to\/playlist\/\d+)['"]/)?.[1];
   if (!token || !expires || !path || Number(expires) * 1000 < Date.now() + 60000) return null;
-  const masterUrl = `${path}?token=${encodeURIComponent(token)}&expires=${expires}&h=1`;
+  // `h=1` asks for the FHD rendition. Since Nov 2026 the playlist answers
+  // 403 to it unless the embed page sets canPlayFHD = true, which dropped
+  // every VixSrc row. Ask for it only when the page allows it.
+  const fhd = /\bwindow\.canPlayFHD\s*=\s*true\b/.test(page.text);
+  const masterUrl = `${path}?token=${encodeURIComponent(token)}&expires=${expires}` + (fhd ? '&h=1' : '');
   const master = await http.text(masterUrl, { headers });
   if (!master?.text.startsWith('#EXTM3U')) return null;
   const parsed = parseMaster(master.text);

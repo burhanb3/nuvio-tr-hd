@@ -3,7 +3,7 @@ const{test}=require('node:test'),assert=require('node:assert/strict');
 const{scanFilmEkseni,pageMatches,playerEntries,playerCandidate}=require('../src/providers/filmekseni.cjs');
 const{quotedJson}=require('../src/providers/page-data.cjs'),{createHttp}=require('../src/http.cjs'),{probe}=require('../src/media/probe.cjs');
 const{loadSubtitles}=require('../src/subtitles.cjs'),{fixtureFetch,vtt}=require('./helpers.cjs');
-const root='https://filmekseni.vip',player='https://eksenload.top',id='a'.repeat(20),url='https://media.test/hls/'+id+'/session/aistream-legacy-master.m3u8';
+const root='https://filmekseni.pro',player='https://eksenload.top',id='a'.repeat(20),url='https://media.test/hls/'+id+'/session/aistream-legacy-master.m3u8';
 const target={tmdbId:123456,type:'movie',originalTitle:'Example Movie',searchTitles:['Example Movie'],year:2020,imdbId:'tt1234567',runtimeMinutes:120};
 const quote=data=>JSON.stringify(data).replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/"/g,'\\u0022');
 const row={title:'Örnek Film',slug:'example-movie',releaseYear:'2020',contentableType:'App\\Models\\Movie'};

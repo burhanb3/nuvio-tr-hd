@@ -40,8 +40,8 @@ Piksel ve gerçek dosya boyutu varsa öncelikle bunlar kullanılır. Eksik bilgi
 | Alan | Sağlayıcılar |
 | --- | --- |
 | Film ve dizi dosyaları | Internet Archive, 4KHDHub/HubCloud, HDRezka, Goojara (bağımsız), Waploaded; dizilerde FzTvSeries; MoviesDrive/Pixeldrain; filmlerde FzMovies, JetFilmizle ve RareFilmm |
-| Online film ve dizi | PlayIMDb, VixSrc, DiziYou, DiziBak, FilmModu, HDFilmDelisi, DiziBal, Purstream, FilmEkseni |
-| Anime | Animecix, SonAnime, AniMOM, SeiCode/MP4Upload; online Anizone |
+| Online film ve dizi | PlayIMDb, VixSrc, DiziBak, FilmModu, HDFilmDelisi, DiziBal, Purstream, FilmEkseni; DiziYou isteğe bağlı, varsayılan kapalı |
+| Anime | Animecix, SonAnime; Ek Anime'de SeiCode (tau-video/MP4Upload). AniMOM ve online Anizone isteğe bağlı, varsayılan kapalı |
 | Harici altyazı | AltyazıDB, OpenSubtitles ve kaynakla eşlenmiş TR/EN dosyaları |
 
 Kapsam sağlayıcıya ve bölüme göre değişir. Her yapımın indirilebilir sürümü veya her çözünürlüğü bulunamayabilir. 4K yalnız kaynakta mevcutsa sunulur. Kaynak listesi bir erişilebilirlik garantisi değildir; bozuk bağlantılar elenir.

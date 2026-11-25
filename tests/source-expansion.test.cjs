@@ -17,9 +17,10 @@ const anime = { tmdbId:13916, type:'tv', originalTitle:'デスノート', search
 const tv = { tmdbId:67070, type:'tv', originalTitle:'Fleabag', year:2016, season:1, episode:1, imdbId:'tt5687612', originalLanguage:'en' };
 const ld = data => `<script type="application/ld+json">${JSON.stringify(data)}</script>`;
 test('SonAnime: sırasız bölümlerden tam S/E seçilir, yanlış TMDB/yıl ve başka bölüm elenir; gerçek MP4 probu şart',async()=>{
- const row={anime_id:20,tmdb_id:13916,anime_name:'Death Note',anime_year:2006,anime_type:'anime',anime_link:'death-note'};
- const detail={...row,episodes:[{anime_id:20,anime_season:1,episode_number:2,episode_link_720:'https://video.konununuzmani.com/video/wrong'},
-  {anime_id:20,anime_season:1,episode_number:1,episode_link_720:'https://video.konununuzmani.com/video/right'}]};
+ // Current API: the search row has no tmdb_id; the detail record carries it.
+ const row={anime_id:20,anime_name:'Death Note',anime_year:'2006',anime_type:'anime',anime_link:'death-note'};
+ const detail={...row,tmdb_id:13916,anime_name_en:'Death Note',episodes:[{anime_id:20,anime_season:1,episode_number:2,episode_link_720:'https://video.konununuzmani.com/video/wrong'},
+  {anime_id:20,anime_season:1,episode_number:1,episode_link_720:'https://video.konununuzmani.com/video/right',links_expire_at:Math.floor(Date.now()/1000)+3600}]};
  const fixture={
   'https://api.sonanime.com/api/anime/search?q=Death%20Note':{json:[row]},
   'https://api.sonanime.com/api/anime/link/death-note':{json:detail},
@@ -32,6 +33,11 @@ test('SonAnime: sırasız bölümlerden tam S/E seçilir, yanlış TMDB/yıl ve 
   assert.deepEqual(await scanSonAnime(http,{...anime,season:2}),[]);
   assert.deepEqual(await scanSonAnime(http,{...anime,tmdbId:999}),[]);
  } finally {http.close();}
+ // A detail without the TMDB id, or with an expired (epoch seconds) link, is not bound.
+ for(const change of[{tmdb_id:undefined},{episodes:detail.episodes.map(e=>({...e,links_expire_at:Math.floor(Date.now()/1000)-60}))}]){
+  const other=createHttp({fetchImpl:fixtureFetch({...fixture,'https://api.sonanime.com/api/anime/link/death-note':{json:{...detail,...change}}})});
+  try{assert.deepEqual(await scanSonAnime(other,anime),[],JSON.stringify(Object.keys(change)));}finally{other.close();}
+ }
  assert.equal(matchesAnime({tmdb_id:13916,year:2006,is_series:true,name:'Death Note'},anime),true);
  assert.equal(matchesAnime({tmdb_id:13917,year:2006,is_series:true,name:'Death Note'},anime),false);
 });

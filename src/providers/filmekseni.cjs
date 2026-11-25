@@ -4,7 +4,8 @@ const {anchors,decodeEntities}=require('./directory.cjs');
 const {sameName,syntheticFilename,quotedJson,tagAttributes}=require('./page-data.cjs');
 const {base64Bytes}=require('../media/base64.cjs');
 const {decodeUtf8,subtitleLanguage}=require('../subtitles.cjs');
-const ORIGIN='https://filmekseni.vip',PLAYER='https://eksenload.top';
+// filmekseni.vip stopped resolving (Nov 2026); .cc/.org redirect to .pro.
+const ORIGIN='https://filmekseni.pro',PLAYER='https://eksenload.top';
 function searchRows(data,target){
   return Array.isArray(data?.data)?data.data.slice(0,24).filter(r=>r?.contentableType==='App\\Models\\Movie'&&
     String(r.releaseYear)===String(target.year)&&typeof r.title==='string'&&/^[a-z0-9-]{1,180}$/.test(r.slug||'')).slice(0,3):[];
@@ -13,7 +14,7 @@ function pageMatches(html,row,target){
   const start=html.search(/<h1\b/i);if(start<0||!target.imdbId)return false;
   const heading=html.slice(start,start+7000),h1=heading.match(/^<h1\b[^>]*>([\s\S]{0,500}?)<\/h1>/i)?.[1];
   const original=heading.match(/<\/h1>\s*<p\b[^>]*>([\s\S]{0,500}?)<\/p>/i)?.[1];
-  const year=heading.match(/href=["']https:\/\/filmekseni\.vip\/yil\/(\d{4})\/["']/)?.[1];
+  const year=heading.match(/href=["']https:\/\/filmekseni\.pro\/yil\/(\d{4})\/["']/)?.[1];
   const ids=anchors(html,2000).map(a=>a.href.match(/^https:\/\/(?:www\.)?imdb\.com\/title\/(tt\d+)(?:$|[/?#])/i)?.[1]).filter(Boolean);
   return normalizeTitle(decodeEntities(h1||''))===normalizeTitle(row.title)&&sameName(decodeEntities(original||h1||''),target)&&
     Number(year)===target.year&&ids.length>0&&ids.every(id=>id===target.imdbId);
