@@ -4,7 +4,7 @@
 
 ## 26 Kasım 2026 — 2.0.5 Nuvio 1.0.1 kilidi ve yenile önerisi
 
-- **Kullanıcıya "ekranı yeniden aç" değil, yenile düğmesi önerilir.** Nuvio 1.0.1 `StreamSearchSessions` sonuç bulan aramayı 15 dk tutar ve kaynak ekranı, oynatıcı kaynak paneli ve sonraki bölüm araması bunu paylaşır. Yalnız `reload` (`forceRefresh`) yeniden tarar. Eklenti ayarları arama anahtarında olmadığı için ayar değişikliğinden sonra da yenile gerekir. Eklenti içinde bunu aşmanın yolu yok (anahtar host tarafında); eklenti davranışı değişmedi.
+- **Kullanıcıya "ekranı yeniden aç" değil, yenile düğmesi önerilir.** Nuvio 1.0.1 `StreamSearchSessions` sonuç bulan aramayı 15 dk tutar ve upstream yorumuna göre kaynak ekranı, oynatıcı kaynak paneli ve sonraki bölüm araması bunu paylaşır. Yalnız `reload` (`forceRefresh`) yeniden tarar. Eklenti ayarları arama anahtarında olmadığı için ayar değişikliğinden sonra da yenile gerekir. Eklenti içinde bunu aşmanın yolu yok (anahtar host tarafında); eklenti davranışı değişmedi.
 - **Kilit 1.0.1'e güncellendi, `StreamSearchSessions.kt` izlenir.** Çağrı yeri değiştiği için eski `StreamsRepository` izlemesi çağrı argümanlarını artık görmüyordu. Yeni ABI denetimi `executeScraper` argümanlarını izler. Sürüm etiketi ile ana dal ayrı incelendi; ikisinde de 17 denetim geçti.
 - **Doğrulayıcı ana dalı karşılaştırır, telefon sürümü çalıştırır.** Notlarda ana dal değişikliği sürüme yazılmaz; sürüm etiketi (`releaseCommit`) ayrıca okunur.
 

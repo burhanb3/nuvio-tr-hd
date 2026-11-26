@@ -3,7 +3,7 @@
 ## 2.0.5 — 26 Kasım 2026
 
 - **Satır gelmezse ne yapılacağı düzeltildi: kaynak listesinin başındaki yenile düğmesi.**
-  - Nuvio 1.0.1 sonuç bulan bir aramayı 15 dakika bellekte tutar. Saklama aynı profil, yapım, bölüm ve kaynak düzeni içindir. Kaynak ekranı, oynatıcının kaynak paneli ve sonraki bölüm araması bu aramayı paylaşır.
+  - Nuvio 1.0.1 sonuç bulan bir aramayı 15 dakika bellekte tutar. Saklama aynı profil, yapım, bölüm ve kaynak düzeni içindir. Upstream yorumuna göre kaynak ekranı, oynatıcının kaynak paneli ve sonraki bölüm araması bu aramayı paylaşır.
   - Bu sürede ekranı kapatıp açmak eklentiyi yeniden çalıştırmaz. Yenile düğmesi saklanan aramayı bırakıp yeniden tarar.
   - Arama anahtarında eklenti ayarları yok, yalnız tarayıcı kimlikleri var. Ayar değiştirdikten sonra da yenile düğmesine basın.
   - CizgiMax ayar açıklaması, kurulum sayfası, AYARLAR ve SORUN_GIDERME buna göre değişti. 2.0.4'teki "kaynak ekranını yeniden açın" önerisi 1.0.1'de 15 dakika boyunca işe yaramaz.
