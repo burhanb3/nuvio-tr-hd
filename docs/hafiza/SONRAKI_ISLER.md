@@ -4,7 +4,7 @@
 
 ## 2.0.4 — 26 Kasım 2026
 
-1. **Yayın:** Sonuç PROJE ve `compatibility/github-publication.json` içine yazılacak.
+1. **Yayımlandı (`ebd9b22`):** Test ve paket `45824418450` ve Pages `45824418430` başarılı; 10 public dosya HTTP 200 ve SHA-256 yerel `dist/` ile aynı (`compatibility/github-publication.json`).
 2. **Yapıldı (bilgisayarda):** Akış API'si 12:49 UTC'de geri geldi. Gravity Falls S1E1 2 satır (MP4 + online 720p), Adventure Time S1E1 tek online 540p satır (PROJE 2.0.4). Bölümün ilk isteği yavaş/502 olabiliyor.
 3. **Telefonda (Wi-Fi ve LTE ayrı):**
    - Depo yenilenmeli; `Tanı · 2.0.4` görünmeli. CizgiMax sağlayıcısının ayarlarında `CizgiMax online Türkçe dublaj (HLS)` açık görünmeli.
@@ -13,7 +13,7 @@
    - Site akış sunucusu 502 verirken Drive satırları gelmeli (simülasyonda geldi).
    - CizgiMax satırları hiç gelmez veya geç gelirse `cizgimaxOnlineEnabled` kapatılıp aynı bölüm denenmeli.
 4. **Nuvio 1.0.1 tam inceleme:** StreamsRepository'deki eklenti çağrısının taşındığı dosya (ayar, başlık ve sonuç birleştirme) incelenmeli. Oynatıcılar başlıkları `http-header-fields` ile veriyor ve `extension_picky` vermiyor (görüldü). iOS Libmpv sürümü bulundu (mpv 0.41.0 + FFmpeg n8.1.2 etiketli derleme, PROJE 2.0.4); uzantı riski kaynak düzeyinde düşük, cihazda DiziBal/KultFilmler/CizgiMax online satırlarıyla doğrulanmalı. Kilit ancak inceleme bittikten sonra güncellenmeli.
-5. **Sıradaki:** Altyazı kaynakları (2.0.2 madde 5).
+5. **Altyazı kaynakları turu yapıldı (26 Kasım, yeni kaynak eklenmedi):** YIFY, SubSource, SubDL, turkcealtyazi, Podnapisi, planetdp ve Gestdown ölçüldü (KAYNAK_ARASTIRMASI "26 Kasım 2026 altyazı turu"). ZIP/anahtar/doğrulama/erişim nedeniyle elenenler dışında yalnız Gestdown uygun; Türkçe katkısı küçük (0–2), ana listeye yeni host riski getirdiği için eklenmedi. AltyazıDB indirme yolu yeniden 200/UTF-8. Yeni bir anahtarsız, UTF-8 düz SRT veren ve kimliğe bağlanabilen Türkçe kaynak çıkarsa yeniden bakılır.
 
 ## 2.0.3 — 26 Kasım 2026
 
