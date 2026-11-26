@@ -36,6 +36,21 @@ Seçilen sağlayıcı kodları yalnız yöntemleri anlamak için okundu. Uzaktan
 | MovieBox web arama | Denenen eski public web yolu 404 | Ekleme yapılmadı. Özel imzalama anahtarları kopyalanmadı. |
 | Internet Archive TV araması | Fleabag/GOT sezon item'larında kullanılabilir video dosyası yok | Bunlar dizi kaynağı başarısı olarak sayılmadı. |
 
+### 26 Kasım 2026 — 2.0.6 dizi dosyaları ve Türkçe film turu (bu bilgisayar)
+
+Türkçe dublajlı/altyazılı film araştırması bu turda yalnız JetFilmizle ile sınırlı kaldı; yeni bir Türkçe film sitesi denenmedi.
+
+| Yol | Gözlem | 2.0.6 kararı |
+| --- | --- | --- |
+| HDRezka uzun dizi sayfaları | Stranger Things ~319 KB, The Simpsons ~737 KB; 300 KB sınırı sayfayı hiç okutmuyordu | Sayfa tavanı 1 MB. 9 dizi/film/çizgi/anime filmi örneğinde 4'er MP4 adayı. |
+| HDRezka `/cartoons/`, `/animation/` | Çizgi dizi/film ve anime filmleri ayrı yolda; anime adı "Romaji / English" | Çizgi dizi/film ve anime filmi alınır; anime dizisi alınmaz (sezon düzeni TMDB'den farklı olabilir). |
+| HDRezka özgün ses | Shameless yalnız RU/UA/GE; Rick and Morty ve The Simpsons dizisinde "Оригинал" premium; Your Name'de özgün iz yok | Premium/dublaj izleri alınmaz; değişiklik yok. |
+| MoviesDrive dizi | Breaking Bad ve Game of Thrones çok sezonlu paket sayfası, IMDb kimliği yok; Severance, Fleabag, Shameless yok; alan adı new5 | Paketler bağlanmaz; arama new5'ten başlar. |
+| 4KHDHub dizi | Shameless yok. Breaking Bad S1E1 sayfa afişiyle bağlanınca 4 aday, 1 doğrulanmış Pixeldrain 1080p | Afiş bağlaması korunur; telefonda TMDB afişiyle doğrulanmalı. |
+| Waploaded | Yalnız yeni listelemeler | Değişiklik yok. |
+| JetFilmizle altyazılı sekme | Gold go kimliği dil ekli; player'da altyazı izi yok; Matrix 1080p `eng`, iki filmde 360p (ses okunamadı); örneklemde her altyazılı Gold'lu filmde dublaj Gold da var | Satır eklendi, TR altyazı yalnız site etiketi (`site-label`). Sekme başarısız olunca JetFilmizle ~2 sn geç biter, dublaj satırı düşmez. |
+| JetFilmizle Vip/Apollo, diğer | Vip `/api/stream` yalnız HLS (`mp4Sources` 0); Interstellar dublajında Gold yok; Dune (2021) sitede yok | İndirilebilir sayılmaz; değişiklik yok. |
+
 ## Türkçe altyazı
 
 - **AltyazıDB eklendi:** [sağlayıcının kurulum açıklaması](https://altyazidb.com/forum/moduller-eklentiler/8-altyazidb-subtitles-stremio-eklentisi.html), [manifest](https://altyazidb.online/manifest.json). Dune ve Fleabag için hesap/anahtar girmeden gerçek UTF-8 SRT gövdeleri doğrulandı. Game of Thrones S01E01 sorgusu bu denemede boştu. Her film/bölüm için sonuç sözü değildir.
@@ -48,6 +63,7 @@ Seçilen sağlayıcı kodları yalnız yöntemleri anlamak için okundu. Uzaktan
   - **YIFY (yts-subs.com, yifysubtitles.ch):** IMDb sayfası anahtarsız açıldı. Ancak Inception'da 403 satırdan yalnız 1'i Türkçe ve indirme ZIP (deflate) dosyası. Eklenmedi.
   - **SubSource API v1:** 401 (anahtar). Eski arama yolu 404. **SubDL web:** Cloudflare doğrulaması. **turkcealtyazi.org:** form, ZIP/RAR ve doğrulama sayfası. **Podnapisi, planetdp:** bu ağdan bağlantı kurulamadı; erişim engeli aşılmaz. Hiçbiri eklenmedi.
   - **Gestdown (Addic7ed dizini, `api.gestdown.info`):** Anahtarsız JSON. Dizi kaydında TMDB kimliği var (kimlik bağlanabilir). İndirme düz `text/srt`. 8 popüler dizinin S1E1'inde Türkçe 0–2 dosya; örneklenen 5 dosyanın 1'i Windows-1254 (Nuvio'da bozuk karakter). Aynı bölümlerde mevcut servisler zaten 3–34 Türkçe altyazı veriyor (OpenSubtitles v3+ 3–34, resmî v3 3–9, AltyazıDB 0–3). Ek Türkçe katkı küçük. Ana listeye yeni bir ağ hostu da ekler; iOS native isteği iptal edilemez. Bu yüzden eklenmedi. İngilizce sürüm adları (WEB-DL grupları) ileride senkron için ayrı karar olarak değerlendirilebilir.
+  - **2.0.6 turu:** Wyzie hâlâ anahtar istiyor (`sub.wyzie.ru` → 301 `sub.wyzie.io` → 401). subtitlecat makine çevirisi; eklenmedi. Severance S1E1 için AltyazıDB, OpenSubtitles v3 ve stremio.homes TR'de Türkçe 0.
   - **AltyazıDB:** 1.9.1'deki sürekli 502 bu turda görülmedi. The Last of Us S1E1, Wednesday S1E1 ve Inception örneklerinde liste adresleri 200 ve UTF-8 SRT döndü (0,4–1,2 sn). Kod değişmedi; devre kesici 5xx görürse yine durdurur.
 
 Bir altyazı alternatifi bozuksa sonraki aday denenir; en çok 12 adaya kadar, dört farklı geçerli dosyada durulur. Video ile eşleşen release notları tam hash/sürüm kanıtına dönüştürülmez. Aynı bölüm için paket içinden çıkarılmış SRT, yanlış bölümü kabul etme gerekçesi değildir.

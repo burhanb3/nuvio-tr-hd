@@ -15,7 +15,9 @@
    - Altyazılı JetFilmizle dosyalarında ses izi dili Shadow's Edge ve The Mummy'de okunamadı; bu dosyalarda "Ses" etiketi sitenin iddiasıdır.
    - 4KHDHub dizi zinciri sayfa afişiyle elle bağlanınca Breaking Bad S1E1'de 1 doğrulanmış dosya verdi (Pixeldrain 1080p, PROJE 2.0.6). Telefonda TMDB afişiyle bağlanıp bağlanmadığı görülmeli.
    - FzTvSeries CDN'i bu bilgisayardan bazen açılıyor (Stranger Things S1E1, Shameless satır verdi), bazen açılmıyor.
-   - Severance'ta Türkçe altyazı kaynağı yok; yeni bir anahtarsız TR kaynağı çıkarsa yeniden bakılır.
+   - Severance'ta dış Türkçe altyazı yok; Türkçe yalnız 4KHDHub MKV'lerinin gömülü izinde. HDRezka ve FzTvSeries dosyaları Türkçesiz kalıyor. Yeni bir anahtarsız TR kaynağı çıkarsa yeniden bakılır.
+   - JetFilmizle altyazılı sekmesi başarısız olduğunda JetFilmizle ~2 sn geç biter (Night Patrol 3,6–4,8 → 5,6–6,4 sn); dublaj satırı düşmedi. Ana listede gecikme sorun olursa ikinci Gold denemesi sınırlanabilir.
+   - Türkçe dublajlı film için bu turda yalnız JetFilmizle incelendi; yeni Türkçe film sitesi denenmedi.
 4. **Sonraki konu (kullanıcıyla):** Nuvio fork/PR ile iOS arka plan indirmesi ve "Sezonu indir" (aşağıdaki iOS indirme notu).
 
 ## Nuvio iOS indirme davranışı (26 Kasım 2026, kaynak okundu, cihazda denenmedi)
