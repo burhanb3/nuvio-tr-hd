@@ -4,14 +4,14 @@
 
 ## 2.0.2 — 26 Kasım 2026
 
-1. **Yayın:** Sonuç PROJE ve `compatibility/github-publication.json` içinde (10 public dosya: manifest, 7 sağlayıcı, sabit online, ana sayfa).
+1. **Yayımlandı (`2d8374b`):** Test ve paket `45816189128` ve Pages `45816189100` başarılı; 10 public dosya (manifest, 7 sağlayıcı, sabit online, ana sayfa) HTTP 200 ve SHA-256 yerel `dist/` ile aynı (`compatibility/github-publication.json`).
 2. **Telefonda (Wi-Fi ve LTE ayrı):**
    - Depo yenilenmeli; yeni **Nuvio TR HD · CizgiMax** sağlayıcısı etkinleştirilmeli; `Tanı · 2.0.2` görünmeli.
    - Scooby-Doo! Mystery Incorporated S1E1'de `CizgiMax` sağlayıcısı altında İndirilebilir satır (1080p, ~0,41 GB, Ses: TR) gelmeli. Ana `Nuvio TR HD` altında artık CizgiMax satırı yoktur.
    - Satır oynatılmalı ve indirilmeli; dosyanın tam ve oynatılabilir olduğu, Türkçe sesin geldiği not edilmeli.
 3. **2.0.3 adayı: dolgulu MP4 düzeni (yalnız CizgiMax).** Gravity Falls S1E1: `ftyp` + 0,7 MB `free` + `mdat` + sonda 0,7 MB `moov`.
-   - Önce gerçek dosyada `mdat` sonundaki 16 baytın `moov` olduğu doğrulanmalı. Oradan okunan 256 KB'ta `mp4MetadataInfo` piksel ve süre veriyor mu bakılmalı (ses izi önce gelirse vermeyebilir).
-   - Phineas and Ferb S1E1 aynı düzende mi ölçülmeli (`cmx-probe.cjs`); yaygın değilse yapılmaz.
+   - Ölçüldü (yayından sonra, PROJE): ana `mdat`'tan sonra 138 baytlık ikinci bir `mdat`, ardından `moov` geliyor. `moov` başından 256 KB piksel ve süre veriyor. Phineas and Ferb bu düzende değil (mevcut probe okur).
+   - Gereken: dolgulu başın kabulü, iki metadata atlaması ve aralıktaki tamamlanmış küçük kutuların geçilmesi.
    - Uygulanırsa: `readAudioTracks` gibi aday bayrağı, yalnız CizgiMax ayarlar. Bildirilen kutu sınırları izlenir, her atlamada `sameFile`, en fazla iki ek atlama. Yalnız `ftyp` + dolgudan satır çıkmaz; `moov` içinde video izi, piksel ve süre zorunlu. "Tek ftyp → null" testi korunur. Range dizisini birebir denetleyen sentetik fixture eklenir.
 4. **2.0.4 adayı: RubyVidHub HLS (CizgiMax lane'inde).** Site kararlıyken `cmx-age.cjs` (master gerçekçi gecikmeye dayanmalı; t0 alt listesinin parçaları t0 + bölüm süresinde açılmalı) ve `cmx-ua.cjs` (oynatıcı UA ve Referer varyantları) yeniden koşulmalı. Satır HLS'dir; indirilebilir gösterilmez. Ayrı anahtar, 2.0.1 reddinin yerine geçen KARARLAR maddesi, sentetik belirteçli fixture.
 5. **Altyazı kaynakları (sonra):** Wyzie, subsource, subtitlecat (yapay çeviri olmayanlar), yifysubtitles. Hesap, anahtar, captcha yok; kimliğe bağlı; yabancı veya yanlış kimlikli altyazı birleştirilmez.

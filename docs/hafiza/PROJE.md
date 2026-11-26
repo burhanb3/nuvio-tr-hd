@@ -16,6 +16,11 @@ Uzun kaynak turunun eksik kapatma adımı. Yeni kaynak eklenmedi.
 - **CizgiMax verimi (Node, `cmx-yield.cjs`, sayı kuralı uygulanmadan, 8 dizi S1E1):** Drive'da `.mp4` adı 3 (Gravity Falls, Scooby-Doo MI, Phineas and Ferb); `.ts` 1 (Adventure Time); Drive sunucusu yok 4 (Gumball, Regular Show, Avatar, Teen Titans Go!). Dosyası doğrulanmış satır yalnız Scooby-Doo. "Dosya adı geçti" sonucu probe'un geçtiği anlamına gelmez.
 - **Gravity Falls probe reddi (`cmx-probe.cjs`):** Dosya gerçek MP4 (467 MB): `ftyp` 20 B + `free` 732.769 B + `mdat` 465.925.690 B; `moov` sonda ~733.697 B. İlk 128 KB yalnız `ftyp` + dolgu içerdiği için `inspectContainer` null döner (moov/mdat yok). Dolgu kabul edilse bile mevcut tek metadata atlaması `mdat`'a düşer, 256 KB kuyruk okuması `moov` başlığının gerisinde kalır. 2.0.1'de de aynıydı; gerileme değil.
 - **RareFilmm (Node, varsayılan başlıklar, UA yok):** THE MOST (1962) 3 satır (206), RATZ (2000) 3 satır (206), THE YELLOW CANARY (1963) 0 (neden incelenmedi). Her embed oynatıcı verisini (`data-options`) döndürdü. Kod değişmedi.
+- **Testler ve yayın:** 391/391 (`npm run check`). ABI değişmedi. Yayın `2d8374b`: Test ve paket `45816189128` (ubuntu+windows) başarılı, Pages `45816189100` başarılı. Manifest, yedi `?v=2.0.2` sağlayıcı (yeni `nuvio-tr-hd-cizgimax.js` dahil), sabit online adı ve ana sayfa (10 dosya) public HTTP 200 döndü; SHA-256 yerel `dist/` ile aynı (`compatibility/github-publication.json`, anonim GitHub API).
+- **Yayından sonra ölçülen kutu düzeni (`cmx-layout.cjs`, 16 baytlık Range okumalarıyla):**
+  - Gravity Falls S1E1: `ftyp` 20 → `free` 732.769 → `mdat` 465.925.690 → `mdat` 138 → `moov` 733.559. `moov` başından 256 KB: 1920×1080, 1293,8 sn.
+  - Phineas and Ferb S1E1: `ftyp` 32 → `free` 8 → `mdat` → `moov` 1.269.601. Mevcut tek atlama bunu okur: 1920×1080, 1351,4 sn.
+  - Scooby-Doo MI S1E1: `moov` başta (954.194).
 - **Yapılmayanlar:** Fiziksel telefon, tam bölüm oynatımı ve indirme testi yapılmadı.
 
 ## 2.0.1 — 26 Kasım 2026: CizgiMax Türkçe dublajlı çizgi dizi dosyaları

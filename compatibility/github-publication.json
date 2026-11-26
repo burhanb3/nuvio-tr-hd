@@ -1,15 +1,15 @@
 {
-  "checkedAt": "2026-11-26T08:04:17.043Z",
-  "version": "2.0.1",
+  "checkedAt": "2026-11-26T12:05:31.341Z",
+  "version": "2.0.2",
   "origin": "https://burhanb3.github.io/nuvio-tr-hd",
   "authenticated": false,
   "assetRequestsAuthenticated": false,
   "ciMetadataAuthenticated": false,
   "repository": "https://github.com/burhanb3/nuvio-tr-hd",
-  "sourceCommit": "51082f7e09b9909ec7bdf03eff1048d948653856",
+  "sourceCommit": "2d8374be365a5de12fb5b5de740b75e9e5316844",
   "branch": "codex/publish-nuvio-tr-hd",
   "actions": {
-    "tests": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/45779861170",
+    "tests": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/45816189128",
     "testsConclusion": "success",
     "jobs": [
       {
@@ -129,7 +129,7 @@
         ]
       }
     ],
-    "pages": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/45779861123",
+    "pages": "https://github.com/burhanb3/nuvio-tr-hd/actions/runs/45816189100",
     "pagesConclusion": "success"
   },
   "checks": [
@@ -137,72 +137,80 @@
       "path": "/manifest.json",
       "status": 200,
       "type": "application/json; charset=utf-8",
-      "bytes": 4046,
-      "sha256": "dcc1bb464ec8a7ff74364369b5ae957c9de59338409d8d049e8397e5a3d95628",
+      "bytes": 4706,
+      "sha256": "b789f5350fc8034170a5a06766a6b6d2cb3bc63ecfaef3fcb7578abe39fc717e",
       "matchesLocal": true
     },
     {
-      "path": "/providers/nuvio-tr-hd.js?v=2.0.1",
+      "path": "/providers/nuvio-tr-hd.js?v=2.0.2",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 172097,
-      "sha256": "62892ca2581d76ea5445bcd284bb6c5de8b07e5d2368c5f378f0306e4d2313f4",
+      "bytes": 167846,
+      "sha256": "db9b8c284c23e9f89ff9dfc0ed17bba4de6d91d6d32b0e925c38b810dfb20127",
       "matchesLocal": true
     },
     {
-      "path": "/providers/nuvio-tr-hd-anime.js?v=2.0.1",
+      "path": "/providers/nuvio-tr-hd-anime.js?v=2.0.2",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 102651,
-      "sha256": "c62c36e04535bf39a5c74d03edfe68526d4ca1b52f35ddbf2fbe345cc175ccd0",
+      "bytes": 103239,
+      "sha256": "0b6a0a4523292014754a466089edd76b4a1400ed9965e2ebb8f19044b4a14510",
       "matchesLocal": true
     },
     {
-      "path": "/providers/nuvio-tr-hd-extra-anime.js?v=2.0.1",
+      "path": "/providers/nuvio-tr-hd-extra-anime.js?v=2.0.2",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 109580,
-      "sha256": "d6e9ceb5f1e0f4c33b7f2faf949a56956f91f1bf441048d32bbe76efef4c9e77",
+      "bytes": 110168,
+      "sha256": "e59fb117fccdaf49d51854267806cfbbf13994e88a9cb8e0a8f07071f6ab1ec7",
       "matchesLocal": true
     },
     {
-      "path": "/providers/nuvio-tr-hd-fast-online.js?v=2.0.1",
+      "path": "/providers/nuvio-tr-hd-fast-online.js?v=2.0.2",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 126350,
-      "sha256": "692fc1f8af34661654e113e7863f05196af909b59baa06c5b836c27225e84d2d",
+      "bytes": 126938,
+      "sha256": "caa7300d381b07908ee3da24edfb040abe5967f149eaf6a1fe14d67d8cd6fc4f",
       "matchesLocal": true
     },
     {
-      "path": "/providers/nuvio-tr-hd-goojara.js?v=2.0.1",
+      "path": "/providers/nuvio-tr-hd-goojara.js?v=2.0.2",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 105825,
-      "sha256": "527bc0518f02443f0cd1e8763837cbe789000421ed0b407513879b0d409d57bc",
+      "bytes": 106413,
+      "sha256": "1680a31ddf96ac679d5d160e2f74d435cf8e1e374e02b84f7dc55bc278320a72",
       "matchesLocal": true
     },
     {
-      "path": "/providers/nuvio-tr-hd-hdrezka.js?v=2.0.1",
+      "path": "/providers/nuvio-tr-hd-hdrezka.js?v=2.0.2",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 106526,
-      "sha256": "429f57f997716aaab523f799761a6c4f5cfe736cbe2cdcd8d307d4efa51048bc",
+      "bytes": 107114,
+      "sha256": "f6c6289b30c58237d8c6006b99b9d7ecc4ea60f4f34d7e94ded5458573302f1d",
+      "matchesLocal": true
+    },
+    {
+      "path": "/providers/nuvio-tr-hd-cizgimax.js?v=2.0.2",
+      "status": 200,
+      "type": "application/javascript; charset=utf-8",
+      "bytes": 106620,
+      "sha256": "a0fc275b628e1ef28a42b37e68192b187c05d6c06f7d358ab96337d5b2403d27",
       "matchesLocal": true
     },
     {
       "path": "/providers/nuvio-tr-hd-online.js",
       "status": 200,
       "type": "application/javascript; charset=utf-8",
-      "bytes": 135011,
-      "sha256": "2fb2b682afcb0cccaaa8749993b9f60d0891f3a1185b4dc5c5d5a454b4e44525",
+      "bytes": 135599,
+      "sha256": "d79b44b6b2a5061a8c817f73046610a5227b796faa530c6670533b3071f518c9",
       "matchesLocal": true
     },
     {
       "path": "/",
       "status": 200,
       "type": "text/html; charset=utf-8",
-      "bytes": 6519,
-      "sha256": "3fd595a4b1a21b114b86d9e3e19f002faf826c6345d89de24decbe1d438cd623",
+      "bytes": 6608,
+      "sha256": "575d02ff1eb194eb5b6896956faab7a82af8d07ba9eac77a39c29ff3a1e96256",
       "matchesLocal": true
     }
   ],
@@ -220,7 +228,8 @@
     "nuvio-tr-hd-extra-anime",
     "nuvio-tr-hd-fast-online",
     "nuvio-tr-hd-goojara",
-    "nuvio-tr-hd-hdrezka"
+    "nuvio-tr-hd-hdrezka",
+    "nuvio-tr-hd-cizgimax"
   ],
   "phoneDeviceTest": "not-run",
   "fullPlayback": "not-run",
