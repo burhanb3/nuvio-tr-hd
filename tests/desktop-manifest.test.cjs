@@ -3,8 +3,8 @@ const {test}=require('node:test');
 const assert=require('node:assert/strict');
 const manifest=require('../manifest.json');
 
-test('desktop platformunda altı sağlayıcı görünür; mobil destek korunur',()=>{
-  assert.equal(manifest.scrapers.length,6);
+test('desktop platformunda yedi sağlayıcı görünür; mobil destek korunur',()=>{
+  assert.equal(manifest.scrapers.length,7);
   for(const scraper of manifest.scrapers){
     for(const platform of ['desktop','android','ios']) assert.ok(scraper.supportedPlatforms.includes(platform),`${scraper.id}: ${platform}`);
     assert.equal(scraper.enabled,true);

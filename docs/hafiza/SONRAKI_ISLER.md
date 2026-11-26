@@ -2,16 +2,31 @@
 
 - Son durum: masaüstü Nuvio TR HD artık Start-NuvioTRHD.ps1 üzerinden açılır. Kullanıcı yeniden aynı hata bildirdiğinde özgün kurulum çalışıyordu; nedeni kesinleşmedi. CheckOnly ve gömülü Java17 penceresiz classpath probe geçti. Kullanıcı kontrollü başlatıcıyla deneyip hata sürerse çalışan yol ve gerçek kaynak raporu birlikte incelenmeli. Tekrar UI başarısı/tam indirme doğrulanmış sayılmamalı.
 
+## 2.0.2 — 26 Kasım 2026
+
+1. **Yayın:** Sonuç PROJE ve `compatibility/github-publication.json` içinde (10 public dosya: manifest, 7 sağlayıcı, sabit online, ana sayfa).
+2. **Telefonda (Wi-Fi ve LTE ayrı):**
+   - Depo yenilenmeli; yeni **Nuvio TR HD · CizgiMax** sağlayıcısı etkinleştirilmeli; `Tanı · 2.0.2` görünmeli.
+   - Scooby-Doo! Mystery Incorporated S1E1'de `CizgiMax` sağlayıcısı altında İndirilebilir satır (1080p, ~0,41 GB, Ses: TR) gelmeli. Ana `Nuvio TR HD` altında artık CizgiMax satırı yoktur.
+   - Satır oynatılmalı ve indirilmeli; dosyanın tam ve oynatılabilir olduğu, Türkçe sesin geldiği not edilmeli.
+3. **2.0.3 adayı: dolgulu MP4 düzeni (yalnız CizgiMax).** Gravity Falls S1E1: `ftyp` + 0,7 MB `free` + `mdat` + sonda 0,7 MB `moov`.
+   - Önce gerçek dosyada `mdat` sonundaki 16 baytın `moov` olduğu doğrulanmalı. Oradan okunan 256 KB'ta `mp4MetadataInfo` piksel ve süre veriyor mu bakılmalı (ses izi önce gelirse vermeyebilir).
+   - Phineas and Ferb S1E1 aynı düzende mi ölçülmeli (`cmx-probe.cjs`); yaygın değilse yapılmaz.
+   - Uygulanırsa: `readAudioTracks` gibi aday bayrağı, yalnız CizgiMax ayarlar. Bildirilen kutu sınırları izlenir, her atlamada `sameFile`, en fazla iki ek atlama. Yalnız `ftyp` + dolgudan satır çıkmaz; `moov` içinde video izi, piksel ve süre zorunlu. "Tek ftyp → null" testi korunur. Range dizisini birebir denetleyen sentetik fixture eklenir.
+4. **2.0.4 adayı: RubyVidHub HLS (CizgiMax lane'inde).** Site kararlıyken `cmx-age.cjs` (master gerçekçi gecikmeye dayanmalı; t0 alt listesinin parçaları t0 + bölüm süresinde açılmalı) ve `cmx-ua.cjs` (oynatıcı UA ve Referer varyantları) yeniden koşulmalı. Satır HLS'dir; indirilebilir gösterilmez. Ayrı anahtar, 2.0.1 reddinin yerine geçen KARARLAR maddesi, sentetik belirteçli fixture.
+5. **Altyazı kaynakları (sonra):** Wyzie, subsource, subtitlecat (yapay çeviri olmayanlar), yifysubtitles. Hesap, anahtar, captcha yok; kimliğe bağlı; yabancı veya yanlış kimlikli altyazı birleştirilmez.
+6. **Kapandı:** 2.0.1 madde 5 (RareFilmm UA denetimi ve CizgiMax verimi) bu sürümde ölçüldü; sonuçlar PROJE'de.
+
 ## 2.0.1 — 26 Kasım 2026
 
 1. **Yayımlandı (`51082f7`):** Test ve paket `45779861170` ve Pages `45779861123` başarılı; 9 public dosya HTTP 200 ve SHA-256 yerel `dist/` ile aynı (`compatibility/github-publication.json`).
-2. **Telefonda (Wi-Fi ve LTE ayrı):**
+2. **Telefonda (Wi-Fi ve LTE ayrı):** 2.0.2'den beri CizgiMax ayrı sağlayıcıda; güncel adımlar yukarıda (2.0.2 madde 2).
    - Depo yenilenmeli; `Tanı · 2.0.1` görünmeli.
-   - "Scooby-Doo! Mystery Incorporated" (Scooby Doo Gizem Avcıları) S1E1'de ana `Nuvio TR HD` altında `CizgiMax` İndirilebilir satırı (1080p, ~0,41 GB, Ses: TR) gelmeli.
+   - "Scooby-Doo! Mystery Incorporated" (Scooby Doo Gizem Avcıları) S1E1'de `CizgiMax` İndirilebilir satırı (1080p, ~0,41 GB, Ses: TR) gelmeli.
    - Satır oynatılmalı ve indirilmeli. İndirilen dosyanın tam ve oynatılabilir olduğu, Türkçe sesin geldiği not edilmeli.
 3. **QuickJS test düzeneği:** ~0,2 MB üstü metin gövdelerinde çalışma zamanı kapanışında `list_empty(&rt->gc_obj_list)` ile duruyor. Yayınlanmış DiziBox'ta 300K ile de tekrarlandı; yalnız shim içeren küçük denemede 600K temiz kapandı. Neden bulunmadı. Cihazda büyük sayfa çöküşü bildirilmedi. Ayrıştırıcı tam boyutta ayrı sınanıyor; neden ayrıca araştırılmalı.
 4. **Elenen adaylar (26 Kasım, 2.0.1 sonrası):** BelgeselX, IzleAI, UHDMovies/MoviesMod, mobiletvshows (FzTvSeries kopyası), nkiri. Gerekçeler KARARLAR'da.
-5. **Eksik kapatma turu:** RareFilmm ok.ru yanıtı tek başlıkla yeniden denetlenmeli (iPhone UA ile ok.ru anonim giriş sayfasına yönlendirme görüldü). CizgiMax'in başka çizgi dizilerdeki verimi ölçülmeli; sayı kuralı ve `.ts` kararı ayrı karar olmadan değişmez. Ardından altyazı kaynakları (Wyzie, subsource, subtitlecat, yifysubtitles).
+5. **Eksik kapatma turu (2.0.2'de ölçüldü, kapandı):** RareFilmm ok.ru yanıtı tek başlıkla yeniden denetlenmeli (iPhone UA ile ok.ru anonim giriş sayfasına yönlendirme görüldü). CizgiMax'in başka çizgi dizilerdeki verimi ölçülmeli; sayı kuralı ve `.ts` kararı ayrı karar olmadan değişmez. Ardından altyazı kaynakları (Wyzie, subsource, subtitlecat, yifysubtitles).
 
 ## 2.0.0 — 26 Kasım 2026
 

@@ -2,6 +2,15 @@
 
 - Windows yerel düzeltme başlatıcısı başka Nuvio işlemini sessizce veya zorla kapatmaz. Kullanıcının kısayolu açması ve iletişim kutusunda onay vermesiyle normal pencere kapatma denenir. Açılış öncesi paket SHA ve classpath kontrolü zorunludur; yalnız kısayolun doğru olması uygulamanın doğru kopyada çalıştığı kanıtı değildir.
 
+## 26 Kasım 2026 — 2.0.2 CizgiMax bağımsız scraper
+
+- **Ayrı scraper (HDRezka/Goojara deseni).** Sitenin sunucusu çöktüğünde istek yanıtsız kalıyor ve iOS native isteği iptal edemiyor; ana listedeki kaynak bütçesi (10 sn) iPhone'da dönüşü kurtarmaz. Bu yüzden ana paketten çıkarıldı. Ana pakette kayıtlı `cizgimaxEnabled` yok sayılır.
+- **Erken dönüş altyazıdan önce.** Bağımsız lane animasyon dışı veya anime başlıkta altyazı keşfi ve site isteği açmadan döner (`not_cartoon_series`). Böylece her dizi aramasında gereksiz ağ işi açılmaz.
+- **Kaynak kodu değişmedi.** Sayı kuralı, yalnız Drive, yalnız `.mp4` ve `og:url` kararları (2.0.1) aynen geçerli.
+- **2.0.1'deki RubyVidHub 502'si:** Aynı gün sitenin sunucusu çöktüğü için o ölçüm sunucu kesintisi olabilir. Site düzelince RubyVidHub akış adresi HLS master'ı verdi (Referer gerekli, alt liste ve parçalar başlıksız; ENDLIST'li VOD, 480–720p). Belirteç ömrü ölçülmedi. 2.0.1 reddinin yerine geçecek karar ayrı sürümde, ölçümle verilecek.
+- **Gravity Falls dosya düzeni (ftyp + büyük `free` + `mdat` + sonda büyük `moov`) 2.0.2'de çözülmedi.** Ortak MP4 denetimine dokunmak bütün kaynakları etkiler. Ayrı sürümde, yalnız aday bayrağıyla (CizgiMax) ve en fazla iki kutu sınırı atlamasıyla ele alınacak. Yalnız `ftyp` + dolgudan satır üretilmeyecek; gerçek `moov` içinde video izi (piksel ve süre) zorunlu.
+- **RareFilmm UA:** İstek UA vermediği için ok.ru giriş yönlendirmesi görülmedi. Masaüstü/iPhone UA eklenmedi; kod değişmedi.
+
 ## 26 Kasım 2026 — 2.0.1 sonrası elenen adaylar
 
 - **BelgeselX eklenmedi (kimlik yetersiz).**

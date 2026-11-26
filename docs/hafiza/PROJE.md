@@ -2,6 +2,22 @@
 
 - 12 Kasım ek bilgi: kullanıcı Windows Son aramalar listesindeki Nuvio girişinden açtığını ekran görüntüsüyle gösterdi. Bu önbellek girdisinin hedefi doğrudan okunmadı. Ayrı ve aranabilir `Programs/Nuvio TR HD.lnk` kullanıcı Başlat menüsüne eklendi; kontrollü başlatıcı argümanı yeniden okunarak doğrulandı. Kullanıcı aramada tam Nuvio TR HD adını veya masaüstü aynı adlı kısayolu seçmeli. Açık uygulamaya dokunulmadı.
 
+## 2.0.2 — 26 Kasım 2026: CizgiMax bağımsız scraper
+
+Uzun kaynak turunun eksik kapatma adımı. Yeni kaynak eklenmedi.
+
+- **Bulgu:** CizgiMax sitesinin sunucusu çöktüğünde bağlantı ve TLS kuruluyor, ilk bayt gelmiyordu (`phase.mjs`). Başka bir ölçümde 60 sn sonra Cloudflare 522 ve `Retry-After: 120` döndü. `phone-sim.cjs` artık 20 sn'yi aşan native isteği `NATIVE-LONG` diye yazıyor. iOS kurallı simülasyonda (`IOS=1`) Adventure Time S1E1 ana listesi 60,6 sn'de döndü; Nuvio tüm satırları düşürürdü. Site birkaç saat sonra düzeldi (200, ilk bayt ~340 ms).
+- **Uygulama:**
+  - `src/entry-cizgimax.cjs` (`createEntry('cizgimax', {scanCizgiMax})`); `entry-files.cjs`'ten `scanCizgiMax` çıkarıldı. `index.cjs` (`all`) değişmedi.
+  - `core.cjs`: `ISOLATED_LANES`'e `cizgimax`. Lane erken dönüşü: `tv && isAnimation && !isAnime` değilse `report.reason='not_cartoon_series'`, altyazı keşfinden ve site isteğinden önce. Kaynak kapısı `['cizgimax','all'].includes(lane)`. Ayar `only.cizgimax=['cizgimaxEnabled']`; `only.files`'tan çıkarıldı. Lane bilgi metni ve tanı etiketi `CizgiMax`.
+  - `scripts/build.mjs` yeni giriş ve 7 scraper denetimi; `test-coverage-live.mjs` cizgimax lane'i; manifest yeni scraper (`supportedTypes:['tv']`, `formats:['mp4']`).
+  - Testler: contract (7 scraper), desktop manifest, QuickJS cizgimax paketi (animasyon dışı başlıkta yalnız TMDB çağrısı; ana pakette kayıtlı `cizgimaxEnabled:true` siteye veya Drive'a istek açmaz), `cizgimax.test.cjs` lane testi.
+- **Sonrası (iOS kurallı, sırayla):** Adventure Time S1E1 ana liste siteye 0 istekle 7,7 sn. CizgiMax lane: Scooby-Doo MI S1E1 5,7 sn, 2.0.1 ile aynı satır (1080p, 0,41 GB, süre 1395 sn). Adventure Time S1E1 3,0 sn, 0 satır (Drive dosyası `S1 B1.ts`). Gravity Falls S1E1 4,5 sn, 0 satır (`video_unavailable`).
+- **CizgiMax verimi (Node, `cmx-yield.cjs`, sayı kuralı uygulanmadan, 8 dizi S1E1):** Drive'da `.mp4` adı 3 (Gravity Falls, Scooby-Doo MI, Phineas and Ferb); `.ts` 1 (Adventure Time); Drive sunucusu yok 4 (Gumball, Regular Show, Avatar, Teen Titans Go!). Dosyası doğrulanmış satır yalnız Scooby-Doo. "Dosya adı geçti" sonucu probe'un geçtiği anlamına gelmez.
+- **Gravity Falls probe reddi (`cmx-probe.cjs`):** Dosya gerçek MP4 (467 MB): `ftyp` 20 B + `free` 732.769 B + `mdat` 465.925.690 B; `moov` sonda ~733.697 B. İlk 128 KB yalnız `ftyp` + dolgu içerdiği için `inspectContainer` null döner (moov/mdat yok). Dolgu kabul edilse bile mevcut tek metadata atlaması `mdat`'a düşer, 256 KB kuyruk okuması `moov` başlığının gerisinde kalır. 2.0.1'de de aynıydı; gerileme değil.
+- **RareFilmm (Node, varsayılan başlıklar, UA yok):** THE MOST (1962) 3 satır (206), RATZ (2000) 3 satır (206), THE YELLOW CANARY (1963) 0 (neden incelenmedi). Her embed oynatıcı verisini (`data-options`) döndürdü. Kod değişmedi.
+- **Yapılmayanlar:** Fiziksel telefon, tam bölüm oynatımı ve indirme testi yapılmadı.
+
 ## 2.0.1 — 26 Kasım 2026: CizgiMax Türkçe dublajlı çizgi dizi dosyaları
 
 Uzun kaynak turunun ikinci kaynağı. Ana `Nuvio TR HD` taramasına (dosya hattı) eklendi.

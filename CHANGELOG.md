@@ -1,5 +1,29 @@
 # Sürüm notları
 
+## 2.0.2 — 26 Kasım 2026
+
+- **CizgiMax 7. bağımsız scraper oldu (`nuvio-tr-hd-cizgimax`, "Nuvio TR HD · CizgiMax").**
+  - **Kök neden:** 26 Kasım'da CizgiMax sitesinin sunucusu çöktü. Bağlantı ve TLS kuruluyor, ama ilk bayt hiç gelmiyordu. Başka bir ölçümde 60 sn beklemeden sonra Cloudflare 522 (kaynak sunucuya ulaşılamıyor) döndü. iOS bu isteği 60 sn bekler. iOS kurallı simülasyonda Adventure Time S1E1 ana listesi 60,6 sn'de döndü; bu, Nuvio'nun ana `Nuvio TR HD` listesindeki tüm satırları düşüreceği anlamına gelir.
+  - **Çözüm:** CizgiMax ana taramadan çıkarıldı ve Goojara/HDRezka gibi kendi tarayıcısına alındı. Ana paket CizgiMax kodu içermez. Ana pakette kayıtlı `cizgimaxEnabled: true` ayarı CizgiMax isteği açmaz. Yeni tarayıcı yalnız dizilerde görünür. Animasyon dizisi olmayan (veya anime olan) başlıkta TMDB kimlik sorgusundan sonra döner; siteye ve altyazı servislerine istek açmaz. Altyazı ön-sorgusu yalnız dosya doğrulandıktan sonra başlar.
+  - **Sonrası (iOS kurallı simülasyon, sırayla, başka iş yokken):**
+    - Adventure Time S1E1 ana liste: siteye 0 istek, 7,7 sn'de döndü.
+    - CizgiMax tarayıcısı, Scooby-Doo! Mystery Incorporated S1E1: 2.0.1'deki satırın aynısı 5,7 sn'de geldi ("İndirilebilir · CizgiMax · 1080p · 1920×1080 · 0,41 GB · Ses: TR"; süre 1395 sn).
+    - CizgiMax tarayıcısı, Adventure Time S1E1: 3,0 sn'de 0 satır. Bu bölümün Drive dosyası `.ts`; 2.0.1 kararı gereği eklenmez.
+    - Bu ölçümler fiziksel iPhone dönüş süresi garantisi değildir.
+  - **Kalan risk:** Site yeniden çökerse iPhone'da CizgiMax tarayıcısı o aramada boş dönebilir. Yalnız ana liste korunur.
+  - Kaynak kodu ve medya doğrulaması 2.0.1 ile aynıdır.
+- **CizgiMax verim ölçümü (bu bilgisayar, Node; 8 çizgi dizinin S1E1 bölümü, bölüm sayısı kuralı uygulanmadan):**
+  - Drive sunucusunda `.mp4` adlı dosya: 3 dizi (Gravity Falls, Scooby-Doo! Mystery Incorporated, Phineas and Ferb).
+  - `.ts` dosya: 1 dizi (Adventure Time).
+  - Drive sunucusu yok: 4 dizi (The Amazing World of Gumball, Regular Show, Avatar: The Last Airbender, Teen Titans Go!).
+  - Dosyası doğrulanmış satır: yalnız Scooby-Doo. Gravity Falls dosyası gerçek MP4, ama başında ~0,7 MB boş dolgu kutusu var ve `moov` dosya sonunda ~0,7 MB. Mevcut dosya denetimi bu düzende süre ve piksele ulaşamıyor, satır atılıyor (2.0.1'de de aynıydı). Phineas and Ferb dosya denetiminden ve bölüm sayısı kuralından geçirilmedi.
+- **RareFilmm yeniden denetlendi (kod değişmedi):**
+  - Daha önce iPhone `User-Agent`'ıyla ok.ru'nun anonim giriş sayfasına yönlendirme görülmüştü. RareFilmm isteği `User-Agent` vermez.
+  - Varsayılan başlıklarla (Node): THE MOST (1962) ve RATZ (2000) üçer satır verdi (Range 206). THE YELLOW CANARY (1963) 0 satır verdi; nedeni incelenmedi.
+  - Nuvio köprüsünün eklenti UA vermediğinde masaüstü UA koyduğu cihazda doğrulanmadı.
+- 391 yerel birim ve QuickJS paket testi geçti (`npm run check`). Plugin ABI'si değişmedi.
+- Fiziksel telefon, tam bölüm oynatımı, indirme, çevrimdışı altyazı ve senkron testi yapılmadı.
+
 ## 2.0.1 — 26 Kasım 2026
 
 - **Yeni indirilebilir kaynak: CizgiMax (Türkçe dublajlı çizgi dizi bölümleri, ana `Nuvio TR HD` taraması).**

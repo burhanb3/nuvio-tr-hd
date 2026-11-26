@@ -23,12 +23,14 @@ test('manifest KMP scrapers şeması, yayın yolu ve sürümleri tutarlı', asyn
   assert.equal(goojara?.enabled,true);assert.deepEqual(goojara?.formats,['mp4']);
   const hdrezka=manifest.scrapers.find(s=>s.id==='nuvio-tr-hd-hdrezka');
   assert.equal(hdrezka?.enabled,true);assert.deepEqual(hdrezka?.formats,['mp4']);
-  assert.equal(manifest.scrapers.length,6);
+  const cizgimax=manifest.scrapers.find(s=>s.id==='nuvio-tr-hd-cizgimax');
+  assert.equal(cizgimax?.enabled,true);assert.deepEqual(cizgimax?.formats,['mp4']);assert.deepEqual(cizgimax?.supportedTypes,['tv']);
+  assert.equal(manifest.scrapers.length,7);
   assert.ok(!manifest.scrapers.some(s=>s.id==='nuvio-tr-hd-online'),'Film/dizi araması yeni online scraper kurulmasına bağımlı olmamalı');
   for (const scraper of manifest.scrapers) {
     for (const key of ['id', 'name', 'version', 'filename']) assert.equal(typeof scraper[key], 'string');
     assert.equal(scraper.version, manifest.version);
-    assert.deepEqual(scraper.supportedTypes, scraper.id==='nuvio-tr-hd-extra-anime'?['tv']:['movie', 'tv']);
+    assert.deepEqual(scraper.supportedTypes, ['nuvio-tr-hd-extra-anime','nuvio-tr-hd-cizgimax'].includes(scraper.id)?['tv']:['movie', 'tv']);
     assert.equal(scraper.hasSettings, true);
     await access(new URL('../' + scraper.filename, import.meta.url));
     const published = await readFile(new URL('../dist/' + scraper.filename, import.meta.url), 'utf8');

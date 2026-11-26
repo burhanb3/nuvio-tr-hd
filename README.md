@@ -14,7 +14,7 @@ Nuvio Mobile **Full** veya Nuvio Desktop sürümünde **Pluginler → Depo ekle*
 https://burhanb3.github.io/nuvio-tr-hd/manifest.json
 ```
 
-**Nuvio TR HD**, **Hızlı İzle**, **Goojara**, **HDRezka**, **Anime** ve **Ek Anime** sağlayıcılarını etkinleştirin. Goojara ve HDRezka, yanıt vermeyen CDN düğümleri ana aramayı etkilemesin diye bağımsız çalışır; anime bölümlerinde ek sağlayıcılar birlikte kullanılabilir. Güncellemek için mevcut depoyu yenileyin; yeni satırların da açık olduğunu kontrol edin.
+**Nuvio TR HD**, **Hızlı İzle**, **Goojara**, **HDRezka**, **CizgiMax**, **Anime** ve **Ek Anime** sağlayıcılarını etkinleştirin. Goojara ve HDRezka yanıt vermeyen CDN düğümleri, CizgiMax de sitesi yanıt vermediğinde ana aramayı etkilemesin diye bağımsız çalışır; anime bölümlerinde ek sağlayıcılar birlikte kullanılabilir. Güncellemek için mevcut depoyu yenileyin; yeni satırların da açık olduğunu kontrol edin.
 
 Başlangıç için önerilen ayarlar: **Tüm çözünürlükler · 20 alternatif · HLS açık**. Nuvio'nun altyazı tercihini Türkçe seçin.
 
@@ -39,7 +39,7 @@ Piksel ve gerçek dosya boyutu varsa öncelikle bunlar kullanılır. Eksik bilgi
 
 | Alan | Sağlayıcılar |
 | --- | --- |
-| Film ve dizi dosyaları | Internet Archive, 4KHDHub/HubCloud, HDRezka (bağımsız), Goojara (bağımsız), Waploaded; dizilerde FzTvSeries; MoviesDrive/Pixeldrain; çizgi dizilerde CizgiMax (Türkçe dublaj); filmlerde FzMovies, JetFilmizle ve RareFilmm |
+| Film ve dizi dosyaları | Internet Archive, 4KHDHub/HubCloud, HDRezka (bağımsız), Goojara (bağımsız), Waploaded; dizilerde FzTvSeries; MoviesDrive/Pixeldrain; çizgi dizilerde CizgiMax (bağımsız, Türkçe dublaj); filmlerde FzMovies, JetFilmizle ve RareFilmm |
 | Online film ve dizi | PlayIMDb, VixSrc, DiziBak, FilmModu, HDFilmDelisi, DiziBal, Purstream, FilmEkseni, KultFilmler, DiziBox; DiziYou isteğe bağlı, varsayılan kapalı |
 | Anime | Animecix, SonAnime; Ek Anime'de SeiCode (tau-video/MP4Upload). AniMOM ve online Anizone isteğe bağlı, varsayılan kapalı |
 | Harici altyazı | AltyazıDB, OpenSubtitles ve kaynakla eşlenmiş TR/EN dosyaları |

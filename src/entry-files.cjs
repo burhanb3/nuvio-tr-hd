@@ -10,7 +10,6 @@ module.exports = createEntry('main', {
   scanHdHub: require('./providers/hdhub.cjs').scanHdHub,
   scanFzTvSeries: require('./providers/fztvseries.cjs').scanFzTvSeries,
   scanMoviesDrive: require('./providers/moviesdrive.cjs').scanMoviesDrive,
-  scanCizgiMax: require('./providers/cizgimax.cjs').scanCizgiMax,
   scanFzMovies: require('./providers/fzmovies.cjs').scanFzMovies,
   scanJetFilmizle: require('./providers/jetfilmizle.cjs').scanJetFilmizle,
   scanPlayImdb: require('./providers/playimdb.cjs').scanPlayImdb,

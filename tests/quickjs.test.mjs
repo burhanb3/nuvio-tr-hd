@@ -15,6 +15,7 @@ const extraAnimeBundle = await readFile(new URL('../providers/nuvio-tr-hd-extra-
 const fastOnlineBundle = await readFile(new URL('../providers/nuvio-tr-hd-fast-online.js', import.meta.url), 'utf8');
 const goojaraBundle = await readFile(new URL('../providers/nuvio-tr-hd-goojara.js', import.meta.url), 'utf8');
 const hdrezkaBundle = await readFile(new URL('../providers/nuvio-tr-hd-hdrezka.js', import.meta.url), 'utf8');
+const cizgimaxBundle = await readFile(new URL('../providers/nuvio-tr-hd-cizgimax.js', import.meta.url), 'utf8');
 
 function aliasFeatureSample(language='eng',width=3840,height=2160){
  const e=helpers.ebml,duration=Buffer.alloc(8),size=n=>[n>>8,n&255];duration.writeDoubleBE(7200000);
@@ -110,7 +111,7 @@ test('QuickJS: CizgiMax ayrıştırması gerçek boyutlu (0,6/0,8 MB) sayfalarda
   assert.ok(value.ms<1500,'QuickJS CizgiMax ayrıştırma '+value.ms+' ms');
  }finally{vm.dispose();runtime.dispose();}
 });
-test('QuickJS: CizgiMax paket içinde dublaj Drive MP4 verir; bölüm sayısı TMDB ile çelişirse ve animasyon değilse çağrılmaz',async()=>{
+test('QuickJS: CizgiMax bağımsız pakette dublaj Drive MP4 verir; bölüm sayısı TMDB ile çelişirse ve animasyon değilse çağrılmaz; ana paket siteye hiç istek atmaz',async()=>{
  const C=require('./cizgimax-fixture.cjs');
  // Smaller padding: with text bodies beyond ~0.2 MB this harness aborts at
  // runtime dispose (leftover GC objects) for other providers too (DiziBox);
@@ -121,16 +122,27 @@ test('QuickJS: CizgiMax paket içinde dublaj Drive MP4 verir; bölüm sayısı T
  const fixture={...C.cizgimaxFixture({series,episode}),...tv([{id:16}]),...season(3)};
  const settings={autoSubtitles:false,useDownloadBridge:false,archiveEnabled:false,hdhubEnabled:false,moviesdriveEnabled:false,fztvseriesEnabled:false,waploadedEnabled:false,rarefilmmEnabled:false,playImdbEnabled:false,vixsrcEnabled:false,dizibakEnabled:false,diziyouEnabled:false,filmmoduEnabled:false,goojaraEnabled:false,hdrezkaEnabled:false};
  const fetchCalls=[];
- const rows=await runInQuickJs(fixture,{args:['123456','tv',1,2],settings,nativeTimers:true,fetchCalls});
+ const rows=await runInQuickJs(fixture,{code:cizgimaxBundle,args:['123456','tv',1,2],settings,nativeTimers:true,fetchCalls});
  assert.equal(rows.length,1,JSON.stringify(rows));const row=rows[0];
  assert.equal(row.url,C.DOWNLOAD);assert.match(row.title,/Ses: TR/);assert.match(row.name+row.title,/İndirilebilir/);assert.match(row.quality||row.title,/1080p/);
  assert.ok(fetchCalls.includes(C.SERIES)&&fetchCalls.some(u=>u.endsWith(C.TOKEN))&&!fetchCalls.some(u=>u.endsWith(C.TOKEN2)));
- assert.deepEqual(await runInQuickJs({...fixture,...season(4)},{args:['123456','tv',1,2],settings,nativeTimers:true}),[]);
+ assert.deepEqual(await runInQuickJs({...fixture,...season(4)},{code:cizgimaxBundle,args:['123456','tv',1,2],settings,nativeTimers:true}),[]);
  for(const other of [tv([{id:35}]),tv([{id:16}],'ja')]){
-   const calls=[];assert.deepEqual(await runInQuickJs({...fixture,...other},{args:['123456','tv',1,2],settings,nativeTimers:true,fetchCalls:calls}),[]);
+   const calls=[];assert.deepEqual(await runInQuickJs({...fixture,...other},{code:cizgimaxBundle,args:['123456','tv',1,2],settings,nativeTimers:true,fetchCalls:calls}),[]);
    assert.ok(!calls.some(u=>u.startsWith(C.ORIGIN)));
+   // Not a cartoon series: returns after identity, before any subtitle request.
+   assert.ok(calls.every(u=>u.startsWith('https://api.themoviedb.org/3/tv/123456?')),JSON.stringify(calls));
  }
- assert.deepEqual(await runInQuickJs(fixture,{args:['123456','tv',1,2],settings:{...settings,cizgimaxEnabled:false},nativeTimers:true}),[]);
+ assert.deepEqual(await runInQuickJs(fixture,{code:cizgimaxBundle,args:['123456','tv',1,2],settings:{...settings,cizgimaxEnabled:false},nativeTimers:true}),[]);
+ // A down origin can hold a native request for 60 s on iOS; the main list must
+ // never wait on it, even with a saved cizgimaxEnabled.
+ const mainCalls=[];await runInQuickJs(fixture,{args:['123456','tv',1,2],settings:{...settings,cizgimaxEnabled:true},nativeTimers:true,fetchCalls:mainCalls});
+ assert.ok(mainCalls.length&&!mainCalls.some(u=>u.startsWith(C.ORIGIN)||u.includes('drive.')),JSON.stringify(mainCalls));
+ const czSettings=await runInQuickJs({},{code:cizgimaxBundle,invokeSettings:true});
+ assert.equal(czSettings.find(f=>f.key==='cizgimaxEnabled')?.defaultValue,true);
+ assert.ok(czSettings.some(f=>f.type==='info'&&f.label.includes('Bağımsız CizgiMax')));
+ assert.ok(!czSettings.some(f=>['includeHls','useDownloadBridge','hdhubEnabled','hdrezkaEnabled'].includes(f.key)));
+ assert.ok(!(await runInQuickJs({},{invokeSettings:true})).some(f=>f.key==='cizgimaxEnabled'));
 });
 
 test('QuickJS: Anizone (Ek Anime, opt-in) güvenli Unicode veri zarfını ve tam bölüm kimliğini çözer; HLS indirme sayılmaz',async()=>{

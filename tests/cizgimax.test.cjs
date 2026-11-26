@@ -117,17 +117,22 @@ test('TMDB sezon bölüm sayısı yalnız yayınlanmış bölümleri sayar; eksi
   try{assert.equal(await resolveSeasonEpisodes(http,{...target,type:'movie'},'test'),null);assert.equal(await resolveSeasonEpisodes(http,target,''),null);assert.equal(calls.length,0);}finally{http.close();}
 });
 
-test('CizgiMax yalnız anime olmayan animasyon dizilerde çalışır ve sezon sayısını TMDB’den alır',async()=>{
+test('CizgiMax yalnız bağımsız taramada ve anime olmayan animasyon dizilerde çalışır, sezon sayısını TMDB’den alır; ana tarama çağırmaz',async()=>{
   const reference=(genres,language='en')=>({id:123456,name:'Example Toon',original_name:'Example Toon',first_air_date:'2010-04-05',original_language:language,genres,external_ids:{}});
   for(const[genres,language,expected]of[[[{id:16}],'en',1],[[{id:35}],'en',0],[[{id:16}],'ja',0],[[],'en',0]]){
     const seen=[],f={'https://api.themoviedb.org/3/tv/123456?api_key=test&append_to_response=external_ids':{json:reference(genres,language)},[seasonUrl]:{json:seasonData(['2010-04-05','2010-04-12','2010-04-19'])}};
-    const provider=createProvider({lane:'main',tmdbKey:'test',settings:{autoSubtitles:false},fetchImpl:fixtureFetch(f),
+    const provider=createProvider({lane:'cizgimax',tmdbKey:'test',settings:{autoSubtitles:false},fetchImpl:fixtureFetch(f),
       adapters:{scanCizgiMax:async(http,t,{loadSeason})=>{seen.push({t,season:await loadSeason()});return[];}}});
     await provider.getStreams(123456,'tv',1,2);
     assert.equal(seen.length,expected,JSON.stringify(genres)+language);
     if(expected){assert.equal(seen[0].t.isAnimation,true);assert.deepEqual(seen[0].season,{airedEpisodes:3,runtimeMinutes:22});}
+    if(!expected)assert.equal(provider.getReport().reason,'not_cartoon_series');
   }
-  const off=[],provider=createProvider({lane:'main',tmdbKey:'test',settings:{autoSubtitles:false,cizgimaxEnabled:false},
+  const off=[],provider=createProvider({lane:'cizgimax',tmdbKey:'test',settings:{autoSubtitles:false,cizgimaxEnabled:false},
     fetchImpl:fixtureFetch({'https://api.themoviedb.org/3/tv/123456?api_key=test&append_to_response=external_ids':{json:reference([{id:16}])}}),adapters:{scanCizgiMax:async()=>{off.push(1);return[];}}});
   await provider.getStreams(123456,'tv',1,2);assert.equal(off.length,0);
+  // The main lane never runs it, even when an adapter is supplied.
+  const main=[],mainProvider=createProvider({lane:'main',tmdbKey:'test',settings:{autoSubtitles:false,cizgimaxEnabled:true},
+    fetchImpl:fixtureFetch({'https://api.themoviedb.org/3/tv/123456?api_key=test&append_to_response=external_ids':{json:reference([{id:16}])}}),adapters:{scanCizgiMax:async()=>{main.push(1);return[];}}});
+  await mainProvider.getStreams(123456,'tv',1,2);assert.equal(main.length,0);
 });
