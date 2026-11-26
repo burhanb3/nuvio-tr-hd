@@ -5,14 +5,15 @@
 ## 2.0.4 — 26 Kasım 2026
 
 1. **Yayın:** Sonuç PROJE ve `compatibility/github-publication.json` içine yazılacak.
-2. **Telefonda (Wi-Fi ve LTE ayrı):**
+2. **Akış API'si yeniden 200 verince (bilgisayarda):** CizgiMax lane simülasyonu Gravity Falls S1E1 (40075) ve Adventure Time S1E1 (15260) sırayla çalıştırılmalı. Yayımlanan tarama gerçek listelerde henüz online satır üretmedi; sonuç PROJE'ye yazılmalı.
+3. **Telefonda (Wi-Fi ve LTE ayrı):**
    - Depo yenilenmeli; `Tanı · 2.0.4` görünmeli. CizgiMax sağlayıcısının ayarlarında `CizgiMax online Türkçe dublaj (HLS)` açık görünmeli.
    - We Bare Bears S1E3, Gravity Falls S1E1 veya Adventure Time S1E1'de `Online · CizgiMax` satırı gelmeli (site akış sunucusu çalışıyorsa). Adventure Time S1E1'de Drive dosyası `.ts` olduğu için yalnız online satır beklenir; tam taramada görülmedi. Satır oynatılmalı ve 5 dk sonra ileri sarılmalı: Referer'lı HLS'nin cihazda oynadığı henüz denenmedi. Satır indirme seçeneği göstermemeli.
    - Satır listede olup açılmıyorsa olası neden uzantısız parça adresleri (FFmpeg `extension_picky`) olabilir. Aynı ağda DiziBal (`.png` parçalar) ve KultFilmler (`.html` parçalar) satırları da denenmeli; sonuç birlikte değerlendirilir.
    - Site akış sunucusu 502 verirken Drive satırları gelmeli (simülasyonda geldi).
    - CizgiMax satırları hiç gelmez veya geç gelirse `cizgimaxOnlineEnabled` kapatılıp aynı bölüm denenmeli.
-3. **Nuvio 1.0.1 tam inceleme:** StreamsRepository'deki eklenti çağrısının taşındığı dosya (ayar, başlık ve sonuç birleştirme), PlayerEngine.android ve MPVPlayerBridge başlık aktarımı incelenmeli. Kilit ancak inceleme bittikten sonra güncellenmeli.
-4. **Sıradaki:** Altyazı kaynakları (2.0.2 madde 5).
+4. **Nuvio 1.0.1 tam inceleme:** StreamsRepository'deki eklenti çağrısının taşındığı dosya (ayar, başlık ve sonuç birleştirme) incelenmeli. Oynatıcılar başlıkları `http-header-fields` ile veriyor ve `extension_picky` vermiyor (görüldü). iOS Libmpv paket sürümü (Package.resolved/pbxproj) bulunmalı: CizgiMax, DiziBal ve KultFilmler'in uzantı riskini birlikte netleştirir. Kilit ancak inceleme bittikten sonra güncellenmeli.
+5. **Sıradaki:** Altyazı kaynakları (2.0.2 madde 5).
 
 ## 2.0.3 — 26 Kasım 2026
 
