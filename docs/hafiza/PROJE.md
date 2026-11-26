@@ -10,7 +10,7 @@
   - `cizgimax.cjs`: satırlara `followMp4Boxes:true`.
   - Testler: `download-expansion.test.cjs`'e iki test (bayraklı tam Range dizisi; bayraksız tek Range ve null; moov'suz ve yalnız ses izli dosya null; `mp4PaddedHead` sınırları). `cizgimax.test.cjs` satır bayrağı.
 - **Ölçüm (iOS kurallı):** Gravity Falls S1E1 1080p 0,47 GB, 1294 sn, 7,2 sn (Range: 0, 732789, 466658479, son 64 KB). Scooby-Doo S1E1 5,4 sn aynı satır. Inception ana liste 10 akış, 18,3 sn.
-- **Testler:** 393/393 (`npm run check`). ABI değişmedi.
+- **Testler ve yayın:** 393/393 (`npm run check`). ABI değişmedi. Yayın `8284773`: Test ve paket `45817192160` (ubuntu+windows) başarılı, Pages `45817192182` başarılı; 10 public dosya HTTP 200 ve SHA-256 yerel `dist/` ile aynı (`compatibility/github-publication.json`, anonim GitHub API).
 - **Yapılmayanlar:** Fiziksel telefon, tam bölüm oynatımı ve indirme testi yapılmadı.
 
 ## 2.0.2 — 26 Kasım 2026: CizgiMax bağımsız scraper

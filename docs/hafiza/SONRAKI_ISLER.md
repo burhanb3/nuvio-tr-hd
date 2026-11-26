@@ -4,7 +4,7 @@
 
 ## 2.0.3 — 26 Kasım 2026
 
-1. **Yayın:** Sonuç PROJE ve `compatibility/github-publication.json` içine yazılacak.
+1. **Yayımlandı (`8284773`):** Test ve paket `45817192160` ve Pages `45817192182` başarılı; 10 public dosya HTTP 200 ve SHA-256 yerel `dist/` ile aynı (`compatibility/github-publication.json`).
 2. **Telefonda (Wi-Fi ve LTE ayrı):**
    - Depo yenilenmeli; `Tanı · 2.0.3` görünmeli.
    - Gravity Falls S1E1'de `CizgiMax` sağlayıcısı altında İndirilebilir satır (1080p, ~0,47 GB, Ses: TR) gelmeli. Satır oynatılmalı ve indirilmeli. İleri sarma özellikle denenmeli: `moov` dosya sonunda olduğu için oynatıcı açılışta sonu okumak zorunda.
