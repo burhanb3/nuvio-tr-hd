@@ -2,6 +2,19 @@
 
 - Windows yerel düzeltme başlatıcısı başka Nuvio işlemini sessizce veya zorla kapatmaz. Kullanıcının kısayolu açması ve iletişim kutusunda onay vermesiyle normal pencere kapatma denenir. Açılış öncesi paket SHA ve classpath kontrolü zorunludur; yalnız kısayolun doğru olması uygulamanın doğru kopyada çalıştığı kanıtı değildir.
 
+## 26 Kasım 2026 — 2.0.5 sonrası test turu (kod değişmedi)
+
+- **DiziBox Hızlı İzle'de kalır.**
+  - Bugünkü ~10 dk'lık yavaş pencerede önbellekte olmayan adresler 17–50 sn'de döndü. iOS kuralında Hızlı İzle dönüşü 42 sn'ye uzadı; bu bir simülasyon kuralıdır, cihaz ölçümü değildir.
+  - Pencere geçiciydi ve önceki kayıtlarda tekrarı yok. CizgiMax'i ayırma kararında saatlerce süren kesinti ve 60,6 sn'lik dönüş vardı.
+  - Ayrı scraper'a taşıma tetikleyicisi: ikinci bir yavaş pencere veya 60 sn'yi aşan bir Hızlı İzle dönüşü.
+  - Kullanıcı için geçici çözüm: Hızlı İzle ayarlarında `diziboxEnabled` kapatılır, sonra yenile düğmesine basılır.
+- **Bölüm adresi tahmini eklenmez.** `-hd-izle` ve `-hd-1-izle` tahminlerinin her yanlışı, yavaş pencerede ~45 sn'lik bir native istek daha açar. Site eski adresi yeni adrese 301 ile yönlendiriyor ve kod yönlendirmeyi izliyor.
+- **CizgiMax ana liste sınırı 4 sn kalır.**
+  - Soğuk örnekler 3,6 ve 7,3 sn.
+  - Bugün yalnız hazırlanmış bölüm 200 verdi, diğerleri ~1,2 sn'de 502. Sınırı uzatmak bunu çözmez, Drive satırı da akış işini bekler.
+  - Soğuk istekte 200 canlı doğrulanamadı. Sınır uzatma ancak soğuk 200 örnekleri birikirse yeniden değerlendirilir.
+
 ## 26 Kasım 2026 — 2.0.5 Nuvio 1.0.1 kilidi ve yenile önerisi
 
 - **Kullanıcıya "ekranı yeniden aç" değil, yenile düğmesi önerilir.** Nuvio 1.0.1 `StreamSearchSessions` sonuç bulan aramayı 15 dk tutar ve upstream yorumuna göre kaynak ekranı, oynatıcı kaynak paneli ve sonraki bölüm araması bunu paylaşır. Yalnız `reload` (`forceRefresh`) yeniden tarar. Eklenti ayarları arama anahtarında olmadığı için ayar değişikliğinden sonra da yenile gerekir. Eklenti içinde bunu aşmanın yolu yok (anahtar host tarafında); eklenti davranışı değişmedi.

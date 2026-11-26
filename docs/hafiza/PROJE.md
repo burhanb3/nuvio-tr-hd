@@ -2,6 +2,38 @@
 
 - 12 Kasım ek bilgi: kullanıcı Windows Son aramalar listesindeki Nuvio girişinden açtığını ekran görüntüsüyle gösterdi. Bu önbellek girdisinin hedefi doğrudan okunmadı. Ayrı ve aranabilir `Programs/Nuvio TR HD.lnk` kullanıcı Başlat menüsüne eklendi; kontrollü başlatıcı argümanı yeniden okunarak doğrulandı. Kullanıcı aramada tam Nuvio TR HD adını veya masaüstü aynı adlı kısayolu seçmeli. Açık uygulamaya dokunulmadı.
 
+## 2.0.5 sonrası son test turu — 26 Kasım 2026 (eklenti kodu ve sürüm değişmedi)
+
+- **Kapsam ve yöntem:** CHANGELOG 2.0.0–2.0.5 maddeleri. `src/` üzerinden `phone-sim.cjs` (iOS kuralı `IOS=1`, 60 sn) ve canlı Node betikleri, sırayla ve tek başlıkla çalıştırıldı. TMDB yanıtları elle kurulmuş sabitlerdi; yayımlanan paket ve gerçek TMDB yanıtı kullanılmadı. Simülasyona Türkçe başlık sabiti eklendi (`SIM_TR`). İlk koşudaki DiziBal 0 sonucu, simülasyonun sahte anahtarıyla `/translations` isteğinin 401 dönmesiydi.
+- **CizgiMax (bağımsız lane):**
+  - Gravity Falls S1E1: 2 satır (İndirilebilir 1080p MP4 0,47 GB ve Online 720p İndirilemez), 7,2 sn.
+  - Gravity Falls S1E1 akışı: 121 parça, ENDLIST. İlk, orta ve son parça Referer'lı ve Referer'sız, mpv/AVPlayer UA ile 206 MPEG-TS döndü. HTTP düzeyinde oynatılabilir; cihazda oynatılmadı.
+  - Gravity Falls S1E1 ana listesi ilk istekte 7,3 sn (soğuk), sonra ~0,4 sn. Önceki soğuk örnek 3,6 sn.
+  - Scooby-Doo MI S1E1: Drive 1080p satırı geldi (8,4 sn); akış 502.
+  - Adventure Time S1E1: 0 satır (Drive `.ts`, akış 502).
+  - 16:53–16:56 UTC arası akış: Gravity Falls S1E2, We Bare Bears S1E3, Adventure Time S1E1 ve Scooby-Doo S1E1 tekrarlarda ~1,2 sn'de 502. Yalnız önceden hazırlanmış Gravity Falls S1E1 200. Site tarafı.
+  - Kullanıcının "Gravity Falls'ta satır gelmedi" bildirimi açıklanmadı: Drive satırı akıştan bağımsız geliyor.
+- **Hızlı İzle:**
+  - Inception: 6 satır (KultFilmler 1080p ve 720p, HDFilmDelisi, Purstream, DiziBal 720p TR/EN ses, FilmEkseni), 6,2 sn.
+  - Stranger Things S5E1: 3 satır, DiziBox 1080p dahil, 3,9 sn.
+  - Breaking Bad S1E1: 3 satır (Purstream, DiziBal, DiziBox 1080p), 9,0 sn. Eski bölüm adresi `-hd-1-izle` biçimine 301 ile gidiyor; yönlendirme izlendi.
+  - Adventure Time S1E1: DiziBox'ta yok. Site bilinmeyen adrese 143 B'lık "Böyle bir sayfa yok" sayfası (200/206) veriyor; başlık denetimi eliyor. 0 satır, 2,1 sn.
+  - Grey's Anatomy S20E1 (canlı Node): düz ve kıvrık kesme işareti aynı `greys-anatomy` adresine gidiyor; 1080p satır geldi. Bir denemede site Range'siz 200 verdi ve satır çıkmadı (2.0.0'da kayıtlı davranış). Sonraki iki denemede satır geldi.
+  - **DiziBox yavaş pencere (~16:58–17:07 UTC):**
+    - Önbellekte olmayan adresler 17–50 sn'de döndü: 301 33–38 sn, 404 46–50 sn, arama 40 sn'de 520.
+    - O sırada Breaking Bad S1E1 Hızlı İzle mantıksal olarak 4,6 sn'de bitti, ama native istek 41,9 sn sürdü (`NATIVE-SETTLED` 42 sn). iOS kuralına göre bütün Hızlı İzle satırları bu kadar gecikir.
+    - 17:11 UTC'de aynı adresler 0,3–0,5 sn'de döndü. Önceki oturum kayıtlarında başka yavaş DiziBox penceresi yok. Kod değişmedi (KARARLAR).
+- **Ana liste:**
+  - Inception: 8 satır (7 İndirilebilir 360p–2160p ve VixSrc), 21,9 sn.
+  - Breaking Bad S1E1: 3 satır (Archive 480p ve 720p, VixSrc), 6,9 sn. 20 Kasım koşusuyla aynı satırlar.
+  - FzTvSeries CDN'ine bu bilgisayardan bağlanılamadı; PlayIMDb dosyası 403. 20 Kasım koşusunda da bu iki kaynaktan satır yoktu.
+- **RareFilmm (canlı Node):**
+  - RATZ (2000): 3 satır (206, ftyp).
+  - THE MOST (1962): bu kez 0. ok.ru embed'i anonim VK giriş yönlendirmesine gitti; form gönderilmez, kaynak boş döner.
+  - THE YELLOW CANARY: 0, önceki gibi.
+- **Testler:** 397/397 (`npm run check`). Eklenti kodu değişmedi; yayın yok.
+- **Yapılmayanlar:** Fiziksel telefon, cihazda online oynatma, tam bölüm oynatımı ve indirme testi yapılmadı.
+
 ## 2.0.5 — 26 Kasım 2026: Nuvio 1.0.1 incelemesi, kilit ve yenile önerisi
 
 - **Uygulama:** Yalnız `core.cjs` `cizgimaxOnlineEnabled` açıklaması: "satır gelmezse kaynak listesinin başındaki yenile düğmesine basın (Nuvio sonuç bulan aramayı bir süre saklar…)". Site, AYARLAR, SORUN_GIDERME aynı. Eklenti davranışı değişmedi.

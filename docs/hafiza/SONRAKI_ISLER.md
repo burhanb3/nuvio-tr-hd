@@ -2,6 +2,19 @@
 
 - Son durum: masaüstü Nuvio TR HD artık Start-NuvioTRHD.ps1 üzerinden açılır. Kullanıcı yeniden aynı hata bildirdiğinde özgün kurulum çalışıyordu; nedeni kesinleşmedi. CheckOnly ve gömülü Java17 penceresiz classpath probe geçti. Kullanıcı kontrollü başlatıcıyla deneyip hata sürerse çalışan yol ve gerçek kaynak raporu birlikte incelenmeli. Tekrar UI başarısı/tam indirme doğrulanmış sayılmamalı.
 
+## 2.0.5 sonrası test turu — 26 Kasım 2026 (sürüm değişmedi)
+
+1. **Yapıldı (bilgisayarda, ayrıntı PROJE):** CizgiMax, Hızlı İzle (DiziBox, DiziBal, KultFilmler), ana liste ve RareFilmm yeniden denendi. Eklenti hatası bulunmadı; kod ve sürüm değişmedi. 397/397.
+2. **Telefonda: CizgiMax satırı gelmezse:**
+   - Sağlayıcı listesinde "Nuvio TR HD · CizgiMax" açık olmalı. Ayarlarında `Tanı · 2.0.5` görünmeli.
+   - Gravity Falls S1E1'de İndirilebilir 1080p satırı da mı yok, yoksa yalnız Online satırı mı? Drive satırı akıştan bağımsız gelir.
+   - Kaynak listesinin başındaki yenile düğmesine basılmalı.
+   - 26 Kasım 17:00 UTC'de online satır yalnız Gravity Falls S1E1'de beklenir. Diğer bölümlerde sitenin akış sunucusu 502 veriyordu (site tarafı).
+3. **DiziBox izleme:**
+   - Bir dizide Hızlı İzle satırları çok geç geliyorsa Hızlı İzle ayarlarında DiziBox kapatılıp yenile denenmeli. Bu durum not edilmeli.
+   - İkinci bir yavaş pencere veya 60 sn'yi aşan dönüş görülürse DiziBox ayrı scraper'a taşınır (KARARLAR).
+4. **İsteğe bağlı (başka nedenle sürüm çıkarsa):** DiziBox ad döngüsü, ilk ad taşıma hatasıyla düşünce ikinci adı denemeyi bırakmalı. Bu, yavaş pencerede en kötü dönüşü ~55 sn'den ~50 sn'ye indirir. İki ad yalnız özgün ad ile arama adı farklıysa denenir.
+
 ## 2.0.5 — 26 Kasım 2026
 
 1. **Yayımlandı (`3331704`):** Test ve paket `45855931852` ve Pages `45855931799` başarılı; 10 public dosya HTTP 200 ve SHA-256 yerel `dist/` ile aynı (`compatibility/github-publication.json`).

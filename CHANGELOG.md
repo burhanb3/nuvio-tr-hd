@@ -1,5 +1,17 @@
 # Sürüm notları
 
+## 2.0.5 sonrası test turu — 26 Kasım 2026 (yeni sürüm yok)
+
+- Eklenti kodu değişmedi. 2.0.0–2.0.5 eklemeleri bilgisayarda yeniden denendi: iOS kurallı simülasyon ve canlı Node, elle kurulmuş TMDB sabitleriyle (ayrıntı `docs/hafiza/PROJE.md`).
+- **CizgiMax:**
+  - Gravity Falls S1E1'de iki satır geldi: 1080p MP4 ve 720p online. Akış parçaları HTTP 206 MPEG-TS.
+  - Denenen diğer bölümlerde sitenin akış sunucusu 502 verdi. Drive satırları (Gravity Falls, Scooby-Doo) yine geldi.
+- **Hızlı İzle:** DiziBox, DiziBal ve KultFilmler satır verdi (Inception, Stranger Things S5E1, Breaking Bad S1E1). DiziBox'ın yeni `-hd-1-izle` bölüm adresine yönlendirmesi izleniyor. Grey's Anatomy'de kesme işaretinin iki yazımı da aynı adrese gidiyor.
+- **DiziBox yavaşlığı:** Site yaklaşık 10 dakika boyunca önbellekte olmayan adreslere 17–50 sn'de yanıt verdi. iOS kurallı simülasyonda Hızlı İzle o sırada 42 sn'de döndü.
+  - Tekrarlarsa DiziBox ayrı taramaya alınacak.
+  - O zamana kadar geçici çözüm: Hızlı İzle ayarlarında DiziBox'ı kapatıp yenile düğmesine basmak.
+- 397/397 test (`npm run check`). Fiziksel telefon, online oynatma, tam bölüm oynatımı ve indirme testi yapılmadı.
+
 ## 2.0.5 — 26 Kasım 2026
 
 - **Satır gelmezse ne yapılacağı düzeltildi: kaynak listesinin başındaki yenile düğmesi.**
