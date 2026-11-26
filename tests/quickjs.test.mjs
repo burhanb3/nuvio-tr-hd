@@ -66,6 +66,20 @@ test('QuickJS: KultFilmler kart ad/yıl ve oynatıcı IMDb bağıyla altyazılı
  assert.ok(dubbed&&original);assert.equal(original.subtitles[0].language,'tr');
  assert.deepEqual(await runInQuickJs(fixture,{code:fastOnlineBundle,settings:{...settings,kultfilmlerEnabled:false},nativeTimers:true}),[]);
 });
+test('QuickJS: DiziBox ad/bölüm/yıl bağıyla AES oynatıcıdan HLS; UA+Referer ve .m3u8 işareti korunur, indirme yok',async()=>{
+ const D=require('./dizibox-fixture.cjs');
+ const fixture={...D.diziboxFixture(),'https://api.themoviedb.org/3/tv/123456?api_key=test&append_to_response=external_ids':{json:{id:123456,original_name:'Example Series',name:'Example Series',first_air_date:'2020-01-01',original_language:'en',episode_run_time:[45]}}};
+ const settings={autoSubtitles:false,useDownloadBridge:false,hdfilmdelisiEnabled:false,dizibalEnabled:false,purstreamEnabled:false,filmekseniEnabled:false};
+ const fetchCalls=[];
+ const rows=await runInQuickJs(fixture,{code:fastOnlineBundle,args:['123456','tv',1,2],settings,nativeTimers:true,fetchCalls});
+ assert.equal(rows.length,1);const row=rows[0];
+ assert.equal(row.type,'hls');assert.equal(row.url,D.PLAYER+'/embed/sheila/'+D.EMBED+'?format=.m3u8');
+ assert.equal(row.headers.Referer,D.PLAYER+'/');assert.match(row.headers['User-Agent'],/Safari/);
+ assert.match(row.quality,/1080p/);assert.match(row.title,/Sitede Türkçe altyazılı/);assert.match(row.title,/İndirilemez/);
+ assert.ok(fetchCalls.includes(D.ORIGIN+'/diziler/example-series/'));
+ assert.deepEqual(await runInQuickJs(fixture,{code:fastOnlineBundle,args:['123456','tv',1,2],settings:{...settings,diziboxEnabled:false},nativeTimers:true}),[]);
+ assert.deepEqual(await runInQuickJs(fixture,{code:fastOnlineBundle,args:['123456','tv',1,3],settings,nativeTimers:true}),[]);
+});
 
 test('QuickJS: Anizone (Ek Anime, opt-in) güvenli Unicode veri zarfını ve tam bölüm kimliğini çözer; HLS indirme sayılmaz',async()=>{
  const root='https://anizone.to',slug='example1',url='https://fixture.vid-cdn.xyz/11111111-1111-4111-8111-111111111111/master.m3u8';

@@ -21,6 +21,7 @@ const ALL_ADAPTERS = {
   scanAnizone: require('./providers/anizone.cjs').scanAnizone,
   scanFilmEkseni: require('./providers/filmekseni.cjs').scanFilmEkseni,
   scanKultFilmler: require('./providers/kultfilmler.cjs').scanKultFilmler,
+  scanDiziBox: require('./providers/dizibox.cjs').scanDiziBox,
   scanDiziYou: require('./providers/diziyou.cjs').scanDiziYou,
   scanFilmModu: require('./providers/filmmodu.cjs').scanFilmModu,
   scanHdFilmDelisi: require('./providers/hdfilmdelisi.cjs').scanHdFilmDelisi,

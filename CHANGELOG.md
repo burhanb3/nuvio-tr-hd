@@ -1,5 +1,30 @@
 # Sürüm notları
 
+## 2.0.0 — 26 Kasım 2026
+
+- **Yeni online dizi kaynağı: DiziBox (Hızlı İzle ve sabit online paket).**
+  - **Ne verir:** Sitenin "DBX Pro" oynatıcısındaki HLS akışı. Ölçülen bölümlerde 720p–1080p. Akış HLS'dir; indirilebilir dosya olarak gösterilmez.
+  - **Kimlik:** Bölüm sayfasında dizi adı ve sezon/bölüm birebir eşleşmelidir. Dizi sayfasındaki ilk yayın yılı da TMDB yılıyla aynı olmalıdır. Aynı adlı yeniden çevrimler yıldan ayrılır: Shameless (ABD, 2011) geldi; Shameless (İngiltere, 2004) ve The Office (İngiltere, 2001) boş döndü. Başka sitenin oynatıcısı veya dosya adresi kabul edilmez.
+  - **Türkçe altyazı:** Satırda "Sitede Türkçe altyazılı olarak etiketlenmiş" yazar. Akışta ayrı altyazı izi yoktur. Altyazının görüntüye işlendiği doğrulanamadı; oynatıcı bilgisayardaki tarayıcı panelinde açılmadı. Bu etiket sıralamada Türkçe altyazı sayılmaz. Bölüm için bulunan harici TR altyazılar ayrıca eklenir.
+  - **Oynatıcı yapılandırması:** Oynatıcı sayfası yapılandırmayı CryptoJS AES ile şifreli verir ve parolayı aynı sayfada taşır. Eklenti bunu kendi AES-256-CBC çözücüsüyle metin olarak çözer; çözücü node:crypto ile karşılaştırıldı. Betik çalıştırılmaz. Hesap, çerez, anahtar veya sabit koruma değeri kullanılmaz.
+  - **Tarayıcı kimliği:** Site ve oynatıcı sunucusu, tarayıcı benzeri `User-Agent` olmadan 403/404 veriyor. Eklenti istekleri ve akış başlıkları standart bir iPhone Safari kimliği taşır. Nuvio iOS akış başlıklarını oynatıcıya (MPV) iletir; oynatıcı sunucusunun bunu cihazda kabul ettiği denenmedi.
+  - **Hız:** Bölüm sayfası yaklaşık 1,8 MB. Yalnız son 320 KB `Range` ile istenir. Yalnız "Moly" oynatıcısı olan bölümlerde ek istek açılmaz.
+  - **Ayar:** `diziboxEnabled`, varsayılan açık. Yalnız dizilerde (anime hariç), 7 sn kaynak bütçesiyle çalışır. Ana `Nuvio TR HD` taramasında çalışmaz.
+  - **Canlı ölçüm (bu bilgisayar, Node, telefon değil):**
+    - 1 akış: Breaking Bad S1E1 ve S1E7, The 100 S5E5 (720p), Stranger Things S5E1, Shameless (ABD) S1E1, Fleabag S1E1, Dark S1E1, The Queen's Gambit S1E1, Grey's Anatomy S20E1. The 100 dışındakiler 1080p.
+    - 0 akış, doğru red: Shameless (İngiltere), The Office (İngiltere).
+    - 0 akış, sitede yok veya yalnız Moly var: Game of Thrones, The Bear, Grey's Anatomy S1E1 (Moly videosu silinmiş), It's Always Sunny S1E1.
+    - Tek kaynak taraması 0,4–2,1 sn sürdü.
+  - **iOS kurallı simülasyon (Hızlı İzle, sırayla):**
+    - Stranger Things S5E1: önce 2 satır, 3,6 sn; sonra 3 satır, 5,6 sn (DiziBox 1080p).
+    - The 100 S5E5: 2 satır, 4,7 sn (DiziBox 720p).
+    - 60 sn askı görülmedi. Bu ölçüm fiziksel iPhone dönüş süresi garantisi değildir.
+  - **Bilinmeyen:** HLS parçaları `.png` uzantılı adlarla gelir; içerik gerçek MPEG-TS'tir. Yeni FFmpeg sürümlerindeki HLS `extension_picky` denetimi bu tür adları reddedebilir. Nuvio'nun iOS oynatıcısındaki FFmpeg sürümü bilinmiyor. Aynı risk KultFilmler'in `.html` parçaları için de geçerli. iPhone'da denenmedi.
+- **Ad eşleştirme düzeltmesi (tüm kaynaklar):** Başlık normalizasyonu U+2000–U+303F aralığındaki tipografik işaretleri harf gibi tutuyordu: kıvrık kesme işareti, tırnak, uzun tire ve üç nokta. Bu yüzden "Grey’s Anatomy" ile "Grey's Anatomy" eşleşmiyordu. Artık bu işaretler ayırıcı sayılır. Kiril, kana, CJK ve 々 korunur. Korece (Hangul) davranışı değişmedi.
+- **Bu turda incelenip eklenmeyen kaynak:** MovieBox. Yeni arama API'si anonim istekte "invalid token" döndü. Belirteç üretilmedi.
+- 378 yerel birim ve QuickJS paket testi geçti (`npm run check`). Plugin ABI'si değişmedi.
+- Fiziksel telefon, tam bölüm oynatımı, indirme, çevrimdışı altyazı ve senkron testi yapılmadı.
+
 ## 1.9.9 — 26 Kasım 2026
 
 - **Yeni online film kaynağı: KultFilmler (Hızlı İzle ve sabit online paket).**

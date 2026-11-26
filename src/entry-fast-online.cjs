@@ -5,5 +5,6 @@ module.exports = createEntry('fastOnline', {
   scanDiziBal: require('./providers/dizibal.cjs').scanDiziBal,
   scanPurstream: require('./providers/purstream.cjs').scanPurstream,
   scanFilmEkseni: require('./providers/filmekseni.cjs').scanFilmEkseni,
-  scanKultFilmler: require('./providers/kultfilmler.cjs').scanKultFilmler
+  scanKultFilmler: require('./providers/kultfilmler.cjs').scanKultFilmler,
+  scanDiziBox: require('./providers/dizibox.cjs').scanDiziBox
 });

@@ -13,6 +13,8 @@ Resmî release ve geliştirme dalındaki ilgili dosyaların SHA'ları `compatibi
 
 ## Güncel kontrol
 
+2.0.0 (26 Kasım) DiziBox online dizi kaynağını Hızlı İzle ve sabit online pakete ekler. Kimlik bölüm başlığı ile dizi sayfasındaki ilk yayın yılına bağlıdır. Oynatıcı yapılandırması sayfanın verdiği parolayla AES olarak metin halinde çözülür; betik çalıştırılmaz. Başlık normalizasyonu tipografik noktalama işaretlerini (’ – … “”) ayırıcı sayar. Plugin ABI'sine dokunmaz. 378 fixture/QuickJS testi geçti. Yayın kontrolü yayından sonra yazılacak.
+
 1.9.9 (26 Kasım) KultFilmler online film kaynağını Hızlı İzle ve sabit online pakete ekler. Kimlik oynatıcının IMDb kimliğine bağlıdır. Dublaj sitenin beyanıdır. Paketli oynatıcı betiği çalıştırılmadan, sınırlı sözlükle çözülür (`unpackPacked`). Plugin ABI'sine dokunmaz. 370 fixture/QuickJS testi geçti. `b653608` yayını: Test ve paket `45701344984`, Pages `45701345092` başarılı; 9 public dosya SHA-256 eşleşti. Windows Desktop, fiziksel telefon, tam oynatma ve indirme testi yapılmadı.
 
 1.9.8 (25 Kasım) HDRezka'yı 6. bağımsız scraper (`nuvio-tr-hd-hdrezka`) yapar. Anizone ve AniMOM'u yeni opt-in anahtarlarıyla varsayılan kapatıp Anime taramasından çıkarır. SonAnime, SeiCode (tau-video), VixSrc (FHD 403), FilmEkseni (alan adı) ve PlayIMDb (`cast_urls`) değişikliklerine uyar; kesme işaretli adları `%27` ile gönderir. Plugin ABI'sine dokunmaz. 365 fixture/QuickJS testi geçti. `55b732d` yayını: Test ve paket `45692600060`, Pages `45692600154` başarılı; 9 public dosya SHA-256 eşleşti. Windows Desktop, fiziksel telefon, tam oynatma ve indirme testi yapılmadı.

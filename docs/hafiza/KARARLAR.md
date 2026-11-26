@@ -2,6 +2,20 @@
 
 - Windows yerel düzeltme başlatıcısı başka Nuvio işlemini sessizce veya zorla kapatmaz. Kullanıcının kısayolu açması ve iletişim kutusunda onay vermesiyle normal pencere kapatma denenir. Açılış öncesi paket SHA ve classpath kontrolü zorunludur; yalnız kısayolun doğru olması uygulamanın doğru kopyada çalıştığı kanıtı değildir.
 
+## 26 Kasım 2026 — 2.0.0 DiziBox
+
+- **Yalnız Hızlı İzle ve online paket, yalnız dizi.** KultFilmler deseni; 7 sn kaynak bütçesi. Film, anime ve geçersiz bölümde istek açılmaz.
+- **Kimlik bağı:** Bölüm sayfasında ad + sezon/bölüm; dizi sayfasında ad + ilk yayın yılı. Site TMDB/IMDb kimliği vermediği için güven 90'dır (DiziBal gibi). Yeniden çevrimler yalnız yıl ile ayrılır.
+- **Yalnız King ("DBX Pro").** Moly (dış video hostu) okunmaz; incelenen Moly bölümünde video silinmişti. King yoksa ve DBX Pro seçeneği de yoksa dizi sayfası istenmez.
+- **AES zarfı:** Parola oynatıcı sayfasının kendi verisidir; eklentide gömülü anahtar veya koruma sabiti yoktur. Çözülen metin yalnız regex ile okunur, çalıştırılmaz. Dosya adresi ve türü birebir denetlenir.
+- **Range kuyruğu:** Sayfa ~1,8 MB ve http istemcisi büyük gövdeyi atar. Başlık, oynatıcı ve dizi bağlantısı son ~150 KB'dedir. `bytes=-320000` ile 206 alınır; sunucu tam gövde verirse sınır aşılır ve kaynak boş döner.
+- **User-Agent:** Tarayıcı UA'sı olmadan her adım 403/404 verdi; "libmpv"/"Lavf" dizeleri de reddedildi (masaüstü denemesi). Nuvio fetch köprüsü eklentinin verdiği `User-Agent`'ı korur (yoksa kendi masaüstü UA'sını koyar). iOS MPV köprüsü akış başlıklarını `http-header-fields` ile iletir, yalnız Range'i siler. Bu yüzden akış başlığına da aynı UA eklendi. Standart tarayıcı kimliğidir, koruma sabiti değildir (JetFilmizle öncülü).
+- **Altyazı etiketi:** `burnedSubtitleLanguage:'tr'` + `burnedSubtitleBasis:'site-label'`. Sıralamada TR altyazı puanı almaz ve yabancı sabit altyazı cezası da almaz. Satırda "Sitede Türkçe altyazılı olarak etiketlenmiş" yazar.
+- **`.png` parçalar:** FFmpeg `extension_picky` denetimi reddedebilir; eklenti oynatıcı seçeneği veremez. Cihaz testi gelene kadar kaynak açık kalır; açılmazsa KultFilmler ile birlikte değerlendirilir.
+- **Ad normalizasyonu:** `normalizeTitle` artık U+2000–U+303F aralığını (tipografik tırnak, tire, üç nokta, CJK noktalama) ayırıcı sayar; 々〆〇 (U+3005–3007) korunur. Önceki aralık (U+0400–U+9FFF) bunları harf sayıyordu.
+- **19 Kasım notu güncellendi:** "dizibox.live: Cloudflare challenge" notu 26 Kasım'da geçerli değildi (challenge yok, çerez gerekmedi). Bu, yeni dış durum sayıldı.
+- **MovieBox elendi:** Yeni arama API'si anonim istekte "invalid token". Belirteç üretilmez.
+
 ## 26 Kasım 2026 — 1.9.9 KultFilmler
 
 - **Yalnız Hızlı İzle ve online paket.** Ana `Nuvio TR HD` taramasına eklenmedi. Yeni bir host iPhone'da askı yaparsa yalnız Hızlı İzle etkilenir. 6 sn kaynak bütçesi var; yalnız filmlerde çalışır.

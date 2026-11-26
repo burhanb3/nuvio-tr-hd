@@ -2,6 +2,19 @@
 
 - Son durum: masaüstü Nuvio TR HD artık Start-NuvioTRHD.ps1 üzerinden açılır. Kullanıcı yeniden aynı hata bildirdiğinde özgün kurulum çalışıyordu; nedeni kesinleşmedi. CheckOnly ve gömülü Java17 penceresiz classpath probe geçti. Kullanıcı kontrollü başlatıcıyla deneyip hata sürerse çalışan yol ve gerçek kaynak raporu birlikte incelenmeli. Tekrar UI başarısı/tam indirme doğrulanmış sayılmamalı.
 
+## 2.0.0 — 26 Kasım 2026
+
+1. **Yayın:** Yayın kontrolü sonucu PROJE ve `compatibility/github-publication.json` içine yazılacak.
+2. **Telefonda (Wi-Fi ve LTE ayrı):**
+   - Depo yenilenmeli; `Tanı · 2.0.0` görünmeli.
+   - Stranger Things S5E1 veya The 100 S5E5'te `Hızlı İzle` altında DiziBox satırı gelmeli.
+   - Satır oynatılmalı. Parçalar `.png` adlıdır. Açılmazsa aynı ağda KultFilmler (Inception) satırı da denenmeli. İkisi birlikte açılmıyorsa olası neden Nuvio oynatıcısının FFmpeg uzantı denetimidir.
+   - Görüntüde Türkçe altyazı olup olmadığı not edilmeli; site etiketi doğrulanmadı.
+3. **Sonraki kaynaklar:** CizgiMax, BelgeselX, IzleAI. İndirilebilir: o2tvseries / mobiletvshows, nkiri. HD: uhdmovies / moviesmod. Ardından altyazı kaynakları.
+4. **Kullanıcı bildirimi (26 Kasım):** 1.9.9 sonrası "kısa testleri yaptım, sıkıntı yok" dedi. Hangi başlık, kaynak ve ağda denendiği söylenmedi. Bu, tam oynatma, indirme veya KultFilmler `.html` parçalarının iPhone'da oynatıldığının kanıtı sayılmaz.
+5. **MovieBox elendi (26 Kasım):** Yeni `h5-api` araması anonim istekte 400 "invalid token" döndü; sayfanın istemci tarafında ürettiği belirteçle de aynı. Sayfa verisinde VIP düzeyi ve önizleme saniyesi alanları var. Belirteç peşine düşülmez; yeni dış durum olmadan yeniden denenmez.
+6. **DiziBox eklendi:** 19 Kasım'da Cloudflare challenge veriyordu; 26 Kasım'da bölüm sayfaları challenge'sız 200 döndü. Çerez gerekmedi, yalnız tarayıcı `User-Agent`'ı gerekti. Ayrıntılar KARARLAR'da.
+
 ## 1.9.9 — 26 Kasım 2026
 
 1. **Yayımlandı (`b653608`):** Test ve paket `45701344984` ve Pages `45701345092` başarılı; 9 public dosya HTTP 200 ve SHA-256 yerel `dist/` ile aynı (`compatibility/github-publication.json`).
@@ -12,7 +25,7 @@
    - Altyazılı satırda TR altyazı görünmeli ve senkron olmalı.
    - Oynatma bağlantısı yaklaşık 2 saat geçerli. Liste uzun süre açık kaldıktan sonra oynatma denenip hata alınırsa not edilmeli.
 3. **HDRezka:** Kullanıcı Interstellar, Inception, Fury'de Wi-Fi ve mobil veride ayrı denemeli. İki ağda farklı sonuç çıkarsa düğüm kısıtlaması ağa bağlıdır.
-4. **Sonraki kaynak turu:** DiziBox (dizi). King oynatıcısında AES çözümü için gereken parola sayfadan geliyor; ayrıca sabit bir çerez var. Önce bu çerezin koruma sabiti olup olmadığına bakılmalı; koruma sabitiyse eklenmez. Ardından CizgiMax ve BelgeselX değerlendirilmeli.
+4. **Sonraki kaynak turu:** DiziBox (dizi). King oynatıcısında AES çözümü için gereken parola sayfadan geliyor; ayrıca sabit bir çerez var. Önce bu çerezin koruma sabiti olup olmadığına bakılmalı; koruma sabitiyse eklenmez. Ardından CizgiMax ve BelgeselX değerlendirilmeli. **2.0.0'da yapıldı:** çerez gerekmedi.
 5. **1.9.8 maddeleri** (aşağıda) hâlâ açık.
 
 ## 1.9.8 — 25 Kasım 2026

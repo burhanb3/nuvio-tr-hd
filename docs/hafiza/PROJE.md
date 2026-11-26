@@ -2,6 +2,28 @@
 
 - 12 Kasım ek bilgi: kullanıcı Windows Son aramalar listesindeki Nuvio girişinden açtığını ekran görüntüsüyle gösterdi. Bu önbellek girdisinin hedefi doğrudan okunmadı. Ayrı ve aranabilir `Programs/Nuvio TR HD.lnk` kullanıcı Başlat menüsüne eklendi; kontrollü başlatıcı argümanı yeniden okunarak doğrulandı. Kullanıcı aramada tam Nuvio TR HD adını veya masaüstü aynı adlı kısayolu seçmeli. Açık uygulamaya dokunulmadı.
 
+## 2.0.0 — 26 Kasım 2026: DiziBox online dizi kaynağı ve tipografik ad eşleşmesi
+
+Kullanıcı 1.9.9 sonrası kısa testlerde sorun görmediğini söyledi ve uzun bir kaynak genişletme turu istedi. Bu turda tek kaynak eklendi: DiziBox. MovieBox elendi.
+
+- **Kaynak zinciri:**
+  1. Bölüm sayfası `/<slug>-<S>-sezon-<E>-bolum-izle/`. Bilinmeyen slug ana sayfaya yönlenir; başlık denetimi bunu eler. Sayfa ~1,8 MB; yalnız son 320 KB `Range` ile alınır (206).
+  2. İlk `<h1>`: dizi adı, `S.Sezon E.Bölüm` ve dil bayrağı (`altyazi.png`). Dizi sayfası bağlantısı `archive-title`.
+  3. Dizi sayfası: başlık bağlantısı ve `/yil/YYYY/` etiketi (ilk yayın yılı). Akış zinciriyle paralel istenir.
+  4. `video-area` içindeki King iframe'i (`/player/king/king.php?v=<hex>`). Değilse "DBX Pro" seçeneği bir kez izlenir ve başlık yeniden doğrulanır.
+  5. King sayfası → oynatıcı hostunda `/embed/<n>-<hex>` iframe'i.
+  6. Embed sayfası: `CryptoJS.AES.decrypt("<zarf>","<parola>")`. Çözülen metinde `file` aynı hostta `/embed/sheila/<aynı kimlik>` olmalı ve tür `application/vnd.apple.mpegurl` olmalı.
+  7. Uzantısız master'a `?format=.m3u8` işareti eklenir (DiziBal deseni). Varyant da uzantısız; parçalar `.png` adlı MPEG-TS.
+- **Uygulama:**
+  - `src/providers/dizibox.cjs` yazıldı ve `src/media/cryptojs.cjs` eklendi (MD5, EVP_BytesToKey, AES-256-CBC çözme, PKCS7 denetimi). Rastgele ve gerçek zarfta node:crypto ile aynı çıktı verdi. QuickJS'te 11,5 KB yük ~60–90 ms (masaüstü wasm).
+  - Hızlı İzle, sabit online paket ve `all` hattında çalışır. Ana tarama dışındadır. Hafif HLS listesindedir.
+  - Tüm istekler ve akış başlıkları iPhone Safari `User-Agent` taşır; akışta `Referer` oynatıcı hostunun kökü.
+  - `normalizeTitle` U+2000–U+303F aralığını ayırıcı sayar (`Grey’s` = `Grey's`). Bu tüm kaynakların ad eşleşmesini etkiler; mevcut testlerin hiçbiri değişmeden geçti.
+- **Canlı ölçüm (Node, bu bilgisayar):** 12 ilk denemenin 7'si satır verdi. İki red doğruydu (Shameless UK, The Office UK). Üç boşluk sitede olmayan, ana sayfaya yönlenen veya yalnız Moly olan bölümlerdi (Game of Thrones, The Bear, Grey's Anatomy S1E1). Kesme işaretli The Queen's Gambit S1E1 ve Grey's Anatomy S20E1 düzeltmeden sonra 1080p verdi.
+- **iOS kurallı simülasyon (Hızlı İzle):** Stranger Things S5E1 2 → 3 satır, 3,6 → 5,6 sn. The 100 S5E5 2 satır, 4,7 sn. Yayılan satırın URL'si ve başlıkları (`Referer`, `User-Agent`) aynen tekrar oynatıldı: master, varyant ve ortadaki parça (TS senkron baytı) açıldı; UA'sız parça 403.
+- **Testler:** 378/378 yerel birim + QuickJS paket testi geçti (`npm run check`). ABI değişmedi.
+- **Yapılmayanlar:** Fiziksel telefon, tam bölüm oynatımı ve indirme testi yapılmadı. `.png` adlı HLS parçalarının ve sabit TR altyazının iPhone'da görünmesi doğrulanmadı.
+
 ## 1.9.9 — 26 Kasım 2026: KultFilmler online film kaynağı
 
 Kullanıcı 1.9.8 ölçümlerinin kendi deneyimiyle uyuştuğunu söyledi ve kaynak genişletme turlarının sürmesini istedi. Bu turda tek kaynak eklendi: KultFilmler.

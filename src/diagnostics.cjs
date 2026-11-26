@@ -18,7 +18,7 @@ function configuration(settings = {}, injectedKey) {
     anizoneOptInEnabled: settings.anizoneOptInEnabled === true,
     fzmoviesEnabled: settings.fzmoviesEnabled !== false,
     jetfilmizleEnabled: settings.jetfilmizleEnabled !== false,
-    kultfilmlerEnabled: settings.kultfilmlerEnabled !== false,
+    kultfilmlerEnabled: settings.kultfilmlerEnabled !== false, diziboxEnabled: settings.diziboxEnabled !== false,
     fztvseriesEnabled: settings.fztvseriesEnabled !== false,
     hdrezkaEnabled: settings.hdrezkaEnabled !== false,
     hdfilmdelisiEnabled:settings.hdfilmdelisiEnabled!==false,

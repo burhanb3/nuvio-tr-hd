@@ -10,7 +10,9 @@ function normalizeTitle(value) {
   if (typeof value !== 'string') return '';
   return value.normalize('NFKC').toLocaleLowerCase('tr-TR')
     .replace(/ı/g, 'i').replace(/İ/g, 'i').normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9\u0400-\u9fff]+/g, ' ').trim();
+    // Keep Cyrillic..Greek Extended and kana/CJK, but not U+2000-U+303F
+    // (typographic quotes and dashes: "Grey\u2019s" must equal "Grey's").
+    .replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9\u0400-\u1fff\u3005-\u3007\u3040-\u9fff]+/g, ' ').trim();
 }
 
 // Nuvio's URL polyfill does not normalize .href or implement writable setters.
