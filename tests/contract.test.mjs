@@ -24,7 +24,7 @@ test('manifest KMP scrapers şeması, yayın yolu ve sürümleri tutarlı', asyn
   const hdrezka=manifest.scrapers.find(s=>s.id==='nuvio-tr-hd-hdrezka');
   assert.equal(hdrezka?.enabled,true);assert.deepEqual(hdrezka?.formats,['mp4']);
   const cizgimax=manifest.scrapers.find(s=>s.id==='nuvio-tr-hd-cizgimax');
-  assert.equal(cizgimax?.enabled,true);assert.deepEqual(cizgimax?.formats,['mp4']);assert.deepEqual(cizgimax?.supportedTypes,['tv']);
+  assert.equal(cizgimax?.enabled,true);assert.deepEqual(cizgimax?.formats,['mp4','hls']);assert.deepEqual(cizgimax?.supportedTypes,['tv']);
   assert.equal(manifest.scrapers.length,7);
   assert.ok(!manifest.scrapers.some(s=>s.id==='nuvio-tr-hd-online'),'Film/dizi araması yeni online scraper kurulmasına bağımlı olmamalı');
   for (const scraper of manifest.scrapers) {

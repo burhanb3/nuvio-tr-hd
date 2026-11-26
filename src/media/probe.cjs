@@ -20,7 +20,8 @@ async function probeOne(http, candidate, includeHls = false, hashEnabled = false
   const hlsUrl = /\.m3u8(?:$|[?#])/i.test(candidate.url);
   if (hlsUrl && !includeHls) return null;
   if (hlsUrl) {
-    const cached = candidate.source === 'VixSrc' && candidate.hlsMaster;
+    // VixSrc and CizgiMax already fetched (and CizgiMax checked) this exact master.
+    const cached = ['VixSrc', 'CizgiMax'].includes(candidate.source) && candidate.hlsMaster;
     const playlist = cached && cached.url === candidate.url && typeof cached.text === 'string' ? cached : await http.text(candidate.url, { headers: candidate.headers });
     // Long signed segment names can make a valid feature playlist >128 KiB.
     // Still bounded by http.text and below the native bridge's body limit.

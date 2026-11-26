@@ -1,5 +1,23 @@
 # Sürüm notları
 
+## 2.0.4 — 26 Kasım 2026
+
+- **CizgiMax: sitenin kendi online Türkçe dublaj akışı (RubyVidHub, HLS) eklendi.**
+  - **Ne gelir:** Bağımsız CizgiMax sağlayıcısında, Drive MP4 satırının yanında "Online · CizgiMax" satırı. Yalnız izleme içindir; Nuvio üzerinden indirilemez. Drive dosyası olmayan veya `.ts` olan bölümlerde (ör. Adventure Time S1E1) tek satır bu olabilir.
+  - **Denetim (satır oluşmadan önce):**
+    - Ana liste sitenin kendisinden ve site Referer'ıyla alınır.
+    - Bütün varyantlar ve parçalar sitenin kendi alan adlarında olmalıdır.
+    - Alt liste bitmiş (ENDLIST) olmalı ve toplam süresi TMDB bölüm süresinin %70–135'i arasında kalmalıdır. TMDB süresi yoksa satır eklenmez.
+    - Sitenin yedek üçüncü taraf oynatıcısı hiç açılmaz.
+  - **Kart bilgileri:** Çözünürlük oynatma listesinin beyanıdır (ölçülen bölümlerde 720p). Süre TMDB'den gelir. Türkçe ses sitenin dublaj listesine dayanır.
+  - **Ayar:** `CizgiMax online Türkçe dublaj (HLS)` (`cizgimaxOnlineEnabled`), varsayılan açık. Kapatılırsa akış adresine ve alt alana hiç istek gitmez.
+  - **Bilinen risk:** Akış ek bir site alt alanından gelir. O alan bağlantıyı kabul edip hiç yanıt vermezse iPhone isteği 60 sn bekleyebilir; bu durumda bu sağlayıcının bütün satırları (Drive dahil) gelmeyebilir. Ana `Nuvio TR HD` listesi etkilenmez.
+  - **Ölçüm (bu bilgisayar):** Bağlantı ömrü: aynı ana liste, alt liste ve parçalar 25 dakika sonra da açıldı. Oynatıcı başlıklarıyla (Referer, libmpv ve AVPlayer UA) alt liste ve parçalar 200/206 verdi. Ardından site akış sunucusu bütün bölümlerde 1,2 sn içinde 502 döndürmeye başladı. Bu sırada (iOS kurallı simülasyon) Gravity Falls S1E1 (8,6 sn) ve Scooby-Doo S1E1 (5,4 sn) Drive satırları değişmeden geldi; online satır oluşmadı. Süre ölçümleri fiziksel iPhone garantisi değildir.
+- Manifest: CizgiMax sağlayıcısının biçimleri `mp4, hls` (ana ve Hızlı İzle sağlayıcıları zaten `hls` bildiriyor).
+- **Nuvio 1.0.1 (21 Kasım) incelemesi:** Kilitli 0.6.5-beta'ya göre 9 izlenen dosya değişti. 16 ABI denetiminin hepsi geçti. `jsPluginMediaType` yalnız türünü `series` bildiren eklentilerde dizi türünü değiştirir; bu eklentinin bütün tarayıcıları `movie/tv` bildirir. Kilit güncellenmedi; tam inceleme sonraki işlerde.
+- 396 yerel birim ve QuickJS paket testi geçti (`npm run check`).
+- Fiziksel telefon, online oynatma (Referer'lı HLS), tam bölüm oynatımı ve indirme testi yapılmadı.
+
 ## 2.0.3 — 26 Kasım 2026
 
 - **CizgiMax: başında boş dolgu olan MP4 bölümler artık doğrulanıyor (Gravity Falls).**

@@ -2,13 +2,24 @@
 
 - Son durum: masaüstü Nuvio TR HD artık Start-NuvioTRHD.ps1 üzerinden açılır. Kullanıcı yeniden aynı hata bildirdiğinde özgün kurulum çalışıyordu; nedeni kesinleşmedi. CheckOnly ve gömülü Java17 penceresiz classpath probe geçti. Kullanıcı kontrollü başlatıcıyla deneyip hata sürerse çalışan yol ve gerçek kaynak raporu birlikte incelenmeli. Tekrar UI başarısı/tam indirme doğrulanmış sayılmamalı.
 
+## 2.0.4 — 26 Kasım 2026
+
+1. **Yayın:** Sonuç PROJE ve `compatibility/github-publication.json` içine yazılacak.
+2. **Telefonda (Wi-Fi ve LTE ayrı):**
+   - Depo yenilenmeli; `Tanı · 2.0.4` görünmeli. CizgiMax sağlayıcısının ayarlarında `CizgiMax online Türkçe dublaj (HLS)` açık görünmeli.
+   - We Bare Bears S1E3, Gravity Falls S1E1 veya Adventure Time S1E1'de `Online · CizgiMax` satırı gelmeli (site akış sunucusu çalışıyorsa). Satır oynatılmalı ve 5 dk sonra ileri sarılmalı: Referer'lı HLS'nin cihazda oynadığı henüz denenmedi. Satır indirme seçeneği göstermemeli.
+   - Site akış sunucusu 502 verirken Drive satırları gelmeli (simülasyonda geldi).
+   - CizgiMax satırları hiç gelmez veya geç gelirse `cizgimaxOnlineEnabled` kapatılıp aynı bölüm denenmeli.
+3. **Nuvio 1.0.1 tam inceleme:** StreamsRepository'deki eklenti çağrısının taşındığı dosya (ayar, başlık ve sonuç birleştirme), PlayerEngine.android ve MPVPlayerBridge başlık aktarımı incelenmeli. Kilit ancak inceleme bittikten sonra güncellenmeli.
+4. **Sıradaki:** Altyazı kaynakları (2.0.2 madde 5).
+
 ## 2.0.3 — 26 Kasım 2026
 
 1. **Yayımlandı (`8284773`):** Test ve paket `45817192160` ve Pages `45817192182` başarılı; 10 public dosya HTTP 200 ve SHA-256 yerel `dist/` ile aynı (`compatibility/github-publication.json`).
 2. **Telefonda (Wi-Fi ve LTE ayrı):**
    - Depo yenilenmeli; `Tanı · 2.0.3` görünmeli.
    - Gravity Falls S1E1'de `CizgiMax` sağlayıcısı altında İndirilebilir satır (1080p, ~0,47 GB, Ses: TR) gelmeli. Satır oynatılmalı ve indirilmeli. İleri sarma özellikle denenmeli: `moov` dosya sonunda olduğu için oynatıcı açılışta sonu okumak zorunda.
-3. **Sıradaki:** RubyVidHub HLS (aşağıda 2.0.2 madde 4), ardından altyazı kaynakları (2.0.2 madde 5).
+3. **Kapandı:** RubyVidHub HLS 2.0.4'te eklendi (yukarıda).
 
 ## 2.0.2 — 26 Kasım 2026
 

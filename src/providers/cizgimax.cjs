@@ -4,17 +4,24 @@ const {decodeEntities}=require('./directory.cjs');
 const {jsonLd,tagAttributes,sameName,syntheticFilename}=require('./page-data.cjs');
 const {base64Bytes}=require('../media/base64.cjs');
 const {decodeUtf8}=require('../subtitles.cjs');
-// CizgiMax lists Turkish-dubbed cartoon episodes. Only its "Drive" server is
-// read: /oynat/ redirects to a public Google Drive file, whose public download
-// URL (with the confirm=t answer to Drive's "can't scan for viruses" notice
-// for large files) returns the MP4 with Range 206, no cookie or key. Its other
-// servers are not used (a challenge page on one CDN, 403/5xx on others, or a
-// duplicate of the AnimeCix API).
+const {inspectPlaylist,outsideRuntime}=require('../media/hls.cjs');
+// CizgiMax lists Turkish-dubbed cartoon episodes. Two of its dub servers are
+// read:
+// - "Drive": /oynat/ redirects to a public Google Drive file, whose public
+//   download URL (with the confirm=t answer to Drive's "can't scan for
+//   viruses" notice for large files) returns the MP4 with Range 206, no
+//   cookie or key.
+// - "RubyVidHub" (type "media"): the site's own HLS stream. The master needs
+//   the site as Referer (403 without it); its child playlist and segments are
+//   on a subdomain of the site. Streaming only, never a download.
+// Its other servers are not used (a challenge page on one CDN, 403/5xx on
+// others, a duplicate of the AnimeCix API, or a third-party fallback player).
 // The site ignores Range on HTML: the search page is ~0.2 MB, a series page
 // ~0.6 MB and an episode page ~0.8 MB. Larger pages exceed the text limit and
 // the source returns nothing.
 const ORIGIN='https://cizgimax.online',PAGE_CHARS=1000000;
 const DRIVE_FILE=/^https:\/\/drive\.google\.com\/file\/d\/([A-Za-z0-9_-]{20,100})\/preview$/;
+const MEDIA_STREAM=/^\/api\/stream\/media\/\?t=[A-Za-z0-9._-]{20,600}$/;
 function searchResults(html,target){
   const out=[];
   for(const m of String(html).matchAll(/<a\b([^>]{0,600}\bclass=["']film-name["'][^>]{0,600})>([^<]{1,300})<\/a>/gi)){
@@ -57,7 +64,7 @@ function seriesData(html,url,target){
   const episodes=seasonEpisodes(text,target.season);
   return episodes&&episodes.has(target.episode)?{episodes,episodeUrl:episodes.get(target.episode)}:null;
 }
-function driveServers(html,seriesUrl,target){
+function episodeServers(html,seriesUrl,target){
   const text=String(html);
   const ld=jsonLd(text.slice(0,40000)).find(row=>row&&row['@type']==='TVEpisode');
   if(!ld||Number(ld.seasonNumber)!==target.season||Number(ld.episodeNumber)!==target.episode||safeUrl(ld.partOfSeries?.url)!==seriesUrl)return null;
@@ -70,10 +77,36 @@ function driveServers(html,seriesUrl,target){
   let lists;
   try{lists=decoded&&JSON.parse(decoded);}catch{return null;}
   if(!lists||!Array.isArray(lists.dub))return null;
-  const seen=new Set();
+  const seen=new Set(),dub=lists.dub.slice(0,20).filter(s=>s&&s.lang==='dub'&&typeof s.label==='string');
   // Only the entry's own "dub" label counts; "Drive · 1.Part" halves are skipped.
-  return lists.dub.slice(0,20).filter(s=>s&&s.type==='iframe'&&s.lang==='dub'&&typeof s.label==='string'&&/^Drive$/i.test(s.label.trim())&&
+  const drive=dub.filter(s=>s.type==='iframe'&&/^Drive$/i.test(s.label.trim())&&
     typeof s.src==='string'&&/^\/oynat\/\?t=[A-Za-z0-9._-]{20,600}$/.test(s.src)&&!seen.has(s.src)&&seen.add(s.src)).slice(0,2).map(s=>ORIGIN+s.src);
+  // The site's own stream path only; its fallbackSrc (a third-party player) is never read.
+  const media=dub.filter(s=>s.type==='media'&&/^RubyVidHub$/i.test(s.label.trim())&&typeof s.streamUrl==='string'&&MEDIA_STREAM.test(s.streamUrl))
+    .slice(0,1).map(s=>ORIGIN+s.streamUrl+'&format=.m3u8');
+  return {drive,media};
+}
+function ownHost(url){
+  try{const u=new URL(url);return u.protocol==='https:'&&(u.hostname==='cizgimax.online'||u.hostname.endsWith('.cizgimax.online'));}catch{return false;}
+}
+// The stream is checked before it becomes a row: the master from the site
+// with the site as Referer, every variant and segment on the site's own
+// hosts, and a finished child playlist whose length matches TMDB's episode
+// runtime. There is no file title as on Drive, so without a TMDB runtime no
+// row is made. Limits are logical only: iOS does not cancel a native request
+// that never answers.
+async function mediaStream(http,url,runtimeMinutes){
+  if(!(Number(runtimeMinutes)>0)||http.expired())return null;
+  const headers={Referer:ORIGIN+'/'};
+  const master=await http.text(url,{headers,maxChars:20000,timeoutMs:4000});
+  const list=master&&ownHost(master.url)&&/\.m3u8$/.test(master.url)&&inspectPlaylist(master.text,master.url);
+  if(!list||!list.variants.length||!list.variants.every(v=>ownHost(v.url))||http.expired())return null;
+  const child=await http.text(list.variants[0].url,{headers,maxChars:300000,timeoutMs:4000});
+  const media=child&&ownHost(child.url)&&inspectPlaylist(child.text,child.url);
+  // A non-null duration means the playlist is finished (ENDLIST).
+  if(!media||media.live||!media.duration||!media.segments.length||!media.segments.every(s=>ownHost(s.url)))return null;
+  if(outsideRuntime(media.duration,{identity:{runtimeMinutes}}))return null;
+  return {url:master.url,text:master.text};
 }
 function driveFile(page,target,requested){
   if(!page)return null;
@@ -94,7 +127,7 @@ function driveFile(page,target,requested){
   if(numbers&&(Number(numbers[1])!==target.season||Number(numbers[2])!==target.episode))return null;
   return own;
 }
-async function scanCizgiMax(http,target,{loadSeason}={}){
+async function scanCizgiMax(http,target,{loadSeason,online=false}={}){
   if(target.type!=='tv'||!Number.isInteger(target.season)||!Number.isInteger(target.episode)||target.season<1||target.episode<1||typeof loadSeason!=='function')return [];
   // TMDB's small season record loads while the site is searched.
   const seasonJob=Promise.resolve().then(loadSeason).catch(()=>null);
@@ -121,14 +154,25 @@ async function scanCizgiMax(http,target,{loadSeason}={}){
   const season=await seasonJob;
   if(!season||season.airedEpisodes!==series.episodes.size||http.expired())return [];
   const episode=await http.text(series.episodeUrl,{maxChars:PAGE_CHARS});
-  const servers=episode&&driveServers(episode.text,seriesUrl,target)||[];
-  const ids=[];
-  for(const server of servers){
-    if(http.expired())break;
-    const id=driveFile(await http.text(server,{headers:{Referer:series.episodeUrl},maxChars:400000}),target,server);
-    if(id&&!ids.includes(id))ids.push(id);
-  }
+  const servers=episode&&episodeServers(episode.text,seriesUrl,target);
+  if(!servers)return [];
   const identity={...target,runtimeMinutes:season.runtimeMinutes||target.runtimeMinutes||null};
+  // Drive and the stream check run side by side; a failed stream never costs the Drive row.
+  const driveJob=(async()=>{
+    const ids=[];
+    for(const server of servers.drive){
+      if(http.expired())break;
+      const id=driveFile(await http.text(server,{headers:{Referer:series.episodeUrl},maxChars:400000}),target,server);
+      if(id&&!ids.includes(id))ids.push(id);
+    }
+    return ids;
+  })().catch(()=>[]);
+  const streamJob=online&&servers.media.length?mediaStream(http,servers.media[0],identity.runtimeMinutes).catch(()=>null):null;
+  const [ids,stream]=await Promise.all([driveJob,streamJob]);
+  const streams=stream?[{url:stream.url,headers:{Referer:ORIGIN+'/'},hlsMaster:stream,subtitles:[],source:'CizgiMax',
+    identity,identityConfidence:90,filename:syntheticFilename(target)+'.m3u8',filenameSynthetic:true,
+    // Same dub list as the Drive file; the stream carries no language tag.
+    claimedAudioLanguages:['tr']}]:[];
   return ids.map(id=>({url:'https://drive.usercontent.google.com/download?id='+id+'&export=download&confirm=t',headers:{},subtitles:[],source:'CizgiMax',
     identity,identityConfidence:90,filename:syntheticFilename(target)+'.mp4',filenameSynthetic:true,
     expectedContainer:'mp4',requireDuration:true,requireVideoDimensions:true,
@@ -137,6 +181,6 @@ async function scanCizgiMax(http,target,{loadSeason}={}){
     // declared box ends for these rows only.
     followMp4Boxes:true,
     // The site's dub list is the only audio evidence; the files carry no language tag.
-    claimedAudioLanguages:['tr']}));
+    claimedAudioLanguages:['tr']})).concat(streams);
 }
-module.exports={scanCizgiMax,searchResults,seasonEpisodes,seriesData,driveServers,driveFile,ORIGIN};
+module.exports={scanCizgiMax,searchResults,seasonEpisodes,seriesData,episodeServers,mediaStream,driveFile,ORIGIN};

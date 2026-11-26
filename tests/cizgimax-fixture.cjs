@@ -25,6 +25,21 @@ function servers(list){
   return Buffer.from(JSON.stringify(list)).toString('base64').replace(/\//g,'\\/');
 }
 const DUB=[{type:'iframe',src:'/oynat/?t='+TOKEN,label:'Drive',lang:'dub'},{type:'iframe',src:'/oynat/?t='+TOKEN2,label:'Sibnet',lang:'dub'}];
+// The site's own HLS entry. Placeholder token, placeholder subdomain label and
+// a placeholder third-party fallback that must never be requested.
+const MEDIA_TOKEN='placeholder-media-token-0001',MEDIA_HOST='https://placeholder.cizgimax.online';
+const MEDIA={type:'media',streamUrl:'/api/stream/media/?t='+MEDIA_TOKEN,label:'RubyVidHub',lang:'dub',embedToken:MEDIA_TOKEN,fallbackSrc:'https://player.test/embed/'+MEDIA_TOKEN};
+const MASTER=ORIGIN+MEDIA.streamUrl+'&format=.m3u8',CHILD=MEDIA_HOST+'/api/stream/media/?p=placeholder-child-0001';
+function masterPlaylist(child=CHILD){
+  return '#EXTM3U\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=1500000,RESOLUTION=1280x720,FRAME-RATE=25.000,CODECS="avc1.4d401f,mp4a.40.2"\n'+child+'\n'+
+    '#EXT-X-I-FRAME-STREAM-INF:BANDWIDTH=300000,RESOLUTION=1280x720,CODECS="avc1.4d401f",URI="'+MEDIA_HOST+'/api/stream/media/?p=placeholder-iframe-0001"\n';
+}
+function childPlaylist(seconds=1300,{ended=true,host=MEDIA_HOST}={}){
+  const lines=['#EXTM3U','#EXT-X-VERSION:3','#EXT-X-TARGETDURATION:10','#EXT-X-MEDIA-SEQUENCE:0'];
+  for(let i=0;i<Math.ceil(seconds/10);i++)lines.push('#EXTINF:'+Math.min(10,seconds-i*10).toFixed(3)+',',host+'/api/stream/media/?p=placeholder-segment-'+i);
+  if(ended)lines.push('#EXT-X-ENDLIST');
+  return lines.join('\n')+'\n';
+}
 function episodePage({season=1,episode=2,series=SERIES,list={dub:DUB,sub:[]},raw}={}){
   return '<html><head>'+ld({'@context':'https://schema.org','@type':'TVEpisode',name:'Örnek Çizgi - '+season+'. Sezon '+episode+'. Bölüm',episodeNumber:episode,seasonNumber:season,partOfSeries:{'@type':'TVSeries',name:'Örnek Çizgi',url:series}})+
     '</head><body><script>\n// serverList ve serversByLang base64-encode edilmis JSON olarak gomulur\nvar serversByLang= JSON.parse(atob("'+(raw||servers(list))+'"));\nif (!serversByLang) {}\n</script></body></html>';
@@ -42,11 +57,14 @@ function cizgimaxFixture(o={}){
   return{
     [ORIGIN+'/ara/?q=Example%20Toon']:{body:searchPage(),mime:'text/html'},
     [SERIES]:{body:o.series||seriesPage(),mime:'text/html'},
-    [ep]:{body:o.episode||episodePage(),mime:'text/html'},
+    // o.stream: the episode also lists the site's HLS entry, served below.
+    [ep]:{body:o.episode||(o.stream?episodePage({list:{dub:[...DUB,MEDIA],sub:[]}}):episodePage()),mime:'text/html'},
     // o.direct: the transport reports the requested address, not the redirect target.
     [ORIGIN+'/oynat/?t='+TOKEN]:o.direct?{body:o.drive||drivePage(o.title),mime:'text/html'}:{status:302,headers:{location:o.preview||preview}},
     [preview]:{body:o.drive||drivePage(o.title),mime:'text/html'},
-    [DOWNLOAD]:{body:o.media||media(),mime:'video/mp4'}
+    [DOWNLOAD]:{body:o.media||media(),mime:'video/mp4'},
+    [MASTER]:o.masterEntry||{body:o.master||masterPlaylist(),mime:'application/vnd.apple.mpegurl'},
+    [CHILD]:o.childEntry||{body:o.child||childPlaylist(),mime:'application/vnd.apple.mpegurl'}
   };
 }
-module.exports={ORIGIN,SERIES,TOKEN,TOKEN2,ID,DOWNLOAD,DUB,searchPage,button,seriesPage,servers,episodePage,media,drivePage,cizgimaxFixture};
+module.exports={ORIGIN,SERIES,TOKEN,TOKEN2,ID,DOWNLOAD,DUB,MEDIA,MEDIA_HOST,MASTER,CHILD,searchPage,button,seriesPage,servers,episodePage,media,drivePage,masterPlaylist,childPlaylist,cizgimaxFixture};

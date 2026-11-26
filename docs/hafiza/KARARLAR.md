@@ -2,6 +2,16 @@
 
 - Windows yerel düzeltme başlatıcısı başka Nuvio işlemini sessizce veya zorla kapatmaz. Kullanıcının kısayolu açması ve iletişim kutusunda onay vermesiyle normal pencere kapatma denenir. Açılış öncesi paket SHA ve classpath kontrolü zorunludur; yalnız kısayolun doğru olması uygulamanın doğru kopyada çalıştığı kanıtı değildir.
 
+## 26 Kasım 2026 — 2.0.4 CizgiMax RubyVidHub HLS
+
+- **2.0.1'deki "RubyVidHub kullanılmaz" kararının yerine geçer.** 2.0.1'deki 502 sitenin kesintisiydi. Site çalışırken akış adresi (`/api/stream/media/?t=…&format=.m3u8`) site Referer'ıyla HLS ana listesi verdi; Referer olmadan 403. Ana liste, alt liste ve parçalar 25 dakika sonra da açıldı. Oynatıcı başlıklarıyla (Referer, libmpv/AVPlayer UA) alt liste ve parçalar 200/206. Yalnız bu girdi okunur: `type:'media'`, `lang:'dub'`, etiket tam `RubyVidHub`, yol sitenin kendi akış yolu. `fallbackSrc` (üçüncü taraf oynatıcı) hiç açılmaz.
+- **Satırdan önce sağlayıcıda sert denetim.** Ana liste sitenin kendisinden gelmeli; bütün varyantlar, alt listenin son adresi ve bütün parçalar `cizgimax.online` veya alt alanında olmalı. Alt liste bitmiş olmalı (ENDLIST) ve süresi TMDB bölüm süresinin 0,7–1,35 katı olmalı. Drive'daki dosya adı gibi bir içerik kanıtı olmadığı için süre tek içerik denetimidir: TMDB süresi yoksa satır yok.
+- **Probe hafif yol (`lightweightHls`) ve ana liste önbelleği.** Sağlayıcı alt listeyi zaten denetlediği için probe ikinci alt liste isteği ve parça HEAD'leri açmaz; ana liste metni `hlsMaster` olarak geçer (VixSrc deseni), probe ağ isteği yapmaz. Bedeli: karttaki süre `tmdb` kaynaklıdır.
+- **Drive ve akış denetimi paralel, hatalar ayrı.** Akış başarısız olursa Drive satırı kaybolmaz (testle denetlenir). Drive satırı önce sıralanır.
+- **Ayrı anahtar `cizgimaxOnlineEnabled` (varsayılan açık).** Akış ek bir alt alandan gelir; o alan yanıt vermezse iOS native isteği iptal edemez ve bu sağlayıcının bütün satırları düşebilir. Bu risk tasarımla giderilemez; anahtar kapalıyken akış yoluna ve alt alana istek gitmez (testle denetlenir). HLS kapalıysa da istek yok.
+- **HLS indirilemez gösterilir;** çözünürlük oynatma listesinin beyanıdır (dosyadan doğrulanmış sayılmaz).
+- **Manifest biçimi `mp4, hls`.** İncelenen Nuvio 1.0.1 dosyalarında `formats` yalnız manifestten okunup saklanıyor; filtre olarak kullanıldığı görülmedi (bütün kaynak taranmadı). Ana ve Hızlı İzle sağlayıcıları zaten `hls` bildiriyor.
+
 ## 26 Kasım 2026 — 2.0.3 dolgulu MP4 düzeni
 
 - **Yalnız aday bayrağıyla (`followMp4Boxes`), yalnız CizgiMax.** Ortak MP4 denetimi bütün kaynakları etkiler; diğer kaynaklarda ek native Range isteği açılmaz ve ana listenin askı riski değişmez. Bayraksız yol testte aynı Range dizisini verir.
@@ -36,7 +46,7 @@
 
 ## 26 Kasım 2026 — 2.0.1 CizgiMax
 
-- **Yalnız Drive sunucusu.** Diğer sunucular: Sibnet 403, RubyVidHub 502 ve başka bir video hostuna gidiyor, Dzen AnimeCix API'sinin kopyası, bir CDN Cloudflare doğrulama sayfası veriyor. Drive herkese açık indirme adresi Range 206 veriyor, çerez/anahtar gerekmiyor; `confirm=t` büyük dosya virüs taraması uyarısına verilen standart yanıttır, koruma sabiti değildir.
+- **Yalnız Drive sunucusu** (RubyVidHub kısmı 2.0.4'te değişti, yukarıda). Diğer sunucular: Sibnet 403, RubyVidHub 502 ve başka bir video hostuna gidiyor, Dzen AnimeCix API'sinin kopyası, bir CDN Cloudflare doğrulama sayfası veriyor. Drive herkese açık indirme adresi Range 206 veriyor, çerez/anahtar gerekmiyor; `confirm=t` büyük dosya virüs taraması uyarısına verilen standart yanıttır, koruma sabiti değildir.
 - **Bölüm sayısı birebir.** Site TMDB/IMDb kimliği vermiyor; ad + ilk yayın yılı + sezon bölüm sayısı birlikte kimliktir. TMDB çizgi dizileri sık sık yarım bölüm olarak numaralar (SpongeBob S1 41 / S2 36, site 20). Sayı tutmazsa bölüm numarası güvenilmez sayılır ve bölüm sayfası istenmez. Yalnız `air_date <= bugün` olan bölümler sayılır.
 - **Yalnız animasyon, anime hariç.** `isAnimation` (TMDB tür 16) ve `!isAnime`. Filmlerde çalışmaz (site film listesi ayrı ve az).
 - **Dosya adı denetimi:** `.mp4` dışı (`.ts`, `.mkv`) ve Part/Parça/Kısım adları atlanır. `.ts` için konteyner beklentisi yok; eklenmedi.

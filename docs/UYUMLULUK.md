@@ -1,6 +1,6 @@
 # Nuvio uyumluluğu
 
-Nuvio TR HD, Nuvio Mobile'ın Kotlin Multiplatform **Full** sürümündeki JavaScript plugin arayüzünü kullanır. Manifestte beş scraper vardır; önceki kimlikler güncellemelerde korunur.
+Nuvio TR HD, Nuvio Mobile'ın Kotlin Multiplatform **Full** sürümündeki JavaScript plugin arayüzünü kullanır. Manifestte yedi scraper vardır; önceki kimlikler güncellemelerde korunur.
 
 ## Doğrulanan sözleşme
 
@@ -12,6 +12,8 @@ Nuvio TR HD, Nuvio Mobile'ın Kotlin Multiplatform **Full** sürümündeki JavaS
 Resmî release ve geliştirme dalındaki ilgili dosyaların SHA'ları `compatibility/upstream-lock.json` içinde tutulur. `npm run verify:upstream` bunları ve kritik ABI parçalarını karşılaştırır. Fark varsa kilit otomatik yenilenmez; değişiklik incelenir.
 
 ## Güncel kontrol
+
+2.0.4 (26 Kasım) CizgiMax sağlayıcısına sitenin kendi HLS akışını (RubyVidHub) online satır olarak ekler; manifestte bu sağlayıcının biçimleri `mp4, hls` oldu. Satır yeni bir alan kullanmaz: mevcut `url`, `headers` (Referer) ve `type: hls` alanları, DiziBox gibi Referer'lı HLS kaynaklarıyla aynı. HLS indirilemez gösterilir. `npm run verify:upstream`: son sürüm Nuvio **1.0.1** (21 Kasım), kilitli 0.6.5-beta'ya göre 9 izlenen dosyada drift; 16 ABI denetiminin hepsi geçti. İncelenen değişiklikler: `jsPluginMediaType` yalnız türünü `series` bildiren tarayıcılarda dizi türünü değiştirir (bu eklenti `movie/tv` bildirir); indirmede altyazı istek ekleri ve duraklatılmış indirmelerin sürdürülmesi; iOS indirme klasörünün yedekten hariç tutulması; mpv-android 0.2.1; ASS altyazı stili. StreamsRepository'deki eklenti çağrısı başka bir dosyaya taşındı; o dosya ve oynatıcıların başlık aktarımı henüz incelenmedi. Kilit güncellenmedi. 396 fixture/QuickJS testi geçti. Yayın kontrolü sonucu PROJE ve compatibility/github-publication.json içindedir. Windows Desktop, fiziksel telefon, Referer'lı HLS'nin cihazda oynatımı, tam oynatma ve indirme testi yapılmadı.
 
 2.0.3 (26 Kasım) yalnız CizgiMax satırlarında (`followMp4Boxes`) MP4 denetiminin dosyanın bildirdiği kutu sonlarını en fazla iki kez izlemesine izin verir: başında büyük dolgu, sonunda `moov` olan dosyalar (Gravity Falls) artık piksel ve süreyle doğrulanır. Dolgulu baş tek başına kabul edilmez. Diğer kaynakların denetimi ve Range dizisi değişmez. Plugin ABI'sine dokunmaz. 393 fixture/QuickJS testi geçti. `8284773` yayını: Test ve paket `45817192160`, Pages `45817192182` başarılı; 10 public dosya SHA-256 eşleşti. Windows Desktop, fiziksel telefon, tam oynatma ve indirme testi yapılmadı.
 

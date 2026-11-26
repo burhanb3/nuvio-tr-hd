@@ -103,7 +103,7 @@ test('QuickJS: CizgiMax ayrıştırması gerçek boyutlu (0,6/0,8 MB) sayfalarda
   vm.setProp(vm.global,'__parse_url',parse);parse.dispose();
   const target={type:'tv',originalTitle:'Example Toon',searchTitles:['Example Toon'],year:2010,season:1,episode:2};
   const result=vm.evalCode('globalThis.URL=function(u){Object.assign(this,JSON.parse(__parse_url(u)));};'+out.outputFiles[0].text+
-   ';var T='+JSON.stringify(target)+',s=__series(),e=__episode(),t0=Date.now(),d=CZ.seriesData(s,'+JSON.stringify(C.SERIES)+',T),v=CZ.driveServers(e,'+JSON.stringify(C.SERIES)+',T);JSON.stringify({size:d&&d.episodes.size,url:d&&d.episodeUrl,servers:v,ms:Date.now()-t0})');
+   ';var T='+JSON.stringify(target)+',s=__series(),e=__episode(),t0=Date.now(),d=CZ.seriesData(s,'+JSON.stringify(C.SERIES)+',T),v=CZ.episodeServers(e,'+JSON.stringify(C.SERIES)+',T);JSON.stringify({size:d&&d.episodes.size,url:d&&d.episodeUrl,servers:v&&v.drive,ms:Date.now()-t0})');
   if(result.error){const error=vm.dump(result.error);result.error.dispose();throw new Error(JSON.stringify(error));}
   const value=JSON.parse(vm.dump(result.value));result.value.dispose();
   assert.equal(value.size,3);assert.equal(value.url,C.ORIGIN+'/example-toon-1-sezon-2-bolum-izle/');assert.deepEqual(value.servers,[C.ORIGIN+'/oynat/?t='+C.TOKEN]);
@@ -126,6 +126,12 @@ test('QuickJS: CizgiMax bağımsız pakette dublaj Drive MP4 verir; bölüm say�
  assert.equal(rows.length,1,JSON.stringify(rows));const row=rows[0];
  assert.equal(row.url,C.DOWNLOAD);assert.match(row.title,/Ses: TR/);assert.match(row.name+row.title,/İndirilebilir/);assert.match(row.quality||row.title,/1080p/);
  assert.ok(fetchCalls.includes(C.SERIES)&&fetchCalls.some(u=>u.endsWith(C.TOKEN))&&!fetchCalls.some(u=>u.endsWith(C.TOKEN2)));
+ // With the site's own HLS entry the bundle adds one online row after the file;
+ // the stream is checked once and never offered as a download.
+ const streamCalls=[],withStream=await runInQuickJs({...C.cizgimaxFixture({series,stream:true}),...tv([{id:16}]),...season(3)},{code:cizgimaxBundle,args:['123456','tv',1,2],settings,nativeTimers:true,fetchCalls:streamCalls});
+ assert.equal(withStream.length,2,JSON.stringify(withStream));assert.equal(withStream[0].url,C.DOWNLOAD);
+ assert.equal(withStream[1].url,C.MASTER);assert.equal(withStream[1].type,'hls');assert.match(withStream[1].title,/İndirilemez/);assert.equal(withStream[1].headers?.Referer,C.ORIGIN+'/');
+ assert.equal(streamCalls.filter(u=>u===C.MASTER).length,1);assert.ok(!streamCalls.some(u=>u.includes('player.test')));
  assert.deepEqual(await runInQuickJs({...fixture,...season(4)},{code:cizgimaxBundle,args:['123456','tv',1,2],settings,nativeTimers:true}),[]);
  for(const other of [tv([{id:35}]),tv([{id:16}],'ja')]){
    const calls=[];assert.deepEqual(await runInQuickJs({...fixture,...other},{code:cizgimaxBundle,args:['123456','tv',1,2],settings,nativeTimers:true,fetchCalls:calls}),[]);
@@ -140,9 +146,10 @@ test('QuickJS: CizgiMax bağımsız pakette dublaj Drive MP4 verir; bölüm say�
  assert.ok(mainCalls.length&&!mainCalls.some(u=>u.startsWith(C.ORIGIN)||u.includes('drive.')),JSON.stringify(mainCalls));
  const czSettings=await runInQuickJs({},{code:cizgimaxBundle,invokeSettings:true});
  assert.equal(czSettings.find(f=>f.key==='cizgimaxEnabled')?.defaultValue,true);
+ assert.equal(czSettings.find(f=>f.key==='cizgimaxOnlineEnabled')?.defaultValue,true);
  assert.ok(czSettings.some(f=>f.type==='info'&&f.label.includes('Bağımsız CizgiMax')));
  assert.ok(!czSettings.some(f=>['includeHls','useDownloadBridge','hdhubEnabled','hdrezkaEnabled'].includes(f.key)));
- assert.ok(!(await runInQuickJs({},{invokeSettings:true})).some(f=>f.key==='cizgimaxEnabled'));
+ assert.ok(!(await runInQuickJs({},{invokeSettings:true})).some(f=>['cizgimaxEnabled','cizgimaxOnlineEnabled'].includes(f.key)));
 });
 
 test('QuickJS: Anizone (Ek Anime, opt-in) güvenli Unicode veri zarfını ve tam bölüm kimliğini çözer; HLS indirme sayılmaz',async()=>{

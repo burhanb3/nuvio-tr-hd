@@ -8,10 +8,18 @@ const{fixtureFetch}=require('./helpers.cjs');
 const F=require('./cizgimax-fixture.cjs');
 const target={tmdbId:123456,type:'tv',originalTitle:'Example Toon',searchTitles:['Example Toon'],year:2010,season:1,episode:2,isAnimation:true,isAnime:false,runtimeMinutes:null};
 const season=async()=>({airedEpisodes:3,runtimeMinutes:22});
-async function run(fixture,{t=target,loadSeason=season}={}){
+async function run(fixture,{t=target,loadSeason=season,online=false}={}){
   const calls=[],http=createHttp({fetchImpl:fixtureFetch(fixture,calls)});
-  try{const rows=await scanCizgiMax(http,t,{loadSeason});return{rows,calls,checked:rows[0]?await probe(http,rows[0]):null};}finally{http.close();}
+  try{
+    const rows=await scanCizgiMax(http,t,{loadSeason,online}),scanCalls=calls.length;
+    const checked=rows[0]?await probe(http,rows[0]):null;
+    // HLS rows are probed the way the lane does (HLS on, lightweight path).
+    const stream=rows.find(r=>/\.m3u8$/.test(r.url));
+    const before=calls.length,checkedStream=stream?await probe(http,stream,true,false,{detailedHls:false}):null;
+    return{rows,calls,scanCalls,checked,stream,checkedStream,streamProbeCalls:calls.slice(before)};
+  }finally{http.close();}
 }
+const isStreamCall=c=>c.url.includes('/api/stream/')||c.url.startsWith(F.MEDIA_HOST);
 
 test('CizgiMax: ad, yıl, bölüm sayısı ve Drive başlığı tutunca Türkçe dublaj MP4 indirilebilir satır olur',async()=>{
   let loads=0;
@@ -104,6 +112,59 @@ test('CizgiMax: metin sınırını aşan sayfa boş döner; film, geçersiz böl
   const r=await run(F.cizgimaxFixture(),{loadSeason:null});assert.deepEqual(r.rows,[]);assert.equal(r.calls.length,0);
 });
 
+test('CizgiMax: sitenin kendi HLS akışı denetlenince online Türkçe dublaj satırı olur; Drive satırı önce gelir, akış indirilebilir sayılmaz',async()=>{
+  const r=await run(F.cizgimaxFixture({stream:true}),{online:true});
+  assert.equal(r.rows.length,2);assert.equal(r.rows[0].url,F.DOWNLOAD);
+  const row=r.stream;
+  assert.equal(row.url,F.MASTER);assert.deepEqual(row.headers,{Referer:F.ORIGIN+'/'});assert.equal(row.source,'CizgiMax');
+  assert.match(row.filename,/\.S01E02\.m3u8$/);assert.equal(row.filenameSynthetic,true);assert.deepEqual(row.claimedAudioLanguages,['tr']);
+  assert.equal(row.identity.runtimeMinutes,22);assert.equal(row.followMp4Boxes,undefined);
+  // Master with the site as Referer, then its child; the third-party fallback is never opened.
+  const master=r.calls.filter(c=>c.url===F.MASTER),child=r.calls.filter(c=>c.url===F.CHILD);
+  assert.equal(master.length,1);assert.equal(master[0].headers.Referer,F.ORIGIN+'/');assert.equal(child.length,1);
+  assert.ok(!r.calls.some(c=>c.url.includes('player.test')||c.url.includes('placeholder-segment')));
+  assert.ok(r.calls.every(c=>['cizgimax.online','placeholder.cizgimax.online','drive.google.com','drive.usercontent.google.com'].includes(new URL(c.url).hostname)));
+  assert.ok(r.calls.every(c=>!Object.keys(c.headers||{}).some(k=>/authorization|cookie/i.test(k))));
+  // The probe reuses the checked master: no further request, never a download.
+  assert.equal(r.streamProbeCalls.length,0);
+  assert.equal(r.checkedStream.container,'hls');assert.equal(r.checkedStream.downloadable,false);
+  assert.deepEqual(r.checkedStream.resolutionOptions,[{width:1280,height:720}]);assert.equal(r.checkedStream.durationSource,'tmdb');
+});
+
+test('CizgiMax: online ayarı kapalıysa, TMDB süresi yoksa veya akış denetimi tutmazsa HLS satırı yok; Drive satırı korunur',async()=>{
+  // Off: not one request to the stream path or its subdomain.
+  const off=await run(F.cizgimaxFixture({stream:true}));
+  assert.equal(off.rows.length,1);assert.equal(off.rows[0].url,F.DOWNLOAD);assert.ok(!off.calls.some(isStreamCall));
+  const unknown=await run(F.cizgimaxFixture({stream:true}),{online:true,loadSeason:async()=>({airedEpisodes:3,runtimeMinutes:null})});
+  assert.equal(unknown.rows.length,1);assert.ok(!unknown.calls.some(isStreamCall));
+  const cases={
+    'yabancı alt liste':{master:F.masterPlaylist('https://evil.test/child.m3u8')},
+    'bitmemiş liste':{child:F.childPlaylist(1300,{ended:false})},
+    'kısa liste':{child:F.childPlaylist(600)},
+    'uzun liste':{child:F.childPlaylist(1900)},
+    'yabancı parça':{child:F.childPlaylist(1300,{host:'https://evil.test'})},
+    'ana liste 403':{masterEntry:{status:403}},
+    'ana liste değil':{master:'<html>not a playlist</html>'},
+    'alt liste 404':{childEntry:{status:404}},
+    'alt liste ağ hatası':{childEntry:{throw:true}},
+    'alt liste değil':{child:'<html>x</html>'}
+  };
+  for(const[name,o]of Object.entries(cases)){
+    const r=await run(F.cizgimaxFixture({stream:true,...o}),{online:true});
+    assert.equal(r.rows.length,1,name);assert.equal(r.rows[0].url,F.DOWNLOAD,name);
+    assert.ok(!r.calls.some(c=>c.url.startsWith('https://evil.test')),name);
+  }
+  // Wrong label, language or path: the stream is never requested.
+  for(const entry of [{...F.MEDIA,label:'Other'},{...F.MEDIA,lang:'sub'},{...F.MEDIA,streamUrl:'https://evil.test/api/stream/media/?t=placeholder-media-token-0001'},
+    {...F.MEDIA,streamUrl:'/api/stream/media/?t=short'},{...F.MEDIA,type:'iframe'}]){
+    const r=await run(F.cizgimaxFixture({episode:F.episodePage({list:{dub:[...F.DUB,entry],sub:[]}})}),{online:true});
+    assert.equal(r.rows.length,1,JSON.stringify(entry));assert.ok(!r.calls.some(isStreamCall),JSON.stringify(entry));
+  }
+  // Only the stream: the online row stands alone.
+  const only=await run(F.cizgimaxFixture({episode:F.episodePage({list:{dub:[F.MEDIA],sub:[]}})}),{online:true});
+  assert.equal(only.rows.length,1);assert.equal(only.rows[0].url,F.MASTER);
+});
+
 const seasonUrl='https://api.themoviedb.org/3/tv/123456/season/1?api_key=test';
 function seasonData(dates,{showId=123456}={}){return{season_number:1,episodes:dates.map((air_date,i)=>({episode_number:i+1,season_number:1,show_id:showId,air_date,runtime:22}))};}
 test('TMDB sezon bölüm sayısı yalnız yayınlanmış bölümleri sayar; eksik numara veya başka dizi reddedilir',async()=>{
@@ -136,4 +197,25 @@ test('CizgiMax yalnız bağımsız taramada ve anime olmayan animasyon dizilerde
   const main=[],mainProvider=createProvider({lane:'main',tmdbKey:'test',settings:{autoSubtitles:false,cizgimaxEnabled:true},
     fetchImpl:fixtureFetch({'https://api.themoviedb.org/3/tv/123456?api_key=test&append_to_response=external_ids':{json:reference([{id:16}])}}),adapters:{scanCizgiMax:async()=>{main.push(1);return[];}}});
   await mainProvider.getStreams(123456,'tv',1,2);assert.equal(main.length,0);
+});
+
+test('CizgiMax bağımsız taraması: MP4 indirilebilir ve HLS "İndirilemez" online satırı birlikte; ayar veya HLS kapalıysa akışa istek yok',async()=>{
+  const tmdb={'https://api.themoviedb.org/3/tv/123456?api_key=test&append_to_response=external_ids':{json:{id:123456,name:'Example Toon',original_name:'Example Toon',first_air_date:'2010-04-05',original_language:'en',genres:[{id:16}],external_ids:{}}},
+    [seasonUrl]:{json:seasonData(['2010-04-05','2010-04-12','2010-04-19'])}};
+  const scan=async settings=>{
+    const calls=[],provider=createProvider({lane:'cizgimax',tmdbKey:'test',settings:{autoSubtitles:false,...settings},fetchImpl:fixtureFetch({...F.cizgimaxFixture({stream:true}),...tmdb},calls)});
+    return{streams:await provider.getStreams(123456,'tv',1,2),calls};
+  };
+  const{streams,calls}=await scan({});
+  assert.equal(streams.length,2,JSON.stringify(streams));
+  const file=streams.find(s=>s.type==='mp4'),online=streams.find(s=>s.type==='hls');
+  assert.equal(file.url,F.DOWNLOAD);assert.match(file.name,/İndirilebilir/);
+  assert.equal(online.url,F.MASTER);assert.match(online.url,/\.m3u8$/);assert.deepEqual(online.headers,{Referer:F.ORIGIN+'/'});
+  assert.match(online.name,/Online · CizgiMax/);assert.match(online.title,/İndirilemez/);assert.match(online.title,/Ses: TR/);
+  assert.ok(streams.indexOf(file)<streams.indexOf(online));
+  assert.equal(calls.filter(c=>c.url===F.MASTER).length,1);
+  for(const settings of [{cizgimaxOnlineEnabled:false},{includeHls:false}]){
+    const r=await scan(settings);
+    assert.equal(r.streams.length,1,JSON.stringify(settings));assert.equal(r.streams[0].url,F.DOWNLOAD);assert.ok(!r.calls.some(isStreamCall),JSON.stringify(settings));
+  }
 });

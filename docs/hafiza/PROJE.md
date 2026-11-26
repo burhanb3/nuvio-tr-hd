@@ -2,6 +2,19 @@
 
 - 12 Kasım ek bilgi: kullanıcı Windows Son aramalar listesindeki Nuvio girişinden açtığını ekran görüntüsüyle gösterdi. Bu önbellek girdisinin hedefi doğrudan okunmadı. Ayrı ve aranabilir `Programs/Nuvio TR HD.lnk` kullanıcı Başlat menüsüne eklendi; kontrollü başlatıcı argümanı yeniden okunarak doğrulandı. Kullanıcı aramada tam Nuvio TR HD adını veya masaüstü aynı adlı kısayolu seçmeli. Açık uygulamaya dokunulmadı.
 
+## 2.0.4 — 26 Kasım 2026: CizgiMax RubyVidHub online dublaj (HLS)
+
+- **Uygulama:**
+  - `cizgimax.cjs`: `driveServers` → `episodeServers` (`{drive, media}`); aynı `serversByLang` ayrıştırması ve TVEpisode denetimi. `media`: `type:'media'`, `lang:'dub'`, etiket `RubyVidHub`, `streamUrl` `/api/stream/media/?t=[A-Za-z0-9._-]{20,600}` → `ORIGIN+streamUrl+'&format=.m3u8'` (en çok 1). `mediaStream(http,url,runtime)`: TMDB süresi yoksa null; ana liste `Referer: ORIGIN/` ile (4 sn, 20 000 karakter), son adres site alanında ve `.m3u8` ile bitmeli, bütün varyantlar site alanında; ilk alt liste (4 sn, 300 000 karakter) site alanında, bitmiş, parçalar site alanında, süre `outsideRuntime` (0,7–1,35) içinde. Drive zinciri ve akış denetimi `Promise.all` ile paralel, hatalar ayrı. Satır: `headers:{Referer}`, `hlsMaster`, `filename …m3u8`, `claimedAudioLanguages:['tr']`, `identityConfidence:90`; Drive satırlarından sonra.
+  - `hls.cjs`: `outsideRuntime` dışa açıldı. `probe.cjs`: `hlsMaster` önbelleği VixSrc + CizgiMax. `core.cjs`: `lightweightHls` listesine CizgiMax; tarama `online: includeHls!==false && cizgimaxOnlineEnabled!==false` alır; yeni ayar (yalnız CizgiMax sağlayıcısında), açıklamalar ve lane bilgisi güncellendi. `diagnostics.cjs`: `cizgimaxOnlineEnabled`.
+  - Manifest: CizgiMax `formats: ['mp4','hls']`, açıklama "ve online izleme".
+  - Testler: `cizgimax.test.cjs` 3 yeni test (olumlu satır, Referer, çağrı alanları, probe'un ek istek açmaması; 10 olumsuz akış durumu + 5 yanlış girdi + yalnız-akış bölümü; `createProvider({lane:'cizgimax'})` uçtan uca ve ayar/HLS kapalıyken akışa 0 istek). `quickjs.test.mjs`: paket içinde HLS satırı ve yeni ayar. `contract.test.mjs`: biçimler.
+- **Canlı ölçüm (bu bilgisayar, Node):** Üç bölümde (We Bare Bears S1E3, Gravity Falls S1E1, Scooby-Doo MI S1E1) RubyVidHub girdisi var, filtreye uyuyor; ana listede tek 720p varyant (yalnız BANDWIDTH) ve I-FRAME satırı. Ömür: aynı ana/alt liste ve parçalar t+2/5/10/15/25 dk açıldı. Referer ve libmpv/AVPlayer UA ile alt liste 200, parçalar GET 206 / HEAD 200. Yabancı Referer'la alt liste 200. Yaklaşık 12:20 UTC'den sonra ana liste bütün bölümlerde ~1,2 sn'de 502.
+- **iOS kurallı simülasyon (502 sırasında):** Gravity Falls S1E1 8,6 sn ve Scooby-Doo S1E1 5,4 sn; Drive satırları değişmedi, online satır yok. Fiziksel iPhone dönüş süresi garantisi değildir.
+- **Upstream:** `verify:upstream` Nuvio 1.0.1 (21 Kasım), 9 dosyada drift, 16 ABI denetimi geçti. İncelenen: `jsPluginMediaType` yalnız `series` bildiren tarayıcılar; DownloadsRepository altyazı istek ekleri ve duraklatılmış indirmelerin sürdürülmesi; iOS indirme klasörü yedekten hariç; mpv-android 0.2.1; ASS altyazı stili. StreamsRepository'deki eklenti çağrısı başka dosyaya taşındı, o dosya incelenmedi. Kilit güncellenmedi.
+- **Testler:** 396/396 (`npm run check`).
+- **Yapılmayanlar:** Fiziksel telefon, Referer'lı HLS'nin cihazda oynatımı, tam bölüm oynatımı ve indirme testi yapılmadı.
+
 ## 2.0.3 — 26 Kasım 2026: CizgiMax dolgulu MP4 düzeni
 
 - **Uygulama:**

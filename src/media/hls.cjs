@@ -214,4 +214,4 @@ async function inspectHls(http, text, url, candidate, options = {}) {
     sizeEstimate, ...(duration ? { duration, durationSource } : {}) };
 }
 
-module.exports = { attributes, inspectPlaylist, inspectHls, selectedMaster, profileAddress };
+module.exports = { attributes, inspectPlaylist, inspectHls, selectedMaster, profileAddress, outsideRuntime };
