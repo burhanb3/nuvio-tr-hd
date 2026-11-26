@@ -4,7 +4,7 @@
 
 ## 2.0.0 — 26 Kasım 2026
 
-1. **Yayın:** Yayın kontrolü sonucu PROJE ve `compatibility/github-publication.json` içine yazılacak.
+1. **Yayımlandı (`fa5acb2`):** Test ve paket `45773314376` ve Pages `45773314401` başarılı; 9 public dosya HTTP 200 ve SHA-256 yerel `dist/` ile aynı (`compatibility/github-publication.json`).
 2. **Telefonda (Wi-Fi ve LTE ayrı):**
    - Depo yenilenmeli; `Tanı · 2.0.0` görünmeli.
    - Stranger Things S5E1 veya The 100 S5E5'te `Hızlı İzle` altında DiziBox satırı gelmeli.

@@ -21,7 +21,7 @@ Kullanıcı 1.9.9 sonrası kısa testlerde sorun görmediğini söyledi ve uzun 
   - `normalizeTitle` U+2000–U+303F aralığını ayırıcı sayar (`Grey’s` = `Grey's`). Bu tüm kaynakların ad eşleşmesini etkiler; mevcut testlerin hiçbiri değişmeden geçti.
 - **Canlı ölçüm (Node, bu bilgisayar):** 12 ilk denemenin 7'si satır verdi. İki red doğruydu (Shameless UK, The Office UK). Üç boşluk sitede olmayan, ana sayfaya yönlenen veya yalnız Moly olan bölümlerdi (Game of Thrones, The Bear, Grey's Anatomy S1E1). Kesme işaretli The Queen's Gambit S1E1 ve Grey's Anatomy S20E1 düzeltmeden sonra 1080p verdi.
 - **iOS kurallı simülasyon (Hızlı İzle):** Stranger Things S5E1 2 → 3 satır, 3,6 → 5,6 sn. The 100 S5E5 2 satır, 4,7 sn. Yayılan satırın URL'si ve başlıkları (`Referer`, `User-Agent`) aynen tekrar oynatıldı: master, varyant ve ortadaki parça (TS senkron baytı) açıldı; UA'sız parça 403.
-- **Testler:** 378/378 yerel birim + QuickJS paket testi geçti (`npm run check`). ABI değişmedi.
+- **Testler ve yayın:** 378/378 yerel birim + QuickJS paket testi geçti (`npm run check`). ABI değişmedi. Yayın `fa5acb2`: Test ve paket `45773314376` (ubuntu+windows) başarılı, Pages `45773314401` başarılı. Manifest, altı `?v=2.0.0` sağlayıcı, sabit online adı ve ana sayfa (9 dosya) public HTTP 200 döndü; SHA-256 yerel `dist/` ile aynı (`compatibility/github-publication.json`, anonim GitHub API).
 - **Yapılmayanlar:** Fiziksel telefon, tam bölüm oynatımı ve indirme testi yapılmadı. `.png` adlı HLS parçalarının ve sabit TR altyazının iPhone'da görünmesi doğrulanmadı.
 
 ## 1.9.9 — 26 Kasım 2026: KultFilmler online film kaynağı
