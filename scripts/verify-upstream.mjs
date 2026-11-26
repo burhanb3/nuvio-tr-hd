@@ -44,7 +44,8 @@ const abiAssertions = [
   ['PlayerStartupSubtitles.kt', /remoteStreamSubtitles\.map/, 'plugin altyazılarının oynatıcıya aktarımı'],
   ['PlayerScreenRuntimeTrackActions.kt', /preferredSubtitleLanguage/, 'tercih edilen altyazı diliyle otomatik seçim'],
   ['PlayerSubtitleMatching.kt', /"tur" to "tr"/, 'Türkçe ISO dil kodu'],
-  ['DownloadsRepository.kt', /normalized\.contains\("\.m3u8\?"\)/, 'HLS indirme filtresi']
+  ['DownloadsRepository.kt', /normalized\.contains\("\.m3u8\?"\)/, 'HLS indirme filtresi'],
+  ['StreamSearchSessions.kt', /PluginRepository\.executeScraper\(\s*scraper = scraper,\s*tmdbId = pluginContentId\(\s*videoId = targets\.videoId,\s*season = targets\.season,\s*episode = targets\.episode,\s*\),\s*mediaType = targets\.type,\s*season = targets\.season,\s*episode = targets\.episode,\s*\)/, 'eklenti çağrısının TMDB kimliği, tür, sezon ve bölüm argümanları']
 ];
 const failedAssertions = abiAssertions.filter(([suffix, regex]) => {
   const path = paths.find(p => p.endsWith('/' + suffix));

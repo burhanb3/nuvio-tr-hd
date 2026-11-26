@@ -2,17 +2,28 @@
 
 - Son durum: masaüstü Nuvio TR HD artık Start-NuvioTRHD.ps1 üzerinden açılır. Kullanıcı yeniden aynı hata bildirdiğinde özgün kurulum çalışıyordu; nedeni kesinleşmedi. CheckOnly ve gömülü Java17 penceresiz classpath probe geçti. Kullanıcı kontrollü başlatıcıyla deneyip hata sürerse çalışan yol ve gerçek kaynak raporu birlikte incelenmeli. Tekrar UI başarısı/tam indirme doğrulanmış sayılmamalı.
 
+## 2.0.5 — 26 Kasım 2026
+
+1. **Yayın:** Sonuç PROJE ve `compatibility/github-publication.json` içine yazılacak.
+2. **Telefonda (Wi-Fi ve LTE ayrı; 2.0.4 listesinin yerine geçer):**
+   - Depo yenilenmeli, sonra kaynak ekranında **yenile düğmesine** basılmalı; `Tanı · 2.0.5` görünmeli. Arama anahtarında sürüm yok, bu yüzden yenilemeden eski aramanın satırları görünebilir.
+   - Gravity Falls S1E1 veya Adventure Time S1E1: `Online · CizgiMax` satırı gelmeli. Gelmezse kaynak listesinin başındaki yenile düğmesine basılmalı; ekranı kapatıp açmak 15 dk boyunca yeniden taramaz. Satır oynatılmalı ve 5 dk sonra ileri sarılmalı. Satırda indirme seçeneği olmamalı.
+   - Listede olup açılmayan satırda önce yenile denenmeli: saklanan aramadaki bağlantılar 15 dk'ya kadar eski olabilir. Yine açılmazsa aynı ağda DiziBal (`.png` parçalar) ve KultFilmler (`.html` parçalar) satırları denenmeli.
+   - Ayar değiştirince (ör. `cizgimaxOnlineEnabled` kapatma) aynı bölümde yenile düğmesine basılmalı.
+   - Gravity Falls/Scooby-Doo Drive satırları, bir DiziBox bölümü ve KultFilmler (Inception) indirme/oynatma.
+3. **Açık kalanlar:** `StreamsRepository.clear()`/`cancelLoading()` ve `StreamSearchSessions.clear()` çağıranları izlenmedi. Media3'ün uzantısız HLS parçalarını nasıl işlediği okunmadı. Kotlin derlemesi yok.
+
 ## 2.0.4 — 26 Kasım 2026
 
 1. **Yayımlandı (`ebd9b22`):** Test ve paket `45824418450` ve Pages `45824418430` başarılı; 10 public dosya HTTP 200 ve SHA-256 yerel `dist/` ile aynı (`compatibility/github-publication.json`).
 2. **Yapıldı (bilgisayarda):** Akış API'si 12:49 UTC'de geri geldi. Gravity Falls S1E1 2 satır (MP4 + online 720p), Adventure Time S1E1 tek online 540p satır (PROJE 2.0.4). Bölümün ilk isteği yavaş/502 olabiliyor.
 3. **Telefonda (Wi-Fi ve LTE ayrı):**
    - Depo yenilenmeli; `Tanı · 2.0.4` görünmeli. CizgiMax sağlayıcısının ayarlarında `CizgiMax online Türkçe dublaj (HLS)` açık görünmeli.
-   - We Bare Bears S1E3, Gravity Falls S1E1 veya Adventure Time S1E1'de `Online · CizgiMax` satırı gelmeli (site akış sunucusu çalışıyorsa). Adventure Time S1E1'de yalnız online satır gelir (simülasyonda geldi). İlk açılışta gelmezse kaynak ekranı kapatılıp yeniden açılmalı (ilk istek yavaş/502 olabiliyor). Satır oynatılmalı ve 5 dk sonra ileri sarılmalı: Referer'lı HLS'nin cihazda oynadığı henüz denenmedi. Satır indirme seçeneği göstermemeli.
+   - We Bare Bears S1E3, Gravity Falls S1E1 veya Adventure Time S1E1'de `Online · CizgiMax` satırı gelmeli (site akış sunucusu çalışıyorsa). Adventure Time S1E1'de yalnız online satır gelir (simülasyonda geldi). İlk açılışta gelmezse yenile düğmesine basılmalı (2.0.5 notu; ilk istek yavaş/502 olabiliyor). Satır oynatılmalı ve 5 dk sonra ileri sarılmalı: Referer'lı HLS'nin cihazda oynadığı henüz denenmedi. Satır indirme seçeneği göstermemeli.
    - Satır listede olup açılmıyorsa olası neden uzantısız parça adresleri (FFmpeg `extension_picky`) olabilir. Aynı ağda DiziBal (`.png` parçalar) ve KultFilmler (`.html` parçalar) satırları da denenmeli; sonuç birlikte değerlendirilir.
    - Site akış sunucusu 502 verirken Drive satırları gelmeli (simülasyonda geldi).
    - CizgiMax satırları hiç gelmez veya geç gelirse `cizgimaxOnlineEnabled` kapatılıp aynı bölüm denenmeli.
-4. **Nuvio 1.0.1 tam inceleme:** StreamsRepository'deki eklenti çağrısının taşındığı dosya (ayar, başlık ve sonuç birleştirme) incelenmeli. Oynatıcılar başlıkları `http-header-fields` ile veriyor ve `extension_picky` vermiyor (görüldü). iOS Libmpv sürümü bulundu (mpv 0.41.0 + FFmpeg n8.1.2 etiketli derleme, PROJE 2.0.4); uzantı riski kaynak düzeyinde düşük, cihazda DiziBal/KultFilmler/CizgiMax online satırlarıyla doğrulanmalı. Kilit ancak inceleme bittikten sonra güncellenmeli.
+4. **Kapandı (2.0.5): Nuvio 1.0.1 tam inceleme ve kilit.** Eski not: StreamsRepository'deki eklenti çağrısının taşındığı dosya (ayar, başlık ve sonuç birleştirme) incelenmeli. Oynatıcılar başlıkları `http-header-fields` ile veriyor ve `extension_picky` vermiyor (görüldü). iOS Libmpv sürümü bulundu (mpv 0.41.0 + FFmpeg n8.1.2 etiketli derleme, PROJE 2.0.4); uzantı riski kaynak düzeyinde düşük, cihazda DiziBal/KultFilmler/CizgiMax online satırlarıyla doğrulanmalı. Kilit ancak inceleme bittikten sonra güncellenmeli.
 5. **Altyazı kaynakları turu yapıldı (26 Kasım, yeni kaynak eklenmedi):** YIFY, SubSource, SubDL, turkcealtyazi, Podnapisi, planetdp ve Gestdown ölçüldü (KAYNAK_ARASTIRMASI "26 Kasım 2026 altyazı turu"). ZIP/anahtar/doğrulama/erişim nedeniyle elenenler dışında yalnız Gestdown uygun; Türkçe katkısı küçük (0–2), ana listeye yeni host riski getirdiği için eklenmedi. AltyazıDB indirme yolu yeniden 200/UTF-8. Yeni bir anahtarsız, UTF-8 düz SRT veren ve kimliğe bağlanabilen Türkçe kaynak çıkarsa yeniden bakılır.
 
 ## 2.0.3 — 26 Kasım 2026

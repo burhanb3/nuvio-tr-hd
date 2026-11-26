@@ -1,5 +1,32 @@
 # Sürüm notları
 
+## 2.0.5 — 26 Kasım 2026
+
+- **Satır gelmezse ne yapılacağı düzeltildi: kaynak listesinin başındaki yenile düğmesi.**
+  - Nuvio 1.0.1 sonuç bulan bir aramayı 15 dakika bellekte tutar. Saklama aynı profil, yapım, bölüm ve kaynak düzeni içindir. Kaynak ekranı, oynatıcının kaynak paneli ve sonraki bölüm araması bu aramayı paylaşır.
+  - Bu sürede ekranı kapatıp açmak eklentiyi yeniden çalıştırmaz. Yenile düğmesi saklanan aramayı bırakıp yeniden tarar.
+  - Arama anahtarında eklenti ayarları yok, yalnız tarayıcı kimlikleri var. Ayar değiştirdikten sonra da yenile düğmesine basın.
+  - CizgiMax ayar açıklaması, kurulum sayfası, AYARLAR ve SORUN_GIDERME buna göre değişti. 2.0.4'teki "kaynak ekranını yeniden açın" önerisi 1.0.1'de 15 dakika boyunca işe yaramaz.
+- **Nuvio 1.0.1 incelemesi tamamlandı; upstream kilidi 1.0.1'e güncellendi.**
+  - Eklenti çağrısı `StreamSearchSessions.kt` dosyasına taşındı. Argümanlar aynı: TMDB kimliği (`pluginContentId`), tür, sezon, bölüm.
+  - Sonuçların birleştirilmesi `StreamsRepository` içinde aynı kaldı.
+  - Bu dosya izlenen dosyalara ve doğrulayıcıya eklendi; bu çağrı için yeni bir ABI denetimi var.
+  - 17 ABI denetimi hem sürüm etiketinde (`3cfc311`) hem ana dalda geçti. `verify:upstream` sonucu: drift yok.
+- **Sürüm ile ana dal ayrıldı.** 2.0.4 notunda 1.0.1'e yazılan bazı değişiklikler yalnız ana dalda var, 1.0.1 sürümünde yok:
+  - `jsPluginMediaType`
+  - duraklatılmış indirmelerin sürdürülmesi
+  - mpv-android 0.2.1
+  - ASS stil anahtarı
+  - Android metin yanıtı 16 MB sınırı
+  - altyazı seçiminin eklentileri beklemesi
+
+  1.0.1'in Android mpv kütüphanesi 0.6.5-beta ile aynı (0.1.12). iOS'ta MPVKit `da4b7da`.
+- **Android ExoPlayer:** Akış adresindeki `format=.m3u8` sorgusu HLS olarak tanınır (`PlaybackMediaItems.android.kt`, 1.0.1'de aynı). Media3'ün uzantısız parça adreslerini nasıl işlediği okunmadı.
+- **İzlenmeyenler:** `StreamsRepository.clear()` ve `cancelLoading()` eklenti aramasını duraklatır; duraklatılan çağrı sürünce baştan çalışır (`PluginRuntime`, 0.6.5-beta'dan beri aynı). Bunları hangi ekran olayının çağırdığı izlenmedi. Saklanan aramayı silen `StreamSearchSessions.clear()` çağrısı incelenen dosyalarda görülmedi.
+- Eklenti davranışı değişmedi; yalnız açıklama metni ve sürüm.
+- 397 yerel birim ve QuickJS paket testi geçti (`npm run check`).
+- Fiziksel telefon, online oynatma, tam bölüm oynatımı ve indirme testi yapılmadı.
+
 ## 2.0.4 — 26 Kasım 2026
 
 - **CizgiMax: sitenin kendi online Türkçe dublaj akışı (RubyVidHub, HLS) eklendi.**
@@ -13,7 +40,7 @@
   - **Ayar:** `CizgiMax online Türkçe dublaj (HLS)` (`cizgimaxOnlineEnabled`), varsayılan açık. Kapatılırsa akış adresine ve alt alana hiç istek gitmez.
   - **Bilinen risk:** Akış ek bir site alt alanından gelir. O alan bağlantıyı kabul edip hiç yanıt vermezse iPhone isteği 60 sn bekleyebilir; bu durumda bu sağlayıcının bütün satırları (Drive dahil) gelmeyebilir. Ana `Nuvio TR HD` listesi etkilenmez.
   - **Bilinmeyen:** Alt liste ve parça adresleri uzantısızdır (`?p=…`). FFmpeg'in HLS `extension_picky` denetimi (n8.0 ve geriye taşındığı n6.1.3, n7.0.3, n7.1.1 ve sonrası) böyle adresleri reddeder. mpv 0.40 ve sonrası HLS'de bu denetimi kendisi kapatır. Riskli eşleşme: bu denetimi içeren FFmpeg ile 0.40'tan eski mpv. Nuvio'nun kaynak kodunda (0.6.5-beta ve 1.0.1) iOS Libmpv derlemesi mpv 0.41.0 + FFmpeg n8.1.2 etiketlidir; Android mpv kütüphanesi (Haziran 2025 ve sonrası sürümler) mpv'yi ana daldan derleyen betikle üretilir. Kaynak düzeyinde risk düşük; ikili derlemeler ve cihazda oynatma doğrulanmadı.
-  - **İlk istek:** Bir bölüm ilk kez istendiğinde akış API'si ana listeyi 4 sn içinde vermedi ya da ~3,9–5,5 sn'de 502 döndürdü. Sonraki isteklerde ~0,4 sn'de 200 verdi. Bu yüzden online satır ilk aramada gelmeyebilir; kaynak ekranı yeniden açılınca gelebilir (ayar açıklamasında yazıyor).
+  - **İlk istek:** Bir bölüm ilk kez istendiğinde akış API'si ana listeyi 4 sn içinde vermedi ya da ~3,9–5,5 sn'de 502 döndürdü. Sonraki isteklerde ~0,4 sn'de 200 verdi. Bu yüzden online satır ilk aramada gelmeyebilir; kaynak ekranı yeniden açılınca gelebilir (ayar açıklamasında yazıyor; 2.0.5'te düzeltildi: Nuvio 1.0.1'de yenile düğmesi gerekir).
   - **Canlı sonuç (akış API'si 12:49 UTC'de yeniden çalışınca, iOS kurallı simülasyon, yayımlanan paket):**
     - Gravity Falls S1E1, 7,1 sn: `İndirilebilir · CizgiMax` 1080p MP4 (0,47 GB) ve `Online · CizgiMax` 720p, İndirilemez.
     - Adventure Time S1E1, 4,4 sn: tek satır `Online · CizgiMax` 540p, İndirilemez (Drive dosyası `.ts`).
@@ -21,7 +48,7 @@
     - Süreler fiziksel iPhone garantisi değildir.
   - **Ölçüm (bu bilgisayar):** Bağlantı ömrü: aynı ana liste, alt liste ve parçalar 25 dakika sonra da açıldı. Oynatıcı başlıklarıyla (Referer, libmpv ve AVPlayer UA) alt liste ve parçalar 200/206 verdi. Ardından sitenin akış API'si bütün bölümlerde ~1,2 sn içinde 502 döndürmeye başladı (12:15 UTC'de 200, 12:29 UTC'de 502; site sayfaları bu sırada açılıyordu). Bu sırada (iOS kurallı simülasyon) Gravity Falls S1E1 (8,6 sn) ve Scooby-Doo S1E1 (5,4 sn) Drive satırları değişmeden geldi; online satır oluşmadı. Süre ölçümleri fiziksel iPhone garantisi değildir.
 - Manifest: CizgiMax sağlayıcısının biçimleri `mp4, hls` (ana ve Hızlı İzle sağlayıcıları zaten `hls` bildiriyor).
-- **Nuvio 1.0.1 (21 Kasım) incelemesi:** Kilitli 0.6.5-beta'ya göre 9 izlenen dosya değişti. 16 ABI denetiminin hepsi geçti. `jsPluginMediaType` yalnız türünü `series` bildiren eklentilerde dizi türünü değiştirir; bu eklentinin bütün tarayıcıları `movie/tv` bildirir. Kilit güncellenmedi; tam inceleme sonraki işlerde.
+- **Nuvio 1.0.1 (21 Kasım) incelemesi:** Kilitli 0.6.5-beta'ya göre 9 izlenen dosya değişti. 16 ABI denetiminin hepsi geçti. `jsPluginMediaType` yalnız türünü `series` bildiren eklentilerde dizi türünü değiştirir; bu eklentinin bütün tarayıcıları `movie/tv` bildirir. Kilit güncellenmedi; tam inceleme sonraki işlerde. (2.0.5 düzeltmesi: bu karşılaştırma ana daldaydı; `jsPluginMediaType` ve birkaç değişiklik 1.0.1 sürümünde yok.)
 - **Altyazı kaynakları araştırıldı, yeni kaynak eklenmedi:** Nuvio altyazıyı verilen adresten kendisi indirip UTF-8 okuduğu için ZIP veren kaynaklar (YIFY ve benzerleri) kullanılamıyor. SubSource ve SubDL anahtar ya da doğrulama istiyor. Gestdown anahtarsız ama örnek dizilerde Türkçe katkısı 0–2 dosya; mevcut servisler aynı bölümlerde 3–34 Türkçe veriyor. AltyazıDB indirmeleri yeniden çalışıyor (kod değişmedi).
 - 397 yerel birim ve QuickJS paket testi geçti (`npm run check`). Yeni testlerden biri: akış API'si 502 dönerken iki Drive sunucusu da açılır ve iki dosya korunur (site alanı devre dışı sayılmaz).
 - Fiziksel telefon, online oynatma (Referer'lı HLS), tam bölüm oynatımı ve indirme testi yapılmadı.

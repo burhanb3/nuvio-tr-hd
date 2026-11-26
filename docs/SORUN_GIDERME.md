@@ -16,7 +16,7 @@ Nuvio iOS ağ çağrıları JavaScript zaman aşımıyla her zaman fiziksel olar
 
 Online HLS seçenekleri indirilebilir dosya değildir. Küçük MP4/MKV bulunması sağlayıcının o yapım için sunduğu dosyalara bağlıdır; büyük bir dosya eklenti tarafından küçültülmez. Desteklenen uzantısız MKV'ler için dosya köprüsü açık olmalıdır.
 
-Bir dosyanın başlığı ve Range yanıtı çalışsa da bağlantı sonradan sona erebilir. İndirmeyi başlatmadan önce kaynak ekranını yeniden açmak yeni bağlantı alınmasını sağlar.
+Bir dosyanın başlığı ve Range yanıtı çalışsa da bağlantı sonradan sona erebilir. İndirmeyi başlatmadan önce kaynak listesinin başındaki yenile düğmesine basmak yeni bağlantı alınmasını sağlar. Nuvio 1.0.1 sonuç bulan aramayı 15 dk bellekte tuttuğu için ekranı kapatıp açmak bu sürede yeni bağlantı getirmez.
 
 ## Türkçe dublaj veya altyazı yok
 

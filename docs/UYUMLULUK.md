@@ -13,6 +13,28 @@ Resmî release ve geliştirme dalındaki ilgili dosyaların SHA'ları `compatibi
 
 ## Güncel kontrol
 
+2.0.5 (26 Kasım) Nuvio 1.0.1 incelemesini tamamlar ve kilidi 1.0.1'e günceller.
+
+- **Kilit:** sürüm etiketi `3cfc311`, ana dal `8f19c9d`, 24 izlenen dosya. `verify:upstream` sonucu drift yok; 17 ABI denetiminin hepsi geçti. Aynı denetimler sürüm etiketindeki dosyalarda da geçti.
+- **Eklenti çağrısı:** `StreamSearchSessions.kt` (`launchStreamSearchTasks`) içine taşındı. `executeScraper` argümanları 0.6.5-beta ile aynı: `pluginContentId(videoId, season, episode)`, tür, sezon, bölüm. Yeni denetim bu çağrıyı izler.
+- **Yeni arama oturumları:** Aynı profil, yapım, bölüm ve kaynak düzeni için tek arama yürür. Kaynak ekranı, oynatıcı kaynak paneli ve sonraki bölüm araması bu aramayı paylaşır.
+  - Herhangi bir kaynaktan sonuç gelen arama 15 dk bellekte tutulur (en çok 12). Sonuçsuz arama tutulmaz.
+  - Anahtar eklenti, sunucu ve tarayıcı kimlikleriyle debrid düzeninden oluşur; eklenti ayarları anahtarda yok.
+  - Yenile düğmesi (`ProviderFilterRow` → `StreamsRepository.reload`, `forceRefresh`) saklanan aramayı bırakır. Bu bağlantı sürüm etiketinde de aynı.
+  - Bu yüzden 2.0.5 kullanıcıya ekranı kapatıp açmak yerine yenile düğmesini önerir.
+- **İzlenmeyenler:** `StreamsRepository.clear()` ve `cancelLoading()` eklenti aramasını duraklatır (`PluginRuntime.setSearchPaused`, değişmedi); duraklatılan çağrı sürünce baştan çalışır. Bunları hangi ekran olayının çağırdığı izlenmedi. `StreamSearchSessions.clear()` çağıranı incelenen dosyalarda görülmedi.
+- **Sürüm ile ana dal ayrımı:** 2.0.4 karşılaştırması ana daldaydı. Şu değişiklikler 1.0.1 sürümünde yok, yalnız ana dalda var:
+  - `jsPluginMediaType`; bu eklenti `movie/tv` bildirdiği için zaten etkisiz.
+  - duraklatılmış indirmelerin sürdürülmesi
+  - mpv-android-lib 0.2.1; 1.0.1'de 0.1.12, 0.6.5-beta ile aynı.
+  - ASS stil anahtarı
+  - Android metin API'si 16 MB sınırı; eklenti `fetch` yolu (`httpRequestRaw`) bundan etkilenmez.
+  - altyazı seçiminin yavaş eklentileri beklemesi
+
+  iOS MPVKit alt modülü 1.0.1'de ve ana dalda `da4b7da`. Etiketten ana dala oynatıcı farkları altyazı stili ve biçim rozetleriyle sınırlı; ağ başlığı ve HLS seçeneklerinde değişiklik görülmedi.
+- **Android:** `NetworkErrorInterceptor` (ana dal) OkHttp'nin sardığı `IOException`'ı açar; eklentiye yine reddedilen `fetch` olarak ulaşır. ExoPlayer yolunda adresin `format=.m3u8` sorgusu HLS türüne çevrilir (`PlaybackMediaItems.android.kt`, sürümde aynı). Media3'ün uzantısız parçaları nasıl işlediği okunmadı.
+- **Testler:** 397 fixture/QuickJS testi geçti. Windows Desktop, fiziksel telefon, Kotlin derlemesi, online oynatma, tam oynatma ve indirme testi yapılmadı.
+
 2.0.4 (26 Kasım) CizgiMax sağlayıcısına sitenin kendi HLS akışını (RubyVidHub) online satır olarak ekler; manifestte bu sağlayıcının biçimleri `mp4, hls` oldu. Satır yeni bir alan kullanmaz: mevcut `url`, `headers` (Referer) ve `type: hls` alanları, DiziBox gibi Referer'lı HLS kaynaklarıyla aynı. HLS indirilemez gösterilir. `npm run verify:upstream`: son sürüm Nuvio **1.0.1** (21 Kasım), kilitli 0.6.5-beta'ya göre 9 izlenen dosyada drift; 16 ABI denetiminin hepsi geçti. İncelenen değişiklikler: `jsPluginMediaType` yalnız türünü `series` bildiren tarayıcılarda dizi türünü değiştirir (bu eklenti `movie/tv` bildirir); indirmede altyazı istek ekleri ve duraklatılmış indirmelerin sürdürülmesi; iOS indirme klasörünün yedekten hariç tutulması; mpv-android 0.2.1; ASS altyazı stili. StreamsRepository'deki eklenti çağrısı başka bir dosyaya taşındı; o dosya henüz incelenmedi. Oynatıcılar (Android ve iOS mpv) istek başlıklarını `http-header-fields` ile verir ve `extension_picky` ayarlamaz; parça adresleri uzantısız olan bu akışın cihazda açılıp açılmadığı mpv/FFmpeg sürümüne bağlıdır. Kaynak koduna göre iOS Libmpv derlemesi mpv 0.41.0 + FFmpeg n8.1.2, Android kütüphanesi mpv’yi ana daldan derler; ikisinde de mpv HLS için bu denetimi kapatır (KARARLAR 2.0.4; ikili derleme ve cihaz doğrulanmadı). Kilit güncellenmedi. 397 fixture/QuickJS testi geçti. `ebd9b22` yayını: Test ve paket `45824418450`, Pages `45824418430` başarılı; 10 public dosya SHA-256 eşleşti (compatibility/github-publication.json). Windows Desktop, fiziksel telefon, Referer'lı HLS'nin cihazda oynatımı, tam oynatma ve indirme testi yapılmadı.
 
 2.0.3 (26 Kasım) yalnız CizgiMax satırlarında (`followMp4Boxes`) MP4 denetiminin dosyanın bildirdiği kutu sonlarını en fazla iki kez izlemesine izin verir: başında büyük dolgu, sonunda `moov` olan dosyalar (Gravity Falls) artık piksel ve süreyle doğrulanır. Dolgulu baş tek başına kabul edilmez. Diğer kaynakların denetimi ve Range dizisi değişmez. Plugin ABI'sine dokunmaz. 393 fixture/QuickJS testi geçti. `8284773` yayını: Test ve paket `45817192160`, Pages `45817192182` başarılı; 10 public dosya SHA-256 eşleşti. Windows Desktop, fiziksel telefon, tam oynatma ve indirme testi yapılmadı.
