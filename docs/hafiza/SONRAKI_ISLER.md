@@ -5,14 +5,14 @@
 ## 2.0.4 — 26 Kasım 2026
 
 1. **Yayın:** Sonuç PROJE ve `compatibility/github-publication.json` içine yazılacak.
-2. **Akış API'si yeniden 200 verince (bilgisayarda):** CizgiMax lane simülasyonu Gravity Falls S1E1 (40075) ve Adventure Time S1E1 (15260) sırayla çalıştırılmalı. Yayımlanan tarama gerçek listelerde henüz online satır üretmedi; sonuç PROJE'ye yazılmalı.
+2. **Yapıldı (bilgisayarda):** Akış API'si 12:49 UTC'de geri geldi. Gravity Falls S1E1 2 satır (MP4 + online 720p), Adventure Time S1E1 tek online 540p satır (PROJE 2.0.4). Bölümün ilk isteği yavaş/502 olabiliyor.
 3. **Telefonda (Wi-Fi ve LTE ayrı):**
    - Depo yenilenmeli; `Tanı · 2.0.4` görünmeli. CizgiMax sağlayıcısının ayarlarında `CizgiMax online Türkçe dublaj (HLS)` açık görünmeli.
-   - We Bare Bears S1E3, Gravity Falls S1E1 veya Adventure Time S1E1'de `Online · CizgiMax` satırı gelmeli (site akış sunucusu çalışıyorsa). Adventure Time S1E1'de Drive dosyası `.ts` olduğu için yalnız online satır beklenir; tam taramada görülmedi. Satır oynatılmalı ve 5 dk sonra ileri sarılmalı: Referer'lı HLS'nin cihazda oynadığı henüz denenmedi. Satır indirme seçeneği göstermemeli.
+   - We Bare Bears S1E3, Gravity Falls S1E1 veya Adventure Time S1E1'de `Online · CizgiMax` satırı gelmeli (site akış sunucusu çalışıyorsa). Adventure Time S1E1'de yalnız online satır gelir (simülasyonda geldi). İlk açılışta gelmezse kaynak ekranı kapatılıp yeniden açılmalı (ilk istek yavaş/502 olabiliyor). Satır oynatılmalı ve 5 dk sonra ileri sarılmalı: Referer'lı HLS'nin cihazda oynadığı henüz denenmedi. Satır indirme seçeneği göstermemeli.
    - Satır listede olup açılmıyorsa olası neden uzantısız parça adresleri (FFmpeg `extension_picky`) olabilir. Aynı ağda DiziBal (`.png` parçalar) ve KultFilmler (`.html` parçalar) satırları da denenmeli; sonuç birlikte değerlendirilir.
    - Site akış sunucusu 502 verirken Drive satırları gelmeli (simülasyonda geldi).
    - CizgiMax satırları hiç gelmez veya geç gelirse `cizgimaxOnlineEnabled` kapatılıp aynı bölüm denenmeli.
-4. **Nuvio 1.0.1 tam inceleme:** StreamsRepository'deki eklenti çağrısının taşındığı dosya (ayar, başlık ve sonuç birleştirme) incelenmeli. Oynatıcılar başlıkları `http-header-fields` ile veriyor ve `extension_picky` vermiyor (görüldü). iOS Libmpv paket sürümü (Package.resolved/pbxproj) bulunmalı: CizgiMax, DiziBal ve KultFilmler'in uzantı riskini birlikte netleştirir. Kilit ancak inceleme bittikten sonra güncellenmeli.
+4. **Nuvio 1.0.1 tam inceleme:** StreamsRepository'deki eklenti çağrısının taşındığı dosya (ayar, başlık ve sonuç birleştirme) incelenmeli. Oynatıcılar başlıkları `http-header-fields` ile veriyor ve `extension_picky` vermiyor (görüldü). iOS Libmpv sürümü bulundu (mpv 0.41.0 + FFmpeg n8.1.2 etiketli derleme, PROJE 2.0.4); uzantı riski kaynak düzeyinde düşük, cihazda DiziBal/KultFilmler/CizgiMax online satırlarıyla doğrulanmalı. Kilit ancak inceleme bittikten sonra güncellenmeli.
 5. **Sıradaki:** Altyazı kaynakları (2.0.2 madde 5).
 
 ## 2.0.3 — 26 Kasım 2026

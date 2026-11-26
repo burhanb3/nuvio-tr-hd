@@ -3,7 +3,7 @@
 ## 2.0.4 — 26 Kasım 2026
 
 - **CizgiMax: sitenin kendi online Türkçe dublaj akışı (RubyVidHub, HLS) eklendi.**
-  - **Ne gelir:** Bağımsız CizgiMax sağlayıcısında, Drive MP4 satırının yanında "Online · CizgiMax" satırı. Yalnız izleme içindir; Nuvio üzerinden indirilemez. Drive dosyası olmayan veya `.ts` olan bölümlerde tek satır bu olabilir. Adventure Time S1E1 için bu bir beklentidir: Drive dosyası `.ts`, sitenin akış girdisi ve 540p ana listesi okundu; tam tarama akış sunucusu 502 verirken denenemedi.
+  - **Ne gelir:** Bağımsız CizgiMax sağlayıcısında, Drive MP4 satırının yanında "Online · CizgiMax" satırı. Yalnız izleme içindir; Nuvio üzerinden indirilemez. Drive dosyası olmayan veya `.ts` olan bölümlerde tek satır bu olabilir (ör. Adventure Time S1E1, We Bare Bears S1E3).
   - **Denetim (satır oluşmadan önce):**
     - Ana liste sitenin kendisinden ve site Referer'ıyla alınır.
     - Bütün varyantlar ve parçalar sitenin kendi alan adlarında olmalıdır.
@@ -12,8 +12,13 @@
   - **Kart bilgileri:** Çözünürlük oynatma listesinin beyanıdır (ölçülen bölümlerde 540p–720p). Süre TMDB'den gelir. Türkçe ses sitenin dublaj listesine dayanır.
   - **Ayar:** `CizgiMax online Türkçe dublaj (HLS)` (`cizgimaxOnlineEnabled`), varsayılan açık. Kapatılırsa akış adresine ve alt alana hiç istek gitmez.
   - **Bilinen risk:** Akış ek bir site alt alanından gelir. O alan bağlantıyı kabul edip hiç yanıt vermezse iPhone isteği 60 sn bekleyebilir; bu durumda bu sağlayıcının bütün satırları (Drive dahil) gelmeyebilir. Ana `Nuvio TR HD` listesi etkilenmez.
-  - **Bilinmeyen:** Alt liste ve parça adresleri uzantısızdır (`?p=…`). FFmpeg'in HLS `extension_picky` denetimi (n8.0 ve geriye taşındığı n6.1.3, n7.0.3, n7.1.1 ve sonrası) böyle adresleri reddeder. mpv 0.40 ve sonrası HLS'de bu denetimi kendisi kapatır. Riskli eşleşme: bu denetimi içeren FFmpeg ile 0.40'tan eski mpv. Nuvio oynatıcısındaki mpv/FFmpeg sürümü kesin bilinmiyor; cihazda denenmedi.
-  - **Henüz canlı geçmedi:** Akış API'si 502 verdiği için yayımlanan taramanın ana/alt liste denetimi gerçek listelerde hiç olumlu sonuç vermedi; online satır yalnız fixture ve QuickJS testlerinde oluştu. Akış API'si yeniden çalışınca Gravity Falls ve Adventure Time S1E1 simülasyonları tekrarlanacak.
+  - **Bilinmeyen:** Alt liste ve parça adresleri uzantısızdır (`?p=…`). FFmpeg'in HLS `extension_picky` denetimi (n8.0 ve geriye taşındığı n6.1.3, n7.0.3, n7.1.1 ve sonrası) böyle adresleri reddeder. mpv 0.40 ve sonrası HLS'de bu denetimi kendisi kapatır. Riskli eşleşme: bu denetimi içeren FFmpeg ile 0.40'tan eski mpv. Nuvio'nun kaynak kodunda (0.6.5-beta ve 1.0.1) iOS Libmpv derlemesi mpv 0.41.0 + FFmpeg n8.1.2 etiketlidir; Android mpv kütüphanesi (Haziran 2025 ve sonrası sürümler) mpv'yi ana daldan derleyen betikle üretilir. Kaynak düzeyinde risk düşük; ikili derlemeler ve cihazda oynatma doğrulanmadı.
+  - **İlk istek:** Bir bölüm ilk kez istendiğinde akış API'si ana listeyi 4 sn içinde vermedi ya da ~3,9–5,5 sn'de 502 döndürdü. Sonraki isteklerde ~0,4 sn'de 200 verdi. Bu yüzden online satır ilk aramada gelmeyebilir; kaynak ekranı yeniden açılınca gelebilir (ayar açıklamasında yazıyor).
+  - **Canlı sonuç (akış API'si 12:49 UTC'de yeniden çalışınca, iOS kurallı simülasyon, yayımlanan paket):**
+    - Gravity Falls S1E1, 7,1 sn: `İndirilebilir · CizgiMax` 1080p MP4 (0,47 GB) ve `Online · CizgiMax` 720p, İndirilemez.
+    - Adventure Time S1E1, 4,4 sn: tek satır `Online · CizgiMax` 540p, İndirilemez (Drive dosyası `.ts`).
+    - We Bare Bears S1E3 (Node, aynı denetim): 720p online; Drive sunucusu yok.
+    - Süreler fiziksel iPhone garantisi değildir.
   - **Ölçüm (bu bilgisayar):** Bağlantı ömrü: aynı ana liste, alt liste ve parçalar 25 dakika sonra da açıldı. Oynatıcı başlıklarıyla (Referer, libmpv ve AVPlayer UA) alt liste ve parçalar 200/206 verdi. Ardından sitenin akış API'si bütün bölümlerde ~1,2 sn içinde 502 döndürmeye başladı (12:15 UTC'de 200, 12:29 UTC'de 502; site sayfaları bu sırada açılıyordu). Bu sırada (iOS kurallı simülasyon) Gravity Falls S1E1 (8,6 sn) ve Scooby-Doo S1E1 (5,4 sn) Drive satırları değişmeden geldi; online satır oluşmadı. Süre ölçümleri fiziksel iPhone garantisi değildir.
 - Manifest: CizgiMax sağlayıcısının biçimleri `mp4, hls` (ana ve Hızlı İzle sağlayıcıları zaten `hls` bildiriyor).
 - **Nuvio 1.0.1 (21 Kasım) incelemesi:** Kilitli 0.6.5-beta'ya göre 9 izlenen dosya değişti. 16 ABI denetiminin hepsi geçti. `jsPluginMediaType` yalnız türünü `series` bildiren eklentilerde dizi türünü değiştirir; bu eklentinin bütün tarayıcıları `movie/tv` bildirir. Kilit güncellenmedi; tam inceleme sonraki işlerde.
