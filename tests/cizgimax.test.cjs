@@ -165,6 +165,21 @@ test('CizgiMax: online ayarı kapalıysa, TMDB süresi yoksa veya akış denetim
   assert.equal(only.rows.length,1);assert.equal(only.rows[0].url,F.MASTER);
 });
 
+test('CizgiMax: akış API 502 dönse de iki Drive sunucusu açılır ve iki dosya korunur',async()=>{
+  // Live failure mode: the stream API answered 502 while site pages loaded.
+  // The site origin must not be marked unavailable for the /oynat/ servers.
+  const token3='placeholder-token-0003',id2='PLACEHOLDERdriveFILEid0002',preview2='https://drive.google.com/file/d/'+id2+'/preview';
+  const download2='https://drive.usercontent.google.com/download?id='+id2+'&export=download&confirm=t';
+  const episode=F.episodePage({list:{dub:[F.DUB[0],{...F.DUB[0],src:'/oynat/?t='+token3},F.MEDIA],sub:[]}});
+  const fixture={...F.cizgimaxFixture({episode,masterEntry:{status:502}}),
+    [F.ORIGIN+'/oynat/?t='+token3]:{status:302,headers:{location:preview2}},
+    [preview2]:{body:F.drivePage('S1 B2.mp4',{id:id2}),mime:'text/html'},[download2]:{body:F.media(),mime:'video/mp4'}};
+  const r=await run(fixture,{online:true});
+  assert.deepEqual(r.rows.map(x=>x.url),[F.DOWNLOAD,download2]);
+  assert.equal(r.calls.filter(c=>c.url===F.MASTER).length,1);assert.ok(!r.calls.some(c=>c.url===F.CHILD));
+  assert.equal(r.calls.filter(c=>c.url.includes('/oynat/')).length,2);
+});
+
 const seasonUrl='https://api.themoviedb.org/3/tv/123456/season/1?api_key=test';
 function seasonData(dates,{showId=123456}={}){return{season_number:1,episodes:dates.map((air_date,i)=>({episode_number:i+1,season_number:1,show_id:showId,air_date,runtime:22}))};}
 test('TMDB sezon bölüm sayısı yalnız yayınlanmış bölümleri sayar; eksik numara veya başka dizi reddedilir',async()=>{
