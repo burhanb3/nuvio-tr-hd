@@ -10,7 +10,8 @@
    - "Scooby-Doo! Mystery Incorporated" (Scooby Doo Gizem Avcıları) S1E1'de ana `Nuvio TR HD` altında `CizgiMax` İndirilebilir satırı (1080p, ~0,41 GB, Ses: TR) gelmeli.
    - Satır oynatılmalı ve indirilmeli. İndirilen dosyanın tam ve oynatılabilir olduğu, Türkçe sesin geldiği not edilmeli.
 3. **QuickJS test düzeneği:** ~0,2 MB üstü metin gövdelerinde çalışma zamanı kapanışında `list_empty(&rt->gc_obj_list)` ile duruyor. Yayınlanmış DiziBox'ta 300K ile de tekrarlandı; yalnız shim içeren küçük denemede 600K temiz kapandı. Neden bulunmadı. Cihazda büyük sayfa çöküşü bildirilmedi. Ayrıştırıcı tam boyutta ayrı sınanıyor; neden ayrıca araştırılmalı.
-4. **Sonraki kaynaklar:** BelgeselX, IzleAI. İndirilebilir: mobiletvshows (captcha olabilir), nkiri (zaman aşımı), Waploaded araması, RareFilmm. HD: uhdmovies / moviesmod (atlatma olmadan). Ardından altyazı kaynakları (Wyzie, subsource, subtitlecat, yifysubtitles).
+4. **Elenen adaylar (26 Kasım, 2.0.1 sonrası):** BelgeselX, IzleAI, UHDMovies/MoviesMod, mobiletvshows (FzTvSeries kopyası), nkiri. Gerekçeler KARARLAR'da.
+5. **Eksik kapatma turu:** RareFilmm ok.ru yanıtı tek başlıkla yeniden denetlenmeli (iPhone UA ile ok.ru anonim giriş sayfasına yönlendirme görüldü). CizgiMax'in başka çizgi dizilerdeki verimi ölçülmeli; sayı kuralı ve `.ts` kararı ayrı karar olmadan değişmez. Ardından altyazı kaynakları (Wyzie, subsource, subtitlecat, yifysubtitles).
 
 ## 2.0.0 — 26 Kasım 2026
 

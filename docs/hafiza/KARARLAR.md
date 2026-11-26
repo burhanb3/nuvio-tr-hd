@@ -2,6 +2,22 @@
 
 - Windows yerel düzeltme başlatıcısı başka Nuvio işlemini sessizce veya zorla kapatmaz. Kullanıcının kısayolu açması ve iletişim kutusunda onay vermesiyle normal pencere kapatma denenir. Açılış öncesi paket SHA ve classpath kontrolü zorunludur; yalnız kısayolun doğru olması uygulamanın doğru kopyada çalıştığı kanıtı değildir.
 
+## 26 Kasım 2026 — 2.0.1 sonrası elenen adaylar
+
+- **BelgeselX eklenmedi (kimlik yetersiz).**
+  - Dizi sayfasındaki `datePublished` sitenin yükleme tarihidir, ilk yayın yılı değildir (Planet Earth II: 2019).
+  - IMDb kimliği 26 örnek dizinin hiçbirinde yoktu; yalnız bir sayfada görüldü.
+  - Oynatıcı da kimlik vermiyor: ok.ru başlığı site adı, Drive dosya adı "P1.mkv" gibi.
+  - Geriye yalnız Türkçe ad kalıyor ("AFRİKA", "TABU"). Bu, eklenmiş hiçbir kaynağın kabul etmediği kadar zayıf bir kimlik.
+  - Site araması istemci tarafında Google özel aramasıyla yapılıyor; `/arama` 404 döndü. Tek yol ~650 KB site haritası veya slug tahmini.
+  - Örneklerin yaklaşık dörtte biri sezon 0 olarak numaralı; bir dizide bütün bölümler 0. TMDB ile karşılaştırılacak numara yok.
+  - Sunucular: bir yuva her bölümde aynı ilgisiz kayıtlı oynatıcı sayfasını döndürüyor. Yandex Disk bağlantısı 404 verdi. Drive yuvası 7 örnekte boştu; tek bulunan dosya 18 GB MKV. ok.ru 4 bölümün 1'inde dosya verdi (1080p MP4, Range 206).
+  - Sitede ilk yayın yılı veya dış kimlik görünürse yeniden bakılabilir.
+- **IzleAI:** Denenen alan adları park sayfasına yönleniyor; canlı site bulunamadı.
+- **UHDMovies / MoviesMod:** Denenen alan adları park sayfası veya reklam yönlendirmesi. Önceki araştırmada (`compatibility/download-expansion-178.json`, `-186.json`) dosya zinciri form adımından geçiyordu. Son dosya sunucusu Range'i yok sayıyordu (MoviesMod) veya bağlantı üretmiyordu (UHDMovies). Yeni dış durum olmadan yeniden denenmez.
+- **mobiletvshows:** FzTvSeries ile aynı altyapı. İndirme sayfasının başlığı FzTvSeries ve zincir aynı (`downloadmp4.php` → `filelink.php`). Yeni kaynak sayılmaz.
+- **nkiri:** İkinci kez bağlantı zaman aşımı. Atlandı.
+
 ## 26 Kasım 2026 — 2.0.1 CizgiMax
 
 - **Yalnız Drive sunucusu.** Diğer sunucular: Sibnet 403, RubyVidHub 502 ve başka bir video hostuna gidiyor, Dzen AnimeCix API'sinin kopyası, bir CDN Cloudflare doğrulama sayfası veriyor. Drive herkese açık indirme adresi Range 206 veriyor, çerez/anahtar gerekmiyor; `confirm=t` büyük dosya virüs taraması uyarısına verilen standart yanıttır, koruma sabiti değildir.
