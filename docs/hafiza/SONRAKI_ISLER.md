@@ -4,7 +4,7 @@
 
 ## 2.0.1 — 26 Kasım 2026
 
-1. **Yayın:** Yayın kontrolü sonucu PROJE ve `compatibility/github-publication.json` içine yazılacak.
+1. **Yayımlandı (`51082f7`):** Test ve paket `45779861170` ve Pages `45779861123` başarılı; 9 public dosya HTTP 200 ve SHA-256 yerel `dist/` ile aynı (`compatibility/github-publication.json`).
 2. **Telefonda (Wi-Fi ve LTE ayrı):**
    - Depo yenilenmeli; `Tanı · 2.0.1` görünmeli.
    - "Scooby-Doo! Mystery Incorporated" (Scooby Doo Gizem Avcıları) S1E1'de ana `Nuvio TR HD` altında `CizgiMax` İndirilebilir satırı (1080p, ~0,41 GB, Ses: TR) gelmeli.

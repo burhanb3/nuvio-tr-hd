@@ -16,7 +16,7 @@ Uzun kaynak turunun ikinci kaynağı. Ana `Nuvio TR HD` taramasına (dosya hatt�
 - **Uygulama:** `src/providers/cizgimax.cjs`; `matching.cjs`'e `isAnimation` (tür 16) ve `resolveSeasonEpisodes`; `core.cjs` işi MoviesDrive'dan sonra, yalnız `target.isAnimation && !target.isAnime`, `http.scope(10000)`. Ayar `cizgimaxEnabled` ve `only.files` listesinde.
 - **Canlı ölçüm (Node):** Scooby-Doo! Mystery Incorporated S1E1/E2/E5 birer satır. Adventure Time S5E36 boş (`.ts`). SpongeBob red (bölüm sayısı). Telefon benzetimi (varsayılan ayar): Scooby S1E1 "01 · İndirilebilir · CizgiMax || 1080p · 1920×1080 · 0,41 GB · Ses: TR · TR altyazı yok", süre 1395 sn. Telefon profili (`IOS=1 LAT=600 CAP=6 BPS=2000000`): keşif 7,3 sn, bitiş 11,8 sn, 60 sn içinde yerleşti. The 100 S5E5'te CizgiMax çağrılmadı, 4 satır aynı.
 - **QuickJS:** Kayıtlı canlı sayfalarda ayrıştırma dizi 15 ms, bölüm 5 ms. Tam boyutlu sayfalar ayrıştırıcı düzeyinde sınandı; paket testi 0,2 ölçekli sayfalarla (aşağıdaki düzenek sorunu).
-- **Testler:** 391/391 (`npm run check`). ABI değişmedi.
+- **Testler ve yayın:** 391/391 (`npm run check`). ABI değişmedi. Yayın `51082f7`: Test ve paket `45779861170` (ubuntu+windows) başarılı, Pages `45779861123` başarılı. Manifest, altı `?v=2.0.1` sağlayıcı, sabit online adı ve ana sayfa (9 dosya) public HTTP 200 döndü; SHA-256 yerel `dist/` ile aynı (`compatibility/github-publication.json`, anonim GitHub API).
 - **Yapılmayanlar:** Fiziksel telefon, tam bölüm oynatımı ve indirme testi yapılmadı. iOS'un yönlendirme sonrası adresi bildirmesi doğrulanmadı.
 
 ## 2.0.0 — 26 Kasım 2026: DiziBox online dizi kaynağı ve tipografik ad eşleşmesi
