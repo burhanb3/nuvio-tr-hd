@@ -1,5 +1,30 @@
 # Sürüm notları
 
+## 2.0.1 — 26 Kasım 2026
+
+- **Yeni indirilebilir kaynak: CizgiMax (Türkçe dublajlı çizgi dizi bölümleri, ana `Nuvio TR HD` taraması).**
+  - **Ne verir:** Sitenin "Drive" dublaj sunucusundaki MP4 bölüm dosyası. Dosya Google Drive'ın herkese açık indirme adresinden gelir. Gerçek MP4 olduğu için "İndirilebilir" olarak gösterilir. Çözünürlük, boyut ve süre dosyadan okunur.
+  - **Ne zaman çalışır:** Yalnız TMDB'de Animasyon türündeki dizilerde. Japonca anime hariçtir; anime kendi sağlayıcılarında kalır. Filmlerde çalışmaz.
+  - **Kimlik:** Arama sonucundaki Türkçe veya alternatif ad, dizi sayfasındaki ad ve ilk yayın yılı TMDB ile aynı olmalıdır. Bölüm sayfasının kendi sezon/bölüm bilgisi de tutmalıdır.
+  - **Bölüm sayısı kuralı:** Sitenin o sezonda listelediği bölüm sayısı, TMDB'de yayınlanmış bölüm sayısıyla birebir aynı olmalıdır. Birçok çizgi dizi TMDB'de yarım bölümler halinde numaralanır (SpongeBob 1. sezon: TMDB 41, site 20). Bu dizilerde bölüm numarası eşleşmediği için hiçbir satır eklenmez.
+  - **Drive dosyası:** Önizleme sayfasındaki tek dosya kimliği kullanılır. Dosya adı `.mp4` ile bitmeli, parça ("Part") olmamalı ve adında sezon/bölüm varsa aynı olmalıdır. `.ts` dosyalar eklenmez (Adventure Time S5E36 bu yüzden boş döner). Sitenin diğer sunucuları (Sibnet, Dzen, RubyVidHub ve diğerleri) kullanılmaz.
+  - **Ses:** "Ses: TR" sitenin dublaj listesine dayanır. Dosyada dil etiketi yoktur; ses izinden ölçülmüş değildir.
+  - **Altyazı:** Dosyada gömülü altyazı yok. `Türkçe altyazı bulunamazsa: Videoyu gizle` seçiliyse, TR altyazısı bulunamayan bölümler diğer dublaj kaynaklarında olduğu gibi gizlenir.
+  - **Ayar:** `cizgimaxEnabled`, varsayılan açık. 10 sn kaynak bütçesiyle çalışır. Hesap, çerez, anahtar veya sabit koruma değeri kullanılmaz.
+  - **Canlı ölçüm (bu bilgisayar, Node, telefon değil):**
+    - Satır geldi: Scooby-Doo! Mystery Incorporated ("Scooby Doo Gizem Avcıları") S1E1, S1E2 ve S1E5. S1E1 1080p, 1920×1080, 0,41 GB; süre 1395 sn (TMDB 22 dk).
+    - Doğru red: SpongeBob (bölüm sayısı TMDB ile farklı), Adventure Time S5E36 (Drive dosyası `.ts`).
+    - The 100 S5E5 (animasyon değil): CizgiMax çağrılmadı, mevcut 4 satır değişmedi.
+  - **iOS kurallı simülasyon (telefon profili, yavaş ağ):** Scooby-Doo S1E1'de CizgiMax satırı 7,3 sn'de bulundu; tarama 11,8 sn'de bitti. 60 sn askı görülmedi. Satır adresi doğrudan Drive indirme adresidir; MKV köprüsünden geçmez. Bu ölçüm fiziksel iPhone dönüş süresi garantisi değildir.
+  - **Bilinmeyen:** iOS'un yönlendirme sonrası adresi bildirmesi cihazda denenmedi. Bildirmezse önizleme sayfasının kendi dosya kimliği kullanılır. Drive'ın büyük dosya uyarısına `confirm=t` ile yanıt verilir; telefonda tam indirme denenmedi. Kapsam kısmidir: her çizgi dizinin her bölümü Drive sunucusunda yoktur.
+- **Bu turda incelenip eklenmeyen kaynaklar:**
+  - WCO: Cloudflare doğrulama sayfası. Aşılmadı.
+  - O2TvSeries: captcha. Aşılmadı.
+  - CizgiMax'in Sibnet sunucusu 403 verdi. RubyVidHub 502 verdi ve başka bir video hostuna gidiyor. Dzen, mevcut AnimeCix kaynağının kopyası.
+  - archive.org'daki çizgi dizi koleksiyonları: bağlantılar 404 veya bölüm eşlemesi yanlış.
+- 391 yerel birim ve QuickJS paket testi geçti (`npm run check`). Plugin ABI'si değişmedi.
+- Fiziksel telefon, tam bölüm oynatımı, indirme, çevrimdışı altyazı ve senkron testi yapılmadı.
+
 ## 2.0.0 — 26 Kasım 2026
 
 - **Yeni online dizi kaynağı: DiziBox (Hızlı İzle ve sabit online paket).**

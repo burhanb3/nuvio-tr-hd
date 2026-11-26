@@ -41,6 +41,7 @@ async function resolveIdentity(http, tmdbId, mediaType, season, episode, key) {
     firstAirDate: type === 'tv' ? date : null, season: type === 'tv' ? Number(season) : null,
     searchTitles: [...new Set([meta.title || meta.name, originalTitle].filter(v => typeof v === 'string' && v.trim()))].slice(0, 2),
     isAnime: meta.genres?.some(g => g.id === 16) === true && (meta.original_language === 'ja' || meta.origin_country?.includes('JP') === true),
+    isAnimation: meta.genres?.some(g => g.id === 16) === true,
     ...(typeof meta.poster_path === 'string' && /^\/[A-Za-z0-9]+\.(jpg|png)$/i.test(meta.poster_path) ? { posterPath: meta.poster_path } : {}),
     ...(type === 'tv' && positiveInt(meta.number_of_seasons) && meta.number_of_seasons <= 200 ? { seasonCount: Number(meta.number_of_seasons) } : {}),
     episode: type === 'tv' ? Number(episode) : null, imdbId: meta.imdb_id || meta.external_ids?.imdb_id || null,
@@ -121,6 +122,21 @@ async function resolveSeasonEpisode(http,target,key){
     !Number.isInteger(episode.runtime)||episode.runtime<=0||episode.runtime>1000||year<target.year||year>2099)return null;
   return{seasonReleaseYear:year,runtimeMinutes:episode.runtime};
 }
+// Aired episodes of the requested TMDB season (1..n, air date not after
+// today) and the requested episode's runtime when TMDB has one. A source
+// compares its own season length with this before trusting its numbering.
+async function resolveSeasonEpisodes(http,target,key,today=new Date().toISOString().slice(0,10)){
+  if(!key||target.type!=='tv'||!positiveInt(target.season)||!positiveInt(target.episode)||http.expired())return null;
+  const data=await http.json(`https://api.themoviedb.org/3/tv/${target.tmdbId}/season/${target.season}?api_key=${encodeURIComponent(key)}`,{timeoutMs:3000});
+  if(data?.season_number!==target.season||!Array.isArray(data.episodes)||data.episodes.length>500)return null;
+  const aired=data.episodes.filter(e=>/^\d{4}-\d{2}-\d{2}$/.test(e?.air_date||'')&&e.air_date<=today);
+  if(aired.some(e=>e.season_number!==target.season||e.show_id!==target.tmdbId))return null;
+  const numbers=new Set(aired.map(e=>e.episode_number));
+  for(let i=1;i<=aired.length;i++)if(!numbers.has(i))return null;
+  if(!numbers.has(target.episode))return null;
+  const runtime=aired.find(e=>e.episode_number===target.episode).runtime;
+  return{airedEpisodes:aired.length,runtimeMinutes:Number.isInteger(runtime)&&runtime>0&&runtime<=1000?runtime:null};
+}
 // Every poster TMDB holds for this exact series (no language filter, so all
 // languages), plus the requested and latest season's posters. A source page
 // may show any of them instead of the primary poster. This only widens which
@@ -142,4 +158,4 @@ async function resolvePosterPaths(http,target,key){
   });
   return [...paths];
 }
-module.exports = { resolveIdentity, resolveTranslatedTitles, resolveAlternativeTitles, resolveSeasonEpisode, resolvePosterPaths, matchesIdentity, matchesAddonMeta, matchesStreamFilename, matchesEpisode };
+module.exports = { resolveIdentity, resolveTranslatedTitles, resolveAlternativeTitles, resolveSeasonEpisode, resolveSeasonEpisodes, resolvePosterPaths, matchesIdentity, matchesAddonMeta, matchesStreamFilename, matchesEpisode };

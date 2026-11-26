@@ -2,7 +2,7 @@
 const { createHttp } = require('./http.cjs');
 const { createScheduler } = require('./scheduler.cjs');
 const { loadHosted, registerDownloads, SERVICE_ORIGIN } = require('./hosted.cjs');
-const { resolveIdentity,resolveTranslatedTitles,resolveAlternativeTitles,resolveSeasonEpisode,resolvePosterPaths } = require('./matching.cjs');
+const { resolveIdentity,resolveTranslatedTitles,resolveAlternativeTitles,resolveSeasonEpisode,resolveSeasonEpisodes,resolvePosterPaths } = require('./matching.cjs');
 const { probe } = require('./media/probe.cjs');
 const {languageCodes}=require('./media/languages.cjs');
 const { loadSubtitles, subtitleLanguage, subtitleKey, selectSubtitles, embeddedSubtitleLanguages } = require('./subtitles.cjs');
@@ -299,6 +299,13 @@ function createProvider({ settings = {}, fetchImpl, tmdbKey, budgetMs, requestTi
                 const sourceHttp=http.scope(10000);
                 return adapters.scanMoviesDrive(sourceHttp,target,{onCandidates:acceptCandidates,loadSeason:()=>resolveSeasonEpisode(sourceHttp,target,tmdbApiKey),loadTitles:()=>loadAltTitles(sourceHttp)});
               }});
+            // Turkish-dubbed cartoon episodes (Drive MP4). Animated, non-anime
+            // series only, so other TV searches never pay its large pages.
+            if(filesLane&&adapters.scanCizgiMax&&settings.cizgimaxEnabled!==false&&target.type==='tv'&&target.isAnimation===true&&!target.isAnime)
+              sourceJobs.push({name:'CizgiMax',run:()=>{
+                const sourceHttp=http.scope(10000);
+                return adapters.scanCizgiMax(sourceHttp,target,{loadSeason:()=>resolveSeasonEpisodes(sourceHttp,target,tmdbApiKey)});
+              }});
             if (filesLane && adapters.scanFzMovies && settings.fzmoviesEnabled !== false && target.type === 'movie')
               sourceJobs.push({name:'FzMovies',run:()=>adapters.scanFzMovies(http.scope(10000),target)});
             // Films: start 4KHDHub right after FzMovies (before online fallbacks)
@@ -439,6 +446,7 @@ function onSettings() {
     {type:'toggle',key:'kultfilmlerEnabled',label:'KultFilmler Türkçe dublaj ve altyazılı online film',defaultValue:true,description:'Özgün başlık/yıl eşleşir ve oynatıcının bildirdiği IMDb kimliği doğrulanır. Dublaj sitenin beyanıdır (tek ses izi). Eşlenmiş TR altyazı oynatıcıdan okunur. Dosya indirmesi sunmaz.'},
     {type:'toggle',key:'diziboxEnabled',label:'DiziBox Türkçe altyazılı online dizi',defaultValue:true,description:'Dizi adı, sezon/bölüm başlığı ve dizi sayfasındaki ilk yayın yılı birlikte doğrulanır. Türkçe altyazı sitenin etiketidir; akışta ayrı altyazı izi yoktur, görüntüye işlenmiş olabilir (doğrulanmadı). Dosya indirmesi sunmaz.'},
     { type: 'toggle', key: 'moviesdriveEnabled', label: 'MoviesDrive ek film ve bölüm indirmeleri', defaultValue: true, description: 'Film/anime filmi ve bölüm dosyaları aranır. Sonraki sezonların yılı ve bölüm süresi aynı TMDB kaydından doğrulanır; ad, IMDb, bölüm ve gerçek medya denetlenir. Uzantısız MKV dosyaları Nuvio’da .mp4 adıyla kaydedilebilir; dahili MPV gerçek formatı içerikten okur. Harici oynatıcıda .mkv olarak yeniden adlandırmak gerekebilir.' },
+    { type: 'toggle', key: 'cizgimaxEnabled', label: 'CizgiMax Türkçe dublajlı çizgi dizi bölüm dosyaları', defaultValue: true, description: 'Yalnız animasyon diziler (anime hariç); sitenin Drive sunucusundaki MP4 bölümler. Ad, ilk yayın yılı ve sezon/bölüm denetlenir; sitenin sezon bölüm sayısı TMDB ile birebir aynı olmalıdır (parça numaralı diziler eklenmez). Çözünürlük ve süre dosyadan okunur; dublaj sitenin beyanıdır. Kapsam kısmidir.' },
     { type: 'info', label: 'Ses kodları: EN İngilizce, TR Türkçe, JA Japonca, HI Hintçe. EN/ES görüntüde, görüntüye işlenmiş altyazıdır; ses dili değildir.' },
     { type: 'toggle', key: 'autoSubtitles', label: 'TR ve EN altyazıları otomatik ara', defaultValue: true },
     { type: 'toggle', key: 'seicodeEnabled', label: 'SeiCode ek anime dosyaları', defaultValue: true, description: 'Kısmi katalog (çoğunlukla son sezonlar): tam TMDB/ad/yıl ve açık sezon/bölüm bağı gerekir. Yalnız oynatıcının aynı sezon/bölüm olarak bildirdiği gerçek MP4 dosyası sunulur; eksik bölümde başka bölüm seçilmez.' },
@@ -467,7 +475,7 @@ function onSettings() {
 
 function createEntry(lane, adapters = {}) {
   const titles = { main: 'Film/dizi · online ve dosyalar', files: 'Dosyalar', online: 'Hızlı kaynaklar', anime: 'Anime', extraAnime:'Ek Anime',fastOnline:'Hızlı İzle',goojara:'Goojara',hdrezka:'HDRezka' };
-  const only = { files: ['hdhubEnabled','directoryEnabled','archiveEnabled','waploadedEnabled','rarefilmmEnabled','fzmoviesEnabled','jetfilmizleEnabled','fztvseriesEnabled','moviesdriveEnabled','catalogUrls','addonUrls'], hdrezka:['hdrezkaEnabled'], online: ['playImdbEnabled','vixsrcEnabled','diziyouOptInEnabled','dizibakEnabled','filmmoduEnabled','hdfilmdelisiEnabled','purstreamEnabled','filmekseniEnabled','kultfilmlerEnabled','diziboxEnabled','hlsView'], anime: ['animecixEnabled','sonanimeEnabled'],extraAnime:['seicodeEnabled','animomOptInEnabled','anizoneOptInEnabled'],fastOnline:['hdfilmdelisiEnabled','dizibalEnabled','purstreamEnabled','filmekseniEnabled','kultfilmlerEnabled','diziboxEnabled','hlsView'],goojara:['goojaraEnabled'] };
+  const only = { files: ['hdhubEnabled','directoryEnabled','archiveEnabled','waploadedEnabled','rarefilmmEnabled','fzmoviesEnabled','jetfilmizleEnabled','fztvseriesEnabled','moviesdriveEnabled','cizgimaxEnabled','catalogUrls','addonUrls'], hdrezka:['hdrezkaEnabled'], online: ['playImdbEnabled','vixsrcEnabled','diziyouOptInEnabled','dizibakEnabled','filmmoduEnabled','hdfilmdelisiEnabled','purstreamEnabled','filmekseniEnabled','kultfilmlerEnabled','diziboxEnabled','hlsView'], anime: ['animecixEnabled','sonanimeEnabled'],extraAnime:['seicodeEnabled','animomOptInEnabled','anizoneOptInEnabled'],fastOnline:['hdfilmdelisiEnabled','dizibalEnabled','purstreamEnabled','filmekseniEnabled','kultfilmlerEnabled','diziboxEnabled','hlsView'],goojara:['goojaraEnabled'] };
   only.main = [...only.files, ...only.online.filter(key=>!['hdfilmdelisiEnabled','purstreamEnabled','filmekseniEnabled','kultfilmlerEnabled','diziboxEnabled'].includes(key))];
   const sourceFields = Object.values(only).flat();
   return {

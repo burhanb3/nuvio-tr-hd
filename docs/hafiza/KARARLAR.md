@@ -2,6 +2,17 @@
 
 - Windows yerel düzeltme başlatıcısı başka Nuvio işlemini sessizce veya zorla kapatmaz. Kullanıcının kısayolu açması ve iletişim kutusunda onay vermesiyle normal pencere kapatma denenir. Açılış öncesi paket SHA ve classpath kontrolü zorunludur; yalnız kısayolun doğru olması uygulamanın doğru kopyada çalıştığı kanıtı değildir.
 
+## 26 Kasım 2026 — 2.0.1 CizgiMax
+
+- **Yalnız Drive sunucusu.** Diğer sunucular: Sibnet 403, RubyVidHub 502 ve başka bir video hostuna gidiyor, Dzen AnimeCix API'sinin kopyası, bir CDN Cloudflare doğrulama sayfası veriyor. Drive herkese açık indirme adresi Range 206 veriyor, çerez/anahtar gerekmiyor; `confirm=t` büyük dosya virüs taraması uyarısına verilen standart yanıttır, koruma sabiti değildir.
+- **Bölüm sayısı birebir.** Site TMDB/IMDb kimliği vermiyor; ad + ilk yayın yılı + sezon bölüm sayısı birlikte kimliktir. TMDB çizgi dizileri sık sık yarım bölüm olarak numaralar (SpongeBob S1 41 / S2 36, site 20). Sayı tutmazsa bölüm numarası güvenilmez sayılır ve bölüm sayfası istenmez. Yalnız `air_date <= bugün` olan bölümler sayılır.
+- **Yalnız animasyon, anime hariç.** `isAnimation` (TMDB tür 16) ve `!isAnime`. Filmlerde çalışmaz (site film listesi ayrı ve az).
+- **Dosya adı denetimi:** `.mp4` dışı (`.ts`, `.mkv`) ve Part/Parça/Kısım adları atlanır. `.ts` için konteyner beklentisi yok; eklenmedi.
+- **og:url yedeği:** Taşıma katmanı son adresi bildirirse kimliği `og:url` ile aynı olmalı. Bildirmezse (adres istenen `/oynat/` ile aynıysa) sayfanın kendi kimliği kullanılır. Sayfada ikinci bir dosya kimliği varsa satır atılır.
+- **Dublaj beyanı:** `claimedAudioLanguages:['tr']` sitenin `dub` listesine dayanır (KultFilmler deseni). Dosyada dil etiketi yok.
+- **Altyazı politikası:** `subtitlePolicy:'require'` TR altyazısız satırları gizler; dublaj kaynaklarında da aynı. Ayrı istisna eklenmedi (ayar kullanıcının açık seçimidir).
+- **Elenen siteler:** WCO (Cloudflare doğrulama sayfası), O2TvSeries (captcha), archive.org çizgi dizi koleksiyonları (404 / yanlış bölüm eşlemesi). Aşılmadı.
+
 ## 26 Kasım 2026 — 2.0.0 DiziBox
 
 - **Yalnız Hızlı İzle ve online paket, yalnız dizi.** KultFilmler deseni; 7 sn kaynak bütçesi. Film, anime ve geçersiz bölümde istek açılmaz.

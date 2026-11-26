@@ -2,6 +2,23 @@
 
 - 12 Kasım ek bilgi: kullanıcı Windows Son aramalar listesindeki Nuvio girişinden açtığını ekran görüntüsüyle gösterdi. Bu önbellek girdisinin hedefi doğrudan okunmadı. Ayrı ve aranabilir `Programs/Nuvio TR HD.lnk` kullanıcı Başlat menüsüne eklendi; kontrollü başlatıcı argümanı yeniden okunarak doğrulandı. Kullanıcı aramada tam Nuvio TR HD adını veya masaüstü aynı adlı kısayolu seçmeli. Açık uygulamaya dokunulmadı.
 
+## 2.0.1 — 26 Kasım 2026: CizgiMax Türkçe dublajlı çizgi dizi dosyaları
+
+Uzun kaynak turunun ikinci kaynağı. Ana `Nuvio TR HD` taramasına (dosya hattı) eklendi.
+
+- **Kaynak zinciri:**
+  1. `/ara/?q=<ad>`: düz alt dize araması. Site adlardaki noktalama işaretlerini atar; sorgular `[özgün ad, noktalamasız özgün ad, ...searchTitles]`, en fazla 3. Sonuç `<a class="film-name" href="/diziler/<slug>-izle/" data-alt-title>`.
+  2. Dizi sayfası (~0,6 MB, Range yok sayılır): `TVSeries` ld+json (`url`, `name`/`alternateName`, `datePublished` = ilk yayın yılı). Bölüm düğmeleri `/<slug>-S-sezon-E-bolum-izle/` + `ep-num-label`; başlık "Ad : S.Sezon E.Bölüm" ise href ile aynı olmalı, yoksa bölüm adıdır.
+  3. TMDB sezon kaydı (`resolveSeasonEpisodes`): yayınlanmış bölüm sayısı ve süre. Arama ile paralel başlar. Sitenin bölüm sayısı birebir aynı değilse bölüm sayfası istenmez.
+  4. Bölüm sayfası (~0,8 MB): `TVEpisode` ld+json sezon/bölüm/dizi adresi. `var serversByLang= JSON.parse(atob("..."))` (base64, `\/` kaçışlı; ad ilk önce yorumda geçer). Yalnız `dub` listesindeki etiketi tam "Drive" olan iframe'ler (`/oynat/?t=<belirteç>`), en fazla 2.
+  5. `/oynat/` → 302 Drive önizleme sayfası (~83 KB). `og:url` kendi dosya kimliğini verir; sayfadaki tüm `/file/d/` kimlikleri aynı olmalı. Başlık "S1 B1.mp4 - Google Drive": `.mp4`, Part değil, varsa S/B aynı.
+  6. Satır: `drive.usercontent.google.com/download?id=<id>&export=download&confirm=t`, boş başlık, `expectedContainer:'mp4'`, süre ve piksel zorunlu, `claimedAudioLanguages:['tr']`, güven 90.
+- **Uygulama:** `src/providers/cizgimax.cjs`; `matching.cjs`'e `isAnimation` (tür 16) ve `resolveSeasonEpisodes`; `core.cjs` işi MoviesDrive'dan sonra, yalnız `target.isAnimation && !target.isAnime`, `http.scope(10000)`. Ayar `cizgimaxEnabled` ve `only.files` listesinde.
+- **Canlı ölçüm (Node):** Scooby-Doo! Mystery Incorporated S1E1/E2/E5 birer satır. Adventure Time S5E36 boş (`.ts`). SpongeBob red (bölüm sayısı). Telefon benzetimi (varsayılan ayar): Scooby S1E1 "01 · İndirilebilir · CizgiMax || 1080p · 1920×1080 · 0,41 GB · Ses: TR · TR altyazı yok", süre 1395 sn. Telefon profili (`IOS=1 LAT=600 CAP=6 BPS=2000000`): keşif 7,3 sn, bitiş 11,8 sn, 60 sn içinde yerleşti. The 100 S5E5'te CizgiMax çağrılmadı, 4 satır aynı.
+- **QuickJS:** Kayıtlı canlı sayfalarda ayrıştırma dizi 15 ms, bölüm 5 ms. Tam boyutlu sayfalar ayrıştırıcı düzeyinde sınandı; paket testi 0,2 ölçekli sayfalarla (aşağıdaki düzenek sorunu).
+- **Testler:** 391/391 (`npm run check`). ABI değişmedi.
+- **Yapılmayanlar:** Fiziksel telefon, tam bölüm oynatımı ve indirme testi yapılmadı. iOS'un yönlendirme sonrası adresi bildirmesi doğrulanmadı.
+
 ## 2.0.0 — 26 Kasım 2026: DiziBox online dizi kaynağı ve tipografik ad eşleşmesi
 
 Kullanıcı 1.9.9 sonrası kısa testlerde sorun görmediğini söyledi ve uzun bir kaynak genişletme turu istedi. Bu turda tek kaynak eklendi: DiziBox. MovieBox elendi.

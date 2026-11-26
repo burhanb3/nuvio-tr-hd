@@ -32,6 +32,8 @@ FzTvSeries dizi bölüm dosyaları ana sağlayıcıda varsayılan açıktır. K�
 
 FzMovies film dosyaları ana sağlayıcıda varsayılan açıktır. Küçük film dosyaları (genelde 360p MP4 ve 720p MKV) sunar; IMDb kimliği veya dosya adındaki yıl tutmazsa sonuç eklenmez. Dizi aramaz. Telefon benzetiminde açıkken MoviesDrive satırları daha seyrek çıktı; MoviesDrive'ın büyük dosyaları görünmüyorsa bu anahtar kapatılıp aynı film yeniden denenebilir.
 
+CizgiMax Türkçe dublajlı çizgi dizi bölümleri (`cizgimaxEnabled`) ana sağlayıcıda varsayılan açıktır. Yalnız animasyon dizilerinde (anime hariç) aranır. Sitenin sezondaki bölüm sayısı TMDB ile aynı değilse sonuç eklenmez. `Türkçe altyazı bulunamazsa` ayarı `Videoyu gizle` ise, harici TR altyazısı bulunamayan dublaj bölümleri de diğer dublaj kaynaklarında olduğu gibi gizlenir.
+
 HDRezka, farklı boyutlarda ücretsiz MP4 seçenekleri için kendi bağımsız sağlayıcısında (Nuvio TR HD · HDRezka) varsayılan açıktır. Kaynak her dosyayı sabit bir CDN düğümüne yönlendirir; bazı düğümler bağlantıya yanıt vermediğinde iPhone bu isteği 60 sn bekler. Bu nedenle ana sağlayıcıdan ayrıldı: böyle bir durumda yalnız HDRezka satırları gelmeyebilir, ana liste korunur. Ana sağlayıcıda önceden kaydedilmiş HDRezka ayarı artık bir şey açmaz. Özgün ses veya açıkça Türkçe olarak belirtilen sürümler seçilir; diğer dublajlar TR diye etiketlenmez. Kaynağın ücretli kalite seçenekleri eklenmez. Dosyadaki gerçek piksel, oynatıcının kalite etiketinden önce gelir.
 
 4KHDHub ayarı FSL ve Pixeldrain film/bölüm aramalarını birlikte yönetir. Uygun kayıtlarda 1080p/4K dosyalar ve gömülü Türkçe altyazılar bulunabilir. Pixeldrain dosyaları, MKV dosya köprüsü kapalıyken de doğrudan değerlendirilir; Nuvio'nun kayıt adı için aşağıdaki uzantısız MKV notu geçerlidir.

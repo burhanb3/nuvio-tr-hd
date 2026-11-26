@@ -81,6 +81,58 @@ test('QuickJS: DiziBox ad/bölüm/yıl bağıyla AES oynatıcıdan HLS; UA+Refer
  assert.deepEqual(await runInQuickJs(fixture,{code:fastOnlineBundle,args:['123456','tv',1,3],settings,nativeTimers:true}),[]);
 });
 
+const cizgimaxPad=(()=>{const unit='<div class="cz-row"><span>'+'Örnek metin '.repeat(8)+'</span></div>\n';return n=>unit.repeat(Math.ceil(n/unit.length));})();
+function cizgimaxPages(C,scale){
+ // Live pages: series ~0.6 MB, episode ~0.8 MB with the server list at ~0.66 MB.
+ const pad=n=>cizgimaxPad(Math.round(n*scale));
+ return{series:C.seriesPage().replace('<div data-season-pane','<main>'+pad(300000)+'</main><div data-season-pane').replace('</body>',pad(250000)+'</body>'),
+  episode:C.episodePage().replace('<script>\n//','<main>'+pad(650000)+'</main><script>\n//').replace('</body>','<script>'+'if (!serversByLang) {}\n'.repeat(30)+'</script>'+pad(100000)+'</body>')};
+}
+test('QuickJS: CizgiMax ayrıştırması gerçek boyutlu (0,6/0,8 MB) sayfalarda doğru ve hızlı',async()=>{
+ const C=require('./cizgimax-fixture.cjs'),{series,episode}=cizgimaxPages(C,1);
+ assert.ok(series.length>550000&&series.length<1000000&&episode.length>750000&&episode.length<1000000);
+ const {build}=await import('esbuild');
+ const {fileURLToPath}=await import('node:url');
+ const out=await build({entryPoints:[fileURLToPath(new URL('../src/providers/cizgimax.cjs',import.meta.url))],bundle:true,minify:true,platform:'neutral',format:'iife',globalName:'CZ',target:'es2020',write:false,charset:'utf8'});
+ const engine=await getQuickJS(),runtime=engine.newRuntime();runtime.setMemoryLimit(64*1024*1024);runtime.setMaxStackSize(1024*1024);
+ const vm=runtime.newContext();
+ try{
+  for(const[name,value]of[['__series',series],['__episode',episode]]){const fn=vm.newFunction(name,()=>vm.newString(value));vm.setProp(vm.global,name,fn);fn.dispose();}
+  const parse=vm.newFunction('__parse_url',url=>{const u=new URL(vm.getString(url));return vm.newString(JSON.stringify({href:u.href,protocol:u.protocol,hostname:u.hostname,origin:u.origin,pathname:u.pathname,search:u.search,hash:u.hash}));});
+  vm.setProp(vm.global,'__parse_url',parse);parse.dispose();
+  const target={type:'tv',originalTitle:'Example Toon',searchTitles:['Example Toon'],year:2010,season:1,episode:2};
+  const result=vm.evalCode('globalThis.URL=function(u){Object.assign(this,JSON.parse(__parse_url(u)));};'+out.outputFiles[0].text+
+   ';var T='+JSON.stringify(target)+',s=__series(),e=__episode(),t0=Date.now(),d=CZ.seriesData(s,'+JSON.stringify(C.SERIES)+',T),v=CZ.driveServers(e,'+JSON.stringify(C.SERIES)+',T);JSON.stringify({size:d&&d.episodes.size,url:d&&d.episodeUrl,servers:v,ms:Date.now()-t0})');
+  if(result.error){const error=vm.dump(result.error);result.error.dispose();throw new Error(JSON.stringify(error));}
+  const value=JSON.parse(vm.dump(result.value));result.value.dispose();
+  assert.equal(value.size,3);assert.equal(value.url,C.ORIGIN+'/example-toon-1-sezon-2-bolum-izle/');assert.deepEqual(value.servers,[C.ORIGIN+'/oynat/?t='+C.TOKEN]);
+  // Engine parse cost only; not a device or network timing guarantee.
+  assert.ok(value.ms<1500,'QuickJS CizgiMax ayrıştırma '+value.ms+' ms');
+ }finally{vm.dispose();runtime.dispose();}
+});
+test('QuickJS: CizgiMax paket içinde dublaj Drive MP4 verir; bölüm sayısı TMDB ile çelişirse ve animasyon değilse çağrılmaz',async()=>{
+ const C=require('./cizgimax-fixture.cjs');
+ // Smaller padding: with text bodies beyond ~0.2 MB this harness aborts at
+ // runtime dispose (leftover GC objects) for other providers too (DiziBox);
+ // cause not identified. Full-size parsing is covered by the test above.
+ const{series,episode}=cizgimaxPages(C,0.2);
+ const tv=(genres,language='en')=>({'https://api.themoviedb.org/3/tv/123456?api_key=test&append_to_response=external_ids':{json:{id:123456,original_name:'Example Toon',name:'Example Toon',first_air_date:'2010-04-05',original_language:language,genres,external_ids:{}}}});
+ const season=count=>({'https://api.themoviedb.org/3/tv/123456/season/1?api_key=test':{json:{season_number:1,episodes:Array.from({length:count},(_,i)=>({episode_number:i+1,season_number:1,show_id:123456,air_date:'2010-04-05',runtime:22}))}}});
+ const fixture={...C.cizgimaxFixture({series,episode}),...tv([{id:16}]),...season(3)};
+ const settings={autoSubtitles:false,useDownloadBridge:false,archiveEnabled:false,hdhubEnabled:false,moviesdriveEnabled:false,fztvseriesEnabled:false,waploadedEnabled:false,rarefilmmEnabled:false,playImdbEnabled:false,vixsrcEnabled:false,dizibakEnabled:false,diziyouEnabled:false,filmmoduEnabled:false,goojaraEnabled:false,hdrezkaEnabled:false};
+ const fetchCalls=[];
+ const rows=await runInQuickJs(fixture,{args:['123456','tv',1,2],settings,nativeTimers:true,fetchCalls});
+ assert.equal(rows.length,1,JSON.stringify(rows));const row=rows[0];
+ assert.equal(row.url,C.DOWNLOAD);assert.match(row.title,/Ses: TR/);assert.match(row.name+row.title,/İndirilebilir/);assert.match(row.quality||row.title,/1080p/);
+ assert.ok(fetchCalls.includes(C.SERIES)&&fetchCalls.some(u=>u.endsWith(C.TOKEN))&&!fetchCalls.some(u=>u.endsWith(C.TOKEN2)));
+ assert.deepEqual(await runInQuickJs({...fixture,...season(4)},{args:['123456','tv',1,2],settings,nativeTimers:true}),[]);
+ for(const other of [tv([{id:35}]),tv([{id:16}],'ja')]){
+   const calls=[];assert.deepEqual(await runInQuickJs({...fixture,...other},{args:['123456','tv',1,2],settings,nativeTimers:true,fetchCalls:calls}),[]);
+   assert.ok(!calls.some(u=>u.startsWith(C.ORIGIN)));
+ }
+ assert.deepEqual(await runInQuickJs(fixture,{args:['123456','tv',1,2],settings:{...settings,cizgimaxEnabled:false},nativeTimers:true}),[]);
+});
+
 test('QuickJS: Anizone (Ek Anime, opt-in) güvenli Unicode veri zarfını ve tam bölüm kimliğini çözer; HLS indirme sayılmaz',async()=>{
  const root='https://anizone.to',slug='example1',url='https://fixture.vid-cdn.xyz/11111111-1111-4111-8111-111111111111/master.m3u8';
  const row={slug,url:root+'/anime/'+slug,main_title:'Example Anime',title_list:{en:'Example Anime'},type:'TV Series',is_unsafe:false,start_year:2020,episode_count:12},snapshot=JSON.stringify({data:{anime_slug:slug,episode_slug:'2'}}).replace(/"/g,'&quot;');

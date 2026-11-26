@@ -2,6 +2,16 @@
 
 - Son durum: masaüstü Nuvio TR HD artık Start-NuvioTRHD.ps1 üzerinden açılır. Kullanıcı yeniden aynı hata bildirdiğinde özgün kurulum çalışıyordu; nedeni kesinleşmedi. CheckOnly ve gömülü Java17 penceresiz classpath probe geçti. Kullanıcı kontrollü başlatıcıyla deneyip hata sürerse çalışan yol ve gerçek kaynak raporu birlikte incelenmeli. Tekrar UI başarısı/tam indirme doğrulanmış sayılmamalı.
 
+## 2.0.1 — 26 Kasım 2026
+
+1. **Yayın:** Yayın kontrolü sonucu PROJE ve `compatibility/github-publication.json` içine yazılacak.
+2. **Telefonda (Wi-Fi ve LTE ayrı):**
+   - Depo yenilenmeli; `Tanı · 2.0.1` görünmeli.
+   - "Scooby-Doo! Mystery Incorporated" (Scooby Doo Gizem Avcıları) S1E1'de ana `Nuvio TR HD` altında `CizgiMax` İndirilebilir satırı (1080p, ~0,41 GB, Ses: TR) gelmeli.
+   - Satır oynatılmalı ve indirilmeli. İndirilen dosyanın tam ve oynatılabilir olduğu, Türkçe sesin geldiği not edilmeli.
+3. **QuickJS test düzeneği:** ~0,2 MB üstü metin gövdelerinde çalışma zamanı kapanışında `list_empty(&rt->gc_obj_list)` ile duruyor. Yayınlanmış DiziBox'ta 300K ile de tekrarlandı; yalnız shim içeren küçük denemede 600K temiz kapandı. Neden bulunmadı. Cihazda büyük sayfa çöküşü bildirilmedi. Ayrıştırıcı tam boyutta ayrı sınanıyor; neden ayrıca araştırılmalı.
+4. **Sonraki kaynaklar:** BelgeselX, IzleAI. İndirilebilir: mobiletvshows (captcha olabilir), nkiri (zaman aşımı), Waploaded araması, RareFilmm. HD: uhdmovies / moviesmod (atlatma olmadan). Ardından altyazı kaynakları (Wyzie, subsource, subtitlecat, yifysubtitles).
+
 ## 2.0.0 — 26 Kasım 2026
 
 1. **Yayımlandı (`fa5acb2`):** Test ve paket `45773314376` ve Pages `45773314401` başarılı; 9 public dosya HTTP 200 ve SHA-256 yerel `dist/` ile aynı (`compatibility/github-publication.json`).
@@ -10,7 +20,7 @@
    - Stranger Things S5E1 veya The 100 S5E5'te `Hızlı İzle` altında DiziBox satırı gelmeli.
    - Satır oynatılmalı. Parçalar `.png` adlıdır. Açılmazsa aynı ağda KultFilmler (Inception) satırı da denenmeli. İkisi birlikte açılmıyorsa olası neden Nuvio oynatıcısının FFmpeg uzantı denetimidir.
    - Görüntüde Türkçe altyazı olup olmadığı not edilmeli; site etiketi doğrulanmadı.
-3. **Sonraki kaynaklar:** CizgiMax, BelgeselX, IzleAI. İndirilebilir: o2tvseries / mobiletvshows, nkiri. HD: uhdmovies / moviesmod. Ardından altyazı kaynakları.
+3. **Sonraki kaynaklar:** CizgiMax (2.0.1'de eklendi), BelgeselX, IzleAI. İndirilebilir: o2tvseries / mobiletvshows, nkiri. HD: uhdmovies / moviesmod. Ardından altyazı kaynakları.
 4. **Kullanıcı bildirimi (26 Kasım):** 1.9.9 sonrası "kısa testleri yaptım, sıkıntı yok" dedi. Hangi başlık, kaynak ve ağda denendiği söylenmedi. Bu, tam oynatma, indirme veya KultFilmler `.html` parçalarının iPhone'da oynatıldığının kanıtı sayılmaz.
 5. **MovieBox elendi (26 Kasım):** Yeni `h5-api` araması anonim istekte 400 "invalid token" döndü; sayfanın istemci tarafında ürettiği belirteçle de aynı. Sayfa verisinde VIP düzeyi ve önizleme saniyesi alanları var. Belirteç peşine düşülmez; yeni dış durum olmadan yeniden denenmez.
 6. **DiziBox eklendi:** 19 Kasım'da Cloudflare challenge veriyordu; 26 Kasım'da bölüm sayfaları challenge'sız 200 döndü. Çerez gerekmedi, yalnız tarayıcı `User-Agent`'ı gerekti. Ayrıntılar KARARLAR'da.

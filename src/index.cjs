@@ -16,6 +16,7 @@ const ALL_ADAPTERS = {
   scanJetFilmizle: require('./providers/jetfilmizle.cjs').scanJetFilmizle,
   scanHdRezka: require('./providers/hdrezka.cjs').scanHdRezka,
   scanMoviesDrive: require('./providers/moviesdrive.cjs').scanMoviesDrive,
+  scanCizgiMax: require('./providers/cizgimax.cjs').scanCizgiMax,
   scanAnimecix: require('./providers/animecix.cjs').scanAnimecix,
   scanSonAnime: require('./providers/sonanime.cjs').scanSonAnime,
   scanAnizone: require('./providers/anizone.cjs').scanAnizone,
