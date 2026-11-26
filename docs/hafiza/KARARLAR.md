@@ -2,6 +2,13 @@
 
 - Windows yerel düzeltme başlatıcısı başka Nuvio işlemini sessizce veya zorla kapatmaz. Kullanıcının kısayolu açması ve iletişim kutusunda onay vermesiyle normal pencere kapatma denenir. Açılış öncesi paket SHA ve classpath kontrolü zorunludur; yalnız kısayolun doğru olması uygulamanın doğru kopyada çalıştığı kanıtı değildir.
 
+## 26 Kasım 2026 — 2.0.3 dolgulu MP4 düzeni
+
+- **Yalnız aday bayrağıyla (`followMp4Boxes`), yalnız CizgiMax.** Ortak MP4 denetimi bütün kaynakları etkiler; diğer kaynaklarda ek native Range isteği açılmaz ve ana listenin askı riski değişmez. Bayraksız yol testte aynı Range dizisini verir.
+- **En fazla iki atlama, yalnız bildirilen kutu sonları.** Video verisi içinde `moov` kelimesi aranmaz. Aralığın başındaki küçük kutular yalnız tamamlanmışsa ve `free/skip/wide/mdat` ise geçilir.
+- **Dolgulu baş kanıt değildir.** Sonda video izi, piksel ve süre bulunmazsa satır yok. "Tek ftyp → null" testi korunur.
+- **CizgiMax'in 2.0.1 `.mp4` kararı değişmedi:** `.ts` hâlâ eklenmez.
+
 ## 26 Kasım 2026 — 2.0.2 CizgiMax bağımsız scraper
 
 - **Ayrı scraper (HDRezka/Goojara deseni).** Sitenin sunucusu çöktüğünde istek yanıtsız kalıyor ve iOS native isteği iptal edemiyor; ana listedeki kaynak bütçesi (10 sn) iPhone'da dönüşü kurtarmaz. Bu yüzden ana paketten çıkarıldı. Ana pakette kayıtlı `cizgimaxEnabled` yok sayılır.

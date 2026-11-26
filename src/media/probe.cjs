@@ -1,5 +1,5 @@
 'use strict';
-const { inspectContainer, mp4TailInfo, mp4MetadataOffset, mp4MetadataInfo, mp4NextTrackOffset, mp4TrackAt, ascii } = require('./containers.cjs');
+const { inspectContainer, mp4TailInfo, mp4MetadataOffset, mp4MetadataInfo, mp4NextTrackOffset, mp4TrackAt, mp4PaddedHead, mp4LeadingBoxes, ascii } = require('./containers.cjs');
 const { opensubtitlesHash } = require('./hash.cjs');
 const { inspectHls } = require('./hls.cjs');
 const { languageCode } = require('./languages.cjs');
@@ -51,7 +51,12 @@ async function probeOne(http, candidate, includeHls = false, hashEnabled = false
     if (!includeHls || !/\.m3u8(?:$|[?#])/i.test(sample.url) || !/#EXT-X-(STREAM-INF|TARGETDURATION):/.test(textPrefix)) return null;
     return inspectHls(http, textPrefix, sample.url, candidate, { detailed: options.detailedHls });
   }
-  const info = inspectContainer(sample.bytes);
+  let info = inspectContainer(sample.bytes);
+  // Opt-in only (CizgiMax): ftyp + padding that runs past the first range.
+  // It is kept only if the moov found later has a video track with pixels
+  // and a duration; padding alone never becomes a row.
+  const paddedHead = !info && candidate.followMp4Boxes === true && mp4PaddedHead(sample.bytes, sample.total);
+  if (paddedHead) info = { container: 'mp4', dimensions: null };
   if (!info) return null;
   const expectedDuration = candidate.identity?.runtimeMinutes * 60;
   if (/mpegurl|dash\+xml/.test(sample.mime) || /\.m3u8(?:$|[?#])/i.test(sample.url)) return null;
@@ -72,18 +77,30 @@ async function probeOne(http, candidate, includeHls = false, hashEnabled = false
   let optionalMetadataFailed = false;
   let moovChunk = { bytes: sample.bytes, base: 0 };
   if (info.container === 'mp4' && (!info.dimensions || candidate.requireDuration && !info.duration) && !http.expired()) {
-    const offset = mp4MetadataOffset(sample.bytes, sample.total);
-    if (offset !== null) {
+    // Only declared top-level box ends are followed. One jump by default. The
+    // opt-in walk allows a second one (padding -> mdat -> moov) and skips
+    // complete small boxes in front of moov inside the range (Gravity Falls:
+    // a 138-byte mdat before moov). Every range must come from the same file.
+    const walk = candidate.followMp4Boxes === true;
+    let offset = mp4MetadataOffset(sample.bytes, sample.total);
+    for (let hop = 0; offset !== null && hop < (walk ? 2 : 1); hop++) {
+      if (hop && http.expired()) break;
       const metadata = await bytes(offset, Math.min(sample.total - 1, offset + 262143),3000);
       if (supplemental && !metadata) optionalMetadataFailed = true;
-      if (sameFile(sample, metadata)) {
-        moovChunk = { bytes: metadata.bytes, base: offset };
-        const extra = mp4MetadataInfo(metadata.bytes, sample.total - offset);
-        if (extra?.invalidVideo) return null;
-        if (extra?.dimensions) info.dimensions = extra.dimensions;
-        if (extra?.duration && !info.duration) info.duration = extra.duration;
-        if (extra?.audioLanguages?.length && !info.audioLanguages?.length) info.audioLanguages = extra.audioLanguages;
+      if (!sameFile(sample, metadata)) break;
+      const lead = walk ? mp4LeadingBoxes(metadata.bytes) : 0;
+      const chunk = lead ? metadata.bytes.subarray(lead) : metadata.bytes;
+      moovChunk = { bytes: chunk, base: offset + lead };
+      const extra = mp4MetadataInfo(chunk, sample.total - offset - lead);
+      if (extra?.invalidVideo) return null;
+      if (extra) {
+        if (extra.dimensions) info.dimensions = extra.dimensions;
+        if (extra.duration && !info.duration) info.duration = extra.duration;
+        if (extra.audioLanguages?.length && !info.audioLanguages?.length) info.audioLanguages = extra.audioLanguages;
+        break;
       }
+      const next = walk ? mp4MetadataOffset(metadata.bytes, sample.total - offset) : null;
+      offset = next === null ? null : offset + next;
     }
   }
   if ((!info.dimensions || (candidate.requireDuration && !info.duration)) && !optionalMetadataFailed && info.container === 'mp4' && sample.total > sample.bytes.length && !http.expired()) {
@@ -114,6 +131,7 @@ async function probeOne(http, candidate, includeHls = false, hashEnabled = false
     }
     if (found.length) info.audioLanguages = found;
   }
+  if (paddedHead && !(info.dimensions && info.duration)) return null;
   if (candidate.requireDuration && !info.duration) return null;
   if (candidate.requireVideoDimensions && !info.dimensions) return null;
   if (Array.isArray(candidate.requireAudioAny) && !candidate.requireAudioAny.some(code=>(info.audioLanguages||[]).map(languageCode).includes(code))) return null;

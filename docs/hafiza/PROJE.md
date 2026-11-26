@@ -2,6 +2,17 @@
 
 - 12 Kasım ek bilgi: kullanıcı Windows Son aramalar listesindeki Nuvio girişinden açtığını ekran görüntüsüyle gösterdi. Bu önbellek girdisinin hedefi doğrudan okunmadı. Ayrı ve aranabilir `Programs/Nuvio TR HD.lnk` kullanıcı Başlat menüsüne eklendi; kontrollü başlatıcı argümanı yeniden okunarak doğrulandı. Kullanıcı aramada tam Nuvio TR HD adını veya masaüstü aynı adlı kısayolu seçmeli. Açık uygulamaya dokunulmadı.
 
+## 2.0.3 — 26 Kasım 2026: CizgiMax dolgulu MP4 düzeni
+
+- **Uygulama:**
+  - `containers.cjs`: `mp4VideoBrand` (mp4Info'daki marka denetimi ayrıldı, davranış aynı). `mp4PaddedHead(bytes,total)` yalnız `ftyp` + tamamlanmış dolgular + bitmemiş `free/skip/wide` ve `last.end < total-8` ise true. `mp4LeadingBoxes(bytes)` aralığın başındaki tamamlanmış `free/skip/wide/mdat` kutularını (en çok 4) `moov`'a kadar atlar; `moov` yoksa 0.
+  - `probe.cjs`: `candidate.followMp4Boxes === true` ise dolgulu baş `{container:'mp4'}` sayılır. Metadata aşaması döngü oldu: bayraksız 1 atlama (eski davranış), bayraklı 2 atlama; her atlamada `sameFile`. Sonraki adres `mp4MetadataOffset(chunk, kalan)`. Dolgulu başta piksel ve süre yoksa null.
+  - `cizgimax.cjs`: satırlara `followMp4Boxes:true`.
+  - Testler: `download-expansion.test.cjs`'e iki test (bayraklı tam Range dizisi; bayraksız tek Range ve null; moov'suz ve yalnız ses izli dosya null; `mp4PaddedHead` sınırları). `cizgimax.test.cjs` satır bayrağı.
+- **Ölçüm (iOS kurallı):** Gravity Falls S1E1 1080p 0,47 GB, 1294 sn, 7,2 sn (Range: 0, 732789, 466658479, son 64 KB). Scooby-Doo S1E1 5,4 sn aynı satır. Inception ana liste 10 akış, 18,3 sn.
+- **Testler:** 393/393 (`npm run check`). ABI değişmedi.
+- **Yapılmayanlar:** Fiziksel telefon, tam bölüm oynatımı ve indirme testi yapılmadı.
+
 ## 2.0.2 — 26 Kasım 2026: CizgiMax bağımsız scraper
 
 Uzun kaynak turunun eksik kapatma adımı. Yeni kaynak eklenmedi.

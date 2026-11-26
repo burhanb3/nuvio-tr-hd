@@ -114,18 +114,21 @@ function mp4HasVideo(bytes, movie) {
     return handler && ascii(bytes, handler.data + 8, 4) === 'vide';
   });
 }
+function mp4VideoBrand(bytes) {
+  const ftyp = boxes(bytes, 0, Math.min(bytes.length, 128)).find(x => x.type === 'ftyp' && x.complete);
+  if (!ftyp || ftyp.end - ftyp.data < 8) return false;
+  const brands = [ascii(bytes, ftyp.data, 4)];
+  for (let at = ftyp.data + 8; at + 4 <= ftyp.end; at += 4) brands.push(ascii(bytes, at, 4));
+  if (brands.some(x => /^(avif|avis|heic|heix|mif1|msf1)$/.test(x))) return false;
+  return brands.some(x => /^(isom|iso[2-9]|mp4[12]|avc1|dash|M4V |MSNV)$/.test(x));
+}
 function mp4Info(bytes) {
   if (!boxes(bytes).some(x => ['moov', 'mdat'].includes(x.type) && x.end > x.data)) return null;
   const movie = boxes(bytes).find(x => x.type === 'moov' && x.complete);
   if (movie) {
     if (!mp4HasVideo(bytes, movie)) return null;
   }
-  const ftyp = boxes(bytes, 0, Math.min(bytes.length, 128)).find(x => x.type === 'ftyp' && x.complete);
-  if (!ftyp || ftyp.end - ftyp.data < 8) return null;
-  const brands = [ascii(bytes, ftyp.data, 4)];
-  for (let at = ftyp.data + 8; at + 4 <= ftyp.end; at += 4) brands.push(ascii(bytes, at, 4));
-  if (brands.some(x => /^(avif|avis|heic|heix|mif1|msf1)$/.test(x))) return null;
-  if (!brands.some(x => /^(isom|iso[2-9]|mp4[12]|avc1|dash|M4V |MSNV)$/.test(x))) return null;
+  if (!mp4VideoBrand(bytes)) return null;
   const duration = mp4Duration(bytes);
   const audioLanguages = mp4AudioLanguages(bytes);
   return { container: 'mp4', dimensions: mp4Dimensions(bytes), ...(duration ? { duration } : {}), ...(audioLanguages.length ? { audioLanguages } : {}) };
@@ -262,5 +265,26 @@ function mp4MetadataInfo(bytes, remaining) {
   const duration = mp4Duration(bytes), audioLanguages = mp4AudioLanguages(bytes);
   return { dimensions, duration, ...(audioLanguages.length ? { audioLanguages } : {}) };
 }
+// A head that holds only ftyp and padding (free/skip/wide) that runs past the
+// bytes read: no media yet, so it proves nothing by itself. One CizgiMax
+// upload starts with ftyp + a 0.7 MB free box (Gravity Falls, 26 Nov).
+function mp4PaddedHead(bytes, total) {
+  const list = boxes(bytes), last = list[list.length - 1];
+  if (list.length < 2 || list[0].type !== 'ftyp' || !list[0].complete || !mp4VideoBrand(bytes)) return false;
+  if (!last || last.complete || !['free','skip','wide'].includes(last.type)) return false;
+  if (!list.slice(1, -1).every(x => x.complete && ['free','skip','wide'].includes(x.type))) return false;
+  return Number.isSafeInteger(total) && last.end < total - 8;
+}
+// Complete padding or small mdat boxes in front of moov inside one range
+// (Gravity Falls: a 138-byte mdat sits between the main mdat and moov).
+function mp4LeadingBoxes(bytes) {
+  let skip = 0;
+  for (const item of boxes(bytes).slice(0, 4)) {
+    if (item.type === 'moov') return skip;
+    if (!item.complete || !['free','skip','wide','mdat'].includes(item.type)) return 0;
+    skip = item.end;
+  }
+  return 0;
+}
 function inspectContainer(bytes) { return mp4Info(bytes) || mkvInfo(bytes); }
-module.exports = { inspectContainer, mp4Dimensions, mp4Duration, mp4TailDimensions, mp4TailInfo, mp4MetadataOffset, mp4MetadataInfo, mp4NextTrackOffset, mp4TrackAt, ascii };
+module.exports = { inspectContainer, mp4Dimensions, mp4Duration, mp4TailDimensions, mp4TailInfo, mp4MetadataOffset, mp4MetadataInfo, mp4NextTrackOffset, mp4TrackAt, mp4PaddedHead, mp4LeadingBoxes, ascii };

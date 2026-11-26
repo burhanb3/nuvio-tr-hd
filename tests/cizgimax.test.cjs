@@ -20,6 +20,7 @@ test('CizgiMax: ad, yıl, bölüm sayısı ve Drive başlığı tutunca Türkçe
   assert.equal(row.url,F.DOWNLOAD);assert.deepEqual(row.headers,{});assert.equal(row.source,'CizgiMax');
   assert.match(row.filename,/\.S01E02\.mp4$/);assert.equal(row.filenameSynthetic,true);
   assert.deepEqual(row.claimedAudioLanguages,['tr']);assert.equal(row.identity.runtimeMinutes,22);assert.equal(target.runtimeMinutes,null);
+  assert.equal(row.followMp4Boxes,true);
   assert.equal(checked.downloadable,true);assert.deepEqual(checked.dimensions,{width:1920,height:1080});assert.equal(checked.duration,1320);
   // Only the dub "Drive" server is opened, with the episode page as Referer.
   const player=calls.filter(c=>c.url.includes('/oynat/'));

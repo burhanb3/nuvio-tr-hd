@@ -132,6 +132,10 @@ async function scanCizgiMax(http,target,{loadSeason}={}){
   return ids.map(id=>({url:'https://drive.usercontent.google.com/download?id='+id+'&export=download&confirm=t',headers:{},subtitles:[],source:'CizgiMax',
     identity,identityConfidence:90,filename:syntheticFilename(target)+'.mp4',filenameSynthetic:true,
     expectedContainer:'mp4',requireDuration:true,requireVideoDimensions:true,
+    // Some uploads start with ftyp + a large free box and keep moov at the end
+    // behind a second small mdat (Gravity Falls); the probe may follow two
+    // declared box ends for these rows only.
+    followMp4Boxes:true,
     // The site's dub list is the only audio evidence; the files carry no language tag.
     claimedAudioLanguages:['tr']}));
 }

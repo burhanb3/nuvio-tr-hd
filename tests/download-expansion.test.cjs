@@ -2,7 +2,7 @@
 const {test}=require('node:test'),assert=require('node:assert/strict');
 const {createHttp}=require('../src/http.cjs'),{probe}=require('../src/media/probe.cjs');
 const {scanAniMom,searchRows,episodeAddress,uploadVideo}=require('../src/providers/animom.cjs');
-const {mp4MetadataOffset,mp4MetadataInfo}=require('../src/media/containers.cjs');
+const {mp4MetadataOffset,mp4MetadataInfo,mp4PaddedHead}=require('../src/media/containers.cjs');
 const {fixtureFetch,box,moov}=require('./helpers.cjs');
 const target={tmdbId:123456,type:'tv',originalTitle:'例のアニメ',searchTitles:['Example Anime','例のアニメ'],year:2020,season:1,episode:2,isAnime:true};
 const root='https://animom.org/anime/example-anime',embed='https://www.yourupload.com/embed/Example1',file='https://vidcache.net:8161/example/video.mp4';
@@ -55,6 +55,37 @@ test('MP4 sınırı taşması, bilinmeyen kutu ve mdat içindeki sahte moov meta
  invalid.writeUInt32BE(180008,24);invalid.write('evil',28);assert.equal(mp4MetadataOffset(invalid,body.length),null);
  const metadata=body.subarray(offset,offset+262144);assert.equal(mp4MetadataInfo(metadata,metadata.length),null);
  assert.equal(mp4MetadataInfo(moov(1280,720,true),1000)?.invalidVideo,true);
+});
+// ftyp + large free + mdat + small mdat + moov at the end (CizgiMax Gravity Falls layout).
+function paddedMovie({audio=false,withMoov=true}={}){
+ const ftyp=box('ftyp',Buffer.from('isom\0\0\0\0isommp42','binary')),pad=box('free',Buffer.alloc(200000)),mdat=box('mdat',Buffer.alloc(300000)),tiny=box('mdat',Buffer.alloc(130));
+ const mvhd=Buffer.alloc(24);mvhd.writeUInt32BE(1000,12);mvhd.writeUInt32BE(1320000,16);
+ const movie=box('moov',box('mvhd',mvhd),moov(1920,1080,audio).subarray(8),box('free',Buffer.alloc(300000)));
+ return{body:Buffer.concat([ftyp,pad,mdat,...(withMoov?[tiny,movie]:[])]),hop1:ftyp.length+pad.length,hop2:ftyp.length+pad.length+mdat.length};
+}
+async function probePadded(body,extra={}){
+ const url='https://media.test/padded.mp4',calls=[],http=createHttp({fetchImpl:fixtureFetch({[url]:{body,mime:'video/mp4'}},calls)});
+ try{return{video:await probe(http,{url,headers:{},requireDuration:true,requireVideoDimensions:true,...extra}),ranges:calls.map(c=>c.headers?.Range).filter(Boolean)};}finally{http.close();}
+}
+test('Dolgulu MP4 başı: yalnız aday bayrağıyla iki kutu sınırı izlenir; moov içindeki video izi piksel ve süre verir',async()=>{
+ const {body,hop1,hop2}=paddedMovie();
+ const on=await probePadded(body,{followMp4Boxes:true});
+ assert.deepEqual(on.video.dimensions,{width:1920,height:1080});assert.equal(on.video.duration,1320);assert.equal(on.video.size,body.length);
+ assert.deepEqual(on.ranges,['bytes=0-131071',`bytes=${hop1}-${hop1+262143}`,`bytes=${hop2}-${hop2+262143}`]);
+ // Without the flag the probe keeps its old behaviour: one range, no row.
+ const off=await probePadded(body);assert.equal(off.video,null);assert.deepEqual(off.ranges,['bytes=0-131071']);
+});
+test('Dolgulu MP4 başı tek başına satır olmaz: moov yoksa veya yalnız ses izi varsa elenir',async()=>{
+ for(const options of[{withMoov:false},{audio:true}]){
+  const {body}=paddedMovie(options),{video,ranges}=await probePadded(body,{followMp4Boxes:true});
+  assert.equal(video,null,JSON.stringify(options));assert.ok(ranges.length<=4);
+ }
+ const {body}=paddedMovie();
+ assert.equal(mp4PaddedHead(body.subarray(0,131072),body.length),true);
+ assert.equal(mp4PaddedHead(box('ftyp',Buffer.from('isom\0\0\0\0isom','binary')),1000),false);
+ const whole=Buffer.concat([box('ftyp',Buffer.from('isom\0\0\0\0isom','binary')),box('free',Buffer.alloc(64))]);
+ assert.equal(mp4PaddedHead(whole,whole.length),false);
+ const heic=Buffer.from(body.subarray(0,131072));heic.write('heic',8);assert.equal(mp4PaddedHead(heic,body.length),false);
 });
 test('Metadata isteğinde dosya kimliği değişirse o piksel doğrulanmış sayılmaz',async()=>{
  const {body}=largeMoov(),url='https://media.test/file.mp4';let requests=0;

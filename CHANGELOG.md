@@ -1,5 +1,20 @@
 # Sürüm notları
 
+## 2.0.3 — 26 Kasım 2026
+
+- **CizgiMax: başında boş dolgu olan MP4 bölümler artık doğrulanıyor (Gravity Falls).**
+  - **Sorun:** Gravity Falls S1E1'in Drive dosyası gerçek bir MP4. Ama dosya ~0,7 MB boş dolgu kutusuyla başlıyor ve süre/piksel bilgisi (`moov`) dosyanın sonunda, video verisinin ve 138 baytlık ikinci bir veri kutusunun arkasında. Dosya denetimi ilk 128 KB'ta yalnız dolgu gördüğü için dosyayı reddediyordu (2.0.1'den beri).
+  - **Çözüm:** Yalnız CizgiMax satırları için dosya denetimi, dosyanın kendi bildirdiği kutu sınırlarını en fazla iki kez izleyebilir: dolgunun sonu, sonra video verisinin sonu. Aynı aralıktaki küçük tamamlanmış kutular geçilir. Her okuma aynı dosyadan gelmelidir. Dolgulu baş tek başına satır olmaz: sonda video izi, piksel ve süre bulunmazsa satır atılır.
+  - **Diğer kaynaklar:** Davranış değişmedi; tek atlama ve aynı Range dizisi korunur (testle denetlenir).
+  - **Ölçüm (iOS kurallı simülasyon, bu bilgisayar):**
+    - Gravity Falls S1E1: "İndirilebilir · CizgiMax · 1080p · 1920×1080 · 0,47 GB · Ses: TR", süre 1294 sn, 7,2 sn. Okumalar: baş 128 KB, iki 256 KB, altyazı eşlemesi için son 64 KB.
+    - Scooby-Doo! Mystery Incorporated S1E1: aynı satır, 5,4 sn.
+    - Inception ana liste: 10 akış (9 indirilebilir), 18,3 sn. 60 sn askı yok.
+    - Bu ölçümler fiziksel iPhone dönüş süresi garantisi değildir.
+  - Phineas and Ferb S1E1'in dosyası dolgusuz düzende; mevcut denetim zaten okuyor (1920×1080, 1351 sn). Bu dizi bölüm sayısı kuralından geçirilmedi.
+- 393 yerel birim ve QuickJS paket testi geçti (`npm run check`). Plugin ABI'si değişmedi.
+- Fiziksel telefon, tam bölüm oynatımı, indirme, çevrimdışı altyazı ve senkron testi yapılmadı.
+
 ## 2.0.2 — 26 Kasım 2026
 
 - **CizgiMax 7. bağımsız scraper oldu (`nuvio-tr-hd-cizgimax`, "Nuvio TR HD · CizgiMax").**
