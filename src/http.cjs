@@ -54,7 +54,9 @@ function createHttp({ fetchImpl, allowHttp = false, timeoutMs = 4500, deadline =
     const { timeoutMs: localTimeout, nativeGroup, publicCookieRedirectOrigin, ...fetchOptions } = options;
     let url = safeUrl(rawUrl, undefined, allowHttp);
     if (!url || expired()) return null;
-    const denialKey=JSON.stringify([options.method||'GET',url,Object.entries(options.headers||{}).sort()]);
+    // A form POST is denied per body: one rejected source index must not
+    // block the same endpoint for another index.
+    const denialKey=JSON.stringify([options.method||'GET',url,Object.entries(options.headers||{}).sort(),typeof options.body==='string'?options.body:'']);
     if(denied.has(denialKey))return null;
     const started = Date.now();
     const requestedTimeout = Number.isFinite(localTimeout) ? Math.max(1, Math.min(localTimeout, 20000)) : timeoutMs;

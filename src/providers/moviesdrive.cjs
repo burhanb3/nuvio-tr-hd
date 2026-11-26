@@ -4,9 +4,10 @@ const {anchors,decodeEntities,filenameIdentity}=require('./directory.cjs');
 const {canonicalNames}=require('./page-data.cjs');
 const {matchesEpisode}=require('../matching.cjs');
 const {pixelPage,publicFile}=require('./pixeldrain.cjs');
-// new2 now answers 302 to a bare new4 /search.php (query dropped), which costs
-// two extra requests per search; start at the current publisher host.
-const ORIGIN='https://new4.moviesdrive.cyou',ARCHIVE='https://mdrive.lol';
+// Older hosts answer 302 to a bare /search.php on the next host (query
+// dropped), which costs two extra requests per search; start at the current
+// publisher host (26 Nov 2026: new4 -> new5).
+const ORIGIN='https://new5.moviesdrive.cyou',ARCHIVE='https://mdrive.lol';
 function catalogueOrigin(value){
   const url=safeUrl(value);if(!url)return null;
   const u=new URL(url);

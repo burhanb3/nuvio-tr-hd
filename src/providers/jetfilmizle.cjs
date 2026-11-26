@@ -30,13 +30,24 @@ function matchingCards(rows,names,target){
   return [...rows.filter(r=>named(r)&&years.includes(r.year)),...rows.filter(r=>named(r)&&!years.includes(r.year)&&near(r))].slice(0,2);
 }
 function imdbIds(html){return [...new Set([...String(html).matchAll(/imdb\.com\/title\/(tt\d{5,10})/g)].map(m=>m[1]))];}
-function goldIndex(html){
-  for(const m of String(html).matchAll(/data-source-index="(\d{1,2})" data-player-type="dublaj">\s*([^<]{0,40}?)\s*<\/button>/g))
-    if(m[2]==='Gold')return m[1];
-  return null;
+// Gold buttons of one player tab in page order: "dublaj" is the Turkish-dub
+// tab, "altyazili" the site's "Türkçe Altyazılı Orijinal Ses" tab. A tab may
+// list two Gold buttons for the same file; the second is only a retry.
+function goldIndexes(html,type='dublaj'){
+  const rows=[];
+  for(const m of String(html).matchAll(/data-source-index="(\d{1,2})" data-player-type="([a-z]{1,20})">\s*([^<]{0,40}?)\s*<\/button>/g))
+    if(m[2]===type&&m[3]==='Gold'&&!rows.includes(m[1]))rows.push(m[1]);
+  return rows.slice(0,2);
 }
-function goPlayer(html){
-  const src=String(html).match(/<iframe\b[^>]*\bsrc=['"]((?:https:)?\/\/videopark\.top\/go\/\?id=\d{1,12})['"]/)?.[1];
+function goldIndex(html,type='dublaj'){return goldIndexes(html,type)[0]??null;}
+// Subtitled-tab ids carry a language suffix ("<digits>-en", 26 Nov); dub ids
+// are digits only.
+const GO_FRAME={
+  dublaj:/<iframe\b[^>]*\bsrc=['"]((?:https:)?\/\/videopark\.top\/go\/\?id=\d{1,12})['"]/,
+  altyazili:/<iframe\b[^>]*\bsrc=['"]((?:https:)?\/\/videopark\.top\/go\/\?id=\d{1,12}(?:-[a-z]{2})?)['"]/
+};
+function goPlayer(html,type='dublaj'){
+  const src=GO_FRAME[type]&&String(html).match(GO_FRAME[type])?.[1];
   return src?safeUrl(src.startsWith('//')?'https:'+src:src):null;
 }
 // The player names its own delivery worker. Accept only that exact shape.
@@ -107,22 +118,43 @@ async function scanJetFilmizle(http,target,options={}){
     }
   }
   if(!bound)return [];
-  const filmId=bound.text.match(/name="film_id" value="(\d{1,10})"/)?.[1],index=goldIndex(bound.text);
-  if(!filmId||index===null||http.expired())return [];
-  const frame=await page(ORIGIN+'/jetplayer',{method:'POST',headers:{Origin:ORIGIN,Referer:bound.url,'X-Requested-With':'XMLHttpRequest','Content-Type':'application/x-www-form-urlencoded'},
-    body:'film_id='+filmId+'&source_index='+index+'&player_type=dublaj',maxChars:20000});
-  const player=frame?goPlayer(frame.text):null;
-  if(!player||new URL(player).origin!==PLAYER)return [];
-  const playerPage=await page(player,{headers:{Referer:ORIGIN+'/'},maxChars:100000});
-  const video=playerPage?workerVideo(playerPage.text):null;
-  if(!video||http.expired())return [];
-  const urls=variantUrls(video,await http.json(video.base+'/v/'+video.id+'/info',{timeoutMs:4000}));
-  if(!urls.length||http.expired())return [];
-  const checked=await mapLimit(urls,3,async url=>({url,total:await rangeTotal(http,url)}));
-  return checked.filter(row=>row.total).map(({url,total})=>({url,headers:{},filename:syntheticFilename(target)+'.mp4',filenameSynthetic:true,subtitles:[],source:'JetFilmizle',
-    // The tab is the publisher's dub claim. The probe reads the audio trak's
+  const filmId=bound.text.match(/name="film_id" value="(\d{1,10})"/)?.[1];
+  if(!filmId||http.expired())return [];
+  const gold=async(type,index)=>{
+    const frame=await page(ORIGIN+'/jetplayer',{method:'POST',headers:{Origin:ORIGIN,Referer:bound.url,'X-Requested-With':'XMLHttpRequest','Content-Type':'application/x-www-form-urlencoded'},
+      body:'film_id='+filmId+'&source_index='+index+'&player_type='+type,maxChars:20000});
+    const player=frame?goPlayer(frame.text,type):null;
+    if(!player||new URL(player).origin!==PLAYER||http.expired())return [];
+    const playerPage=await page(player,{headers:{Referer:ORIGIN+'/'},maxChars:100000});
+    const video=playerPage?workerVideo(playerPage.text):null;
+    if(!video||http.expired())return [];
+    const urls=variantUrls(video,await http.json(video.base+'/v/'+video.id+'/info',{timeoutMs:4000}));
+    if(!urls.length||http.expired())return [];
+    const checked=await mapLimit(urls,3,async url=>({url,total:await rangeTotal(http,url)}));
+    return checked.filter(row=>row.total);
+  };
+  const tab=async type=>{
+    for(const index of goldIndexes(bound.text,type)){
+      if(http.expired())break;
+      const rows=await gold(type,index);
+      if(rows.length)return rows;
+    }
+    return [];
+  };
+  const row=(type,{url,total})=>({url,headers:{},filename:syntheticFilename(target)+'.mp4',filenameSynthetic:true,subtitles:[],source:'JetFilmizle',
+    // The tab is the publisher's audio claim. The probe reads the audio trak's
     // own language; only that is shown as measured.
-    claimedAudioLanguages:['tr'],readAudioTracks:true,expectedSize:total,
-    identity:target,identityConfidence:90,requireDuration:true,durationTolerance:0.1,requireVideoDimensions:true}));
+    ...(type==='dublaj'?{claimedAudioLanguages:['tr']}:{
+      // No subtitle track in the player or file listing: "Türkçe Altyazılı" is
+      // the site's label (likely burned in, not verified), like DiziBox.
+      claimedAudioLanguages:[target.originalLanguage].filter(Boolean),burnedSubtitleLanguage:'tr',burnedSubtitleBasis:'site-label'}),
+    readAudioTracks:true,expectedSize:total,
+    identity:target,identityConfidence:90,requireDuration:true,durationTolerance:0.1,requireVideoDimensions:true});
+  const tabs=options.subtitledOriginal===false?['dublaj']:['dublaj','altyazili'];
+  const [dub,subtitled=[]]=await Promise.all(tabs.map(type=>tab(type)));
+  // The same worker file under both tabs would carry two conflicting claims;
+  // keep only the dub row (its audio is still measured by the probe).
+  const dubUrls=new Set(dub.map(r=>r.url));
+  return [...dub.map(r=>row('dublaj',r)),...subtitled.filter(r=>!dubUrls.has(r.url)).map(r=>row('altyazili',r))];
 }
-module.exports={scanJetFilmizle,cards,matchingCards,imdbIds,goldIndex,goPlayer,workerVideo,variantUrls,rangeTotal,ORIGIN,PLAYER};
+module.exports={scanJetFilmizle,cards,matchingCards,imdbIds,goldIndex,goldIndexes,goPlayer,workerVideo,variantUrls,rangeTotal,ORIGIN,PLAYER};

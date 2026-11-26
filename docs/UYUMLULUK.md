@@ -13,6 +13,8 @@ Resmî release ve geliştirme dalındaki ilgili dosyaların SHA'ları `compatibi
 
 ## Güncel kontrol
 
+2.0.6 (26 Kasım) sağlayıcı içi değişikliklerdir; plugin ABI'sine ve kilide dokunmaz. Yeni satırlar mevcut alanları kullanır (`url`, `headers`, `title`, `subtitles`). JetFilmizle altyazılı orijinal ses satırı, DiziBox'taki "sitede Türkçe altyazılı olarak etiketlenmiş" başlık metniyle aynı yolu izler. HDRezka sayfa okuması taşıma katmanının 1 MB metin tavanını kullanır; Nuvio fetch köprüsünün sınırı değişmedi. `http.cjs` ret önbelleği POST gövdesini de anahtara katar (eklenti içi). 401 fixture/QuickJS testi geçti. Fiziksel telefon, online oynatma, tam oynatma ve indirme testi yapılmadı.
+
 2.0.5 (26 Kasım) Nuvio 1.0.1 incelemesini tamamlar ve kilidi 1.0.1'e günceller.
 
 - **Kilit:** sürüm etiketi `3cfc311`, ana dal `8f19c9d`, 24 izlenen dosya. `verify:upstream` sonucu drift yok; 17 ABI denetiminin hepsi geçti. Aynı denetimler sürüm etiketindeki dosyalarda da geçti.

@@ -1,7 +1,7 @@
 'use strict';
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
-const { scanJetFilmizle, cards, matchingCards, goldIndex, goPlayer, workerVideo, variantUrls, ORIGIN, PLAYER } = require('../src/providers/jetfilmizle.cjs');
+const { scanJetFilmizle, cards, matchingCards, goldIndex, goldIndexes, goPlayer, workerVideo, variantUrls, ORIGIN, PLAYER } = require('../src/providers/jetfilmizle.cjs');
 const { createHttp } = require('../src/http.cjs');
 const { probe } = require('../src/media/probe.cjs');
 const { mp4NextTrackOffset, mp4TrackAt } = require('../src/media/containers.cjs');
@@ -129,6 +129,60 @@ test('JetFilmizle: yanlış IMDb, Gold yokluğu, dizi/anime ve bozuk worker adre
     assert.equal(loadedTitles, 1);
     assert.equal(rows.length, 1);
   } finally { h3.close(); }
+});
+
+test('JetFilmizle: "Türkçe altyazılı orijinal ses" Gold dosyası orijinal ses iddiası ve site etiketiyle eklenir; aynı dosya iki sekmede ise yalnız dublaj kalır', async () => {
+  const body = largeMoovTrMp4('eng');
+  const subPlayer = PLAYER + '/go/?id=30179-en';
+  const filmPage = `<input name="film_id" value="4420"><a href="https://www.imdb.com/title/tt1375666/">IMDb</a><button data-source-index="2" data-player-type="dublaj">Gold</button><button data-source-index="1" data-player-type="altyazili">Gold</button><button data-source-index="3" data-player-type="altyazili">Gold</button>`;
+  const headOk = (url, size) => ({ ok: true, status: 206, url, headers: { get: n => ({ 'content-range': `bytes 0-15/${size}`, 'content-type': 'video/mp4' })[n.toLowerCase()] || null }, text: async () => '', arrayBuffer: async () => new ArrayBuffer(0) });
+  const run = async (subVideoId, options) => {
+    const f = { ...makeFixture(largeMoovTrMp4('tur')), [ORIGIN + '/film/baslangic']: { body: filmPage },
+      [subPlayer]: { body: `<script>var WORKER_BASE = "${workerBase.replace(/\//g, '\\/')}"; var VIDEO_ID = ${subVideoId};</script>` },
+      [workerBase + '/v/' + subVideoId + '/info']: { json: { id: subVideoId, qualities: subVideoId === 30179 ? [1080, 720, 360] : [] } },
+      [workerBase + '/v/' + subVideoId]: { body, mime: 'video/mp4' } };
+    const calls = [], fetcher = fixtureFetch(f, calls);
+    const http = createHttp({ fetchImpl: async (url, opts = {}) => {
+      if (opts.method === 'POST' && url === ORIGIN + '/jetplayer') {
+        calls.push({ url, ...opts });
+        const sub = /player_type=altyazili/.test(opts.body);
+        // The first subtitled Gold has no player; the second one is the retry.
+        if (sub && /source_index=1&/.test(opts.body)) return fetcher(ORIGIN + '/nothing', opts);
+        return { ok: true, status: 200, url, headers: { get: n => n.toLowerCase() === 'content-type' ? 'text/html' : null }, text: async () => `<iframe src="${sub ? subPlayer : playerUrl}"></iframe>`, arrayBuffer: async () => new ArrayBuffer(0) };
+      }
+      if (opts.method === 'HEAD' && url === workerBase + '/v/30179?q=360') return headOk(url, 777777);
+      if (opts.method === 'HEAD' && url === workerBase + '/v/' + subVideoId && subVideoId !== 30179) return headOk(url, body.length);
+      return fetcher(url, opts);
+    } });
+    try { return { rows: await scanJetFilmizle(http, target, options), calls }; } finally { http.close(); }
+  };
+  const { rows, calls } = await run(30180);
+  assert.equal(rows.length, 2);
+  const [dub, sub] = rows;
+  assert.deepEqual(dub.claimedAudioLanguages, ['tr']);
+  assert.equal(dub.burnedSubtitleLanguage, undefined);
+  assert.equal(sub.url, workerBase + '/v/30180');
+  assert.deepEqual(sub.claimedAudioLanguages, ['en']);
+  assert.equal(sub.burnedSubtitleLanguage, 'tr');
+  assert.equal(sub.burnedSubtitleBasis, 'site-label');
+  assert.equal(sub.readAudioTracks, true);
+  assert.equal(calls.filter(c => c.method === 'POST' && c.url === ORIGIN + '/jetplayer' && /altyazili/.test(c.body)).length, 2, 'ilk Gold 404 verse de ikinci Gold denenir');
+  const video = await (async () => { const h = createHttp({ fetchImpl: fixtureFetch({ [sub.url]: { body, mime: 'video/mp4' } }) }); try { return await probe(h, sub, false, false); } finally { h.close(); } })();
+  assert.deepEqual(video.audioLanguages, ['eng']);
+  assert.doesNotMatch(cardFields(video, sub, []).language, /TR görüntüde/);
+
+  // Same worker file in both tabs -> conflicting claims; only the dub row stays.
+  assert.deepEqual((await run(30179)).rows.map(r => r.claimedAudioLanguages), [['tr']]);
+  // Opt-out keeps the dub tab only and never opens the subtitled tab.
+  const off = await run(30180, { subtitledOriginal: false });
+  assert.equal(off.rows.length, 1);
+  assert.ok(!off.calls.some(c => /altyazili/.test(c.body || '')));
+  // Dub ids are digits only; subtitled ids may carry a 2-letter language suffix.
+  assert.equal(goPlayer(`<iframe src="${subPlayer}"></iframe>`), null);
+  assert.equal(goPlayer(`<iframe src="${subPlayer}"></iframe>`, 'altyazili'), subPlayer);
+  assert.equal(goPlayer(`<iframe src="${PLAYER}/go/?id=1-english"></iframe>`, 'altyazili'), null);
+  assert.deepEqual(goldIndexes(filmPage, 'altyazili'), ['1', '3']);
+  assert.equal(goldIndex(filmPage), '2');
 });
 
 test('mp4NextTrackOffset ve mp4TrackAt: yalnız tam sınırda sonraki trak okunur; und/bozuk kutu atlanır', () => {

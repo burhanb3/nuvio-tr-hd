@@ -3,9 +3,14 @@ const {safeUrl,normalizeTitle}=require('../util.cjs');
 const {anchors,decodeEntities}=require('./directory.cjs');
 const {tagAttributes,canonicalNames,syntheticFilename}=require('./page-data.cjs');
 const {subtitleLanguage}=require('../subtitles.cjs');
-const ORIGIN='https://rezka.ag';
+const ORIGIN='https://rezka.ag',PAGE_MAX_CHARS=1000000;
+// Western animation lives under /cartoons/ (series and films), anime under
+// /animation/. Anime TV is left out: its season grouping often differs from
+// TMDB, and an S/E guess must never pick another episode. IMDb, year and the
+// exact episode list still bind every page.
+function pageKinds(target){return target.type==='tv'?'(?:series|cartoons)':'(?:films|cartoons|animation)';}
 function searchPages(html,target){
-  const kind=target.type==='tv'?'series':'films',seen=new Set(),rows=[];
+  const kind=pageKinds(target),seen=new Set(),rows=[];
   for(const block of String(html).split(/<div\b[^>]*class=["']b-content__inline_item["']/i).slice(1,81)){
     const attrs=tagAttributes('<div '+block.slice(0,block.indexOf('>')+1)),url=safeUrl(attrs['data-url']);
     if(!/^\d{1,9}$/.test(attrs['data-id']||'')||!url||new URL(url).origin!==ORIGIN||!new RegExp('^/'+kind+'/[a-z-]+/'+attrs['data-id']+'-[a-z0-9-]+\\.html$').test(new URL(url).pathname)||
@@ -16,7 +21,7 @@ function searchPages(html,target){
 }
 function pageIdentity(html,url,target){
   const text=String(html),canonical=[...text.matchAll(/<meta\b[^>]*>/gi)].map(m=>tagAttributes(m[0])).find(a=>a.property==='og:url')?.content;
-  const kind=target.type==='tv'?'series':'films',id=new URL(url).pathname.match(new RegExp('^/'+kind+'/[a-z-]+/(\\d{1,9})-[a-z0-9-]+\\.html$'))?.[1];
+  const kind=pageKinds(target),id=new URL(url).pathname.match(new RegExp('^/'+kind+'/[a-z-]+/(\\d{1,9})-[a-z0-9-]+\\.html$'))?.[1];
   if(!id||canonical!==url||/b-player__restricted__block_message|cf-turnstile|g-recaptcha|anubis_challenge/i.test(text))return null;
   const original=decodeEntities(text.match(/class=["']b-post__origtitle["'][^>]*>([^<]{1,300})</)?.[1]||'');
   const release=[...text.matchAll(/<tr\b[^>]*>([\s\S]{0,2500}?)<\/tr>/gi)].find(m=>/Дата выхода/.test(m[1]));
@@ -72,10 +77,16 @@ async function scanHdRezka(http,target,options={}){
   for(const title of [...new Set([target.originalTitle,...(target.searchTitles||[])])].slice(0,2)){
     const search=await http.text(ORIGIN+'/search/?do=search&subaction=search&q='+encodeURIComponent(title),{maxChars:200000});
     for(const url of search?searchPages(search.text,target):[]){
-      const candidate=await http.text(url,{maxChars:300000}),identity=candidate&&pageIdentity(candidate.text,url,target);if(!identity)continue;
-      if(!canonicalNames(target).includes(normalizeTitle(identity.original))&&options.loadTitles&&extraNames===undefined)extraNames=await options.loadTitles();
+      // Long-running series pages (season/episode lists, many translators)
+      // exceed 300 KB (Stranger Things ~319 KB, The Simpsons ~737 KB); use the
+      // transport's own 1 MB text ceiling.
+      const candidate=await http.text(url,{maxChars:PAGE_MAX_CHARS}),identity=candidate&&pageIdentity(candidate.text,url,target);if(!identity)continue;
+      // Anime and some foreign titles list "Romaji / English"; each part is a
+      // name of the same IMDb/year-bound record, never a substring match.
+      const originals=identity.original.split(/\s+\/\s+/).map(normalizeTitle).filter(Boolean);
+      if(!originals.some(n=>canonicalNames(target).includes(n))&&options.loadTitles&&extraNames===undefined)extraNames=await options.loadTitles();
       const names=[...canonicalNames(target),...(extraNames||[]).map(normalizeTitle)];
-      if(!names.includes(normalizeTitle(identity.original)))continue;
+      if(!originals.some(n=>names.includes(n)))continue;
       page=candidate;binding=identity;break;
     }
     if(page||http.expired())break;

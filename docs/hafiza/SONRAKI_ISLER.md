@@ -2,6 +2,44 @@
 
 - Son durum: masaüstü Nuvio TR HD artık Start-NuvioTRHD.ps1 üzerinden açılır. Kullanıcı yeniden aynı hata bildirdiğinde özgün kurulum çalışıyordu; nedeni kesinleşmedi. CheckOnly ve gömülü Java17 penceresiz classpath probe geçti. Kullanıcı kontrollü başlatıcıyla deneyip hata sürerse çalışan yol ve gerçek kaynak raporu birlikte incelenmeli. Tekrar UI başarısı/tam indirme doğrulanmış sayılmamalı.
 
+## 2.0.6 — 26 Kasım 2026
+
+1. **Yayın:** kaydı aşağıya eklenecek (yayın denetimi sonrası).
+2. **Telefonda (Wi-Fi ve LTE ayrı):**
+   - Depo yenilenmeli, kaynak ekranında yenile düğmesine basılmalı; `Tanı · 2.0.6` görünmeli.
+   - **The Matrix:** `İndirilebilir · JetFilmizle` 1080p (~3,1 GB, "Sitede Türkçe altyazılı olarak etiketlenmiş") satırı oynatılmalı. Türkçe altyazının görüntüde olup olmadığı not edilmeli. Görüntüdeyse dış TR altyazı da seçilirse iki altyazı üst üste biner; oynatıcıda dış altyazı kapatılmalı. Dublaj 360p satırı da gelmeli.
+   - **Stranger Things S1E1:** "Nuvio TR HD · HDRezka" altında 4 satır (240p–720p) gelmeli; biri indirilip açılmalı.
+   - **Breaking Bad S1E1 ve Stranger Things S1E1 (ana liste):** 4KHDHub satırı gelip gelmediği not edilmeli (TMDB afiş bağlaması cihazda doğrulanmadı).
+   - Bir filmde ana liste beklenmedik şekilde boş gelirse yenile düğmesine basılmalı ve not edilmeli (simülasyonda bir kez 4KHDHub/HubCloud tarafında 60 sn asılma görüldü, KARARLAR 2.0.6).
+3. **Açık kalanlar:**
+   - Altyazılı JetFilmizle dosyalarında ses izi dili Shadow's Edge ve The Mummy'de okunamadı; bu dosyalarda "Ses" etiketi sitenin iddiasıdır.
+   - 4KHDHub dizi zinciri sayfa afişiyle elle bağlanıp denenmedi (yalnız tasarım okundu).
+   - FzTvSeries CDN'i bu bilgisayardan bazen açılıyor (Stranger Things S1E1, Shameless satır verdi), bazen açılmıyor.
+   - Severance'ta Türkçe altyazı kaynağı yok; yeni bir anahtarsız TR kaynağı çıkarsa yeniden bakılır.
+4. **Sonraki konu (kullanıcıyla):** Nuvio fork/PR ile iOS arka plan indirmesi ve "Sezonu indir" (aşağıdaki iOS indirme notu).
+
+## Nuvio iOS indirme davranışı (26 Kasım 2026, kaynak okundu, cihazda denenmedi)
+
+- **Kaynak:** 1.0.1 etiketi `3cfc311` ve ana dal `6d2fdab`: `DownloadsPlatformDownloader.ios.kt` (ikisinde aynı), `DownloadsRepository.kt`, `DownloadsScreen.kt`, `Info.plist`.
+- **Arka plan:**
+  - iOS indirmesi normal (ön plan) `NSURLSession` veri görevidir; arka plan oturumu değildir. Uygulama askıya alınınca aktarım durur.
+  - `.part` dosyası kalır ve devam, Range (`bytes=N-`) ile sürdürülür.
+  - `pauseDownloadsForAppBackground()` var; çağıranı okunan dosyalarda bulunamadı.
+  - `Info.plist` arka plan modu yalnız `audio`.
+  - Android'de arka plan indirmesi Eylül 2026'da eklendi (`3c239664`); iOS'ta yok.
+  - Çözüm Nuvio tarafında: arka plan `NSURLSession` indirme görevi. Eklenti bunu değiştiremez.
+- **Ağ değişimi:**
+  - `waitsForConnectivity = true` ve 24 saatlik kaynak süresi var; 0.6.5-beta'da da vardı (dosya Nisan 2026'dan beri).
+  - Eklenti yalnız Range'e doğru 206 ile yanıt veren dosyaları İndirilebilir listeler (`http.bytes`). Bu, devamın çalışması için gerekli.
+  - Özel bir ağ değişimi düzeltmesi yazılmadı.
+- **Toplu indirme:**
+  - `enqueueFromStream` bölüm başına tek satır alır. Eklenti bölüm başına çağrılır ve indirme başlatamaz.
+  - 1.0.1'de ve ana dalda sezon indirme yok. Ana dalda (sürümde değil) yalnız "tümünü duraklat / tümünü devam ettir" düğmesi var.
+- **Kullanıcının sorusu (SideStore):**
+  - Nuvio değiştirilirse fork, macOS/Xcode derlemesi (ör. GitHub Actions macOS) ve SideStore ile kurulum gerekir.
+  - Her Nuvio sürümünde fork güncellenmelidir. Upstream PR daha az bakım ister.
+  - Karar kullanıcıda, geliştirme turundan sonra.
+
 ## 2.0.5 sonrası test turu — 26 Kasım 2026 (sürüm değişmedi)
 
 1. **Yapıldı (bilgisayarda, ayrıntı PROJE):** CizgiMax, Hızlı İzle (DiziBox, DiziBal, KultFilmler), ana liste ve RareFilmm yeniden denendi. Eklenti hatası bulunmadı; kod ve sürüm değişmedi. 397/397.

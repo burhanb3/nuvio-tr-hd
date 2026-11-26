@@ -11,6 +11,17 @@ test('Dosya doğrulaması ayrı HEAD beklemeden gerçek Range GET ile yapılır;
  try{assert.equal(await probe(denied,{url,headers:{}}),null);assert.equal(deniedCalls.length,1);}
  finally{denied.close();}
 });
+test('404 reddi POST gövdesine göredir: aynı gövde tekrar açılmaz, başka gövde açılır',async()=>{
+ const url='https://site.test/player',calls=[];
+ const http=createHttp({fetchImpl:async(u,o)=>{calls.push(o.body);return fixtureFetch({[url]:o.body==='i=2'?{body:'ok'}:{status:404}})(u,o);}});
+ try{
+  const post=body=>http.text(url,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body});
+  assert.equal(await post('i=1'),null);
+  assert.equal(await post('i=1'),null);
+  assert.equal((await post('i=2'))?.text,'ok');
+  assert.deepEqual(calls,['i=1','i=2']);
+ }finally{http.close();}
+});
 test('Kaynağın MP4 dediği uzantısız dosya MKV köprüsünü beklemez; gerçek MKV/HTML/HLS MP4 yapılmaz',async()=>{
  const url='https://storage.test/object',candidate={url,filename:'The.Matrix.1999.mp4',headers:{},subtitles:[],identity:target};
  const untouched={json:()=>{throw Error('Optional bridge must not be called');}};

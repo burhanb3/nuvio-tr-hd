@@ -51,6 +51,34 @@ test('HDRezka: TV bölüm listesi aynı çeviride parent/sezon/bölüm doğrular
  assert.equal(exactEpisode('<li class="b-simple_episode__item" data-id="201" data-season_id="2" data-episode_id="1">','200',tv),false);
  }finally{http.close();}
 });
+test('HDRezka: 300 KB üstü uzun dizi sayfası okunur; 1 MB üstü sayfa reddedilir',async()=>{
+ // 26 Kasım 2026 canlı ölçüm: Stranger Things ~319 KB, Supernatural ~387 KB, The Simpsons ~737 KB.
+ const tv={...target,tmdbId:67070,type:'tv',originalTitle:'Fleabag',searchTitles:['Fleabag'],year:2016,imdbId:'tt5687612',season:1,episode:1,runtimeMinutes:26},f=fixture(tv);
+ f[root+'/search/?do=search&subaction=search&q=Fleabag'].body='<div class="b-content__inline_item" data-id="200" data-url="'+tvPage+'">2016</div>';
+ f['https://stream.voidboost.one/high.mp4'].body=media(1560);f['https://stream.voidboost.one/low.mp4'].body=media(1560);
+ const episodes=async options=>{if(!options.body.includes('action=get_episodes'))return;const body=JSON.stringify({success:true,episodes:'<li class="b-simple_episode__item" data-id="200" data-season_id="1" data-episode_id="1"></li>'});return{ok:true,status:200,url:root+'/ajax/get_cdn_series/',headers:{get:()=>'text/html'},text:async()=>body};};
+ const body=detail(tvPage,tv).replace('data-id="100"','data-id="200"');
+ for(const [padding,expected] of [[400000,2],[760000,2],[1010000,0]]){
+  f[tvPage]={body:body+'<!--'+'x'.repeat(padding)+'-->'};const http=httpFor(f,[],episodes);
+  try{assert.equal((await scanHdRezka(http,tv)).length,expected);}finally{http.close();}
+ }
+});
+test('HDRezka: /cartoons/ dizi ve filmi, /animation/ yalnız filmi kabul edilir; "Romaji / English" adı parça parça eşleşir',async()=>{
+ const tv={...target,type:'tv',season:1,episode:1},row=(path,year=1999)=>'<div class="b-content__inline_item" data-id="300" data-url="'+root+path+'"><span>'+year+'</span></div>';
+ assert.deepEqual(searchPages(row('/cartoons/comedy/300-example-1999.html'),tv),[root+'/cartoons/comedy/300-example-1999.html']);
+ assert.deepEqual(searchPages(row('/cartoons/comedy/300-example-1999.html'),target),[root+'/cartoons/comedy/300-example-1999.html']);
+ assert.deepEqual(searchPages(row('/animation/adventures/300-example-1999.html'),target),[root+'/animation/adventures/300-example-1999.html']);
+ // Anime TV season grouping often differs from TMDB: never bound by S/E guess.
+ assert.deepEqual(searchPages(row('/animation/adventures/300-example-1999.html'),tv),[]);
+ assert.deepEqual(searchPages(row('/unknown/adventures/300-example-1999.html'),target),[]);
+ const animePage=root+'/animation/adventures/300-example-1999.html',f=fixture();
+ f[root+'/search/?do=search&subaction=search&q='+encodeURIComponent(target.originalTitle)].body=row('/animation/adventures/300-example-1999.html');
+ f[animePage]={body:detail(animePage).replace('b-post__origtitle">The Matrix','b-post__origtitle">Matorikkusu / The Matrix').replace('data-id="100"','data-id="300"')};
+ let http=httpFor(f);try{assert.equal((await scanHdRezka(http,target)).length,2);}finally{http.close();}
+ // A part must equal the name; a longer title that only contains it is refused.
+ f[animePage].body=f[animePage].body.replace('Matorikkusu / The Matrix','Matorikkusu / The Matrix Reloaded');
+ http=httpFor(f);try{assert.deepEqual(await scanHdRezka(http,target),[]);}finally{http.close();}
+});
 test('HDRezka: kısa teaser tam film gibi kabul edilmez; bozuk stream yanıtı boş döner',async()=>{
  const f=fixture();f['https://stream.voidboost.one/high.mp4'].body=media(30);const http=httpFor(f);try{const rows=await scanHdRezka(http,target);assert.equal(await probe(http,rows[0]),null);f[root+'/ajax/fixture']={json:{success:false}};assert.deepEqual(await scanHdRezka(http,target),[]);}finally{http.close();}
 });

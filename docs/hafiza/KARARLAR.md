@@ -2,6 +2,15 @@
 
 - Windows yerel düzeltme başlatıcısı başka Nuvio işlemini sessizce veya zorla kapatmaz. Kullanıcının kısayolu açması ve iletişim kutusunda onay vermesiyle normal pencere kapatma denenir. Açılış öncesi paket SHA ve classpath kontrolü zorunludur; yalnız kısayolun doğru olması uygulamanın doğru kopyada çalıştığı kanıtı değildir.
 
+## 26 Kasım 2026 — 2.0.6 dizi kapsamı ve JetFilmizle altyazılı sekme
+
+- **JetFilmizle "Türkçe Altyazılı Orijinal Ses" Gold dosyaları eklenir, Türkçe altyazı ölçülmüş sayılmaz.** Sekme etiketi DiziBox'taki gibi `burnedSubtitleBasis:'site-label'` ile taşınır; `embeddedSubtitleLanguages` bunu TR saymaz, sıralamada gömülü TR puanı almaz, dış TR altyazılar yine eklenir. Ses dili iddiası `originalLanguage`; yalnız probe'un okuduğu ses izi ölçülmüş gösterilir. Neden: örneklemde yeni film eklemiyor (altyazılı Gold'u olan her filmde dublaj Gold da var) ama dublaj satırı çoğunlukla 360p iken altyazılı satır özgün sesli 1080p verebiliyor (Matrix 3,12 GB). Aynı worker dosyası iki sekmede çıkarsa çelişen iddia yerine yalnız dublaj satırı kalır. Ayrı ayar eklenmedi; `jetfilmizleEnabled` ikisini birlikte açar/kapatır.
+- **HDRezka sayfa tavanı 1 MB.** Uzun dizilerin sayfası (sezon listesi + çevirmenler) 300 KB'yi aşıyor. 1 MB taşıma katmanının zaten uyguladığı tavandır; arama ve POST sınırları değişmedi.
+- **HDRezka anime dizisi alınmaz; çizgi dizi/film ve anime filmi alınır.** Anime sezon gruplaması TMDB'den sık ayrıldığı için S/B yanlış bölüm seçebilir. "Romaji / English" özgün ad parçaları ayrı tam ad olarak eşleşir, alt dize eşleşmesi yapılmaz.
+- **MoviesDrive aramaya new5'ten başlar.** Eski alan sorguyu düşüren 302 veriyor; yeniden gönderim korunur, ama ilk istek doğrudan güncel alana gider. Çok sezonlu paket sayfaları (IMDb kimliği yok) bilinçli olarak bağlanmaz.
+- **POST reddi gövdeye göre.** Aynı form adresine farklı gövde (ör. başka `source_index`) ayrı istektir. GET davranışı değişmedi.
+- **4KHDHub/HubCloud 60 sn asılması için kod değişmedi.** 4 ana liste koşusunun birinde HubCloud tarafında bir worker isteği 60 sn başlık vermedi. iOS native isteği iptal edilemez; mantıksal zaman aşımı bunu önlemez. Tek gözlem olduğu için 4KHDHub ana listede kalır. Tetikleyici: yeni bir 60 sn aşımı (simülasyon veya kullanıcı bildirimi). O zaman 4KHDHub probe sayısının azaltılması veya ayrı lane'e taşınması değerlendirilir.
+
 ## 26 Kasım 2026 — 2.0.5 sonrası test turu (kod değişmedi)
 
 - **DiziBox Hızlı İzle'de kalır.**

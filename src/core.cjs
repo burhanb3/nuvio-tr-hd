@@ -34,7 +34,7 @@ function formatResults(completed, settings, target) {
       const tracks=new Map();
       for(const sub of [...previous.subtitles,...pair.subtitles].sort((a,b)=>(b._score||0)-(a._score||0)))if(!tracks.has(subtitleKey(sub)))tracks.set(subtitleKey(sub),sub);
       previous.subtitles=selectSubtitles([...tracks.values()]);
-      if(pair.candidate.burnedSubtitleLanguage)previous.candidate={...previous.candidate,burnedSubtitleLanguage:pair.candidate.burnedSubtitleLanguage};
+      if(pair.candidate.burnedSubtitleLanguage)previous.candidate={...previous.candidate,burnedSubtitleLanguage:pair.candidate.burnedSubtitleLanguage,burnedSubtitleBasis:pair.candidate.burnedSubtitleBasis};
     } else { const copy={...pair,subtitles:pair.subtitles.slice()}; distinct.push(copy);if(key)files.set(key,copy); }
   }
   const expanded = distinct.flatMap(pair => {
@@ -437,7 +437,7 @@ function onSettings() {
     { type: 'toggle', key: 'rarefilmmEnabled', label: 'RareFilmm ek film arşivi', defaultValue: true, description: 'Eski ve az bulunan filmlerde küçük MP4 seçenekleri. Bazılarında İngilizce altyazı görüntüye işlenmiştir; 4K veya TR dublaj garantisi yoktur.' },
     { type: 'toggle', key: 'goojaraEnabled', label: 'Goojara film ve bölüm dosyaları', defaultValue: true, description: 'Bağımsız tarama: küçük MP4 alternatifleri; tam başlık/yıl/film IMDb ve bölüm kontrolü. Dönen CDN düğümü yanıt vermezse ana sağlayıcıdaki diğer sonuçlar etkilenmez.' },
     { type: 'toggle', key: 'fzmoviesEnabled', label: 'FzMovies film dosyaları', defaultValue: true, description: 'Küçük film dosyaları (genelde 360p MP4 ve 720p MKV). Film sayfasındaki IMDb kimliği ve dosya adı/yıl denetlenir; çözünürlük ve süre dosyadan okunur. Dizi aramaz.' },
-    { type: 'toggle', key: 'jetfilmizleEnabled', label: 'JetFilmizle Türkçe dublajlı film dosyaları', defaultValue: true, description: 'Yalnız filmler (Gold MP4). Film sayfasındaki IMDb kimliği ve Range 206 ön kontrolü gerekir; çözünürlük, süre ve okunabilen ses dili dosyadan doğrulanır.' },
+    { type: 'toggle', key: 'jetfilmizleEnabled', label: 'JetFilmizle Türkçe dublajlı ve altyazılı film dosyaları', defaultValue: true, description: 'Yalnız filmler (Gold MP4): Türkçe dublaj ve sitenin "Türkçe altyazılı orijinal ses" sekmesi. Film sayfasındaki IMDb kimliği ve Range 206 ön kontrolü gerekir; çözünürlük, süre ve okunabilen ses dili dosyadan doğrulanır. Altyazılı sekmedeki Türkçe altyazı sitenin etiketidir, dosyadan doğrulanmaz.' },
     { type: 'toggle', key: 'fztvseriesEnabled', label: 'FzTvSeries dizi bölüm dosyaları', defaultValue: true, description: 'Küçük MP4 bölümler (çoğunlukla 360p–480p). Dizi sayfasındaki IMDb kimliği, tam sezon/bölüm ve dosya adı denetlenir; çözünürlük dosyadan okunur. Film aramaz.' },
     { type: 'toggle', key: 'hdrezkaEnabled', label: 'HDRezka farklı boyutlarda film/dizi dosyaları', defaultValue: true, description: 'Bağımsız tarama: ücretsiz özgün sesli MP4 seçenekleri ve mevcut TR/EN altyazılar. IMDb, başlık/yıl ve tam bölüm denetlenir; ücretli kalite ve örnek videolar eklenmez. Bir CDN düğümü yanıt vermezse ana sağlayıcıdaki sonuçlar etkilenmez.' },
     {type:'toggle',key:'hdfilmdelisiEnabled',label:'HDFilmDelisi Türkçe dublaj ve çoklu ses',defaultValue:true,description:'Public film kataloğu ve gerçek HLS listesi. Ses/altyazı dilleri yayıncıdan okunur; bu kaynak online izleme içindir.'},

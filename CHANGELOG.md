@@ -1,5 +1,21 @@
 # Sürüm notları
 
+## 2.0.6 — 26 Kasım 2026
+
+- **HDRezka uzun dizilerde de çalışır.** Stranger Things, The Simpsons gibi uzun dizilerin sayfası 300 KB'yi aştığı için okunmuyordu; sınır 1 MB oldu. Stranger Things S1E1'de HDRezka sağlayıcısı 4 MP4 verdi (240p–720p, TR/EN altyazı). Ana listeyle birlikte bu bölümde 7 indirilebilir dosya görüldü (2.0.5'te 3).
+- **HDRezka çizgi dizi/film ve anime filmlerini de tarar.** `/cartoons/` (dizi ve film) ve `/animation/` (yalnız film) sayfaları alınır. Futurama, Shrek, The Simpsons Movie, Spirited Away denendi. Anime dizileri bilinçli olarak alınmaz: sezon düzeni TMDB'den farklı olabilir ve yanlış bölüm seçilmemeli.
+- **JetFilmizle: "Türkçe altyazılı orijinal ses" dosyaları.** Dublaj satırının yanında, sitenin altyazılı sekmesindeki Gold dosyası da gelir. Matrix'te bu satır 1080p, İngilizce ses (dosyadan okundu), 3,1 GB. Kartta "Sitede Türkçe altyazılı olarak etiketlenmiş" yazar. Altyazının görüntüye işlendiği doğrulanmadı ve altyazı "gömülü TR" sayılmaz. Görüntüde Türkçe altyazı varsa dış altyazıyı kapatın.
+- **MoviesDrive yeni alan adı (new5).** Eski alan her aramada iki fazla istek açtırıyordu.
+- **Düzeltme:** Bir form POST'unun 404'ü aynı adrese başka içerikle gidecek POST'u da engelliyordu; artık engel içeriğe göre.
+- **Düzeltme:** İki kaynaktan gelen aynı dosyada "sitede etiketlenmiş" altyazı notu kaybolmuyor.
+- **Bilinen durumlar (değişiklik yok):**
+  - MoviesDrive çok sezonlu paket sayfalarını bağlamaz (Breaking Bad, Game of Thrones).
+  - Shameless için HDRezka'da özgün ses yok.
+  - Severance için Türkçe altyazı servislerde yok.
+  - Wyzie altyazı servisi artık anahtar istiyor ve kullanılmıyor.
+- **Ana liste simülasyonu:** Matrix ile yapılan dört iOS kurallı koşunun birinde 4KHDHub/HubCloud tarafında bir istek 60 sn yanıt vermedi. Bu durumda Nuvio bütün satırları düşürür. Liste boş gelirse yenile düğmesine basın.
+- 401 yerel birim ve QuickJS paket testi geçti (`npm run check`). Fiziksel telefon, online oynatma, tam oynatma ve indirme testi yapılmadı.
+
 ## 2.0.5 sonrası test turu — 26 Kasım 2026 (yeni sürüm yok)
 
 - Eklenti kodu değişmedi. 2.0.0–2.0.5 eklemeleri bilgisayarda yeniden denendi: iOS kurallı simülasyon ve canlı Node, elle kurulmuş TMDB sabitleriyle (ayrıntı `docs/hafiza/PROJE.md`).
