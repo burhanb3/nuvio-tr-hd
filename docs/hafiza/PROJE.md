@@ -18,7 +18,7 @@
   - Android ExoPlayer `PlaybackMediaItems.android.kt`: stream türü yoksa sorgudaki `format=.m3u8` → HLS. Media3 uzantısız parça işleyişi okunmadı.
 - **ABI:** Doğrulayıcının 16 regex'i ve yeni çağrı denetimi (`abi-at.mjs`) etiket ve ana dal dosyalarında 17/17 geçti.
 - **Kilit:** `release` 1.0.1, `releaseCommit` `3cfc311`, `defaultHead` `8f19c9d`. 24 dosya; `StreamSearchSessions.kt` yeni. `verify:upstream`: drift yok, başarısız denetim yok. Ana dal 4777b31 → 8f19c9d ilerledi ama izlenen dosyalar aynı.
-- **Testler:** 397/397 (`npm run check`).
+- **Testler ve yayın:** 397/397 (`npm run check`). Plugin ABI'si değişmedi. Yayın `3331704`: Test ve paket `45855931852` (ubuntu+windows) başarılı, Pages `45855931799` başarılı; 10 public dosya HTTP 200 ve SHA-256 yerel `dist/` ile aynı (`compatibility/github-publication.json`, anonim GitHub API).
 - **Yapılmayanlar:** Fiziksel telefon, Kotlin derlemesi, yenile düğmesinin cihazda denenmesi, online oynatma, tam oynatma ve indirme testi yapılmadı.
 
 ## 2.0.4 — 26 Kasım 2026: CizgiMax RubyVidHub online dublaj (HLS)

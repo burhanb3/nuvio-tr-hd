@@ -4,7 +4,7 @@
 
 ## 2.0.5 — 26 Kasım 2026
 
-1. **Yayın:** Sonuç PROJE ve `compatibility/github-publication.json` içine yazılacak.
+1. **Yayımlandı (`3331704`):** Test ve paket `45855931852` ve Pages `45855931799` başarılı; 10 public dosya HTTP 200 ve SHA-256 yerel `dist/` ile aynı (`compatibility/github-publication.json`).
 2. **Telefonda (Wi-Fi ve LTE ayrı; 2.0.4 listesinin yerine geçer):**
    - Depo yenilenmeli, sonra kaynak ekranında **yenile düğmesine** basılmalı; `Tanı · 2.0.5` görünmeli. Arama anahtarında sürüm yok, bu yüzden yenilemeden eski aramanın satırları görünebilir.
    - Gravity Falls S1E1 veya Adventure Time S1E1: `Online · CizgiMax` satırı gelmeli. Gelmezse kaynak listesinin başındaki yenile düğmesine basılmalı; ekranı kapatıp açmak 15 dk boyunca yeniden taramaz. Satır oynatılmalı ve 5 dk sonra ileri sarılmalı. Satırda indirme seçeneği olmamalı.
