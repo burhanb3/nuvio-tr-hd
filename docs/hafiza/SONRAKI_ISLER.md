@@ -4,7 +4,7 @@
 
 ## 2.0.6 — 26 Kasım 2026
 
-1. **Yayın:** kaydı aşağıya eklenecek (yayın denetimi sonrası).
+1. **Yayımlandı (`6ec9cb5`):** Test ve paket `45883477156` ve Pages `45883477139` başarılı; 10 public dosya HTTP 200 ve SHA-256 yerel `dist/` ile aynı (`compatibility/github-publication.json`).
 2. **Telefonda (Wi-Fi ve LTE ayrı):**
    - Depo yenilenmeli, kaynak ekranında yenile düğmesine basılmalı; `Tanı · 2.0.6` görünmeli.
    - **The Matrix:** `İndirilebilir · JetFilmizle` 1080p (~3,1 GB, "Sitede Türkçe altyazılı olarak etiketlenmiş") satırı oynatılmalı. Türkçe altyazının görüntüde olup olmadığı not edilmeli. Görüntüdeyse dış TR altyazı da seçilirse iki altyazı üst üste biner; oynatıcıda dış altyazı kapatılmalı. Dublaj 360p satırı da gelmeli.
@@ -13,7 +13,7 @@
    - Bir filmde ana liste beklenmedik şekilde boş gelirse yenile düğmesine basılmalı ve not edilmeli (simülasyonda bir kez 4KHDHub/HubCloud tarafında 60 sn asılma görüldü, KARARLAR 2.0.6).
 3. **Açık kalanlar:**
    - Altyazılı JetFilmizle dosyalarında ses izi dili Shadow's Edge ve The Mummy'de okunamadı; bu dosyalarda "Ses" etiketi sitenin iddiasıdır.
-   - 4KHDHub dizi zinciri sayfa afişiyle elle bağlanıp denenmedi (yalnız tasarım okundu).
+   - 4KHDHub dizi zinciri sayfa afişiyle elle bağlanınca Breaking Bad S1E1'de 1 doğrulanmış dosya verdi (Pixeldrain 1080p, PROJE 2.0.6). Telefonda TMDB afişiyle bağlanıp bağlanmadığı görülmeli.
    - FzTvSeries CDN'i bu bilgisayardan bazen açılıyor (Stranger Things S1E1, Shameless satır verdi), bazen açılmıyor.
    - Severance'ta Türkçe altyazı kaynağı yok; yeni bir anahtarsız TR kaynağı çıkarsa yeniden bakılır.
 4. **Sonraki konu (kullanıcıyla):** Nuvio fork/PR ile iOS arka plan indirmesi ve "Sezonu indir" (aşağıdaki iOS indirme notu).
